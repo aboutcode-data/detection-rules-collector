@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/eset/Mumblehard_packer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "mumblehard_packer",
+                "tags": [],
+                "description": "Mumblehard i386 assembly code responsible for decrypting Perl code",
+                "author": "Marc-Etienne M. Leveille",
+                "date": "2015-04-07",
+                "reference": "http://www.welivesecurity.com",
+                "version": "1"
+            },
+            "rule_text": "rule mumblehard_packer\n{\n\tmeta:\n\t\tdescription = \"Mumblehard i386 assembly code responsible for decrypting Perl code\"\n\t\tauthor = \"Marc-Etienne M. Leveille\"\n\t\tdate = \"2015-04-07\"\n\t\treference = \"http://www.welivesecurity.com\"\n\t\tversion = \"1\"\n\n\tstrings:\n\t\t$decrypt = { 31 db  [1-10]  ba ?? 00 00 00  [0-6]  (56 5f |  89 F7)\n                     39 d3 75 13 81 fa ?? 00 00 00 75 02 31 d2 81 c2 ?? 00 00\n                     00 31 db 43 ac 30 d8 aa 43 e2 e2 }\n\n\tcondition:\n\t\t$decrypt\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

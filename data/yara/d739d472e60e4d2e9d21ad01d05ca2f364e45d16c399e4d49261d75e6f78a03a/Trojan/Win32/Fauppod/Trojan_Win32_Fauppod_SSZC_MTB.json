@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Fauppod/Trojan_Win32_Fauppod_SSZC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Fauppod_SSZC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Fauppod.SSZC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Fauppod_SSZC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Fauppod.SSZC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8a 45 fa a2 ?? ?? ?? ?? 0f b6 15 ?? ?? ?? ?? 0f b6 35 ?? ?? ?? ?? 89 55 f4 89 75 f0 8b 45 f4 8b 4d f0 31 c8 88 c2 88 15 ?? ?? ?? ?? a1 ?? ?? ?? ?? 2d e0 0e 00 00 a3 ?? ?? ?? ?? c7 05 ?? ?? ?? ?? 4e 0a 00 00 0f b6 05 ?? ?? ?? ?? 83 c4 0c 5e }\n\t\t$a_01_1 = {45 65 73 49 77 79 73 75 6c 6c 73 74 65 74 77 6c 73 73 69 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

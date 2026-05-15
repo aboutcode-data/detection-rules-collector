@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sharpldapwhoami.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-29",
+                "title": "HackTool - SharpLdapWhoami Execution",
+                "id": "d9367cbb-c2e0-47ce-bdc0-128cb6da898d"
+            },
+            "rule_text": "title: HackTool - SharpLdapWhoami Execution\nid: d9367cbb-c2e0-47ce-bdc0-128cb6da898d\nstatus: test\ndescription: Detects SharpLdapWhoami, a whoami alternative that queries the LDAP service\n  on a domain controller\nreferences:\n- https://github.com/bugch3ck/SharpLdapWhoami\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-29\nmodified: 2023-02-04\ntags:\n- attack.discovery\n- attack.t1033\n- car.2016-03-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_name:\n    Image|endswith: \\SharpLdapWhoami.exe\n  selection_pe:\n  - OriginalFileName|contains: SharpLdapWhoami\n  - Product: SharpLdapWhoami\n  selection_flags1:\n    CommandLine|endswith:\n    - ' /method:ntlm'\n    - ' /method:kerb'\n    - ' /method:nego'\n    - ' /m:nego'\n    - ' /m:ntlm'\n    - ' /m:kerb'\n  condition: 1 of selection*\nfalsepositives:\n- Programs that use the same command line flags\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

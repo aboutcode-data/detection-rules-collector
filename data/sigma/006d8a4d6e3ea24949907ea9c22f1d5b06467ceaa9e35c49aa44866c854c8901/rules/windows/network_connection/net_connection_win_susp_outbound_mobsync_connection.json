@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_susp_outbound_mobsync_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "elhoim",
+                "date": "2022-04-28",
+                "title": "Microsoft Sync Center Suspicious Network Connections",
+                "id": "9f2cc74d-78af-4eb2-bb64-9cd1d292b87b"
+            },
+            "rule_text": "title: Microsoft Sync Center Suspicious Network Connections\nid: 9f2cc74d-78af-4eb2-bb64-9cd1d292b87b\nstatus: test\ndescription: Detects suspicious connections from Microsoft Sync Center to non-private\n  IPs.\nreferences:\n- https://redcanary.com/blog/intelligence-insights-november-2021/\nauthor: elhoim\ndate: 2022-04-28\nmodified: 2024-03-12\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\n- attack.t1218\n- attack.execution\nlogsource:\n  product: windows\n  category: network_connection\ndetection:\n  selection:\n    Image|endswith: \\mobsync.exe\n  filter_main_local_ranges:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 169.254.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

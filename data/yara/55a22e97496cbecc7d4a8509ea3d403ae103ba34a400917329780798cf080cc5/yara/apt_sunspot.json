@@ -1,0 +1,65 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_sunspot.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_SUNSPOT_01",
+                "tags": [
+                    "artifact",
+                    "stellarparticle",
+                    "sunspot"
+                ],
+                "author": "(c) 2021 CrowdStrike Inc.",
+                "description": "Detects RC4 and AES key encryption material in SUNSPOT",
+                "reference": "https://www.crowdstrike.com/blog/sunspot-malware-technical-analysis/",
+                "version": "202101081448",
+                "date": "2021-01-08",
+                "actor": "StellarParticle",
+                "malware_family": "SUNSPOT",
+                "id": "2a2a5cfc-d059-5942-bd70-c3169e9ceb45"
+            },
+            "rule_text": "rule CrowdStrike_SUNSPOT_01 : artifact stellarparticle sunspot\n{\n\tmeta:\n\t\tauthor = \"(c) 2021 CrowdStrike Inc.\"\n\t\tdescription = \"Detects RC4 and AES key encryption material in SUNSPOT\"\n\t\treference = \"https://www.crowdstrike.com/blog/sunspot-malware-technical-analysis/\"\n\t\tversion = \"202101081448\"\n\t\tdate = \"2021-01-08\"\n\t\tactor = \"StellarParticle\"\n\t\tmalware_family = \"SUNSPOT\"\n\t\tid = \"2a2a5cfc-d059-5942-bd70-c3169e9ceb45\"\n\n\tstrings:\n\t\t$key = {fc f3 2a 83 e5 f6 d0 24 a6 bf ce 88 30 c2 48 e7}\n\t\t$iv = {81 8c 85 49 b9 00 06 78 0b e9 63 60 26 64 b2 da}\n\n\tcondition:\n\t\tall of them and filesize < 32MB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_SUNSPOT_02",
+                "tags": [
+                    "artifact",
+                    "stellarparticle",
+                    "sunspot"
+                ],
+                "copyright": "(c) 2021 CrowdStrike Inc.",
+                "description": "Detects mutex names in SUNSPOT",
+                "version": "202101081448",
+                "date": "2021-01-08",
+                "actor": "StellarParticle",
+                "malware_family": "SUNSPOT",
+                "reference": "https://www.crowdstrike.com/blog/sunspot-malware-technical-analysis/",
+                "id": "9ecb89e6-475b-5961-8a67-136a0274e1c7"
+            },
+            "rule_text": "rule CrowdStrike_SUNSPOT_02 : artifact stellarparticle sunspot\n{\n\tmeta:\n\t\tcopyright = \"(c) 2021 CrowdStrike Inc.\"\n\t\tdescription = \"Detects mutex names in SUNSPOT\"\n\t\tversion = \"202101081448\"\n\t\tdate = \"2021-01-08\"\n\t\tactor = \"StellarParticle\"\n\t\tmalware_family = \"SUNSPOT\"\n\t\treference = \"https://www.crowdstrike.com/blog/sunspot-malware-technical-analysis/\"\n\t\tid = \"9ecb89e6-475b-5961-8a67-136a0274e1c7\"\n\n\tstrings:\n\t\t$mutex_01 = \"{12d61a41-4b74-7610-a4d8-3028d2f56395}\" wide ascii\n\t\t$mutex_02 = \"{56331e4d-76a3-0390-a7ee-567adf5836b7}\" wide ascii\n\n\tcondition:\n\t\tany of them and filesize < 10MB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_SUNSPOT_03",
+                "tags": [
+                    "artifact",
+                    "logging",
+                    "stellarparticle",
+                    "sunspot"
+                ],
+                "copyright": "(c) 2021 CrowdStrike Inc.",
+                "description": "Detects log format lines in SUNSPOT",
+                "version": "202101081443",
+                "last_modified": "2021-01-08",
+                "actor": "StellarParticle",
+                "malware_family": "SUNSPOT",
+                "id": "5535163e-a85a-587d-bb6e-083783f915c9"
+            },
+            "rule_text": "rule CrowdStrike_SUNSPOT_03 : artifact logging stellarparticle sunspot\n{\n\tmeta:\n\t\tcopyright = \"(c) 2021 CrowdStrike Inc.\"\n\t\tdescription = \"Detects log format lines in SUNSPOT\"\n\t\tversion = \"202101081443\"\n\t\tlast_modified = \"2021-01-08\"\n\t\tactor = \"StellarParticle\"\n\t\tmalware_family = \"SUNSPOT\"\n\t\tid = \"5535163e-a85a-587d-bb6e-083783f915c9\"\n\n\tstrings:\n\t\t$s01 = \"[ERROR] ***Step1('%ls','%ls') fails with error %#x***\\x0A\" ascii\n\t\t$s02 = \"[ERROR] Step2 fails\\x0A\" ascii\n\t\t$s03 = \"[ERROR] Step3 fails\\x0A\" ascii\n\t\t$s04 = \"[ERROR] Step4('%ls') fails\\x0A\" ascii\n\t\t$s05 = \"[ERROR] Step5('%ls') fails\\x0A\" ascii\n\t\t$s06 = \"[ERROR] Step6('%ls') fails\\x0A\" ascii\n\t\t$s07 = \"[ERROR] Step7 fails\\x0A\" ascii\n\t\t$s08 = \"[ERROR] Step8 fails\\x0A\" ascii\n\t\t$s09 = \"[ERROR] Step9('%ls') fails\\x0A\" ascii\n\t\t$s10 = \"[ERROR] Step10('%ls','%ls') fails with error %#x\\x0A\" ascii\n\t\t$s11 = \"[ERROR] Step11('%ls') fails\\x0A\" ascii\n\t\t$s12 = \"[ERROR] Step12('%ls','%ls') fails with error %#x\\x0A\" ascii\n\t\t$s13 = \"[ERROR] Step30 fails\\x0A\" ascii\n\t\t$s14 = \"[ERROR] Step14 fails with error %#x\\x0A\" ascii\n\t\t$s15 = \"[ERROR] Step15 fails\\x0A\" ascii\n\t\t$s16 = \"[ERROR] Step16 fails\\x0A\" ascii\n\t\t$s17 = \"[%d] Step17 fails with error %#x\\x0A\" ascii\n\t\t$s18 = \"[%d] Step18 fails with error %#x\\x0A\" ascii\n\t\t$s19 = \"[ERROR] Step19 fails with error %#x\\x0A\" ascii\n\t\t$s20 = \"[ERROR] Step20 fails\\x0A\" ascii\n\t\t$s21 = \"[ERROR] Step21(%d,%s,%d) fails\\x0A\" ascii\n\t\t$s22 = \"[ERROR] Step22 fails with error %#x\\x0A\" ascii\n\t\t$s23 = \"[ERROR] Step23 fails with error %#x\\x0A\" ascii\n\t\t$s24 = \"[%d] Solution directory: %ls\\x0A\" ascii\n\t\t$s25 = \"[%d] %04d-%02d-%02d %02d:%02d:%02d:%03d %ls\\x0A\" ascii\n\t\t$s26 = \"[%d] + '%s' \" ascii\n\n\tcondition:\n\t\t2 of them and filesize < 10MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

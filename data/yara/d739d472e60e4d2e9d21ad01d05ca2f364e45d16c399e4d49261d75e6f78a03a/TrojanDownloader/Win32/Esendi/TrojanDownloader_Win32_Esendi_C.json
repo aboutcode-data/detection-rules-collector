@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Esendi/TrojanDownloader_Win32_Esendi_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Esendi_C",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Esendi.C,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 06 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Esendi_C\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Esendi.C,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {40 85 c9 74 21 8b 54 24 04 66 66 66 0f 1f 84 00 00 00 00 00 01 91 ?? ?? ?? ?? 8b 0c 85 ?? ?? ?? ?? 40 85 c9 75 }\n\t\t$a_00_1 = {50 01 00 20 00 00 00 00 60 01 00 00 70 00 00 02 00 00 00 }\n\t\t$a_00_2 = {50 01 00 40 00 00 00 00 60 01 00 00 70 00 00 04 00 00 00 }\n\t\t$a_00_3 = {05 00 20 00 00 00 00 10 05 00 00 30 01 00 02 00 00 00 }\n\t\t$a_00_4 = {8b c2 8d 7f 04 c1 e8 1e 33 c2 69 d0 65 89 07 6c 03 d6 46 89 57 fc 81 fe 70 02 00 00 }\n\t\t$a_00_5 = {81 e1 ff ff ff 7f 33 c8 8b c1 24 01 0f b6 c0 f7 d8 1b c0 d1 e9 25 df b0 08 99 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_00_1 & 1 ) * 20 + ( #a_00_2 & 1 ) * 20 + ( #a_00_3 & 1 ) * 20 + ( #a_00_4 & 1 ) * 10 + ( #a_00_5 & 1 ) * 10 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

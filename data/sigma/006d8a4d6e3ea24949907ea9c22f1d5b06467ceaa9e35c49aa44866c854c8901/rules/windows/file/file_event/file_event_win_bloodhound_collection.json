@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_bloodhound_collection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "C.J. May",
+                "date": "2022-08-09",
+                "title": "BloodHound Collection Files",
+                "id": "02773bed-83bf-469f-b7ff-e676e7d78bab"
+            },
+            "rule_text": "title: BloodHound Collection Files\nid: 02773bed-83bf-469f-b7ff-e676e7d78bab\nstatus: test\ndescription: Detects default file names outputted by the BloodHound collection tool\n  SharpHound\nreferences:\n- https://academy.hackthebox.com/course/preview/active-directory-bloodhound/bloodhound--data-collection\nauthor: C.J. May\ndate: 2022-08-09\nmodified: 2026-02-19\ntags:\n- attack.discovery\n- attack.t1087.001\n- attack.t1087.002\n- attack.t1482\n- attack.t1069.001\n- attack.t1069.002\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - BloodHound.zip\n    - _computers.json\n    - _containers.json\n    - _gpos.json\n    - _groups.json\n    - _ous.json\n    - _users.json\n  filter_optional_ms_winapps:\n    Image|endswith: \\svchost.exe\n    TargetFilename|startswith: C:\\Program Files\\WindowsApps\\Microsoft.\n    TargetFilename|endswith: \\pocket_containers.json\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Some false positives may arise in some environment and this may require some tuning.\n  Add additional filters or reduce level depending on the level of noise\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

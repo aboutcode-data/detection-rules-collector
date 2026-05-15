@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_enable_susp_windows_optional_feature.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-29",
+                "title": "Potential Suspicious Windows Feature Enabled - ProcCreation",
+                "id": "c740d4cf-a1e9-41de-bb16-8a46a4f57918"
+            },
+            "rule_text": "title: Potential Suspicious Windows Feature Enabled - ProcCreation\nid: c740d4cf-a1e9-41de-bb16-8a46a4f57918\nrelated:\n- id: 55c925c1-7195-426b-a136-a9396800e29b\n  type: similar\nstatus: test\ndescription: 'Detects usage of the built-in PowerShell cmdlet \"Enable-WindowsOptionalFeature\"\n  used as a Deployment Image Servicing and Management tool.\n\n  Similar to DISM.exe, this cmdlet is used to enumerate, install, uninstall, configure,\n  and update features and packages in Windows images\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/dism/enable-windowsoptionalfeature?view=windowsserver2022-ps\n- https://learn.microsoft.com/en-us/windows/win32/projfs/enabling-windows-projected-file-system\n- https://learn.microsoft.com/en-us/windows/wsl/install-on-server\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-29\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd:\n    CommandLine|contains|all:\n    - Enable-WindowsOptionalFeature\n    - -Online\n    - -FeatureName\n  selection_feature:\n    CommandLine|contains:\n    - TelnetServer\n    - Internet-Explorer-Optional-amd64\n    - TFTP\n    - SMB1Protocol\n    - Client-ProjFS\n    - Microsoft-Windows-Subsystem-Linux\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage of the features listed in the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_hhctrl_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Persistence Via Hhctrl.ocx",
+                "id": "f10ed525-97fe-4fed-be7c-2feecca941b1"
+            },
+            "rule_text": "title: Persistence Via Hhctrl.ocx\nid: f10ed525-97fe-4fed-be7c-2feecca941b1\nstatus: test\ndescription: Detects when an attacker modifies the registry value of the \"hhctrl\"\n  to point to a custom binary\nreferences:\n- https://persistence-info.github.io/Data/hhctrl.html\n- https://www.hexacorn.com/blog/2018/04/23/beyond-good-ol-run-key-part-77/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-08-17\ntags:\n- attack.persistence\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\CLSID\\{52A2AAAE-085D-4187-97EA-8C30DB990436}\\InprocServer32\\(Default)\n  filter:\n    Details: C:\\Windows\\System32\\hhctrl.ocx\n  condition: selection and not filter\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

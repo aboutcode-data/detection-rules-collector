@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Lace-Tempest/file_event_win_apt_lace_tempest_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-11-09",
+                "title": "Lace Tempest File Indicators",
+                "id": "e94486ea-2650-4548-bf25-88cbd0bb32d7"
+            },
+            "rule_text": "title: Lace Tempest File Indicators\nid: e94486ea-2650-4548-bf25-88cbd0bb32d7\nstatus: test\ndescription: Detects PowerShell script file creation with specific names or suffixes\n  which was seen being used often in PowerShell scripts by FIN7\nreferences:\n- https://www.sysaid.com/blog/service-desk/on-premise-software-security-vulnerability-notification\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-11-09\ntags:\n- attack.execution\n- detection.emerging-threats\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n  - TargetFilename|endswith:\n    - :\\Program Files\\SysAidServer\\tomcat\\webapps\\usersfiles\\user.exe\n    - :\\Program Files\\SysAidServer\\tomcat\\webapps\\usersfiles.war\n    - :\\Program Files\\SysAidServer\\tomcat\\webapps\\leave\n  - TargetFilename|contains: :\\Program Files\\SysAidServer\\tomcat\\webapps\\user.\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

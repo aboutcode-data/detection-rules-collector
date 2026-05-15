@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/HuntingSnakes/Trojan_Win64_HuntingSnakes_PA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_HuntingSnakes_PA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/HuntingSnakes.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_HuntingSnakes_PA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/HuntingSnakes.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {65 69 63 61 72 5f 66 75 64 2e 63 6f 6d }\n\t\t$a_03_1 = {8b 45 fc 48 98 0f b6 84 05 ?? ?? ?? ?? 89 c2 8b 45 f4 31 d0 89 c2 8b 45 fc 48 98 88 94 05 ?? ?? ?? ?? 83 45 fc 01 8b 45 fc 3b 45 f8 7c }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

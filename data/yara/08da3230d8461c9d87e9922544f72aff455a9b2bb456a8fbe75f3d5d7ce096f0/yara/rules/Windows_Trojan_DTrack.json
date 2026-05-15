@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_DTrack.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_DTrack_57db861f",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "57db861f-669b-43a7-9284-24615b606f70",
+                "fingerprint": "a189e255f533d4ff4562c3a59c5dfe8462ad25fcd179a48d54fa1179abf0c9b2",
+                "creation_date": "2024-12-27",
+                "last_modified": "2025-02-11",
+                "threat_name": "Windows.Trojan.DTrack",
+                "reference_sample": "c8df8511bccc588daf87583ea40836acfddefb5416b860799835ea6f93f9ce5f",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_DTrack_57db861f\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"57db861f-669b-43a7-9284-24615b606f70\"\n\t\tfingerprint = \"a189e255f533d4ff4562c3a59c5dfe8462ad25fcd179a48d54fa1179abf0c9b2\"\n\t\tcreation_date = \"2024-12-27\"\n\t\tlast_modified = \"2025-02-11\"\n\t\tthreat_name = \"Windows.Trojan.DTrack\"\n\t\treference_sample = \"c8df8511bccc588daf87583ea40836acfddefb5416b860799835ea6f93f9ce5f\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$str_0 = \"%sExecute_%s.log\" fullword\n\t\t$str_1 = \"%02X:%02X:%02X:%02X:%02X:%02X\" fullword\n\t\t$str_2 = \"%02d.%02d.%04d - %02d:%02d:%02d:%03d : \" fullword\n\t\t$log_0 = \"[+] DownloadToFile\" fullword\n\t\t$log_1 = \"[+] DownloadCommand\" fullword\n\t\t$log_2 = \"[+] StartupThread\" fullword\n\t\t$log_3 = \"[+] Connect\" fullword\n\t\t$log_4 = \"[+] CPT..\" fullword\n\t\t$binary_0 = { 8B 45 ?? C1 E8 08 8B 4D ?? C1 E9 02 33 4D ?? 8B 55 ?? C1 EA 03 33 CA 8B 55 ?? C1 EA 07 33 CA }\n\n\tcondition:\n\t\t( all of ( $str_* ) ) or ( all of ( $log_* ) ) or ( 1 of ( $str_* ) and $binary_0 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

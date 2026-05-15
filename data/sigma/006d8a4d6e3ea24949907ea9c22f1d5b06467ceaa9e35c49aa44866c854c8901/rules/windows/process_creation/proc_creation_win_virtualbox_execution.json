@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_virtualbox_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Janantha Marasinghe",
+                "date": "2020-09-26",
+                "title": "Virtualbox Driver Installation or Starting of VMs",
+                "id": "bab049ca-7471-4828-9024-38279a4c04da"
+            },
+            "rule_text": "title: Virtualbox Driver Installation or Starting of VMs\nid: bab049ca-7471-4828-9024-38279a4c04da\nstatus: test\ndescription: Adversaries can carry out malicious operations using a virtual instance\n  to avoid detection. This rule is built to detect the registration of the Virtualbox\n  driver or start of a Virtualbox VM.\nreferences:\n- https://news.sophos.com/en-us/2020/05/21/ragnar-locker-ransomware-deploys-virtual-machine-to-dodge-security/\n- https://threatpost.com/maze-ransomware-ragnar-locker-virtual-machine/159350/\nauthor: Janantha Marasinghe\ndate: 2020-09-26\nmodified: 2025-07-29\ntags:\n- attack.stealth\n- attack.t1564.006\n- attack.t1564\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains:\n    - VBoxRT.dll,RTR3Init\n    - VBoxC.dll\n    - VBoxDrv.sys\n  selection_2:\n    CommandLine|contains:\n    - startvm\n    - controlvm\n  condition: 1 of selection_*\nfalsepositives:\n- This may have false positives on hosts where Virtualbox is legitimately being used\n  for operations\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

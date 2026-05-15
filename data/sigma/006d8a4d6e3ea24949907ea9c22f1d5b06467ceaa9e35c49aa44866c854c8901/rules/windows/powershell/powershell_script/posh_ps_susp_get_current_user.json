@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_get_current_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-04-04",
+                "title": "Suspicious PowerShell Get Current User",
+                "id": "4096a49c-7de4-4da0-a230-c66ccd56ea5a"
+            },
+            "rule_text": "title: Suspicious PowerShell Get Current User\nid: 4096a49c-7de4-4da0-a230-c66ccd56ea5a\nstatus: test\ndescription: Detects the use of PowerShell to identify the current logged user.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1033/T1033.md#atomic-test-4---user-discovery-with-env-vars-powershell-script\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1033/T1033.md#atomic-test-5---getcurrent-user-with-powershell-script\nauthor: frack113\ndate: 2022-04-04\ntags:\n- attack.discovery\n- attack.t1033\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - '[System.Environment]::UserName'\n    - $env:UserName\n    - '[System.Security.Principal.WindowsIdentity]::GetCurrent()'\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

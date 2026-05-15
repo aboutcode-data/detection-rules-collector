@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_automated_collection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-28",
+                "title": "Automated Collection Command Prompt",
+                "id": "f576a613-2392-4067-9d1a-9345fb58d8d1"
+            },
+            "rule_text": "title: Automated Collection Command Prompt\nid: f576a613-2392-4067-9d1a-9345fb58d8d1\nstatus: test\ndescription: Once established within a system or network, an adversary may use automated\n  techniques for collecting internal data.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1119/T1119.md\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.001/T1552.001.md\nauthor: frack113\ndate: 2021-07-28\nmodified: 2022-11-11\ntags:\n- attack.collection\n- attack.t1119\n- attack.credential-access\n- attack.t1552.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_ext:\n    CommandLine|contains:\n    - .doc\n    - .docx\n    - .xls\n    - .xlsx\n    - .ppt\n    - .pptx\n    - .rtf\n    - .pdf\n    - .txt\n  selection_other_dir:\n    CommandLine|contains|all:\n    - 'dir '\n    - ' /b '\n    - ' /s '\n  selection_other_findstr:\n    OriginalFileName: FINDSTR.EXE\n    CommandLine|contains:\n    - ' /e '\n    - ' /si '\n  condition: selection_ext and 1 of selection_other_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Stairwell/MauiRansomware.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MauiRansomware",
+                "tags": [],
+                "author": "Silas Cutler (Silas@Stairwell.com)",
+                "description": "Detection for Maui Ransomware",
+                "reference": "https://stairwell.com/wp-content/uploads/2022/07/Stairwell-Threat-Report-Maui-Ransomware.pdf",
+                "version": "0.1"
+            },
+            "rule_text": "rule MauiRansomware\n{\n\tmeta:\n\t\tauthor = \"Silas Cutler (Silas@Stairwell.com)\"\n\t\tdescription = \"Detection for Maui Ransomware\"\n\t\treference = \"https://stairwell.com/wp-content/uploads/2022/07/Stairwell-Threat-Report-Maui-Ransomware.pdf\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$ = \"Unable to read public key info.\" wide\n\t\t$ = \"it by <Godhead> using -maui option.\" wide\n\t\t$ = \"Incompatible public key version.\" wide\n\t\t$ = \"maui.key\" wide\n\t\t$ = \"maui.evd\" wide\n\t\t$ = \"Unable to encrypt private key\" wide\n\t\t$ = \"Unable to create evidence file\" wide\n\t\t$ = \"PROCESS_GOINGON[%d%% / %d%%]: %s\" wide\n\t\t$ = \"demigod.key\" wide\n\t\t$ = \"Usage: maui [-ptx] [PATH]\" wide\n\t\t$ = \"-p dir: Set Log Directory (Default: Current Directory)\" wide\n\t\t$ = \"-t n: Set Thread Count (Default: 1)\" wide\n\t\t$ = \"-x: Self Melt (Default: No)\" wide\n\t\t$ = { 44 24 24 44 49 56 45 ?? 44 24 28 01 00 00 00 ?? 44 24 2C 10 00 00 00 }\n\t\t$ = { 44 4F 47 44 ?? ?? 04 01 00 00 00 }\n\n\tcondition:\n\t\t3 of them or ( uint32( filesize - 8 ) == 0x00000001 and uint32( filesize - 12 ) == 0x5055424B )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_http_executable_download_from_webdav.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "SOC Prime, Adam Swan",
+                "date": "2020-05-01",
+                "title": "Executable from Webdav",
+                "id": "aac2fd97-bcba-491b-ad66-a6edf89c71bf"
+            },
+            "rule_text": "title: Executable from Webdav\nid: aac2fd97-bcba-491b-ad66-a6edf89c71bf\nstatus: test\ndescription: Detects executable access via webdav6. Can be seen in APT 29 such as\n  from the emulated APT 29 hackathon https://github.com/OTRF/detection-hackathon-apt29/\nreferences:\n- http://carnal0wnage.attackresearch.com/2012/06/webdav-server-to-download-custom.html\n- https://github.com/OTRF/detection-hackathon-apt29\nauthor: SOC Prime, Adam Swan\ndate: 2020-05-01\nmodified: 2021-11-27\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  product: zeek\n  service: http\ndetection:\n  selection_webdav:\n  - c-useragent|contains: WebDAV\n  - c-uri|contains: webdav\n  selection_executable:\n  - resp_mime_types|contains: dosexec\n  - c-uri|endswith: .exe\n  condition: selection_webdav and selection_executable\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

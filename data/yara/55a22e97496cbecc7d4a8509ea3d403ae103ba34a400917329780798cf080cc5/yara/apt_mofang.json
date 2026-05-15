@@ -1,0 +1,29 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_mofang.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "shimrat",
+                "tags": [],
+                "description": "Detects ShimRat and the ShimRat loader",
+                "author": "Yonathan Klijnsma (yonathan.klijnsma@fox-it.com)",
+                "date": "20/11/2015",
+                "id": "21431895-1180-5552-8e82-1589992ffa1d"
+            },
+            "rule_text": "rule shimrat\n{\n\tmeta:\n\t\tdescription = \"Detects ShimRat and the ShimRat loader\"\n\t\tauthor = \"Yonathan Klijnsma (yonathan.klijnsma@fox-it.com)\"\n\t\tdate = \"20/11/2015\"\n\t\tid = \"21431895-1180-5552-8e82-1589992ffa1d\"\n\n\tstrings:\n\t\t$dll = \".dll\"\n\t\t$dat = \".dat\"\n\t\t$headersig = \"QWERTYUIOPLKJHG\"\n\t\t$datasig = \"MNBVCXZLKJHGFDS\"\n\t\t$datamarker1 = \"Data$$00\"\n\t\t$datamarker2 = \"Data$$01%c%sData\"\n\t\t$cmdlineformat = \"ping localhost -n 9 /c %s > nul\"\n\t\t$demoproject_keyword1 = \"Demo\"\n\t\t$demoproject_keyword2 = \"Win32App\"\n\t\t$comspec = \"COMSPEC\"\n\t\t$shim_func1 = \"ShimMain\"\n\t\t$shim_func2 = \"NotifyShims\"\n\t\t$shim_func3 = \"GetHookAPIs\"\n\n\tcondition:\n\t\t($dll and $dat and $headersig and $datasig ) or ( $datamarker1 and $datamarker2 ) or ( $cmdlineformat and $demoproject_keyword1 and $demoproject_keyword2 and $comspec ) or ( $dll and $dat and $shim_func1 and $shim_func2 and $shim_func3 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "shimratreporter",
+                "tags": [],
+                "description": "Detects ShimRatReporter",
+                "author": "Yonathan Klijnsma (yonathan.klijnsma@fox-it.com)",
+                "date": "20/11/2015",
+                "id": "01688b3c-2f06-518f-939d-4d65529be5ae"
+            },
+            "rule_text": "rule shimratreporter\n{\n\tmeta:\n\t\tdescription = \"Detects ShimRatReporter\"\n\t\tauthor = \"Yonathan Klijnsma (yonathan.klijnsma@fox-it.com)\"\n\t\tdate = \"20/11/2015\"\n\t\tid = \"01688b3c-2f06-518f-939d-4d65529be5ae\"\n\n\tstrings:\n\t\t$IpInfo = \"IP-INFO\"\n\t\t$NetworkInfo = \"Network-INFO\"\n\t\t$OsInfo = \"OS-INFO\"\n\t\t$ProcessInfo = \"Process-INFO\"\n\t\t$BrowserInfo = \"Browser-INFO\"\n\t\t$QueryUserInfo = \"QueryUser-INFO\"\n\t\t$UsersInfo = \"Users-INFO\"\n\t\t$SoftwareInfo = \"Software-INFO\"\n\t\t$AddressFormat = \"%02X-%02X-%02X-%02X-%02X-%02X\"\n\t\t$proxy_str = \"(from environment) = %s\"\n\t\t$netuserfun = \"NetUserEnum\"\n\t\t$networkparams = \"GetNetworkParams\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

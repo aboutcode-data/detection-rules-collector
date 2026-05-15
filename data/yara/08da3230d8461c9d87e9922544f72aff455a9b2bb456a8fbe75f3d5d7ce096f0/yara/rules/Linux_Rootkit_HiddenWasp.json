@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_HiddenWasp.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_HiddenWasp_8408057b",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "8408057b-4cfa-4712-b69a-201561690c2d",
+                "fingerprint": "18171748d498def35fd97e342785ee13e02b0ff926defc50705d56372b62b5f2",
+                "creation_date": "2024-11-14",
+                "last_modified": "2024-11-22",
+                "threat_name": "Linux.Rootkit.HiddenWasp",
+                "reference_sample": "7c5e20872bc0ac5cce83d4c68485743cd16a818cd1e495f97438caad0399c847",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_HiddenWasp_8408057b\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"8408057b-4cfa-4712-b69a-201561690c2d\"\n\t\tfingerprint = \"18171748d498def35fd97e342785ee13e02b0ff926defc50705d56372b62b5f2\"\n\t\tcreation_date = \"2024-11-14\"\n\t\tlast_modified = \"2024-11-22\"\n\t\tthreat_name = \"Linux.Rootkit.HiddenWasp\"\n\t\treference_sample = \"7c5e20872bc0ac5cce83d4c68485743cd16a818cd1e495f97438caad0399c847\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$str1 = \"HIDE_THIS_SHELL\"\n\t\t$str2 = \"I_AM_HIDDEN\"\n\t\t$func1 = \"hiding_hideproc\"\n\t\t$func2 = \"hiding_unhidefile\"\n\t\t$func3 = \"hiding_hidefile\"\n\t\t$func4 = \"hiding_unhideproc\"\n\t\t$func5 = \"/proc/hide-%d\"\n\t\t$func6 = \"hiding_disable_logging\"\n\t\t$func7 = \"hiding_init\"\n\t\t$func8 = \"hiding_uninstall\"\n\t\t$func9 = \"hiding_removeproc\"\n\t\t$func10 = \"hiding_makeroot\"\n\t\t$func11 = \"hiding_free\"\n\t\t$func12 = \"hiding_enable_logging\"\n\t\t$func13 = \"hiding_getvers\"\n\t\t$func14 = \"hidden_services\"\n\n\tcondition:\n\t\tall of ( $str* ) or 5 of ( $func* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

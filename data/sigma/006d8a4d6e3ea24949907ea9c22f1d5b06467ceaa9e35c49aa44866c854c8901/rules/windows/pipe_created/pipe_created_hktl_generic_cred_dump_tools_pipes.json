@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/pipe_created/pipe_created_hktl_generic_cred_dump_tools_pipes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, oscd.community",
+                "date": "2019-11-01",
+                "title": "HackTool - Credential Dumping Tools Named Pipe Created",
+                "id": "961d0ba2-3eea-4303-a930-2cf78bbfcc5e"
+            },
+            "rule_text": "title: HackTool - Credential Dumping Tools Named Pipe Created\nid: 961d0ba2-3eea-4303-a930-2cf78bbfcc5e\nstatus: test\ndescription: Detects well-known credential dumping tools execution via specific named\n  pipe creation\nreferences:\n- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment\n- https://image.slidesharecdn.com/zeronights2017kheirkhabarov-171118103000/75/hunting-for-credentials-dumping-in-windows-environment-57-2048.jpg?cb=1666035799\nauthor: Teymur Kheirkhabarov, oscd.community\ndate: 2019-11-01\nmodified: 2023-08-07\ntags:\n- attack.credential-access\n- attack.t1003.001\n- attack.t1003.002\n- attack.t1003.004\n- attack.t1003.005\nlogsource:\n  product: windows\n  category: pipe_created\n  definition: Note that you have to configure logging for Named Pipe Events in Sysmon\n    config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon\n    configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth\n    verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,\n    https://github.com/olafhartong/sysmon-modular. How to test detection? You can\n    check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575\ndetection:\n  selection:\n    PipeName|contains:\n    - \\cachedump\n    - \\lsadump\n    - \\wceservicepipe\n  condition: selection\nfalsepositives:\n- Legitimate Administrator using tool for password recovery\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

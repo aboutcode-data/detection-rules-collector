@@ -1,0 +1,414 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/packers/packer_compiler_signatures.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IsPE32",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "rule IsPE32 : PECheck\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint16( uint32( 0x3C ) + 0x18 ) == 0x010B\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsPE64",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "rule IsPE64 : PECheck\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint16( uint32( 0x3C ) + 0x18 ) == 0x020B\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsNET_EXE",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "import \"pe\"\n\nrule IsNET_EXE : PECheck\n{\n\tcondition:\n\t\tpe.imports( \"mscoree.dll\" , \"_CorExeMain\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsNET_DLL",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "import \"pe\"\n\nrule IsNET_DLL : PECheck\n{\n\tcondition:\n\t\tpe.imports( \"mscoree.dll\" , \"_CorDllMain\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsDLL",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "rule IsDLL : PECheck\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( uint16( uint32( 0x3C ) + 0x16 ) & 0x2000 ) == 0x2000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsConsole",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "rule IsConsole : PECheck\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint16( uint32( 0x3C ) + 0x5C ) == 0x0003\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsWindowsGUI",
+                "tags": [
+                    "PECheck"
+                ]
+            },
+            "rule_text": "rule IsWindowsGUI : PECheck\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint16( uint32( 0x3C ) + 0x5C ) == 0x0002\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsPacked",
+                "tags": [
+                    "PECheck"
+                ],
+                "description": "Entropy Check"
+            },
+            "rule_text": "import \"math\"\n\nrule IsPacked : PECheck\n{\n\tmeta:\n\t\tdescription = \"Entropy Check\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and math.entropy ( 0 , filesize ) >= 7.0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HasOverlay",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "description": "Overlay Check"
+            },
+            "rule_text": "import \"pe\"\n\nrule HasOverlay : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Overlay Check\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size ) < filesize\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HasTaggantSignature",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "description": "TaggantSignature Check",
+                "date": "2016-07"
+            },
+            "rule_text": "rule HasTaggantSignature : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"TaggantSignature Check\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$a0 = { 54 41 47 47 ?? ?? ?? ?? ?? ?? 00 00 ?? 00 30 82 ?? ?? 06 09 2A 86 48 86 F7 0D 01 07 02 A0 82 ?? ?? 30 82 ?? ?? 02 01 01 31 09 30 07 06 05 2B 0E 03 02 1A 30 82 ?? ?? 06 09 2A 86 48 86 F7 0D 01 07 01 A0 82 ?? ?? 04 82 ?? ?? ?? 00 01 00 ?? ?? }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $a0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HasDigitalSignature",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "description": "DigitalSignature Check",
+                "date": "2016-07"
+            },
+            "rule_text": "import \"pe\"\n\nrule HasDigitalSignature : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"DigitalSignature Check\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$a0 = { ?? ?? ?? ?? 00 02 02 00 30 82 ?? ?? 06 09 2A 86 48 86 F7 0D 01 07 02 A0 82 ?? ?? 30 82 ?? ?? 02 01 01 31 0B 30 09 06 05 2B 0E 03 02 1A 05 00 30 68 06 0A 2B 06 01 04 01 82 37 02 01 04 A0 5A 30 58 30 33 06 0A 2B 06 01 04 01 82 37 02 01 0F 30 25 03 01 00 A0 20 A2 1E 80 1C 00 3C 00 3C 00 3C 00 4F 00 62 00 73 00 6F 00 6C 00 65 00 74 00 65 00 3E 00 3E 00 3E 30 21 30 09 06 05 2B 0E 03 02 1A 05 00 04 14 }\n\t\t$a1 = { ?? ?? ?? ?? 00 02 02 00 30 82 ?? ?? 06 09 2A 86 48 86 F7 0D 01 07 02 A0 82 ?? ?? 30 82 ?? ?? 02 01 01 31 0B 30 09 06 05 2B 0E 03 02 1A 05 00 30 ?? 06 0A 2B 06 01 04 01 82 37 02 01 04 A0 ?? 30 ?? 30 ?? 06 0A 2B 06 01 04 01 82 37 02 01 0F 30 ?? 03 01 00 A0 ?? A2 ?? 80 00 30 21 30 09 06 05 2B 0E 03 02 1A 05 00 04 14 }\n\t\t$a2 = { ?? ?? ?? ?? 00 02 02 00 30 82 ?? ?? 06 09 2A 86 48 86 F7 0D 01 07 02 A0 82 ?? ?? 30 82 ?? ?? 02 01 01 31 0E 30 ?? 06 ?? ?? 86 48 86 F7 0D 02 05 05 00 30 67 06 0A 2B 06 01 04 01 82 37 02 01 04 A0 59 30 57 30 33 06 0A 2B 06 01 04 01 82 37 02 01 0F 30 25 03 01 00 A0 20 A2 1E 80 1C 00 3C 00 3C 00 3C 00 4F 00 62 00 73 00 6F 00 6C 00 65 00 74 00 65 00 3E 00 3E 00 3E 30 20 30 0C 06 08 2A 86 48 86 F7 0D 02 05 05 00 04 }\n\t\t$a3 = { ?? ?? ?? ?? 00 02 02 00 30 82 ?? ?? 06 09 2A 86 48 86 F7 0D 01 07 02 A0 82 ?? ?? 30 82 ?? ?? 02 01 01 31 0F 30 ?? 06 ?? ?? 86 48 01 65 03 04 02 01 05 00 30 78 06 0A 2B 06 01 04 01 82 37 02 01 04 A0 6A 30 68 30 33 06 0A 2B 06 01 04 01 82 37 02 01 0F 30 25 03 01 00 A0 20 A2 1E 80 1C 00 3C 00 3C 00 3C 00 4F 00 62 00 73 00 6F 00 6C 00 65 00 74 00 65 00 3E 00 3E 00 3E 30 31 30 0D 06 09 60 86 48 01 65 03 04 02 01 05 00 04 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( for any of ( $a* ) : ( $ in ( ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size ) .. filesize ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HasDebugData",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "description": "DebugData Check",
+                "date": "2016-07"
+            },
+            "rule_text": "rule HasDebugData : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"DebugData Check\"\n\t\tdate = \"2016-07\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( IsPE32 or IsPE64 ) and ( ( uint32( uint32( 0x3C ) + 0xA8 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) > 0x0 ) and ( uint32be( uint32( 0x3C ) + 0xAC + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) > 0x0 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsBeyondImageSize",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "date": "2016-07",
+                "description": "Data Beyond ImageSize Check"
+            },
+            "rule_text": "import \"pe\"\n\nrule IsBeyondImageSize : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-07\"\n\t\tdescription = \"Data Beyond ImageSize Check\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and for any i in ( 0 .. pe.number_of_sections - 1 ) : ( ( pe.sections [ i ] . virtual_address + pe.sections [ i ] . virtual_size ) > ( uint32( uint32( 0x3C ) + 0x50 ) ) or ( pe.sections [ i ] . raw_data_offset + pe.sections [ i ] . raw_data_size ) > filesize )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ImportTableIsBad",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_ & mrexodia",
+                "date": "2016-07",
+                "description": "ImportTable Check"
+            },
+            "rule_text": "rule ImportTableIsBad : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_ & mrexodia\"\n\t\tdate = \"2016-07\"\n\t\tdescription = \"ImportTable Check\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( IsPE32 or IsPE64 ) and ( ( ( uint32( uint32( 0x3C ) + 0x80 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) ) + ( uint32( uint32( 0x3C ) + 0x84 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) ) ) > ( uint32( uint32( 0x3C ) + 0x50 ) ) or ( ( ( uint32( uint32( 0x3C ) + 0x80 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) ) + ( uint32( uint32( 0x3C ) + 0x84 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) ) ) == 0x0 ) or ( uint32( 0x3C ) + 0x80 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) > filesize ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ExportTableIsBad",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_ & mrexodia",
+                "date": "2016-07",
+                "description": "ExportTable Check"
+            },
+            "rule_text": "rule ExportTableIsBad : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_ & mrexodia\"\n\t\tdate = \"2016-07\"\n\t\tdescription = \"ExportTable Check\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( IsPE32 or IsPE64 ) and ( ( ( uint32( uint32( 0x3C ) + 0x78 + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) ) + ( uint32( uint32( 0x3C ) + 0x7C + ( ( uint16( uint32( 0x3C ) + 0x18 ) & 0x200 ) >> 5 ) ) ) ) > ( uint32( uint32( 0x3C ) + 0x50 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HasModified_DOS_Message",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "description": "DOS Message Check",
+                "date": "2016-07"
+            },
+            "rule_text": "rule HasModified_DOS_Message : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"DOS Message Check\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$a0 = \"This program must be run under Win32\" wide ascii nocase\n\t\t$a1 = \"This program cannot be run in DOS mode\" wide ascii nocase\n\t\t$a2 = \"This program requires Win32\" wide ascii nocase\n\t\t$a3 = \"This program must be run under Win64\" wide ascii nocase\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and not ( for any of ( $a* ) : ( $ in ( 0x0 .. uint32( 0x3c ) ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HasRichSignature",
+                "tags": [
+                    "PECheck"
+                ],
+                "author": "_pusher_",
+                "description": "Rich Signature Check",
+                "date": "2016-07"
+            },
+            "rule_text": "rule HasRichSignature : PECheck\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Rich Signature Check\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$a0 = \"Rich\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( for any of ( $a* ) : ( $ in ( 0x0 .. uint32( 0x3c ) ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsSuspicious",
+                "tags": [],
+                "author": "_pusher_",
+                "date": "2016-07",
+                "description": "Might be PE Virus"
+            },
+            "rule_text": "rule IsSuspicious\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-07\"\n\t\tdescription = \"Might be PE Virus\"\n\n\tcondition:\n\t\tuint32( 0x20 ) == 0x20202020\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsGoLink",
+                "tags": [],
+                "author": "_pusher_",
+                "date": "2016-08",
+                "description": "www.GoDevTool.com"
+            },
+            "rule_text": "rule IsGoLink\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-08\"\n\t\tdescription = \"www.GoDevTool.com\"\n\n\tstrings:\n\t\t$a0 = { 47 6F 4C 69 6E 6B }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and $a0 at 0x40\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "borland_cpp",
+                "tags": [],
+                "author": "_pusher_",
+                "description": "Borland C++",
+                "date": "2015-08",
+                "version": "0.1"
+            },
+            "rule_text": "import \"pe\"\n\nrule borland_cpp\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Borland C++\"\n\t\tdate = \"2015-08\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c0 = { 59 5F 6A 00 E8 ?? ?? ?? ?? 59 68 ?? ?? ?? ?? 6A 00 E8 ?? ?? ?? ?? A3 ?? ?? ?? ?? 6A 00 E9 ?? ?? ?? ?? E9 ?? ?? ?? ?? 33 C0 A0 ?? ?? ?? ?? C3 A1 ?? ?? ?? ?? C3 }\n\t\t$c1 = { A1 ?? ?? ?? ?? C1 E0 02 A3 ?? ?? ?? ?? 52 6A 00 E8 ?? ?? ?? ?? 8B D0 E8 ?? ?? ?? ?? 5A E8 ?? ?? ?? ?? E8 ?? ?? ?? ?? 6A 00 E8 ?? ?? ?? ?? 59 68 ?? ?? ?? ?? 6A 00 E8 ?? ?? ?? ?? A3 ?? ?? ?? ?? 6A 00 E9 ?? ?? ?? ?? E9 ?? ?? ?? ?? 33 C0 A0 ?? ?? ?? ?? C3 A1 ?? ?? ?? ?? C3 }\n\t\t$c2 = { 6A 00 E8 ?? ?? ?? ?? A3 ?? ?? ?? ?? 6A 00 E9 ?? ?? ?? ?? E9 ?? ?? ?? ?? 33 C0 A0 ?? ?? ?? ?? C3 A1 ?? ?? ?? ?? C3 }\n\n\tcondition:\n\t\t(( ( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 25 ) ) or ( ( pe.linker_version.major == 5 ) and ( pe.linker_version.minor == 0 ) ) ) and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "borland_delphi",
+                "tags": [],
+                "author": "_pusher_",
+                "description": "Borland Delphi 2.0 - 7.0 / 2005 - 2007",
+                "date": "2016-03",
+                "version": "0.2"
+            },
+            "rule_text": "import \"pe\"\n\nrule borland_delphi\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Borland Delphi 2.0 - 7.0 / 2005 - 2007\"\n\t\tdate = \"2016-03\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$c0 = { 53 8B D8 33 C0 A3 ?? ?? ?? ?? 6A ?? E8 ?? ?? ?? FF A3 ?? ?? ?? ?? A1 ?? ?? ?? ?? A3 ?? ?? ?? ?? 33 C0 A3 ?? ?? ?? ?? 33 C0 A3 }\n\t\t$c1 = { 53 8B D8 33 C0 A3 ?? ?? ?? ?? 6A ?? E8 ?? ?? ?? ?? A3 ?? ?? ?? ?? A1 ?? ?? ?? ?? A3 ?? ?? ?? ?? 33 C0 A3 ?? ?? ?? ?? 33 C0 A3 ?? ?? ?? ?? 8D 43 08 A3 ?? ?? ?? ?? E8 ?? ?? ?? ?? BA ?? ?? ?? ?? 8B C3 E8 ?? ?? ?? ?? 5B C3 }\n\t\t$c2 = { 53 48 83 EC 20 48 89 CB C7 05 ?? ?? ?? ?? ?? ?? ?? ?? 48 33 C9 E8 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 48 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 48 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 48 8D 43 10 48 89 05 ?? ?? ?? ?? 48 8D 05 ?? FC FF FF 48 89 05 ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 89 D9 48 8D 15 ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 83 C4 20 5B C3 }\n\t\t$c3 = { 50 6A 00 E8 ?? ?? ?? ?? BA ?? ?? ?? ?? 52 89 05 ?? ?? ?? ?? 89 42 04 C7 42 08 00 00 00 00 C7 42 0C 00 00 00 00 E8 ?? ?? ?? ?? 5A 58 E8 ?? ?? ?? ?? C3 }\n\t\t$c4 = { E8 ?? ?? ?? ?? 6A ?? E8 ?? ?? ?? ?? 89 05 ?? ?? ?? ?? E8 ?? ?? ?? ?? 89 05 ?? ?? ?? ?? C7 05 ?? ?? ?? ?? 0A ?? ?? ?? B8 ?? ?? ?? ?? C3 }\n\t\t$c5 = { 50 6A 00 E8 ?? ?? FF FF BA ?? ?? ?? ?? 52 89 05 ?? ?? ?? ?? 89 42 04 E8 ?? ?? ?? ?? 5A 58 E8 ?? ?? ?? ?? C3 55 8B EC 33 C0 }\n\t\t$c6 = { 50 6A ?? E8 ?? ?? FF FF BA ?? ?? ?? ?? 52 89 05 ?? ?? ?? ?? 89 42 04 C7 42 08 ?? ?? ?? ?? C7 42 0C ?? ?? ?? ?? E8 ?? ?? ?? ?? 5A 58 E8 ?? ?? ?? ?? C3 }\n\n\tcondition:\n\t\tany of them and ( ( ( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 25 ) ) or ( ( pe.linker_version.major == 8 ) and ( pe.linker_version.minor == 0 ) ) or ( ( pe.linker_version.major == 0 ) and ( pe.linker_version.minor == 0 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "free_pascal",
+                "tags": [],
+                "author": "_pusher_",
+                "description": "Free Pascal",
+                "date": "2015-08",
+                "version": "0.1"
+            },
+            "rule_text": "rule free_pascal\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Free Pascal\"\n\t\tdate = \"2015-08\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c0 = { 55 89 E5 83 ?? ?? 89 5D FC B8 ?? ?? ?? ?? 50 E8 ?? ?? ?? ?? A0 ?? ?? ?? ?? 84 C0 75 0C 6A 00 E8 ?? ?? ?? ?? A3 ?? ?? ?? ?? A1 ?? ?? ?? ?? A3 }\n\t\t$c1 = { 55 89 E5 53 B8 ?? ?? ?? ?? 50 E8 ?? ?? ?? ?? 80 3D ?? ?? ?? ?? 00 75 0C 6A 00 E8 ?? ?? ?? ?? A3 ?? ?? ?? ?? A1 ?? ?? ?? ?? A3 ?? ?? ?? ?? B8 }\n\t\t$c2 = { 55 89 E5 83 EC 04 89 5D FC B8 ?? ?? ?? ?? 50 E8 ?? ?? ?? ?? E8 ?? ?? ?? ?? A0 ?? ?? ?? ?? 84 C0 75 05 E8 ?? ?? ?? ?? C7 05 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "borland_delphi_dll",
+                "tags": [],
+                "author": "_pusher_",
+                "description": "Borland Delphi DLL",
+                "date": "2015-08",
+                "version": "0.1",
+                "info": "one is at entrypoint"
+            },
+            "rule_text": "rule borland_delphi_dll\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Borland Delphi DLL\"\n\t\tdate = \"2015-08\"\n\t\tversion = \"0.1\"\n\t\tinfo = \"one is at entrypoint\"\n\n\tstrings:\n\t\t$c0 = { BA ?? ?? ?? ?? 83 7D 0C 01 75 ?? 50 52 C6 05 ?? ?? ?? ?? ?? 8B 4D 08 89 0D ?? ?? ?? ?? 89 4A 04 }\n\t\t$c1 = { 55 8B EC 83 C4 ?? B8 ?? ?? ?? ?? E8 ?? ?? FF FF E8 ?? ?? FF FF 8D 40 00 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "borland_component",
+                "tags": [],
+                "author": "_pusher_",
+                "description": "Borland Component",
+                "date": "2015-08",
+                "version": "0.1"
+            },
+            "rule_text": "import \"pe\"\n\nrule borland_component\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdescription = \"Borland Component\"\n\t\tdate = \"2015-08\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c0 = { E9 ?? ?? ?? FF 8D 40 00 }\n\n\tcondition:\n\t\t$c0 at pe.entry_point\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PureBasic",
+                "tags": [
+                    "Neil",
+                    "Hodgson"
+                ],
+                "author": "_pusher_",
+                "date": "2016-07"
+            },
+            "rule_text": "import \"pe\"\n\nrule PureBasic : Neil Hodgson\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$c0 = { 55 8B EC 6A 00 68 00 10 00 00 6A ?? FF 15 ?? ?? ?? ?? A3 ?? ?? ?? ?? C7 05 ?? ?? ?? ?? 00 00 00 00 C7 05 ?? ?? ?? ?? 10 00 00 00 A1 ?? ?? ?? ?? 50 6A ?? 8B 0D ?? ?? ?? ?? 51 FF 15 ?? ?? ?? ?? A3 ?? ?? ?? ?? 5D C3 CC CC CC CC CC CC CC CC CC }\n\t\t$c1 = { 68 ?? ?? 00 00 68 00 00 00 00 68 ?? ?? ?? 00 E8 ?? ?? ?? 00 83 C4 0C 68 00 00 00 00 E8 ?? ?? ?? 00 A3 ?? ?? ?? 00 68 00 00 00 00 68 00 10 00 00 68 00 00 00 00 E8 ?? ?? ?? 00 A3 }\n\t\t$aa0 = \"\\x00MSVCRT.dll\\x00\" ascii\n\t\t$aa1 = \"\\x00CRTDLL.dll\\x00\" ascii\n\n\tcondition:\n\t\t( for any of ( $c0 , $c1 ) : ( $ at pe.entry_point ) ) and ( any of ( $aa* ) ) and ( ( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 50 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PureBasicDLL",
+                "tags": [
+                    "Neil",
+                    "Hodgson"
+                ],
+                "author": "malware-lu"
+            },
+            "rule_text": "import \"pe\"\n\nrule PureBasicDLL : Neil Hodgson\n{\n\tmeta:\n\t\tauthor = \"malware-lu\"\n\n\tstrings:\n\t\t$a0 = { 83 7C 24 08 01 75 ?? 8B 44 24 04 A3 ?? ?? ?? 10 E8 }\n\n\tcondition:\n\t\t$a0 at pe.entry_point\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PureBasic4xDLL",
+                "tags": [
+                    "Neil",
+                    "Hodgson"
+                ],
+                "author": "malware-lu"
+            },
+            "rule_text": "import \"pe\"\n\nrule PureBasic4xDLL : Neil Hodgson\n{\n\tmeta:\n\t\tauthor = \"malware-lu\"\n\n\tstrings:\n\t\t$a0 = { 83 7C 24 08 01 75 0E 8B 44 24 04 A3 ?? ?? ?? 10 E8 22 00 00 00 83 7C 24 08 02 75 00 83 7C 24 08 00 75 05 E8 ?? 00 00 00 83 7C 24 08 03 75 00 B8 01 00 00 00 C2 0C 00 68 00 00 00 00 68 00 10 00 00 68 00 00 00 00 E8 ?? 0F 00 00 A3 }\n\n\tcondition:\n\t\t$a0 at pe.entry_point\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SkDUndetectabler",
+                "tags": [
+                    "SkDrat"
+                ],
+                "author": "_pusher_"
+            },
+            "rule_text": "import \"pe\"\n\nrule SkDUndetectabler : SkDrat\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\n\tcondition:\n\t\t(borland_delphi or ( ( pe.linker_version.major == 6 ) and ( pe.linker_version.minor == 0 ) ) ) and ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size < filesize ) and ( ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size == 0x00000739 ) or ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size == 0x00000745 ) or ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size == 0x00000C00 ) or ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size == 0x00002A00 ) or ( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size == 0x00001A00 ) ) and ( uint16( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size ) == 0x6275 or uint16( pe.sections [ pe.number_of_sections - 1 ] . raw_data_offset + pe.sections [ pe.number_of_sections - 1 ] . raw_data_size ) == 0x4057 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MicrosoftVisualCV80",
+                "tags": [],
+                "author": "malware-lu"
+            },
+            "rule_text": "import \"pe\"\n\nrule MicrosoftVisualCV80\n{\n\tmeta:\n\t\tauthor = \"malware-lu\"\n\n\tstrings:\n\t\t$a0 = { 6A 14 68 [4] E8 [4] BB 94 00 00 00 53 6A 00 8B [5] FF D7 50 FF [5] 8B F0 85 F6 75 0A 6A 12 E8 [4] 59 EB 18 89 1E 56 FF [5] 56 85 C0 75 14 50 FF D7 50 FF [5] B8 }\n\n\tcondition:\n\t\t$a0 at pe.entry_point\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Cygwin",
+                "tags": [
+                    "Red",
+                    "Hat"
+                ],
+                "author": "_pusher_",
+                "date": "2016-07"
+            },
+            "rule_text": "import \"pe\"\n\nrule Cygwin : Red Hat\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$a0 = \"cygwin1.dll\" ascii nocase\n\t\t$aa1 = \"cygwin_internal\"\n\t\t$aa2 = \"cygwin_detach_dll\"\n\n\tcondition:\n\t\t(( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 56 ) or ( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 24 ) or ( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 25 ) ) and ( $a0 and ( any of ( $aa* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MinGW_1",
+                "tags": [],
+                "author": "_pusher_",
+                "date": "2016-07"
+            },
+            "rule_text": "import \"pe\"\n\nrule MinGW_1\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-07\"\n\n\tstrings:\n\t\t$a0 = \"msvcrt.dll\" ascii nocase\n\t\t$aa1 = \"Mingw-w64 runtime failure:\"\n\t\t$aa2 = \"-LIBGCCW32-EH-3-SJLJ-GTHR-MINGW32\" wide ascii nocase\n\t\t$aa3 = \"_mingw32_init_mainargs\"\n\t\t$aa4 = \"mingw32\"\n\t\t$aa5 = \"-LIBGCCW32-EH-2-SJLJ-GTHR-MINGW32\" wide ascii nocase\n\t\t$aa6 = \"-GCCLIBCYGMING-EH-TDM1-SJLJ-GTHR-MINGW32\" wide ascii nocase\n\t\t$aa7 = \"Mingw runtime failure:\"\n\n\tcondition:\n\t\t(( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 56 ) or ( pe.linker_version.major == 2 ) and ( ( pe.linker_version.minor >= 21 ) and ( pe.linker_version.minor <= 25 ) ) ) and ( $a0 and ( any of ( $aa* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FASM",
+                "tags": [
+                    "flat",
+                    "assembler"
+                ],
+                "author": "_pusher_",
+                "date": "2016-01",
+                "description": "http://flatassembler.net"
+            },
+            "rule_text": "import \"pe\"\n\nrule FASM : flat assembler\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-01\"\n\t\tdescription = \"http://flatassembler.net\"\n\n\tcondition:\n\t\t(( pe.linker_version.major == 1 ) and ( ( pe.linker_version.minor >= 60 ) and ( pe.linker_version.minor < 80 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "AutoIt",
+                "tags": [],
+                "author": "_pusher_",
+                "date": "2016-07",
+                "description": "www.autoitscript.com/site/autoit/"
+            },
+            "rule_text": "rule AutoIt\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-07\"\n\t\tdescription = \"www.autoitscript.com/site/autoit/\"\n\n\tstrings:\n\t\t$aa0 = \"AutoIt has detected the stack has become corrupt.\\n\\nStack corruption typically occurs when either the wrong calling convention is used or when the function is called with the wrong number of arguments.\\n\\nAutoIt supports the __stdcall (WINAPI) and __cdecl calling conventions.  The __stdcall (WINAPI) convention is used by default but __cdecl can be used instead.  See the DllCall() documentation for details on changing the calling convention.\" wide ascii nocase\n\t\t$aa1 = \"AutoIt Error\" wide ascii nocase\n\t\t$aa2 = \"Missing right bracket ')' in expression.\" wide ascii nocase\n\t\t$aa3 = \"Missing operator in expression.\" wide ascii nocase\n\t\t$aa4 = \"Unbalanced brackets in expression.\" wide ascii nocase\n\t\t$aa5 = \"Error parsing function call.\" wide ascii nocase\n\t\t$aa6 = \">>>AUTOIT NO CMDEXECUTE<<<\" wide ascii nocase\n\t\t$aa7 = \"#requireadmin\" wide ascii nocase\n\t\t$aa8 = \"#OnAutoItStartRegister\" wide ascii nocase\n\t\t$aa9 = \"#notrayicon\" wide ascii nocase\n\t\t$aa10 = \"Cannot parse #include\" wide ascii nocase\n\n\tcondition:\n\t\t5 of ( $aa* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PellesC",
+                "tags": [
+                    "Pelle",
+                    "Orinius"
+                ],
+                "author": "_pusher_",
+                "date": "2016-08",
+                "description": "www.smorgasbordet.com/pellesc"
+            },
+            "rule_text": "import \"pe\"\n\nrule PellesC : Pelle Orinius\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-08\"\n\t\tdescription = \"www.smorgasbordet.com/pellesc\"\n\n\tstrings:\n\t\t$aa0 = \" -- terminating\\x0D\\x0A\\x00 -- terminating\\x0A\\x00CRT: \\x00unexpected error\\x00\" wide ascii nocase\n\t\t$aa1 = \"unhandled exception (main)\\x00unhandled exception in thread\\x00unable to create thread\\x00unable to destroy semaphore\\x00\" wide ascii nocase\n\t\t$aa2 = \"unable to wait on semaphore\\x00unable to post semaphore\\x00unable to init semaphore\\x00unable to unlock mutex\\x00unable to lock mutex\\x00unable to init mutex\\x00\" wide ascii nocase\n\t\t$aa3 = \"invalid stream lock number\\x00corrupt per-thread data\\x00out of memory\\x00unable to init threads\\x00unable to init HEAP\" wide ascii nocase\n\n\tcondition:\n\t\t3 of ( $aa* ) and ( pe.linker_version.major == 2 ) and ( pe.linker_version.minor == 50 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "QtFrameWork",
+                "tags": [],
+                "author": "_pusher_",
+                "date": "2016-08"
+            },
+            "rule_text": "rule QtFrameWork\n{\n\tmeta:\n\t\tauthor = \"_pusher_\"\n\t\tdate = \"2016-08\"\n\n\tstrings:\n\t\t$aa0 = \"\\x00Qt5Core.dll\\x00\" ascii\n\t\t$aa1 = \"\\x00QtCore4.dll\\x00\" ascii\n\n\tcondition:\n\t\t( any of ( $aa* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

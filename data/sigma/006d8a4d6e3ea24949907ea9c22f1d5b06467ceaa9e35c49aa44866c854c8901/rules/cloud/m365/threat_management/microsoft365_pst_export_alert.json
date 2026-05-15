@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/m365/threat_management/microsoft365_pst_export_alert.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sorina Ionescu",
+                "date": "2022-02-08",
+                "title": "PST Export Alert Using eDiscovery Alert",
+                "id": "18b88d08-d73e-4f21-bc25-4b9892a4fdd0"
+            },
+            "rule_text": "title: PST Export Alert Using eDiscovery Alert\nid: 18b88d08-d73e-4f21-bc25-4b9892a4fdd0\nrelated:\n- id: 6897cd82-6664-11ed-9022-0242ac120002\n  type: similar\nstatus: test\ndescription: Alert on when a user has performed an eDiscovery search or exported a\n  PST file from the search. This PST file usually has sensitive information including\n  email body content\nreferences:\n- https://learn.microsoft.com/en-us/microsoft-365/compliance/alert-policies?view=o365-worldwide\nauthor: Sorina Ionescu\ndate: 2022-02-08\nmodified: 2022-11-17\ntags:\n- attack.collection\n- attack.t1114\nlogsource:\n  service: threat_management\n  product: m365\n  definition: Requires the 'eDiscovery search or exported' alert to be enabled\ndetection:\n  selection:\n    eventSource: SecurityComplianceCenter\n    eventName: eDiscovery search started or exported\n    status: success\n  condition: selection\nfalsepositives:\n- PST export can be done for legitimate purposes but due to the sensitive nature of\n  its content it must be monitored.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

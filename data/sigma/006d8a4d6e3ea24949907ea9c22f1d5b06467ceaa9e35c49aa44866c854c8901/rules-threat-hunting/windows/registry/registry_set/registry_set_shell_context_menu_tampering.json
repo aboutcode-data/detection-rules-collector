@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/registry/registry_set/registry_set_shell_context_menu_tampering.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-03-06",
+                "title": "Shell Context Menu Command Tampering",
+                "id": "868df2d1-0939-4562-83a7-27408c4a1ada"
+            },
+            "rule_text": "title: Shell Context Menu Command Tampering\nid: 868df2d1-0939-4562-83a7-27408c4a1ada\nstatus: test\ndescription: Detects changes to shell context menu commands. Use this rule to hunt\n  for potential anomalies and suspicious shell commands.\nreferences:\n- https://mrd0x.com/sentinelone-persistence-via-menu-context/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-03-06\ntags:\n- attack.persistence\n- detection.threat-hunting\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\Software\\Classes\\\n    - \\shell\\\n    - \\command\\\n  condition: selection\nfalsepositives:\n- Likely from new software installation suggesting to add context menu items. Such\n  as \"PowerShell\", \"Everything\", \"Git\", etc.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

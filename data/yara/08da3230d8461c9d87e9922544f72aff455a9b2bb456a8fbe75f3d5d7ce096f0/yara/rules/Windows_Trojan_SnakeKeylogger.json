@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_SnakeKeylogger.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_SnakeKeylogger_af3faa65",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "af3faa65-b19d-4267-ac02-1a3b50cdc700",
+                "fingerprint": "15f4ef2a03c6f5c6284ea6a9013007e4ea7dc90a1ba9c81a53a1c7407d85890d",
+                "creation_date": "2021-04-06",
+                "last_modified": "2021-08-23",
+                "threat_name": "Windows.Trojan.SnakeKeylogger",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_SnakeKeylogger_af3faa65\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"af3faa65-b19d-4267-ac02-1a3b50cdc700\"\n\t\tfingerprint = \"15f4ef2a03c6f5c6284ea6a9013007e4ea7dc90a1ba9c81a53a1c7407d85890d\"\n\t\tcreation_date = \"2021-04-06\"\n\t\tlast_modified = \"2021-08-23\"\n\t\tthreat_name = \"Windows.Trojan.SnakeKeylogger\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"get_encryptedPassword\" ascii fullword\n\t\t$a2 = \"get_encryptedUsername\" ascii fullword\n\t\t$a3 = \"get_timePasswordChanged\" ascii fullword\n\t\t$a4 = \"get_passwordField\" ascii fullword\n\t\t$a5 = \"set_encryptedPassword\" ascii fullword\n\t\t$a6 = \"get_passwords\" ascii fullword\n\t\t$a7 = \"get_logins\" ascii fullword\n\t\t$a8 = \"GetOutlookPasswords\" ascii fullword\n\t\t$a9 = \"StartKeylogger\" ascii fullword\n\t\t$a10 = \"KeyLoggerEventArgs\" ascii fullword\n\t\t$a11 = \"KeyLoggerEventArgsEventHandler\" ascii fullword\n\t\t$a12 = \"GetDataPassword\" ascii fullword\n\t\t$a13 = \"_encryptedPassword\" ascii fullword\n\t\t$b1 = \"----------------S--------N--------A--------K--------E----------------\"\n\t\t$c1 = \"SNAKE-KEYLOGGER\" ascii fullword\n\n\tcondition:\n\t\t8 of ( $a* ) or #b1 > 5 or #c1 > 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

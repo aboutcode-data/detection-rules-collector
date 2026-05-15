@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/AndeLoader/ande_loader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AndeLoader",
+                "tags": [],
+                "author": "RussianPanda",
+                "decription": "Detects Ande Loader",
+                "date": "12/11/2023"
+            },
+            "rule_text": "import \"pe\"\n\nrule AndeLoader\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdecription = \"Detects Ande Loader\"\n\t\tdate = \"12/11/2023\"\n\n\tstrings:\n\t\t$s1 = {59 61 6E 6F 41 74 74 72 69 62 75 74 65}\n\t\t$s2 = \"CreateShortcut\" wide\n\t\t$s3 = \".vbs\" wide\n\n\tcondition:\n\t\t3 of ( $s* ) and pe.imports ( \"mscoree.dll\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/cloud/azure/azure_exchange_email_compromise.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Ramine Etow",
+                "date": "2024-03-25",
+                "title": "Possible Account Compromise Email Rule",
+                "id": "2ff31c7c-a33a-4c1f-9b64-327de4298738"
+            },
+            "rule_text": "title: Possible Account Compromise Email Rule\nid: 2ff31c7c-a33a-4c1f-9b64-327de4298738\nstatus: test\ndescription: Detects scenarios where an attacker attempts to hide within a compromised\n  email account, such as creating RSS subscriptions, replacing original financial\n  information with the attacker's details, or avoiding certain email notifications\n  during a breach.\nreferences:\n- https://redcanary.com/blog/email-forwarding-rules/\n- https://raw.githubusercontent.com/PwC-IR/Business-Email-Compromise-Guide/main/PwC-Business_Email_Compromise-Guide.pdf\n- https://expel.com/blog/seven-ways-to-spot-business-email-compromise-office-365/\nauthor: NTT Security - Ramine Etow\ndate: 2024-03-25\nmodified: 2026-03-31\ntags:\n- attack.collection\n- attack.t1114\n- attack.t1114.003\n- attack.initial_access\n- attack.t1566\nlogsource:\n  product: m365\n  service: exchange\ndetection:\n  inbox_rule:\n    Operation|cased:\n    - New-InboxRule\n    - Set-InboxRule\n  suspicious_folder:\n    Parameters.MoveToFolder|contains:\n    - RSS\n  suspicious_keywords:\n  - Parameters.BodyContainsWords:\n    - dropbox\n    - hacked\n    - span\n    - phishing\n    - fraud\n    - drop\n    - hack\n    - drop box\n    - azure\n    - invoice\n    - Wire\n    - Tax\n    - Payroll\n    - Password\n    - Docusign\n  - Parameters.SubjectContainsWords:\n    - dropbox\n    - hacked\n    - span\n    - phishing\n    - fraud\n    - drop\n    - hack\n    - drop box\n    - azure\n    - invoice\n    - Wire\n    - Tax\n    - Payroll\n    - Password\n    - Docusign\n  - Parameters.SubjectOrBodyContainsWords:\n    - dropbox\n    - hacked\n    - span\n    - phishing\n    - fraud\n    - drop\n    - hack\n    - drop box\n    - azure\n    - invoice\n    - Wire\n    - Tax\n    - Payroll\n    - Password\n    - Docusign\n  - Parameters.RecipientAddressContainsWords:\n    - '@'\n    - .\n  condition: inbox_rule and 1 of suspicious_*\nfields:\n- Parameters.Name\n- Parameters.MoveToFolder\n- Parameters.BodyContainsWords\n- Parameters.SubjectContainsWords\n- Parameters.SubjectOrBodyContainsWords\n- Parameters.RecipientAddressContainsWords\nfalsepositives:\n- Correlate with other email rules user might have created in the past.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

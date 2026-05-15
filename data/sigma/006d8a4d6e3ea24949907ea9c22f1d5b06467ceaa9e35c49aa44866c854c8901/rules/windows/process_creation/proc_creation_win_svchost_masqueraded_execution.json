@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_svchost_masqueraded_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel",
+                "date": "2024-08-07",
+                "title": "Suspicious Process Masquerading As SvcHost.EXE",
+                "id": "be58d2e2-06c8-4f58-b666-b99f6dc3b6cd"
+            },
+            "rule_text": "title: Suspicious Process Masquerading As SvcHost.EXE\nid: be58d2e2-06c8-4f58-b666-b99f6dc3b6cd\nrelated:\n- id: 01d2e2a1-5f09-44f7-9fc1-24faa7479b6d\n  type: similar\n- id: e4a6b256-3e47-40fc-89d2-7a477edd6915\n  type: similar\nstatus: test\ndescription: 'Detects a suspicious process that is masquerading as the legitimate\n  \"svchost.exe\" by naming its binary \"svchost.exe\" and executing from an uncommon\n  location.\n\n  Adversaries often disguise their malicious binaries by naming them after legitimate\n  system processes like \"svchost.exe\" to evade detection.\n\n  '\nreferences:\n- https://tria.ge/240731-jh4crsycnb/behavioral2\n- https://redcanary.com/blog/threat-detection/process-masquerading/\nauthor: Swachchhanda Shrawan Poudel\ndate: 2024-08-07\ntags:\n- attack.stealth\n- attack.t1036.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n  filter_main_img_location:\n    Image:\n    - C:\\Windows\\System32\\svchost.exe\n    - C:\\Windows\\SysWOW64\\svchost.exe\n  filter_main_ofn:\n    OriginalFileName: svchost.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_svchost_masqueraded_execution/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

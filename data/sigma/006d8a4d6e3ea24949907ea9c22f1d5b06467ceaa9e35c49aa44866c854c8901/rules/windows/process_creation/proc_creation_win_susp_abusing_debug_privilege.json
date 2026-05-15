@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_abusing_debug_privilege.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Semanur Guneysu @semanurtg, oscd.community",
+                "date": "2020-10-28",
+                "title": "Abused Debug Privilege by Arbitrary Parent Processes",
+                "id": "d522eca2-2973-4391-a3e0-ef0374321dae"
+            },
+            "rule_text": "title: Abused Debug Privilege by Arbitrary Parent Processes\nid: d522eca2-2973-4391-a3e0-ef0374321dae\nstatus: test\ndescription: Detection of unusual child processes by different system processes\nreferences:\n- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-74-638.jpg\nauthor: Semanur Guneysu @semanurtg, oscd.community\ndate: 2020-10-28\nmodified: 2022-11-11\ntags:\n- attack.privilege-escalation\n- attack.t1548\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\winlogon.exe\n    - \\services.exe\n    - \\lsass.exe\n    - \\csrss.exe\n    - \\smss.exe\n    - \\wininit.exe\n    - \\spoolsv.exe\n    - \\searchindexer.exe\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\cmd.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n    - Cmd.Exe\n  filter:\n    CommandLine|contains|all:\n    - ' route '\n    - ' ADD '\n  condition: all of selection_* and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

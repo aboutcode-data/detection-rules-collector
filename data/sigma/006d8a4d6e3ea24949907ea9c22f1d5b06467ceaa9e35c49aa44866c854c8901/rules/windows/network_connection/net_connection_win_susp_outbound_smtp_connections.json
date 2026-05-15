@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_susp_outbound_smtp_connections.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-07",
+                "title": "Suspicious Outbound SMTP Connections",
+                "id": "9976fa64-2804-423c-8a5b-646ade840773"
+            },
+            "rule_text": "title: Suspicious Outbound SMTP Connections\nid: 9976fa64-2804-423c-8a5b-646ade840773\nstatus: test\ndescription: 'Adversaries may steal data by exfiltrating it over an un-encrypted network\n  protocol other than that of the existing command and control channel.\n\n  The data may also be sent to an alternate network location from the main command\n  and control server.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-5---exfiltration-over-alternative-protocol---smtp\n- https://www.ietf.org/rfc/rfc2821.txt\nauthor: frack113\ndate: 2022-01-07\nmodified: 2022-09-21\ntags:\n- attack.exfiltration\n- attack.t1048.003\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    DestinationPort:\n    - 25\n    - 587\n    - 465\n    - 2525\n    Initiated: 'true'\n  filter_clients:\n    Image|endswith:\n    - \\thunderbird.exe\n    - \\outlook.exe\n  filter_mailserver:\n    Image|startswith: C:\\Program Files\\Microsoft\\Exchange Server\\\n  filter_outlook:\n    Image|startswith: C:\\Program Files\\WindowsApps\\microsoft.windowscommunicationsapps_\n    Image|endswith: \\HxTsr.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Other SMTP tools\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

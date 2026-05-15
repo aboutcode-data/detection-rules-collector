@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_msteams.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-07-12",
+                "title": "Renamed Microsoft Teams Execution",
+                "id": "88f46b67-14d4-4f45-ac2c-d66984f22191"
+            },
+            "rule_text": "title: Renamed Microsoft Teams Execution\nid: 88f46b67-14d4-4f45-ac2c-d66984f22191\nstatus: test\ndescription: Detects the execution of a renamed Microsoft Teams binary.\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-07-12\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName:\n    - msteams.exe\n    - teams.exe\n  filter_main_legit_names:\n    Image|endswith:\n    - \\msteams.exe\n    - \\teams.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

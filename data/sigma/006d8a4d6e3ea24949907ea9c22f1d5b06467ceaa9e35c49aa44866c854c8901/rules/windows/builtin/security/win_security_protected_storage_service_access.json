@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_protected_storage_service_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-08-10",
+                "title": "Protected Storage Service Access",
+                "id": "45545954-4016-43c6-855e-eae8f1c369dc"
+            },
+            "rule_text": "title: Protected Storage Service Access\nid: 45545954-4016-43c6-855e-eae8f1c369dc\nstatus: test\ndescription: Detects access to a protected_storage service over the network. Potential\n  abuse of DPAPI to extract domain backup keys from Domain Controllers\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190620-DomainDPAPIBackupKeyExtraction/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-08-10\nmodified: 2021-11-27\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5145\n    ShareName|contains: IPC\n    RelativeTargetName: protected_storage\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

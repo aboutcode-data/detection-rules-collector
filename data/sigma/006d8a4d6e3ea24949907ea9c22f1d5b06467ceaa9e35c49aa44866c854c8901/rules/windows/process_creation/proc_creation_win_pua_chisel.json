@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_chisel.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-09-13",
+                "title": "PUA - Chisel Tunneling Tool Execution",
+                "id": "8b0e12da-d3c3-49db-bb4f-256703f380e5"
+            },
+            "rule_text": "title: PUA - Chisel Tunneling Tool Execution\nid: 8b0e12da-d3c3-49db-bb4f-256703f380e5\nrelated:\n- id: cf93e05e-d798-4d9e-b522-b0248dc61eaf\n  type: similar\nstatus: test\ndescription: Detects usage of the Chisel tunneling tool via the commandline arguments\nreferences:\n- https://github.com/jpillora/chisel/\n- https://arcticwolf.com/resources/blog/lorenz-ransomware-chiseling-in/\n- https://blog.sekoia.io/lucky-mouse-incident-response-to-detection-engineering/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-09-13\nmodified: 2023-02-13\ntags:\n- attack.command-and-control\n- attack.t1090.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\chisel.exe\n  selection_param1:\n    CommandLine|contains:\n    - 'exe client '\n    - 'exe server '\n  selection_param2:\n    CommandLine|contains:\n    - -socks5\n    - -reverse\n    - ' r:'\n    - ':127.0.0.1:'\n    - '-tls-skip-verify '\n    - :socks\n  condition: selection_img or all of selection_param*\nfalsepositives:\n- Some false positives may occur with other tools with similar commandlines\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

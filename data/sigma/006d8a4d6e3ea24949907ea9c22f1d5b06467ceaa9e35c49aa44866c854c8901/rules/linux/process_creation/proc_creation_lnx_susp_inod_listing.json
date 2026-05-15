@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_inod_listing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Seth Hanford",
+                "date": "2023-08-23",
+                "title": "Potential Container Discovery Via Inodes Listing",
+                "id": "43e26eb5-cd58-48d1-8ce9-a273f5d298d8"
+            },
+            "rule_text": "title: Potential Container Discovery Via Inodes Listing\nid: 43e26eb5-cd58-48d1-8ce9-a273f5d298d8\nstatus: test\ndescription: Detects listing of the inodes of the \"/\" directory to determine if the\n  we are running inside of a container.\nreferences:\n- https://blog.skyplabs.net/posts/container-detection/\n- https://stackoverflow.com/questions/20010199/how-to-determine-if-a-process-runs-inside-lxc-docker\ntags:\n- attack.discovery\n- attack.t1082\nauthor: Seth Hanford\ndate: 2023-08-23\nmodified: 2025-11-24\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_ls_img:\n    Image|endswith: /ls\n  selection_ls_cli:\n  - CommandLine|endswith: ' /'\n  - CommandLine|contains: ' / '\n  selection_regex_inode:\n    CommandLine|re: (?:\\s-[^-\\s]{0,20}i|\\s--inode\\s)\n  selection_regex_dir:\n    CommandLine|re: (?:\\s-[^-\\s]{0,20}d|\\s--directory\\s)\n  condition: all of selection_*\nfalsepositives:\n- Legitimate system administrator usage of these commands\n- Some container tools or deployments may use these techniques natively to determine\n  how they proceed with execution, and will need to be filtered\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

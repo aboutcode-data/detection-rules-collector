@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_config_disable_recording.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "vitaliy0x1",
+                "date": "2020-01-21",
+                "title": "AWS Config Disabling Channel/Recorder",
+                "id": "07330162-dba1-4746-8121-a9647d49d297"
+            },
+            "rule_text": "title: AWS Config Disabling Channel/Recorder\nid: 07330162-dba1-4746-8121-a9647d49d297\nstatus: test\ndescription: Detects AWS Config Service disabling\nreferences:\n- https://docs.aws.amazon.com/config/latest/developerguide/cloudtrail-log-files-for-aws-config.html\nauthor: vitaliy0x1\ndate: 2020-01-21\nmodified: 2022-10-09\ntags:\n- attack.defense-impairment\n- attack.t1685.002\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: config.amazonaws.com\n    eventName:\n    - DeleteDeliveryChannel\n    - StopConfigurationRecorder\n  condition: selection\nfalsepositives:\n- Valid change in AWS Config Service\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

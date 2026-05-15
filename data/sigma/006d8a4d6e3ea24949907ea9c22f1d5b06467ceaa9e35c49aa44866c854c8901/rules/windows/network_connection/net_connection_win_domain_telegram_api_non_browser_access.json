@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_domain_telegram_api_non_browser_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-19",
+                "title": "Suspicious Non-Browser Network Communication With Telegram API",
+                "id": "c3dbbc9f-ef1d-470a-a90a-d343448d5875"
+            },
+            "rule_text": "title: Suspicious Non-Browser Network Communication With Telegram API\nid: c3dbbc9f-ef1d-470a-a90a-d343448d5875\nstatus: test\ndescription: Detects an a non-browser process interacting with the Telegram API which\n  could indicate use of a covert C2\nreferences:\n- https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/small-sieve/NCSC-MAR-Small-Sieve.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-19\ntags:\n- attack.command-and-control\n- attack.exfiltration\n- attack.t1102\n- attack.t1567\n- attack.t1105\nlogsource:\n  product: windows\n  category: network_connection\ndetection:\n  selection:\n    DestinationHostname|contains: api.telegram.org\n  filter_main_brave:\n    Image|endswith: \\brave.exe\n  filter_main_chrome:\n    Image:\n    - C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\n    - C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\n  filter_main_firefox:\n    Image:\n    - C:\\Program Files\\Mozilla Firefox\\firefox.exe\n    - C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe\n  filter_main_ie:\n    Image:\n    - C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe\n    - C:\\Program Files\\Internet Explorer\\iexplore.exe\n  filter_main_maxthon:\n    Image|endswith: \\maxthon.exe\n  filter_main_edge_1:\n  - Image|startswith: C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\\n  - Image|endswith: \\WindowsApps\\MicrosoftEdge.exe\n  - Image:\n    - C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\n    - C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe\n  filter_main_edge_2:\n    Image|startswith:\n    - C:\\Program Files (x86)\\Microsoft\\EdgeCore\\\n    - C:\\Program Files\\Microsoft\\EdgeCore\\\n    Image|endswith:\n    - \\msedge.exe\n    - \\msedgewebview2.exe\n  filter_main_opera:\n    Image|endswith: \\opera.exe\n  filter_main_safari:\n    Image|endswith: \\safari.exe\n  filter_main_seamonkey:\n    Image|endswith: \\seamonkey.exe\n  filter_main_vivaldi:\n    Image|endswith: \\vivaldi.exe\n  filter_main_whale:\n    Image|endswith: \\whale.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate applications communicating with the Telegram API e.g. web browsers not\n  in the exclusion list, app with an RSS  etc.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

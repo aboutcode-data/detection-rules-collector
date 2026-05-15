@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_wwlib.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-05-18",
+                "title": "Potential WWlib.DLL Sideloading",
+                "id": "e2e01011-5910-4267-9c3b-4149ed5479cf"
+            },
+            "rule_text": "title: Potential WWlib.DLL Sideloading\nid: e2e01011-5910-4267-9c3b-4149ed5479cf\nstatus: test\ndescription: Detects potential DLL sideloading of \"wwlib.dll\"\nreferences:\n- https://twitter.com/WhichbufferArda/status/1658829954182774784\n- https://news.sophos.com/en-us/2022/11/03/family-tree-dll-sideloading-cases-may-be-related/\n- https://securelist.com/apt-luminousmoth/103332/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-05-18\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\wwlib.dll\n  filter_main_path:\n    Image|startswith:\n    - C:\\Program Files (x86)\\Microsoft Office\\\n    - C:\\Program Files\\Microsoft Office\\\n    Image|endswith: \\winword.exe\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\Microsoft Office\\\n    - C:\\Program Files\\Microsoft Office\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

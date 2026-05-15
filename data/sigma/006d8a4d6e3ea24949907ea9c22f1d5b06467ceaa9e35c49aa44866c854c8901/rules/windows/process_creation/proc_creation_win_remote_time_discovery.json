@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_time_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community",
+                "date": "2019-10-24",
+                "title": "Discovery of a System Time",
+                "id": "b243b280-65fe-48df-ba07-6ddea7646427"
+            },
+            "rule_text": "title: Discovery of a System Time\nid: b243b280-65fe-48df-ba07-6ddea7646427\nstatus: test\ndescription: Identifies use of various commands to query a systems time. This technique\n  may be used before executing a scheduled task or to discover the time zone of a\n  target system.\nreferences:\n- https://eqllib.readthedocs.io/en/latest/analytics/fcdb99c2-ac3c-4bde-b664-4b336329bed2.html\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1124/T1124.md\nauthor: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community\ndate: 2019-10-24\nmodified: 2022-06-28\ntags:\n- attack.discovery\n- attack.t1124\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_time:\n    Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n    CommandLine|contains: time\n  selection_w32tm:\n    Image|endswith: \\w32tm.exe\n    CommandLine|contains: tz\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate use of the system utilities to discover system time for legitimate reason\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/LimaBravo.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LimaBravo",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "Mwsagent.dll"
+            },
+            "rule_text": "rule LimaBravo\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"Mwsagent.dll\"\n\n\tstrings:\n\t\t$a = {\n\t\t\t83 ?? 34 \n\t\t\t83 ?? 0A \n\t\t\t[0-2] \n\t\t\t7E ?? \n\t\t\t5? \n\t\t\tC6 ?? 4D \n\t\t\tC6 [2] 5A \n\t\t\tE8 \n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

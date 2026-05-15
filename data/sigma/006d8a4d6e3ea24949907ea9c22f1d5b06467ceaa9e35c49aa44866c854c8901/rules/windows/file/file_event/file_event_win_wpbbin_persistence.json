@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_wpbbin_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-18",
+                "title": "UEFI Persistence Via Wpbbin - FileCreation",
+                "id": "e94b9ddc-eec5-4bb8-8a58-b9dc5f4e185f"
+            },
+            "rule_text": "title: UEFI Persistence Via Wpbbin - FileCreation\nid: e94b9ddc-eec5-4bb8-8a58-b9dc5f4e185f\nstatus: test\ndescription: Detects creation of a file named \"wpbbin\" in the \"%systemroot%\\system32\\\"\n  directory. Which could be indicative of UEFI based persistence method\nreferences:\n- https://grzegorztworek.medium.com/using-uefi-to-inject-executable-files-into-bitlocker-protected-drives-8ff4ca59c94c\n- https://persistence-info.github.io/Data/wpbbin.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-18\ntags:\n- attack.persistence\n- attack.stealth\n- attack.t1542.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename: C:\\Windows\\System32\\wpbbin.exe\n  condition: selection\nfalsepositives:\n- Legitimate usage of the file by hardware manufacturer such as lenovo (Thanks @0gtweet\n  for the tip)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

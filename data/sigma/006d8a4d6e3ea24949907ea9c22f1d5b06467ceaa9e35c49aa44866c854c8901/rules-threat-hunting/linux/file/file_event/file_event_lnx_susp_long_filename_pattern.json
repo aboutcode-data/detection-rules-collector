@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/linux/file/file_event/file_event_lnx_susp_long_filename_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "@kostastsale",
+                "date": "2025-11-22",
+                "title": "Potentially Suspicious Long Filename Pattern - Linux",
+                "id": "11629c4d-0fe6-465b-be62-b39a1c442aad"
+            },
+            "rule_text": "title: Potentially Suspicious Long Filename Pattern - Linux\nid: 11629c4d-0fe6-465b-be62-b39a1c442aad\nstatus: experimental\ndescription: 'Detects the creation of files with unusually long filenames (100 or\n  more characters), which may indicate obfuscation techniques used by malware such\n  as VShell.\n\n  This is a hunting rule to identify potential threats that use long filenames to\n  evade detection. Keep in mind that on a legitimate system, such long filenames can\n  and are common. Run this detection in the context of threat hunting rather than\n  alerting.\n\n  Adjust the threshold of filename length as needed based on your environment.\n\n  '\nreferences:\n- https://www.trellix.com/blogs/research/the-silent-fileless-threat-of-vshell/\nauthor: '@kostastsale'\ndate: 2025-11-22\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.004\n- attack.t1027\n- detection.threat-hunting\nlogsource:\n  product: linux\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|re: '[^/]{100,}$'\n  filter_optional_known_good:\n    TargetFilename|startswith:\n    - /run/systemd/units/invocation:systemd-fsck@\n    - /sys/firmware/\n    - /var/log/journal/\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate files with long filenames.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

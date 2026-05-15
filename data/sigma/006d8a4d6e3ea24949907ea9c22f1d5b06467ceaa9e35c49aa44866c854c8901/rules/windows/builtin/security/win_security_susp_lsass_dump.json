@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_lsass_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "sigma",
+                "date": "2017-02-12",
+                "title": "Password Dumper Activity on LSASS",
+                "id": "aa1697b7-d611-4f9a-9cb2-5125b4ccfd5c"
+            },
+            "rule_text": "title: Password Dumper Activity on LSASS\nid: aa1697b7-d611-4f9a-9cb2-5125b4ccfd5c\nstatus: test\ndescription: Detects process handle on LSASS process with certain access mask and\n  object type SAM_DOMAIN\nreferences:\n- https://twitter.com/jackcr/status/807385668833968128\nauthor: sigma\ndate: 2017-02-12\nmodified: 2022-10-09\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4656\n    ProcessName|endswith: \\lsass.exe\n    AccessMask: '0x705'\n    ObjectType: SAM_DOMAIN\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

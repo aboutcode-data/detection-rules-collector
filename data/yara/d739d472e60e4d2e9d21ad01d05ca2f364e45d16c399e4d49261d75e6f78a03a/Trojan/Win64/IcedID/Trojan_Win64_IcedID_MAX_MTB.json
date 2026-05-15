@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/IcedID/Trojan_Win64_IcedID_MAX_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_IcedID_MAX_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/IcedID.MAX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_IcedID_MAX_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/IcedID.MAX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 84 24 80 00 00 00 48 8b 84 24 80 00 00 00 e9 ?? ?? ?? ?? 33 c0 e9 ?? ?? ?? ?? 8b 84 24 94 00 00 00 e9 ?? ?? ?? ?? 48 8b 8c 24 48 01 00 00 48 3b c8 74 ?? eb ?? 48 8b 84 24 30 01 00 00 48 89 84 24 58 01 00 00 e9 ?? ?? ?? ?? 41 8a 04 00 88 04 0a e9 }\n\t\t$a_01_1 = {79 67 61 67 6b 61 73 6a 66 68 75 61 73 68 66 6a 6b 61 73 6a 61 73 68 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

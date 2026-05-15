@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_DoubleLoader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_DoubleLoader_3660c98a",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "3660c98a-0d39-4c21-a526-8c2e45e50dc0",
+                "fingerprint": "8f24627393b2d905c0cc86ec6fe32341e0cb3dab9f79df2b0e24ed43ff8442ba",
+                "creation_date": "2025-02-05",
+                "last_modified": "2025-02-11",
+                "threat_name": "Windows.Trojan.DoubleLoader",
+                "reference_sample": "d94f7224a065a09a9f0c116bcb021bae2e941e2cd544eb0a0b1d1a325ae87667",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_DoubleLoader_3660c98a\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"3660c98a-0d39-4c21-a526-8c2e45e50dc0\"\n\t\tfingerprint = \"8f24627393b2d905c0cc86ec6fe32341e0cb3dab9f79df2b0e24ed43ff8442ba\"\n\t\tcreation_date = \"2025-02-05\"\n\t\tlast_modified = \"2025-02-11\"\n\t\tthreat_name = \"Windows.Trojan.DoubleLoader\"\n\t\treference_sample = \"d94f7224a065a09a9f0c116bcb021bae2e941e2cd544eb0a0b1d1a325ae87667\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$str1 = \"GetSettingsFromRegistry failed\" ascii fullword\n\t\t$str2 = \"Install persistence failed\" ascii fullword\n\t\t$str3 = \"Connect to remote port using Afd driver failed\" ascii fullword\n\t\t$str4 = \"/obfdownload/DoubleLoaderDll.dll\" ascii fullword\n\t\t$str5 = \"Invalid response status code for download file. not 200 OK\" ascii fullword\n\t\t$str6 = \"Failed to send HTTP/1.1 request to server for download file\" ascii fullword\n\t\t$path = \"D:\\\\projects\\\\DoubleLoader_net4\\\\DoubleLoader\\\\x64\\\\Release\\\\Loader.pdb\" ascii fullword\n\t\t$path2 = \"d:\\\\projects\\\\doubleloader_net4\\\\doubleloader\\\\cryptopp\\\\sha_simd.cpp\" ascii fullword\n\t\t$path3 = \"d:\\\\projects\\\\doubleloader_net4\\\\doubleloader\\\\cryptopp\\\\gf2n_simd.cpp\" ascii fullword\n\n\tcondition:\n\t\t4 of ( $str* ) or 1 of ( $path* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

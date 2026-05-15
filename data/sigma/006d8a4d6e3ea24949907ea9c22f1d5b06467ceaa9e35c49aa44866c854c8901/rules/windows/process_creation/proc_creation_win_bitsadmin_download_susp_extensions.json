@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_extensions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-28",
+                "title": "File With Suspicious Extension Downloaded Via Bitsadmin",
+                "id": "5b80a791-ad9b-4b75-bcc1-ad4e1e89c200"
+            },
+            "rule_text": "title: File With Suspicious Extension Downloaded Via Bitsadmin\nid: 5b80a791-ad9b-4b75-bcc1-ad4e1e89c200\nstatus: test\ndescription: Detects usage of bitsadmin downloading a file with a suspicious extension\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\n- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-28\nmodified: 2023-05-30\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\n- attack.s0190\n- attack.t1036.003\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bitsadmin.exe\n  - OriginalFileName: bitsadmin.exe\n  selection_flags:\n    CommandLine|contains:\n    - ' /transfer '\n    - ' /create '\n    - ' /addfile '\n  selection_extension:\n    CommandLine|contains:\n    - .7z\n    - .asax\n    - .ashx\n    - .asmx\n    - .asp\n    - .aspx\n    - .bat\n    - .cfm\n    - .cgi\n    - .chm\n    - .cmd\n    - .dll\n    - .gif\n    - .jpeg\n    - .jpg\n    - .jsp\n    - .jspx\n    - .log\n    - .png\n    - .ps1\n    - .psm1\n    - .rar\n    - .scf\n    - .sct\n    - .txt\n    - .vbe\n    - .vbs\n    - .war\n    - .wsf\n    - .wsh\n    - .xll\n    - .zip\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_extensions/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Windows - BITSAdmin BITS Download\n  technique: T1105\n  atomic_guid: a1921cd3-9a2d-47d5-a891-f1d0f2a7a31b\n",
+            "vulnerabilities": []
+        }
+    ]
+}

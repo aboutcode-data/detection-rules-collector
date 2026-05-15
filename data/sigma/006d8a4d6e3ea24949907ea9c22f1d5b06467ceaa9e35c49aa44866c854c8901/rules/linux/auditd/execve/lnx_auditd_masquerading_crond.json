@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_masquerading_crond.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2019-10-21",
+                "title": "Masquerading as Linux Crond Process",
+                "id": "9d4548fa-bba0-4e88-bd66-5d5bf516cda0"
+            },
+            "rule_text": "title: Masquerading as Linux Crond Process\nid: 9d4548fa-bba0-4e88-bd66-5d5bf516cda0\nstatus: test\ndescription: 'Masquerading occurs when the name or location of an executable, legitimate\n  or malicious, is manipulated or abused for the sake of evading defenses and observation.\n\n  Several different variations of this technique have been observed.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/8a82e9b66a5b4f4bc5b91089e9f24e0544f20ad7/atomics/T1036.003/T1036.003.md#atomic-test-2---masquerading-as-linux-crond-process\nauthor: Timur Zinniatullin, oscd.community\ndate: 2019-10-21\nmodified: 2023-08-22\ntags:\n- attack.stealth\n- attack.t1036.003\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: execve\n    a0: cp\n    a1: /bin/sh\n    a2|endswith: /crond\n  condition: selection\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

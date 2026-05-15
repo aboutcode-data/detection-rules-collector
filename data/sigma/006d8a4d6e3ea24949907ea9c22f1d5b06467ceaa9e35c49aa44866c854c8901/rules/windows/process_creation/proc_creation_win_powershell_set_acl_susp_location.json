@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_set_acl_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-18",
+                "title": "PowerShell Set-Acl On Windows Folder",
+                "id": "0944e002-e3f6-4eb5-bf69-3a3067b53d73"
+            },
+            "rule_text": "title: PowerShell Set-Acl On Windows Folder\nid: 0944e002-e3f6-4eb5-bf69-3a3067b53d73\nrelated:\n- id: cae80281-ef23-44c5-873b-fd48d2666f49\n  type: derived\n- id: bdeb2cff-af74-4094-8426-724dc937f20a\n  type: derived\n- id: 3bf1d859-3a7e-44cb-8809-a99e066d3478\n  type: derived\nstatus: test\ndescription: Detects PowerShell scripts to set the ACL to a file in the Windows folder\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-acl?view=powershell-5.1\n- https://github.com/redcanaryco/atomic-red-team/blob/74438b0237d141ee9c99747976447dc884cb1a39/atomics/T1505.005/T1505.005.md\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-18\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  selection_cmdlet:\n    CommandLine|contains|all:\n    - 'Set-Acl '\n    - '-AclObject '\n  selection_paths:\n    CommandLine|contains:\n    - -Path \"C:\\Windows\n    - -Path 'C:\\Windows\n    - -Path %windir%\n    - -Path $env:windir\n  selection_permissions:\n    CommandLine|contains:\n    - FullControl\n    - Allow\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

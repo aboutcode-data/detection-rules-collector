@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/QUIETEXIT_strings.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "QUIETEXIT_strings",
+                "tags": [],
+                "author": "Mandiant",
+                "reference": "https://www.mandiant.com/resources/unc3524-eye-spy-email",
+                "date_created": "2022-01-13",
+                "date_modified": "2022-01-13",
+                "rev": 1
+            },
+            "rule_text": "rule QUIETEXIT_strings\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\treference = \"https://www.mandiant.com/resources/unc3524-eye-spy-email\"\n\t\tdate_created = \"2022-01-13\"\n\t\tdate_modified = \"2022-01-13\"\n\t\trev = 1\n\n\tstrings:\n\t\t$s1 = \"auth-agent@openssh.com\"\n\t\t$s2 = \"auth-%.8x-%d\"\n\t\t$s3 = \"Child connection from %s:%s\"\n\t\t$s4 = \"Compiled without normal mode, can't run without -i\"\n\t\t$s5 = \"cancel-tcpip-forward\"\n\t\t$s6 = \"dropbear_prng\"\n\t\t$s7 = \"cron\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7F454C46 and filesize < 2MB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

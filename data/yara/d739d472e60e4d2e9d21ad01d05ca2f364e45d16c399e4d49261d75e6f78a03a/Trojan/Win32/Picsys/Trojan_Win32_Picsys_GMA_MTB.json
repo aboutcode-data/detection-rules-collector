@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Picsys/Trojan_Win32_Picsys_GMA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Picsys_GMA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Picsys.GMA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Picsys_GMA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Picsys.GMA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {16 80 34 01 c0 4e 47 4e 0e ba ?? ?? ?? ?? e2 }\n\t\t$a_80_1 = {54 4a 70 72 6f 6a 4d 61 69 6e }\n\t\t$a_01_2 = {40 2e 74 68 65 6d 69 64 61 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_80_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

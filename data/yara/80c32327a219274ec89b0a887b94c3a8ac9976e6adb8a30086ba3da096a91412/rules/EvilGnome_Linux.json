@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/EvilGnome_Linux.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EvilGnome_Linux",
+                "tags": [
+                    "infostealer",
+                    "linuxmalware"
+                ],
+                "Description": "Detects the EvilGnome backdoor malware designed for Linux desktops, which disguises itself as a Gnome extension.",
+                "Reference": "https://www.intezer.com/blog-evilgnome-rare-malware-spying-on-linux-desktop-users/"
+            },
+            "rule_text": "rule EvilGnome_Linux : infostealer linuxmalware\n{\n\tmeta:\n\t\tDescription = \"Detects the EvilGnome backdoor malware designed for Linux desktops, which disguises itself as a Gnome extension.\"\n\t\tReference = \"https://www.intezer.com/blog-evilgnome-rare-malware-spying-on-linux-desktop-users/\"\n\n\tstrings:\n\t\t$ftype0 = \".doc\" ascii fullword\n\t\t$ftype1 = \".docx\" ascii fullword\n\t\t$ftype2 = \".pdf\" ascii fullword\n\t\t$ftype3 = \".rtf\" ascii fullword\n\t\t$cpp0 = \"_GLOBAL__sub_I_application.cpp\" ascii\n\t\t$cpp1 = \"_GLOBAL__sub_I_shooterPing.cpp\" ascii\n\t\t$cpp2 = \"_GLOBAL__sub_I_packetBase.cpp\" ascii\n\t\t$cpp3 = \"_GLOBAL__sub_I_parameters.cpp\" ascii\n\t\t$cpp4 = \"_GLOBAL__sub_I_session.cpp\" ascii\n\t\t$cpp5 = \"_GLOBAL__sub_I_packet.cpp\" ascii\n\t\t$cpp6 = \"_GLOBAL__sub_I_rc5.cpp\" ascii\n\t\t$cpp7 = \"shooterImage.cpp\" ascii\n\t\t$cpp8 = \"shooterSound.cpp\" ascii\n\t\t$cpp9 = \"shooterFile.cpp\" ascii\n\t\t$cpp10 = \"../session.cpp\" ascii\n\t\t$cpp12 = \"shooterKey.cpp\" ascii\n\t\t$cpp13 = \"tcpSocket.cpp\" ascii\n\t\t$cpp14 = \"shooter.cpp\" ascii\n\t\t$cpp15 = \"logger.cpp\" ascii\n\t\t$cpp16 = \"engine.cpp\" ascii\n\t\t$cpp17 = \"main.cpp\" ascii\n\t\t$path0 = \".lib\" ascii fullword\n\t\t$path1 = \"opt\" ascii fullword\n\t\t$path2 = \"proc\" ascii fullword\n\t\t$path3 = \"root\" ascii fullword\n\t\t$path4 = \"run\" ascii fullword\n\t\t$path5 = \"sbin\" ascii fullword\n\t\t$path6 = \"snap\" ascii fullword\n\t\t$path7 = \"srv\" ascii fullword\n\t\t$path8 = \"sys\" ascii fullword\n\t\t$path9 = \"tmp\" ascii fullword\n\t\t$path10 = \"usr\" ascii fullword\n\t\t$path11 = \"boot\" ascii fullword\n\t\t$path12 = \"var\" ascii fullword\n\t\t$path13 = \"cdrom\" ascii fullword\n\t\t$path14 = \"dev\" ascii fullword\n\t\t$path15 = \"etc\" ascii fullword\n\t\t$path16 = \"lib\" ascii fullword\n\t\t$path17 = \"lib32\" ascii fullword\n\t\t$path18 = \"lib64\" ascii fullword\n\t\t$path19 = \"lost+found\" ascii fullword\n\n\tcondition:\n\t\t( uint32be( 0x0 ) == 0x7f454c46 ) and 10 of ( $cpp* ) and all of ( $ftype* ) and all of ( $path* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

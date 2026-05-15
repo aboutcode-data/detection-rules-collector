@@ -1,0 +1,48 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Trend Micro/crime_linux_umbreon : rootkit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "crime_linux_umbreon",
+                "tags": [
+                    "rootkit"
+                ],
+                "description": "Catches Umbreon rootkit",
+                "reference": "http://blog.trendmicro.com/trendlabs-security-intelligence/pokemon-themed-umbreon-linux-rootkit-hits-x86-arm-systems",
+                "author": "Fernando Merces, FTR, Trend Micro",
+                "date": "2016-08"
+            },
+            "rule_text": "rule crime_linux_umbreon : rootkit\n{\n\tmeta:\n\t\tdescription = \"Catches Umbreon rootkit\"\n\t\treference = \"http://blog.trendmicro.com/trendlabs-security-intelligence/pokemon-themed-umbreon-linux-rootkit-hits-x86-arm-systems\"\n\t\tauthor = \"Fernando Merces, FTR, Trend Micro\"\n\t\tdate = \"2016-08\"\n\n\tstrings:\n\t\t$ = { 75 6e 66 75 63 6b 5f 6c 69 6e 6b 6d 61 70 }\n\t\t$ = \"unhide.rb\" ascii fullword\n\t\t$ = \"rkit\" ascii fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and uint8( 16 ) == 0x0003 and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "crime_linux_umbreon_strace",
+                "tags": [
+                    "rootkit"
+                ],
+                "description": "Catches Umbreon strace rootkit component",
+                "reference": "http://blog.trendmicro.com/trendlabs-security-intelligence/pokemon-themed-umbreon-linux-rootkit-hits-x86-arm-systems",
+                "author": "Fernando Merces, FTR, Trend Micro",
+                "date": "2016-08"
+            },
+            "rule_text": "rule crime_linux_umbreon_strace : rootkit\n{\n\tmeta:\n\t\tdescription = \"Catches Umbreon strace rootkit component\"\n\t\treference = \"http://blog.trendmicro.com/trendlabs-security-intelligence/pokemon-themed-umbreon-linux-rootkit-hits-x86-arm-systems\"\n\t\tauthor = \"Fernando Merces, FTR, Trend Micro\"\n\t\tdate = \"2016-08\"\n\n\tstrings:\n\t\t$ = \"LD_PRELOAD\" fullword\n\t\t$ = /ld\\.so\\.[a-zA-Z0-9]{7}/ fullword\n\t\t$ = \"\\\"/etc/ld.so.preload\\\"\" fullword\n\t\t$ = \"fputs_unlocked\" fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and uint8( 16 ) == 0x0003 and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "crime_linux_umbreon_espeon",
+                "tags": [
+                    "rootkit",
+                    "backdoor"
+                ],
+                "description": "Catches Umbreon strace rootkit component",
+                "reference": "http://blog.trendmicro.com/trendlabs-security-intelligence/pokemon-themed-umbreon-linux-rootkit-hits-x86-arm-systems",
+                "author": "Fernando Merces, FTR, Trend Micro",
+                "date": "2016-08"
+            },
+            "rule_text": "rule crime_linux_umbreon_espeon : rootkit backdoor\n{\n\tmeta:\n\t\tdescription = \"Catches Umbreon strace rootkit component\"\n\t\treference = \"http://blog.trendmicro.com/trendlabs-security-intelligence/pokemon-themed-umbreon-linux-rootkit-hits-x86-arm-systems\"\n\t\tauthor = \"Fernando Merces, FTR, Trend Micro\"\n\t\tdate = \"2016-08\"\n\n\tstrings:\n\t\t$ = \"Usage: %s [interface]\" fullword\n\t\t$ = \"Options:\" fullword\n\t\t$ = \"    interface    Listen on <interface> for packets.\" fullword\n\t\t$ = \"/bin/espeon-shell %s %hu\"\n\t\t$ = { 66 75 63 6b 20 6f 66 66 20 63 75 6e 74 }\n\t\t$ = \"error: unrecognized command-line options\" fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and uint8( 16 ) == 0x0002 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

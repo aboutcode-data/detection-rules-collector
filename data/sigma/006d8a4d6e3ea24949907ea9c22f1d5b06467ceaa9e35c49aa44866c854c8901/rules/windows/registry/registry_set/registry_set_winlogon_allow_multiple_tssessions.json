@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_winlogon_allow_multiple_tssessions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-09",
+                "title": "Winlogon AllowMultipleTSSessions Enable",
+                "id": "f7997770-92c3-4ec9-b112-774c4ef96f96"
+            },
+            "rule_text": "title: Winlogon AllowMultipleTSSessions Enable\nid: f7997770-92c3-4ec9-b112-774c4ef96f96\nstatus: test\ndescription: 'Detects when the ''AllowMultipleTSSessions'' value is enabled.\n\n  Which allows for multiple Remote Desktop connection sessions to be opened at once.\n\n  This is often used by attacker as a way to connect to an RDP session without disconnecting\n  the other users\n\n  '\nreferences:\n- http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-09\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\AllowMultipleTSSessions\n    Details|endswith: DWORD (0x00000001)\n  condition: selection\nfalsepositives:\n- Legitimate use of the multi session functionality\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

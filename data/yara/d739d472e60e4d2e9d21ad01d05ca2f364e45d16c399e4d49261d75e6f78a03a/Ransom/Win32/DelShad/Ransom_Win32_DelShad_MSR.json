@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/DelShad/Ransom_Win32_DelShad_MSR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_DelShad_MSR",
+                "tags": [],
+                "description": "Ransom:Win32/DelShad!MSR,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_DelShad_MSR\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/DelShad!MSR,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {44 65 6c 65 74 65 20 53 68 61 64 6f 77 73 20 2f 41 6c 6c 20 2f 51 75 69 65 74 }\n\t\t$a_80_1 = {73 68 61 64 6f 77 63 6f 70 79 20 64 65 6c 65 74 65 }\n\t\t$a_80_2 = {64 65 6c 65 74 65 20 63 61 74 61 6c 6f 67 20 2d 20 71 75 69 65 74 }\n\t\t$a_80_3 = {68 6f 77 20 74 6f 20 72 65 63 6f 76 65 72 2e 74 78 74 }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 2 + ( #a_80_1 & 1 ) * 2 + ( #a_80_2 & 1 ) * 2 + ( #a_80_3 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

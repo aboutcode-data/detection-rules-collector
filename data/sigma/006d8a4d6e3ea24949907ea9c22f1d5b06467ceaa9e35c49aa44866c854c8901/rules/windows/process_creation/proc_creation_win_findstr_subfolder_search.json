@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_findstr_subfolder_search.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Furkan CALISKAN, @caliskanfurkan_, @oscd_initiative, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2020-10-05",
+                "title": "Insensitive Subfolder Search Via Findstr.EXE",
+                "id": "04936b66-3915-43ad-a8e5-809eadfd1141"
+            },
+            "rule_text": "title: Insensitive Subfolder Search Via Findstr.EXE\nid: 04936b66-3915-43ad-a8e5-809eadfd1141\nrelated:\n- id: bf6c39fc-e203-45b9-9538-05397c1b4f3f\n  type: obsolete\nstatus: test\ndescription: 'Detects execution of findstr with the \"s\" and \"i\" flags for a \"subfolder\"\n  and \"insensitive\" search respectively. Attackers sometimes leverage this built-in\n  utility to search the system for interesting files or filter through results of\n  commands.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Findstr/\n- https://oddvar.moe/2018/04/11/putting-data-in-alternate-data-streams-and-how-to-execute-it-part-2/\n- https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f\nauthor: Furkan CALISKAN, @caliskanfurkan_, @oscd_initiative, Nasreddine Bencherchali\n  (Nextron Systems)\ndate: 2020-10-05\nmodified: 2024-03-05\ntags:\n- attack.credential-access\n- attack.command-and-control\n- attack.stealth\n- attack.t1218\n- attack.t1564.004\n- attack.t1552.001\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_findstr:\n  - CommandLine|contains: findstr\n  - Image|endswith: findstr.exe\n  - OriginalFileName: FINDSTR.EXE\n  selection_cli_search_subfolder:\n    CommandLine|contains|windash: ' -s '\n  selection_cli_search_insensitive:\n    CommandLine|contains|windash: ' -i '\n  condition: selection_findstr and all of selection_cli_search_*\nfalsepositives:\n- Administrative or software activity\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

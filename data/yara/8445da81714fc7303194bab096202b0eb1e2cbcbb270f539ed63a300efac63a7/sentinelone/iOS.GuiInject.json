@@ -1,0 +1,55 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/sentinelone/iOS.GuiInject.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "_fat",
+                "tags": [],
+                "reference": "http://pastebin.com/2W0tyUAF",
+                "reference2": "https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/"
+            },
+            "rule_text": "private rule _fat\n{\n\tmeta:\n\t\treference = \"http://pastebin.com/2W0tyUAF\"\n\t\treference2 = \"https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/\"\n\n\tstrings:\n\t\t$fat = { CA FE BA BE }\n\n\tcondition:\n\t\t$fat at 0 and uint32( 4 ) < 0x14000000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "_macho",
+                "tags": [],
+                "reference": "http://pastebin.com/2W0tyUAF",
+                "reference2": "https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/"
+            },
+            "rule_text": "private rule _macho\n{\n\tmeta:\n\t\treference = \"http://pastebin.com/2W0tyUAF\"\n\t\treference2 = \"https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/\"\n\n\tstrings:\n\t\t$macho1 = { CE FA ED FE }\n\t\t$macho2 = { CF FA ED FE }\n\t\t$macho3 = { FE ED FA CE }\n\t\t$macho4 = { FE ED FA CF }\n\n\tcondition:\n\t\tfor any of ( $macho* ) : ( $ at 0 ) or _fat\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lib_jb",
+                "tags": [],
+                "reference": "http://pastebin.com/2W0tyUAF",
+                "reference2": "https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/"
+            },
+            "rule_text": "rule lib_jb\n{\n\tmeta:\n\t\treference = \"http://pastebin.com/2W0tyUAF\"\n\t\treference2 = \"https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/\"\n\n\tstrings:\n\t\t$import = \"libguiinject.dylib\"\n\n\tcondition:\n\t\t_macho and $import\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "app_jb",
+                "tags": [],
+                "reference": "http://pastebin.com/2W0tyUAF",
+                "reference2": "https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/"
+            },
+            "rule_text": "rule app_jb\n{\n\tmeta:\n\t\treference = \"http://pastebin.com/2W0tyUAF\"\n\t\treference2 = \"https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/\"\n\n\tstrings:\n\t\t$import1 = \"@executable_path/jailbreak\" nocase\n\t\t$import2 = \"@executable_path/patch\" nocase\n\n\tcondition:\n\t\t_macho and any of ( $import* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ipa_jb",
+                "tags": [],
+                "reference": "http://pastebin.com/2W0tyUAF",
+                "reference2": "https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/"
+            },
+            "rule_text": "rule ipa_jb\n{\n\tmeta:\n\t\treference = \"http://pastebin.com/2W0tyUAF\"\n\t\treference2 = \"https://sentinelone.com/blogs/analysis-ios-guiinject-adware-library/\"\n\n\tstrings:\n\t\t$zip = \"PK\"\n\t\t$import1 = \".app/jailbreak\" nocase\n\t\t$import2 = \".app/patch\" nocase\n\n\tcondition:\n\t\t$zip at 0 and any of ( $import* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

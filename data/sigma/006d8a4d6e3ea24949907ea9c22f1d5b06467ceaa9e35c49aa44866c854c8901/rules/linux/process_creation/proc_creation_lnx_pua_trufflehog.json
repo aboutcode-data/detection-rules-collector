@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_pua_trufflehog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-09-24",
+                "title": "PUA - TruffleHog Execution - Linux",
+                "id": "d7a650c4-226c-451e-948f-cc490db506aa"
+            },
+            "rule_text": "title: PUA - TruffleHog Execution - Linux\nid: d7a650c4-226c-451e-948f-cc490db506aa\nrelated:\n- id: 44030449-b0df-4c94-aae1-502359ab28ee\n  type: similar\nstatus: experimental\ndescription: 'Detects execution of TruffleHog, a tool used to search for secrets in\n  different platforms like Git, Jira, Slack, SharePoint, etc. that could be used maliciously.\n\n  While it is a legitimate tool, intended for use in CI pipelines and security assessments,\n\n  It was observed in the Shai-Hulud malware campaign targeting npm packages to steal\n  sensitive information.\n\n  '\nreferences:\n- https://github.com/trufflesecurity/trufflehog\n- https://www.getsafety.com/blog-posts/shai-hulud-npm-attack\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-09-24\ntags:\n- attack.discovery\n- attack.credential-access\n- attack.t1083\n- attack.t1552.001\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /trufflehog\n  selection_cli_platform:\n    CommandLine|contains:\n    - ' docker --image '\n    - ' Git '\n    - ' GitHub '\n    - ' Jira '\n    - ' Slack '\n    - ' Confluence '\n    - ' SharePoint '\n    - ' s3 '\n    - ' gcs '\n  selection_cli_verified:\n    CommandLine|contains: ' --results=verified'\n  condition: selection_img or all of selection_cli_*\nfalsepositives:\n- Legitimate use of TruffleHog by security teams or developers.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

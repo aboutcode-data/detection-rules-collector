@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/svchost_wout_normal_parameters.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Svchost Not Matching Normal Execution Parameters",
+                "id": "036c727d-0263-4733-ad60-d5f48dc72144"
+            },
+            "rule_text": "title: Svchost Not Matching Normal Execution Parameters\nid: 036c727d-0263-4733-ad60-d5f48dc72144\nstatus: experimental\ndescription: Looks for the execution of svchost without the normal -k parameter. Inspired\n  by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/match-legitimate-name-or-location/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.defense_evasion\n- attack.t1036\n- attack.t1036.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n  filter:\n    CommandLine|contains: -k\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

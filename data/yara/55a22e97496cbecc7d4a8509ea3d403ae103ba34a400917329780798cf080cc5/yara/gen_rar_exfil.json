@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_rar_exfil.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_RAR_NtdsDIT",
+                "tags": [],
+                "description": "Detects suspicious RAR file that contains ntds.dit or SAM export",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.cybereason.com/blog/operation-soft-cell-a-worldwide-campaign-against-telecommunications-providers",
+                "date": "2019-12-16",
+                "modified": "2022-11-15",
+                "score": 70,
+                "id": "da9e160f-3213-5027-bb0f-bf80ab3d5318"
+            },
+            "rule_text": "rule SUSP_RAR_NtdsDIT\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious RAR file that contains ntds.dit or SAM export\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.cybereason.com/blog/operation-soft-cell-a-worldwide-campaign-against-telecommunications-providers\"\n\t\tdate = \"2019-12-16\"\n\t\tmodified = \"2022-11-15\"\n\t\tscore = 70\n\t\tid = \"da9e160f-3213-5027-bb0f-bf80ab3d5318\"\n\n\tstrings:\n\t\t$x1 = \"ntds.dit0\" ascii fullword\n\t\t$x2 = { 0? 53 41 4D 30 01 00 03 }\n\t\t$x3 = { 0? 73 61 6D 30 01 00 03 }\n\n\tcondition:\n\t\tuint32( 0 ) == 0x21726152 and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

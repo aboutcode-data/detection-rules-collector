@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/Evilnum/proc_creation_win_apt_evilnum_jul20.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-07-10",
+                "title": "EvilNum APT Golden Chickens Deployment Via OCX Files",
+                "id": "8acf3cfa-1e8c-4099-83de-a0c4038e18f0"
+            },
+            "rule_text": "title: EvilNum APT Golden Chickens Deployment Via OCX Files\nid: 8acf3cfa-1e8c-4099-83de-a0c4038e18f0\nstatus: test\ndescription: Detects Golden Chickens deployment method as used by Evilnum and described\n  in ESET July 2020 report\nreferences:\n- https://www.welivesecurity.com/2020/07/09/more-evil-deep-look-evilnum-toolset/\n- https://app.any.run/tasks/33d37fdf-158d-4930-aa68-813e1d5eb8ba/\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-07-10\nmodified: 2023-03-09\ntags:\n- attack.stealth\n- attack.t1218.011\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - regsvr32\n    - /s\n    - /i\n    - \\AppData\\Roaming\\\n    - .ocx\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

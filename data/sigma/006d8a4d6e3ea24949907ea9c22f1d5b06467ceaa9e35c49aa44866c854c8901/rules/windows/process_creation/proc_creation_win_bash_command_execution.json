@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bash_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-11-24",
+                "title": "Indirect Inline Command Execution Via Bash.EXE",
+                "id": "5edc2273-c26f-406c-83f3-f4d948e740dd"
+            },
+            "rule_text": "title: Indirect Inline Command Execution Via Bash.EXE\nid: 5edc2273-c26f-406c-83f3-f4d948e740dd\nrelated:\n- id: 2d22a514-e024-4428-9dba-41505bd63a5b\n  type: similar\nstatus: test\ndescription: 'Detects execution of Microsoft bash launcher with the \"-c\" flag.\n\n  This can be used to potentially bypass defenses and execute Linux or Windows-based\n  binaries directly via bash.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Bash/\nauthor: frack113\ndate: 2021-11-24\nmodified: 2023-08-15\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - :\\Windows\\System32\\bash.exe\n    - :\\Windows\\SysWOW64\\bash.exe\n  - OriginalFileName: Bash.exe\n  selection_cli:\n    CommandLine|contains: ' -c '\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

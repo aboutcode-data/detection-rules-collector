@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_data_compressed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2019-10-21",
+                "title": "Data Compressed",
+                "id": "a3b5e3e9-1b49-4119-8b8e-0344a01f21ee"
+            },
+            "rule_text": "title: Data Compressed\nid: a3b5e3e9-1b49-4119-8b8e-0344a01f21ee\nstatus: test\ndescription: An adversary may compress data (e.g., sensitive documents) that is collected\n  prior to exfiltration in order to make it portable and minimize the amount of data\n  sent over the network.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/a78b9ed805ab9ea2e422e1aa7741e9407d82d7b1/atomics/T1560.001/T1560.001.md\nauthor: Timur Zinniatullin, oscd.community\ndate: 2019-10-21\nmodified: 2023-07-28\ntags:\n- attack.exfiltration\n- attack.collection\n- attack.t1560.001\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection1:\n    type: execve\n    a0: zip\n  selection2:\n    type: execve\n    a0: gzip\n    a1: -k\n  selection3:\n    type: execve\n    a0: tar\n    a1|contains: -c\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate use of archiving tools by legitimate user.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_dfsvc_uncommon_ports.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-12",
+                "title": "Dfsvc.EXE Initiated Network Connection Over Uncommon Port",
+                "id": "4c5fba4a-9ef6-4f16-823d-606246054741"
+            },
+            "rule_text": "title: Dfsvc.EXE Initiated Network Connection Over Uncommon Port\nid: 4c5fba4a-9ef6-4f16-823d-606246054741\nstatus: test\ndescription: Detects an initiated network connection over uncommon ports from \"dfsvc.exe\".\n  A utility used to handled ClickOnce applications.\nreferences:\n- https://posts.specterops.io/less-smartscreen-more-caffeine-ab-using-clickonce-for-trusted-code-execution-1446ea8051c5\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-12\nmodified: 2024-01-31\ntags:\n- attack.execution\n- attack.t1203\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|contains: :\\Windows\\Microsoft.NET\\\n    Image|endswith: \\dfsvc.exe\n    Initiated: 'true'\n  filter_main_known_ports:\n    DestinationPort:\n    - 80\n    - 443\n  filter_optional_dns_ipv6:\n    DestinationIsIpv6: 'true'\n    DestinationPort: 53\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Niojec/Worm_Win32_Niojec.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Niojec",
+                "tags": [],
+                "description": "Worm:Win32/Niojec,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Niojec\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Niojec,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {5c 00 73 00 65 00 63 00 70 00 6f 00 6c 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_00_1 = {43 00 6e 00 39 00 31 00 31 00 00 00 }\n\t\t$a_00_2 = {53 00 65 00 42 00 61 00 63 00 6b 00 75 00 70 00 50 00 72 00 69 00 76 00 69 00 6c 00 65 00 67 00 65 00 }\n\t\t$a_00_3 = {53 00 65 00 52 00 65 00 73 00 74 00 6f 00 72 00 65 00 50 00 72 00 69 00 76 00 69 00 6c 00 65 00 67 00 65 00 }\n\t\t$a_03_4 = {c7 45 fc 09 00 00 00 e8 ?? ?? ?? ?? c7 45 fc 0a 00 00 00 68 88 13 00 00 e8 ?? ?? ?? ?? ff 15 ?? ?? ?? ?? c7 45 fc 0b 00 00 00 ff 15 ?? ?? ?? ?? c7 45 fc 0c 00 00 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 2 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 10 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

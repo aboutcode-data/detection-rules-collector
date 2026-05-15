@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dsquery_domain_trust_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "E.M. Anhaus, Tony Lambert, oscd.community, omkar72",
+                "date": "2019-10-24",
+                "title": "Domain Trust Discovery Via Dsquery",
+                "id": "3bad990e-4848-4a78-9530-b427d854aac0"
+            },
+            "rule_text": "title: Domain Trust Discovery Via Dsquery\nid: 3bad990e-4848-4a78-9530-b427d854aac0\nrelated:\n- id: b23fcb74-b1cb-4ff7-a31d-bfe2a7ba453b\n  type: similar\n- id: 77815820-246c-47b8-9741-e0def3f57308\n  type: obsolete\nstatus: test\ndescription: Detects execution of \"dsquery.exe\" for domain trust discovery\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1482/T1482.md\n- https://posts.specterops.io/an-introduction-to-manual-active-directory-querying-with-dsquery-and-ldapsearch-84943c13d7eb?gi=41b97a644843\nauthor: E.M. Anhaus, Tony Lambert, oscd.community, omkar72\ndate: 2019-10-24\nmodified: 2023-02-02\ntags:\n- attack.discovery\n- attack.t1482\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\dsquery.exe\n  - OriginalFileName: dsquery.exe\n  selection_cli:\n    CommandLine|contains: trustedDomain\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the utilities by legitimate user for legitimate reason\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_dsquery_domain_trust_discovery/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Windows - Discover domain trusts with dsquery\n  technique: T1482\n  atomic_guid: 4700a710-c821-4e17-a3ec-9e4c81d6845f\n",
+            "vulnerabilities": []
+        }
+    ]
+}

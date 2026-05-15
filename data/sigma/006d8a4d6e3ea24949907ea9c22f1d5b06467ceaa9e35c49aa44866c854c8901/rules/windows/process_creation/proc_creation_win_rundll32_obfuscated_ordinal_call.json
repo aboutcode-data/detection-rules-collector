@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_obfuscated_ordinal_call.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2023-05-17",
+                "title": "Potential Obfuscated Ordinal Call Via Rundll32",
+                "id": "43fa5350-db63-4b8f-9a01-789a427074e1"
+            },
+            "rule_text": "title: Potential Obfuscated Ordinal Call Via Rundll32\nid: 43fa5350-db63-4b8f-9a01-789a427074e1\nstatus: test\ndescription: Detects execution of \"rundll32\" with potential obfuscated ordinal calls\nreferences:\n- Internal Research\n- https://www.youtube.com/watch?v=52tAmVLg1KM&t=2070s\nauthor: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron\n  Systems)\ndate: 2023-05-17\nmodified: 2025-02-23\ntags:\n- attack.stealth\n- attack.t1027.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  - CommandLine|contains: rundll32\n  selection_cli:\n    CommandLine|contains:\n    - '#+'\n    - '#-'\n    - '#0'\n    - '#655'\n    - '#656'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

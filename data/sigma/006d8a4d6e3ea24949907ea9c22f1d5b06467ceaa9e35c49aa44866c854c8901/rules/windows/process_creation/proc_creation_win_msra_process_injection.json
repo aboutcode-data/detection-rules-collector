@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msra_process_injection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alexander McDonald",
+                "date": "2022-06-24",
+                "title": "Potential Process Injection Via Msra.EXE",
+                "id": "744a188b-0415-4792-896f-11ddb0588dbc"
+            },
+            "rule_text": "title: Potential Process Injection Via Msra.EXE\nid: 744a188b-0415-4792-896f-11ddb0588dbc\nstatus: test\ndescription: Detects potential process injection via Microsoft Remote Asssistance\n  (Msra.exe) by looking at suspicious child processes spawned from the aforementioned\n  process. It has been a target used by many threat actors and used for discovery\n  and persistence tactics\nreferences:\n- https://www.microsoft.com/security/blog/2021/12/09/a-closer-look-at-qakbots-latest-building-blocks-and-how-to-knock-them-down/\n- https://www.fortinet.com/content/dam/fortinet/assets/analyst-reports/ar-qakbot.pdf\nauthor: Alexander McDonald\ndate: 2022-06-24\nmodified: 2023-02-03\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\msra.exe\n    ParentCommandLine|endswith: msra.exe\n    Image|endswith:\n    - \\arp.exe\n    - \\cmd.exe\n    - \\net.exe\n    - \\netstat.exe\n    - \\nslookup.exe\n    - \\route.exe\n    - \\schtasks.exe\n    - \\whoami.exe\n  condition: selection\nfalsepositives:\n- Legitimate use of Msra.exe\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/A-C/adfind.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "adfind",
+                "tags": [],
+                "description": "Detection patterns for the tool 'adfind' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "adfind",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule adfind\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'adfind' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"adfind\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \"adfind -gcb -sc trustdmp\" nocase ascii wide\n\t\t$string2 = \"adfind -sc adinfo\" nocase ascii wide\n\t\t$string3 = \"adfind -sc computers_pwdnotreqd\" nocase ascii wide\n\t\t$string4 = \"adfind -sc dclist\" nocase ascii wide\n\t\t$string5 = \"adfind -sc dcmodes\" nocase ascii wide\n\t\t$string6 = \"adfind -sc domainlist\" nocase ascii wide\n\t\t$string7 = \"adfind -sc trustdmp\" nocase ascii wide\n\t\t$string8 = \"adfind -subnets\" nocase ascii wide\n\t\t$string9 = /adfind\\.exe\\s\\-f\\s\\(objectcategory\\=organizationalUnit\\)\\s\\>\\s.{0,1000}\\.txt/ nocase ascii wide\n\t\t$string10 = /adfind\\.exe\\s\\-f\\s\\(objectcategory\\=person\\)\\s\\>\\s.{0,1000}\\.txt/ nocase ascii wide\n\t\t$string11 = /adfind\\.exe\\s\\-f\\s.{0,1000}\\(objectcategory\\=group\\).{0,1000}\\s\\>\\s.{0,1000}\\.txt/ nocase ascii wide\n\t\t$string12 = /adfind\\.exe\\s\\-f\\sobjectcategory\\=computer\\s\\>\\s.{0,1000}\\.txt/ nocase ascii wide\n\t\t$string13 = /adfind\\.exe\\s\\-gcb\\s\\-sc\\strustdmp\\s\\>\\s.{0,1000}\\.txt/ nocase ascii wide\n\t\t$string14 = /adfind\\.exe\\s\\-subnets\\s\\-f\\s\\(objectCategory\\=subnet\\)\\s\\>\\s.{0,1000}\\.txt/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

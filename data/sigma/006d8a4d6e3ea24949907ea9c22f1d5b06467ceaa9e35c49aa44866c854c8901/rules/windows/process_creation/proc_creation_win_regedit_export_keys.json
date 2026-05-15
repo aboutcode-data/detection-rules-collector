@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regedit_export_keys.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Oddvar Moe, Sander Wiebing, oscd.community",
+                "date": "2020-10-07",
+                "title": "Exports Registry Key To a File",
+                "id": "f0e53e89-8d22-46ea-9db5-9d4796ee2f8a"
+            },
+            "rule_text": "title: Exports Registry Key To a File\nid: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a\nrelated:\n- id: 82880171-b475-4201-b811-e9c826cd5eaa\n  type: similar\nstatus: test\ndescription: Detects the export of the target Registry key to a file.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Regedit/\n- https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f\nauthor: Oddvar Moe, Sander Wiebing, oscd.community\ndate: 2020-10-07\nmodified: 2024-03-13\ntags:\n- attack.exfiltration\n- attack.discovery\n- attack.t1012\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\regedit.exe\n  - OriginalFileName: REGEDIT.EXE\n  selection_cli:\n    CommandLine|contains|windash: ' -E '\n  filter_1:\n    CommandLine|contains:\n    - hklm\n    - hkey_local_machine\n  filter_2:\n    CommandLine|endswith:\n    - \\system\n    - \\sam\n    - \\security\n  condition: all of selection_* and not all of filter_*\nfalsepositives:\n- Legitimate export of keys\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

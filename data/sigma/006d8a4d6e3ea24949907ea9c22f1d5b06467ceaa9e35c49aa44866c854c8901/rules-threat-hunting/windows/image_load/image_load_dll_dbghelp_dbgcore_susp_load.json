@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/image_load/image_load_dll_dbghelp_dbgcore_susp_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Perez Diego (@darkquassar), oscd.community, Ecco",
+                "date": "2019-10-27",
+                "title": "Dbghelp/Dbgcore DLL Loaded By Uncommon/Suspicious Process",
+                "id": "0e277796-5f23-4e49-a490-483131d4f6e1"
+            },
+            "rule_text": "title: Dbghelp/Dbgcore DLL Loaded By Uncommon/Suspicious Process\nid: 0e277796-5f23-4e49-a490-483131d4f6e1\nrelated:\n- id: bdc64095-d59a-42a2-8588-71fd9c9d9abc\n  type: similar\nstatus: test\ndescription: 'Detects the load of dbghelp/dbgcore DLL by a potentially uncommon or\n  potentially suspicious process.\n\n  The Dbghelp and Dbgcore DLLs export functions that allow for the dump of process\n  memory. Tools like ProcessHacker, Task Manager and some attacker tradecraft use\n  the MiniDumpWriteDump API found in dbghelp.dll or dbgcore.dll.\n\n  As an example, SilentTrynity C2 Framework has a module that leverages this API to\n  dump the contents of Lsass.exe and transfer it over the network back to the attacker''s\n  machine.\n\n  Keep in mind that many legitimate Windows processes and services might load the\n  aforementioned DLLs for debugging or other related purposes. Investigate the CommandLine\n  and the Image location of the process loading the DLL.\n\n  '\nreferences:\n- https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump\n- https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html\n- https://medium.com/@fsx30/bypass-edrs-memory-protection-introduction-to-hooking-2efb21acffd6\nauthor: Perez Diego (@darkquassar), oscd.community, Ecco\ndate: 2019-10-27\nmodified: 2024-03-01\ntags:\n- attack.credential-access\n- attack.t1003.001\n- detection.threat-hunting\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith:\n    - \\dbghelp.dll\n    - \\dbgcore.dll\n    Image|endswith:\n    - \\bash.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\dnx.exe\n    - \\excel.exe\n    - \\monitoringhost.exe\n    - \\msbuild.exe\n    - \\mshta.exe\n    - \\outlook.exe\n    - \\powerpnt.exe\n    - \\regsvcs.exe\n    - \\rundll32.exe\n    - \\sc.exe\n    - \\scriptrunner.exe\n    - \\winword.exe\n    - \\wmic.exe\n    - \\wscript.exe\n  filter_main_tiworker:\n    CommandLine|startswith: C:\\WINDOWS\\WinSxS\\\n    CommandLine|endswith: \\TiWorker.exe -Embedding\n  filter_main_generic:\n    Image|endswith: \\svchost.exe\n    CommandLine|endswith:\n    - -k LocalServiceNetworkRestricted\n    - -k WerSvcGroup\n  filter_main_rundll32:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains:\n    - /d srrstr.dll,ExecuteScheduledSPPCreation\n    - aepdu.dll,AePduRunUpdate\n    - shell32.dll,OpenAs_RunDL\n    - Windows.Storage.ApplicationData.dll,CleanupTemporaryState\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Debugging scripts might leverage this DLL in order to dump process memory for further\n  analysis.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

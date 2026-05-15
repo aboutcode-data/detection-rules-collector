@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/susp_bat_obfusc_jul24.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_BAT_OBFUSC_Jul24_1",
+                "tags": [],
+                "description": "Detects indicators of obfuscation in Windows Batch files",
+                "author": "Florian Roth",
+                "reference": "https://x.com/0xToxin/status/1811656147943752045",
+                "date": "2024-07-12",
+                "score": 70,
+                "id": "801e7efc-2c31-5590-afcd-9e11072c9c65"
+            },
+            "rule_text": "rule SUSP_BAT_OBFUSC_Jul24_1\n{\n\tmeta:\n\t\tdescription = \"Detects indicators of obfuscation in Windows Batch files\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://x.com/0xToxin/status/1811656147943752045\"\n\t\tdate = \"2024-07-12\"\n\t\tscore = 70\n\t\tid = \"801e7efc-2c31-5590-afcd-9e11072c9c65\"\n\n\tstrings:\n\t\t$s1 = \"&&set \"\n\n\tcondition:\n\t\tfilesize < 300KB and uint32( 0 ) == 0x20746573 and $s1 in ( 0 .. 32 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_BAT_OBFUSC_Jul24_2",
+                "tags": [],
+                "description": "Detects indicators of obfuscation in Windows Batch files",
+                "author": "Florian Roth",
+                "reference": "https://x.com/0xToxin/status/1811656147943752045",
+                "date": "2024-07-12",
+                "score": 70,
+                "id": "999cd365-2862-5618-b0b6-ee45dea1e9cf"
+            },
+            "rule_text": "rule SUSP_BAT_OBFUSC_Jul24_2\n{\n\tmeta:\n\t\tdescription = \"Detects indicators of obfuscation in Windows Batch files\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://x.com/0xToxin/status/1811656147943752045\"\n\t\tdate = \"2024-07-12\"\n\t\tscore = 70\n\t\tid = \"999cd365-2862-5618-b0b6-ee45dea1e9cf\"\n\n\tstrings:\n\t\t$s1 = \"&&set \"\n\n\tcondition:\n\t\tfilesize < 300KB and #s1 > 30 and uint16( filesize - 2 ) == 0x0a0d and uint8( filesize - 3 ) == 0x25\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_BAT_OBFUSC_Jul24_3",
+                "tags": [],
+                "description": "Detects indicators of obfuscation in Windows Batch files",
+                "author": "Florian Roth",
+                "reference": "https://x.com/0xToxin/status/1811656147943752045",
+                "date": "2024-07-12",
+                "score": 70,
+                "id": "a484ed03-8588-55e7-9674-b1208e14eb3f"
+            },
+            "rule_text": "rule SUSP_BAT_OBFUSC_Jul24_3\n{\n\tmeta:\n\t\tdescription = \"Detects indicators of obfuscation in Windows Batch files\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://x.com/0xToxin/status/1811656147943752045\"\n\t\tdate = \"2024-07-12\"\n\t\tscore = 70\n\t\tid = \"a484ed03-8588-55e7-9674-b1208e14eb3f\"\n\n\tstrings:\n\t\t$s1 = \"% \\\\\\\\%\"\n\t\t$s2 = { 3D ?? 26 26 73 65 74 20 }\n\n\tcondition:\n\t\tfilesize < 300KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

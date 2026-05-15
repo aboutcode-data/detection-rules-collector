@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_java_keytool_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades)",
+                "date": "2021-12-22",
+                "title": "Suspicious Shells Spawn by Java Utility Keytool",
+                "id": "90fb5e62-ca1f-4e22-b42e-cc521874c938"
+            },
+            "rule_text": "title: Suspicious Shells Spawn by Java Utility Keytool\nid: 90fb5e62-ca1f-4e22-b42e-cc521874c938\nstatus: test\ndescription: Detects suspicious shell spawn from Java utility keytool process (e.g.\n  adselfservice plus exploitation)\nreferences:\n- https://redcanary.com/blog/intelligence-insights-december-2021\n- https://www.synacktiv.com/en/publications/how-to-exploit-cve-2021-40539-on-manageengine-adselfservice-plus.html\nauthor: Andreas Hunkeler (@Karneades)\ndate: 2021-12-22\nmodified: 2023-01-21\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\keytool.exe\n    Image|endswith:\n    - \\cmd.exe\n    - \\sh.exe\n    - \\bash.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\schtasks.exe\n    - \\certutil.exe\n    - \\whoami.exe\n    - \\bitsadmin.exe\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\scrcons.exe\n    - \\regsvr32.exe\n    - \\hh.exe\n    - \\wmic.exe\n    - \\mshta.exe\n    - \\rundll32.exe\n    - \\forfiles.exe\n    - \\scriptrunner.exe\n    - \\mftrace.exe\n    - \\AppVLP.exe\n    - \\systeminfo.exe\n    - \\reg.exe\n    - \\query.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2021-40539"
+            ]
+        }
+    ]
+}

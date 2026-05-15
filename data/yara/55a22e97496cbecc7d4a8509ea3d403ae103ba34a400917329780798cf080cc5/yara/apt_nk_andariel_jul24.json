@@ -1,0 +1,291 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_nk_andariel_jul24.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_ScheduledTask_Loader",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a scheduled task loader used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "0c32758b-480c-5784-b28f-cee85d038850"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_ScheduledTask_Loader\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a scheduled task loader used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"0c32758b-480c-5784-b28f-cee85d038850\"\n\n\tstrings:\n\t\t$obfuscation1 = { B8 02 00 00 00 48 6B C0 00 B9 CD FF 00 00 66 89 8C 04 60 01 00 00 B8 02 00 00 00 48 6B C0 01 B9 CC FF 00 00 66 89 8C 04 60 01 00 00 B8 02 00 00 00 48 6B C0 02 B9 8D FF 00 00 66 89 8C 04 60 01 00 00 B8 02 00 00 00 48 6B C0 03 B9 9A FF 00 00 66 89 8C 04 60 01 00 00 B8 02 00 00 00 48 6B C0 04 B9 8C FF 00 00 66 89 8C 04 60 01 00 00 B8 02 00 00 00 48 6B C0 05 B9 8A FF 00 00 66 89 8C 04 60 01 00 00 B8 02 00 00 00 48 6B C0 06 33 C9 66 89 8C 04 60 01 00 00 }\n\t\t$obfuscation2 = { 48 6B C0 02 C6 44 04 20 BA B8 01 00 00 00 48 6B C0 03 C6 44 04 20 9A B8 01 00 00 00 48 6B C0 04 C6 44 04 20 8B B8 01 00 00 00 48 6B C0 05 C6 44 04 20 8A B8 01 00 00 00 48 6B C0 06 C6 44 04 20 9C B8 01 00 00 00 }\n\t\t$obfuscation3 = { 48 6B C0 00 C6 44 04 20 A8 B8 01 00 00 00 48 6B C0 01 C6 44 04 20 9A B8 01 00 00 00 48 6B C0 02 C6 44 04 20 93 B8 01 00 00 00 48 6B C0 03 C6 44 04 20 96 B8 01 00 00 00 48 6B C0 04 C6 44 04 20 B9 B8 01 00 00 00 48 6B C0 05 C6 44 04 20 9A B8 01 00 00 00 48 6B C0 06 C6 44 04 20 8B B8 01 00 00 00 48 6B C0 07 C6 44 04 20 9E B8 01 00 00 00 48 6B C0 08 C6 44 04 20 9A B8 01 00 00 00 48 6B C0 09 C6 44 04 20 8D B8 01 00 00 00 48 6B C0 0A C6 44 04 20 BC B8 01 00 00 00 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and $obfuscation1 and $obfuscation2 and $obfuscation3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_KaosRAT_Yamabot",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects the KaosRAT variant",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 70,
+                "id": "cdde69cd-1b38-52f5-8552-cef2cf4ad69c"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_KaosRAT_Yamabot\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects the KaosRAT variant\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 70\n\t\tid = \"cdde69cd-1b38-52f5-8552-cef2cf4ad69c\"\n\n\tstrings:\n\t\t$str1 = \"/kaos/\"\n\t\t$str2 = \"Abstand [\"\n\t\t$str3 = \"] anwenden\"\n\t\t$str4 = \"cmVjYXB0Y2hh\"\n\t\t$str5 = \"/bin/sh\"\n\t\t$str6 = \"utilities.CIpaddress\"\n\t\t$str7 = \"engine.NewEgg\"\n\t\t$str8 = \"%s%04x%s%s%s\"\n\t\t$str9 = \"Y2FwdGNoYV9zZXNzaW9u\"\n\t\t$str10 = \"utilities.EierKochen\"\n\t\t$str11 = \"kandidatKaufhaus\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_TriFaux_EasyRAT_JUPITER",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the EasyRAT malware family",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "8bd72287-59da-53cf-9015-66149303e59f"
+            },
+            "rule_text": "rule MAL_APT_NK_TriFaux_EasyRAT_JUPITER\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the EasyRAT malware family\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"8bd72287-59da-53cf-9015-66149303e59f\"\n\n\tstrings:\n\t\t$InitOnce = \"InitOnceExecuteOnce\"\n\t\t$BREAK = { 0D 00 0A 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 2D 00 0D 00 0A }\n\t\t$Bytes = \"4C,$00,$00,$00,$01,$14,$02,$00,$00,$00,$00,$00,$C0,$00,$00,$00,$00,$00,$00,\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_CutieDrop_MagicRAT",
+                "tags": [],
+                "author": "CISA.gov (modified by Florian Roth, Nextron Systems)",
+                "description": "Detects the MagicRAT variant used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "104244de-83fb-5112-a2b6-e20d38a6ced6"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_CutieDrop_MagicRAT\n{\n\tmeta:\n\t\tauthor = \"CISA.gov (modified by Florian Roth, Nextron Systems)\"\n\t\tdescription = \"Detects the MagicRAT variant used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"104244de-83fb-5112-a2b6-e20d38a6ced6\"\n\n\tstrings:\n\t\t$config_os_w = \"os/windows\" ascii\n\t\t$config_os_l = \"os/linux\" ascii\n\t\t$config_os_m = \"os/mac\" ascii\n\t\t$config_comp_msft = \"company/microsoft\" ascii\n\t\t$config_comp_orcl = \"company/oracle\" ascii\n\t\t$POST_field_1 = \"session=\" ascii\n\t\t$POST_field_2 = \"type=\" ascii\n\t\t$command_misspelled = \"renmae\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 7 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_HHSD_FileTransferTool",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the HHSD File Transfer Tool",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "modified": "2025-07-09",
+                "score": 70,
+                "id": "46b6dbaf-1272-5bbd-a586-5e48ba6c5022"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_HHSD_FileTransferTool\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the HHSD File Transfer Tool\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tmodified = \"2025-07-09\"\n\t\tscore = 70\n\t\tid = \"46b6dbaf-1272-5bbd-a586-5e48ba6c5022\"\n\n\tstrings:\n\t\t$handshake = { 30 ?? ?? 81 7? ?? 22 C0 78 00 4? 88 }\n\t\t$err_xor_str = { 14 C7 [2] 14 00 41 00 C7 [2] 7A 00 7F 00 C7 [2] 7B 00 63 00 C7 [2] 7A 00 34 00 }\n\t\t$hash_call_loadlib = { B? 8D 10 B7 F8 E8 }\n\t\t$hash_call_unk = { B? 91 B8 F6 88 E8 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 1 of ( $handshake , $err_xor_str ) and 1 of ( $hash_call_* ) or 2 of ( $handshake , $err_xor_str )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_Atharvan_3RAT",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the Atharvan 3RAT malware family",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "9ff6998a-a2dd-5671-bd3f-ee69561f71ef"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_Atharvan_3RAT\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the Atharvan 3RAT malware family\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"9ff6998a-a2dd-5671-bd3f-ee69561f71ef\"\n\n\tstrings:\n\t\t$3RAT = \"D:\\\\rang\\\\TOOL\\\\3RAT\"\n\t\t$atharvan = \"Atharvan_dll.pdb\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_LilithRAT_Variant",
+                "tags": [],
+                "author": "CISA.gov (modified by Florian Roth, Nextron Systems)",
+                "description": "Detects a variant of the Lilith RAT malware family",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "modified": "2024-07-26",
+                "score": 80,
+                "id": "916a289b-db7b-5f09-9d3e-589c3f09101d"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_LilithRAT_Variant\n{\n\tmeta:\n\t\tauthor = \"CISA.gov (modified by Florian Roth, Nextron Systems)\"\n\t\tdescription = \"Detects a variant of the Lilith RAT malware family\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tmodified = \"2024-07-26\"\n\t\tscore = 80\n\t\tid = \"916a289b-db7b-5f09-9d3e-589c3f09101d\"\n\n\tstrings:\n\t\t$lilith_1 = \"Initiate a CMD session first.\" ascii\n\t\t$lilith_2 = \"CMD is not open\" ascii\n\t\t$lilith_3 = \"Couldn't write command\" ascii\n\t\t$lilith_4 = \"Couldn't write to CMD: CMD not open\" ascii\n\t\t$unique_1 = \"Upload Error!\" ascii\n\t\t$unique_2 = \"ERROR: Downloading is already running!\" ascii\n\t\t$unique_3 = \"ERROR: Unable to open file:\" ascii\n\t\t$unique_4 = \"General error\" ascii\n\t\t$unique_5 = \"CMD error\" ascii\n\t\t$unique_6 = \"killing self\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 150KB and ( all of ( $lilith_* ) or 4 of ( $unique_* ) or 1 of ( $lilith_4 , $unique_2 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_SocksTroy_Strings_OpCodes",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the SocksTroy malware family",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "9e7fb6ba-771e-5cae-a0d5-c0b95ee6d4e9"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_SocksTroy_Strings_OpCodes\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the SocksTroy malware family\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"9e7fb6ba-771e-5cae-a0d5-c0b95ee6d4e9\"\n\n\tstrings:\n\t\t$strHost = \"-host\" wide\n\t\t$strAuth = \"-auth\" wide\n\t\t$SocksTroy = \"SocksTroy\"\n\t\t$cOpCodeCheck = { 81 E? A0 00 00 00 0F 84 ?? ?? ?? ?? 83 E? 03 74 ?? 83 E? 02 74 ?? 83 F? 0B }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 1 of ( $str* ) and all of ( $c* ) or all of ( $Socks* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_Agni",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects samples of the Agni malware family",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "ffe3f427-c10a-5ad4-ab29-c0d9b576c30f"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_Agni\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects samples of the Agni malware family\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"ffe3f427-c10a-5ad4-ab29-c0d9b576c30f\"\n\n\tstrings:\n\t\t$xor = { 34 ?? 88 01 48 8D 49 01 0F B6 01 84 C0 75 F1 }\n\t\t$stackstrings = { C7 44 24 [5-10] C7 44 24 [5] C7 44 24 [5-10] C7 44 24 [5-10] C7 44 24 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and #xor > 100 and #stackstrings > 5\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_GoLang_Validalpha_Handshake",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the GoLang Validalpha malware",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 75,
+                "id": "51dafa43-9da0-569a-9123-7e9800284046"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_GoLang_Validalpha_Handshake\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the GoLang Validalpha malware\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 75\n\t\tid = \"51dafa43-9da0-569a-9123-7e9800284046\"\n\n\tstrings:\n\t\t$ = { 66 C7 00 AB CD C6 40 02 EF ?? 03 00 00 00 48 89 C1 ?? 03 00 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_GoLang_Validalpha_Tasks",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the GoLang Validalpha malware",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "caa67a79-3ea6-5910-971c-f311722570ff"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_GoLang_Validalpha_Tasks\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the GoLang Validalpha malware\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"caa67a79-3ea6-5910-971c-f311722570ff\"\n\n\tstrings:\n\t\t$ = \"main.ScreenMonitThread\"\n\t\t$ = \"main.CmdShell\"\n\t\t$ = \"main.GetAllFoldersAndFiles\"\n\t\t$ = \"main.SelfDelete\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_GoLang_Validalpha_BlackString",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a variant of the GoLang Validalpha malware based on a file path found in the samples",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 90,
+                "id": "36f46a1d-69b6-5c99-9a54-6a14d62d2721"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_GoLang_Validalpha_BlackString\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a variant of the GoLang Validalpha malware based on a file path found in the samples\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 90\n\t\tid = \"36f46a1d-69b6-5c99-9a54-6a14d62d2721\"\n\n\tstrings:\n\t\t$ = \"I:/01___Tools/02__RAT/Black\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_ELF_Backdoor_Fipps",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a Linux backdoor named Fipps used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "040bca78-8b7e-5397-8a2b-1ddeed59eea3"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_ELF_Backdoor_Fipps\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a Linux backdoor named Fipps used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"040bca78-8b7e-5397-8a2b-1ddeed59eea3\"\n\n\tstrings:\n\t\t$a = \"found mac address\"\n\t\t$b = \"RecvThread\"\n\t\t$c = \"OpenSSL-1.0.0-fipps\"\n\t\t$d = \"Disconnected!\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_BindShell",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects a BindShell used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "modified": "2026-01-29",
+                "score": 50,
+                "id": "3f6d83da-cea5-5e12-b0ba-93ace09d3d5c"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_BindShell\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects a BindShell used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tmodified = \"2026-01-29\"\n\t\tscore = 50\n\t\tid = \"3f6d83da-cea5-5e12-b0ba-93ace09d3d5c\"\n\n\tstrings:\n\t\t$str_comspec = \"COMSPEC\"\n\t\t$str_consolewindow = \"GetConsoleWindow\"\n\t\t$str_ShowWindow = \"ShowWindow\"\n\t\t$str_WSASocketA = \"WSASocketA\"\n\t\t$str_CreateProcessA = \"CreateProcessA\"\n\t\t$str_port = { B9 4D 05 00 00 89 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_Grease2",
+                "tags": [],
+                "author": "CISA.gov (modified by Florian Roth, Nextron Systems)",
+                "description": "Detects the Grease2 malware family used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "modified": "2024-07-26",
+                "score": 80,
+                "id": "4defbe08-b3c6-5ab9-9a57-cec57ff42d9a"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_Grease2\n{\n\tmeta:\n\t\tauthor = \"CISA.gov (modified by Florian Roth, Nextron Systems)\"\n\t\tdescription = \"Detects the Grease2 malware family used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tmodified = \"2024-07-26\"\n\t\tscore = 80\n\t\tid = \"4defbe08-b3c6-5ab9-9a57-cec57ff42d9a\"\n\n\tstrings:\n\t\t$str_rdpconf = \"emp\\\\RDPConf.exe\"\n\t\t$str_rdpwinst = \"emp\\\\RDPWInst.exe\"\n\t\t$str_net_user = \"net user\"\n\t\t$str_admins_add = \"net localgroup administrators\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_NoPineapple_Dtrack_Unpacked",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects the Dtrack variant used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 80,
+                "id": "6ccaf24b-c110-5788-a792-fa7f39fb18f7"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_NoPineapple_Dtrack_Unpacked\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects the Dtrack variant used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 80\n\t\tid = \"6ccaf24b-c110-5788-a792-fa7f39fb18f7\"\n\n\tstrings:\n\t\t$str_nopineapple = \"< No Pineapple! >\"\n\t\t$str_qt_library = \"Qt 5.12.10\"\n\t\t$str_xor = { 8B 10 83 F6 ?? 83 FA 01 77 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_DTrack_Unpacked",
+                "tags": [],
+                "author": "CISA.gov (modified by Florian Roth, Nextron Systems)",
+                "description": "Detects DTrack variant used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "modified": "2024-07-26",
+                "score": 75,
+                "id": "0c161275-2b2e-51a4-9e08-c118fb4c8671"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_DTrack_Unpacked\n{\n\tmeta:\n\t\tauthor = \"CISA.gov (modified by Florian Roth, Nextron Systems)\"\n\t\tdescription = \"Detects DTrack variant used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tmodified = \"2024-07-26\"\n\t\tscore = 75\n\t\tid = \"0c161275-2b2e-51a4-9e08-c118fb4c8671\"\n\n\tstrings:\n\t\t$x_str_cmd_4 = \"/c systeminfo > \\\"%s\\\" & tasklist > \\\"%s\\\" & netstat -naop tcp > \\\"%s\\\"\" wide\n\t\t$x_str_cmd_2 = \"/c ping -n 3 127.0.01 > NUL % echo EEE > \\\"%s\\\"\" wide\n\t\t$str_mutex = \"MTX_Global\"\n\t\t$str_cmd_1 = \"/c net use \\\\\\\\\" wide\n\t\t$str_cmd_3 = \"/c move /y %s \\\\\\\\\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( 1 of ( $x* ) or 3 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_Andariel_TigerRAT_Crowdsourced_Rule",
+                "tags": [],
+                "author": "CISA.gov (modified by Florian Roth, Nextron Systems)",
+                "description": "Detects the Tiger RAT variant used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "modified": "2024-07-26",
+                "score": 75,
+                "id": "6be65222-7d3c-5ff5-a9c7-d91dcf1deaa6"
+            },
+            "rule_text": "rule MAL_APT_NK_Andariel_TigerRAT_Crowdsourced_Rule\n{\n\tmeta:\n\t\tauthor = \"CISA.gov (modified by Florian Roth, Nextron Systems)\"\n\t\tdescription = \"Detects the Tiger RAT variant used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tmodified = \"2024-07-26\"\n\t\tscore = 75\n\t\tid = \"6be65222-7d3c-5ff5-a9c7-d91dcf1deaa6\"\n\n\tstrings:\n\t\t$m1 = \".?AVModuleKeyLogger@@\" fullword ascii\n\t\t$m2 = \".?AVModulePortForwarder@@\" fullword ascii\n\t\t$m3 = \".?AVModuleScreenCapture@@\" fullword ascii\n\t\t$m4 = \".?AVModuleShell@@\" fullword ascii\n\t\t$s1 = \"\\\\x9891-009942-xnopcopie.dat\" fullword wide\n\t\t$s2 = \"(%02d : %02d-%02d %02d:%02d:%02d)--- %s[Clipboard]\" fullword ascii\n\t\t$s3 = \"[%02d : %02d-%02d %02d:%02d:%02d]--- %s[Title]\" fullword ascii\n\t\t$s4 = \"del \\\"%s\\\"%s \\\"%s\\\" goto \" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( all of ( $s* ) or ( all of ( $m* ) and 1 of ( $s* ) ) or ( 2 of ( $m* ) and 2 of ( $s* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_WIN_Tiger_RAT_Auto",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects the Tiger RAT variant used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 75,
+                "id": "4579af62-52be-5f5f-a577-16ec50297c05"
+            },
+            "rule_text": "rule MAL_APT_NK_WIN_Tiger_RAT_Auto\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects the Tiger RAT variant used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 75\n\t\tid = \"4579af62-52be-5f5f-a577-16ec50297c05\"\n\n\tstrings:\n\t\t$sequence_0 = { 33 c0 89 44 24 38 89 44 24 30 44 8b cf 45 33 c0 }\n\t\t$sequence_1 = { 41 b9 01 00 00 00 48 8b d6 48 8b cb e8 ?? ?? ?? ?? }\n\t\t$sequence_2 = { 48 81 ec 90 05 00 00 8b 01 89 85 c8 04 00 00 8b 41 04 }\n\t\t$sequence_3 = { 48 8b 01 ff 10 48 8b 4f 08 4c 8d 4c 24 30 }\n\t\t$sequence_4 = { 48 8b 01 ff 10 48 8b 4e 18 48 8b 01 }\n\t\t$sequence_5 = { 48 81 ec a0 00 00 00 33 c0 48 8b d9 48 8d 4c 24 32 }\n\t\t$sequence_6 = { 48 8b 01 eb 03 48 8b c1 0f b6 00 }\n\t\t$sequence_7 = { 48 8b 01 8b 10 89 51 24 44 8b 41 24 45 85 c0 }\n\t\t$sequence_8 = { 4c 8d 0d 31 eb 00 00 c1 e9 18 c1 e8 08 41 bf 00 00 00 80 }\n\t\t$sequence_9 = { 48 8b d8 48 85 c0 75 2d ff 15 ?? ?? ?? ?? 83 f8 57 0f 85 e0 01 00 00 48 8d 0d a0 bd 00 00 }\n\t\t$sequence_10 = { 75 d4 48 8d 1d 7f 6c 01 00 48 8b 4b f8 48 85 c9 74 0b }\n\t\t$sequence_11 = { 0f 85 d9 00 00 00 48 8d 15 d0 c9 00 00 41 b8 10 20 01 00 48 8b cd e8 ?? ?? ?? ?? eb 6b b9 f4 ff ff ff }\n\t\t$sequence_12 = { 48 89 0d ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 48 8d 05 ae 61 00 00 48 89 05 ?? ?? ?? ?? 48 8d 05 a0 55 00 00 48 89 05 ?? ?? ?? ?? }\n\t\t$sequence_13 = { 8b cf e8 ?? ?? ?? ?? 48 8b 7c 24 48 85 c0 0f 84 40 03 00 00 48 8d 05 60 25 01 00 }\n\t\t$sequence_14 = { ff 15 ?? ?? ?? ?? 8b 05 ?? ?? ?? ?? 23 05 ?? ?? ?? ?? ba 02 00 00 00 33 c9 89 05 ?? ?? ?? ?? 8b 05 ?? ?? ?? ?? }\n\t\t$sequence_15 = { 48 83 ec 30 49 8b d8 e8 ?? ?? ?? ?? 48 8b c8 48 85 c0 }\n\n\tcondition:\n\t\tfilesize < 600KB and 7 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_WIN_DTrack_Auto",
+                "tags": [],
+                "author": "CISA.gov",
+                "description": "Detects DTrack variant used by Andariel",
+                "reference": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a",
+                "date": "2024-07-25",
+                "score": 75,
+                "id": "1b40c685-beba-50fa-b484-c1526577cb23"
+            },
+            "rule_text": "rule MAL_APT_NK_WIN_DTrack_Auto\n{\n\tmeta:\n\t\tauthor = \"CISA.gov\"\n\t\tdescription = \"Detects DTrack variant used by Andariel\"\n\t\treference = \"https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-207a\"\n\t\tdate = \"2024-07-25\"\n\t\tscore = 75\n\t\tid = \"1b40c685-beba-50fa-b484-c1526577cb23\"\n\n\tstrings:\n\t\t$sequence_0 = { 52 8b 45 08 50 e8 ?? ?? ?? ?? 83 c4 14 8b 4d 10 51 }\n\t\t$sequence_1 = { 3a 41 01 75 23 83 85 4c f6 ff ff 02 83 85 50 f6 ff ff 02 80 bd 4a f6 ff ff 00 75 ae c7 85 44 f6 ff ff 00 00 00 00 }\n\t\t$sequence_2 = { 50 ff 15 ?? ?? ?? ?? a3 ?? ?? ?? ?? 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 83 c4 04 50 }\n\t\t$sequence_3 = { 8d 8d d4 fa ff ff 51 e8 ?? ?? ?? ?? 83 c4 08 8b 15 ?? ?? ?? ?? }\n\t\t$sequence_4 = { 88 55 f5 6a 5c 8b 45 0c 50 e8 ?? ?? ?? ?? }\n\t\t$sequence_5 = { 51 e8 ?? ?? ?? ?? 83 c4 10 8b 55 8c 52 }\n\t\t$sequence_6 = { 8b 4d 0c 51 68 ?? ?? ?? ?? 8d 95 60 ea ff ff 52 e8 ?? ?? ?? ?? }\n\t\t$sequence_7 = { 83 c0 01 89 45 f4 83 7d f4 20 7d 2c 8b 4d f8 }\n\t\t$sequence_8 = { 83 c0 01 89 85 6c f6 ff ff 8b 8d 70 f6 ff ff 8a 11 }\n\t\t$sequence_9 = { 03 55 f0 0f b6 02 0f b6 4d f7 33 c1 0f b6 55 fc 33 c2 }\n\t\t$sequence_10 = { d1 e9 89 4d f8 8b 55 18 89 55 fc c7 45 f0 00 00 00 00 }\n\t\t$sequence_11 = { 8b 4d f0 3b 4d 10 0f 8d 90 00 00 00 8b 55 08 03 55 f0 0f b6 02 }\n\t\t$sequence_12 = { 89 4d 14 8b 45 f8 c1 e0 18 8b 4d fc c1 e9 08 0b c1 }\n\t\t$sequence_13 = { 0b c1 89 45 18 8b 55 14 89 55 f8 }\n\t\t$sequence_14 = { 8b 55 14 89 55 f8 8b 45 18 89 45 fc e9 ?? ?? ?? ?? 8b e5 }\n\n\tcondition:\n\t\tfilesize < 1700KB and 7 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

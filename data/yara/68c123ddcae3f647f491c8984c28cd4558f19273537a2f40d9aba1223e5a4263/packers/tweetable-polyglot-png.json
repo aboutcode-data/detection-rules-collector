@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/packers/tweetable-polyglot-png.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TweetablePolyglotPng",
+                "tags": [],
+                "description": "tweetable-polyglot-png: https://github.com/DavidBuchanan314/tweetable-polyglot-png",
+                "author": "Manfred Kaiser"
+            },
+            "rule_text": "rule TweetablePolyglotPng\n{\n\tmeta:\n\t\tdescription = \"tweetable-polyglot-png: https://github.com/DavidBuchanan314/tweetable-polyglot-png\"\n\t\tauthor = \"Manfred Kaiser\"\n\n\tstrings:\n\t\t$magic1 = { 50 4b 01 02 }\n\t\t$magic2 = { 50 4b 03 04 }\n\t\t$magic3 = { 50 4b 05 06 }\n\n\tcondition:\n\t\t( uint32be( 0 ) == 0x89504E47 or uint32be( 0 ) == 0xFFD8FFE0 ) and $magic1 and $magic2 and $magic3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

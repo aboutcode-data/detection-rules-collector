@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/SmokeLoader/Trojan_Win32_SmokeLoader_PHR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_SmokeLoader_PHR_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/SmokeLoader.PHR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_SmokeLoader_PHR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/SmokeLoader.PHR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {d3 ea 8b 4c 24 ?? 03 c7 89 44 24 ?? 8d 44 24 2c 89 54 24 2c c7 05 ?? ?? ?? ?? ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 44 24 24 31 44 24 14 81 3d ?? ?? ?? ?? ?? ?? ?? ?? 75 }\n\t\t$a_03_1 = {d3 ee 03 74 24 ?? 8b 44 24 ?? 31 44 24 14 81 3d ?? ?? ?? ?? ?? ?? ?? ?? 75 ?? 53 53 53 ff 15 ?? ?? ?? ?? 8b 44 24 14 33 c6 89 44 24 14 2b f8 8d 44 24 ?? e8 ?? ?? ?? ?? 83 6c 24 34 01 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

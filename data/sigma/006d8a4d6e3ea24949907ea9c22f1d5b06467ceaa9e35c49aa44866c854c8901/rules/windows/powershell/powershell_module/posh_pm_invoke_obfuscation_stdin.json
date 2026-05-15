@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_invoke_obfuscation_stdin.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jonathan Cheong, oscd.community",
+                "date": "2020-10-15",
+                "title": "Invoke-Obfuscation STDIN+ Launcher - PowerShell Module",
+                "id": "9ac8b09b-45de-4a07-9da1-0de8c09304a3"
+            },
+            "rule_text": "title: Invoke-Obfuscation STDIN+ Launcher - PowerShell Module\nid: 9ac8b09b-45de-4a07-9da1-0de8c09304a3\nrelated:\n- id: 779c8c12-0eb1-11eb-adc1-0242ac120002\n  type: derived\nstatus: test\ndescription: Detects Obfuscated use of stdin to execute PowerShell\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Jonathan Cheong, oscd.community\ndate: 2020-10-15\nmodified: 2024-04-05\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_4103:\n    Payload|re: cmd.{0,5}(?:/c|/r).+powershell.+(?:\\$\\{?input\\}?|noexit).+\"\n  condition: selection_4103\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

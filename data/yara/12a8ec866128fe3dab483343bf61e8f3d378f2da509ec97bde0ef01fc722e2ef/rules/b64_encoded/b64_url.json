@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/ail-project/ail-yara-rules/blob/master/rules/b64_encoded/b64_url.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "b64_url",
+                "tags": [],
+                "author": "@KevTheHermit",
+                "info": "Part of PasteHunter",
+                "reference": "https://github.com/kevthehermit/PasteHunter"
+            },
+            "rule_text": "rule b64_url\n{\n\tmeta:\n\t\tauthor = \"@KevTheHermit\"\n\t\tinfo = \"Part of PasteHunter\"\n\t\treference = \"https://github.com/kevthehermit/PasteHunter\"\n\n\tstrings:\n\t\t$a1 = \"aHR0cDov\"\n\t\t$a2 = \"SFRUUDov\"\n\t\t$a3 = \"d3d3Lg\"\n\t\t$a4 = \"V1dXLg\"\n\t\t$not1 = \"GlobalSign Root CA\" nocase\n\t\t$not2 = /data:[a-z0-9\\/]+;(base64,)?aHR0cDov/ nocase\n\t\t$not3 = /data:[a-z0-9\\/]+;(base64,)?SFRUUDov/ nocase\n\t\t$not4 = /data:[a-z0-9\\/]+;(base64,)?d3d3Lg/ nocase\n\t\t$not5 = /data:[a-z0-9\\/]+;(base64,)?V1dXLg/ nocase\n\n\tcondition:\n\t\tany of ( $a* ) and not any of ( $not* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

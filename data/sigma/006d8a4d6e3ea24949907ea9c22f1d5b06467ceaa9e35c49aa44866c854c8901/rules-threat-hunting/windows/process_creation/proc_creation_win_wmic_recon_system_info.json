@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_wmic_recon_system_info.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-12-19",
+                "title": "System Information Discovery Via Wmic.EXE",
+                "id": "d85ecdd7-b855-4e6e-af59-d9c78b5b861e"
+            },
+            "rule_text": "title: System Information Discovery Via Wmic.EXE\nid: d85ecdd7-b855-4e6e-af59-d9c78b5b861e\nrelated:\n- id: 9d5a1274-922a-49d0-87f3-8c653483b909\n  type: derived\nstatus: test\ndescription: 'Detects the use of the WMI command-line (WMIC) utility to identify and\n  display various system information,\n\n  including OS, CPU, GPU, disk drive names, memory capacity, display resolution, baseboard,\n  BIOS,\n\n  and GPU driver products/versions.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/a2ccd19c37d0278b4ffa8583add3cf52060a5418/atomics/T1082/T1082.md#atomic-test-25---system-information-discovery-with-wmic\n- https://nwgat.ninja/getting-system-information-with-wmic-on-windows/\n- https://blog.sekoia.io/aurora-a-rising-stealer-flying-under-the-radar\n- https://blog.cyble.com/2023/01/18/aurora-a-stealer-using-shapeshifting-tactics/\n- https://app.any.run/tasks/a6aa0057-82ec-451f-8f99-55650ca537da/\n- https://www.virustotal.com/gui/file/d6f6bc10ae0e634ed4301d584f61418cee18e5d58ad9af72f8aa552dc4aaeca3/behavior\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-12-19\nmodified: 2024-01-15\ntags:\n- attack.discovery\n- attack.t1082\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_wmic:\n  - Description: WMI Commandline Utility\n  - OriginalFileName: wmic.exe\n  - Image|endswith: \\WMIC.exe\n  selection_get:\n    CommandLine|contains: get\n  selection_classes:\n    CommandLine|contains:\n    - baseboard\n    - bios\n    - cpu\n    - diskdrive\n    - logicaldisk\n    - memphysical\n    - os\n    - path\n    - startup\n    - win32_videocontroller\n  selection_attributes:\n    CommandLine|contains:\n    - caption\n    - command\n    - driverversion\n    - maxcapacity\n    - name\n    - osarchitecture\n    - product\n    - size\n    - smbiosbiosversion\n    - version\n    - videomodedescription\n  filter_optional_vmtools:\n    ParentCommandLine|contains: \\VMware\\VMware Tools\\serviceDiscovery\\scripts\\\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- VMWare Tools serviceDiscovery scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

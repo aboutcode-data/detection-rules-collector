@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vmware_toolbox_cmd_persistence_susp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-14",
+                "title": "Suspicious Persistence Via VMwareToolBoxCmd.EXE VM State Change Script",
+                "id": "236d8e89-ed95-4789-a982-36f4643738ba"
+            },
+            "rule_text": "title: Suspicious Persistence Via VMwareToolBoxCmd.EXE VM State Change Script\nid: 236d8e89-ed95-4789-a982-36f4643738ba\nrelated:\n- id: 7aa4e81a-a65c-4e10-9f81-b200eb229d7d\n  type: derived\nstatus: test\ndescription: Detects execution of the \"VMwareToolBoxCmd.exe\" with the \"script\" and\n  \"set\" flag to setup a specific script that's located in a potentially suspicious\n  location to run for a specific VM state\nreferences:\n- https://bohops.com/2021/10/08/analyzing-and-detecting-a-vmtools-persistence-technique/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-14\ntags:\n- attack.execution\n- attack.persistence\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_bin_img:\n  - Image|endswith: \\VMwareToolBoxCmd.exe\n  - OriginalFileName: toolbox-cmd.exe\n  selection_bin_cli:\n    CommandLine|contains|all:\n    - ' script '\n    - ' set '\n  selection_susp_paths:\n    CommandLine|contains:\n    - :\\PerfLogs\\\n    - :\\Temp\\\n    - :\\Windows\\System32\\Tasks\\\n    - :\\Windows\\Tasks\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

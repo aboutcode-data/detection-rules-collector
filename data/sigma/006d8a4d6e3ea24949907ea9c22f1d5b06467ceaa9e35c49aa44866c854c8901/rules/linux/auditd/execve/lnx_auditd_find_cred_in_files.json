@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_find_cred_in_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Igor Fits, oscd.community",
+                "date": "2020-10-15",
+                "title": "Credentials In Files - Linux",
+                "id": "df3fcaea-2715-4214-99c5-0056ea59eb35"
+            },
+            "rule_text": "title: Credentials In Files - Linux\nid: df3fcaea-2715-4214-99c5-0056ea59eb35\nstatus: test\ndescription: Detecting attempts to extract passwords with grep\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.001/T1552.001.md\nauthor: Igor Fits, oscd.community\ndate: 2020-10-15\nmodified: 2023-04-30\ntags:\n- attack.credential-access\n- attack.t1552.001\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n  keywords:\n    '|all':\n    - grep\n    - password\n  condition: selection and keywords\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

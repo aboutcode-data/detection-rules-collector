@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_private_keys_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-07-20",
+                "title": "Private Keys Reconnaissance Via CommandLine Tools",
+                "id": "213d6a77-3d55-4ce8-ba74-fcfef741974e"
+            },
+            "rule_text": "title: Private Keys Reconnaissance Via CommandLine Tools\nid: 213d6a77-3d55-4ce8-ba74-fcfef741974e\nstatus: test\ndescription: Adversaries may search for private key certificate files on compromised\n  systems for insecurely stored credential\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.004/T1552.004.md\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-07-20\nmodified: 2023-03-06\ntags:\n- attack.credential-access\n- attack.t1552.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cmd_cli:\n    CommandLine|contains: 'dir '\n  selection_pwsh_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_pwsh_cli:\n    CommandLine|contains: 'Get-ChildItem '\n  selection_findstr:\n  - Image|endswith: \\findstr.exe\n  - OriginalFileName: FINDSTR.EXE\n  selection_ext:\n    CommandLine|contains:\n    - .key\n    - .pgp\n    - .gpg\n    - .ppk\n    - .p12\n    - .pem\n    - .pfx\n    - .cer\n    - .p7b\n    - .asc\n  condition: selection_ext and (all of selection_cmd_* or all of selection_pwsh_*\n    or selection_findstr)\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

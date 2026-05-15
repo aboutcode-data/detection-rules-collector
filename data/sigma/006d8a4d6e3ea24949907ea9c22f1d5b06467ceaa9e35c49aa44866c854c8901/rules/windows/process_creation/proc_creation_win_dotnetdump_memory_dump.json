@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dotnetdump_memory_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-14",
+                "title": "Process Memory Dump Via Dotnet-Dump",
+                "id": "53d8d3e1-ca33-4012-adf3-e05a4d652e34"
+            },
+            "rule_text": "title: Process Memory Dump Via Dotnet-Dump\nid: 53d8d3e1-ca33-4012-adf3-e05a4d652e34\nstatus: test\ndescription: 'Detects the execution of \"dotnet-dump\" with the \"collect\" flag. The\n  execution could indicate potential process dumping of critical processes such as\n  LSASS.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-dump#dotnet-dump-collect\n- https://twitter.com/bohops/status/1635288066909966338\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-14\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\dotnet-dump.exe\n  - OriginalFileName: dotnet-dump.dll\n  selection_cli:\n    CommandLine|contains: collect\n  condition: all of selection_*\nfalsepositives:\n- Process dumping is the expected behavior of the tool. So false positives are expected\n  in legitimate usage. The PID/Process Name of the process being dumped needs to be\n  investigated\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

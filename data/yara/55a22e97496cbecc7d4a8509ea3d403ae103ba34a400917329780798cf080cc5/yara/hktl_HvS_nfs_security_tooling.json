@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/hktl_HvS_nfs_security_tooling.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HKTL_NFS_Fuse_NFS",
+                "tags": [],
+                "description": "Detects the nfs-security-tooling fuse_nfs by HvS Consulting",
+                "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "author": "Moritz Oettle",
+                "date": "2024-10-22",
+                "score": 75,
+                "reference": "https://github.com/hvs-consulting/nfs-security-tooling",
+                "id": "287fbe7d-ee1c-58a4-aa2d-9d9bec8321b4"
+            },
+            "rule_text": "rule HKTL_NFS_Fuse_NFS\n{\n\tmeta:\n\t\tdescription = \"Detects the nfs-security-tooling fuse_nfs by HvS Consulting\"\n\t\tlicense = \"https://creativecommons.org/licenses/by-nc/4.0/\"\n\t\tauthor = \"Moritz Oettle\"\n\t\tdate = \"2024-10-22\"\n\t\tscore = 75\n\t\treference = \"https://github.com/hvs-consulting/nfs-security-tooling\"\n\t\tid = \"287fbe7d-ee1c-58a4-aa2d-9d9bec8321b4\"\n\n\tstrings:\n\t\t$s1 = \"NFS3ConnectionFactory\" fullword ascii\n\t\t$s2 = \"fuse_to_nfs_timestamp\" fullword ascii\n\t\t$s3 = \"--manual-fh\" fullword ascii\n\t\t$s4 = \"--fake-uid-allow-root\" fullword ascii\n\t\t$s5 = \"nfs.rpc.credential\" fullword ascii\n\t\t$s6 = \"nfs.readlink\" fullword ascii\n\t\t$s7 = \"pyfuse3.EntryAttributes\" fullword ascii\n\t\t$s8 = \"Make nested exports on NetApp servers work\" fullword ascii\n\t\t$s9 = \"add_mutually_exclusive_group\" fullword ascii\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HKTL_NFS_NFS_Analyze",
+                "tags": [],
+                "description": "Detects the nfs-security-tooling nfy_analyze by HvS Consulting",
+                "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "author": "Marc Stroebel",
+                "date": "2024-10-22",
+                "score": 75,
+                "reference": "https://github.com/hvs-consulting/nfs-security-tooling",
+                "id": "3350d0ae-e638-5c8f-a578-ba0ac5521053"
+            },
+            "rule_text": "rule HKTL_NFS_NFS_Analyze\n{\n\tmeta:\n\t\tdescription = \"Detects the nfs-security-tooling nfy_analyze by HvS Consulting\"\n\t\tlicense = \"https://creativecommons.org/licenses/by-nc/4.0/\"\n\t\tauthor = \"Marc Stroebel\"\n\t\tdate = \"2024-10-22\"\n\t\tscore = 75\n\t\treference = \"https://github.com/hvs-consulting/nfs-security-tooling\"\n\t\tid = \"3350d0ae-e638-5c8f-a578-ba0ac5521053\"\n\n\tstrings:\n\t\t$s1 = \"no_root_squash_exports\" fullword ascii\n\t\t$s2 = \"nfs lock manager\" fullword ascii\n\t\t$s3 = \"netapp partner\" fullword ascii\n\t\t$s4 = \"xdrdef.mnt3_type\" fullword ascii\n\t\t$s5 = \"BTRFS subvolumes\" fullword ascii\n\t\t$s6 = \"Unsupported fsid\" fullword ascii\n\t\t$s7 = \"nfs3_read_etc_shadow\" fullword ascii\n\t\t$s8 = \"nfs3_check_no_root_squash\" fullword ascii\n\t\t$s9 = \"krb5i\" fullword ascii\n\t\t$s10 = \"nfs4_overview\" fullword ascii\n\t\t$s11 = \"--btrfs-subvolumes\" fullword ascii\n\t\t$s12 = \"when escaping a BTRFS export\" fullword ascii\n\t\t$s13 = \"No NFS server detected\" fullword ascii\n\n\tcondition:\n\t\t6 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

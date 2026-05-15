@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disk_cleanup_handler_autorun_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Persistence Via Disk Cleanup Handler - Autorun",
+                "id": "d4e2745c-f0c6-4bde-a3ab-b553b3f693cc"
+            },
+            "rule_text": "title: Persistence Via Disk Cleanup Handler - Autorun\nid: d4e2745c-f0c6-4bde-a3ab-b553b3f693cc\nstatus: test\ndescription: \"Detects when an attacker modifies values of the Disk Cleanup Handler\\\n  \\ in the registry to achieve persistence via autorun.\\nThe disk cleanup manager\\\n  \\ is part of the operating system.\\nIt displays the dialog box [\\u2026] The user\\\n  \\ has the option of enabling or disabling individual handlers by selecting or clearing\\\n  \\ their check box in the disk cleanup manager's UI.\\nAlthough Windows comes with\\\n  \\ a number of disk cleanup handlers, they aren't designed to handle files produced\\\n  \\ by other applications.\\nInstead, the disk cleanup manager is designed to be flexible\\\n  \\ and extensible by enabling any developer to implement and register their own disk\\\n  \\ cleanup handler.\\nAny developer can extend the available disk cleanup services\\\n  \\ by implementing and registering a disk cleanup handler.\\n\"\nreferences:\n- https://persistence-info.github.io/Data/diskcleanuphandler.html\n- https://www.hexacorn.com/blog/2018/09/02/beyond-good-ol-run-key-part-86/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-08-17\ntags:\n- attack.persistence\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  root:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VolumeCaches\\\n  selection_autorun:\n    TargetObject|contains: \\Autorun\n    Details: DWORD (0x00000001)\n  selection_pre_after:\n    TargetObject|contains:\n    - \\CleanupString\n    - \\PreCleanupString\n    Details|contains:\n    - cmd\n    - powershell\n    - rundll32\n    - mshta\n    - cscript\n    - wscript\n    - wsl\n    - \\Users\\Public\\\n    - \\Windows\\TEMP\\\n    - \\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\\n  condition: root and 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

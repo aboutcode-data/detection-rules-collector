@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/identity_protection/azure_identity_protection_impossible_travel.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'",
+                "date": "2023-09-03",
+                "title": "Impossible Travel",
+                "id": "b2572bf9-e20a-4594-b528-40bde666525a"
+            },
+            "rule_text": "title: Impossible Travel\nid: b2572bf9-e20a-4594-b528-40bde666525a\nstatus: test\ndescription: Identifies user activities originating from geographically distant locations\n  within a time period shorter than the time it takes to travel from the first location\n  to the second.\nreferences:\n- https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#impossible-travel\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-user-accounts#unusual-sign-ins\nauthor: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'\ndate: 2023-09-03\ntags:\n- attack.stealth\n- attack.t1078\n- attack.persistence\n- attack.privilege-escalation\n- attack.initial-access\nlogsource:\n  product: azure\n  service: riskdetection\ndetection:\n  selection:\n    riskEventType: impossibleTravel\n  condition: selection\nfalsepositives:\n- Connecting to a VPN, performing activity and then dropping and performing additional\n  activity.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_nscurl_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniel Cortez",
+                "date": "2024-06-04",
+                "title": "File Download Via Nscurl - MacOS",
+                "id": "6d8a7cf1-8085-423b-b87d-7e880faabbdf"
+            },
+            "rule_text": "title: File Download Via Nscurl - MacOS\nid: 6d8a7cf1-8085-423b-b87d-7e880faabbdf\nstatus: test\ndescription: Detects the execution of the nscurl utility in order to download files.\nreferences:\n- https://www.loobins.io/binaries/nscurl/\n- https://www.agnosticdev.com/content/how-diagnose-app-transport-security-issues-using-nscurl-and-openssl\n- https://gist.github.com/nasbench/ca6ef95db04ae04ffd1e0b1ce709cadd\nauthor: Daniel Cortez\ndate: 2024-06-04\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /nscurl\n    CommandLine|contains:\n    - '--download '\n    - '--download-directory '\n    - '--output '\n    - '-dir '\n    - '-dl '\n    - -ld\n    - '-o '\n  condition: selection\nfalsepositives:\n- Legitimate usage of nscurl by administrators and users.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

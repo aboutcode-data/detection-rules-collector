@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_ACRStealer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_ACRStealer_f9728d76",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "f9728d76-0b57-4a4f-93de-9d8590301416",
+                "fingerprint": "d1308f5a32426666fce76a4777becbfc6f90ffa12b8ef2b8ee7ab2f9ede203b5",
+                "creation_date": "2025-05-01",
+                "last_modified": "2026-01-06",
+                "threat_name": "Windows.Trojan.ACRStealer",
+                "reference_sample": "120316ecaf06b76a564ce42e11f7074c52df6d79b85d3526c5b4e9f362d2f1c2",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_ACRStealer_f9728d76\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"f9728d76-0b57-4a4f-93de-9d8590301416\"\n\t\tfingerprint = \"d1308f5a32426666fce76a4777becbfc6f90ffa12b8ef2b8ee7ab2f9ede203b5\"\n\t\tcreation_date = \"2025-05-01\"\n\t\tlast_modified = \"2026-01-06\"\n\t\tthreat_name = \"Windows.Trojan.ACRStealer\"\n\t\treference_sample = \"120316ecaf06b76a564ce42e11f7074c52df6d79b85d3526c5b4e9f362d2f1c2\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = { 55 8B EC 51 0F B6 45 ?? 83 F8 30 7C ?? 0F B6 4D ?? 83 F9 39 7E ?? 0F B6 55 ?? 83 FA 41 7C ?? 0F B6 45 ?? 83 F8 5A 7E ?? 0F B6 4D ?? 83 F9 61 7C ?? 0F B6 55 ?? 83 FA 7A 7E ?? 0F B6 45 ?? 83 F8 2B 74 ?? 0F B6 4D ?? 83 F9 2F 74 ?? C7 45 ?? ?? ?? ?? ?? EB ?? C7 45 }\n\t\t$a2 = \"Error: no GetSystemMetrics\" ascii fullword\n\t\t$a3 = \"Error: no user32.dll\" ascii fullword\n\t\t$a4 = { 8B ?? 24 C7 ?? ?? ?? ?? ?? 8B ?? F8 5? E8 ?? ?? ?? ?? 83 C4 04 8B ?? FC 5? FF 15 ?? ?? ?? ?? 33 C0 E9 }\n\t\t$a5 = { 89 45 F8 8B 45 F8 8B 88 A4 00 00 00 89 4D F4 8B 55 F8 }\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

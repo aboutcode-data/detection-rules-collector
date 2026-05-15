@@ -1,0 +1,61 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/juanandresgs/apt_ZZ_Sig37_NAZAR.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_ZZ_SIG37_NAZAR_GpUpdatesExe",
+                "tags": [],
+                "desc": "SIG37 GpUpdates dropper, Chilkat Zip2Secure",
+                "author": "JAG-S",
+                "hash": "75e4d73252c753cd8e177820eb261cd72fecd7360cc8ec3feeab7bd129c01ff6"
+            },
+            "rule_text": "rule apt_ZZ_SIG37_NAZAR_GpUpdatesExe\n{\n\tmeta:\n\t\tdesc = \"SIG37 GpUpdates dropper, Chilkat Zip2Secure\"\n\t\tauthor = \"JAG-S\"\n\t\thash = \"75e4d73252c753cd8e177820eb261cd72fecd7360cc8ec3feeab7bd129c01ff6\"\n\n\tstrings:\n\t\t$open = \"open\" ascii wide fullword\n\t\t$regsrv = \"regsvr32.exe\" ascii wide\n\t\t$filename1 = \"Godown.dll -s\" ascii wide\n\t\t$filename2 = \"ViewScreen.dll -s\" ascii wide\n\t\t$filename3 = \"Filesystem.dll -s\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( $open and $regsrv and ( 1 of ( $filename* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_ZZ_SIG37_NAZAR_FarsiResources",
+                "tags": [],
+                "desc": "SIG37 GpUpdates Shared Farsi resources",
+                "author": "JAG-S",
+                "hash": "75e4d73252c753cd8e177820eb261cd72fecd7360cc8ec3feeab7bd129c01ff6"
+            },
+            "rule_text": "import \"pe\"\nimport \"hash\"\n\nrule apt_ZZ_SIG37_NAZAR_FarsiResources\n{\n\tmeta:\n\t\tdesc = \"SIG37 GpUpdates Shared Farsi resources\"\n\t\tauthor = \"JAG-S\"\n\t\thash = \"75e4d73252c753cd8e177820eb261cd72fecd7360cc8ec3feeab7bd129c01ff6\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and for any i in ( 0 .. pe.number_of_resources - 1 ) : ( hash.sha256 ( pe.resources [ i ] . offset , pe.resources [ i ] . length ) == \"893cf8c164106784669b395825f17c21f46a345babfff6144686e8e1a48bf2f1\" or hash.sha256 ( pe.resources [ i ] . offset , pe.resources [ i ] . length ) == \"26ee0ff37e6ffd30ca5415992ececc5faeb8e6a937fcbeb3952ce5581456b7b5\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_ZZ_SIG37_NAZAR_GoDownDll",
+                "tags": [],
+                "desc": "SIG37 Dropped TypeLibrary",
+                "author": "JAG-S",
+                "hash": "8fb9a22b20a338d90c7ceb9424d079a61ca7ccb7f78ffb7d74d2f403ae9fbeec"
+            },
+            "rule_text": "rule apt_ZZ_SIG37_NAZAR_GoDownDll\n{\n\tmeta:\n\t\tdesc = \"SIG37 Dropped TypeLibrary\"\n\t\tauthor = \"JAG-S\"\n\t\thash = \"8fb9a22b20a338d90c7ceb9424d079a61ca7ccb7f78ffb7d74d2f403ae9fbeec\"\n\n\tstrings:\n\t\t$godown1 = /Godown [0-9.]{1,4} Type LibraryWWW/ ascii wide\n\t\t$godown2 = \"Godown.Shutdown.1\" ascii wide\n\t\t$godown3 = \"qGODOWNLibWWW\" ascii wide\n\t\t$guid1 = \"{772BA12D-8A62-4DD3-B3E8-92DA702E6F3D}\" ascii wide\n\t\t$guid2 = \"{B64E94AF-D56B-48B4-B178-AF0723E72AB5}\" ascii wide\n\t\t$guid3 = \"{DBCB4B31-21B8-4A0F-BC69-0C3CE3B66D00}\" ascii wide\n\t\t$shutdown1 = \"aShutdownd\" ascii wide\n\t\t$shutdown2 = \"IShutdownWWWd\" ascii wide\n\t\t$shutdown3 = \"IShutdown InterfaceWWW\" ascii wide\n\t\t$shutdown4 = \"method PowerOffWWW\" ascii wide\n\t\t$shutdown5 = \"property TimeoutWW\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $godown* ) or any of ( $guid* ) or 2 of ( $shutdown* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_ZZ_SIG37_NAZAR_Kzher_pdb",
+                "tags": [],
+                "desc": "GoDown PDB Path",
+                "author": "JAG-S",
+                "hash": "1110c3e34b6bbaadc5082fabbdd69f492f3b1480724b879a3df0035ff487fd6f"
+            },
+            "rule_text": "rule apt_ZZ_SIG37_NAZAR_Kzher_pdb\n{\n\tmeta:\n\t\tdesc = \"GoDown PDB Path\"\n\t\tauthor = \"JAG-S\"\n\t\thash = \"4d0ab3951df93589a874192569cac88f7107f595600e274f52e2b75f68593bca\"\n\t\thash = \"d9801b4da1dbc5264e83029abb93e800d3c9971c650ecc2df5f85bcc10c7bd61\"\n\t\thash = \"1110c3e34b6bbaadc5082fabbdd69f492f3b1480724b879a3df0035ff487fd6f\"\n\n\tstrings:\n\t\t$pdb_spec = \"C:\\\\khzer\\\\DLLs\\\\DLL's Source\\\\\" ascii wide\n\t\t$pdb_gen = \"C:\\\\khzer\\\\\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_ZZ_SIG37_NAZAR_GpUpdates_Distribute",
+                "tags": [],
+                "desc": "SIG37 GpUpdates unpacked distributor: Distribute.exe",
+                "author": "JAG-S",
+                "hash": "6b8ea9a156d495ec089710710ce3f4b1e19251c1d0e5b2c21bbeeab05e7b331f",
+                "parent": "d34a996826ea5a028f5b4713c797247913f036ca0063cc4c18d8b04736fa0b65"
+            },
+            "rule_text": "rule apt_ZZ_SIG37_NAZAR_GpUpdates_Distribute\n{\n\tmeta:\n\t\tdesc = \"SIG37 GpUpdates unpacked distributor: Distribute.exe\"\n\t\tauthor = \"JAG-S\"\n\t\thash = \"6b8ea9a156d495ec089710710ce3f4b1e19251c1d0e5b2c21bbeeab05e7b331f\"\n\t\tparent = \"d34a996826ea5a028f5b4713c797247913f036ca0063cc4c18d8b04736fa0b65\"\n\n\tstrings:\n\t\t$uniq_filename1 = \"\\\\godown.dll\" ascii wide\n\t\t$common_filename1 = \"\\\\ViewScreen.dll\" ascii wide\n\t\t$common_filename2 = \"\\\\filesystem.dll\" ascii wide\n\t\t$common_filename3 = \"\\\\dllcache\\\\svchost.exe\" ascii wide\n\t\t$common_filename4 = \"\\\\lame_enc.dll\" ascii wide\n\t\t$common_filename5 = \"\\\\hodll.dll\" ascii wide\n\t\t$service1 = \"Provides basic host functionality\" ascii wide\n\t\t$service2 = \"EYService\" ascii wide\n\t\t$service3 = \"Windows Host Service\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $uniq_filename* ) or all of ( $common_filename* ) or ( all of ( $service* ) and 3 of ( $common_filename* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

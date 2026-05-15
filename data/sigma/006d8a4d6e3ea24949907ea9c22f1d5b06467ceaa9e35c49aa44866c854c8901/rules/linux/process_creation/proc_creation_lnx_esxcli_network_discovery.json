@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_esxcli_network_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Cedric Maurugeon",
+                "date": "2023-09-04",
+                "title": "ESXi Network Configuration Discovery Via ESXCLI",
+                "id": "33e814e0-1f00-4e43-9c34-31fb7ae2b174"
+            },
+            "rule_text": "title: ESXi Network Configuration Discovery Via ESXCLI\nid: 33e814e0-1f00-4e43-9c34-31fb7ae2b174\nstatus: test\ndescription: Detects execution of the \"esxcli\" command with the \"network\" flag in\n  order to retrieve information about the network configuration.\nreferences:\n- https://www.crowdstrike.com/blog/hypervisor-jackpotting-ecrime-actors-increase-targeting-of-esxi-servers/\n- https://developer.broadcom.com/xapis/esxcli-command-reference/7.0.0/namespace/esxcli_network.html\nauthor: Cedric Maurugeon\ndate: 2023-09-04\ntags:\n- attack.discovery\n- attack.execution\n- attack.t1033\n- attack.t1007\n- attack.t1059.012\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /esxcli\n    CommandLine|contains: network\n  selection_cli:\n    CommandLine|contains:\n    - ' get'\n    - ' list'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

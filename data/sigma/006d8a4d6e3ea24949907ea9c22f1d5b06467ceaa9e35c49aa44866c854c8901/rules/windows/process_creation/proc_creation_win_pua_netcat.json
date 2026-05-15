@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_netcat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Florian Roth (Nextron Systems)",
+                "date": "2021-07-21",
+                "title": "PUA - Netcat Suspicious Execution",
+                "id": "e31033fc-33f0-4020-9a16-faf9b31cbf08"
+            },
+            "rule_text": "title: PUA - Netcat Suspicious Execution\nid: e31033fc-33f0-4020-9a16-faf9b31cbf08\nstatus: test\ndescription: Detects execution of Netcat. Adversaries may use a non-application layer\n  protocol for communication between host and C2 server or among infected hosts within\n  a network\nreferences:\n- https://nmap.org/ncat/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1095/T1095.md\n- https://www.revshells.com/\nauthor: frack113, Florian Roth (Nextron Systems)\ndate: 2021-07-21\nmodified: 2023-02-08\ntags:\n- attack.command-and-control\n- attack.t1095\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith:\n    - \\nc.exe\n    - \\ncat.exe\n    - \\netcat.exe\n  selection_cmdline:\n    CommandLine|contains:\n    - ' -lvp '\n    - ' -lvnp'\n    - ' -l -v -p '\n    - ' -lv -p '\n    - ' -l --proxy-type http '\n    - ' -vnl --exec '\n    - ' -vnl -e '\n    - ' --lua-exec '\n    - ' --sh-exec '\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate ncat use\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_install_suspicious_packages.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-03",
+                "title": "Suspicious Package Installed - Linux",
+                "id": "700fb7e8-2981-401c-8430-be58e189e741"
+            },
+            "rule_text": "title: Suspicious Package Installed - Linux\nid: 700fb7e8-2981-401c-8430-be58e189e741\nstatus: test\ndescription: Detects installation of suspicious packages using system installation\n  utilities\nreferences:\n- https://gist.githubusercontent.com/MichaelKoczwara/12faba9c061c12b5814b711166de8c2f/raw/e2068486692897b620c25fde1ea258c8218fe3d3/history.txt\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-03\nmodified: 2026-01-01\ntags:\n- attack.defense-impairment\n- attack.t1553.004\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_tool_apt:\n    Image|endswith:\n    - /apt\n    - /apt-get\n    CommandLine|contains: install\n  selection_tool_yum:\n    Image|endswith: /yum\n    CommandLine|contains:\n    - localinstall\n    - install\n  selection_tool_rpm:\n    Image|endswith: /rpm\n    CommandLine|contains: -i\n  selection_tool_dpkg:\n    Image|endswith: /dpkg\n    CommandLine|contains:\n    - --install\n    - -i\n  selection_keyword:\n    CommandLine|contains:\n    - nmap\n    - ' nc'\n    - netcat\n    - wireshark\n    - tshark\n    - openconnect\n    - proxychains\n    - socat\n  condition: 1 of selection_tool_* and selection_keyword\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

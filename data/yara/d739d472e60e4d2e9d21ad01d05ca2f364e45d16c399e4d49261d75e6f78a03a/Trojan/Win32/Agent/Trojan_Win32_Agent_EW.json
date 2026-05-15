@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Agent/Trojan_Win32_Agent_EW.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Agent_EW",
+                "tags": [],
+                "description": "Trojan:Win32/Agent.EW,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Agent_EW\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Agent.EW,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {85 c0 74 2f 8b 8d ?? ?? ?? ?? 0f be 91 ?? ?? ?? ?? 83 f2 77 85 d2 74 1b 8b 85 ?? ?? ?? ?? 8a 88 ?? ?? ?? ?? 80 f1 77 8b 95 ?? ?? ?? ?? 88 8a ?? ?? ?? ?? eb a3 }\n\t\t$a_03_1 = {8a 02 34 21 8b 8d ?? ?? ?? ?? 03 8d ?? ?? ?? ?? 88 01 eb c3 8b 15 ?? ?? ?? ?? 52 ff 15 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

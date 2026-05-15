@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ClipBanker/Trojan_Win32_ClipBanker_NCB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ClipBanker_NCB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/ClipBanker.NCB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ClipBanker_NCB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ClipBanker.NCB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 04 9f 41 8b 55 ?? 89 45 f8 89 4d ?? eb 03 8b 4d f4 43 8b 04 9f 66 39 30 }\n\t\t$a_01_1 = {6d 70 64 6d 61 73 6c 73 6f 69 65 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

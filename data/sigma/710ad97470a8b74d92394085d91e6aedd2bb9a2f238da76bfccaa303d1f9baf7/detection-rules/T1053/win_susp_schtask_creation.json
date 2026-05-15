@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1053/win_susp_schtask_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Florian Roth",
+                "date": null,
+                "title": "Scheduled Task Creation",
+                "id": null
+            },
+            "rule_text": "title: Scheduled Task Creation\nstatus: experimental\ndescription: Detects the creation of scheduled tasks in user session\nauthor: Florian Roth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image: '*\\schtasks.exe'\n    CommandLine: '* /create *'\n  filter:\n    User: NT AUTHORITY\\SYSTEM\n  condition: selection and not filter\nfields:\n- CommandLine\n- ParentCommandLine\ntags:\n- attack.execution\n- attack.persistence\n- attack.privilege_escalation\n- attack.t1053\n- attack.s0111\nfalsepositives:\n- Administrative activity\n- Software installation\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Redline/Trojan_Win32_Redline_ASAX_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Redline_ASAX_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Redline.ASAX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Redline_ASAX_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Redline.ASAX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ff d7 80 ae [0-05] ff d7 80 86 [0-05] ff d7 80 b6 [0-05] ff d7 }\n\t\t$a_03_1 = {ff d7 80 86 [0-05] ff d7 80 86 [0-05] ff d7 80 b6 [0-05] ff d7 80 86 }\n\t\t$a_03_2 = {ff d7 80 b6 [0-05] ff d7 80 86 [0-05] ff d7 80 86 [0-05] ff d7 80 86 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 4 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

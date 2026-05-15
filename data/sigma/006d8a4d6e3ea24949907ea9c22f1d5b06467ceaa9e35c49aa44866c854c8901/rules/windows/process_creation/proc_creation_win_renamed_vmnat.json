@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_vmnat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "elhoim",
+                "date": "2022-09-09",
+                "title": "Renamed Vmnat.exe Execution",
+                "id": "7b4f794b-590a-4ad4-ba18-7964a2832205"
+            },
+            "rule_text": "title: Renamed Vmnat.exe Execution\nid: 7b4f794b-590a-4ad4-ba18-7964a2832205\nstatus: test\ndescription: Detects renamed vmnat.exe or portable version that can be used for DLL\n  side-loading\nreferences:\n- https://twitter.com/malmoeb/status/1525901219247845376\nauthor: elhoim\ndate: 2022-09-09\nmodified: 2023-02-03\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: vmnat.exe\n  filter_rename:\n    Image|endswith: vmnat.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

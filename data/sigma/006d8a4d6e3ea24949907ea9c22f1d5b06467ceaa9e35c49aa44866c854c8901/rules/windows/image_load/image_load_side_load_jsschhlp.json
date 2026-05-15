@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_jsschhlp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-14",
+                "title": "Potential DLL Sideloading Via JsSchHlp",
+                "id": "68654bf0-4412-43d5-bfe8-5eaa393cd939"
+            },
+            "rule_text": "title: Potential DLL Sideloading Via JsSchHlp\nid: 68654bf0-4412-43d5-bfe8-5eaa393cd939\nstatus: test\ndescription: Detects potential DLL sideloading using JUSTSYSTEMS Japanese word processor\nreferences:\n- https://www.welivesecurity.com/2022/12/14/unmasking-mirrorface-operation-liberalface-targeting-japanese-political-entities/\n- http://www.windowexe.com/bbs/board.php?q=jsschhlp-exe-c-program-files-common-files-justsystem-jsschhlp-jsschhlp\nauthor: frack113\ndate: 2022-12-14\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\JSESPR.dll\n  filter:\n    ImageLoaded|startswith: C:\\Program Files\\Common Files\\Justsystem\\JsSchHlp\\\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/SodinokibiCrypt/Ransom_Win32_SodinokibiCrypt_SN_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_SodinokibiCrypt_SN_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/SodinokibiCrypt.SN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_SodinokibiCrypt_SN_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/SodinokibiCrypt.SN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {56 ff d7 56 ff 15 ?? ?? ?? ?? bd ?? ?? ?? ?? ff 15 ?? ?? ?? ?? 81 3d ?? ?? ?? ?? ?? ?? 00 00 75 ?? 56 ff 15 ?? ?? ?? ?? 4d 75 }\n\t\t$a_02_1 = {53 56 33 db 33 f6 81 fe ?? ?? 00 00 7d 06 ff 15 ?? ?? ?? ?? 81 fe ?? ?? ?? ?? 7e 24 81 bd ?? ?? ff ff ?? ?? ?? ?? 74 18 81 bd ?? ?? 00 00 ?? ?? 00 00 74 0c 81 bd ?? ?? ff ff ?? ?? ?? ?? 75 0b 46 81 fe ?? ?? ?? ?? 7c }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

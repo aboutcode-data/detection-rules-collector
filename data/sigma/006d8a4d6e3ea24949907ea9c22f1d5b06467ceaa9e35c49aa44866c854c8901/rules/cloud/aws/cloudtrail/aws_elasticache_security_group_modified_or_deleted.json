@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_elasticache_security_group_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-07-24",
+                "title": "AWS ElastiCache Security Group Modified or Deleted",
+                "id": "7c797da2-9cf2-4523-ba64-33b06339f0cc"
+            },
+            "rule_text": "title: AWS ElastiCache Security Group Modified or Deleted\nid: 7c797da2-9cf2-4523-ba64-33b06339f0cc\nstatus: test\ndescription: Identifies when an ElastiCache security group has been modified or deleted.\nreferences:\n- https://github.com/elastic/detection-rules/blob/7d5efd68603f42be5e125b5a6a503b2ef3ac0f4e/rules/integrations/aws/impact_elasticache_security_group_modified_or_deleted.toml\nauthor: Austin Songer @austinsonger\ndate: 2021-07-24\nmodified: 2022-10-09\ntags:\n- attack.impact\n- attack.t1531\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: elasticache.amazonaws.com\n    eventName:\n    - DeleteCacheSecurityGroup\n    - AuthorizeCacheSecurityGroupIngress\n    - RevokeCacheSecurityGroupIngress\n    - AuthorizeCacheSecurityGroupEgress\n    - RevokeCacheSecurityGroupEgress\n  condition: selection\nfalsepositives:\n- A ElastiCache security group deletion may be done by a system or network administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment. Security Group deletions from unfamiliar users or hosts should\n  be investigated. If known behavior is causing false positives, it can be exempted\n  from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_launch_vsdevshell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-19",
+                "title": "Launch-VsDevShell.PS1 Proxy Execution",
+                "id": "45d3a03d-f441-458c-8883-df101a3bb146"
+            },
+            "rule_text": "title: Launch-VsDevShell.PS1 Proxy Execution\nid: 45d3a03d-f441-458c-8883-df101a3bb146\nstatus: test\ndescription: Detects the use of the 'Launch-VsDevShell.ps1' Microsoft signed script\n  to execute commands.\nreferences:\n- https://twitter.com/nas_bench/status/1535981653239255040\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-19\ntags:\n- attack.stealth\n- attack.t1216.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_script:\n    CommandLine|contains: Launch-VsDevShell.ps1\n  selection_flags:\n    CommandLine|contains:\n    - 'VsWherePath '\n    - 'VsInstallationPath '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage of the script by a developer\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_net_share_obj_susp_desktop_ini.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Shelton (HAWK.IO)",
+                "date": "2021-12-06",
+                "title": "Windows Network Access Suspicious desktop.ini Action",
+                "id": "35bc7e28-ee6b-492f-ab04-da58fcf6402e"
+            },
+            "rule_text": "title: Windows Network Access Suspicious desktop.ini Action\nid: 35bc7e28-ee6b-492f-ab04-da58fcf6402e\nstatus: test\ndescription: Detects unusual processes accessing desktop.ini remotely over network\n  share, which can be leveraged to alter how Explorer displays a folder's content\n  (i.e. renaming files) without changing them on disk.\nreferences:\n- https://isc.sans.edu/forums/diary/Desktopini+as+a+postexploitation+tool/25912/\nauthor: Tim Shelton (HAWK.IO)\ndate: 2021-12-06\nmodified: 2022-01-16\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.009\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5145\n    ObjectType: File\n    RelativeTargetName|endswith: \\desktop.ini\n    AccessList|contains:\n    - WriteData\n    - DELETE\n    - WriteDAC\n    - AppendData\n    - AddSubdirectory\n  condition: selection\nfalsepositives:\n- Read only access list authority\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

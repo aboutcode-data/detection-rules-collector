@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_admin_logon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-10-14",
+                "title": "User with Privileges Logon",
+                "id": "94309181-d345-4cbf-b5fe-061769bdf9cb"
+            },
+            "rule_text": "title: User with Privileges Logon\nid: 94309181-d345-4cbf-b5fe-061769bdf9cb\nstatus: test\ndescription: Detects logon with \"Special groups\" and \"Special Privileges\" can be thought\n  of as Administrator groups or privileges.\nreferences:\n- https://github.com/Yamato-Security/EnableWindowsLogSettings/blob/7f6d755d45ac7cc9fc35b0cbf498e6aa4ef19def/ConfiguringSecurityLogAuditPolicies.md\n- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4672\n- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4964\nauthor: frack113\ndate: 2022-10-14\nmodified: 2023-12-14\ntags:\n- attack.lateral-movement\n- attack.credential-access\n- attack.t1558\n- attack.t1649\n- attack.t1550\nlogsource:\n  service: security\n  product: windows\ndetection:\n  selection:\n    EventID:\n    - 4672\n    - 4964\n  filter_main_local_system:\n    SubjectUserSid: S-1-5-18\n  filter_main_valid_account:\n    SubjectUserName|expand: '%Admins_Workstations%'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

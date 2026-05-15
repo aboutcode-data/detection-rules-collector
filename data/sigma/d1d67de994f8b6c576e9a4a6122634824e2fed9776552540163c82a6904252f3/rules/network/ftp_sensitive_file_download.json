@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/network/ftp_sensitive_file_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-07-20",
+                "title": "FTP Sensitive File Download",
+                "id": "b93fec22-98fb-48b3-9fd7-cfdc152dbc9a"
+            },
+            "rule_text": "title: FTP Sensitive File Download\nid: b93fec22-98fb-48b3-9fd7-cfdc152dbc9a\ndescription: Potentially sensitive file downloaded over FTP\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: 2024-07-20\nmodified: 2026-02-12\nlogsource:\n  category: firewall\nreferences:\n- https://www.cisco.com/c/en/us/td/docs/security/asa/syslog/asa-syslog/syslog-messages-302003-to-342008.html#con_8244007\ndetection:\n  ftp_download_cisco_asa:\n    raw|contains|all:\n    - '303002'\n    - Retrieved\n  sensitive_file:\n  - file_name|endswith:\n    - .htpasswd\n    - .bash_history\n    - .env\n    - .json\n    - id_rsa\n    - id_ecdsa\n  - file_name|contains:\n    - /.ssh/\n    - /.config/\n    - .pwd\n  condition: 1 of ftp_download* and sensitive_file\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

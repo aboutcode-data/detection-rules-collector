@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/linux/process_creation/proc_creation_lnx_susp_process_termination_via_kill.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tuan Le (NCSGroup)",
+                "date": "2023-03-16",
+                "title": "Terminate Linux Process Via Kill",
+                "id": "64c41342-6b27-523b-5d3f-c265f3efcdb3"
+            },
+            "rule_text": "title: Terminate Linux Process Via Kill\nid: 64c41342-6b27-523b-5d3f-c265f3efcdb3\nstatus: test\ndescription: Detects usage of command line tools such as \"kill\", \"pkill\" or \"killall\"\n  to terminate or signal a running process.\nreferences:\n- https://www.trendmicro.com/en_us/research/23/c/iron-tiger-sysupdate-adds-linux-targeting.html\n- https://www.cyberciti.biz/faq/how-force-kill-process-linux/\n- https://www.geeksforgeeks.org/how-to-kill-processes-on-the-linux-desktop-with-xkill/\nauthor: Tuan Le (NCSGroup)\ndate: 2023-03-16\nmodified: 2024-12-12\ntags:\n- attack.defense-impairment\n- attack.t1685\n- detection.threat-hunting\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith:\n    - /kill\n    - /killall\n    - /pkill\n    - /xkill\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Banload/TrojanDownloader_Win32_Banload_ALD.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Banload_ALD",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Banload.ALD,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Banload_ALD\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Banload.ALD,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {43 3a 5c 50 72 6f 67 72 61 6d 44 61 74 61 [0-10] 68 74 74 70 3a 2f 2f 64 6c 2e 64 72 6f 70 62 6f 78 2e 63 6f 6d 2f 75 2f [0-08] 2f 6d 6f 64 75 6c 6f 61 2e 6a 70 67 [0-10] 6d 66 72 73 [0-04] 2e 65 78 65 }\n\t\t$a_02_1 = {49 00 6e 00 74 00 65 00 72 00 6e 00 61 00 6c 00 4e 00 61 00 6d 00 65 00 [0-04] 49 00 6e 00 73 00 74 00 61 00 6c 00 61 00 64 00 6f 00 72 00 2e 00 65 00 78 00 65 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

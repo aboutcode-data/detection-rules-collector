@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/cylance/MiSType_Backdoor_Packed.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MiSType_Backdoor_Packed",
+                "tags": [],
+                "author": "Cylance SPEAR Team",
+                "note": "Probably Prone to False Positive"
+            },
+            "rule_text": "rule MiSType_Backdoor_Packed\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\t\tnote = \"Probably Prone to False Positive\"\n\n\tstrings:\n\t\t$upx = {33 2E 30 33 00 55 50 58 21}\n\t\t$send_httpquery = {00 00 00 48 74 74 70 51 75 65 72 79 49 6E 66 6F 41 00 00 73 65 6E 64 00 00}\n\t\t$delphi_sec_pe = {50 45 00 00 4C 01 03 00 19 5E 42 2A}\n\n\tcondition:\n\t\tfilesize < 100KB and $upx and $send_httpquery and $delphi_sec_pe\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

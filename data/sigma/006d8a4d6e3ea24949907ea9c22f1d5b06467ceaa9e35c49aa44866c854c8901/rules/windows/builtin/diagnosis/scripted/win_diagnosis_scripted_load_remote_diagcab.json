@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/diagnosis/scripted/win_diagnosis_scripted_load_remote_diagcab.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-14",
+                "title": "Loading Diagcab Package From Remote Path",
+                "id": "50cb47b8-2c33-4b23-a2e9-4600657d9746"
+            },
+            "rule_text": "title: Loading Diagcab Package From Remote Path\nid: 50cb47b8-2c33-4b23-a2e9-4600657d9746\nstatus: test\ndescription: Detects loading of diagcab packages from a remote path, as seen in DogWalk\n  vulnerability\nreferences:\n- https://twitter.com/nas_bench/status/1539679555908141061\n- https://twitter.com/j00sean/status/1537750439701225472\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-14\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  service: diagnosis-scripted\ndetection:\n  selection:\n    EventID: 101\n    PackagePath|contains: \\\\\\\\\n  condition: selection\nfalsepositives:\n- Legitimate package hosted on a known and authorized remote location\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

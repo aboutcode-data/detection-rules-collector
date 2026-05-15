@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_sdelete.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-06-03",
+                "title": "Potential File Overwrite Via Sysinternals SDelete",
+                "id": "a4824fca-976f-4964-b334-0621379e84c4"
+            },
+            "rule_text": "title: Potential File Overwrite Via Sysinternals SDelete\nid: a4824fca-976f-4964-b334-0621379e84c4\nstatus: test\ndescription: Detects the use of SDelete to erase a file not the free space\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md\nauthor: frack113\ndate: 2021-06-03\nmodified: 2023-02-28\ntags:\n- attack.impact\n- attack.t1485\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: sdelete.exe\n  filter:\n    CommandLine|contains:\n    - ' -h'\n    - ' -c'\n    - ' -z'\n    - ' /\\?'\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

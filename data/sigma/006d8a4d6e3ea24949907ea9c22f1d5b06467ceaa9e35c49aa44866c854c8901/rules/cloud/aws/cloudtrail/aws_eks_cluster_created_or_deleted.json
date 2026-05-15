@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_eks_cluster_created_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer",
+                "date": "2021-08-16",
+                "title": "AWS EKS Cluster Created or Deleted",
+                "id": "33d50d03-20ec-4b74-a74e-1e65a38af1c0"
+            },
+            "rule_text": "title: AWS EKS Cluster Created or Deleted\nid: 33d50d03-20ec-4b74-a74e-1e65a38af1c0\nstatus: test\ndescription: Identifies when an EKS cluster is created or deleted.\nreferences:\n- https://any-api.com/amazonaws_com/eks/docs/API_Description\nauthor: Austin Songer\ndate: 2021-08-16\nmodified: 2022-10-09\ntags:\n- attack.impact\n- attack.t1485\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: eks.amazonaws.com\n    eventName:\n    - CreateCluster\n    - DeleteCluster\n  condition: selection\nfalsepositives:\n- EKS Cluster being created or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- EKS Cluster created or deleted from unfamiliar users should be investigated. If\n  known behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_smb_win_admin_shares_impacket_svc_via_registry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Default Impacket Service Creation Via Registry Keys (RedCanary Threat Detection Report)",
+                "id": "187ac7b5-f919-446b-93b3-cde8a6506d64"
+            },
+            "rule_text": "title: Default Impacket Service Creation Via Registry Keys (RedCanary Threat Detection\n  Report)\nid: 187ac7b5-f919-446b-93b3-cde8a6506d64\nstatus: experimental\ndescription: Detects registry key creation matching default Impacket default naming\n  convention. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-admin-shares/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.lateral_movement\n- attack.t1021.002\nlogsource:\n  category: registry_add\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\services.exe\n    EventType: CreateKey\n    TargetObject: HKLM\\System\\CurrentControlSet\\Services\\BTOBTO\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

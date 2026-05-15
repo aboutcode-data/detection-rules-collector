@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/CobaltStrike/Trojan_Win64_CobaltStrike_AHF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_CobaltStrike_AHF_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/CobaltStrike.AHF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_CobaltStrike_AHF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/CobaltStrike.AHF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 03 c1 e1 ?? 0b c8 0f b6 43 ff c1 e1 ?? 0b c8 0f b6 43 ?? 89 4c 24 30 }\n\t\t$a_03_1 = {44 8b c5 c1 e1 ?? 41 c1 e8 ?? 44 33 c1 8d 8e ?? ?? ?? ?? 48 c1 e9 ?? 44 03 c5 83 e1 ?? 41 8b 14 8c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 30 + ( #a_03_1 & 1 ) * 20 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

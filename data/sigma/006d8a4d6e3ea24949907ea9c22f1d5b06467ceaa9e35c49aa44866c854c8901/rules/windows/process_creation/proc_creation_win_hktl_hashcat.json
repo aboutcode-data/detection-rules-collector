@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_hashcat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-27",
+                "title": "HackTool - Hashcat Password Cracker Execution",
+                "id": "39b31e81-5f5f-4898-9c0e-2160cfc0f9bf"
+            },
+            "rule_text": "title: HackTool - Hashcat Password Cracker Execution\nid: 39b31e81-5f5f-4898-9c0e-2160cfc0f9bf\nstatus: test\ndescription: Execute Hashcat.exe with provided SAM file from registry of Windows and\n  Password list to crack against\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1110.002/T1110.002.md#atomic-test-1---password-cracking-with-hashcat\n- https://hashcat.net/wiki/doku.php?id=hashcat\nauthor: frack113\ndate: 2021-12-27\nmodified: 2023-02-04\ntags:\n- attack.credential-access\n- attack.t1110.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\hashcat.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - '-a '\n    - '-m 1000 '\n    - '-r '\n  condition: 1 of selection_*\nfalsepositives:\n- Tools that use similar command line flags and values\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

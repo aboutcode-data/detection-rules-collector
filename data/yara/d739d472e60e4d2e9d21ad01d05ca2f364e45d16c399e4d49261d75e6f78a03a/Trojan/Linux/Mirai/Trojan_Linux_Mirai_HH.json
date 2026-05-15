@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Linux/Mirai/Trojan_Linux_Mirai_HH.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Linux_Mirai_HH",
+                "tags": [],
+                "description": "Trojan:Linux/Mirai.HH,SIGNATURE_TYPE_ELFHSTR_EXT,0a 00 0a 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Linux_Mirai_HH\n{\n\tmeta:\n\t\tdescription = \"Trojan:Linux/Mirai.HH,SIGNATURE_TYPE_ELFHSTR_EXT,0a 00 0a 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {2f 76 61 72 2f 53 6f 66 69 61 2f }\n\t\t$a_00_1 = {2f 62 69 6e 2f 62 75 73 79 62 6f 78 20 64 64 20 69 66 3d 2f 62 69 6e 2f 62 75 73 79 62 6f 78 20 62 73 3d }\n\t\t$a_00_2 = {2f 62 69 6e 2f 62 75 73 79 62 6f 78 20 63 68 6d 6f 64 20 37 37 37 }\n\t\t$a_00_3 = {2f 62 69 6e 2f 62 75 73 79 62 6f 78 20 63 61 74 20 2f 70 72 6f 63 2f 63 70 75 69 6e 66 6f }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 5 + ( #a_00_1 & 1 ) * 3 + ( #a_00_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 2 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

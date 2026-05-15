@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_iexpress_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2024-02-05",
+                "title": "New Self Extracting Package Created Via IExpress.EXE",
+                "id": "c2b478fc-09bf-40b2-8768-ab3ec8d61c9a"
+            },
+            "rule_text": "title: New Self Extracting Package Created Via IExpress.EXE\nid: c2b478fc-09bf-40b2-8768-ab3ec8d61c9a\nstatus: test\ndescription: 'Detects the \"iexpress.exe\" utility creating self-extracting packages.\n\n  Attackers where seen leveraging \"iexpress\" to compile packages on the fly via \".sed\"\n  files.\n\n  Investigate the command line options provided to \"iexpress\" and in case of a \".sed\"\n  file, check the contents and legitimacy of it.\n\n  '\nreferences:\n- https://strontic.github.io/xcyclopedia/library/iexpress.exe-D594B2A33EFAFD0EABF09E3FDC05FCEA.html\n- https://en.wikipedia.org/wiki/IExpress\n- https://decoded.avast.io/janvojtesek/raspberry-robins-roshtyak-a-little-lesson-in-trickery/\n- https://www.virustotal.com/gui/file/602f4ae507fa8de57ada079adff25a6c2a899bd25cd092d0af7e62cdb619c93c/behavior\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2024-02-05\ntags:\n- attack.stealth\n- attack.t1218\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1_parent:\n    ParentImage|endswith: \\iexpress.exe\n  selection_1_img:\n  - Image|endswith: \\makecab.exe\n  - OriginalFileName: makecab.exe\n  selection_2_img:\n  - Image|endswith: \\iexpress.exe\n  - OriginalFileName: IEXPRESS.exe\n  selection_2_cli:\n    CommandLine|contains: ' /n '\n  condition: all of selection_1_* or all of selection_2_*\nfalsepositives:\n- Administrators building packages using iexpress.exe\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

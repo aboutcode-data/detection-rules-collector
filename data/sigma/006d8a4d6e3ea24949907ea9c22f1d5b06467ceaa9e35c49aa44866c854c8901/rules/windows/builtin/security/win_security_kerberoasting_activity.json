@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_kerberoasting_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2022-01-21",
+                "title": "Kerberoasting Activity - Initial Query",
+                "id": "d04ae2b8-ad54-4de0-bd87-4bc1da66aa59"
+            },
+            "rule_text": "title: Kerberoasting Activity - Initial Query\nid: d04ae2b8-ad54-4de0-bd87-4bc1da66aa59\nstatus: test\ndescription: 'This rule will collect the data needed to start looking into possible\n  kerberoasting activity.\n\n  Further analysis or computation within the query is needed focusing on requests\n  from one specific host/IP towards multiple service names within a time period of\n  5 seconds.\n\n  You can then set a threshold for the number of requests and time between the requests\n  to turn this into an alert.\n\n  '\nreferences:\n- https://www.trustedsec.com/blog/art_of_kerberoast/\n- https://adsecurity.org/?p=3513\nauthor: '@kostastsale'\ndate: 2022-01-21\nmodified: 2025-10-19\ntags:\n- attack.credential-access\n- attack.t1558.003\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4769\n    Status: '0x0'\n    TicketEncryptionType: '0x17'\n  filter_main_krbtgt:\n    ServiceName|endswith:\n    - krbtgt\n    - $\n  filter_main_machine_accounts:\n    TargetUserName|contains: $@\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legacy applications.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Dofoil/TrojanDownloader_Win32_Dofoil_AF_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Dofoil_AF_bit",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Dofoil.AF!bit,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Dofoil_AF_bit\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Dofoil.AF!bit,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {e8 00 00 00 00 75 06 74 04 ?? ?? ?? ?? 5b eb }\n\t\t$a_03_1 = {0f b6 40 02 eb ?? ?? 40 eb ?? ?? ?? ?? ?? b9 ?? ?? ?? ?? eb ?? ?? ?? ?? ?? eb ?? ?? eb ?? ?? f7 e1 eb ?? ?? ?? ?? ?? ?? 01 d8 74 07 75 05 ?? ?? ?? ?? ?? 50 c3 }\n\t\t$a_01_2 = {89 ce 83 e6 03 75 0c 8b 5d 10 66 01 da c1 ca 03 89 55 10 30 10 40 c1 ca 08 e2 e4 }\n\t\t$a_01_3 = {8a 10 80 ca 60 01 d3 d1 e3 03 45 10 8a 08 84 c9 e0 ee }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

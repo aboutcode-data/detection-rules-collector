@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_bypass_uac_using_silentcleanup_task.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nextron Systems",
+                "date": "2022-01-06",
+                "title": "Bypass UAC Using SilentCleanup Task",
+                "id": "724ea201-6514-4f38-9739-e5973c34f49a"
+            },
+            "rule_text": "title: Bypass UAC Using SilentCleanup Task\nid: 724ea201-6514-4f38-9739-e5973c34f49a\nstatus: test\ndescription: 'Detects the setting of the environement variable \"windir\" to a non default\n  value.\n\n  Attackers often abuse this variable in order to trigger a UAC bypass via the \"SilentCleanup\"\n  task.\n\n  The SilentCleanup task located in %windir%\\system32\\cleanmgr.exe is an auto-elevated\n  task that can be abused to elevate any file with administrator privileges without\n  prompting UAC.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-9---bypass-uac-using-silentcleanup-task\n- https://www.reddit.com/r/hacking/comments/ajtrws/bypassing_highest_uac_level_windows_810/\n- https://www.fortinet.com/blog/threat-research/enter-the-darkgate-new-cryptocurrency-mining-and-ransomware-campaign\nauthor: frack113, Nextron Systems\ndate: 2022-01-06\nmodified: 2024-01-30\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Environment\\windir\n  filter_main_default:\n    Details: '%SystemRoot%'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_silentcleanup_task/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Bypass UAC using SilentCleanup Task\n  technique: T1548.002\n  atomic_guid: 28104f8a-4ff1-4582-bcf6-699dce156608\n",
+            "vulnerabilities": []
+        }
+    ]
+}

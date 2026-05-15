@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_capa_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-28",
+                "title": "Capabilities Discovery - Linux",
+                "id": "d8d97d51-122d-4cdd-9e2f-01b4b4933530"
+            },
+            "rule_text": "title: Capabilities Discovery - Linux\nid: d8d97d51-122d-4cdd-9e2f-01b4b4933530\nstatus: test\ndescription: Detects usage of \"getcap\" binary. This is often used during recon activity\n  to determine potential binaries that can be abused as GTFOBins or other.\nreferences:\n- https://github.com/SaiSathvik1/Linux-Privilege-Escalation-Notes\n- https://github.com/carlospolop/PEASS-ng\n- https://github.com/diego-treitos/linux-smart-enumeration\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-28\nmodified: 2026-01-24\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /getcap\n    CommandLine|contains: ' -r '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

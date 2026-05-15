@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/tjnel/yara_repo/blob/master/trojans/ovidiy.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ovidiy",
+                "tags": [],
+                "author": "tjadanel @reonfleek",
+                "date": "2017-09-06",
+                "description": "Ovidiy Stealer: Russian credential theft malware",
+                "reference": "https://www.proofpoint.com/us/threat-insight/post/meet-ovidiy-stealer-bringing-credential-theft-masses",
+                "sha256_0": "3ddc17470fb86dcb4b16705eb78bcbcb24dce70545f512ce75c4a0747474ef52"
+            },
+            "rule_text": "rule ovidiy\n{\n\tmeta:\n\t\tauthor = \"tjadanel @reonfleek\"\n\t\tdate = \"2017-09-06\"\n\t\tdescription = \"Ovidiy Stealer: Russian credential theft malware\"\n\t\treference = \"https://www.proofpoint.com/us/threat-insight/post/meet-ovidiy-stealer-bringing-credential-theft-masses\"\n\t\tsha256_0 = \"ef29fef8de847585d6e54d88a3288996b77ae15cb39db3129441be70a7b296ab\"\n\t\tsha256_0 = \"c59644c0c879382ce5324d9a5ac2c6cb57762979b9bbdf592c39544a3fec2222\"\n\t\tsha256_0 = \"3ddc17470fb86dcb4b16705eb78bcbcb24dce70545f512ce75c4a0747474ef52\"\n\n\tstrings:\n\t\t$ovidiy0 = \"ovidiy\" nocase\n\t\t$ovidiy1 = \"Ovidiy.exe\" ascii\n\t\t$dotnet0 = \"System.Net\" ascii\n\t\t$dotnet1 = \"AssemblyFileVersionAttribute\" ascii\n\t\t$dotnet2 = \"System.IO\" ascii\n\t\t$dotnet3 = \"GuidAttribute\" ascii\n\t\t$dotnet4 = \"System.Runtime.CompilerServices\" ascii\n\t\t$dotnet5 = \"CRYPT32.dlL\" ascii\n\t\t$obfuscator0 = \"ConfuserEx v\" ascii\n\t\t$obfuscator1 = \"Ovidiy.g.resources\" ascii\n\t\t$obfuscator2 = \"<Module>\" ascii\n\t\t$plaintext0 = \"get_Login\"\n\t\t$plaintext1 = \"set_Login\"\n\t\t$plaintext2 = \"get_Password\"\n\t\t$plaintext3 = \"set_Password\"\n\t\t$plaintext4 = \"get_SimpleUid\"\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D ) and ( 4 of ( $dotnet* ) ) and ( all of ( $ovidiy* ) ) and ( ( 2 of ( $obfuscator* ) or ( all of ( $plaintext* ) ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

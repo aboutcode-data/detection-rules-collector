@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_netsh_packet_capture.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Kutepov Anton, oscd.community",
+                "date": "2019-10-24",
+                "title": "New Network Trace Capture Started Via Netsh.EXE",
+                "id": "d3c3861d-c504-4c77-ba55-224ba82d0118"
+            },
+            "rule_text": "title: New Network Trace Capture Started Via Netsh.EXE\nid: d3c3861d-c504-4c77-ba55-224ba82d0118\nstatus: test\ndescription: Detects the execution of netsh with the \"trace\" flag in order to start\n  a network capture\nreferences:\n- https://blogs.msdn.microsoft.com/canberrapfe/2012/03/30/capture-a-network-trace-without-installing-anything-capture-a-network-trace-of-a-reboot/\n- https://klausjochem.me/2016/02/03/netsh-the-cyber-attackers-tool-of-choice/\nauthor: Kutepov Anton, oscd.community\ndate: 2019-10-24\nmodified: 2023-02-13\ntags:\n- attack.discovery\n- attack.credential-access\n- attack.t1040\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\netsh.exe\n  - OriginalFileName: netsh.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - trace\n    - start\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

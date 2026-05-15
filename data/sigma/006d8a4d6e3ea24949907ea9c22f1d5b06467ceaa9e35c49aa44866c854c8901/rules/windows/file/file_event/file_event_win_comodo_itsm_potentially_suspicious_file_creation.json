@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_comodo_itsm_potentially_suspicious_file_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "@kostastsale",
+                "date": "2026-02-19",
+                "title": "Potentially Suspicious File Creation by OpenEDR's ITSMService",
+                "id": "9e4b7d3a-6f2c-4e9a-8d1b-3c5e7a9f2b4d"
+            },
+            "rule_text": "title: Potentially Suspicious File Creation by OpenEDR's ITSMService\nid: 9e4b7d3a-6f2c-4e9a-8d1b-3c5e7a9f2b4d\nstatus: experimental\ndescription: 'Detects the creation of potentially suspicious files by OpenEDR''s ITSMService\n  process.\n\n  The ITSMService is responsible for remote management operations and can create files\n  on the system through the Process Explorer or file management features.\n\n  While legitimate for IT operations, creation of executable or script files could\n  indicate unauthorized file uploads, data staging, or malicious file deployment.\n\n  '\nauthor: '@kostastsale'\ndate: 2026-02-19\nreferences:\n- https://kostas-ts.medium.com/detecting-abuse-of-openedrs-permissive-edr-trial-a-security-researcher-s-perspective-fc55bf53972c\ntags:\n- attack.command-and-control\n- attack.t1105\n- attack.lateral-movement\n- attack.t1570\n- attack.t1219\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection_process:\n    Image|endswith: \\COMODO\\Endpoint Manager\\ITSMService.exe\n  selection_suspicious_extensions:\n    TargetFilename|endswith:\n    - .7z\n    - .bat\n    - .cmd\n    - .com\n    - .dll\n    - .exe\n    - .hta\n    - .js\n    - .pif\n    - .ps1\n    - .rar\n    - .scr\n    - .vbe\n    - .vbs\n    - .zip\n  condition: all of selection_*\nfalsepositives:\n- Legitimate OpenEDR file management operations\n- Authorized remote file uploads by IT administrators\n- Software deployment through OpenEDR console\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

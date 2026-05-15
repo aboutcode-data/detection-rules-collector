@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Marsilia/Trojan_BAT_Marsilia_SXA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Marsilia_SXA_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Marsilia.SXA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,50 00 50 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Marsilia_SXA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Marsilia.SXA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,50 00 50 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {28 10 00 00 0a 26 20 80 01 00 00 8d 16 00 00 01 25 d0 01 00 00 04 28 11 00 00 0a }\n\t\t$a_01_1 = {72 01 00 00 70 28 12 00 00 0a 0b 07 8e 2d 01 2a 07 16 9a 6f 13 00 00 0a 0c 20 ff 0f 1f 00 16 08 28 01 00 00 06 0d 09 7e 14 00 00 0a 28 15 00 00 0a 2c 01 2a }\n\t\t$a_01_2 = {09 7e 14 00 00 0a 06 8e 69 20 00 30 00 00 1f 40 28 02 00 00 06 13 04 11 04 7e 14 00 00 0a 28 15 00 00 0a 2c 01 2a 09 11 04 06 06 8e 69 12 05 28 03 00 00 06 26 09 7e 14 00 00 0a 16 11 04 7e 14 00 00 0a 16 7e 14 00 00 0a 28 04 00 00 06 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 50 ) >= 80\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

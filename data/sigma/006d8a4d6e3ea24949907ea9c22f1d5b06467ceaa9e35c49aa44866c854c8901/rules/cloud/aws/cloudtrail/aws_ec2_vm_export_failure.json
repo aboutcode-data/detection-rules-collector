@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_ec2_vm_export_failure.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Diogo Braz",
+                "date": "2020-04-16",
+                "title": "AWS EC2 VM Export Failure",
+                "id": "54b9a76a-3c71-4673-b4b3-2edb4566ea7b"
+            },
+            "rule_text": "title: AWS EC2 VM Export Failure\nid: 54b9a76a-3c71-4673-b4b3-2edb4566ea7b\nstatus: test\ndescription: An attempt to export an AWS EC2 instance has been detected. A VM Export\n  might indicate an attempt to extract information from an instance.\nreferences:\n- https://docs.aws.amazon.com/vm-import/latest/userguide/vmexport.html#export-instance\nauthor: Diogo Braz\ndate: 2020-04-16\nmodified: 2022-10-05\ntags:\n- attack.collection\n- attack.t1005\n- attack.exfiltration\n- attack.t1537\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventName: CreateInstanceExportTask\n    eventSource: ec2.amazonaws.com\n  filter1:\n    errorMessage|contains: '*'\n  filter2:\n    errorCode|contains: '*'\n  filter3:\n    responseElements|contains: Failure\n  condition: selection and not 1 of filter*\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

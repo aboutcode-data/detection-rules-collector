@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/fakem.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HTMLVariant",
+                "tags": [
+                    "FakeM",
+                    "Family",
+                    "HTML",
+                    "Variant"
+                ],
+                "description": "Identifier for html variant of FAKEM",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-05-20"
+            },
+            "rule_text": "private rule HTMLVariant : FakeM Family HTML Variant\n{\n\tmeta:\n\t\tdescription = \"Identifier for html variant of FAKEM\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-05-20\"\n\n\tstrings:\n\t\t$s1 = { 8B 55 08 B9 00 50 00 00 8D 3D ?? ?? ?? 00 8B F7 AD 33 C2 AB 83 E9 04 85 C9 75 F5 }\n\t\t$s2 = { C6 45 F? (3?|4?) }\n\n\tcondition:\n\t\t$s1 and #s2 == 16\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FakeM",
+                "tags": [
+                    "Family"
+                ],
+                "description": "FakeM",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-07-03"
+            },
+            "rule_text": "rule FakeM : Family\n{\n\tmeta:\n\t\tdescription = \"FakeM\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-07-03\"\n\n\tcondition:\n\t\tHTMLVariant\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FAKEMhtml",
+                "tags": [
+                    "Variant"
+                ],
+                "description": "Rule for just the HTML Variant",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-07-10"
+            },
+            "rule_text": "rule FAKEMhtml : Variant\n{\n\tmeta:\n\t\tdescription = \"Rule for just the HTML Variant\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-07-10\"\n\n\tcondition:\n\t\tHTMLVariant\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

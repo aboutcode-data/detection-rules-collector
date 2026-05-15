@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_ioreg_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-12-20",
+                "title": "System Information Discovery Using Ioreg",
+                "id": "2d5e7a8b-f484-4a24-945d-7f0efd52eab0"
+            },
+            "rule_text": "title: System Information Discovery Using Ioreg\nid: 2d5e7a8b-f484-4a24-945d-7f0efd52eab0\nstatus: test\ndescription: 'Detects the use of \"ioreg\" which will show I/O Kit registry information.\n\n  This process is used for system information discovery.\n\n  It has been observed in-the-wild by calling this process directly or using bash\n  and grep to look for specific strings.\n\n  '\nreferences:\n- https://www.virustotal.com/gui/file/0373d78db6c3c0f6f6dcc409821bf89e1ad8c165d6f95c5c80ecdce2219627d7/behavior\n- https://www.virustotal.com/gui/file/4ffdc72d1ff1ee8228e31691020fc275afd1baee5a985403a71ca8c7bd36e2e4/behavior\n- https://www.virustotal.com/gui/file/5907d59ec1303cfb5c0a0f4aaca3efc0830707d86c732ba6b9e842b5730b95dc/behavior\n- https://www.trendmicro.com/en_ph/research/20/k/new-macos-backdoor-connected-to-oceanlotus-surfaces.html\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-12-20\nmodified: 2024-01-02\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: /ioreg\n  - CommandLine|contains: ioreg\n  selection_cmd1:\n    CommandLine|contains:\n    - -l\n    - -c\n  selection_cmd2:\n    CommandLine|contains:\n    - AppleAHCIDiskDriver\n    - IOPlatformExpertDevice\n    - Oracle\n    - Parallels\n    - USB Vendor Name\n    - VirtualBox\n    - VMware\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

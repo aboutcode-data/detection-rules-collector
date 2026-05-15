@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_persistence_via_plistbuddy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-02-18",
+                "title": "Potential Persistence Via PlistBuddy",
+                "id": "65d506d3-fcfe-4071-b4b2-bcefe721bbbb"
+            },
+            "rule_text": "title: Potential Persistence Via PlistBuddy\nid: 65d506d3-fcfe-4071-b4b2-bcefe721bbbb\nstatus: test\ndescription: Detects potential persistence activity using LaunchAgents or LaunchDaemons\n  via the PlistBuddy utility\nreferences:\n- https://redcanary.com/blog/clipping-silver-sparrows-wings/\n- https://www.manpagez.com/man/8/PlistBuddy/\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-02-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1543.001\n- attack.t1543.004\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /PlistBuddy\n    CommandLine|contains|all:\n    - RunAtLoad\n    - 'true'\n    CommandLine|contains:\n    - LaunchAgents\n    - LaunchDaemons\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

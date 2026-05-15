@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_BITSloth.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_BITSloth_05fc3a0a",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "05fc3a0a-ce19-4042-90f8-32a43f40616e",
+                "fingerprint": "520722d4502230eed76b0c53fffb90bd2b818256363bc1393f51c378ff6cdd9b",
+                "creation_date": "2024-07-16",
+                "last_modified": "2024-07-26",
+                "threat_name": "Windows.Trojan.BITSloth",
+                "reference_sample": "0944b17a4330e1c97600f62717d6bae7e4a4260604043f2390a14c8d76ef1507",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_BITSloth_05fc3a0a\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"05fc3a0a-ce19-4042-90f8-32a43f40616e\"\n\t\tfingerprint = \"520722d4502230eed76b0c53fffb90bd2b818256363bc1393f51c378ff6cdd9b\"\n\t\tcreation_date = \"2024-07-16\"\n\t\tlast_modified = \"2024-07-26\"\n\t\tthreat_name = \"Windows.Trojan.BITSloth\"\n\t\treference_sample = \"0944b17a4330e1c97600f62717d6bae7e4a4260604043f2390a14c8d76ef1507\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$str_1 = \"/%s/index.htm?RspID=%d\" wide fullword\n\t\t$str_2 = \"/%s/%08x.rpl\" wide fullword\n\t\t$str_3 = \"/%s/wu.htm\" wide fullword\n\t\t$str_4 = \"GET_DESKDOP\" wide fullword\n\t\t$str_5 = \"http://updater.microsoft.com/index.aspx\" wide fullword\n\t\t$str_6 = \"[U] update error...\" wide fullword\n\t\t$str_7 = \"RMC_KERNEL ...\" wide fullword\n\t\t$seq_global_protocol_check = { 81 3D ?? ?? ?? ?? F9 03 00 00 B9 AC 0F 00 00 0F 46 C1 }\n\t\t$seq_exit_windows = { 59 85 C0 0F 84 ?? ?? ?? ?? E9 ?? ?? ?? ?? 6A 02 EB ?? 56 EB }\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

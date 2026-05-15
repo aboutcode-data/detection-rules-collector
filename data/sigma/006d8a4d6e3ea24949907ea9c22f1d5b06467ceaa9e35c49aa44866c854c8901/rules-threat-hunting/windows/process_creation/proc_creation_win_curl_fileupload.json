@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_fileupload.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Cedric MAURUGEON (Update)",
+                "date": "2020-07-03",
+                "title": "Potential Data Exfiltration Via Curl.EXE",
+                "id": "00bca14a-df4e-4649-9054-3f2aa676bc04"
+            },
+            "rule_text": "title: Potential Data Exfiltration Via Curl.EXE\nid: 00bca14a-df4e-4649-9054-3f2aa676bc04\nstatus: test\ndescription: Detects the execution of the \"curl\" process with \"upload\" flags. Which\n  might indicate potential data exfiltration\nreferences:\n- https://twitter.com/d1r4c/status/1279042657508081664\n- https://medium.com/@petehouston/upload-files-with-curl-93064dcccc76\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1105/T1105.md#atomic-test-19---curl-upload-file\n- https://curl.se/docs/manpage.html\nauthor: Florian Roth (Nextron Systems), Cedric MAURUGEON (Update)\ndate: 2020-07-03\nmodified: 2023-05-02\ntags:\n- attack.exfiltration\n- attack.command-and-control\n- attack.t1567\n- attack.t1105\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - Product: The curl executable\n  selection_cli:\n  - CommandLine|contains:\n    - ' --form'\n    - ' --upload-file '\n    - ' --data '\n    - ' --data-'\n  - CommandLine|re: \\s-[FTd]\\s\n  filter_optional_localhost:\n    CommandLine|contains:\n    - ://localhost\n    - ://127.0.0.1\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Scripts created by developers and admins\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/esent/win_esent_ntdsutil_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-14",
+                "title": "Ntdsutil Abuse",
+                "id": "e6e88853-5f20-4c4a-8d26-cd469fd8d31f"
+            },
+            "rule_text": "title: Ntdsutil Abuse\nid: e6e88853-5f20-4c4a-8d26-cd469fd8d31f\nstatus: test\ndescription: Detects potential abuse of ntdsutil to dump ntds.dit database\nreferences:\n- https://twitter.com/mgreen27/status/1558223256704122882\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj574207(v=ws.11)\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-14\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name: ESENT\n    EventID:\n    - 216\n    - 325\n    - 326\n    - 327\n    Data|contains: ntds.dit\n  condition: selection\nfalsepositives:\n- Legitimate backup operation/creating shadow copies\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

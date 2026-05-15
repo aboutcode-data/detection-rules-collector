@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_powershell_web_access_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael Haag",
+                "date": "2024-09-03",
+                "title": "PowerShell Web Access Installation - PsScript",
+                "id": "5f9c7f1a-7c21-4c39-b2f3-8d8006e0e51f"
+            },
+            "rule_text": "title: PowerShell Web Access Installation - PsScript\nid: 5f9c7f1a-7c21-4c39-b2f3-8d8006e0e51f\nstatus: test\ndescription: Detects the installation and configuration of PowerShell Web Access,\n  which could be used for remote access and potential abuse\nreferences:\n- https://docs.microsoft.com/en-us/powershell/module/powershellwebaccess/install-pswawebapplication\n- https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-241a\n- https://gist.github.com/MHaggis/7e67b659af9148fa593cf2402edebb41\nauthor: Michael Haag\ndate: 2024-09-03\ntags:\n- attack.persistence\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_install:\n    ScriptBlockText|contains: Install-WindowsFeature WindowsPowerShellWebAccess\n  selection_config:\n    ScriptBlockText|contains: Install-PswaWebApplication\n  selection_auth:\n    ScriptBlockText|contains|all:\n    - Add-PswaAuthorizationRule\n    - -UserName *\n    - -ComputerName *\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate PowerShell Web Access installations by administrators\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

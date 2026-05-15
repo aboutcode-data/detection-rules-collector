@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_office_outlook_enable_load_macro_provider_on_boot.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-04-05",
+                "title": "Potential Persistence Via Outlook LoadMacroProviderOnBoot Setting",
+                "id": "396ae3eb-4174-4b9b-880e-dc0364d78a19"
+            },
+            "rule_text": "title: Potential Persistence Via Outlook LoadMacroProviderOnBoot Setting\nid: 396ae3eb-4174-4b9b-880e-dc0364d78a19\nstatus: test\ndescription: Detects the modification of Outlook setting \"LoadMacroProviderOnBoot\"\n  which if enabled allows the automatic loading of any configured VBA project/module\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=53\n- https://www.linkedin.com/pulse/outlook-backdoor-using-vba-samir-b-/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-04-05\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.command-and-control\n- attack.t1137\n- attack.t1008\n- attack.t1546\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Outlook\\LoadMacroProviderOnBoot\n    Details|contains: '0x00000001'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

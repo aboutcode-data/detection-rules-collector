@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_kerberos_manipulation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-02-10",
+                "title": "Kerberos Manipulation",
+                "id": "f7644214-0eb0-4ace-9455-331ec4c09253"
+            },
+            "rule_text": "title: Kerberos Manipulation\nid: f7644214-0eb0-4ace-9455-331ec4c09253\nstatus: test\ndescription: Detects failed Kerberos TGT issue operation. This can be a sign of manipulations\n  of TGT messages by an attacker.\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4771\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-02-10\nmodified: 2024-01-16\ntags:\n- attack.credential-access\n- attack.t1212\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID:\n    - 675\n    - 4768\n    - 4769\n    - 4771\n    Status:\n    - '0x9'\n    - '0xA'\n    - '0xB'\n    - '0xF'\n    - '0x10'\n    - '0x11'\n    - '0x13'\n    - '0x14'\n    - '0x1A'\n    - '0x1F'\n    - '0x21'\n    - '0x22'\n    - '0x23'\n    - '0x24'\n    - '0x26'\n    - '0x27'\n    - '0x28'\n    - '0x29'\n    - '0x2C'\n    - '0x2D'\n    - '0x2E'\n    - '0x2F'\n    - '0x31'\n    - '0x32'\n    - '0x3E'\n    - '0x3F'\n    - '0x40'\n    - '0x41'\n    - '0x43'\n    - '0x44'\n  condition: selection\nfalsepositives:\n- Faulty legacy applications\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

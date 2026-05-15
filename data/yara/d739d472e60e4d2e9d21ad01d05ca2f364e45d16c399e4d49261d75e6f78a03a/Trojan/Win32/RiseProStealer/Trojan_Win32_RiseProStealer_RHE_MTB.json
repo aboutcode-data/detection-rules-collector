@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/RiseProStealer/Trojan_Win32_RiseProStealer_RHE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_RiseProStealer_RHE_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/RiseProStealer.RHE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_RiseProStealer_RHE_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/RiseProStealer.RHE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ff 75 e0 e8 ?? ?? 00 00 cc e8 ?? ?? 00 00 e9 ?? ?? ff ff }\n\t\t$a_01_1 = {53 74 65 61 6c 65 72 43 6c 69 65 6e 74 2e 65 78 65 00 53 74 61 72 74 }\n\t\t$a_03_2 = {52 69 73 65 50 72 6f ?? ?? 54 65 6c 65 67 72 61 6d 3a 20 68 74 74 70 73 3a 2f 2f 74 2e 6d 65 2f 52 69 73 65 50 72 6f 53 55 50 50 4f 52 54 }\n\t\t$a_03_3 = {50 45 00 00 4c 01 05 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0b 01 0e 22 00 ?? 10 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 10 00 00 00 ?? 10 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 + ( #a_03_3 & 1 ) * 2 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

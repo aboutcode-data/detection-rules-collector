@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_whoami.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-08-12",
+                "title": "Renamed Whoami Execution",
+                "id": "f1086bf7-a0c4-4a37-9102-01e573caf4a0"
+            },
+            "rule_text": "title: Renamed Whoami Execution\nid: f1086bf7-a0c4-4a37-9102-01e573caf4a0\nstatus: test\ndescription: Detects the execution of whoami that has been renamed to a different\n  name to avoid detection\nreferences:\n- https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/\n- https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-08-12\nmodified: 2022-10-09\ntags:\n- attack.discovery\n- attack.t1033\n- car.2016-03-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: whoami.exe\n  filter:\n    Image|endswith: \\whoami.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

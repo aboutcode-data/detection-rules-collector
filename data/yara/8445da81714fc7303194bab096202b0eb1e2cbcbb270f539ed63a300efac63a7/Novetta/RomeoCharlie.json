@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/RomeoCharlie.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RomeoCharlie",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "a82108ef7115931b3fbe1fab99448c4139e22feda27c1b1d29325710671154e8"
+            },
+            "rule_text": "import \"pe\"\n\nrule RomeoCharlie\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"a82108ef7115931b3fbe1fab99448c4139e22feda27c1b1d29325710671154e8\"\n\n\tstrings:\n\t\t$auth1 = \"Success - Accept Auth\"\n\t\t$auth2 = \"Fail - Accept Auth\"\n\t\t$startupRelayThreads = {\n\t\t\t81 ?? FF FF 00 00 \n\t\t\t8B ?? \n\t\t\t5? \n\t\t\tC1 ?? 10 \n\t\t\t81 ?? FF FF 00 00 \n\t\t\t8B ?? \n\t\t\t8B ?? \n\t\t\t81 ?? FF FF 00 00 \n\t\t\tC1 ?? 10 \n\t\t\t6A 00 \n\t\t\t0B ?? \n\t\t\t6A 00 \n\t\t\t50 \n\t\t\t68 [4] \n\t\t\t6A 00 \n\t\t\t6A 00 \n\t\t\tFF 15 [4] \n\t\t\tC1 ?? 10 \n\t\t}\n\t\t$crypto = {\n\t\t\t2? 00 20 00 00 \n\t\t\t3? 00 20 00 00 \n\t\t\t0F [2] \n\t\t\t81 ?? 80 00 00 00 \n\t\t\t33 ?? \n\t\t\t80 ?? 80 \n\t\t\t0F [2] \n\t\t\t03 ?? \n\t\t\t33 ?? \n\t\t\t83 ?? 01 \n\t\t}\n\n\tcondition:\n\t\tall of ( $auth* ) or $startupRelayThreads in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or $crypto in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

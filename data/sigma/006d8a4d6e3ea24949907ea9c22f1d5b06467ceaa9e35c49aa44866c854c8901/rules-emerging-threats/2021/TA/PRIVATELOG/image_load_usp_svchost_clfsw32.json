@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2021/TA/PRIVATELOG/image_load_usp_svchost_clfsw32.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-09-07",
+                "title": "APT PRIVATELOG Image Load Pattern",
+                "id": "33a2d1dd-f3b0-40bd-8baf-7974468927cc"
+            },
+            "rule_text": "title: APT PRIVATELOG Image Load Pattern\nid: 33a2d1dd-f3b0-40bd-8baf-7974468927cc\nstatus: test\ndescription: Detects an image load pattern as seen when a tool named PRIVATELOG is\n  used and rarely observed under legitimate circumstances\nreferences:\n- https://web.archive.org/web/20210901184449/https://www.fireeye.com/blog/threat-research/2021/09/unknown-actor-using-clfs-log-files-for-stealth.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-09-07\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\n- detection.emerging-threats\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n    ImageLoaded|endswith: \\clfsw32.dll\n  condition: selection\nfalsepositives:\n- Rarely observed\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_right_to_left_override.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Micah Babinski, @micahbabinski, Swachchhanda Shrawan Poudel (Nextron Systems), Luc Génaux",
+                "date": "2023-02-15",
+                "title": "Potential Defense Evasion Via Right-to-Left Override",
+                "id": "ad691d92-15f2-4181-9aa4-723c74f9ddc3"
+            },
+            "rule_text": "title: Potential Defense Evasion Via Right-to-Left Override\nid: ad691d92-15f2-4181-9aa4-723c74f9ddc3\nrelated:\n- id: e0552b19-5a83-4222-b141-b36184bb8d79\n  type: derived\n- id: 584bca0f-3608-4402-80fd-4075ff6072e3\n  type: derived\nstatus: test\ndescription: 'Detects the presence of the \"u202+E\" character, which causes a terminal,\n  browser, or operating system to render text in a right-to-left sequence.\n\n  This character is used as an obfuscation and masquerading techniques by adversaries\n  to trick users into opening malicious files.\n\n  '\nreferences:\n- https://redcanary.com/blog/right-to-left-override/\n- https://www.malwarebytes.com/blog/news/2014/01/the-rtlo-method\n- https://unicode-explorer.com/c/202E\n- https://tria.ge/241015-l98snsyeje/behavioral2\n- https://unprotect.it/technique/right-to-left-override-rlo-extension-spoofing/\nauthor: \"Micah Babinski, @micahbabinski, Swachchhanda Shrawan Poudel (Nextron Systems),\\\n  \\ Luc G\\xE9naux\"\ndate: 2023-02-15\nmodified: 2026-03-20\ntags:\n- attack.stealth\n- attack.t1036.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - \\u202e\n    - '[U+202E]'\n    - \"\\u202E\"\n  condition: selection\nfalsepositives:\n- Commandlines that contains scriptures such as arabic or hebrew might make use of\n  this character\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_susp_right_to_left_override/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

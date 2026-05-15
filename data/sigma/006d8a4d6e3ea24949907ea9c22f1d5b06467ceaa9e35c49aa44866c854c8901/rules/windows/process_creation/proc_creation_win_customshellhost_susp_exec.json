@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_customshellhost_susp_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-19",
+                "title": "Suspicious CustomShellHost Execution",
+                "id": "84b14121-9d14-416e-800b-f3b829c5a14d"
+            },
+            "rule_text": "title: Suspicious CustomShellHost Execution\nid: 84b14121-9d14-416e-800b-f3b829c5a14d\nstatus: test\ndescription: 'Detects the execution of CustomShellHost.exe where the child isn''t\n  located in ''C:\\Windows\\explorer.exe''. CustomShellHost is a known LOLBin that can\n  be abused by attackers for defense evasion techniques.\n\n  '\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/pull/180\n- https://lolbas-project.github.io/lolbas/Binaries/CustomShellHost/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-19\nmodified: 2025-10-29\ntags:\n- attack.stealth\n- attack.t1216\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\CustomShellHost.exe\n  filter_main_explorer:\n    Image: C:\\Windows\\explorer.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- False positives are unlikely, investigate matches carefully.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_remote_server_service_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "Remote Server Service Abuse",
+                "id": "b6ea3cc7-542f-43ef-bbe4-980fbed444c7"
+            },
+            "rule_text": "title: Remote Server Service Abuse\nid: b6ea3cc7-542f-43ef-bbe4-980fbed444c7\nstatus: test\ndescription: Detects remote RPC calls to possibly abuse remote encryption service\n  via MS-SRVS\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-srvs/accf23b0-0f57-441c-9185-43041f1b0ee9\n- https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/ddd4608fe8684fcf2fcf9b48c5f0b3c28097f8a3/documents/MS-SRVS.md\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.lateral-movement\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes with\n    \"audit:true action:block uuid:4b324fc8-1670-01d3-1278-5a47bf6ee188'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid: 4b324fc8-1670-01d3-1278-5a47bf6ee188\n  condition: selection\nfalsepositives:\n- Legitimate remote share creation\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_hktl_crackmapexec_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-03-11",
+                "title": "HackTool - CrackMapExec File Indicators",
+                "id": "736ffa74-5f6f-44ca-94ef-1c0df4f51d2a"
+            },
+            "rule_text": "title: HackTool - CrackMapExec File Indicators\nid: 736ffa74-5f6f-44ca-94ef-1c0df4f51d2a\nrelated:\n- id: 9433ff9c-5d3f-4269-99f8-95fc826ea489\n  type: obsolete\nstatus: test\ndescription: Detects file creation events with filename patterns used by CrackMapExec.\nreferences:\n- https://github.com/byt3bl33d3r/CrackMapExec/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-03-11\nmodified: 2024-06-27\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection_path:\n    TargetFilename|startswith: C:\\Windows\\Temp\\\n  selection_names_str:\n    TargetFilename|endswith:\n    - \\temp.ps1\n    - \\msol.ps1\n  selection_names_re:\n  - TargetFilename|re: \\\\[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.txt$\n  - TargetFilename|re: \\\\[a-zA-Z]{8}\\.tmp$\n  condition: selection_path and 1 of selection_names_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

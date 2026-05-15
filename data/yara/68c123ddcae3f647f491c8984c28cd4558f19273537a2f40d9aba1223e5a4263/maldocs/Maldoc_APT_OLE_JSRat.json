@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/maldocs/Maldoc_APT_OLE_JSRat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_OLE_JSRat",
+                "tags": [
+                    "maldoc",
+                    "APT"
+                ],
+                "author": "Rahul Mohandas",
+                "Date": "2015-06-16",
+                "Description": "Targeted attack using Excel/word documents"
+            },
+            "rule_text": "rule APT_OLE_JSRat : maldoc APT\n{\n\tmeta:\n\t\tauthor = \"Rahul Mohandas\"\n\t\tDate = \"2015-06-16\"\n\t\tDescription = \"Targeted attack using Excel/word documents\"\n\n\tstrings:\n\t\t$header = {D0 CF 11 E0 A1 B1 1A E1}\n\t\t$key1 = \"AAAAAAAAAA\"\n\t\t$key2 = \"Base64Str\" nocase\n\t\t$key3 = \"DeleteFile\" nocase\n\t\t$key4 = \"Scripting.FileSystemObject\" nocase\n\n\tcondition:\n\t\t$header at 0 and ( all of ( $key* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

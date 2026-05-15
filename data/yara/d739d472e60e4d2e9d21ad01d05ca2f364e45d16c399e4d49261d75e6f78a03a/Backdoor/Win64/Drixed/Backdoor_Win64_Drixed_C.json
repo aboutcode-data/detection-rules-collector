@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win64/Drixed/Backdoor_Win64_Drixed_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win64_Drixed_C",
+                "tags": [],
+                "description": "Backdoor:Win64/Drixed.C,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win64_Drixed_C\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win64/Drixed.C,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 fa 03 75 07 e8 ?? ?? ?? ?? eb ?? 85 d2 75 ?? 3d ee ac ff e7 75 }\n\t\t$a_01_1 = {81 bb 00 04 00 00 ef be ad de }\n\t\t$a_01_2 = {63 6c 69 63 6b 73 68 6f 74 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

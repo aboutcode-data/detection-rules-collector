@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_netsh_helper_dll_potential_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Anish Bogati",
+                "date": "2023-11-28",
+                "title": "Potential Persistence Via Netsh Helper DLL - Registry",
+                "id": "c90362e0-2df3-4e61-94fe-b37615814cb1"
+            },
+            "rule_text": "title: Potential Persistence Via Netsh Helper DLL - Registry\nid: c90362e0-2df3-4e61-94fe-b37615814cb1\nrelated:\n- id: 56321594-9087-49d9-bf10-524fe8479452\n  type: similar\n- id: e7b18879-676e-4a0e-ae18-27039185a8e7\n  type: similar\nstatus: test\ndescription: 'Detects changes to the Netsh registry key to add a new DLL value. This\n  change might be an indication of a potential persistence attempt by adding a malicious\n  Netsh helper\n\n  '\nreferences:\n- https://www.ired.team/offensive-security/persistence/t1128-netsh-helper-dll\n- https://pentestlab.blog/2019/10/29/persistence-netsh-helper-dll/\nauthor: Anish Bogati\ndate: 2023-11-28\nmodified: 2025-10-08\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.007\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\NetSh\n    Details|contains: .dll\n  filter_main_poqexec:\n    Image: C:\\Windows\\System32\\poqexec.exe\n    Details:\n    - ipmontr.dll\n    - iasmontr.dll\n    - ippromon.dll\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate helper added by different programs and the OS\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

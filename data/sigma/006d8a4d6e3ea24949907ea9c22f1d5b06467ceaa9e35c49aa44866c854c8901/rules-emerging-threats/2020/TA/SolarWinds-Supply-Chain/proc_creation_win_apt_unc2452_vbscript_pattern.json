@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/SolarWinds-Supply-Chain/proc_creation_win_apt_unc2452_vbscript_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-03-05",
+                "title": "Suspicious VBScript UN2452 Pattern",
+                "id": "20c3f09d-c53d-4e85-8b74-6aa50e2f1b61"
+            },
+            "rule_text": "title: Suspicious VBScript UN2452 Pattern\nid: 20c3f09d-c53d-4e85-8b74-6aa50e2f1b61\nstatus: test\ndescription: Detects suspicious inline VBScript keywords as used by UNC2452\nreferences:\n- https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-03-05\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.001\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - Execute\n    - CreateObject\n    - RegRead\n    - window.close\n    - \\Microsoft\\Windows\\CurrentVersion\n  filter:\n    CommandLine|contains: \\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

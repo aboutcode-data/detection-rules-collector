@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_capsh_shell_invocation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Capsh Shell Invocation - Linux",
+                "id": "db1ac3be-f606-4e3a-89e0-9607cbe6b98a"
+            },
+            "rule_text": "title: Capsh Shell Invocation - Linux\nid: db1ac3be-f606-4e3a-89e0-9607cbe6b98a\nstatus: test\ndescription: 'Detects the use of the \"capsh\" utility to invoke a shell.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/capsh/#shell\n- https://www.elastic.co/guide/en/security/current/linux-restricted-shell-breakout-via-linux-binary-s.html\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /capsh\n    CommandLine|endswith: ' --'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

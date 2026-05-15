@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_outlook_newform.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tobias Michalski (Nextron Systems)",
+                "date": "2021-06-10",
+                "title": "Potential Persistence Via Outlook Form",
+                "id": "c3edc6a5-d9d4-48d8-930e-aab518390917"
+            },
+            "rule_text": "title: Potential Persistence Via Outlook Form\nid: c3edc6a5-d9d4-48d8-930e-aab518390917\nstatus: test\ndescription: Detects the creation of a new Outlook form which can contain malicious\n  code\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=76\n- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=79\n- https://learn.microsoft.com/en-us/office/vba/outlook/concepts/outlook-forms/create-an-outlook-form\n- https://www.slipstick.com/developer/custom-form/clean-outlooks-forms-cache/\nauthor: Tobias Michalski (Nextron Systems)\ndate: 2021-06-10\nmodified: 2023-02-22\ntags:\n- attack.persistence\n- attack.t1137.003\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith: \\outlook.exe\n    TargetFilename|contains:\n    - \\AppData\\Local\\Microsoft\\FORMS\\IPM\n    - \\Local Settings\\Application Data\\Microsoft\\Forms\n  condition: selection\nfalsepositives:\n- Legitimate use of outlook forms\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Dopplepaymer/Ransom_Win32_Dopplepaymer_KM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Dopplepaymer_KM_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Dopplepaymer.KM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Dopplepaymer_KM_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Dopplepaymer.KM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {31 c0 89 45 ?? eb ?? 8b 45 ?? 8b 4d ?? 8a 14 01 8b 75 ?? 88 14 06 83 c0 01 8b 7d ?? 39 f8 89 45 }\n\t\t$a_02_1 = {8a 14 01 8b 75 ?? 88 14 06 83 c0 01 8b 7d ?? 39 f8 89 45 ?? 74 ?? eb ?? 31 c0 89 45 ?? eb }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

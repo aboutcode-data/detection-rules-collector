@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_logman_disable_eventlog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-02-11",
+                "title": "Suspicious Windows Trace ETW Session Tamper Via Logman.EXE",
+                "id": "cd1f961e-0b96-436b-b7c6-38da4583ec00"
+            },
+            "rule_text": "title: Suspicious Windows Trace ETW Session Tamper Via Logman.EXE\nid: cd1f961e-0b96-436b-b7c6-38da4583ec00\nstatus: test\ndescription: Detects the execution of \"logman\" utility in order to disable or delete\n  Windows trace sessions\nreferences:\n- https://twitter.com/0gtweet/status/1359039665232306183?s=21\n- https://ss64.com/nt/logman.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-02-11\nmodified: 2023-02-21\ntags:\n- attack.defense-impairment\n- attack.t1685\n- attack.t1685.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\logman.exe\n  - OriginalFileName: Logman.exe\n  selection_action:\n    CommandLine|contains:\n    - 'stop '\n    - 'delete '\n  selection_service:\n    CommandLine|contains:\n    - Circular Kernel Context Logger\n    - EventLog-\n    - SYSMON TRACE\n    - SysmonDnsEtwSession\n  condition: all of selection*\nfalsepositives:\n- Legitimate deactivation by administrative staff\n- Installer tools that disable services, e.g. before log collection agent installation\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

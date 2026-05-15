@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_rundll32_no_cmdline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Rundll32 Without a Command Line (RedCanary Threat Detection Report)",
+                "id": "2a2bd094-ecd0-4b19-afb7-c2547b0bdf30"
+            },
+            "rule_text": "title: Rundll32 Without a Command Line (RedCanary Threat Detection Report)\nid: 2a2bd094-ecd0-4b19-afb7-c2547b0bdf30\nstatus: experimental\ndescription: Detects instances of Rundll32 without a command line spawning child processes.\n  Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.defense_evasion\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\rundll32.exe\n    ParentCommandLine:\n    - rundll32.exe\n    - rundll32\n    - ''\n    - null\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/cyberduck_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Andreas Foureaux",
+                "date": "2025-09-22",
+                "title": "Potential Data Exfiltration Using Cyberduck",
+                "id": "c2cc89c6-1503-481a-b013-306a5f1ce935"
+            },
+            "rule_text": "title: Potential Data Exfiltration Using Cyberduck\nid: c2cc89c6-1503-481a-b013-306a5f1ce935\nstatus: test\ndescription: Detects the use of Cyberduck to upload data\nreferences:\n- https://docs.duck.sh/cli\nauthor: NTT Security - Andreas Foureaux\ndate: 2025-09-22\nlogsource:\n  category: process_creation\ndetection:\n  selection_command:\n    CommandLine|contains|all:\n    - duck\n    CommandLine|contains:\n    - --upload\n    - --copy\n  condition: selection_command\nfalsepositives:\n- Legitimate use of the tool\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_susp_pendingfilerenameoperations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-01-27",
+                "title": "Potential PendingFileRenameOperations Tampering",
+                "id": "4eec988f-7bf0-49f1-8675-1e6a510b3a2a"
+            },
+            "rule_text": "title: Potential PendingFileRenameOperations Tampering\nid: 4eec988f-7bf0-49f1-8675-1e6a510b3a2a\nstatus: test\ndescription: 'Detect changes to the \"PendingFileRenameOperations\" registry key from\n  uncommon or suspicious images locations to stage currently used files for rename\n  or deletion after reboot.\n\n  '\nreferences:\n- https://any.run/report/3ecd4763ffc944fdc67a9027e459cd4f448b1a8d1b36147977afaf86bbf2a261/64b0ba45-e7ce-423b-9a1d-5b4ea59521e6\n- https://devblogs.microsoft.com/scripting/determine-pending-reboot-statuspowershell-style-part-1/\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc960241(v=technet.10)?redirectedfrom=MSDN\n- https://www.trendmicro.com/en_us/research/21/j/purplefox-adds-new-backdoor-that-uses-websockets.html\n- https://www.trendmicro.com/en_us/research/19/i/purple-fox-fileless-malware-with-rookit-component-delivered-by-rig-exploit-kit-now-abuses-powershell.html\nauthor: frack113\ndate: 2023-01-27\nmodified: 2025-10-07\ntags:\n- attack.stealth\n- attack.t1036.003\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_main:\n    TargetObject|contains: \\CurrentControlSet\\Control\\Session Manager\\PendingFileRenameOperations\n  selection_susp_paths:\n    Image|contains: \\Users\\Public\\\n  selection_susp_images:\n    Image|endswith:\n    - \\reg.exe\n    - \\regedit.exe\n  condition: selection_main and 1 of selection_susp_*\nfalsepositives:\n- Installers and updaters may set currently in use files for rename or deletion after\n  a reboot.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

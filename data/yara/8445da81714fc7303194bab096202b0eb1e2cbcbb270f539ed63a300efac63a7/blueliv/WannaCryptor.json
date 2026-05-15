@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/blueliv/WannaCryptor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "wannacry_static_ransom",
+                "tags": [
+                    "wannacry_static_ransom"
+                ],
+                "description": "Detects WannaCryptor spreaded during 2017-May-12th campaign and variants",
+                "author": "Blueliv",
+                "reference": "https://blueliv.com/research/wannacrypt-malware-analysis/",
+                "date": "2017-05-15"
+            },
+            "rule_text": "rule wannacry_static_ransom : wannacry_static_ransom\n{\n\tmeta:\n\t\tdescription = \"Detects WannaCryptor spreaded during 2017-May-12th campaign and variants\"\n\t\tauthor = \"Blueliv\"\n\t\treference = \"https://blueliv.com/research/wannacrypt-malware-analysis/\"\n\t\tdate = \"2017-05-15\"\n\n\tstrings:\n\t\t$mutex01 = \"Global\\\\MsWinZonesCacheCounterMutexA\" ascii\n\t\t$lang01 = \"m_bulgarian.wnr\" ascii\n\t\t$lang02 = \"m_vietnamese.wnry\" ascii\n\t\t$startarg01 = \"StartTask\" ascii\n\t\t$startarg02 = \"TaskStart\" ascii\n\t\t$startarg03 = \"StartSchedule\" ascii\n\t\t$wcry01 = \"WanaCrypt0r\" ascii wide\n\t\t$wcry02 = \"WANACRY\" ascii\n\t\t$wcry03 = \"WANNACRY\" ascii\n\t\t$wcry04 = \"WNCRYT\" ascii wide\n\t\t$forig01 = \".wnry\\x00\" ascii\n\t\t$fvar01 = \".wry\\x00\" ascii\n\n\tcondition:\n\t\t($mutex01 or any of ( $lang* ) ) and ( $forig01 or all of ( $fvar* ) ) and any of ( $wcry* ) and any of ( $startarg* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "wannacry_memory_ransom",
+                "tags": [
+                    "wannacry_memory_ransom"
+                ],
+                "description": "Detects WannaCryptor spreaded during 2017-May-12th campaign and variants in memory",
+                "author": "Blueliv",
+                "reference": "https://blueliv.com/research/wannacrypt-malware-analysis/",
+                "date": "2017-05-15"
+            },
+            "rule_text": "rule wannacry_memory_ransom : wannacry_memory_ransom\n{\n\tmeta:\n\t\tdescription = \"Detects WannaCryptor spreaded during 2017-May-12th campaign and variants in memory\"\n\t\tauthor = \"Blueliv\"\n\t\treference = \"https://blueliv.com/research/wannacrypt-malware-analysis/\"\n\t\tdate = \"2017-05-15\"\n\n\tstrings:\n\t\t$s01 = \"%08X.eky\"\n\t\t$s02 = \"%08X.pky\"\n\t\t$s03 = \"%08X.res\"\n\t\t$s04 = \"%08X.dky\"\n\t\t$s05 = \"@WanaDecryptor@.exe\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "worm_ms17_010",
+                "tags": [
+                    "worm_ms17_010"
+                ],
+                "description": "Detects Worm used during 2017-May-12th WannaCry campaign, which is based on ETERNALBLUE",
+                "author": "Blueliv",
+                "reference": "https://blueliv.com/research/wannacrypt-malware-analysis/",
+                "date": "2017-05-15"
+            },
+            "rule_text": "rule worm_ms17_010 : worm_ms17_010\n{\n\tmeta:\n\t\tdescription = \"Detects Worm used during 2017-May-12th WannaCry campaign, which is based on ETERNALBLUE\"\n\t\tauthor = \"Blueliv\"\n\t\treference = \"https://blueliv.com/research/wannacrypt-malware-analysis/\"\n\t\tdate = \"2017-05-15\"\n\n\tstrings:\n\t\t$s01 = \"__TREEID__PLACEHOLDER__\" ascii\n\t\t$s02 = \"__USERID__PLACEHOLDER__@\" ascii\n\t\t$s03 = \"SMB3\"\n\t\t$s05 = \"SMBu\"\n\t\t$s06 = \"SMBs\"\n\t\t$s07 = \"SMBr\"\n\t\t$s08 = \"%s -m security\" ascii\n\t\t$s09 = \"%d.%d.%d.%d\"\n\t\t$payloadwin2000_2195 = \"\\x57\\x00\\x69\\x00\\x6e\\x00\\x64\\x00\\x6f\\x00\\x77\\x00\\x73\\x00\\x20\\x00\\x32\\x00\\x30\\x00\\x30\\x00\\x30\\x00\\x20\\x00\\x32\\x00\\x31\\x00\\x39\\x00\\x35\\x00\\x00\\x00\"\n\t\t$payload2000_50 = \"\\x57\\x00\\x69\\x00\\x6e\\x00\\x64\\x00\\x6f\\x00\\x77\\x00\\x73\\x00\\x20\\x00\\x32\\x00\\x30\\x00\\x30\\x00\\x30\\x00\\x20\\x00\\x35\\x00\\x2e\\x00\\x30\\x00\\x00\\x00\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

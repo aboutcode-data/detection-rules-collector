@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Bewymids/Trojan_Win32_Bewymids_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Bewymids_A",
+                "tags": [],
+                "description": "Trojan:Win32/Bewymids.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Bewymids_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Bewymids.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {74 18 6a 02 6a 98 57 e8 ?? ?? ?? ?? 83 c4 0c 85 c0 74 0b }\n\t\t$a_03_1 = {80 3b 63 8b f8 0f 85 ?? ?? 00 00 80 7b 01 64 0f 85 ?? ?? 00 00 80 7b 02 20 0f 85 }\n\t\t$a_01_2 = {8a 14 08 02 d0 80 c2 5a 32 d0 88 14 08 40 3b 44 24 08 7c ec }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,233 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/generic_anomalies.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Embedded_EXE_Cloaking",
+                "tags": [],
+                "description": "Detects an embedded executable in a non-executable file",
+                "author": "Florian Roth",
+                "date": "2015/02/27",
+                "score": 65
+            },
+            "rule_text": "rule Embedded_EXE_Cloaking\n{\n\tmeta:\n\t\tdescription = \"Detects an embedded executable in a non-executable file\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/27\"\n\t\tscore = 65\n\n\tstrings:\n\t\t$noex_png = { 89 50 4E 47 }\n\t\t$noex_pdf = { 25 50 44 46 }\n\t\t$noex_rtf = { 7B 5C 72 74 66 31 }\n\t\t$noex_jpg = { FF D8 FF E0 }\n\t\t$noex_gif = { 47 49 46 38 }\n\t\t$mz = { 4D 5A }\n\t\t$a1 = \"This program cannot be run in DOS mode\"\n\t\t$a2 = \"This program must be run under Win32\"\n\n\tcondition:\n\t\t(( $noex_png at 0 ) or ( $noex_pdf at 0 ) or ( $noex_rtf at 0 ) or ( $noex_jpg at 0 ) or ( $noex_gif at 0 ) ) and for any i in ( 1 .. #mz ) : ( @a1 < ( @mz [ i ] + 200 ) or @a2 < ( @mz [ i ] + 200 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Cloaked_as_JPG",
+                "tags": [],
+                "description": "Detects a cloaked file as JPG",
+                "author": "Florian Roth (eval section from Didier Stevens)",
+                "date": "2015/02/29",
+                "score": 40
+            },
+            "rule_text": "rule Cloaked_as_JPG\n{\n\tmeta:\n\t\tdescription = \"Detects a cloaked file as JPG\"\n\t\tauthor = \"Florian Roth (eval section from Didier Stevens)\"\n\t\tdate = \"2015/02/29\"\n\t\tscore = 40\n\n\tcondition:\n\t\tuint16be( 0x00 ) != 0xFFD8 and extension matches /\\.jpg/i and filetype != \"GIF\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GIFCloaked_Webshell",
+                "tags": [],
+                "description": "Detects a webshell that cloakes itself with GIF header(s) - Based on Dark Security Team Webshell",
+                "author": "Florian Roth",
+                "hash": "f1c95b13a71ca3629a0bb79601fcacf57cdfcf768806a71b26f2448f8c1d5d24",
+                "score": 60
+            },
+            "rule_text": "rule GIFCloaked_Webshell\n{\n\tmeta:\n\t\tdescription = \"Detects a webshell that cloakes itself with GIF header(s) - Based on Dark Security Team Webshell\"\n\t\tauthor = \"Florian Roth\"\n\t\thash = \"f1c95b13a71ca3629a0bb79601fcacf57cdfcf768806a71b26f2448f8c1d5d24\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$magic = \"GIF\"\n\t\t$s0 = \"input type\"\n\t\t$s1 = \"<%eval request\"\n\t\t$s2 = \"<%eval(Request.Item[\"\n\t\t$s3 = \"LANGUAGE='VBScript'\"\n\n\tcondition:\n\t\t($magic at 0 ) and ( 1 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_explorer_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of explorer.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_explorer_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of explorer.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"explorer.exe\" and not filepath contains \"teamviewer\" and ( filesize < 1000KB or filesize > 3500KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_chrome_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of chrome.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_chrome_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of chrome.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"chrome.exe\" and ( filesize < 500KB or filesize > 1300KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_csrss_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of csrss.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_csrss_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of csrss.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"csrss.exe\" and ( filesize > 18KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_iexplore_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of iexplore.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_iexplore_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of iexplore.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"iexplore.exe\" and not filepath contains \"teamviewer\" and ( filesize < 75KB or filesize > 910KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_firefox_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of firefox.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_firefox_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of firefox.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"firefox.exe\" and ( filesize < 265KB or filesize > 910KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_java_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of java.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_java_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of java.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"java.exe\" and ( filesize < 42KB or filesize > 900KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_lsass_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of lsass.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_lsass_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of lsass.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"lsass.exe\" and ( filesize < 10KB or filesize > 58KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_svchost_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of svchost.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_svchost_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of svchost.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"svchost.exe\" and ( filesize < 14KB or filesize > 40KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_winlogon_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of winlogon.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_winlogon_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of winlogon.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"winlogon.exe\" and ( filesize < 279KB or filesize > 580KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_igfxhk_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of igfxhk.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-21"
+            },
+            "rule_text": "rule Suspicious_Size_igfxhk_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of igfxhk.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-21\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"igfxhk.exe\" and ( filesize < 200KB or filesize > 265KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_servicehost_dll",
+                "tags": [],
+                "description": "Detects uncommon file size of servicehost.dll",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-23"
+            },
+            "rule_text": "rule Suspicious_Size_servicehost_dll\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of servicehost.dll\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-23\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"servicehost.dll\" and filesize > 150KB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_rundll32_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of rundll32.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-23"
+            },
+            "rule_text": "rule Suspicious_Size_rundll32_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of rundll32.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-23\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"rundll32.exe\" and ( filesize < 30KB or filesize > 60KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_taskhost_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of taskhost.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-23"
+            },
+            "rule_text": "rule Suspicious_Size_taskhost_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of taskhost.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-23\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"taskhost.exe\" and ( filesize < 45KB or filesize > 85KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_spoolsv_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of spoolsv.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-23"
+            },
+            "rule_text": "rule Suspicious_Size_spoolsv_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of spoolsv.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-23\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"spoolsv.exe\" and ( filesize < 50KB or filesize > 930KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_smss_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of smss.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-23"
+            },
+            "rule_text": "rule Suspicious_Size_smss_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of smss.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-23\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"smss.exe\" and ( filesize < 40KB or filesize > 320KB )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_Size_wininit_exe",
+                "tags": [],
+                "description": "Detects uncommon file size of wininit.exe",
+                "author": "Florian Roth",
+                "score": 60,
+                "date": "2015-12-23"
+            },
+            "rule_text": "rule Suspicious_Size_wininit_exe\n{\n\tmeta:\n\t\tdescription = \"Detects uncommon file size of wininit.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\tdate = \"2015-12-23\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filename == \"wininit.exe\" and ( filesize < 90KB or filesize > 300KB )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

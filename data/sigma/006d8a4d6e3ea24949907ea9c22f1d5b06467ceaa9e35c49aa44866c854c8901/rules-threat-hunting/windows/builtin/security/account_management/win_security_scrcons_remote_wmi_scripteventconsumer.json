@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/builtin/security/account_management/win_security_scrcons_remote_wmi_scripteventconsumer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-09-02",
+                "title": "Potential Remote WMI ActiveScriptEventConsumers Activity",
+                "id": "9599c180-e3a8-4743-8f92-7fb96d3be648"
+            },
+            "rule_text": "title: Potential Remote WMI ActiveScriptEventConsumers Activity\nid: 9599c180-e3a8-4743-8f92-7fb96d3be648\nstatus: test\ndescription: 'Detect potential adversaries leveraging WMI ActiveScriptEventConsumers\n  remotely to move laterally in a network.\n\n  This event is best correlated and used as an enrichment to determine the potential\n  lateral movement activity.\n\n  '\nreferences:\n- https://threathunterplaybook.com/hunts/windows/200902-RemoteWMIActiveScriptEventConsumers/notebook.html\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-09-02\nmodified: 2024-09-02\ntags:\n- attack.lateral-movement\n- attack.privilege-escalation\n- detection.threat-hunting\n- attack.persistence\n- attack.t1546.003\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    LogonType: 3\n    ProcessName|endswith: scrcons.exe\n  filter_main_local_system:\n    TargetLogonId: '0x3e7'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- SCCM\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Agent/Trojan_Win32_Agent_VDSK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Agent_VDSK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Agent.VDSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Agent_VDSK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Agent.VDSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 4c 24 10 81 c2 dc 22 6e 01 89 11 8b cf 2b cd 03 c9 2b c8 81 c1 a9 77 00 00 89 15 ?? ?? ?? ?? 39 3d }\n\t\t$a_00_1 = {66 8b 44 24 26 66 0b 44 24 26 8b 4c 24 10 66 89 44 24 26 8b 54 24 08 8a 1c 0a 8b 74 24 04 88 1c 0e }\n\t\t$a_02_2 = {81 ec 20 04 00 00 a1 ?? ?? ?? ?? 33 c4 89 84 24 1c 04 00 00 81 3d ?? ?? ?? ?? 12 0f 00 00 75 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 2 + ( #a_02_2 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

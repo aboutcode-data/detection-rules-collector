@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_cli_obfuscation_unicode.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Florian Roth (Nextron Systems)",
+                "date": "2022-01-15",
+                "title": "Potential CommandLine Obfuscation Using Unicode Characters",
+                "id": "e0552b19-5a83-4222-b141-b36184bb8d79"
+            },
+            "rule_text": "title: Potential CommandLine Obfuscation Using Unicode Characters\nid: e0552b19-5a83-4222-b141-b36184bb8d79\nrelated:\n- id: 584bca0f-3608-4402-80fd-4075ff6072e3\n  type: similar\n- id: ad691d92-15f2-4181-9aa4-723c74f9ddc3\n  type: similar\n- id: 2c0d2d7b-30d6-4d14-9751-7b9113042ab9\n  type: obsolete\nstatus: test\ndescription: 'Detects potential CommandLine obfuscation using unicode characters.\n\n  Adversaries may attempt to make an executable or file difficult to discover or analyze\n  by encrypting, encoding, or otherwise obfuscating its contents on the system or\n  in transit.\n\n  '\nreferences:\n- https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1027/T1027.md#atomic-test-6---dlp-evasion-via-sensitive-data-in-vba-macro-over-http\nauthor: frack113, Florian Roth (Nextron Systems)\ndate: 2022-01-15\nmodified: 2024-09-05\ntags:\n- attack.stealth\n- attack.t1027\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - \"\\u02E3\"\n    - \"\\u02EA\"\n    - \"\\u02E2\"\n    - \"\\u2215\"\n    - \"\\u2044\"\n    - \"\\u2015\"\n    - \"\\u2014\"\n    - \"\\_\"\n    - \"\\xAF\"\n    - \"\\xAE\"\n    - \"\\xB6\"\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

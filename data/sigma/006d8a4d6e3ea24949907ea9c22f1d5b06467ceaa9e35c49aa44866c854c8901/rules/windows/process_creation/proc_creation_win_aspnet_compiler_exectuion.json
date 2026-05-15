@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_aspnet_compiler_exectuion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-11-24",
+                "title": "AspNetCompiler Execution",
+                "id": "a01b8329-5953-4f73-ae2d-aa01e1f35f00"
+            },
+            "rule_text": "title: AspNetCompiler Execution\nid: a01b8329-5953-4f73-ae2d-aa01e1f35f00\nrelated:\n- id: 9ccba514-7cb6-4c5c-b377-700758f2f120\n  type: similar\n- id: 4c7f49ee-2638-43bb-b85b-ce676c30b260\n  type: similar\n- id: 9f50fe98-fe5c-4a2d-86c7-fad7f63ed622\n  type: similar\nstatus: test\ndescription: Detects execution of \"aspnet_compiler.exe\" which can be abused to compile\n  and execute C# code.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/\n- https://ijustwannared.team/2020/08/01/the-curious-case-of-aspnet_compiler-exe/\nauthor: frack113\ndate: 2021-11-24\nmodified: 2025-02-24\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|contains:\n    - :\\Windows\\Microsoft.NET\\Framework\\\n    - :\\Windows\\Microsoft.NET\\Framework64\\\n    - :\\Windows\\Microsoft.NET\\FrameworkArm\\\n    - :\\Windows\\Microsoft.NET\\FrameworkArm64\\\n    Image|endswith: \\aspnet_compiler.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

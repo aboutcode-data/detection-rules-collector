@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/IRCBot/Backdoor_Win32_IRCbot_AE.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_IRCbot_AE",
+                "tags": [],
+                "description": "Backdoor:Win32/IRCbot.AE,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_IRCbot_AE\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/IRCbot.AE,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b c1 99 f7 3d ?? ?? ?? 00 8a 82 ?? ?? ?? 00 8a 14 ?? 32 d0 }\n\t\t$a_01_1 = {64 a1 30 00 00 00 8b 40 0c 8b 40 14 }\n\t\t$a_03_2 = {6a 40 68 00 30 00 00 8b ?? 50 8b ?? 34 }\n\t\t$a_03_3 = {8b 48 34 51 ?? ff 15 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

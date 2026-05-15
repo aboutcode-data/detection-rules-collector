@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ICLoader/Trojan_Win32_ICLoader_VDSK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ICLoader_VDSK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/ICLoader.VDSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ICLoader_VDSK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ICLoader.VDSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 55 0c 03 c1 8a 0d ?? ?? ?? ?? 03 c2 8a 10 32 d1 8b 4d 08 88 10 83 3d ?? ?? ?? ?? 03 76 }\n\t\t$a_02_1 = {8a 0c 11 88 0c 06 8a 8a ?? ?? ?? ?? 84 c9 75 ?? 8b 0d ?? ?? ?? ?? 03 ca 03 c1 8a 0d ?? ?? ?? ?? 30 08 83 3d ?? ?? ?? ?? 03 7e }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

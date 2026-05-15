@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Linux/Flashback/Backdoor_Linux_Flashback_E_ldr.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Linux_Flashback_E_ldr",
+                "tags": [],
+                "description": "Backdoor:Linux/Flashback.E!ldr,SIGNATURE_TYPE_MACHOHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Backdoor_Linux_Flashback_E_ldr\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Linux/Flashback.E!ldr,SIGNATURE_TYPE_MACHOHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {5f 6b 73 79 6d 73 }\n\t\t$a_03_1 = {3c 53 75 24 80 ?? 01 61 75 46 80 ?? 02 66 75 40 80 ?? 03 61 75 3a 80 ?? 04 72 }\n\t\t$a_03_2 = {3c 57 75 24 80 ?? 01 65 75 1e 80 ?? 02 62 }\n\t\t$a_03_3 = {01 00 00 c7 45 ?? 01 00 00 00 c7 45 ?? 31 00 00 00 e8 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

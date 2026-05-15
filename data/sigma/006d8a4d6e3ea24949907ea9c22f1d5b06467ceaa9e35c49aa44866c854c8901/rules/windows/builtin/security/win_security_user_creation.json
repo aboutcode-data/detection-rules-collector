@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_user_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Patrick Bareiss",
+                "date": "2019-04-18",
+                "title": "Local User Creation",
+                "id": "66b6be3d-55d0-4f47-9855-d69df21740ea"
+            },
+            "rule_text": "title: Local User Creation\nid: 66b6be3d-55d0-4f47-9855-d69df21740ea\nstatus: test\ndescription: 'Detects local user creation on Windows servers, which shouldn''t happen\n  in an Active Directory environment. Apply this Sigma Use Case on your Windows server\n  logs and not on your DC logs.\n\n  '\nreferences:\n- https://patrick-bareiss.com/detecting-local-user-creation-in-ad-with-sigma/\nauthor: Patrick Bareiss\ndate: 2019-04-18\nmodified: 2021-01-17\ntags:\n- attack.persistence\n- attack.t1136.001\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4720\n  condition: selection\nfalsepositives:\n- Domain Controller Logs\n- Local accounts managed by privileged account management tools\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

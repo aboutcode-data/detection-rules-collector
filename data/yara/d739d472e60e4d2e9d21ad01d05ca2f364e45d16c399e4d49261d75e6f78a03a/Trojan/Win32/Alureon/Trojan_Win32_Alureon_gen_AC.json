@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Alureon/Trojan_Win32_Alureon_gen_AC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Alureon_gen_AC",
+                "tags": [],
+                "description": "Trojan:Win32/Alureon.gen!AC,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Alureon_gen_AC\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Alureon.gen!AC,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {43 72 65 61 74 65 52 65 63 74 52 67 6e 49 6e 64 69 72 65 63 74 00 00 00 50 74 49 6e 52 65 67 69 6f 6e 00 }\n\t\t$a_03_1 = {85 c0 0f 84 ?? ?? ?? ?? 68 ?? ?? ?? ?? ff 35 ?? ?? ?? ?? c6 45 ?? 22 c6 45 ?? 53 ff 55 ?? 68 ?? ?? ?? ?? ff 35 90 1b 02 8b ?? ff 55 90 1b 05 6a }\n\t\t$a_03_2 = {85 c0 0f 84 ?? ?? ?? ?? 68 ?? ?? ?? ?? ff 35 ?? ?? ?? ?? c6 45 ?? 53 c6 45 ?? 22 ff 55 ?? 68 ?? ?? ?? ?? ff 35 90 1b 02 8b ?? ff 55 90 1b 05 6a }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

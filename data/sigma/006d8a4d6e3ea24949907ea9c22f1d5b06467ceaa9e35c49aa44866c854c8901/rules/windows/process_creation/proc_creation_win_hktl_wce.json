@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_wce.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-12-31",
+                "title": "HackTool - Windows Credential Editor (WCE) Execution",
+                "id": "7aa7009a-28b9-4344-8c1f-159489a390df"
+            },
+            "rule_text": "title: HackTool - Windows Credential Editor (WCE) Execution\nid: 7aa7009a-28b9-4344-8c1f-159489a390df\nstatus: test\ndescription: 'Detects the use of Windows Credential Editor (WCE), a popular post-exploitation\n  tool used to extract plaintext passwords, hash, PIN code and Kerberos tickets from\n  memory.\n\n  It is often used by threat actors for credential dumping and lateral movement within\n  compromised networks.\n\n  '\nreferences:\n- https://www.ampliasecurity.com/research/windows-credentials-editor/\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-12-31\nmodified: 2025-10-21\ntags:\n- attack.credential-access\n- attack.t1003.001\n- attack.s0005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith:\n    - \\WCE.exe\n    - \\WCE64.exe\n  selection_hash:\n    Hashes|contains:\n    - IMPHASH=136F0A8572C058A96436C82E541E4C41\n    - IMPHASH=589657C64DDE88533186C39F82FA1F50\n    - IMPHASH=6BFE09EFCB4FFDE061EBDBAFC4DB84CF\n    - IMPHASH=7D490037BF450877E6D0287BDCFF8D2E\n    - IMPHASH=8AB93B061287C79F3088C5BC7E7D97ED\n    - IMPHASH=A53A02B997935FD8EEDCB5F7ABAB9B9F\n    - IMPHASH=BA434A7A729EEC20E136CA4C32D6C740\n    - IMPHASH=BD1D1547DA13C0FCB6C15E86217D5EB8\n    - IMPHASH=E96A73C7BF33A464C510EDE582318BF2\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

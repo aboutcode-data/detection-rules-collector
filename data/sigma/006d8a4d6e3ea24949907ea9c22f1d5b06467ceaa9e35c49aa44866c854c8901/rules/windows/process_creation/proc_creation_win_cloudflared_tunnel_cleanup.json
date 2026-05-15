@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cloudflared_tunnel_cleanup.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-17",
+                "title": "Cloudflared Tunnel Connections Cleanup",
+                "id": "7050bba1-1aed-454e-8f73-3f46f09ce56a"
+            },
+            "rule_text": "title: Cloudflared Tunnel Connections Cleanup\nid: 7050bba1-1aed-454e-8f73-3f46f09ce56a\nstatus: test\ndescription: Detects execution of the \"cloudflared\" tool with the tunnel \"cleanup\"\n  flag in order to cleanup tunnel connections.\nreferences:\n- https://github.com/cloudflare/cloudflared\n- https://developers.cloudflare.com/cloudflare-one/connections/connect-apps\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-17\nmodified: 2023-12-21\ntags:\n- attack.command-and-control\n- attack.t1102\n- attack.t1090\n- attack.t1572\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - ' tunnel '\n    - 'cleanup '\n    CommandLine|contains:\n    - '-config '\n    - '-connector-id '\n  condition: selection\nfalsepositives:\n- Legitimate usage of Cloudflared.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

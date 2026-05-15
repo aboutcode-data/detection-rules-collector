@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_ripzip_attack.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Greg (rule)",
+                "date": "2022-07-21",
+                "title": "Potential RipZip Attack on Startup Folder",
+                "id": "a6976974-ea6f-4e97-818e-ea08625c52cb"
+            },
+            "rule_text": "title: Potential RipZip Attack on Startup Folder\nid: a6976974-ea6f-4e97-818e-ea08625c52cb\nstatus: test\ndescription: 'Detects a phishing attack which expands a ZIP file containing a malicious\n  shortcut.\n\n  If the victim expands the ZIP file via the explorer process, then the explorer process\n  expands the malicious ZIP file and drops a malicious shortcut redirected to a backdoor\n  into the Startup folder.\n\n  Additionally, the file name of the malicious shortcut in Startup folder contains\n  {0AFACED1-E828-11D1-9187-B532F1E9575D} meaning the folder shortcut operation.\n\n  '\nreferences:\n- https://twitter.com/jonasLyk/status/1549338335243534336?t=CrmPocBGLbDyE4p6zTX1cg&s=19\nauthor: Greg (rule)\ndate: 2022-07-21\nmodified: 2023-01-05\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|contains|all:\n    - \\Microsoft\\Windows\\Start Menu\\Programs\\Startup\n    - .lnk.{0AFACED1-E828-11D1-9187-B532F1E9575D}\n    Image|endswith: \\explorer.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

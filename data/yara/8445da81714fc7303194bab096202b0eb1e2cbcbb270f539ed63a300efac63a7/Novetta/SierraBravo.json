@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/SierraBravo.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SierraBravo_Two",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "import \"pe\"\n\nrule SierraBravo_Two\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$smbComNegotiationPacketGen = { 66 C7 ?? 0E 07 C8 \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t[0-32]\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tC7 ?? 39 D4 00 00 80 \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t[0-32]\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t66 C7 ?? 25 FF 00 \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t[0-32]\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t66 C7 ?? 27 A4 00 \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t[0-32]\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t66 C7 ?? 29 04 41 \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t[0-32]\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t66 C7 ?? 2B 32 00\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t$lib = \"!emCFgv7Xc8ItaVGN0bMf\"\n\t\t$api1 = \"!ctRHFEX5m9JnZdDfpK\"\n\t\t$api2 = \"!emCFgv7Xc8ItaVGN0bMf\"\n\t\t$api3 = \"!VWBeBxYx1nzrCkBLGQO\"\n\t\t$pwd = \"iamsorry!@1234567\"\n\n\tcondition:\n\t\t$smbComNegotiationPacketGen in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or ( $pwd in ( ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_size ) ) and ( $lib in ( ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_size ) ) or $api1 in ( ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_size ) ) or $api2 in ( ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_size ) ) or $api3 in ( ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".data\" ) ] . raw_data_size ) ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SierraBravo_One",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "import \"pe\"\n\nrule SierraBravo_One\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$spreaderSetup = {68 7E 66 04 80 \n\t\t\t\t\t\t\t\t\t\t\t5? \n\t\t\t\t\t\t\t\t\t\t\tE8 [4] \n\t\t\t\t\t\t\t\t\t\t\t6A 32 \n\t\t\t\t\t\t\t\t\t\t\t89 B4 [5]\n\t\t\t\t\t\t\t\t\t\t\tC7 84 [5] 01 00 00 00 \n\t\t\t\t\t\t\t\t\t\t\tC7 44 [2] 03 00 00 00 \n\t\t\t\t\t\t\t\t\t\t\tC7 44 [2] 00 00 00 00 }\n\n\tcondition:\n\t\t$spreaderSetup in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SierraBravo_packed",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "rule SierraBravo_packed\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$ = \"cmd.exe /c \\\"net share admin$ /d\\\"\"\n\t\t$ = \"MAIL FROM:<\"\n\t\t$ = \".petite\"\n\t\t$ = \"Subject: %s|%s|%s\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

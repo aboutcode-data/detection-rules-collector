@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_defendercheck.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-30",
+                "title": "PUA - DefenderCheck Execution",
+                "id": "f0ca6c24-3225-47d5-b1f5-352bf07ecfa7"
+            },
+            "rule_text": "title: PUA - DefenderCheck Execution\nid: f0ca6c24-3225-47d5-b1f5-352bf07ecfa7\nstatus: test\ndescription: Detects the use of DefenderCheck, a tool to evaluate the signatures used\n  in Microsoft Defender. It can be used to figure out the strings / byte chains used\n  in Microsoft Defender to detect a tool and thus used for AV evasion.\nreferences:\n- https://github.com/matterpreter/DefenderCheck\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-30\nmodified: 2023-02-04\ntags:\n- attack.stealth\n- attack.t1027.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\DefenderCheck.exe\n  - Description: DefenderCheck\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_seatbelt.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-18",
+                "title": "PUA - Seatbelt Execution",
+                "id": "38646daa-e78f-4ace-9de0-55547b2d30da"
+            },
+            "rule_text": "title: PUA - Seatbelt Execution\nid: 38646daa-e78f-4ace-9de0-55547b2d30da\nstatus: test\ndescription: Detects the execution of the PUA/Recon tool Seatbelt via PE information\n  of command line parameters\nreferences:\n- https://github.com/GhostPack/Seatbelt\n- https://www.bluetangle.dev/2022/08/fastening-seatbelt-on-threat-hunting.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-18\nmodified: 2023-02-04\ntags:\n- attack.discovery\n- attack.t1526\n- attack.t1087\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\Seatbelt.exe\n  - OriginalFileName: Seatbelt.exe\n  - Description: Seatbelt\n  - CommandLine|contains:\n    - ' DpapiMasterKeys'\n    - ' InterestingProcesses'\n    - ' InterestingFiles'\n    - ' CertificateThumbprints'\n    - ' ChromiumBookmarks'\n    - ' ChromiumHistory'\n    - ' ChromiumPresence'\n    - ' CloudCredentials'\n    - ' CredEnum'\n    - ' CredGuard'\n    - ' FirefoxHistory'\n    - ' ProcessCreationEvents'\n  selection_group_list:\n    CommandLine|contains:\n    - ' -group=misc'\n    - ' -group=remote'\n    - ' -group=chromium'\n    - ' -group=slack'\n    - ' -group=system'\n    - ' -group=user'\n    - ' -group=all'\n  selection_group_output:\n    CommandLine|contains: ' -outputfile='\n  condition: selection_img or all of selection_group_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

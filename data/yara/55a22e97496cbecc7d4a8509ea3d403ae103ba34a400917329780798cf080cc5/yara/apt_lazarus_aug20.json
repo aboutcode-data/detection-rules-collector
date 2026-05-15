@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_lazarus_aug20.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_NK_Lazarus_RC4_Loop",
+                "tags": [],
+                "author": "f-secure ",
+                "description": "Detects RC4 loop in Lazarus Group implant",
+                "date": "2020-06-10",
+                "reference": "https://labs.f-secure.com/publications/ti-report-lazarus-group-cryptocurrency-vertical",
+                "id": "a9503795-b4b8-505e-a1bf-df64ec8c1c32"
+            },
+            "rule_text": "rule APT_NK_Lazarus_RC4_Loop\n{\n\tmeta:\n\t\tauthor = \"f-secure \"\n\t\tdescription = \"Detects RC4 loop in Lazarus Group implant\"\n\t\tdate = \"2020-06-10\"\n\t\treference = \"https://labs.f-secure.com/publications/ti-report-lazarus-group-cryptocurrency-vertical\"\n\t\tid = \"a9503795-b4b8-505e-a1bf-df64ec8c1c32\"\n\n\tstrings:\n\t\t$str_rc4_loop = { 41 FE 8? 00 01 00 00 45 0F B6 ?? 00 01 00 00 48 \n                        FF C? 43 0F B6 0? ?? 41 00 8? 01 01 00 00 41 0F \n                        B6 ?? 01 01 00 00 }\n\n\tcondition:\n\t\tint16 ( 0 ) == 0x5a4d and filesize < 3000KB and $str_rc4_loop\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_NK_Lazarus_Network_Backdoor_Unpacked",
+                "tags": [],
+                "author": "f-secure",
+                "description": "Detects unpacked variant of Lazarus Group network backdoor",
+                "date": "2020-06-10",
+                "reference": "https://labs.f-secure.com/publications/ti-report-lazarus-group-cryptocurrency-vertical",
+                "id": "8eda9e74-1a19-5510-82d8-cd2eb324629c"
+            },
+            "rule_text": "rule APT_NK_Lazarus_Network_Backdoor_Unpacked\n{\n\tmeta:\n\t\tauthor = \"f-secure\"\n\t\tdescription = \"Detects unpacked variant of Lazarus Group network backdoor\"\n\t\tdate = \"2020-06-10\"\n\t\treference = \"https://labs.f-secure.com/publications/ti-report-lazarus-group-cryptocurrency-vertical\"\n\t\tid = \"8eda9e74-1a19-5510-82d8-cd2eb324629c\"\n\n\tstrings:\n\t\t$str_netsh_1 = \"netsh firewall add portopening TCP %d\" ascii wide nocase\n\t\t$str_netsh_2 = \"netsh firewall delete portopening TCP %d\" ascii wide nocase\n\t\t$str_mask_1 = \"cmd.exe /c \\\"%s >> %s 2>&1\\\"\" ascii wide\n\t\t$str_mask_2 = \"cmd.exe /c \\\"%s 2>> %s\\\"\" ascii wide\n\t\t$str_mask_3 = \"%s\\\\%s\\\\%s\" ascii wide\n\t\t$str_other_1 = \"perflog.dat\" ascii wide nocase\n\t\t$str_other_2 = \"perflog.evt\" ascii wide nocase\n\t\t$str_other_3 = \"cbstc.log\" ascii wide nocase\n\t\t$str_other_4 = \"LdrGetProcedureAddress\" ascii\n\t\t$str_other_5 = \"NtProtectVirtualMemory\" ascii\n\n\tcondition:\n\t\tint16 ( 0 ) == 0x5a4d and filesize < 3000KB and 1 of ( $str_netsh* ) and 1 of ( $str_mask* ) and 1 of ( $str_other* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

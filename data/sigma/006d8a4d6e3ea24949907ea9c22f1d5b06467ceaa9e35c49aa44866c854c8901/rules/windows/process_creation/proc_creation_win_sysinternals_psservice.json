@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_psservice.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-16",
+                "title": "Sysinternals PsService Execution",
+                "id": "3371f518-5fe3-4cf6-a14b-2a0ae3fd8a4f"
+            },
+            "rule_text": "title: Sysinternals PsService Execution\nid: 3371f518-5fe3-4cf6-a14b-2a0ae3fd8a4f\nstatus: test\ndescription: Detects usage of Sysinternals PsService which can be abused for service\n  reconnaissance and tampering\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/psservice\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-16\nmodified: 2023-02-24\ntags:\n- attack.privilege-escalation\n- attack.discovery\n- attack.persistence\n- attack.t1543.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - OriginalFileName: psservice.exe\n  - Image|endswith:\n    - \\PsService.exe\n    - \\PsService64.exe\n  condition: selection\nfalsepositives:\n- Legitimate use of PsService by an administrator\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

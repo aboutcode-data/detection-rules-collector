@@ -1,0 +1,59 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/apt_casper.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Casper_Backdoor_x86",
+                "tags": [],
+                "description": "Casper French Espionage Malware - Win32/ProxyBot.B - x86 Payload http://goo.gl/VRJNLo",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/VRJNLo",
+                "date": "2015/03/05",
+                "hash": "f4c39eddef1c7d99283c7303c1835e99d8e498b0",
+                "score": 80
+            },
+            "rule_text": "rule Casper_Backdoor_x86\n{\n\tmeta:\n\t\tdescription = \"Casper French Espionage Malware - Win32/ProxyBot.B - x86 Payload http://goo.gl/VRJNLo\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/VRJNLo\"\n\t\tdate = \"2015/03/05\"\n\t\thash = \"f4c39eddef1c7d99283c7303c1835e99d8e498b0\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$s1 = \"\\\"svchost.exe\\\"\" fullword wide\n\t\t$s2 = \"firefox.exe\" fullword ascii\n\t\t$s3 = \"\\\"Host Process for Windows Services\\\"\" fullword wide\n\t\t$x1 = \"\\\\Users\\\\*\" fullword ascii\n\t\t$x2 = \"\\\\Roaming\\\\Mozilla\\\\Firefox\\\\Profiles\\\\*\" fullword ascii\n\t\t$x3 = \"\\\\Mozilla\\\\Firefox\\\\Profiles\\\\*\" fullword ascii\n\t\t$x4 = \"\\\\Documents and Settings\\\\*\" fullword ascii\n\t\t$y1 = \"%s; %S=%S\" fullword wide\n\t\t$y2 = \"%s; %s=%s\" fullword ascii\n\t\t$y3 = \"Cookie: %s=%s\" fullword ascii\n\t\t$y4 = \"http://%S:%d\" fullword wide\n\t\t$z1 = \"http://google.com/\" fullword ascii\n\t\t$z2 = \"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; MALC)\" fullword ascii\n\t\t$z3 = \"Operating System\\\"\" fullword wide\n\n\tcondition:\n\t\t( all of ( $s* ) ) or ( 3 of ( $x* ) and 2 of ( $y* ) and 2 of ( $z* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Casper_EXE_Dropper",
+                "tags": [],
+                "description": "Casper French Espionage Malware - Win32/ProxyBot.B - Dropper http://goo.gl/VRJNLo",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/VRJNLo",
+                "date": "2015/03/05",
+                "hash": "e4cc35792a48123e71a2c7b6aa904006343a157a",
+                "score": 80
+            },
+            "rule_text": "rule Casper_EXE_Dropper\n{\n\tmeta:\n\t\tdescription = \"Casper French Espionage Malware - Win32/ProxyBot.B - Dropper http://goo.gl/VRJNLo\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/VRJNLo\"\n\t\tdate = \"2015/03/05\"\n\t\thash = \"e4cc35792a48123e71a2c7b6aa904006343a157a\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$s0 = \"<Command>\" fullword ascii\n\t\t$s1 = \"</Command>\" fullword ascii\n\t\t$s2 = \"\\\" /d \\\"\" fullword ascii\n\t\t$s4 = \"'%s' %s\" fullword ascii\n\t\t$s5 = \"nKERNEL32.DLL\" fullword wide\n\t\t$s6 = \"@ReturnValue\" fullword wide\n\t\t$s7 = \"ID: 0x%x\" fullword ascii\n\t\t$s8 = \"Name: %S\" fullword ascii\n\n\tcondition:\n\t\t7 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Casper_Included_Strings",
+                "tags": [],
+                "description": "Casper French Espionage Malware - String Match in File - http://goo.gl/VRJNLo",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/VRJNLo",
+                "date": "2015/03/06",
+                "score": 50
+            },
+            "rule_text": "rule Casper_Included_Strings\n{\n\tmeta:\n\t\tdescription = \"Casper French Espionage Malware - String Match in File - http://goo.gl/VRJNLo\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/VRJNLo\"\n\t\tdate = \"2015/03/06\"\n\t\tscore = 50\n\n\tstrings:\n\t\t$a0 = \"cmd.exe /C FOR /L %%i IN (1,1,%d) DO IF EXIST\"\n\t\t$a1 = \"& SYSTEMINFO) ELSE EXIT\"\n\t\t$mz = { 4d 5a }\n\t\t$c1 = \"domcommon.exe\" wide fullword\n\t\t$c2 = \"jpic.gov.sy\" fullword\n\t\t$c3 = \"aiomgr.exe\" wide fullword\n\t\t$c4 = \"perfaudio.dat\" fullword\n\t\t$c5 = \"Casper_DLL.dll\" fullword\n\t\t$c6 = { 7B 4B 59 DE 37 4A 42 26 59 98 63 C6 2D 0F 57 40 }\n\t\t$c7 = \"{4216567A-4512-9825-7745F856}\" fullword\n\n\tcondition:\n\t\tall of ( $a* ) or ( $mz at 0 ) and ( 1 of ( $c* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Casper_SystemInformation_Output",
+                "tags": [],
+                "description": "Casper French Espionage Malware - System Info Output - http://goo.gl/VRJNLo",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/VRJNLo",
+                "date": "2015/03/06",
+                "score": 70
+            },
+            "rule_text": "rule Casper_SystemInformation_Output\n{\n\tmeta:\n\t\tdescription = \"Casper French Espionage Malware - System Info Output - http://goo.gl/VRJNLo\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/VRJNLo\"\n\t\tdate = \"2015/03/06\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$a0 = \"***** SYSTEM INFORMATION ******\"\n\t\t$a1 = \"***** SECURITY INFORMATION ******\"\n\t\t$a2 = \"Antivirus: \"\n\t\t$a3 = \"Firewall: \"\n\t\t$a4 = \"***** EXECUTION CONTEXT ******\"\n\t\t$a5 = \"Identity: \"\n\t\t$a6 = \"<CONFIG TIMESTAMP=\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_rdp_to_http.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-04-29",
+                "title": "RDP to HTTP or HTTPS Target Ports",
+                "id": "b1e5da3b-ca8e-4adf-915c-9921f3d85481"
+            },
+            "rule_text": "title: RDP to HTTP or HTTPS Target Ports\nid: b1e5da3b-ca8e-4adf-915c-9921f3d85481\nstatus: test\ndescription: Detects svchost hosting RDP termsvcs communicating to target systems\n  on TCP port 80 or 443\nreferences:\n- https://twitter.com/tekdefense/status/1519711183162556416?s=12&t=OTsHCBkQOTNs1k3USz65Zg\n- https://www.mandiant.com/resources/bypassing-network-restrictions-through-rdp-tunneling\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-04-29\nmodified: 2022-07-14\ntags:\n- attack.command-and-control\n- attack.t1572\n- attack.lateral-movement\n- attack.t1021.001\n- car.2013-07-002\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n    Initiated: 'true'\n    SourcePort: 3389\n    DestinationPort:\n    - 80\n    - 443\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

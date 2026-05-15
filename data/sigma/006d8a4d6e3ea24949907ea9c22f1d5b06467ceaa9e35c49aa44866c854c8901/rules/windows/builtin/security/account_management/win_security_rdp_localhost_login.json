@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/account_management/win_security_rdp_localhost_login.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thomas Patzke",
+                "date": "2019-01-28",
+                "title": "RDP Login from Localhost",
+                "id": "51e33403-2a37-4d66-a574-1fda1782cc31"
+            },
+            "rule_text": "title: RDP Login from Localhost\nid: 51e33403-2a37-4d66-a574-1fda1782cc31\nstatus: test\ndescription: RDP login with localhost source address may be a tunnelled login\nreferences:\n- https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html\nauthor: Thomas Patzke\ndate: 2019-01-28\nmodified: 2022-10-09\ntags:\n- attack.lateral-movement\n- car.2013-07-002\n- attack.t1021.001\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    LogonType: 10\n    IpAddress:\n    - ::1\n    - 127.0.0.1\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/wmi_event/sysmon_wmi_susp_encoded_scripts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-09-01",
+                "title": "Suspicious Encoded Scripts in a WMI Consumer",
+                "id": "83844185-1c5b-45bc-bcf3-b5bf3084ca5b"
+            },
+            "rule_text": "title: Suspicious Encoded Scripts in a WMI Consumer\nid: 83844185-1c5b-45bc-bcf3-b5bf3084ca5b\nstatus: test\ndescription: Detects suspicious encoded payloads in WMI Event Consumers\nreferences:\n- https://github.com/RiccardoAncarani/LiquidSnake\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-09-01\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.t1047\n- attack.persistence\n- attack.t1546.003\nlogsource:\n  product: windows\n  category: wmi_event\ndetection:\n  selection_destination:\n    Destination|base64offset|contains:\n    - WriteProcessMemory\n    - This program cannot be run in DOS mode\n    - This program must be run under Win32\n  condition: selection_destination\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

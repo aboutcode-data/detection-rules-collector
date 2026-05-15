@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/maccontrol.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MacControlCode",
+                "tags": [
+                    "MacControl",
+                    "Family"
+                ],
+                "description": "MacControl code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-17"
+            },
+            "rule_text": "private rule MacControlCode : MacControl Family\n{\n\tmeta:\n\t\tdescription = \"MacControl code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-17\"\n\n\tstrings:\n\t\t$L4_Accept = { C7 ?? 41 63 63 65 C7 ?? 04 70 74 3A 20 }\n\t\t$L4_AcceptLang = { C7 ?? 41 63 63 65 C7 ?? 04 70 74 2D 4C }\n\t\t$L4_Pragma = { C7 ?? 50 72 61 67 C7 ?? 04 6D 61 3A 20 }\n\t\t$L4_Connection = { C7 ?? 43 6F 6E 6E C7 ?? 04 65 63 74 69 }\n\t\t$GEThgif = { C7 ?? 47 45 54 20 C7 ?? 04 2F 68 2E 67 }\n\n\tcondition:\n\t\tall of ( $L4* ) or $GEThgif\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MacControlStrings",
+                "tags": [
+                    "MacControl",
+                    "Family"
+                ],
+                "description": "MacControl Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-17"
+            },
+            "rule_text": "private rule MacControlStrings : MacControl Family\n{\n\tmeta:\n\t\tdescription = \"MacControl Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-17\"\n\n\tstrings:\n\t\t$ = \"HTTPHeadGet\"\n\t\t$ = \"/Library/launched\"\n\t\t$ = \"My connect error with no ip!\"\n\t\t$ = \"Send File is Failed\"\n\t\t$ = \"****************************You Have got it!****************************\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MacControl",
+                "tags": [
+                    "Family"
+                ],
+                "description": "MacControl",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-16"
+            },
+            "rule_text": "rule MacControl : Family\n{\n\tmeta:\n\t\tdescription = \"MacControl\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-16\"\n\n\tcondition:\n\t\tMacControlCode or MacControlStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

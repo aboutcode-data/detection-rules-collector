@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/tool.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "tool_frp_str",
+                "tags": [],
+                "description": "Detect fast reverse proxy (frp)",
+                "author": "JPCERT/CC Incident Response Group",
+                "reference": "https://github.com/fatedier/frp"
+            },
+            "rule_text": "rule tool_frp_str\n{\n\tmeta:\n\t\tdescription = \"Detect fast reverse proxy (frp)\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\treference = \"https://github.com/fatedier/frp\"\n\n\tstrings:\n\t\t$str1 = \"json:\\\"dst_addr\\\"\"\n\t\t$str2 = \"json:\\\"bind_addr\\\"\"\n\t\t$str3 = \"json:\\\"proxy_name\\\"\"\n\t\t$str4 = \"json:\\\"log_way\\\"\"\n\t\t$str5 = \"json:\\\"maxdays\\\"\"\n\t\t$str6 = \"json:\\\"sk\\\"\"\n\t\t$str7 = \"json:\\\"authenticate_new_work_conns\\\"\"\n\t\t$str8 = \"json:\\\"detailed_errors_to_client\\\"\"\n\t\t$str9 = \"json:\\\"oidc_skip_expiry_check\\\"\"\n\t\t$str10 = \"json:\\\"health_check_interval_s\\\"\"\n\t\t$str11 = \"json:\\\"token_type,omitempty\\\"\"\n\n\tcondition:\n\t\t6 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

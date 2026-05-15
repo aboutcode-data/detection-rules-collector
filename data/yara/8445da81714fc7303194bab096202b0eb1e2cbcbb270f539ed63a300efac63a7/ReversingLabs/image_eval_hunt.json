@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/ReversingLabs/image_eval_hunt.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "image_eval_hunt",
+                "tags": [],
+                "author": "ReversingLabs",
+                "reference": "https://blog.reversinglabs.com/blog/malware-in-images"
+            },
+            "rule_text": "rule image_eval_hunt\n{\n\tmeta:\n\t\tauthor = \"ReversingLabs\"\n\t\treference = \"https://blog.reversinglabs.com/blog/malware-in-images\"\n\n\tstrings:\n\t\t$png = {89 50 4E 47}\n\t\t$jpeg = {FF D8 FF}\n\t\t$gif = \"GIF\"\n\t\t$eval = \"eval(\"\n\n\tcondition:\n\t\t(( $png at 0 ) or ( $jpeg at 0 ) or ( $gif at 0 ) ) and $eval\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

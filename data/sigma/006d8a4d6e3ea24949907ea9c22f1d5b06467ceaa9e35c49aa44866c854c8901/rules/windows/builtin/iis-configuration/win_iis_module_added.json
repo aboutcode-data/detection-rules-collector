@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/iis-configuration/win_iis_module_added.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2024-10-06",
+                "title": "New Module Module Added To IIS Server",
+                "id": "dd857d3e-0c6e-457b-9b48-e82ae7f86bd7"
+            },
+            "rule_text": "title: New Module Module Added To IIS Server\nid: dd857d3e-0c6e-457b-9b48-e82ae7f86bd7\nstatus: test\ndescription: Detects the addition of a new module to an IIS server.\nreferences:\n- https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis\n- https://www.microsoft.com/en-us/security/blog/2022/12/12/iis-modules-the-evolution-of-web-shells-and-how-to-detect-them/\n- https://www.microsoft.com/en-us/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/\n- https://learn.microsoft.com/en-us/iis/get-started/introduction-to-iis/iis-modules-overview\nauthor: frack113\ndate: 2024-10-06\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1685.001\n- attack.t1505.004\nlogsource:\n  product: windows\n  service: iis-configuration\ndetection:\n  selection:\n    EventID: 29\n    Configuration|contains: /system.webServer/modules/add\n  filter_main_builtin:\n    NewValue:\n    - AnonymousAuthenticationModule\n    - CustomErrorModule\n    - DefaultDocumentModule\n    - DirectoryListingModule\n    - FileCacheModule\n    - HttpCacheModule\n    - HttpLoggingModule\n    - ProtocolSupportModule\n    - RequestFilteringModule\n    - StaticCompressionModule\n    - StaticFileModule\n    - TokenCacheModule\n    - UriCacheModule\n  filter_main_remove:\n    NewValue: ''\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

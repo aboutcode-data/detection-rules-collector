@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_ssh_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-08-29",
+                "title": "Shell Invocation Via Ssh - Linux",
+                "id": "8737b7f6-8df3-4bb7-b1da-06019b99b687"
+            },
+            "rule_text": "title: Shell Invocation Via Ssh - Linux\nid: 8737b7f6-8df3-4bb7-b1da-06019b99b687\nstatus: test\ndescription: 'Detects the use of the \"ssh\" utility to execute a shell. Such behavior\n  may be associated with privilege escalation, unauthorized command execution, or\n  to break out from restricted environments.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/ssh/\n- https://www.elastic.co/guide/en/security/current/linux-restricted-shell-breakout-via-linux-binary-s.html\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-08-29\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /ssh\n    CommandLine|contains:\n    - ProxyCommand=;\n    - permitlocalcommand=yes\n    - localhost\n  selection_cli:\n    CommandLine|contains:\n    - /bin/bash\n    - /bin/dash\n    - /bin/fish\n    - /bin/sh\n    - /bin/zsh\n    - sh 0<&2 1>&2\n    - sh 1>&2 0<&2\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

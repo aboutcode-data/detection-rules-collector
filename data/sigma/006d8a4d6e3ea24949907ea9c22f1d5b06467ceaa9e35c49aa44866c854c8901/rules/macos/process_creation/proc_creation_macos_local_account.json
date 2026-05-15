@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_local_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alejandro Ortuno, oscd.community",
+                "date": "2020-10-08",
+                "title": "Local System Accounts Discovery - MacOs",
+                "id": "ddf36b67-e872-4507-ab2e-46bda21b842c"
+            },
+            "rule_text": "title: Local System Accounts Discovery - MacOs\nid: ddf36b67-e872-4507-ab2e-46bda21b842c\nstatus: test\ndescription: Detects enumeration of local systeam accounts on MacOS\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1087.001/T1087.001.md\nauthor: Alejandro Ortuno, oscd.community\ndate: 2020-10-08\nmodified: 2022-11-27\ntags:\n- attack.discovery\n- attack.t1087.001\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection_1:\n    Image|endswith: /dscl\n    CommandLine|contains|all:\n    - list\n    - /users\n  selection_2:\n    Image|endswith: /dscacheutil\n    CommandLine|contains|all:\n    - -q\n    - user\n  selection_3:\n    CommandLine|contains: '''x:0:'''\n  selection_4:\n    Image|endswith: /cat\n    CommandLine|contains:\n    - /etc/passwd\n    - /etc/sudoers\n  selection_5:\n    Image|endswith: /id\n  selection_6:\n    Image|endswith: /lsof\n    CommandLine|contains: -u\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

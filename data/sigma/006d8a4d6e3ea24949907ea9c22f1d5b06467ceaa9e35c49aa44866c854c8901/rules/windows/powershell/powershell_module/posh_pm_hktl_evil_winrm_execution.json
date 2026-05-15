@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_hktl_evil_winrm_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-02-25",
+                "title": "HackTool - Evil-WinRm Execution - PowerShell Module",
+                "id": "9fe55ea2-4cd6-4491-8a54-dd6871651b51"
+            },
+            "rule_text": "title: HackTool - Evil-WinRm Execution - PowerShell Module\nid: 9fe55ea2-4cd6-4491-8a54-dd6871651b51\nstatus: test\ndescription: 'Detects the execution of Evil-WinRM via PowerShell Module logs by leveraging\n  the hardcoded strings inside the utility.\n\n  '\nreferences:\n- https://github.com/Hackplayers/evil-winrm/blob/7514b055d67ec19836e95c05bd63e7cc47c4c2aa/evil-winrm.rb\n- https://github.com/search?q=repo%3AHackplayers%2Fevil-winrm++shell.run%28&type=code\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-02-25\ntags:\n- attack.lateral-movement\nlogsource:\n  product: windows\n  category: ps_module\ndetection:\n  selection_wsm:\n    ContextInfo|contains:\n    - :\\Windows\\System32\\wsmprovhost.exe\n    - :\\Windows\\SysWOW64\\wsmprovhost.exe\n  selection_payload_1:\n    Payload|contains:\n    - value=\"(get-location).path\n    - value=\"(get-item*).length\n    - 'Invoke-Binary '\n    - Donut-Loader -process_id*-donutfile\n    - Bypass-4MSI\n    - IEX ([System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($a))).replace('???','')\n  selection_payload_2:\n    Payload|contains|all:\n    - $servicios = Get-ItemProperty \"registry::HKLM\\System\\CurrentControlSet\\Services\\\"\n    - Where-Object {$_.imagepath -notmatch \"system\" -and $_.imagepath -ne $null }\n      | Select-Object pschildname,imagepath\n  selection_payload_3:\n    Payload|contains|all:\n    - $a +=  \\\"$($_.FullName.Replace('\\\\','/'))/\\\"}else{  $a += \\\"$($_.FullName.Replace('\\\\',\n      '/'))\\\" }\n    - $a=@();$\n  condition: selection_wsm and 1 of selection_payload_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

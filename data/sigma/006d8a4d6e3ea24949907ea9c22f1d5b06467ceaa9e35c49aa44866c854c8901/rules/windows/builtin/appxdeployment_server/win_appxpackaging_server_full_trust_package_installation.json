@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxpackaging_server_full_trust_package_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Michael Haag, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-03",
+                "title": "Windows AppX Deployment Full Trust Package Installation",
+                "id": "e54279c7-4910-4e2c-902c-c56a25b549f6"
+            },
+            "rule_text": "title: Windows AppX Deployment Full Trust Package Installation\nid: e54279c7-4910-4e2c-902c-c56a25b549f6\nstatus: experimental\ndescription: Detects the installation of MSIX/AppX packages with full trust privileges\n  which run with elevated privileges outside normal AppX container restrictions\nreferences:\n- https://www.splunk.com/en_us/blog/security/msix-weaponization-threat-detection-splunk.html\nauthor: Michael Haag, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-03\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1204.002\n- attack.t1553.005\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID: 400\n    HasFullTrust: true\n  filter_main_legitpath:\n    PackageSourceUri|startswith:\n    - file:///C:/Program%20Files/\n    - file:///C:/Program%20Files%20(x86)/\n  filter_main_microsoft:\n  - PackageSourceUri|startswith: https://go.microsoft.com/fwlink/?linkid\n  - PackageSourceUri|contains:\n    - .cdn.microsoft.com\n    - .cdn.office.net/\n  filter_main_callerprocess:\n    CallingProcess|startswith:\n    - sysprep.exe\n    - svchost.exe,AppReadiness\n  filter_optional_x_update:\n    PackageSourceUri|startswith: x-windowsupdate://\n  filter_optional_microsoftclient:\n    PackageFullName|startswith: MicrosoftWindows.Client.\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Some legitimate applications installation which have been missed from filtering\n  can generate fps, thus baselining and tuning is recommended before deploying to\n  production\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

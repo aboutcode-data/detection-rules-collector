@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_cmd_for_loop_execution_with_recursive_directory_search.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2025-11-12",
+                "title": "Suspicious Usage of For Loop with Recursive Directory Search in CMD",
+                "id": "2782fbd8-b662-4eb5-9962-5bfbfb671e7b"
+            },
+            "rule_text": "title: Suspicious Usage of For Loop with Recursive Directory Search in CMD\nid: 2782fbd8-b662-4eb5-9962-5bfbfb671e7b\nstatus: experimental\ndescription: 'Detects suspicious usage of the cmd.exe ''for /f'' loop combined with\n  the ''tokens='' parameter and a recursive directory listing.\n\n  This pattern may indicate an attempt to discover and execute system binaries dynamically,\n  for example powershell, a technique sometimes used by attackers to evade detection.\n\n  This behavior has been observed in various malicious lnk files.\n\n  '\nreferences:\n- https://www.virustotal.com/gui/file/29837d0d3202758063185828c8f8d9e0b7b42b365c8941cc926d2d7c7bae2fb3\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2025-11-12\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.003\n- attack.t1027.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_tokens:\n    CommandLine|contains|all:\n    - for /f\n    - tokens=\n    - in (\n    - dir\n  selection_tokens_parent:\n    ParentCommandLine|contains|all:\n    - for /f\n    - tokens=\n    - in (\n    - dir\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_base64_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "pH-T (Nextron Systems)",
+                "date": "2022-07-26",
+                "title": "Linux Base64 Encoded Pipe to Shell",
+                "id": "ba592c6d-6888-43c3-b8c6-689b8fe47337"
+            },
+            "rule_text": "title: Linux Base64 Encoded Pipe to Shell\nid: ba592c6d-6888-43c3-b8c6-689b8fe47337\nstatus: test\ndescription: Detects suspicious process command line that uses base64 encoded input\n  for execution with a shell\nreferences:\n- https://github.com/arget13/DDexec\n- https://www.mandiant.com/resources/blog/barracuda-esg-exploited-globally\nauthor: pH-T (Nextron Systems)\ndate: 2022-07-26\nmodified: 2023-06-16\ntags:\n- attack.stealth\n- attack.t1140\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_base64:\n    CommandLine|contains: 'base64 '\n  selection_exec:\n  - CommandLine|contains:\n    - '| bash '\n    - '| sh '\n    - '|bash '\n    - '|sh '\n  - CommandLine|endswith:\n    - ' |sh'\n    - '| bash'\n    - '| sh'\n    - '|bash'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

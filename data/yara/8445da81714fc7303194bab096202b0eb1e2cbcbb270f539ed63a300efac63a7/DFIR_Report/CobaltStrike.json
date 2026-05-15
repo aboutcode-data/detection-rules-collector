@@ -1,0 +1,123 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/DFIR_Report/CobaltStrike.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CS_default_exe_beacon_stager",
+                "tags": [],
+                "description": "Remote CS beacon execution as a service - spoolsv.exe",
+                "author": "TheDFIRReport",
+                "date": "2021-07-13",
+                "hash1": "f3dfe25f02838a45eba8a683807f7d5790ccc32186d470a5959096d009cc78a2"
+            },
+            "rule_text": "import \"pe\"\n\nrule CS_default_exe_beacon_stager\n{\n\tmeta:\n\t\tdescription = \"Remote CS beacon execution as a service - spoolsv.exe\"\n\t\tauthor = \"TheDFIRReport\"\n\t\tdate = \"2021-07-13\"\n\t\thash1 = \"f3dfe25f02838a45eba8a683807f7d5790ccc32186d470a5959096d009cc78a2\"\n\n\tstrings:\n\t\t$s1 = \"windir\" fullword ascii\n\t\t$s2 = \"rundll32.exe\" fullword ascii\n\t\t$s3 = \"VirtualQuery failed for %d bytes at address %p\" fullword ascii\n\t\t$s4 = \"msvcrt.dll\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 800KB and ( pe.imphash ( ) == \"93f7b1a7b8b61bde6ac74d26f1f52e8d\" and 3 of them ) or ( all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "tdr615_exe",
+                "tags": [],
+                "description": "Cobalt Strike on beachhead: tdr615.exe",
+                "author": "TheDFIRReport",
+                "reference": "https://thedfirreport.com/2021/08/01/bazarcall-to-conti-ransomware-via-trickbot-and-cobalt-strike/",
+                "date": "2021-07-07",
+                "hash1": "12761d7a186ff14dc55dd4f59c4e3582423928f74d8741e7ec9f761f44f369e5"
+            },
+            "rule_text": "rule tdr615_exe\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike on beachhead: tdr615.exe\"\n\t\tauthor = \"TheDFIRReport\"\n\t\treference = \"https://thedfirreport.com/2021/08/01/bazarcall-to-conti-ransomware-via-trickbot-and-cobalt-strike/\"\n\t\tdate = \"2021-07-07\"\n\t\thash1 = \"12761d7a186ff14dc55dd4f59c4e3582423928f74d8741e7ec9f761f44f369e5\"\n\n\tstrings:\n\t\t$a1 = \"AppPolicyGetProcessTerminationMethod\" fullword ascii\n\t\t$a2 = \"I:\\\\RoDcnyLYN\\\\k1GP\\\\ap0pivKfOF\\\\odudwtm30XMz\\\\UnWdqN\\\\01\\\\7aXg1kTkp.pdb\" fullword ascii\n\t\t$b1 = \"ealagi@aol.com0\" fullword ascii\n\t\t$b2 = \"operator co_await\" fullword ascii\n\t\t$b3 = \"GetModuleHandleRNtUnmapViewOfSe\" fullword ascii\n\t\t$b4 = \"RtlExitUserThrebNtFlushInstruct\" fullword ascii\n\t\t$c1 = \"Jersey City1\" fullword ascii\n\t\t$c2 = \"Mariborska cesta 971\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 10000KB and any of ( $a* ) and 2 of ( $b* ) and any of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CS_DLL",
+                "tags": [],
+                "description": "62.dll",
+                "author": "TheDFIRReport",
+                "reference": "https://thedfirreport.com/2021/08/01/bazarcall-to-conti-ransomware-via-trickbot-and-cobalt-strike/",
+                "date": "2021-07-07",
+                "hash1": "8b9d605b826258e07e63687d1cefb078008e1a9c48c34bc131d7781b142c84ab"
+            },
+            "rule_text": "import \"pe\"\n\nrule CS_DLL\n{\n\tmeta:\n\t\tdescription = \"62.dll\"\n\t\tauthor = \"TheDFIRReport\"\n\t\treference = \"https://thedfirreport.com/2021/08/01/bazarcall-to-conti-ransomware-via-trickbot-and-cobalt-strike/\"\n\t\tdate = \"2021-07-07\"\n\t\thash1 = \"8b9d605b826258e07e63687d1cefb078008e1a9c48c34bc131d7781b142c84ab\"\n\n\tstrings:\n\t\t$s1 = \"Common causes completion include incomplete download and damaged media\" fullword ascii\n\t\t$s2 = \"StartW\" fullword ascii\n\t\t$s4 = \".rdata$zzzdbg\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 70KB and ( pe.imphash ( ) == \"42205b145650671fa4469a6321ccf8bf\" ) or ( all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "conti_cobaltstrike_192145_icju1_0",
+                "tags": [],
+                "description": "files - from files 192145.dll, icju1.exe",
+                "author": "The DFIR Report",
+                "reference": "https://thedfirreport.com",
+                "date": "2021-05-09",
+                "hash1": "29bc338e63a62c24c301c04961084013816733dad446a29c20d4413c5c818af9",
+                "hash2": "e54f38d06a4f11e1b92bb7454e70c949d3e1a4db83894db1ab76e9d64146ee06"
+            },
+            "rule_text": "rule conti_cobaltstrike_192145_icju1_0\n{\n\tmeta:\n\t\tdescription = \"files - from files 192145.dll, icju1.exe\"\n\t\tauthor = \"The DFIR Report\"\n\t\treference = \"https://thedfirreport.com\"\n\t\tdate = \"2021-05-09\"\n\t\thash1 = \"29bc338e63a62c24c301c04961084013816733dad446a29c20d4413c5c818af9\"\n\t\thash2 = \"e54f38d06a4f11e1b92bb7454e70c949d3e1a4db83894db1ab76e9d64146ee06\"\n\n\tstrings:\n\t\t$x1 = \"cmd.exe /c echo NGAtoDgLpvgJwPLEPFdj>\\\"%s\\\"&exit\" fullword ascii\n\t\t$s2 = \"veniamatquiest90.dll\" fullword ascii\n\t\t$s3 = \"Quaerat magni assumenda nihil architecto labore ullam autem unde temporibus mollitia illum\" fullword ascii\n\t\t$s4 = \"Quaerat tempora culpa provident\" fullword ascii\n\t\t$s5 = \"Dolores ullam tempora error distinctio ut natus facere quibusdam\" fullword ascii\n\t\t$s6 = \"Velit consequuntur quisquam tempora error\" fullword ascii\n\t\t$s7 = \"Corporis minima omnis qui est temporibus sint quo error magnam\" fullword ascii\n\t\t$s8 = \"Quo omnis repellat ut expedita temporibus eius fuga error\" fullword ascii\n\t\t$s9 = \"Officia sit maiores deserunt nobis tempora deleniti aut et quidem fugit\" fullword ascii\n\t\t$s10 = \"Rerum tenetur sapiente est tempora qui deserunt\" fullword ascii\n\t\t$s11 = \"Sed nulla quaerat porro error excepturi\" fullword ascii\n\t\t$s12 = \"Aut tempore quo cumque dicta ut quia in\" fullword ascii\n\t\t$s13 = \"Doloribus commodi repudiandae voluptates consequuntur neque tempora ut neque nemo ad ut\" fullword ascii\n\t\t$s14 = \"Tempore possimus aperiam nam mollitia illum hic at ut doloremque\" fullword ascii\n\t\t$s15 = \"Et quia aut temporibus enim repellat dolores totam recusandae repudiandae\" fullword ascii\n\t\t$s16 = \"Dolorum eum ipsum tempora non et\" fullword ascii\n\t\t$s17 = \"Quas alias illum laborum tempora sit est rerum temporibus dicta et\" fullword ascii\n\t\t$s18 = \"Sed velit ipsa et dolor tempore sunt nostrum\" fullword ascii\n\t\t$s19 = \"Veniam voluptatem aliquam et eaque tempore tenetur possimus\" fullword ascii\n\t\t$s20 = \"Possimus suscipit placeat dolor quia tempora voluptas qui fugiat et accusantium\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 2000KB and ( 1 of ( $x* ) and 4 of them ) ) or ( all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cobalt_strike_tmp01925d3f",
+                "tags": [],
+                "description": "files - file ~tmp01925d3f.exe",
+                "author": "The DFIR Report",
+                "reference": "https://thedfirreport.com",
+                "date": "2021-02-22",
+                "hash1": "10ff83629d727df428af1f57c524e1eaddeefd608c5a317a5bfc13e2df87fb63"
+            },
+            "rule_text": "import \"pe\"\n\nrule cobalt_strike_tmp01925d3f\n{\n\tmeta:\n\t\tdescription = \"files - file ~tmp01925d3f.exe\"\n\t\tauthor = \"The DFIR Report\"\n\t\treference = \"https://thedfirreport.com\"\n\t\tdate = \"2021-02-22\"\n\t\thash1 = \"10ff83629d727df428af1f57c524e1eaddeefd608c5a317a5bfc13e2df87fb63\"\n\n\tstrings:\n\t\t$x1 = \"C:\\\\Users\\\\hillary\\\\source\\\\repos\\\\gromyko\\\\Release\\\\gromyko.pdb\" fullword ascii\n\t\t$x2 = \"api-ms-win-core-synch-l1-2-0.dll\" fullword wide\n\t\t$s3 = \"gromyko32.dll\" fullword ascii\n\t\t$s4 = \"<requestedExecutionLevel level='asInvoker' uiAccess='false'/>\" fullword ascii\n\t\t$s5 = \"AppPolicyGetProcessTerminationMethod\" fullword ascii\n\t\t$s6 = \"https://sectigo.com/CPS0\" fullword ascii\n\t\t$s7 = \"2http://crl.comodoca.com/AAACertificateServices.crl04\" fullword ascii\n\t\t$s8 = \"?http://crl.usertrust.com/USERTrustRSACertificationAuthority.crl0v\" fullword ascii\n\t\t$s9 = \"3http://crt.usertrust.com/USERTrustRSAAddTrustCA.crt0%\" fullword ascii\n\t\t$s10 = \"http://ocsp.sectigo.com0\" fullword ascii\n\t\t$s11 = \"2http://crl.sectigo.com/SectigoRSACodeSigningCA.crl0s\" fullword ascii\n\t\t$s12 = \"2http://crt.sectigo.com/SectigoRSACodeSigningCA.crt0#\" fullword ascii\n\t\t$s13 = \"http://www.digicert.com/CPS0\" fullword ascii\n\t\t$s14 = \"AppPolicyGetThreadInitializationType\" fullword ascii\n\t\t$s15 = \"alerajner@aol.com0\" fullword ascii\n\t\t$s16 = \"gromyko.inf\" fullword ascii\n\t\t$s17 = \"operator<=>\" fullword ascii\n\t\t$s18 = \"operator co_await\" fullword ascii\n\t\t$s19 = \"gromyko\" fullword ascii\n\t\t$s20 = \"api-ms-win-appmodel-runtime-l1-1-2\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 1000KB and ( pe.imphash ( ) == \"1b1b73382580c4be6fa24e8297e1849d\" or ( 1 of ( $x* ) or 4 of them ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cobalt_strike_TSE28DF",
+                "tags": [],
+                "description": "exe - file TSE28DF.exe",
+                "author": "The DFIR Report",
+                "reference": "https://thedfirreport.com",
+                "date": "2021-01-05",
+                "hash1": "65282e01d57bbc75f24629be9de126f2033957bd8fe2f16ca2a12d9b30220b47"
+            },
+            "rule_text": "import \"pe\"\n\nrule cobalt_strike_TSE28DF\n{\n\tmeta:\n\t\tdescription = \"exe - file TSE28DF.exe\"\n\t\tauthor = \"The DFIR Report\"\n\t\treference = \"https://thedfirreport.com\"\n\t\tdate = \"2021-01-05\"\n\t\thash1 = \"65282e01d57bbc75f24629be9de126f2033957bd8fe2f16ca2a12d9b30220b47\"\n\n\tstrings:\n\t\t$s1 = \"mneploho86.dll\" fullword ascii\n\t\t$s2 = \"C:\\\\projects\\\\Project1\\\\Project1.pdb\" fullword ascii\n\t\t$s3 = \"AppPolicyGetProcessTerminationMethod\" fullword ascii\n\t\t$s4 = \"AppPolicyGetThreadInitializationType\" fullword ascii\n\t\t$s5 = \"boltostrashno.nfo\" fullword ascii\n\t\t$s6 = \"operator<=>\" fullword ascii\n\t\t$s7 = \"operator co_await\" fullword ascii\n\t\t$s8 = \".data$rs\" fullword ascii\n\t\t$s9 = \"tutoyola\" fullword ascii\n\t\t$s10 = \"api-ms-win-appmodel-runtime-l1-1-2\" fullword wide\n\t\t$s11 = \"vector too long\" fullword ascii\n\t\t$s12 = \"wrong protocol type\" fullword ascii\n\t\t$s13 = \"network reset\" fullword ascii\n\t\t$s14 = \"owner dead\" fullword ascii\n\t\t$s15 = \"connection already in progress\" fullword ascii\n\t\t$s16 = \"network down\" fullword ascii\n\t\t$s17 = \"protocol not supported\" fullword ascii\n\t\t$s18 = \"connection aborted\" fullword ascii\n\t\t$s19 = \"network unreachable\" fullword ascii\n\t\t$s20 = \"host unreachable\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 700KB and ( pe.imphash ( ) == \"ab74ed3f154e02cfafb900acffdabf9e\" or all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cobalt_strike_TSE588C",
+                "tags": [],
+                "description": "exe - file TSE588C.exe",
+                "author": "The DFIR Report",
+                "reference": "https://thedfirreport.com",
+                "date": "2021-01-05",
+                "hash1": "32c13df5d411bf5a114e2021bbe9ffa5062ed1db91075a55fe4182b3728d62fe"
+            },
+            "rule_text": "import \"pe\"\n\nrule cobalt_strike_TSE588C\n{\n\tmeta:\n\t\tdescription = \"exe - file TSE588C.exe\"\n\t\tauthor = \"The DFIR Report\"\n\t\treference = \"https://thedfirreport.com\"\n\t\tdate = \"2021-01-05\"\n\t\thash1 = \"32c13df5d411bf5a114e2021bbe9ffa5062ed1db91075a55fe4182b3728d62fe\"\n\n\tstrings:\n\t\t$s1 = \"mneploho86.dll\" fullword ascii\n\t\t$s2 = \"C:\\\\projects\\\\Project1\\\\Project1.pdb\" fullword ascii\n\t\t$s3 = \"AppPolicyGetProcessTerminationMethod\" fullword ascii\n\t\t$s4 = \"AppPolicyGetThreadInitializationType\" fullword ascii\n\t\t$s5 = \"boltostrashno.nfo\" fullword ascii\n\t\t$s6 = \"operator<=>\" fullword ascii\n\t\t$s7 = \"operator co_await\" fullword ascii\n\t\t$s8 = \"?7; ?<= <?= 6<\" fullword ascii\n\t\t$s9 = \".data$rs\" fullword ascii\n\t\t$s10 = \"tutoyola\" fullword ascii\n\t\t$s11 = \"Ommk~z#K`majg`i4.itg~\\\".jkhbozk\" fullword ascii\n\t\t$s12 = \"api-ms-win-appmodel-runtime-l1-1-2\" fullword wide\n\t\t$s13 = \"OVOVPWTOVOWOTF\" fullword ascii\n\t\t$s14 = \"vector too long\" fullword ascii\n\t\t$s15 = \"n>log2\" fullword ascii\n\t\t$s16 = \"\\\\khk|k|4.fzz~4!!majk d\" fullword ascii\n\t\t$s17 = \"network reset\" fullword ascii\n\t\t$s18 = \"wrong protocol type\" fullword ascii\n\t\t$s19 = \"owner dead\" fullword ascii\n\t\t$s20 = \"connection already in progress\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 900KB and ( pe.imphash ( ) == \"bb8169128c5096ea026d19888c139f1a\" or 10 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CS_encrypted_beacon_x86",
+                "tags": [],
+                "author": "Etienne Maynier tek@randhome.io"
+            },
+            "rule_text": "rule CS_encrypted_beacon_x86\n{\n\tmeta:\n\t\tauthor = \"Etienne Maynier tek@randhome.io\"\n\n\tstrings:\n\t\t$s1 = { fc e8 ?? 00 00 00 }\n\t\t$s2 = { 8b [1-3] 83 c? 04 [0-1] 8b [1-2] 31 }\n\n\tcondition:\n\t\t$s1 at 0 and $s2 in ( 0 .. 200 ) and filesize < 300000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CS_encrypted_beacon_x86_64",
+                "tags": [],
+                "author": "Etienne Maynier tek@randhome.io"
+            },
+            "rule_text": "rule CS_encrypted_beacon_x86_64\n{\n\tmeta:\n\t\tauthor = \"Etienne Maynier tek@randhome.io\"\n\n\tstrings:\n\t\t$s1 = { fc 48 83 e4 f0 eb 33 5d 8b 45 00 48 83 c5 04 8b }\n\n\tcondition:\n\t\t$s1 at 0 and filesize < 300000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CS_beacon",
+                "tags": [],
+                "author": "Etienne Maynier tek@randhome.io"
+            },
+            "rule_text": "rule CS_beacon\n{\n\tmeta:\n\t\tauthor = \"Etienne Maynier tek@randhome.io\"\n\n\tstrings:\n\t\t$s1 = \"%02d/%02d/%02d %02d:%02d:%02d\" ascii\n\t\t$s2 = \"%s as %s\\\\%s: %d\" ascii\n\t\t$s3 = \"Started service %s on %s\" ascii\n\t\t$s4 = \"beacon.dll\" ascii\n\t\t$s5 = \"beacon.x64.dll\" ascii\n\t\t$s6 = \"ReflectiveLoader\" ascii\n\t\t$s7 = { 2e 2f 2e 2f 2e 2c ?? ?? 2e 2c 2e 2f }\n\t\t$s8 = { 69 68 69 68 69 6b ?? ?? 69 6b 69 68 }\n\t\t$s9 = \"%s (admin)\" ascii\n\t\t$s10 = \"Updater.dll\" ascii\n\t\t$s11 = \"LibTomMath\" ascii\n\t\t$s12 = \"Content-Type: application/octet-stream\" ascii\n\n\tcondition:\n\t\t6 of them and filesize < 300000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

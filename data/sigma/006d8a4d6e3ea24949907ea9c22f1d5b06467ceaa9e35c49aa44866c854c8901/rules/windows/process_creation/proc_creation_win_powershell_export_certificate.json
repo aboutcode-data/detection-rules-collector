@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_export_certificate.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-18",
+                "title": "Certificate Exported Via PowerShell",
+                "id": "9e716b33-63b2-46da-86a4-bd3c3b9b5dfb"
+            },
+            "rule_text": "title: Certificate Exported Via PowerShell\nid: 9e716b33-63b2-46da-86a4-bd3c3b9b5dfb\nrelated:\n- id: aa7a3fce-bef5-4311-9cc1-5f04bb8c308c\n  type: similar\nstatus: test\ndescription: Detects calls to cmdlets that are used to export certificates from the\n  local certificate store. Threat actors were seen abusing this to steal private keys\n  from compromised machines.\nreferences:\n- https://us-cert.cisa.gov/ncas/analysis-reports/ar21-112a\n- https://learn.microsoft.com/en-us/powershell/module/pki/export-pfxcertificate?view=windowsserver2022-ps\n- https://www.splunk.com/en_us/blog/security/breaking-the-chain-defending-against-certificate-services-abuse.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-18\ntags:\n- attack.credential-access\n- attack.execution\n- attack.t1552.004\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains:\n    - 'Export-PfxCertificate '\n    - 'Export-Certificate '\n  condition: selection\nfalsepositives:\n- Legitimate certificate exports by administrators. Additional filters might be required.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

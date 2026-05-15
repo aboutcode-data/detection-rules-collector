@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_gen_cactustorch.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CACTUSTORCH",
+                "tags": [],
+                "description": "Detects CactusTorch Hacktool",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/mdsecactivebreach/CACTUSTORCH",
+                "date": "2017-07-31",
+                "hash1": "314e6d7d863878b6dca46af165e7f08fedd42c054d7dc3828dc80b86a3a9b98c",
+                "hash2": "0305aa32d5f8484ca115bb4888880729af7f33ac99594ec1aa3c65644e544aea",
+                "hash3": "a52d802e34ac9d7d3539019d284b04ded3b8e197d5e3b38ed61f523c3d68baa7",
+                "id": "75606b9e-97d5-5b8b-87f5-69b7e415b73c"
+            },
+            "rule_text": "rule CACTUSTORCH\n{\n\tmeta:\n\t\tdescription = \"Detects CactusTorch Hacktool\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/mdsecactivebreach/CACTUSTORCH\"\n\t\tdate = \"2017-07-31\"\n\t\thash1 = \"314e6d7d863878b6dca46af165e7f08fedd42c054d7dc3828dc80b86a3a9b98c\"\n\t\thash2 = \"0305aa32d5f8484ca115bb4888880729af7f33ac99594ec1aa3c65644e544aea\"\n\t\thash3 = \"a52d802e34ac9d7d3539019d284b04ded3b8e197d5e3b38ed61f523c3d68baa7\"\n\t\tid = \"75606b9e-97d5-5b8b-87f5-69b7e415b73c\"\n\n\tstrings:\n\t\t$x1 = \"$payload = shellcode(%options[\\\"listener\\\"], \\\"true\\\", \\\"x86\\\");\" fullword ascii\n\t\t$x2 = \"Copy the base64 encoded payload into the code variable below.\" fullword ascii\n\t\t$x3 = \" CACTUSTORCH Payload\" ascii\n\t\t$x4 = \"ms.Write transform.TransformFinalBlock(enc.GetBytes_4(b), 0, length), 0, ((length / 4) * 3)\" fullword ascii\n\t\t$x5 = \"' Author: Vincent Yiu (@vysecurity)\" fullword ascii\n\t\t$x6 = \"Dim binary : binary = \\\"rundll32.exe\\\"\" fullword ascii\n\t\t$a1 = \"code = code & \\\"\" ascii\n\t\t$a2 = \"serialized_obj = serialized_obj & \\\"\" ascii\n\t\t$s1 = \"binary = \\\"rundll32.exe\\\"\" fullword ascii\n\t\t$s2 = \"EL.DataType = \\\"bin.hex\\\"\" fullword ascii\n\t\t$s3 = \"Set stm = CreateObject(\\\"System.IO.MemoryStream\\\")\" fullword ascii\n\t\t$s4 = \"var binary = \\\"rundll32.exe\\\";\" fullword ascii\n\t\t$s5 = \"var serialized_obj = \\\"\" ascii\n\n\tcondition:\n\t\t( filesize < 800KB and ( 1 of ( $x* ) or ( 1 of ( $a* ) and 1 of ( $s* ) ) ) ) or ( 3 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

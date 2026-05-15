@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_Jupyter.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_Jupyter_56152e31",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "56152e31-77c6-49fa-bbc5-c3630f11e633",
+                "fingerprint": "9cccc2e3d4cfe9ff090d02b143fa837f4da0c229426435b4e097f902e8c5fb01",
+                "creation_date": "2021-07-22",
+                "last_modified": "2021-08-23",
+                "threat_name": "Windows.Trojan.Jupyter",
+                "reference_sample": "ce486097ad2491aba8b1c120f6d0aa23eaf59cf698b57d2113faab696d03c601",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_Jupyter_56152e31\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"56152e31-77c6-49fa-bbc5-c3630f11e633\"\n\t\tfingerprint = \"9cccc2e3d4cfe9ff090d02b143fa837f4da0c229426435b4e097f902e8c5fb01\"\n\t\tcreation_date = \"2021-07-22\"\n\t\tlast_modified = \"2021-08-23\"\n\t\tthreat_name = \"Windows.Trojan.Jupyter\"\n\t\treference_sample = \"ce486097ad2491aba8b1c120f6d0aa23eaf59cf698b57d2113faab696d03c601\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"%appdata%\\\\solarmarker.dat\" ascii fullword\n\t\t$a2 = \"\\\\AppData\\\\Roaming\\\\solarmarker.dat\" wide fullword\n\t\t$b1 = \"steal_passwords\" ascii fullword\n\t\t$b2 = \"jupyter\" ascii fullword\n\n\tcondition:\n\t\t1 of ( $a* ) or 2 of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

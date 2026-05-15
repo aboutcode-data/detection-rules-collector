@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_ssl_keyword.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-23",
+                "title": "Suspicious SSL Connection",
+                "id": "195626f3-5f1b-4403-93b7-e6cfd4d6a078"
+            },
+            "rule_text": "title: Suspicious SSL Connection\nid: 195626f3-5f1b-4403-93b7-e6cfd4d6a078\nstatus: test\ndescription: Adversaries may employ a known encryption algorithm to conceal command\n  and control traffic rather than relying on any inherent protections provided by\n  a communication protocol.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1573/T1573.md#atomic-test-1---openssl-c2\n- https://medium.com/walmartglobaltech/openssl-server-reverse-shell-from-windows-client-aee2dbfa0926\nauthor: frack113\ndate: 2022-01-23\ntags:\n- attack.command-and-control\n- attack.t1573\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - System.Net.Security.SslStream\n    - Net.Security.RemoteCertificateValidationCallback\n    - .AuthenticateAsClient\n  condition: selection\nfalsepositives:\n- Legitimate administrative script\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

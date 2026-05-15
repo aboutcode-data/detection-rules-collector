@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_add_safeboot.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-02",
+                "title": "Add SafeBoot Keys Via Reg Utility",
+                "id": "d7662ff6-9e97-4596-a61d-9839e32dee8d"
+            },
+            "rule_text": "title: Add SafeBoot Keys Via Reg Utility\nid: d7662ff6-9e97-4596-a61d-9839e32dee8d\nrelated:\n- id: fc0e89b5-adb0-43c1-b749-c12a10ec37de\n  type: similar\nstatus: test\ndescription: Detects execution of \"reg.exe\" commands with the \"add\" or \"copy\" flags\n  on safe boot registry keys. Often used by attacker to allow the ransomware to work\n  in safe mode as some security products do not\nreferences:\n- https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-02\nmodified: 2024-03-19\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_safeboot:\n    CommandLine|contains: \\SYSTEM\\CurrentControlSet\\Control\\SafeBoot\n  selection_flag:\n    CommandLine|contains:\n    - ' copy '\n    - ' add '\n  condition: all of selection*\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_reg_add_safeboot/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_Solarmarker/win_victim_id_file_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/08",
+                "title": "Solarmarker Unique Victim ID File Creation",
+                "id": "c7e8e46c-10f2-45e6-936d-8651522223d1"
+            },
+            "rule_text": "title: Solarmarker Unique Victim ID File Creation\nid: c7e8e46c-10f2-45e6-936d-8651522223d1\nstatus: experimental\ndescription: Detects creation of anomalous text file used to generate victim ID by\n  Solarmarker malware.\nreferences:\n- https://www.crowdstrike.com/blog/solarmarker-backdoor-technical-analysis/\n- https://news.sophos.com/en-us/2022/02/01/solarmarker-campaign-used-novel-registry-changes-to-establish-persistence/\nauthor: Micah Babinski\ndate: 2022/11/08\ntags:\n- attack.command_and_control\n- attack.t1132\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_1:\n    TargetFilename|contains: \\AppData\\Roaming\\\n    TargetFilename|re: ^.{120,}$\n    TargetFilename|endswith: '='\n  selection_2:\n    TargetFilename|endswith: \\AppData\\Roaming\\solarmarker.dat\n  condition: any of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

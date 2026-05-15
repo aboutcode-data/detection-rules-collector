@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/win_alert_mimikatz_keywords.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), David ANDRE (additional keywords)",
+                "date": "2017-01-10",
+                "title": "Mimikatz Use",
+                "id": "06d71506-7beb-4f22-8888-e2e5e2ca7fd8"
+            },
+            "rule_text": "title: Mimikatz Use\nid: 06d71506-7beb-4f22-8888-e2e5e2ca7fd8\nstatus: test\ndescription: This method detects mimikatz keywords in different Eventlogs (some of\n  them only appear in older Mimikatz version that are however still used by different\n  threat groups)\nreferences:\n- https://tools.thehacker.recipes/mimikatz/modules\nauthor: Florian Roth (Nextron Systems), David ANDRE (additional keywords)\ndate: 2017-01-10\nmodified: 2022-01-05\ntags:\n- attack.s0002\n- attack.lateral-movement\n- attack.credential-access\n- car.2013-07-001\n- car.2019-04-004\n- attack.t1003.002\n- attack.t1003.004\n- attack.t1003.001\n- attack.t1003.006\nlogsource:\n  product: windows\ndetection:\n  keywords:\n  - dpapi::masterkey\n  - eo.oe.kiwi\n  - event::clear\n  - event::drop\n  - gentilkiwi.com\n  - kerberos::golden\n  - kerberos::ptc\n  - kerberos::ptt\n  - kerberos::tgt\n  - Kiwi Legit Printer\n  - 'lsadump::'\n  - mimidrv.sys\n  - \\mimilib.dll\n  - misc::printnightmare\n  - misc::shadowcopies\n  - misc::skeleton\n  - privilege::backup\n  - privilege::debug\n  - privilege::driver\n  - 'sekurlsa::'\n  filter:\n    EventID: 15\n  condition: keywords and not filter\nfalsepositives:\n- Naughty administrators\n- AV Signature updates\n- Files with Mimikatz in their filename\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

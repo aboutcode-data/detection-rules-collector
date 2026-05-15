@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_changepk_slui.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-23",
+                "title": "UAC Bypass Using ChangePK and SLUI",
+                "id": "503d581c-7df0-4bbe-b9be-5840c0ecc1fc"
+            },
+            "rule_text": "title: UAC Bypass Using ChangePK and SLUI\nid: 503d581c-7df0-4bbe-b9be-5840c0ecc1fc\nstatus: test\ndescription: Detects an UAC bypass that uses changepk.exe and slui.exe (UACMe 61)\nreferences:\n- https://mattharr0ey.medium.com/privilege-escalation-uac-bypass-in-changepk-c40b92818d1b\n- https://github.com/hfiref0x/UACME\n- https://medium.com/falconforce/falconfriday-detecting-uac-bypasses-0xff16-86c2a9107abf\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-23\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\changepk.exe\n    ParentImage|endswith: \\slui.exe\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

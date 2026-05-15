@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/APT/EE_Dropper.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EE_Dropper",
+                "tags": [],
+                "id": "25d2Jqee4Uip3sr0muPuRO",
+                "fingerprint": "v1_sha256_8c095876a8282857f9434e97fce844d79e4dd8994a9dc61d2be3fce8f6dcb6d1",
+                "version": "1.0",
+                "date": "2025-10-27",
+                "modified": "2025-10-27",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies dropper, EXE dropping and loading 3 CAB files, as seen in Earth Estries campaign.",
+                "category": "MALWARE",
+                "reference": "https://bartblaze.blogspot.com/2025/10/earth-estries-alive-and-kicking.html",
+                "hash": "3822207529127eb7bdf2abc41073f6bbe4cd6e9b95d78b6d7dd04f42d643d2c3"
+            },
+            "rule_text": "import \"pe\"\n\nrule EE_Dropper\n{\n\tmeta:\n\t\tid = \"25d2Jqee4Uip3sr0muPuRO\"\n\t\tfingerprint = \"v1_sha256_8c095876a8282857f9434e97fce844d79e4dd8994a9dc61d2be3fce8f6dcb6d1\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2025-10-27\"\n\t\tmodified = \"2025-10-27\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies dropper, EXE dropping and loading 3 CAB files, as seen in Earth Estries campaign.\"\n\t\tcategory = \"MALWARE\"\n\t\treference = \"https://bartblaze.blogspot.com/2025/10/earth-estries-alive-and-kicking.html\"\n\t\thash = \"3822207529127eb7bdf2abc41073f6bbe4cd6e9b95d78b6d7dd04f42d643d2c3\"\n\n\tstrings:\n\t\t$cab = {4D 53 43 46}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and #cab == 3 and ( for any i in ( 0 .. pe.number_of_resources - 1 ) : ( pe.resources [ i ] . type_string == \"T\\x00E\\x00S\\x00T\\x00\" ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_certify.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "pH-T (Nextron Systems)",
+                "date": "2023-04-17",
+                "title": "HackTool - Certify Execution",
+                "id": "762f2482-ff21-4970-8939-0aa317a886bb"
+            },
+            "rule_text": "title: HackTool - Certify Execution\nid: 762f2482-ff21-4970-8939-0aa317a886bb\nstatus: test\ndescription: Detects Certify a tool for Active Directory certificate abuse based on\n  PE metadata characteristics and common command line arguments.\nreferences:\n- https://github.com/GhostPack/Certify\nauthor: pH-T (Nextron Systems)\ndate: 2023-04-17\nmodified: 2023-04-25\ntags:\n- attack.discovery\n- attack.credential-access\n- attack.t1649\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\Certify.exe\n  - OriginalFileName: Certify.exe\n  - Description|contains: Certify\n  selection_cli_commands:\n    CommandLine|contains:\n    - '.exe cas '\n    - '.exe find '\n    - '.exe pkiobjects '\n    - '.exe request '\n    - '.exe download '\n  selection_cli_options:\n    CommandLine|contains:\n    - ' /vulnerable'\n    - ' /template:'\n    - ' /altname:'\n    - ' /domain:'\n    - ' /path:'\n    - ' /ca:'\n  condition: selection_img or all of selection_cli_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

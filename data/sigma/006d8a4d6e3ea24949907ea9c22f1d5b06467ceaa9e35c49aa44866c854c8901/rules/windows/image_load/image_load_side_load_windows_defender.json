@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_windows_defender.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2022-08-02",
+                "title": "Potential Mpclient.DLL Sideloading",
+                "id": "418dc89a-9808-4b87-b1d7-e5ae0cb6effc"
+            },
+            "rule_text": "title: Potential Mpclient.DLL Sideloading\nid: 418dc89a-9808-4b87-b1d7-e5ae0cb6effc\nrelated:\n- id: 7002aa10-b8d4-47ae-b5ba-51ab07e228b9\n  type: similar\nstatus: test\ndescription: Detects potential sideloading of \"mpclient.dll\" by Windows Defender processes\n  (\"MpCmdRun\" and \"NisSrv\") from their non-default directory.\nreferences:\n- https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool\nauthor: Bhabesh Raj\ndate: 2022-08-02\nmodified: 2023-08-04\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  product: windows\n  category: image_load\ndetection:\n  selection:\n    ImageLoaded|endswith: \\mpclient.dll\n    Image|endswith:\n    - \\MpCmdRun.exe\n    - \\NisSrv.exe\n  filter_main_known_locations:\n    Image|startswith:\n    - C:\\Program Files (x86)\\Windows Defender\\\n    - C:\\Program Files\\Microsoft Security Client\\\n    - C:\\Program Files\\Windows Defender\\\n    - C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\\n    - C:\\Windows\\WinSxS\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

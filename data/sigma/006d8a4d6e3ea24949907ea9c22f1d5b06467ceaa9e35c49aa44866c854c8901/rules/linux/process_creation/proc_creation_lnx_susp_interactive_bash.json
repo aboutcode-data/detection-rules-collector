@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_interactive_bash.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-14",
+                "title": "Interactive Bash Suspicious Children",
+                "id": "ea3ecad2-db86-4a89-ad0b-132a10d2db55"
+            },
+            "rule_text": "title: Interactive Bash Suspicious Children\nid: ea3ecad2-db86-4a89-ad0b-132a10d2db55\nstatus: test\ndescription: Detects suspicious interactive bash as a parent to rather uncommon child\n  processes\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-14\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.004\n- attack.t1036\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    ParentCommandLine: bash -i\n  anomaly1:\n    CommandLine|contains:\n    - '-c import '\n    - base64\n    - pty.spawn\n  anomaly2:\n    Image|endswith:\n    - whoami\n    - iptables\n    - /ncat\n    - /nc\n    - /netcat\n  condition: selection and 1 of anomaly*\nfalsepositives:\n- Legitimate software that uses these patterns\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

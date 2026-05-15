@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/GALLIUM/win_dns_analytic_apt_gallium.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Burrell",
+                "date": "2020-02-07",
+                "title": "GALLIUM Artefacts - Builtin",
+                "id": "3db10f25-2527-4b79-8d4b-471eb900ee29"
+            },
+            "rule_text": "title: GALLIUM Artefacts - Builtin\nid: 3db10f25-2527-4b79-8d4b-471eb900ee29\nrelated:\n- id: 440a56bf-7873-4439-940a-1c8a671073c2\n  type: derived\nstatus: test\ndescription: Detects artefacts associated with activity group GALLIUM - Microsoft\n  Threat Intelligence Center indicators released in December 2019.\nreferences:\n- https://www.microsoft.com/security/blog/2019/12/12/gallium-targeting-global-telecom/\n- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn800669(v=ws.11)\nauthor: Tim Burrell\ndate: 2020-02-07\nmodified: 2023-01-02\ntags:\n- attack.credential-access\n- attack.command-and-control\n- attack.t1071\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: dns-server-analytic\n  definition: 'Requirements: Microsoft-Windows-DNS-Server/Analytical ({EB79061A-A566-4698-9119-3ED2807060E7})\n    Event Log must be collected in order to receive the events.'\ndetection:\n  selection:\n    EventID: 257\n    QNAME:\n    - asyspy256.ddns.net\n    - hotkillmail9sddcc.ddns.net\n    - rosaf112.ddns.net\n    - cvdfhjh1231.myftp.biz\n    - sz2016rose.ddns.net\n    - dffwescwer4325.myftp.biz\n    - cvdfhjh1231.ddns.net\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

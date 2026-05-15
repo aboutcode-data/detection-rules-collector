@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/DllHijack/Trojan_Win64_DLLHijack_ARR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_DLLHijack_ARR_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/DLLHijack.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_DLLHijack_ARR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/DLLHijack.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 45 f8 48 8b 45 20 48 8b 4d f8 48 89 08 48 8b 45 10 38 00 48 8b 45 10 48 83 c0 ?? 48 8b 4d 10 38 09 48 8b 4d 10 48 83 c1 08 48 2b c1 48 83 }\n\t\t$a_01_1 = {48 8b 45 20 48 8b 8d 68 ff ff ff 48 89 08 48 8b 45 10 38 00 48 8b 45 10 48 83 c0 48 48 2b 45 10 89 85 44 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 25 + ( #a_01_1 & 1 ) * 5 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

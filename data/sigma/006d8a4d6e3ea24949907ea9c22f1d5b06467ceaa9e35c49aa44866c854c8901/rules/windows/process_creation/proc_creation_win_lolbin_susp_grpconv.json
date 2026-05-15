@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_susp_grpconv.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-05-19",
+                "title": "Suspicious GrpConv Execution",
+                "id": "f14e169e-9978-4c69-acb3-1cff8200bc36"
+            },
+            "rule_text": "title: Suspicious GrpConv Execution\nid: f14e169e-9978-4c69-acb3-1cff8200bc36\nstatus: test\ndescription: Detects the suspicious execution of a utility to convert Windows 3.x\n  .grp files or for persistence purposes by malicious software or actors\nreferences:\n- https://twitter.com/0gtweet/status/1526833181831200770\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-05-19\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - grpconv.exe -o\n    - grpconv -o\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

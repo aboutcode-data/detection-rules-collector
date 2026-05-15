@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_xor_commandline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sami Ruohonen, Harish Segar, Tim Shelton, Teymur Kheirkhabarov, Vasiliy Burov, oscd.community, Nasreddine Bencherchali",
+                "date": "2018-09-05",
+                "title": "Suspicious XOR Encoded PowerShell Command",
+                "id": "bb780e0c-16cf-4383-8383-1e5471db6cf9"
+            },
+            "rule_text": "title: Suspicious XOR Encoded PowerShell Command\nid: bb780e0c-16cf-4383-8383-1e5471db6cf9\nrelated:\n- id: 5b572dcf-254b-425c-a8c5-d9af6bea35a6\n  type: obsolete\nstatus: test\ndescription: Detects presence of a potentially xor encoded powershell command\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65\n- https://redcanary.com/blog/yellow-cockatoo/\n- https://zero2auto.com/2020/05/19/netwalker-re/\n- https://mez0.cc/posts/cobaltstrike-powershell-exec/\nauthor: Sami Ruohonen, Harish Segar, Tim Shelton, Teymur Kheirkhabarov, Vasiliy Burov,\n  oscd.community, Nasreddine Bencherchali\ndate: 2018-09-05\nmodified: 2023-01-30\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.001\n- attack.t1140\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  - Description: Windows PowerShell\n  - Product: PowerShell Core 6\n  selection_cli_xor:\n    CommandLine|contains: bxor\n  selection_cli_other:\n    CommandLine|contains:\n    - ForEach\n    - for(\n    - 'for '\n    - '-join '\n    - -join'\n    - -join\"\n    - -join`\n    - ::Join\n    - '[char]'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

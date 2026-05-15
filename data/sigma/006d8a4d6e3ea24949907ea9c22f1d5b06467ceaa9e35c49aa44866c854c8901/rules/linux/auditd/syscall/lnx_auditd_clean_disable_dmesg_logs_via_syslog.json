@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/syscall/lnx_auditd_clean_disable_dmesg_logs_via_syslog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Milad Cheraghi",
+                "date": "2025-05-27",
+                "title": "Clear or Disable Kernel Ring Buffer Logs via Syslog Syscall",
+                "id": "eca5e022-d368-4043-98e5-9736fb01f72f"
+            },
+            "rule_text": "title: Clear or Disable Kernel Ring Buffer Logs via Syslog Syscall\nid: eca5e022-d368-4043-98e5-9736fb01f72f\nstatus: experimental\ndescription: 'Detects the use of the `syslog` syscall with action code 5 (SYSLOG_ACTION_CLEAR),\n\n  (4 is SYSLOG_ACTION_READ_CLEAR and 6 is SYSLOG_ACTION_CONSOLE_OFF) which clears\n  the kernel\n\n  ring buffer (dmesg logs). This can be used by attackers to hide traces after exploitation\n\n  or privilege escalation. A common technique is running `dmesg -c`, which triggers\n  this syscall internally.\n\n  '\nreferences:\n- https://man7.org/linux/man-pages/man2/syslog.2.html\n- https://man7.org/linux/man-pages/man1/dmesg.1.html\nauthor: Milad Cheraghi\ndate: 2025-05-27\nmodified: 2025-12-05\ntags:\n- attack.defense-impairment\n- attack.t1685.006\nlogsource:\n  product: linux\n  service: auditd\n  definition: 'Required auditd configuration:\n\n    -a always,exit -F arch=b64 -S syslog -F a0=4 -k clear_dmesg_logs\n\n    -a always,exit -F arch=b64 -S syslog -F a0=5 -k clear_dmesg_logs\n\n    -a always,exit -F arch=b64 -S syslog -F a0=6 -k disable_dmesg_logs\n\n    -a always,exit -F arch=b32 -S syslog -F a0=4 -k clear_dmesg_logs\n\n    -a always,exit -F arch=b32 -S syslog -F a0=5 -k clear_dmesg_logs\n\n    -a always,exit -F arch=b32 -S syslog -F a0=6 -k disable_dmesg_logs\n\n    '\ndetection:\n  selection:\n    type: SYSCALL\n    SYSCALL: syslog\n    a0:\n    - 4\n    - 5\n    - 6\n  condition: selection\nfalsepositives:\n- System administrators or scripts that intentionally clear logs\n- Debugging scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

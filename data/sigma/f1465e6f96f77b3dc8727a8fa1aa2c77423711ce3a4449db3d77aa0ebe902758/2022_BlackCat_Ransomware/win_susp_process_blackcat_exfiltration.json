@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_BlackCat_Ransomware/win_susp_process_blackcat_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/04",
+                "title": "Suspicious BlackCat-Related Exfiltration Command",
+                "id": "613624be-dabf-4562-b49b-c2fd45773556"
+            },
+            "rule_text": "title: Suspicious BlackCat-Related Exfiltration Command\nid: 613624be-dabf-4562-b49b-c2fd45773556\nstatus: experimental\ndescription: Detects process execution of RClone or similar tools used by ransomware\n  operators to exfiltrate data.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/06/13/the-many-lives-of-blackcat-ransomware/\n- https://rclone.org/docs/\nauthor: Micah Babinski\ndate: 2022/12/04\ntags:\n- attack.exfiltration\n- attack.t1020\n- attack.t1537\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - copy\n    - --max-age\n    - --ignore-existing\n    - --multi-thread-streams\n    - --transfers\n    CommandLine|contains:\n    - ftp\n    - ssh\n    - -q\n  condition: selection\nfalsepositives:\n- Legitimate use of rclone to manage files on cloud storage.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

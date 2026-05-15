@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_powersploit_empire_default_schtasks.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis, @Karneades",
+                "date": "2018-03-06",
+                "title": "HackTool - Default PowerSploit/Empire Scheduled Task Creation",
+                "id": "56c217c3-2de2-479b-990f-5c109ba8458f"
+            },
+            "rule_text": "title: HackTool - Default PowerSploit/Empire Scheduled Task Creation\nid: 56c217c3-2de2-479b-990f-5c109ba8458f\nstatus: test\ndescription: Detects the creation of a schtask via PowerSploit or Empire Default Configuration.\nreferences:\n- https://github.com/0xdeadbeefJERKY/PowerSploit/blob/8690399ef70d2cad10213575ac67e8fa90ddf7c3/Persistence/Persistence.psm1\n- https://github.com/EmpireProject/Empire/blob/08cbd274bef78243d7a8ed6443b8364acd1fc48b/lib/modules/powershell/persistence/userland/schtasks.py\nauthor: Markus Neis, @Karneades\ndate: 2018-03-06\nmodified: 2023-03-03\ntags:\n- attack.execution\n- attack.persistence\n- attack.privilege-escalation\n- attack.s0111\n- attack.g0022\n- attack.g0060\n- car.2013-08-001\n- attack.t1053.005\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|all:\n    - /Create\n    - powershell.exe -NonI\n    - /TN Updater /TR\n    CommandLine|contains:\n    - /SC ONLOGON\n    - /SC DAILY /ST\n    - /SC ONIDLE\n    - /SC HOURLY\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

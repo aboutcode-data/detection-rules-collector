@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_token_obfuscation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-27",
+                "title": "Powershell Token Obfuscation - Process Creation",
+                "id": "deb9b646-a508-44ee-b7c9-d8965921c6b6"
+            },
+            "rule_text": "title: Powershell Token Obfuscation - Process Creation\nid: deb9b646-a508-44ee-b7c9-d8965921c6b6\nrelated:\n- id: f3a98ce4-6164-4dd4-867c-4d83de7eca51\n  type: similar\nstatus: test\ndescription: Detects TOKEN OBFUSCATION technique from Invoke-Obfuscation\nreferences:\n- https://github.com/danielbohannon/Invoke-Obfuscation\nauthor: frack113\ndate: 2022-12-27\nmodified: 2026-03-16\ntags:\n- attack.stealth\n- attack.t1027.009\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - CommandLine|re: \\w+`(?:\\w+|-|.)`[\\w+|\\s]\n  - CommandLine|re: '\"(?:\\{\\d\\})+\"\\s*-f'\n  - CommandLine|re: (?i)\\$\\{`?e`?n`?v`?:`?p`?a`?t`?h`?\\}\n  filter_main_envpath:\n    CommandLine|contains: ${env:path}\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

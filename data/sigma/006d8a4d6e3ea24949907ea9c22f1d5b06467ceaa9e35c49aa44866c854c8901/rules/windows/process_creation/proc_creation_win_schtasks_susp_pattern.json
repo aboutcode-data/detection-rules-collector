@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_susp_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-23",
+                "title": "Suspicious Command Patterns In Scheduled Task Creation",
+                "id": "f2c64357-b1d2-41b7-849f-34d2682c0fad"
+            },
+            "rule_text": "title: Suspicious Command Patterns In Scheduled Task Creation\nid: f2c64357-b1d2-41b7-849f-34d2682c0fad\nstatus: test\ndescription: Detects scheduled task creation using \"schtasks\" that contain potentially\n  suspicious or uncommon commands\nreferences:\n- https://app.any.run/tasks/512c1352-6380-4436-b27d-bb62f0c020d6/\n- https://twitter.com/RedDrip7/status/1506480588827467785\n- https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/devil-bait/NCSC-MAR-Devil-Bait.pdf\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-23\nmodified: 2024-03-19\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.t1053.005\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_schtasks:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains: '/Create '\n  selection_pattern_1:\n    CommandLine|contains:\n    - '/sc minute '\n    - '/ru system '\n  selection_pattern_2:\n    CommandLine|contains:\n    - cmd /c\n    - cmd /k\n    - cmd /r\n    - 'cmd.exe /c '\n    - 'cmd.exe /k '\n    - 'cmd.exe /r '\n  selection_uncommon:\n    CommandLine|contains:\n    - ' -decode '\n    - ' -enc '\n    - ' -w hidden '\n    - ' bypass '\n    - ' IEX'\n    - .DownloadData\n    - .DownloadFile\n    - .DownloadString\n    - '/c start /min '\n    - FromBase64String\n    - mshta http\n    - mshta.exe http\n  selection_anomaly_1:\n    CommandLine|contains:\n    - :\\ProgramData\\\n    - :\\Temp\\\n    - :\\Tmp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\\n    - '%AppData%'\n    - '%Temp%'\n    - '%tmp%'\n  selection_anomaly_2:\n    CommandLine|contains:\n    - cscript\n    - curl\n    - wscript\n  condition: selection_schtasks and ( all of selection_pattern_* or selection_uncommon\n    or all of selection_anomaly_* )\nfalsepositives:\n- Software installers that run from temporary folders and also install scheduled tasks\n  are expected to generate some false positives\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

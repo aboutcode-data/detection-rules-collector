@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/crimeware/ZLoader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ZLoader",
+                "tags": [],
+                "id": "2JUpH4J7F9VVLnQm59k5t9",
+                "fingerprint": "b6cc36932d196457ad66df7815f1eb3a5e8561686d9184286a375bc78a209db0",
+                "version": "1.0",
+                "creation_date": "2020-04-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2022-02-03",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies ZLoader in memory or unpacked.",
+                "category": "MALWARE",
+                "malware": "ZLOADER",
+                "malware_type": "LOADER"
+            },
+            "rule_text": "rule ZLoader\n{\n\tmeta:\n\t\tid = \"2JUpH4J7F9VVLnQm59k5t9\"\n\t\tfingerprint = \"b6cc36932d196457ad66df7815f1eb3a5e8561686d9184286a375bc78a209db0\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-04-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2022-02-03\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies ZLoader in memory or unpacked.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"ZLOADER\"\n\t\tmalware_type = \"LOADER\"\n\n\tstrings:\n\t\t$code = { 89 f8 8b 0d ?? ?? ?? ?? 99 f7 7? ?? 8b 4? ?? 0f b6 1c ?? 32\n    1c 38 88 1c 3e 8d 7f 01 74 ?? e8 ?? ?? ?? ?? 80 fb 7f 74 ?? 38 c3 7d\n    ?? 80 fb 0d 77 ?? 0f b6 c3 b9 00 26 00 00 0f a3 c1 72 ?? }\n\t\t$dll = \"antiemule-loader-bot32.dll\" ascii wide fullword\n\t\t$s1 = \"/post.php\" ascii wide\n\t\t$s2 = \"BOT-INFO\" ascii wide\n\t\t$s3 = \"Connection: close\" ascii wide\n\t\t$s4 = \"It's a debug version.\" ascii wide\n\t\t$s5 = \"Proxifier is a conflict program, form-grabber and web-injects will not works. Terminate proxifier for solve this problem.\" ascii wide\n\t\t$s6 = \"rhnbeqcuwzbsjwfsynex\" ascii wide fullword\n\n\tcondition:\n\t\t$code or $dll or ( 4 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_camera_microphone_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-06-07",
+                "title": "Processes Accessing the Microphone and Webcam",
+                "id": "8cd538a4-62d5-4e83-810b-12d41e428d6e"
+            },
+            "rule_text": "title: Processes Accessing the Microphone and Webcam\nid: 8cd538a4-62d5-4e83-810b-12d41e428d6e\nstatus: test\ndescription: Potential adversaries accessing the microphone and webcam in an endpoint.\nreferences:\n- https://twitter.com/duzvik/status/1269671601852813320\n- https://medium.com/@7a616368/can-you-track-processes-accessing-the-camera-and-microphone-7e6885b37072\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-06-07\nmodified: 2021-11-27\ntags:\n- attack.collection\n- attack.t1123\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID:\n    - 4657\n    - 4656\n    - 4663\n    ObjectName|contains:\n    - \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\microphone\\NonPackaged\n    - \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\webcam\\NonPackaged\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

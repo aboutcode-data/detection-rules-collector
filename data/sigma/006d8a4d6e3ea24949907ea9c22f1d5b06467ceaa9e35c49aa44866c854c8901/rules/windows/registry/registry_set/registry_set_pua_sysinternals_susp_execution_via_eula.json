@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_pua_sysinternals_susp_execution_via_eula.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-24",
+                "title": "PUA - Sysinternals Tools Execution - Registry",
+                "id": "c7da8edc-49ae-45a2-9e61-9fd860e4e73d"
+            },
+            "rule_text": "title: PUA - Sysinternals Tools Execution - Registry\nid: c7da8edc-49ae-45a2-9e61-9fd860e4e73d\nrelated:\n- id: 25ffa65d-76d8-4da5-a832-3f2b0136e133\n  type: derived\n- id: 9841b233-8df8-4ad7-9133-b0b4402a9014\n  type: obsolete\nstatus: test\ndescription: Detects the execution of some potentially unwanted tools such as PsExec,\n  Procdump, etc. (part of the Sysinternals suite) via the creation of the \"accepteula\"\n  registry key.\nreferences:\n- https://twitter.com/Moti_B/status/1008587936735035392\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-24\nmodified: 2025-10-26\ntags:\n- attack.resource-development\n- attack.t1588.002\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\Active Directory Explorer\n    - \\Handle\n    - \\LiveKd\n    - \\Process Explorer\n    - \\ProcDump\n    - \\PsExec\n    - \\PsLoglist\n    - \\PsPasswd\n    - \\SDelete\n    - \\Sysinternals\n    TargetObject|endswith: \\EulaAccepted\n  condition: selection\nfalsepositives:\n- Legitimate use of SysInternals tools. Filter the legitimate paths used in your environment\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_pua_sysinternals_susp_execution_via_eula/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

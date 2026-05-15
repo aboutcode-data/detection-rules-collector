@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_onenote_susp_dropped_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-09",
+                "title": "Suspicious File Created Via OneNote Application",
+                "id": "fcc6d700-68d9-4241-9a1a-06874d621b06"
+            },
+            "rule_text": "title: Suspicious File Created Via OneNote Application\nid: fcc6d700-68d9-4241-9a1a-06874d621b06\nstatus: test\ndescription: Detects suspicious files created via the OneNote application. This could\n  indicate a potential malicious \".one\"/\".onepkg\" file was executed as seen being\n  used in malware activity in the wild\nreferences:\n- https://www.bleepingcomputer.com/news/security/hackers-now-use-microsoft-onenote-attachments-to-spread-malware/\n- https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/\n- https://twitter.com/MaD_c4t/status/1623414582382567424\n- https://labs.withsecure.com/publications/detecting-onenote-abuse\n- https://www.trustedsec.com/blog/new-attacks-old-tricks-how-onenote-malware-is-evolving/\n- https://app.any.run/tasks/17f2d378-6d11-4d6f-8340-954b04f35e83/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-09\nmodified: 2023-02-27\ntags:\n- attack.stealth\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\onenote.exe\n    - \\onenotem.exe\n    - \\onenoteim.exe\n    TargetFilename|contains: \\AppData\\Local\\Temp\\OneNote\\\n    TargetFilename|endswith:\n    - .bat\n    - .chm\n    - .cmd\n    - .dll\n    - .exe\n    - .hta\n    - .htm\n    - .html\n    - .js\n    - .lnk\n    - .ps1\n    - .vbe\n    - .vbs\n    - .wsf\n  condition: selection\nfalsepositives:\n- False positives should be very low with the extensions list cited. Especially if\n  you don't heavily utilize OneNote.\n- Occasional FPs might occur if OneNote is used internally to share different embedded\n  documents\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

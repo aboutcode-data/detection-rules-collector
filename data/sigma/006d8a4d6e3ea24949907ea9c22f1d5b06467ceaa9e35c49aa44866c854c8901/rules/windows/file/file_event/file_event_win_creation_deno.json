@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_creation_deno.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Josh Nickels, Michael Taggart",
+                "date": "2025-05-22",
+                "title": "Suspicious Deno File Written from Remote Source",
+                "id": "6c0ce3b6-85e2-49d4-9c3f-6e008ce9796e"
+            },
+            "rule_text": "title: Suspicious Deno File Written from Remote Source\nid: 6c0ce3b6-85e2-49d4-9c3f-6e008ce9796e\nstatus: experimental\ndescription: 'Detects Deno writing a file from a direct HTTP(s) call and writing to\n  the appdata folder or bringing it''s own malicious DLL.\n\n  This behavior may indicate an attempt to execute remotely hosted, potentially malicious\n  files through deno.\n\n  '\nreferences:\n- https://taggart-tech.com/evildeno/\nauthor: Josh Nickels, Michael Taggart\ndate: 2025-05-22\ntags:\n- attack.execution\n- attack.t1204\n- attack.t1059.007\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_path:\n    TargetFilename|contains:\n    - \\deno\\gen\\\n    - \\deno\\remote\\https\\\n    TargetFilename|contains|all:\n    - :\\Users\\\n    - \\AppData\\\n  condition: selection_path\nfalsepositives:\n- Legitimate usage of deno to request a file or bring a DLL to a host\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

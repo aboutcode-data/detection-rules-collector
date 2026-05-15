@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/RevShellSim/VirTool_Win64_RevShellSim_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_RevShellSim_C",
+                "tags": [],
+                "description": "VirTool:Win64/RevShellSim.C,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_RevShellSim_C\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/RevShellSim.C,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c7 44 24 28 00 00 00 00 c7 44 24 20 00 00 00 00 41 b9 00 00 00 00 41 b8 ?? ?? ?? ?? ba 01 00 00 00 b9 02 00 00 00 48 8b 05 ?? ?? ?? ?? ff d0 48 8b 95 70 01 00 00 48 89 02 48 8b 85 70 01 00 00 48 8b 00 }\n\t\t$a_03_1 = {48 c7 44 24 28 00 00 00 00 c7 44 24 20 00 00 00 00 41 b9 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ba 00 00 00 00 b9 00 00 00 00 48 8b 05 ?? ?? ?? ?? ff d0 }\n\t\t$a_03_2 = {48 8b 85 70 01 00 00 48 8b 00 ?? ?? ?? ?? 41 b8 ?? ?? ?? ?? 48 89 c1 48 8b 05 ?? ?? ?? ?? ff d0 }\n\t\t$a_03_3 = {48 89 44 24 40 48 c7 44 24 38 00 00 00 00 48 c7 44 24 30 00 00 00 00 c7 44 24 28 ?? ?? ?? ?? c7 44 24 20 ?? ?? ?? ?? 41 b9 00 00 00 00 41 b8 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? 48 89 c2 b9 00 00 00 00 48 8b 05 ?? ?? ?? ?? ff d0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Remcos/Trojan_Win32_Remcos_DSK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Remcos_DSK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Remcos.DSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Remcos_DSK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Remcos.DSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 7c 24 24 8a 54 24 14 8a 44 24 16 0a 44 24 12 88 14 3e 83 25 ?? ?? ?? ?? 00 8a 54 24 15 88 54 3e 01 81 3d ?? ?? ?? ?? d8 01 00 00 88 44 24 16 75 }\n\t\t$a_02_1 = {8a 54 24 15 33 c9 8a 44 24 17 0a 44 24 13 88 14 3e 8a 54 24 16 89 0d ?? ?? ?? ?? 88 54 3e 01 81 3d ?? ?? ?? ?? d8 01 00 00 88 44 24 17 75 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

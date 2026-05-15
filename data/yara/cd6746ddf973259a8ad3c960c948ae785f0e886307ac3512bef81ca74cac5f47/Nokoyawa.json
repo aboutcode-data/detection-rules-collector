@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/Nokoyawa.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Nokoyawa_ransomware",
+                "tags": [
+                    "Nokoyawa"
+                ],
+                "description": "Detect_Nokoyawa_ransomware",
+                "author": "@malgamy12",
+                "date": "20/12/2022",
+                "license": "DRL 1.1",
+                "hash": "259f9ec10642442667a40bf78f03af2fc6d653443cce7062636eb750331657c4"
+            },
+            "rule_text": "rule Nokoyawa_ransomware : Nokoyawa\n{\n\tmeta:\n\t\tdescription = \"Detect_Nokoyawa_ransomware\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"20/12/2022\"\n\t\tlicense = \"DRL 1.1\"\n\t\thash = \"7095beafff5837070a89407c1bf3c6acf8221ed786e0697f6c578d4c3de0efd6\"\n\t\thash = \"47c00ac29bbaee921496ef957adaf5f8b031121ef0607937b003b6ab2a895a12\"\n\t\thash = \"259f9ec10642442667a40bf78f03af2fc6d653443cce7062636eb750331657c4\"\n\n\tstrings:\n\t\t$pdb = \"deps\\\\noko.pdb\" ascii\n\t\t$s1 = \"How to run:\" ascii\n\t\t$s2 = \"--config <base64 encoded config> (to start full encryption)\" ascii\n\t\t$s3 = \"--config <base64 encoded config> --file <filePath>\" ascii\n\t\t$s4 = \"CIS lang detected! Stop working\" ascii\n\t\t$s5 = \"config isn't configurated to load hidden drives\" ascii\n\t\t$s6 = \"ENCRYPT_NETWORKYour config isn't configurated to encrypt network shares\" ascii\n\t\t$s7 = \"Your config isn't configurated to delete shadow copies\" ascii\n\t\t$s8 = \"Successfully deleted shadow copies from\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( $pdb or 3 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_send_mailmessage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-09-26",
+                "title": "Potential Data Exfiltration Over SMTP Via Send-MailMessage Cmdlet",
+                "id": "9a7afa56-4762-43eb-807d-c3dc9ffe211b"
+            },
+            "rule_text": "title: Potential Data Exfiltration Over SMTP Via Send-MailMessage Cmdlet\nid: 9a7afa56-4762-43eb-807d-c3dc9ffe211b\nstatus: test\ndescription: 'Detects the execution of a PowerShell script with a call to the \"Send-MailMessage\"\n  cmdlet along with the \"-Attachments\" flag. This could be a potential sign of data\n  exfiltration via Email.\n\n  Adversaries may steal data by exfiltrating it over an un-encrypted network protocol\n  other than that of the existing command and control channel. The data may also be\n  sent to an alternate network location from the main command and control server.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-5---exfiltration-over-alternative-protocol---smtp\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/send-mailmessage?view=powershell-7.4\n- https://www.ietf.org/rfc/rfc2821.txt\nauthor: frack113\ndate: 2022-09-26\nmodified: 2024-11-01\ntags:\n- attack.exfiltration\n- attack.t1048.003\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains: Send-MailMessage*-Attachments\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

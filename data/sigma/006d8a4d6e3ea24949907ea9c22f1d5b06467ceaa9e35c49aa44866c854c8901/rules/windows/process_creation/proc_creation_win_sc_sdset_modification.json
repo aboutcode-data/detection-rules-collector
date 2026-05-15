@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_sdset_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-28",
+                "title": "Service Security Descriptor Tampering Via Sc.EXE",
+                "id": "98c5aeef-32d5-492f-b174-64a691896d25"
+            },
+            "rule_text": "title: Service Security Descriptor Tampering Via Sc.EXE\nid: 98c5aeef-32d5-492f-b174-64a691896d25\nrelated:\n- id: 99cf1e02-00fb-4c0d-8375-563f978dfd37\n  type: similar\n- id: a537cfc3-4297-4789-92b5-345bfd845ad0\n  type: similar\nstatus: test\ndescription: Detection of sc.exe utility adding a new service with special permission\n  which hides that service.\nreferences:\n- https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html\n- https://www.sans.org/blog/red-team-tactics-hiding-windows-services/\n- https://twitter.com/Alh4zr3d/status/1580925761996828672\n- https://twitter.com/0gtweet/status/1628720819537936386\n- https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-28\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\sc.exe\n  - OriginalFileName: sc.exe\n  selection_cli:\n    CommandLine|contains: sdset\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/schtasks_create_shell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Windows Scheduled Task Create Shell",
+                "id": "eb9d10be-1ece-4241-bc76-d51eadcaf42b"
+            },
+            "rule_text": "title: Windows Scheduled Task Create Shell\nid: eb9d10be-1ece-4241-bc76-d51eadcaf42b\nstatus: experimental\ndescription: Detects creation of scheduled tasks which may establish persistence using\n  the command shell. Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.persistence\n- attack.execution\n- attack.t1053\n- attack.t1053.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains: create\n    CommandLine|contains|all|windash:\n    - /c\n    - cmd\n  condition: selection\nfalsepositives:\n- Creation of legitimate scheduled tasks which need to run cmd.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

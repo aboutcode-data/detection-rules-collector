@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_steghide_embed_steganography.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-09-11",
+                "title": "Steganography Hide Files with Steghide",
+                "id": "ce446a9e-30b9-4483-8e38-d2c9ad0a2280"
+            },
+            "rule_text": "title: Steganography Hide Files with Steghide\nid: ce446a9e-30b9-4483-8e38-d2c9ad0a2280\nstatus: test\ndescription: Detects embedding of files with usage of steghide binary, the adversaries\n  may use this technique to prevent the detection of hidden information.\nreferences:\n- https://vitux.com/how-to-hide-confidential-files-in-images-on-debian-using-steganography/\nauthor: Pawel Mazur\ndate: 2021-09-11\nmodified: 2022-10-09\ntags:\n- attack.stealth\n- attack.t1027.003\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0: steghide\n    a1: embed\n    a2:\n    - -cf\n    - -ef\n    a4:\n    - -cf\n    - -ef\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

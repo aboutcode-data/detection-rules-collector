@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msiexec_install_remote.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-28",
+                "title": "Suspicious Msiexec Quiet Install From Remote Location",
+                "id": "8150732a-0c9d-4a99-82b9-9efb9b90c40c"
+            },
+            "rule_text": "title: Suspicious Msiexec Quiet Install From Remote Location\nid: 8150732a-0c9d-4a99-82b9-9efb9b90c40c\nrelated:\n- id: f7b5f842-a6af-4da5-9e95-e32478f3cd2f\n  type: similar\nstatus: test\ndescription: Detects usage of Msiexec.exe to install packages hosted remotely quietly\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-28\nmodified: 2025-10-07\ntags:\n- attack.stealth\n- attack.t1218.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\msiexec.exe\n  - OriginalFileName: msiexec.exe\n  selection_cli:\n    CommandLine|contains|windash:\n    - -i\n    - -package\n    - -a\n    - -j\n  selection_quiet:\n    CommandLine|contains|windash: -q\n  selection_remote:\n    CommandLine|contains:\n    - http\n    - \\\\\\\\\n  filter_optional_openoffice:\n    CommandLine|contains|all:\n    - \\AppData\\Local\\Temp\\OpenOffice\n    - Installation Files\\openoffice\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

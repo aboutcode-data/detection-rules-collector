@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_rurat_non_default_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-19",
+                "title": "Remote Access Tool - RURAT Execution From Unusual Location",
+                "id": "e01fa958-6893-41d4-ae03-182477c5e77d"
+            },
+            "rule_text": "title: Remote Access Tool - RURAT Execution From Unusual Location\nid: e01fa958-6893-41d4-ae03-182477c5e77d\nstatus: test\ndescription: Detects execution of Remote Utilities RAT (RURAT) from an unusual location\n  (outside of 'C:\\Program Files')\nreferences:\n- https://redcanary.com/blog/misbehaving-rats/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-19\nmodified: 2023-03-05\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith:\n    - \\rutserv.exe\n    - \\rfusclient.exe\n  - Product: Remote Utilities\n  filter:\n    Image|startswith:\n    - C:\\Program Files\\Remote Utilities\n    - C:\\Program Files (x86)\\Remote Utilities\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

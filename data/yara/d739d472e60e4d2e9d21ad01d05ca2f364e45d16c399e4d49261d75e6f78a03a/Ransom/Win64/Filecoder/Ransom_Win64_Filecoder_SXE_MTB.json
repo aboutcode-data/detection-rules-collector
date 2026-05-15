@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win64/Filecoder/Ransom_Win64_Filecoder_SXE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win64_Filecoder_SXE_MTB",
+                "tags": [],
+                "description": "Ransom:Win64/Filecoder.SXE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win64_Filecoder_SXE_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win64/Filecoder.SXE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {2b cf 83 e1 ?? ?? ?? ?? ?? ?? 2b c1 44 8b e8 4c 8b e3 4c 2b e7 49 }\n\t\t$a_03_1 = {2b cf 83 e1 ?? ?? ?? ?? ?? ?? 2b c1 44 8b e8 8b f0 48 2b f7 }\n\t\t$a_01_2 = {72 61 6e 73 6f 6d 2e 74 78 74 }\n\t\t$a_01_3 = {6b 65 79 2e 62 69 6e }\n\t\t$a_01_4 = {59 6f 75 72 20 66 69 6c 65 73 20 68 61 76 65 20 62 65 65 6e 20 65 6e 63 72 79 70 74 65 64 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

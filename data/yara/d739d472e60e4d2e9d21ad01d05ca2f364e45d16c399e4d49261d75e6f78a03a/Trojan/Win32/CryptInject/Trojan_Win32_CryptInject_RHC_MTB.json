@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CryptInject/Trojan_Win32_CryptInject_RHC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CryptInject_RHC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CryptInject.RHC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CryptInject_RHC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CryptInject.RHC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {50 45 00 00 4c 01 04 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0b 01 0c 00 00 ?? ?? ?? ?? ?? 91 02 00 00 00 00 35 68 }\n\t\t$a_03_1 = {e9 00 00 00 00 6a 90 09 06 00 cc e8 }\n\t\t$a_03_2 = {b8 fd dd 44 53 f7 64 24 14 8b 44 24 14 81 6c 24 08 f0 06 bd 57 81 6c 24 38 f5 ?? 30 07 81 6c 24 28 7b e3 2f 6b 33 ff 81 3d ?? ?? d1 02 00 04 00 00 75 66 }\n\t\t$a_01_3 = {20 20 00 00 01 00 08 00 a8 08 00 00 02 00 30 30 00 00 01 00 20 00 a8 25 00 00 03 00 20 20 00 00 01 00 20 00 a8 10 00 00 04 00 10 10 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 2 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

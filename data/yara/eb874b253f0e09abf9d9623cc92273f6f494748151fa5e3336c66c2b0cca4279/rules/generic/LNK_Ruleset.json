@@ -1,0 +1,344 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/generic/LNK_Ruleset.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "isLNK",
+                "tags": [],
+                "id": "1XKPrHhGUVGxZ9ZtveVhF9",
+                "fingerprint": "399c994f697568637efb30910b80f5ae7bedd42bf1cf4188cb74610e46cb23a8",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-11-14",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Private rule identifying shortcut (LNK) files. To be used in conjunction with the other LNK rules below.",
+                "category": "INFO"
+            },
+            "rule_text": "private rule isLNK\n{\n\tmeta:\n\t\tid = \"1XKPrHhGUVGxZ9ZtveVhF9\"\n\t\tfingerprint = \"399c994f697568637efb30910b80f5ae7bedd42bf1cf4188cb74610e46cb23a8\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-11-14\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Private rule identifying shortcut (LNK) files. To be used in conjunction with the other LNK rules below.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$lnk = { 4C 00 00 00 01 14 02 00 }\n\n\tcondition:\n\t\t$lnk at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PS_in_LNK",
+                "tags": [],
+                "id": "5PjnTrwMNGYdZahLd6yrPa",
+                "fingerprint": "d89b0413d59b57e5177261530ed1fb60f0f6078951a928caf11b2db1c2ec5109",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies PowerShell artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule PS_in_LNK\n{\n\tmeta:\n\t\tid = \"5PjnTrwMNGYdZahLd6yrPa\"\n\t\tfingerprint = \"d89b0413d59b57e5177261530ed1fb60f0f6078951a928caf11b2db1c2ec5109\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies PowerShell artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \".ps1\" ascii wide nocase\n\t\t$ = \"powershell\" ascii wide nocase\n\t\t$ = \"invoke\" ascii wide nocase\n\t\t$ = \"[Convert]\" ascii wide nocase\n\t\t$ = \"FromBase\" ascii wide nocase\n\t\t$ = \"-exec\" ascii wide nocase\n\t\t$ = \"-nop\" ascii wide nocase\n\t\t$ = \"-noni\" ascii wide nocase\n\t\t$ = \"-w hidden\" ascii wide nocase\n\t\t$ = \"-enc\" ascii wide nocase\n\t\t$ = \"-decode\" ascii wide nocase\n\t\t$ = \"bypass\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Script_in_LNK",
+                "tags": [],
+                "id": "24OwxeALdNyMpIq2oeeatL",
+                "fingerprint": "bed7b00cdd2966629d9492097d357b729212d6d90251b9f1319634af05f40fdc",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies scripting artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Script_in_LNK\n{\n\tmeta:\n\t\tid = \"24OwxeALdNyMpIq2oeeatL\"\n\t\tfingerprint = \"bed7b00cdd2966629d9492097d357b729212d6d90251b9f1319634af05f40fdc\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies scripting artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"javascript\" ascii wide nocase\n\t\t$ = \"jscript\" ascii wide nocase\n\t\t$ = \"vbscript\" ascii wide nocase\n\t\t$ = \"wscript\" ascii wide nocase\n\t\t$ = \"cscript\" ascii wide nocase\n\t\t$ = \".js\" ascii wide nocase\n\t\t$ = \".vb\" ascii wide nocase\n\t\t$ = \".wsc\" ascii wide nocase\n\t\t$ = \".wsh\" ascii wide nocase\n\t\t$ = \".wsf\" ascii wide nocase\n\t\t$ = \".sct\" ascii wide nocase\n\t\t$ = \".cmd\" ascii wide nocase\n\t\t$ = \".hta\" ascii wide nocase\n\t\t$ = \".bat\" ascii wide nocase\n\t\t$ = \"ActiveXObject\" ascii wide nocase\n\t\t$ = \"eval\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EXE_in_LNK",
+                "tags": [],
+                "id": "3SSZmnnXU0l4qoc9wubdhN",
+                "fingerprint": "f169fab39da34f827cdff5ee022374f7c1cc0b171da9c2bb718d8fee9657d7a3",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-02-16",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies executable artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule EXE_in_LNK\n{\n\tmeta:\n\t\tid = \"3SSZmnnXU0l4qoc9wubdhN\"\n\t\tfingerprint = \"f169fab39da34f827cdff5ee022374f7c1cc0b171da9c2bb718d8fee9657d7a3\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-02-16\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies executable artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"This program\" ascii wide nocase\n\t\t$ = \"TVqQAA\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Archive_in_LNK",
+                "tags": [],
+                "id": "2ku4ClpAScswD86dAiYijX",
+                "fingerprint": "91946edcd14021c70c3dc4e1898b346f671095e87715df73fa4db3a70074b918",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies archive (compressed) files in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Archive_in_LNK\n{\n\tmeta:\n\t\tid = \"2ku4ClpAScswD86dAiYijX\"\n\t\tfingerprint = \"91946edcd14021c70c3dc4e1898b346f671095e87715df73fa4db3a70074b918\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies archive (compressed) files in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \".7z\" ascii wide nocase\n\t\t$ = \".zip\" ascii wide nocase\n\t\t$ = \".cab\" ascii wide nocase\n\t\t$ = \".iso\" ascii wide nocase\n\t\t$ = \".rar\" ascii wide nocase\n\t\t$ = \".bz2\" ascii wide nocase\n\t\t$ = \".tar\" ascii wide nocase\n\t\t$ = \".lzh\" ascii wide nocase\n\t\t$ = \".dat\" ascii wide nocase\n\t\t$ = \"WinRAR\\\\Rar.exe\" ascii wide nocase\n\t\t$ = \"expand\" ascii wide nocase\n\t\t$ = \"makecab\" ascii wide nocase\n\t\t$ = \"UEsDBA\" ascii wide nocase\n\t\t$ = \"TVNDRg\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Execution_in_LNK",
+                "tags": [],
+                "id": "77XnooZUMUCCdEuppmQ0My",
+                "fingerprint": "cf4910d057f099ef2d2b6fc80739a41e3594c500e6b4eca0fc8f64e48f6dcefb",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies execution artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Execution_in_LNK\n{\n\tmeta:\n\t\tid = \"77XnooZUMUCCdEuppmQ0My\"\n\t\tfingerprint = \"cf4910d057f099ef2d2b6fc80739a41e3594c500e6b4eca0fc8f64e48f6dcefb\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies execution artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"cmd.exe\" ascii wide nocase\n\t\t$ = \"/c echo\" ascii wide nocase\n\t\t$ = \"/c start\" ascii wide nocase\n\t\t$ = \"/c set\" ascii wide nocase\n\t\t$ = \"%COMSPEC%\" ascii wide nocase\n\t\t$ = \"rundll32.exe\" ascii wide nocase\n\t\t$ = \"regsvr32.exe\" ascii wide nocase\n\t\t$ = \"Assembly.Load\" ascii wide nocase\n\t\t$ = \"[Reflection.Assembly]::Load\" ascii wide nocase\n\t\t$ = \"process call\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Compilation_in_LNK",
+                "tags": [],
+                "id": "6MFIj6PnQMhnF21XItMr42",
+                "fingerprint": "58d09c8cd94f0d8616d16195bd7fa0335657dd87235e204d49979785cdd8007e",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies compilation artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Compilation_in_LNK\n{\n\tmeta:\n\t\tid = \"6MFIj6PnQMhnF21XItMr42\"\n\t\tfingerprint = \"58d09c8cd94f0d8616d16195bd7fa0335657dd87235e204d49979785cdd8007e\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies compilation artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"vbc.exe\" ascii wide nocase\n\t\t$ = \"csc.exe\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Download_in_LNK",
+                "tags": [],
+                "id": "4oUWRvBhzXFLJVKxasN6Cd",
+                "fingerprint": "9b95b86b48df38523f1e382483c7a7fd96da1a0244b5ebdd2327eaf904afd117",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies download artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Download_in_LNK\n{\n\tmeta:\n\t\tid = \"4oUWRvBhzXFLJVKxasN6Cd\"\n\t\tfingerprint = \"9b95b86b48df38523f1e382483c7a7fd96da1a0244b5ebdd2327eaf904afd117\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies download artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"bitsadmin\" ascii wide nocase\n\t\t$ = \"certutil\" ascii wide nocase\n\t\t$ = \"ServerXMLHTTP\" ascii wide nocase\n\t\t$ = \"http\" ascii wide nocase\n\t\t$ = \"ftp\" ascii wide nocase\n\t\t$ = \".url\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MSOffice_in_LNK",
+                "tags": [],
+                "id": "5wsZnuCXdcxZ1DbLHFC4pX",
+                "fingerprint": "ac2e453ed19a4f30f17a1c7ff4c8dfcd00b2c2fc53c7ab05d32f5e6a91326da1",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-02-16",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Microsoft Office artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule MSOffice_in_LNK\n{\n\tmeta:\n\t\tid = \"5wsZnuCXdcxZ1DbLHFC4pX\"\n\t\tfingerprint = \"ac2e453ed19a4f30f17a1c7ff4c8dfcd00b2c2fc53c7ab05d32f5e6a91326da1\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-02-16\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Microsoft Office artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \".docm\" ascii wide nocase\n\t\t$ = \".dotm\" ascii wide nocase\n\t\t$ = \".potm\" ascii wide nocase\n\t\t$ = \".ppsm\" ascii wide nocase\n\t\t$ = \".pptm\" ascii wide nocase\n\t\t$ = \".rtf\" ascii wide nocase\n\t\t$ = \".sldm\" ascii wide nocase\n\t\t$ = \".slk\" ascii wide nocase\n\t\t$ = \".wll\" ascii wide nocase\n\t\t$ = \".xla\" ascii wide nocase\n\t\t$ = \".xlam\" ascii wide nocase\n\t\t$ = \".xls\" ascii wide nocase\n\t\t$ = \".xlsm\" ascii wide nocase\n\t\t$ = \".xll\" ascii wide nocase\n\t\t$ = \".xltm\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PDF_in_LNK",
+                "tags": [],
+                "id": "7U50CQK54jXHGYojYg4wKe",
+                "fingerprint": "5640fd2e7a31adf7f080658f07084d5e7b9dd89d2e58c49ffd7fe50f16bfcaa2",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Adobe Acrobat artefacts in shortcut (LNK) files. A PDF document is typically used as decoy in a malicious LNK.",
+                "category": "INFO"
+            },
+            "rule_text": "rule PDF_in_LNK\n{\n\tmeta:\n\t\tid = \"7U50CQK54jXHGYojYg4wKe\"\n\t\tfingerprint = \"5640fd2e7a31adf7f080658f07084d5e7b9dd89d2e58c49ffd7fe50f16bfcaa2\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Adobe Acrobat artefacts in shortcut (LNK) files. A PDF document is typically used as decoy in a malicious LNK.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \".pdf\" ascii wide nocase\n\t\t$ = \"%PDF\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Flash_in_LNK",
+                "tags": [],
+                "id": "2onsBjSNyoLIP4WLOVgS56",
+                "fingerprint": "4d47314dce183d422d05f220835a28920f06caf8fa54c62e2427938ca68627f3",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Adobe Flash artefacts in shortcut (LNK) files.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Flash_in_LNK\n{\n\tmeta:\n\t\tid = \"2onsBjSNyoLIP4WLOVgS56\"\n\t\tfingerprint = \"4d47314dce183d422d05f220835a28920f06caf8fa54c62e2427938ca68627f3\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Adobe Flash artefacts in shortcut (LNK) files.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \".swf\" ascii wide nocase\n\t\t$ = \".fws\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SMB_in_LNK",
+                "tags": [],
+                "id": "5jhrc6f5nuBGClq72MwVw5",
+                "fingerprint": "530336ad2ab3fadb07e5f6517b0ac435a0e0b88a47226e5bbf43b5bcc9a79176",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "category": "INFO",
+                "description": "Identifies SMB in shortcut (LNK) files"
+            },
+            "rule_text": "rule SMB_in_LNK\n{\n\tmeta:\n\t\tid = \"5jhrc6f5nuBGClq72MwVw5\"\n\t\tfingerprint = \"530336ad2ab3fadb07e5f6517b0ac435a0e0b88a47226e5bbf43b5bcc9a79176\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tcategory = \"INFO\"\n\t\tdescription = \"Identifies SMB in shortcut (LNK) files\"\n\n\tstrings:\n\t\t$ = \"\\\\c$\\\\\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Long_RelativePath_LNK",
+                "tags": [],
+                "id": "2ogEIXl8u2qUbIgxTmruYX",
+                "fingerprint": "4b822248bade98d0528ab13549797c225784d7f953fe9c14d178c9d530fb3e55",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-02-16",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies shortcut (LNK) file with a long relative path. Might be used in an attempt to hide the path.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Long_RelativePath_LNK\n{\n\tmeta:\n\t\tid = \"2ogEIXl8u2qUbIgxTmruYX\"\n\t\tfingerprint = \"4b822248bade98d0528ab13549797c225784d7f953fe9c14d178c9d530fb3e55\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-02-16\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies shortcut (LNK) file with a long relative path. Might be used in an attempt to hide the path.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"..\\\\..\\\\..\\\\..\\\\..\\\\..\\\\\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Large_filesize_LNK",
+                "tags": [],
+                "id": "2N6jerukOyU2qFFtcMtnWt",
+                "fingerprint": "a8168e65294bfc0b9ffca544891b818b37feb5b780ab357efbb56638c6578242",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies shortcut (LNK) file larger than 100KB. Most goodware LNK files are smaller than 100KB.",
+                "category": "INFO"
+            },
+            "rule_text": "rule Large_filesize_LNK\n{\n\tmeta:\n\t\tid = \"2N6jerukOyU2qFFtcMtnWt\"\n\t\tfingerprint = \"a8168e65294bfc0b9ffca544891b818b37feb5b780ab357efbb56638c6578242\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies shortcut (LNK) file larger than 100KB. Most goodware LNK files are smaller than 100KB.\"\n\t\tcategory = \"INFO\"\n\n\tcondition:\n\t\tisLNK and filesize > 100KB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "High_Entropy_LNK",
+                "tags": [],
+                "id": "6Dqf8gBGF21dKt03BJOXbQ",
+                "fingerprint": "d0b5bdad04d5894cd1136ec57bd6410180923e9267edb932c8dca6ef3a23722d",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies shortcut (LNK) file with equal or higher entropy than 6.5. Most goodware LNK files have a low entropy, lower than 6.",
+                "category": "INFO"
+            },
+            "rule_text": "import \"math\"\n\nrule High_Entropy_LNK\n{\n\tmeta:\n\t\tid = \"6Dqf8gBGF21dKt03BJOXbQ\"\n\t\tfingerprint = \"d0b5bdad04d5894cd1136ec57bd6410180923e9267edb932c8dca6ef3a23722d\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies shortcut (LNK) file with equal or higher entropy than 6.5. Most goodware LNK files have a low entropy, lower than 6.\"\n\t\tcategory = \"INFO\"\n\n\tcondition:\n\t\tisLNK and math.entropy ( 0 , filesize ) >= 6.5\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CDN_in_LNK",
+                "tags": [],
+                "id": "q22YL1ZnAbHqVNq9Iz1Bn",
+                "fingerprint": "81b8267b7286f4baa02c533c7a4f17e17b38859a81cc0186b1b47c89498b6a0e",
+                "version": "1.0",
+                "creation_date": "2020-03-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies CDN (Content Delivery Network) domain in shortcut (LNK) file.",
+                "category": "INFO"
+            },
+            "rule_text": "rule CDN_in_LNK\n{\n\tmeta:\n\t\tid = \"q22YL1ZnAbHqVNq9Iz1Bn\"\n\t\tfingerprint = \"81b8267b7286f4baa02c533c7a4f17e17b38859a81cc0186b1b47c89498b6a0e\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-03-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies CDN (Content Delivery Network) domain in shortcut (LNK) file.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"cdn.\" ascii wide nocase\n\t\t$ = \"githubusercontent\" ascii wide nocase\n\t\t$ = \"googleusercontent\" ascii wide nocase\n\t\t$ = \"cloudfront\" ascii wide nocase\n\t\t$ = \"amazonaws\" ascii wide nocase\n\t\t$ = \"akamai\" ascii wide nocase\n\t\t$ = \"cdn77\" ascii wide nocase\n\t\t$ = \"discordapp\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WebDAV_in_LNK",
+                "tags": [],
+                "id": "1Be4RxPZQBGIyDOiKzgw",
+                "fingerprint": "v1_sha256_ee6d3555011e9eec0b9724327fc17394c45f985249a5a3ce000cad505399a10b",
+                "version": "1.0",
+                "date": "2025-11-20",
+                "modified": "2025-11-20",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies WebDAV in shortcut (LNK) file.",
+                "category": "INFO"
+            },
+            "rule_text": "rule WebDAV_in_LNK\n{\n\tmeta:\n\t\tid = \"1Be4RxPZQBGIyDOiKzgw\"\n\t\tfingerprint = \"v1_sha256_ee6d3555011e9eec0b9724327fc17394c45f985249a5a3ce000cad505399a10b\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2025-11-20\"\n\t\tmodified = \"2025-11-20\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies WebDAV in shortcut (LNK) file.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"\\\\DavWWWRoot\\\\\" ascii wide nocase\n\t\t$ = \"\\\\webdav\\\\\" ascii wide nocase\n\n\tcondition:\n\t\tisLNK and any of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

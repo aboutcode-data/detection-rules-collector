@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_Impacket/atexec/win_registry_events_impacket_atexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2023/01/08",
+                "title": "Impacket AtExec Suspicious Registry Modification",
+                "id": "be577827-db17-4786-b00a-347c93973662"
+            },
+            "rule_text": "title: Impacket AtExec Suspicious Registry Modification\nid: be577827-db17-4786-b00a-347c93973662\nstatus: experimental\ndescription: Detects Atexec.py (Impacket) suspicious registry key addition.\nreferences:\n- https://www.13cubed.com/downloads/impacket_exec_commands_cheat_sheet.pdf\n- https://www.hackingarticles.in/impacket-guide-smb-msrpc/\n- https://u0041.co/blog/post/1\nauthor: Micah Babinski\ndate: 2023/01/08\ntags:\n- attack.s0357\n- attack.execution\n- attack.t1053\n- attack.t1053.002\nlogsource:\n  product: windows\n  category: registry_add\ndetection:\n  selection:\n    EventType: CreateKey\n    Image|endswith: \\svchost.exe\n    TargetObject|re: ^HKLM\\\\SOFTWARE\\\\Microsoft\\\\Windows\\ NT\\\\CurrentVersion\\\\Schedule\\\\TaskCache\\\\Tree\\\\[A-Za-z]{8}$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

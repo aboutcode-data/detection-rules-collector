@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_Snapekit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_Snapekit_01205a75",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "01205a75-f40a-4f01-9519-19b801ec2aef",
+                "fingerprint": "9316cdd987f5d13fc73707d508fab08cad5d47a4d8346ba0c364514cab146d11",
+                "creation_date": "2024-11-13",
+                "last_modified": "2024-11-22",
+                "threat_name": "Linux.Rootkit.Snapekit",
+                "reference_sample": "58d1e56fff04affb4c8cbb5fc3ea848e88d1f05c07e6f730e1cf17100ef1b666",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_Snapekit_01205a75\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"01205a75-f40a-4f01-9519-19b801ec2aef\"\n\t\tfingerprint = \"9316cdd987f5d13fc73707d508fab08cad5d47a4d8346ba0c364514cab146d11\"\n\t\tcreation_date = \"2024-11-13\"\n\t\tlast_modified = \"2024-11-22\"\n\t\tthreat_name = \"Linux.Rootkit.Snapekit\"\n\t\treference_sample = \"58d1e56fff04affb4c8cbb5fc3ea848e88d1f05c07e6f730e1cf17100ef1b666\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$str1 = \"author=Humzak711\"\n\t\t$str2 = \"name=snapekit\"\n\t\t$str3 = \"description=snapekit\"\n\t\t$str4 = \"license=GPL\"\n\t\t$str5 = \"snapekit\"\n\t\t$func1 = \"snapekit_filepath\"\n\t\t$func2 = \"additional_hidden_filepaths\"\n\t\t$func3 = \"snapekit_persistence_config_files\"\n\t\t$func4 = \"snapekit_persistence_config_dirs\"\n\t\t$func5 = \"snapekit_C2_ips_ipv4\"\n\t\t$func6 = \"snapekit_C2_ips_ipv6\"\n\t\t$func7 = \"unpack_rootkit\"\n\t\t$hook1 = \"getdents64_snape\"\n\t\t$hook2 = \"kill_snape\"\n\t\t$hook3 = \"load_userspace_payload\"\n\t\t$hook4 = \"lstat_snape\"\n\t\t$hook5 = \"open_snape\"\n\t\t$hook6 = \"openat2_snape\"\n\t\t$hook7 = \"openat_snape\"\n\t\t$hook8 = \"pread64_snape\"\n\t\t$hook9 = \"ptrace_snape\"\n\t\t$hook10 = \"pwrite64_snape\"\n\t\t$hook11 = \"read_snape\"\n\t\t$hook12 = \"stat_snape\"\n\t\t$hook13 = \"statfs_snape\"\n\t\t$hook14 = \"statx_snape\"\n\t\t$hook15 = \"tcp4_seq_show_snape\"\n\t\t$hook16 = \"tcp6_seq_show_snape\"\n\t\t$hook17 = \"udp4_seq_show_snape\"\n\t\t$hook18 = \"udp6_seq_show_snape\"\n\t\t$hook19 = \"unhook_kernelAPI\"\n\t\t$hook20 = \"unlink_snape\"\n\t\t$hook21 = \"unlinkat_snape\"\n\t\t$hook22 = \"write_snape\"\n\t\t$hook23 = \"sys_call_table_snape\"\n\t\t$hook24 = \"hooked_tcp6_seq_show\"\n\t\t$hook25 = \"hooked_udp4_seq_show\"\n\t\t$hook26 = \"hooked_udp6_seq_show\"\n\n\tcondition:\n\t\t3 of ( $str* ) or 3 of ( $func* ) or 5 of ( $hook* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

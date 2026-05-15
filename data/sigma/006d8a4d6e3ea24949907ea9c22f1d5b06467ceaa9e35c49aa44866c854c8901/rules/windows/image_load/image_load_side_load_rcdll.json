@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_rcdll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-03-13",
+                "title": "Potential Rcdll.DLL Sideloading",
+                "id": "6e78b74f-c762-4800-82ad-f66787f10c8a"
+            },
+            "rule_text": "title: Potential Rcdll.DLL Sideloading\nid: 6e78b74f-c762-4800-82ad-f66787f10c8a\nstatus: test\ndescription: Detects potential DLL sideloading of rcdll.dll\nreferences:\n- https://www.trendmicro.com/en_us/research/23/c/iron-tiger-sysupdate-adds-linux-targeting.html\nauthor: X__Junior (Nextron Systems)\ndate: 2023-03-13\nmodified: 2023-03-15\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\rcdll.dll\n  filter:\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\Microsoft Visual Studio\\\n    - C:\\Program Files (x86)\\Windows Kits\\\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

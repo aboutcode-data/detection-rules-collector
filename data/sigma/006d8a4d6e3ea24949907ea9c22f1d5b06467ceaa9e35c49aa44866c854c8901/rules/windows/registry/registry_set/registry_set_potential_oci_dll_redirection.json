@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_potential_oci_dll_redirection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-01-24",
+                "title": "Registry Modification for OCI DLL Redirection",
+                "id": "c0e0bdec-3e3d-47aa-9974-05539c999c89"
+            },
+            "rule_text": "title: Registry Modification for OCI DLL Redirection\nid: c0e0bdec-3e3d-47aa-9974-05539c999c89\nstatus: experimental\ndescription: 'Detects registry modifications related to ''OracleOciLib'' and ''OracleOciLibPath''\n  under ''MSDTC'' settings.\n\n  Threat actors may modify these registry keys to redirect the loading of ''oci.dll''\n  to a malicious DLL, facilitating phantom DLL hijacking via the MSDTC service.\n\n  '\nreferences:\n- https://www.crowdstrike.com/en-us/blog/4-ways-adversaries-hijack-dlls/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-01-24\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.defense-impairment\n- attack.t1112\n- attack.t1574.001\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_ocilib:\n    TargetObject|endswith: \\SOFTWARE\\Microsoft\\MSDTC\\MTxOCI\\OracleOciLib\n  filter_main_ocilib_file:\n    Details|contains: oci.dll\n  selection_ocilibpath:\n    TargetObject|endswith: \\SOFTWARE\\Microsoft\\MSDTC\\MTxOCI\\OracleOciLibPath\n  filter_main_ocilibpath:\n    Details|contains: '%SystemRoot%\\System32\\'\n  condition: (selection_ocilib and not filter_main_ocilib_file) or (selection_ocilibpath\n    and not filter_main_ocilibpath)\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Blackberry/Mal_Infostealer_Win32_BlackGuard.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Mal_Infostealer_Win32_BlackGuard",
+                "tags": [],
+                "description": "Detects W32 BlackGuard Infostealer",
+                "author": "BlackBerry Threat Research team ",
+                "reference": "https://blogs.blackberry.com/en/2022/04/threat-thursday-blackguard-infostealer",
+                "date": "2022-14-04",
+                "sha256": "6AB3B21FA7CB638ED68509BE1ED6302284E8A9CD1A10F9B6837C057154AA6162",
+                "license": "This Yara rule is provided under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0) and open to any user or organization, as long as you use it under this license and ensure originator credit in any derivative to The BlackBerry Research & Intelligence Team"
+            },
+            "rule_text": "import \"pe\"\n\nrule Mal_Infostealer_Win32_BlackGuard\n{\n\tmeta:\n\t\tdescription = \"Detects W32 BlackGuard Infostealer\"\n\t\tauthor = \"BlackBerry Threat Research team \"\n\t\treference = \"https://blogs.blackberry.com/en/2022/04/threat-thursday-blackguard-infostealer\"\n\t\tdate = \"2022-14-04\"\n\t\tsha256 = \"6AB3B21FA7CB638ED68509BE1ED6302284E8A9CD1A10F9B6837C057154AA6162\"\n\t\tlicense = \"This Yara rule is provided under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0) and open to any user or organization, as long as you use it under this license and ensure originator credit in any derivative to The BlackBerry Research & Intelligence Team\"\n\n\tstrings:\n\t\t$a1 = { 06 91 06 61 20 AA 00 00 00 61 D2 9C 06 17 58 0A }\n\t\t$a2 = \"System.Data.SQLite\"\n\t\t$a3 = \"FromBase64String\"\n\t\t$a4 = \"BlockInput\"\n\t\t$a5 = \"UploadFile\"\n\t\t$a6 = \"Passwords\"\n\t\t$a7 = \"Discord\"\n\t\t$a8 = \"GetVolumeInformationA\"\n\t\t$a9 = \"NordVPN\"\n\t\t$a10 = \"OpenVPN\"\n\t\t$a11 = \"ProtonVPN\"\n\t\t$a12 = \"OperaCookies\"\n\t\t$a13 = \"EdgeCookies\"\n\t\t$a14 = \"ChromeCookies\"\n\t\t$b1 = \"upche\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and pe.imphash ( ) == \"f34d5f2d4577ed6d9ceec516c1f5a744\" and pe.number_of_sections == 3 and pe.section_index ( \".text\" ) == 0 and pe.section_index ( \".rsrc\" ) == 1 and pe.section_index ( \".reloc\" ) == 2 and ( ( all of ( $a* ) ) or ( ( 12 of ( $a* ) and all of ( $b* ) ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

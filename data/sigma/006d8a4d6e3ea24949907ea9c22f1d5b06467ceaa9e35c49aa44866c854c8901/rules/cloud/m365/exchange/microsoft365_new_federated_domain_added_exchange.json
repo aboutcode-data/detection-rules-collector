@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/m365/exchange/microsoft365_new_federated_domain_added_exchange.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Splunk Threat Research Team (original rule), '@ionsor (rule)'",
+                "date": "2022-02-08",
+                "title": "New Federated Domain Added - Exchange",
+                "id": "42127bdd-9133-474f-a6f1-97b6c08a4339"
+            },
+            "rule_text": "title: New Federated Domain Added - Exchange\nid: 42127bdd-9133-474f-a6f1-97b6c08a4339\nrelated:\n- id: 58f88172-a73d-442b-94c9-95eaed3cbb36\n  type: similar\nstatus: test\ndescription: Detects the addition of a new Federated Domain.\nreferences:\n- https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/wp-m-unc2452-2021-000343-01.pdf\n- https://us-cert.cisa.gov/ncas/alerts/aa21-008a\n- https://www.splunk.com/en_us/blog/security/a-golden-saml-journey-solarwinds-continued.html\n- https://www.sygnia.co/golden-saml-advisory\n- https://o365blog.com/post/aadbackdoor/\nauthor: Splunk Threat Research Team (original rule), '@ionsor (rule)'\ndate: 2022-02-08\ntags:\n- attack.persistence\n- attack.t1136.003\nlogsource:\n  service: exchange\n  product: m365\ndetection:\n  selection:\n    eventSource: Exchange\n    eventName: Add-FederatedDomain\n    status: success\n  condition: selection\nfalsepositives:\n- The creation of a new Federated domain is not necessarily malicious, however these\n  events need to be followed closely, as it may indicate federated credential abuse\n  or backdoor via federated identities at a similar or different cloud provider.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

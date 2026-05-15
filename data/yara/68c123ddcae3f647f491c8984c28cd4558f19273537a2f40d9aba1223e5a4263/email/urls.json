@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/urls.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "with_urls",
+                "tags": [
+                    "mail"
+                ],
+                "author": "Antonio Sanchez <asanchez@hispasec.com>",
+                "reference": "http://laboratorio.blogs.hispasec.com/",
+                "description": "Rule to detect the presence of an or several urls"
+            },
+            "rule_text": "rule with_urls : mail\n{\n\tmeta:\n\t\tauthor = \"Antonio Sanchez <asanchez@hispasec.com>\"\n\t\treference = \"http://laboratorio.blogs.hispasec.com/\"\n\t\tdescription = \"Rule to detect the presence of an or several urls\"\n\n\tstrings:\n\t\t$eml_01 = \"From:\"\n\t\t$eml_02 = \"To:\"\n\t\t$eml_03 = \"Subject:\"\n\t\t$url_regex = /https?:\\/\\/([\\w\\.-]+)([\\/\\w \\.-]*)/\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "without_urls",
+                "tags": [
+                    "mail"
+                ],
+                "author": "Antonio Sanchez <asanchez@hispasec.com>",
+                "reference": "http://laboratorio.blogs.hispasec.com/",
+                "description": "Rule to detect the no presence of any url"
+            },
+            "rule_text": "rule without_urls : mail\n{\n\tmeta:\n\t\tauthor = \"Antonio Sanchez <asanchez@hispasec.com>\"\n\t\treference = \"http://laboratorio.blogs.hispasec.com/\"\n\t\tdescription = \"Rule to detect the no presence of any url\"\n\n\tstrings:\n\t\t$eml_01 = \"From:\"\n\t\t$eml_02 = \"To:\"\n\t\t$eml_03 = \"Subject:\"\n\t\t$url_regex = /https?:\\/\\/([\\w\\.-]+)([\\/\\w \\.-]*)/\n\n\tcondition:\n\t\tall of ( $eml_* ) and not $url_regex\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

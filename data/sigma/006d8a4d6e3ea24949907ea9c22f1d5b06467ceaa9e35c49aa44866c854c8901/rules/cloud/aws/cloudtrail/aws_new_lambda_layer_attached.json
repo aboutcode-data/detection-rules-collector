@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_new_lambda_layer_attached.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer",
+                "date": "2021-09-23",
+                "title": "AWS New Lambda Layer Attached",
+                "id": "97fbabf8-8e1b-47a2-b7d5-a418d2b95e3d"
+            },
+            "rule_text": "title: AWS New Lambda Layer Attached\nid: 97fbabf8-8e1b-47a2-b7d5-a418d2b95e3d\nstatus: test\ndescription: 'Detects when a user attached a Lambda layer to an existing Lambda function.\n\n  A malicious Lambda layer could execute arbitrary code in the context of the function''s\n  IAM role.\n\n  This would give an adversary access to resources that the function has access to.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/lambda/latest/dg/API_UpdateFunctionConfiguration.html\n- https://github.com/clearvector/lambda-spy\nauthor: Austin Songer\ndate: 2021-09-23\nmodified: 2025-03-17\ntags:\n- attack.privilege-escalation\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: lambda.amazonaws.com\n    eventName|startswith: UpdateFunctionConfiguration\n    requestParameters.layers|contains: '*'\n  condition: selection\nfalsepositives:\n- Lambda Layer being attached may be performed by a system administrator. Verify whether\n  the user identity, user agent, and/or hostname should be making changes in your\n  environment.\n- Lambda Layer being attached from unfamiliar users should be investigated. If known\n  behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

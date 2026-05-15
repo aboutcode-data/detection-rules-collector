@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Lazy/Trojan_Win32_Lazy_MK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Lazy_MK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Lazy.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Lazy_MK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Lazy.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2e 69 64 61 74 61 20 20 00 10 00 00 00 f0 05 00 00 02 00 00 00 e2 05 }\n\t\t$a_01_1 = {20 20 20 00 20 20 20 20 00 d0 05 00 00 10 00 00 00 d0 05 00 00 10 }\n\t\t$a_03_2 = {40 00 00 e0 2e 72 73 72 63 00 00 00 ?? 02 00 00 00 e0 05 00 00 02 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_03_2 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

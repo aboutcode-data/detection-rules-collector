@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/rundll32_susp_export_functionality.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Rundll32 with Suspicious Export Functionalities",
+                "id": "e7cff8e3-89ae-47bd-841f-833e0a647f72"
+            },
+            "rule_text": "title: Rundll32 with Suspicious Export Functionalities\nid: e7cff8e3-89ae-47bd-841f-833e0a647f72\nstatus: experimental\ndescription: Detects instances of rundll32.exe running Windows native DLLs that have\n  export functionalities that adversaries commonly leverage for executing malicious\n  code and evading defensive controls. Inspired by the 2022 Red Canary Threat Detection\n  report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.defense_evasion\n- attack.t1218\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains:\n    - minidump\n    - startw\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

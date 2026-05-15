@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_addinutil_uncommon_cmdline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)",
+                "date": "2023-09-18",
+                "title": "Uncommon AddinUtil.EXE CommandLine Execution",
+                "id": "4f2cd9b6-4a17-440f-bb2a-687abb65993a"
+            },
+            "rule_text": "title: Uncommon AddinUtil.EXE CommandLine Execution\nid: 4f2cd9b6-4a17-440f-bb2a-687abb65993a\nstatus: test\ndescription: 'Detects execution of the Add-In deployment cache updating utility (AddInutil.exe)\n  with uncommon Addinroot or Pipelineroot paths. An adversary may execute AddinUtil.exe\n  with uncommon Addinroot/Pipelineroot paths that point to the adversaries Addins.Store\n  payload.\n\n  '\nreferences:\n- https://www.blue-prints.blog/content/blog/posts/lolbin/addinutil-lolbas.html\nauthor: Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)\ndate: 2023-09-18\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\addinutil.exe\n  - OriginalFileName: AddInUtil.exe\n  selection_cli:\n    CommandLine|contains:\n    - '-AddInRoot:'\n    - '-PipelineRoot:'\n  filter_main_addinroot:\n    CommandLine|contains:\n    - -AddInRoot:\"C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\VSTA\n    - -AddInRoot:C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\VSTA\n    - -PipelineRoot:\"C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\VSTA\n    - -PipelineRoot:C:\\Program Files (x86)\\Common Files\\Microsoft Shared\\VSTA\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

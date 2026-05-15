@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Inject/Trojan_Win32_Inject_L_MSR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Inject_L_MSR",
+                "tags": [],
+                "description": "Trojan:Win32/Inject.L!MSR,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Inject_L_MSR\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Inject.L!MSR,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_81_0 = {50 49 6b 4f 34 79 37 39 54 31 6c 65 4b 73 79 34 66 69 51 63 44 49 49 73 55 32 69 33 78 49 68 52 }\n\t\t$a_81_1 = {50 72 6f 63 65 73 73 49 6e 6a 65 63 74 69 6f 6e }\n\t\t$a_81_2 = {53 68 65 6c 6c 63 6f 64 65 44 65 6c 65 67 61 74 65 }\n\n\tcondition:\n\t\t(( #a_81_0 & 1 ) * 1 + ( #a_81_1 & 1 ) * 1 + ( #a_81_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

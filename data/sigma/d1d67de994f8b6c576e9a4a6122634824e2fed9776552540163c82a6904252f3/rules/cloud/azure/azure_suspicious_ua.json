@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/cloud/azure/azure_suspicious_ua.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson, Leandro Ferreira",
+                "date": "2024-07-16",
+                "title": "Suspicious Logon User-Agent",
+                "id": "95745635-ec42-40ed-8cba-4ad815590197"
+            },
+            "rule_text": "title: Suspicious Logon User-Agent\nid: 95745635-ec42-40ed-8cba-4ad815590197\ndescription: Suspicious user-agents that aren't typically observed in authentication\n  events\nreferences:\n- https://fieldeffect.com/blog/field-effect-discovers-m365-adversary-in-the-middle-campaign\nstatus: test\nauthor: NTT Security - Patrik Olson, Leandro Ferreira\ndate: 2024-07-16\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    userAgent|contains:\n    - axios/1.\n  condition: selection\nfalsepositives:\n- Legitimate use of the axios HTTP client as part of some software\n- Microsoft Power BI\nlevel: medium\ntags:\n- attack.initial-access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

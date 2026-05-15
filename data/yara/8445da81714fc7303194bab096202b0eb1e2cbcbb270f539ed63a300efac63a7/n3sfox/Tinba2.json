@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/n3sfox/Tinba2.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Tinba2",
+                "tags": [],
+                "author": "n3sfox <n3sfox@gmail.com>",
+                "date": "2015/11/07",
+                "description": "Tinba 2 (DGA) banking trojan",
+                "reference": "https://securityintelligence.com/tinba-malware-reloaded-and-attacking-banks-around-the-world",
+                "filetype": "memory",
+                "hash1": "c7f662594f07776ab047b322150f6ed0",
+                "hash2": "dc71ef1e55f1ddb36b3c41b1b95ae586",
+                "hash3": "b788155cb82a7600f2ed1965cffc1e88"
+            },
+            "rule_text": "rule Tinba2\n{\n\tmeta:\n\t\tauthor = \"n3sfox <n3sfox@gmail.com>\"\n\t\tdate = \"2015/11/07\"\n\t\tdescription = \"Tinba 2 (DGA) banking trojan\"\n\t\treference = \"https://securityintelligence.com/tinba-malware-reloaded-and-attacking-banks-around-the-world\"\n\t\tfiletype = \"memory\"\n\t\thash1 = \"c7f662594f07776ab047b322150f6ed0\"\n\t\thash2 = \"dc71ef1e55f1ddb36b3c41b1b95ae586\"\n\t\thash3 = \"b788155cb82a7600f2ed1965cffc1e88\"\n\n\tstrings:\n\t\t$str1 = \"MapViewOfFile\"\n\t\t$str2 = \"OpenFileMapping\"\n\t\t$str3 = \"NtCreateUserProcess\"\n\t\t$str4 = \"NtQueryDirectoryFile\"\n\t\t$str5 = \"RtlCreateUserThread\"\n\t\t$str6 = \"DeleteUrlCacheEntry\"\n\t\t$str7 = \"PR_Read\"\n\t\t$str8 = \"PR_Write\"\n\t\t$pubkey = \"BEGIN PUBLIC KEY\"\n\t\t$code1 = {50 87 44 24 04 6A ?? E8}\n\n\tcondition:\n\t\tall of ( $str* ) and $pubkey and $code1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

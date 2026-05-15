@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_qbot_mounted_drive_script_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Qbot Mounted Drive Script Executions",
+                "id": "e69d709f-097f-4798-bf9a-aa600fc3249f"
+            },
+            "rule_text": "title: Qbot Mounted Drive Script Executions\nid: e69d709f-097f-4798-bf9a-aa600fc3249f\nstatus: experimental\ndescription: \"Detects Windows Scripting Host processes (wscript.exe and cscript.exe)\\\n  \\ that are \\ninvoking the execution of common scripting formats that Red Canary\\\n  \\ has observed \\nbeing used by Qbot\\u2014such as .js, .vbs, and .wsf\\u2014that are\\\n  \\ from a logical mounted \\ndrive using the drive letters D: through Z: and that\\\n  \\ have a child process. Part \\nof the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/qbot/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.s0650\n- attack.execution\n- attack.t1059\n- attack.t1204\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\explorer.exe\n    Image|endswith:\n    - \\cscript.exe\n    - \\wscript.exe\n    CommandLine|re: '[d-z]:\\.*[js|vbs|wsf]$'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

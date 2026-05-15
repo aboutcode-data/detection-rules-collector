@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Limraps/Worm_Win32_Limraps_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Limraps_A",
+                "tags": [],
+                "description": "Worm:Win32/Limraps.A,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 08 00 07 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Limraps_A\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Limraps.A,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 08 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c7 45 f8 1a 00 00 00 59 fe 45 08 8d 45 08 50 ff 15 ?? ?? ?? ?? 83 f8 02 0f 85 }\n\t\t$a_01_1 = {8a 54 0d a8 41 88 50 ff 88 18 40 40 83 f9 28 7c ef }\n\t\t$a_01_2 = {8b 46 04 ff 36 40 50 8b 46 10 ff 76 08 40 ff 76 0c 50 8b 46 14 05 6c 07 00 00 }\n\t\t$a_01_3 = {4d 65 73 73 61 67 65 2d 49 44 3a 20 3c 25 64 25 30 32 64 25 30 32 64 25 30 32 64 25 30 32 64 25 30 32 64 25 64 40 6d 78 2e 67 6f 6f 67 6c 65 2e 63 6f 6d 3e }\n\t\t$a_01_4 = {5b 61 75 74 6f 72 75 6e 5d }\n\t\t$a_01_5 = {74 66 74 70 20 2d 69 20 25 73 20 67 65 74 20 25 73 }\n\t\t$a_01_6 = {46 72 6f 6d 3a 20 79 6f 75 72 20 66 72 69 65 6e 64 2e }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 4 + ( #a_01_1 & 1 ) * 4 + ( #a_01_2 & 1 ) * 4 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 + ( #a_01_6 & 1 ) * 1 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/embee-research/Yara-detection-rules/blob/master/Rules/win_redline_bytecodes_oct_2023.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_redline_updated_bytecodes_oct_2023",
+                "tags": [],
+                "author": "Matthew @ Embee_Research",
+                "created": "2023/10/11",
+                "description": "Configuration related bytecodes in redline .net files",
+                "sha_256": "0cc3a0f8b48ef8d8562b9cdf9c7cfe7f63faf43a5ac6dc6973dc8bf13b6c88cf"
+            },
+            "rule_text": "rule win_redline_updated_bytecodes_oct_2023\n{\n\tmeta:\n\t\tauthor = \"Matthew @ Embee_Research\"\n\t\tcreated = \"2023/10/11\"\n\t\tdescription = \"Configuration related bytecodes in redline .net files\"\n\t\tsha_256 = \"0cc3a0f8b48ef8d8562b9cdf9c7cfe7f63faf43a5ac6dc6973dc8bf13b6c88cf\"\n\n\tstrings:\n\t\t$s_1 = {   \n\t\t\t\t20 ?? ?? ?? ?? \t\t\t\t\t\t\t\t\t\t\t// ldc.i4\n\t\t\t\t2B 00       \t\t\t\t\t\t\t\t\t\t\t// br.s\n\t\t\t\t28 ?? ?? ?? 2B \t\t\t\t\t\t\t\t\t\t\t// Call\n\t\t\t\t80 ?? ?? ?? 04 \t\t\t\t\t\t\t\t\t\t\t// stsfld\n\t\t\t\t(20 ?? ?? ?? ?? 2B00 28 ?? ?? ?? 2B | 72 ?? ?? ?? 70)   // ldc.i4, br.s, call OR ldstr\n\t\t\t\t80 ?? ?? ?? 04      \t\t\t\t\t\t\t\t\t// Call\n\t\t\t\t(20 ?? ?? ?? ?? 2B00 28 ?? ?? ?? 2B | 72 ?? ?? ?? 70)   // ldc.i4, br.s, call OR ldstr\n\t\t\t\t80 ?? ?? ?? 04 \t\t\t\t\t\t\t\t\t\t\t// Call\t\t\n\t\t\t\t20 ?? ?? ?? ?? \t\t\t\t\t\t\t\t\t\t\t// ldc.i4\n\t\t\t\t2B00            \t\t\t\t\t\t\t\t\t\t// br.s\n\t\t\t\t28 ?? ?? ?? 2B      \t\t\t\t\t\t\t\t\t// Call\n\t\t\t\t80 ?? ?? ?? 04 \t\t\t\t\t\t\t\t\t\t\t// stsfld\n\t\t\t\t2A \t\t\t\t\t\t\t\t\t\t\t\t\t\t// ret\n\t\t\t}\n\t\t$s_2 = \"mscoree.dll\"\n\n\tcondition:\n\t\t$s_1 and $s_2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

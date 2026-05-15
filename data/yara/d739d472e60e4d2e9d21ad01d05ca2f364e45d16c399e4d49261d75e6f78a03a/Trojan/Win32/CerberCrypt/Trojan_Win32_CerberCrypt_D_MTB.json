@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CerberCrypt/Trojan_Win32_CerberCrypt_D_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CerberCrypt_D_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CerberCrypt.D!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CerberCrypt_D_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CerberCrypt.D!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b f8 90 8b df }\n\t\t$a_01_1 = {8a 06 90 32 c2 }\n\t\t$a_01_2 = {6a 40 68 00 30 00 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

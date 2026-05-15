@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_copy_dmp_from_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-27",
+                "title": "Copy .DMP/.DUMP Files From Remote Share Via Cmd.EXE",
+                "id": "044ba588-dff4-4918-9808-3f95e8160606"
+            },
+            "rule_text": "title: Copy .DMP/.DUMP Files From Remote Share Via Cmd.EXE\nid: 044ba588-dff4-4918-9808-3f95e8160606\nstatus: test\ndescription: Detects usage of the copy builtin cmd command to copy files with the\n  \".dmp\"/\".dump\" extension from a remote share\nreferences:\n- https://thedfirreport.com/2022/09/26/bumblebee-round-two/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-27\nmodified: 2023-09-12\ntags:\n- attack.credential-access\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cli:\n    CommandLine|contains|all:\n    - 'copy '\n    - ' \\\\\\\\'\n    CommandLine|contains:\n    - .dmp\n    - .dump\n    - .hdmp\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

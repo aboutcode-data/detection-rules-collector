@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_elevated_system_shell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), frack113",
+                "date": "2023-11-23",
+                "title": "Elevated System Shell Spawned",
+                "id": "61065c72-5d7d-44ef-bf41-6a36684b545f"
+            },
+            "rule_text": "title: Elevated System Shell Spawned\nid: 61065c72-5d7d-44ef-bf41-6a36684b545f\nrelated:\n- id: 178e615d-e666-498b-9630-9ed363038101\n  type: similar\nstatus: test\ndescription: 'Detects when a shell program such as the Windows command prompt or PowerShell\n  is launched with system privileges. Use this rule to hunt for potential suspicious\n  processes.\n\n  '\nreferences:\n- https://github.com/Wh04m1001/SysmonEoP\nauthor: Nasreddine Bencherchali (Nextron Systems), frack113\ndate: 2023-11-23\nmodified: 2025-03-06\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.t1059\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_shell:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\pwsh.exe\n    - \\cmd.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - powershell_ise.EXE\n    - pwsh.dll\n    - Cmd.Exe\n  selection_user:\n    User|contains:\n    - AUTHORI\n    - AUTORI\n    LogonId: '0x3e7'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

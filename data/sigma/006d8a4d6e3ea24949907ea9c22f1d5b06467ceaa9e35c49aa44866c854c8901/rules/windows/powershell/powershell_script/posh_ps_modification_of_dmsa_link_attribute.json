@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_modification_of_dmsa_link_attribute.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-05-24",
+                "title": "DMSA Link Attributes Modified",
+                "id": "9b111d8e-92e0-4153-88bc-daefc1333aba"
+            },
+            "rule_text": "title: DMSA Link Attributes Modified\nid: 9b111d8e-92e0-4153-88bc-daefc1333aba\nrelated:\n- id: 6c9eb492-e477-4df9-b0f4-571fc9db29cd\n  type: similar\nstatus: experimental\ndescription: 'Detects modification of dMSA link attributes (msDS-ManagedAccountPrecededByLink)\n  via PowerShell scripts.\n\n  This command line pattern could be an indicator an attempt to exploit the BadSuccessor\n  privilege escalation vulnerability in Windows Server 2025.\n\n  '\nreferences:\n- https://www.akamai.com/blog/security-research/abusing-bad-successor-for-privilege-escalation-in-active-directory\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-05-24\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.stealth\n- attack.t1078.002\n- attack.t1098\nlogsource:\n  category: ps_script\n  product: windows\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - .Put(\"msDS-ManagedAccountPrecededByLink\n    - CN=\n  condition: selection\nfalsepositives:\n- Legitimate administrative tasks modifying these attributes.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

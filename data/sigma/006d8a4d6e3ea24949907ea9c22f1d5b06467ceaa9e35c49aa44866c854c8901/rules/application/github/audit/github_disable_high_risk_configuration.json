@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_disable_high_risk_configuration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal (@faisalusuf)",
+                "date": "2023-01-29",
+                "title": "Github High Risk Configuration Disabled",
+                "id": "8622c92d-c00e-463c-b09d-fd06166f6794"
+            },
+            "rule_text": "title: Github High Risk Configuration Disabled\nid: 8622c92d-c00e-463c-b09d-fd06166f6794\nstatus: test\ndescription: Detects when a user disables a critical security feature for an organization.\nreferences:\n- https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/disabling-oauth-app-access-restrictions-for-your-organization\n- https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/reviewing-the-audit-log-for-your-organization#dependabot_alerts-category-actions\n- https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository\n- https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/audit-log-events-for-your-enterprise\nauthor: Muhammad Faisal (@faisalusuf)\ndate: 2023-01-29\nmodified: 2024-07-22\ntags:\n- attack.credential-access\n- attack.persistence\n- attack.defense-impairment\n- attack.t1556\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action:\n    - business_advanced_security.disabled_for_new_repos\n    - business_advanced_security.disabled_for_new_user_namespace_repos\n    - business_advanced_security.disabled\n    - business_advanced_security.user_namespace_repos_disabled\n    - org.advanced_security_disabled_for_new_repos\n    - org.advanced_security_disabled_on_all_repos\n    - org.advanced_security_policy_selected_member_disabled\n    - org.disable_oauth_app_restrictions\n    - org.disable_two_factor_requirement\n    - repo.advanced_security_disabled\n  condition: selection\nfalsepositives:\n- Approved administrator/owner activities.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

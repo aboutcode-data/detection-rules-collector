@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_livekd_kernel_memory_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-16",
+                "title": "Kernel Memory Dump Via LiveKD",
+                "id": "c7746f1c-47d3-43d6-8c45-cd1e54b6b0a2"
+            },
+            "rule_text": "title: Kernel Memory Dump Via LiveKD\nid: c7746f1c-47d3-43d6-8c45-cd1e54b6b0a2\nstatus: test\ndescription: Detects execution of LiveKD with the \"-m\" flag to potentially dump the\n  kernel memory\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/livekd\n- https://4sysops.com/archives/creating-a-complete-memory-dump-without-a-blue-screen/\n- https://kb.acronis.com/content/60892\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-16\nmodified: 2024-03-13\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\livekd.exe\n    - \\livekd64.exe\n  - OriginalFileName: livekd.exe\n  selection_cli:\n    CommandLine|contains|windash: ' -m'\n  condition: all of selection_*\nfalsepositives:\n- Unlikely in production environment\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zenpak/Trojan_Win32_Zenpak_GNI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zenpak_GNI_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Zenpak.GNI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zenpak_GNI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zenpak.GNI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {89 e5 53 81 ec ?? ?? ?? ?? 89 e0 c7 00 ?? ?? ?? ?? a1 }\n\t\t$a_03_1 = {29 c2 83 c2 ?? 89 f8 50 8f 05 ?? ?? ?? ?? 4a 89 2d ?? ?? ?? ?? 83 c2 ?? 89 f0 50 8f 05 ?? ?? ?? ?? 8d 05 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

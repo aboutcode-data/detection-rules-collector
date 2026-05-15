@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Agent/Backdoor_Win32_Agent_HC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Agent_HC",
+                "tags": [],
+                "description": "Backdoor:Win32/Agent.HC,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Agent_HC\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Agent.HC,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {80 30 26 40 3d ?? ?? ?? ?? 72 f5 e9 }\n\t\t$a_00_1 = {33 d2 f7 75 0c 8b 45 08 85 d2 74 0a }\n\t\t$a_00_2 = {53 65 74 54 68 72 65 61 64 43 6f 6e 74 65 78 74 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

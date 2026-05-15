@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/shrpubw_execution_from_unexpected_path.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Shrpubw Execution from Unexpected File Path",
+                "id": "3b9fc5ea-6288-4c03-882a-af00df4f5b32"
+            },
+            "rule_text": "title: Shrpubw Execution from Unexpected File Path\nid: 3b9fc5ea-6288-4c03-882a-af00df4f5b32\nstatus: experimental\ndescription: Looks for the execution of svchost without the normal -k parameter. Inspired\n  by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/dll-search-order-hijacking/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.persistence\n- attack.t1574\n- attack.t1574.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\shrpubw.exe\n  filter:\n    Image|contains:\n    - windows\\system32\\shrpubw.exe\n    - windows\\winsxs\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

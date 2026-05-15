@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/network/net_dns_low_reputation_etld.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Norbert Jaśniewicz (AlphaSOC)",
+                "date": "2025-08-04",
+                "title": "Low Reputation Effective Top-Level Domain (eTLD)",
+                "id": "cf5ee356-65c4-4556-8d11-6977fcdfed4b"
+            },
+            "rule_text": "title: Low Reputation Effective Top-Level Domain (eTLD)\nid: cf5ee356-65c4-4556-8d11-6977fcdfed4b\nstatus: experimental\ndescription: Detects DNS queries to domains within known low reputation eTLDs. This\n  rule uses AlphaSOC's threat intelligence data and is updated on a monthly basis.\nreferences:\n- https://feeds.alphasoc.net/bad-etlds.txt\nauthor: \"Norbert Ja\\u015Bniewicz (AlphaSOC)\"\ndate: 2025-08-04\ntags:\n- attack.command-and-control\n- attack.t1071.004\n- attack.initial-access\n- detection.threat-hunting\nlogsource:\n  category: dns\ndetection:\n  selection:\n    query|endswith:\n    - .duckdns.org\n    - .top\n    - .ddns.net\n    - .gl.at.ply.gg\n    - .portmap.io\n    - .icu\n    - .zapto.org\n    - .live\n    - .hopto.org\n    - .portmap.host\n    - .sbs\n    - .sytes.net\n    - .click\n    - .ydns.eu\n    - .site\n    - .cloud\n    - .no-ip.org\n    - .kozow.com\n    - .lat\n    - .pro\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

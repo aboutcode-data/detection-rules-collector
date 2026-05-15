@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_remotefxvgpudisablement_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-09",
+                "title": "Potential RemoteFXvGPUDisablement.EXE Abuse - PowerShell ScriptBlock",
+                "id": "cacef8fc-9d3d-41f7-956d-455c6e881bc5"
+            },
+            "rule_text": "title: Potential RemoteFXvGPUDisablement.EXE Abuse - PowerShell ScriptBlock\nid: cacef8fc-9d3d-41f7-956d-455c6e881bc5\nrelated:\n- id: a6fc3c46-23b8-4996-9ea2-573f4c4d88c5\n  type: similar\n- id: f65e22f9-819e-4f96-9c7b-498364ae7a25\n  type: similar\n- id: 38a7625e-b2cb-485d-b83d-aff137d859f4\n  type: similar\nstatus: test\ndescription: Detects PowerShell module creation where the module Contents are set\n  to \"function Get-VMRemoteFXPhysicalVideoAdapter\". This could be a sign of potential\n  abuse of the \"RemoteFXvGPUDisablement.exe\" binary which is known to be vulnerable\n  to module load-order hijacking.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md\n- https://github.com/redcanaryco/AtomicTestHarnesses/blob/7e1e4da116801e3d6fcc6bedb207064577e40572/TestHarnesses/T1218_SignedBinaryProxyExecution/InvokeRemoteFXvGPUDisablementCommand.ps1\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-09\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  product: windows\n  category: ps_script\n  definition: bade5735-5ab0-4aa7-a642-a11be0e40872\ndetection:\n  selection:\n    ScriptBlockText|startswith: function Get-VMRemoteFXPhysicalVideoAdapter {\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

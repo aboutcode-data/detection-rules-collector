@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_SomniRecord.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_SomniRecord_097e66bd",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "097e66bd-5ce3-4f05-92f3-ed03719dc60a",
+                "fingerprint": "db4896c85b5a8aa75a4ca3f6944041a4548b6998880c689cb7a318023893ff04",
+                "creation_date": "2023-03-01",
+                "last_modified": "2023-03-20",
+                "threat_name": "Windows.Trojan.SomniRecord",
+                "reference": "https://www.elastic.co/security-labs/not-sleeping-anymore-somnirecords-wakeup-call",
+                "reference_sample": "54114c23f499738a06fd8b8ab2a8458c03ac8cc81e706702fcd1c64a075e4dcc",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_SomniRecord_097e66bd\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"097e66bd-5ce3-4f05-92f3-ed03719dc60a\"\n\t\tfingerprint = \"db4896c85b5a8aa75a4ca3f6944041a4548b6998880c689cb7a318023893ff04\"\n\t\tcreation_date = \"2023-03-01\"\n\t\tlast_modified = \"2023-03-20\"\n\t\tthreat_name = \"Windows.Trojan.SomniRecord\"\n\t\treference = \"https://www.elastic.co/security-labs/not-sleeping-anymore-somnirecords-wakeup-call\"\n\t\treference_sample = \"54114c23f499738a06fd8b8ab2a8458c03ac8cc81e706702fcd1c64a075e4dcc\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a = { 66 81 38 4E 52 75 06 80 78 02 3A 74 34 48 FF C0 4C 8D 47 FE 4C 2B C0 48 8B C8 BA 4E 00 00 00 }\n\t\t$str0 = \"%s-%s-%s.%s\" ascii fullword\n\t\t$str1 = \"ECM-\" ascii fullword\n\t\t$str2 = \"RESP:\" ascii fullword\n\t\t$str3 = \"PROBE\" ascii fullword\n\t\t$str4 = \"SYS\" ascii fullword\n\t\t$str5 = \"PSL\" ascii fullword\n\t\t$str6 = \"WS-\" ascii fullword\n\t\t$str7 = \"There were no commands\" ascii fullword\n\t\t$str8 = \"String abc = Request.Form\" ascii fullword\n\n\tcondition:\n\t\t$a or all of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

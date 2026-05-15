@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_schedule_via_masqueraded_xml_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel, Elastic (idea)",
+                "date": "2023-04-20",
+                "title": "Suspicious Scheduled Task Creation via Masqueraded XML File",
+                "id": "dd2a821e-3b07-4d3b-a9ac-929fe4c6ca0c"
+            },
+            "rule_text": "title: Suspicious Scheduled Task Creation via Masqueraded XML File\nid: dd2a821e-3b07-4d3b-a9ac-929fe4c6ca0c\nstatus: test\ndescription: Detects the creation of a scheduled task using the \"-XML\" flag with a\n  file without the '.xml' extension. This behavior could be indicative of potential\n  defense evasion attempt during persistence\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/taskschd/daily-trigger-example--xml-\n- https://github.com/elastic/protections-artifacts/blob/084067123d3328a823b1c3fdde305b694275c794/behavior/rules/persistence_suspicious_scheduled_task_creation_via_masqueraded_xml_file.toml\nauthor: Swachchhanda Shrawan Poudel, Elastic (idea)\ndate: 2023-04-20\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.stealth\n- attack.t1036.005\n- attack.t1053.005\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\schtasks.exe\n  - OriginalFileName: schtasks.exe\n  selection_cli_create:\n    CommandLine|contains:\n    - /create\n    - -create\n  selection_cli_xml:\n    CommandLine|contains:\n    - /xml\n    - -xml\n  filter_main_extension_xml:\n    CommandLine|contains: .xml\n  filter_main_system_process:\n    IntegrityLevel:\n    - System\n    - S-1-16-16384\n  filter_main_rundll32:\n    ParentImage|endswith: \\rundll32.exe\n    ParentCommandLine|contains|all:\n    - :\\WINDOWS\\Installer\\MSI\n    - .tmp,zzzzInvokeManagedCustomActionOutOfProc\n  filter_optional_third_party:\n    ParentImage|endswith:\n    - :\\ProgramData\\OEM\\UpgradeTool\\CareCenter_*\\BUnzip\\Setup_msi.exe\n    - :\\Program Files\\Axis Communications\\AXIS Camera Station\\SetupActions.exe\n    - :\\Program Files\\Axis Communications\\AXIS Device Manager\\AdmSetupActions.exe\n    - :\\Program Files (x86)\\Zemana\\AntiMalware\\AntiMalware.exe\n    - :\\Program Files\\Dell\\SupportAssist\\pcdrcui.exe\n  condition: all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

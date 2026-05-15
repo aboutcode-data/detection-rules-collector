@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_unusual_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-21",
+                "title": "Unusual Parent Process For Cmd.EXE",
+                "id": "4b991083-3d0e-44ce-8fc4-b254025d8d4b"
+            },
+            "rule_text": "title: Unusual Parent Process For Cmd.EXE\nid: 4b991083-3d0e-44ce-8fc4-b254025d8d4b\nstatus: test\ndescription: Detects suspicious parent process for cmd.exe\nreferences:\n- https://www.elastic.co/guide/en/security/current/unusual-parent-process-for-cmd.exe.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-21\nmodified: 2023-12-05\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    ParentImage|endswith:\n    - \\csrss.exe\n    - \\ctfmon.exe\n    - \\dllhost.exe\n    - \\epad.exe\n    - \\FlashPlayerUpdateService.exe\n    - \\GoogleUpdate.exe\n    - \\jucheck.exe\n    - \\jusched.exe\n    - \\LogonUI.exe\n    - \\lsass.exe\n    - \\regsvr32.exe\n    - \\SearchIndexer.exe\n    - \\SearchProtocolHost.exe\n    - \\SIHClient.exe\n    - \\sihost.exe\n    - \\slui.exe\n    - \\spoolsv.exe\n    - \\sppsvc.exe\n    - \\taskhostw.exe\n    - \\unsecapp.exe\n    - \\WerFault.exe\n    - \\wermgr.exe\n    - \\wlanext.exe\n    - \\WUDFHost.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

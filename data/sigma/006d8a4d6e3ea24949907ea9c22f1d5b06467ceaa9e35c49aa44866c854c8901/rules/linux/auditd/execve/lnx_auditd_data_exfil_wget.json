@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_data_exfil_wget.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-11-18",
+                "title": "Data Exfiltration with Wget",
+                "id": "cb39d16b-b3b6-4a7a-8222-1cf24b686ffc"
+            },
+            "rule_text": "title: Data Exfiltration with Wget\nid: cb39d16b-b3b6-4a7a-8222-1cf24b686ffc\nstatus: test\ndescription: 'Detects attempts to post the file with the usage of wget utility.\n\n  The adversary can bypass the permission restriction with the misconfigured sudo\n  permission for wget utility which could allow them to read files like /etc/shadow.\n\n  '\nreferences:\n- https://linux.die.net/man/1/wget\n- https://gtfobins.github.io/gtfobins/wget/\nauthor: Pawel Mazur\ndate: 2021-11-18\nmodified: 2022-12-25\ntags:\n- attack.exfiltration\n- attack.t1048.003\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0: wget\n    a1|startswith: --post-file=\n  condition: selection\nfalsepositives:\n- Legitimate usage of wget utility to post a file\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

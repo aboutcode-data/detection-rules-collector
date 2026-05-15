@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_evilcorp_dridex_banker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "crime_win32_dridex_socks5_mod",
+                "tags": [],
+                "description": "Detects Dridex socks5 module",
+                "author": "@VK_Intel",
+                "date": "2020-04-06",
+                "reference": "https://twitter.com/VK_Intel/status/1247058432223477760",
+                "id": "cee256b1-ad80-55dd-bbd3-0d3f7bc49664"
+            },
+            "rule_text": "import \"pe\"\n\nrule crime_win32_dridex_socks5_mod\n{\n\tmeta:\n\t\tdescription = \"Detects Dridex socks5 module\"\n\t\tauthor = \"@VK_Intel\"\n\t\tdate = \"2020-04-06\"\n\t\treference = \"https://twitter.com/VK_Intel/status/1247058432223477760\"\n\t\tid = \"cee256b1-ad80-55dd-bbd3-0d3f7bc49664\"\n\n\tstrings:\n\t\t$s0 = \"socks5_2_x32.dll\"\n\t\t$s1 = \"socks5_2_x64.dll\"\n\n\tcondition:\n\t\tany of ( $s* ) and pe.exports ( \"start\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "crime_win32_hvnc_banker_gen",
+                "tags": [],
+                "description": "Detects malware banker hidden VNC",
+                "author": "@VK_Intel",
+                "reference": "https://twitter.com/VK_Intel/status/1247058432223477760",
+                "date": "2020-04-06",
+                "id": "5e13f4a9-2231-524f-82b2-fbc6d6a43b6f"
+            },
+            "rule_text": "import \"pe\"\n\nrule crime_win32_hvnc_banker_gen\n{\n\tmeta:\n\t\tdescription = \"Detects malware banker hidden VNC\"\n\t\tauthor = \"@VK_Intel\"\n\t\treference = \"https://twitter.com/VK_Intel/status/1247058432223477760\"\n\t\tdate = \"2020-04-06\"\n\t\tid = \"5e13f4a9-2231-524f-82b2-fbc6d6a43b6f\"\n\n\tcondition:\n\t\tpe.exports( \"VncStartServer\" ) and pe.exports ( \"VncStopServer\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

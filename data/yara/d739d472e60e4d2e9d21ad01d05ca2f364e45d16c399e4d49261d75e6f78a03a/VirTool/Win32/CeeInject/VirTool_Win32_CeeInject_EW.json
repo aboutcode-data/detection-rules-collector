@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/CeeInject/VirTool_Win32_CeeInject_EW.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_CeeInject_EW",
+                "tags": [],
+                "description": "VirTool:Win32/CeeInject.EW,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_CeeInject_EW\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/CeeInject.EW,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {00 78 3a 5c 77 65 72 64 6f 6e 2e 70 64 62 00 }\n\t\t$a_01_1 = {00 66 6f 72 73 2e 64 61 74 00 }\n\t\t$a_03_2 = {00 00 37 9e c7 45 90 09 03 00 c7 45 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

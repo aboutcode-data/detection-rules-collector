@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_desktopimgdownldr_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-07-03",
+                "title": "Suspicious Desktopimgdownldr Target File",
+                "id": "fc4f4817-0c53-4683-a4ee-b17a64bc1039"
+            },
+            "rule_text": "title: Suspicious Desktopimgdownldr Target File\nid: fc4f4817-0c53-4683-a4ee-b17a64bc1039\nstatus: test\ndescription: Detects a suspicious Microsoft desktopimgdownldr file creation that stores\n  a file to a suspicious location or contains a file with a suspicious extension\nreferences:\n- https://labs.sentinelone.com/living-off-windows-land-a-new-native-file-downldr/\n- https://twitter.com/SBousseaden/status/1278977301745741825\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-07-03\nmodified: 2022-06-02\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n    TargetFilename|contains: \\Personalization\\LockScreenImage\\\n  filter1:\n    TargetFilename|contains: C:\\Windows\\\n  filter2:\n    TargetFilename|contains:\n    - .jpg\n    - .jpeg\n    - .png\n  condition: selection and not filter1 and not filter2\nfalsepositives:\n- False positives depend on scripts and administrative tools used in the monitored\n  environment\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

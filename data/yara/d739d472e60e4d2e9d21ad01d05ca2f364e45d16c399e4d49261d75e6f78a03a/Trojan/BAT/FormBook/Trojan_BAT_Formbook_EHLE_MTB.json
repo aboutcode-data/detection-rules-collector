@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/FormBook/Trojan_BAT_Formbook_EHLE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Formbook_EHLE_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Formbook.EHLE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Formbook_EHLE_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Formbook.EHLE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {00 09 07 fe 04 16 fe 01 13 13 11 13 2c 05 ?? ?? ?? ?? ?? 11 04 08 fe 04 16 fe 01 13 14 11 14 2c 05 ?? ?? ?? ?? ?? 06 ?? ?? ?? ?? ?? 03 fe 04 16 fe 01 13 15 11 15 2c 05 ?? ?? ?? ?? ?? 02 09 11 04 ?? ?? ?? ?? ?? 13 0a 03 06 }\n\t\t$a_03_1 = {00 11 0b 17 59 25 13 0b 16 fe 02 16 fe 01 13 17 11 17 2c 02 2b 4a 06 12 0a ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 11 04 17 58 13 04 38 4f ff ff ff 00 09 17 58 0d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_file_permission_modifications.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-10-23",
+                "title": "File or Folder Permissions Modifications",
+                "id": "37ae075c-271b-459b-8d7b-55ad5f993dd8"
+            },
+            "rule_text": "title: File or Folder Permissions Modifications\nid: 37ae075c-271b-459b-8d7b-55ad5f993dd8\nstatus: test\ndescription: Detects a file or folder's permissions being modified or tampered with.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md\n- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)\n- https://github.com/swagkarna/Defeat-Defender-V1.2.0/tree/ae4059c4276da6f6303b8f53cdff085ecae88a91\nauthor: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)\ndate: 2019-10-23\nmodified: 2023-11-21\ntags:\n- attack.defense-impairment\n- attack.t1222.001\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    Image|endswith:\n    - \\cacls.exe\n    - \\icacls.exe\n    - \\net.exe\n    - \\net1.exe\n    CommandLine|contains:\n    - /grant\n    - /setowner\n    - /inheritance:r\n  selection_2:\n    Image|endswith: \\attrib.exe\n    CommandLine|contains: -r\n  selection_3:\n    Image|endswith: \\takeown.exe\n  filter_optional_dynatrace_1:\n    CommandLine|endswith: ICACLS C:\\ProgramData\\dynatrace\\gateway\\config\\connectivity.history\n      /reset\n  filter_optional_dynatrace_2:\n    CommandLine|contains|all:\n    - 'ICACLS C:\\ProgramData\\dynatrace\\gateway\\config\\config.properties /grant :r '\n    - S-1-5-19:F\n  filter_optional_vscode:\n    CommandLine|contains:\n    - \\AppData\\Local\\Programs\\Microsoft VS Code\n    - :\\Program Files\\Microsoft VS Code\n  filter_optional_avira:\n    CommandLine|contains:\n    - :\\Program Files (x86)\\Avira\n    - :\\Program Files\\Avira\n  condition: 1 of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Users interacting with the files on their own (unlikely unless privileged users).\n- Dynatrace app\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

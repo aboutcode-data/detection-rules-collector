@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_command_shell_bypass_security_controls.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Bypassing Security Controls - Command Shell",
+                "id": "2aaf3922-0a8b-4b7b-9c10-ea552bdff707"
+            },
+            "rule_text": "title: Bypassing Security Controls - Command Shell\nid: 2aaf3922-0a8b-4b7b-9c10-ea552bdff707\nstatus: experimental\ndescription: \"Adversaries bypass controls using the Windows Command Shell in a plethora\\\n  \\ of ways, \\nbut you can detect the one we see most often with a simple combination\\\n  \\ of process \\nexecution and a corresponding command line. Part of the RedCanary\\\n  \\ 2024 Threat \\nDetection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1059\n- attack.t1059.003\n- attack.defense_evasion\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    CommandLine|contains:\n    - bypass\n    - -exec\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

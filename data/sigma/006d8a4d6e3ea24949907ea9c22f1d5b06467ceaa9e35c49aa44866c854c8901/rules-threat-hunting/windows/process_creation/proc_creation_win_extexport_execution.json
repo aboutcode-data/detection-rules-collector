@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_extexport_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-11-26",
+                "title": "Potential DLL Sideloading Activity Via ExtExport.EXE",
+                "id": "fb0b815b-f5f6-4f50-970f-ffe21f253f7a"
+            },
+            "rule_text": "title: Potential DLL Sideloading Activity Via ExtExport.EXE\nid: fb0b815b-f5f6-4f50-970f-ffe21f253f7a\nstatus: test\ndescription: 'Detects the execution of \"Extexport.exe\".A utility that is part of the\n  Internet Explorer browser and is used to export and import various settings and\n  data, particularly when switching between Internet Explorer and other web browsers\n  like Firefox. It allows users to transfer bookmarks, browsing history, and other\n  preferences from Internet Explorer to Firefox or vice versa.\n\n  It can be abused as a tool to side load any DLL. If a folder is provided in the\n  command line it''ll load any DLL with one of the following names \"mozcrt19.dll\",\n  \"mozsqlite3.dll\", or \"sqlite.dll\".\n\n  Arbitrary DLLs can also be loaded if a specific number of flags was provided.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Extexport/\n- https://www.hexacorn.com/blog/2018/04/24/extexport-yet-another-lolbin/\n- https://www.microsoft.com/en-us/security/blog/2020/03/23/latest-astaroth-living-off-the-land-attacks-are-even-more-invisible-but-not-less-observable/\n- https://res.armor.com/resources/threat-intelligence/astaroth-banking-trojan/\n- https://securelist.com/the-tetrade-brazilian-banking-malware/97779/\n- https://www.welivesecurity.com/2020/03/05/guildma-devil-drives-electric/\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-11-26\nmodified: 2024-08-26\ntags:\n- attack.stealth\n- attack.t1218\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\Extexport.exe\n  - OriginalFileName: extexport.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_in_uncommon_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-12-10",
+                "title": "Legitimate Application Writing Files In Uncommon Location",
+                "id": "1cf465a1-2609-4c15-9b66-c32dbe4bfd67"
+            },
+            "rule_text": "title: Legitimate Application Writing Files In Uncommon Location\nid: 1cf465a1-2609-4c15-9b66-c32dbe4bfd67\nrelated:\n- id: 2ddef153-167b-4e89-86b6-757a9e65dcac\n  type: similar\nstatus: experimental\ndescription: 'Detects legitimate applications writing any type of file to uncommon\n  or suspicious locations that are not typical for application data storage or execution.\n\n  Adversaries may leverage legitimate applications (Living off the Land Binaries -\n  LOLBins) to drop or download malicious files to uncommon locations on the system\n  to evade detection by security solutions.\n\n  '\nreferences:\n- https://lolbas-project.github.io/#/download\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-12-10\ntags:\n- attack.stealth\n- attack.t1218\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection_img:\n    Image|endswith:\n    - \\eqnedt32.exe\n    - \\wordpad.exe\n    - \\wordview.exe\n    - \\cmdl32.exe\n    - \\certutil.exe\n    - \\certoc.exe\n    - \\CertReq.exe\n    - \\bitsadmin.exe\n    - \\Desktopimgdownldr.exe\n    - \\esentutl.exe\n    - \\expand.exe\n    - \\extrac32.exe\n    - \\replace.exe\n    - \\mshta.exe\n    - \\ftp.exe\n    - \\Ldifde.exe\n    - \\RdrCEF.exe\n    - \\hh.exe\n    - \\finger.exe\n    - \\findstr.exe\n  selection_locations:\n    TargetFilename|contains:\n    - :\\Perflogs\n    - :\\ProgramData\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\\n    - \\$Recycle.Bin\\\n    - \\AppData\\Local\\\n    - \\AppData\\Roaming\\\n    - \\Contacts\\\n    - \\Desktop\\\n    - \\Favorites\\\n    - \\Favourites\\\n    - \\inetpub\\wwwroot\\\n    - \\Music\\\n    - \\Pictures\\\n    - \\Start Menu\\Programs\\Startup\\\n    - \\Users\\Default\\\n    - \\Videos\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_in_uncommon_location/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

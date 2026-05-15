@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/scrtest.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "scrtest_dropper",
+                "tags": []
+            },
+            "rule_text": "rule scrtest_dropper\n{\n\tstrings:\n\t\t$export = \"SCRTEST\\x00\"\n\t\t$decrypt_key = \"EEB0F\\x00\"\n\t\t$main = { C645E44DC645E561C645E669C645E76EC645E800 }\n\n\tcondition:\n\t\tIsPeFile and ( ( $export and $decrypt_key ) or $main )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "scrtest_payload",
+                "tags": []
+            },
+            "rule_text": "rule scrtest_payload\n{\n\tstrings:\n\t\t$s1 = \"Consysqq.dll\"\n\t\t$s2 = \"Main\"\n\t\t$s3 = \"%c%c%c%c%c%c.exe\"\n\t\t$s4 = \"agmkis2\\x00\"\n\n\tcondition:\n\t\tIsPeFile and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

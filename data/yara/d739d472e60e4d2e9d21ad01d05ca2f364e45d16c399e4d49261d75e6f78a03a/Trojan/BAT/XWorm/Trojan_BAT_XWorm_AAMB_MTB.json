@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/XWorm/Trojan_BAT_XWorm_AAMB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_XWorm_AAMB_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/XWorm.AAMB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_XWorm_AAMB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/XWorm.AAMB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0a 0b 07 09 6f ?? 00 00 0a 07 17 6f ?? 00 00 0a 07 18 6f ?? 00 00 0a 1f 10 8d ?? 00 00 01 0c 02 16 08 16 1f 10 28 ?? 00 00 0a 07 08 6f ?? 00 00 0a 73 ?? 00 00 0a 13 06 02 1f 10 02 8e b7 1f 10 da 73 ?? 00 00 0a 07 6f ?? 00 00 0a 16 73 ?? 00 00 0a 13 07 11 07 11 06 6f ?? 00 00 0a de 0c 11 07 2c 07 11 07 6f ?? 00 00 0a dc 11 06 6f ?? 00 00 0a 0a de 36 de 0c }\n\t\t$a_03_1 = {0a 13 05 11 05 08 6f ?? 00 00 0a 11 05 07 6f ?? 00 00 0a 11 05 17 6f ?? 00 00 0a 11 05 18 6f ?? 00 00 0a 73 ?? 00 00 0a 13 06 02 1f 30 02 8e b7 1f 30 da 73 ?? 00 00 0a 11 05 6f ?? 00 00 0a 16 73 ?? 00 00 0a 13 07 11 07 11 06 6f ?? 00 00 0a de 0c 11 07 2c 07 11 07 6f ?? 00 00 0a dc 11 06 6f ?? 00 00 0a 0a de 1c de 0c }\n\t\t$a_01_2 = {43 72 65 61 74 65 44 65 63 72 79 70 74 6f 72 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 + ( #a_01_2 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

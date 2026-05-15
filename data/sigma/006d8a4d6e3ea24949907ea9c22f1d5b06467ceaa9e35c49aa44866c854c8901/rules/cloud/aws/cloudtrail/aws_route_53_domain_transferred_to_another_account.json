@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_route_53_domain_transferred_to_another_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Elastic, Austin Songer @austinsonger",
+                "date": "2021-07-22",
+                "title": "AWS Route 53 Domain Transferred to Another Account",
+                "id": "b056de1a-6e6e-4e40-a67e-97c9808cf41b"
+            },
+            "rule_text": "title: AWS Route 53 Domain Transferred to Another Account\nid: b056de1a-6e6e-4e40-a67e-97c9808cf41b\nstatus: test\ndescription: Detects when a request has been made to transfer a Route 53 domain to\n  another AWS account.\nreferences:\n- https://github.com/elastic/detection-rules/blob/c76a39796972ecde44cb1da6df47f1b6562c9770/rules/integrations/aws/persistence_route_53_domain_transferred_to_another_account.toml\nauthor: Elastic, Austin Songer @austinsonger\ndate: 2021-07-22\nmodified: 2022-10-09\ntags:\n- attack.persistence\n- attack.credential-access\n- attack.privilege-escalation\n- attack.t1098\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: route53.amazonaws.com\n    eventName: TransferDomainToAnotherAwsAccount\n  condition: selection\nfalsepositives:\n- A domain may be transferred to another AWS account by a system or network administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment. Domain transfers from unfamiliar users or hosts should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_office_outlook_security_settings.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-28",
+                "title": "Outlook Security Settings Updated - Registry",
+                "id": "c3cefdf4-6703-4e1c-bad8-bf422fc5015a"
+            },
+            "rule_text": "title: Outlook Security Settings Updated - Registry\nid: c3cefdf4-6703-4e1c-bad8-bf422fc5015a\nrelated:\n- id: 6763c6c8-bd01-4687-bc8d-4fa52cf8ba08\n  type: similar\nstatus: test\ndescription: Detects changes to the registry values related to outlook security settings\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1137/T1137.md\n- https://learn.microsoft.com/en-us/outlook/troubleshoot/security/information-about-email-security-settings\nauthor: frack113\ndate: 2021-12-28\nmodified: 2026-01-09\ntags:\n- attack.persistence\n- attack.t1137\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\SOFTWARE\\Microsoft\\Office\\\n    - \\Outlook\\Security\\\n  filter_main_outlook:\n    Image|startswith:\n    - C:\\Program Files\\Microsoft Office\\\n    - C:\\Program Files (x86)\\Microsoft Office\\\n    Image|endswith: \\OUTLOOK.EXE\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

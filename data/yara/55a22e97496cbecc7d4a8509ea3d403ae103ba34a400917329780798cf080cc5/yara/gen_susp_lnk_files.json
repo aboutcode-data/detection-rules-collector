@@ -1,0 +1,45 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_susp_lnk_files.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNK_lnkfileoverRFC",
+                "tags": [],
+                "description": "Detects APT lnk files that run double extraction and launch routines with autoruns",
+                "author": "@Grotezinfosec, modified by Florian Roth",
+                "date": "2018-09-18",
+                "id": "19c393af-ff7c-5345-a3ef-c06372344baf"
+            },
+            "rule_text": "rule SUSP_LNK_lnkfileoverRFC\n{\n\tmeta:\n\t\tdescription = \"Detects APT lnk files that run double extraction and launch routines with autoruns\"\n\t\tauthor = \"@Grotezinfosec, modified by Florian Roth\"\n\t\tdate = \"2018-09-18\"\n\t\tid = \"19c393af-ff7c-5345-a3ef-c06372344baf\"\n\n\tstrings:\n\t\t$command = \"C:\\\\Windows\\\\System32\\\\cmd.exe\" fullword ascii\n\t\t$command2 = {2F 00 63 00 20 00 66 00 69 00 6E 00 64 00 73 00 74 00 72}\n\t\t$base64 = \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD\" ascii\n\t\t$cert = \" -decode \" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x004c and uint32( 4 ) == 0x00021401 and filesize > 15KB and ( 2 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNK_SuspiciousCommands",
+                "tags": [],
+                "description": "Detects LNK file with suspicious content",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2018-09-18",
+                "score": 60,
+                "id": "8bfb1322-8e33-50bc-a389-2d8bdfec9ca7"
+            },
+            "rule_text": "rule SUSP_LNK_SuspiciousCommands\n{\n\tmeta:\n\t\tdescription = \"Detects LNK file with suspicious content\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdate = \"2018-09-18\"\n\t\tscore = 60\n\t\tid = \"8bfb1322-8e33-50bc-a389-2d8bdfec9ca7\"\n\n\tstrings:\n\t\t$s1 = \" -decode \" ascii wide\n\t\t$s2 = \" -enc \" ascii wide\n\t\t$s3 = \" -w hidden \" ascii wide\n\t\t$s4 = \" -ep bypass \" ascii wide\n\t\t$s5 = \" -noni \" ascii nocase wide\n\t\t$s7 = \" -noprofile \" ascii wide\n\t\t$s8 = \".DownloadString(\" ascii wide\n\t\t$s9 = \".DownloadFile(\" ascii wide\n\t\t$s10 = \"IEX(\" ascii wide\n\t\t$s11 = \"iex(\" ascii wide\n\t\t$s12 = \"WScript.shell\" ascii wide fullword nocase\n\t\t$s13 = \" -nop \" ascii wide\n\t\t$s14 = \"&tasklist>\"\n\t\t$s15 = \"setlocal EnableExtensions DisableDelayedExpansion\"\n\t\t$s16 = \"echo^ set^\"\n\t\t$s17 = \"del /f /q \"\n\t\t$s18 = \" echo | start \"\n\t\t$s19 = \"&& echo \"\n\t\t$s20 = \"&&set \"\n\t\t$s21 = \"%&&@echo off \"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x004c and 1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_DOC_LNK_in_ZIP",
+                "tags": [],
+                "description": "Detects suspicious .doc.lnk file in ZIP archive",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/RedDrip7/status/1145877272945025029",
+                "date": "2019-07-02",
+                "score": 50,
+                "hash1": "7ea4f77cac557044e72a8e280372a2abe072f2ad98b5a4fbed4e2229e780173a",
+                "id": "9c140d02-3b18-5faf-bb1d-2eb5c07a23dc"
+            },
+            "rule_text": "rule SUSP_DOC_LNK_in_ZIP\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious .doc.lnk file in ZIP archive\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/RedDrip7/status/1145877272945025029\"\n\t\tdate = \"2019-07-02\"\n\t\tscore = 50\n\t\thash1 = \"7ea4f77cac557044e72a8e280372a2abe072f2ad98b5a4fbed4e2229e780173a\"\n\t\tid = \"9c140d02-3b18-5faf-bb1d-2eb5c07a23dc\"\n\n\tstrings:\n\t\t$s1 = \".doc.lnk\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x4b50 and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

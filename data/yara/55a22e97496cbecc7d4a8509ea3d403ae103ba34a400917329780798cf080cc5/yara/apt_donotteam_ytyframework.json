@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_donotteam_ytyframework.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_DonotTeam_YTYframework",
+                "tags": [
+                    "APT",
+                    "DonotTeam",
+                    "Windows"
+                ],
+                "author": "James E.C, ProofPoint",
+                "description": "Modular malware framework with similarities to EHDevel",
+                "hashes": "1e0c1b97925e1ed90562d2c68971e038d8506b354dd6c1d2bcc252d2a48bc31c",
+                "reference": "https://www.arbornetworks.com/blog/asert/donot-team-leverages-new-modular-malware-framework-south-asia/",
+                "reference2": "https://labs.bitdefender.com/2017/09/ehdevel-the-story-of-a-continuously-improving-advanced-threat-creation-toolkit/",
+                "date": "08-03-2018",
+                "id": "6dd07019-aa5a-5966-8331-b6f6758b0652"
+            },
+            "rule_text": "import \"pe\"\n\nrule APT_DonotTeam_YTYframework : APT DonotTeam Windows\n{\n\tmeta:\n\t\tauthor = \"James E.C, ProofPoint\"\n\t\tdescription = \"Modular malware framework with similarities to EHDevel\"\n\t\thashes = \"1e0c1b97925e1ed90562d2c68971e038d8506b354dd6c1d2bcc252d2a48bc31c\"\n\t\treference = \"https://www.arbornetworks.com/blog/asert/donot-team-leverages-new-modular-malware-framework-south-asia/\"\n\t\treference2 = \"https://labs.bitdefender.com/2017/09/ehdevel-the-story-of-a-continuously-improving-advanced-threat-creation-toolkit/\"\n\t\tdate = \"08-03-2018\"\n\t\tid = \"6dd07019-aa5a-5966-8331-b6f6758b0652\"\n\n\tstrings:\n\t\t$x1 = \"/football/download2/\" ascii wide\n\t\t$x2 = \"/football/download/\" ascii wide\n\t\t$x3 = \"Caption: Xp>\" wide\n\t\t$x_c2 = \"5.135.199.0\" ascii fullword\n\t\t$a1 = \"getGoogle\" ascii fullword\n\t\t$a2 = \"/q /noretstart\" wide\n\t\t$a3 = \"IsInSandbox\" ascii fullword\n\t\t$a4 = \"syssystemnew\" ascii fullword\n\t\t$a5 = \"ytyinfo\" ascii fullword\n\t\t$a6 = \"\\\\ytyboth\\\\yty \" ascii\n\t\t$s1 = \"SELECT Name FROM Win32_Processor\" wide\n\t\t$s2 = \"SELECT Caption FROM Win32_OperatingSystem\" wide\n\t\t$s3 = \"SELECT SerialNumber FROM Win32_DiskDrive\" wide\n\t\t$s4 = \"VM: Yes\" wide fullword\n\t\t$s5 = \"VM: No\" wide fullword\n\t\t$s6 = \"helpdll.dll\" ascii fullword\n\t\t$s7 = \"boothelp.exe\" ascii fullword\n\t\t$s8 = \"SbieDll.dll\" wide fullword\n\t\t$s9 = \"dbghelp.dll\" wide fullword\n\t\t$s10 = \"YesNoMaybe\" ascii fullword\n\t\t$s11 = \"saveData\" ascii fullword\n\t\t$s12 = \"saveLogs\" ascii fullword\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and filesize < 500KB and ( pe.imphash ( ) == \"87775285899fa860b9963b11596a2ded\" or 1 of ( $x* ) or 3 of ( $a* ) or 6 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

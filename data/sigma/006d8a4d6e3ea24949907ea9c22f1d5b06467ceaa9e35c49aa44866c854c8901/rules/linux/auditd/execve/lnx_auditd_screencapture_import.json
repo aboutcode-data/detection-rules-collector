@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_screencapture_import.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-09-21",
+                "title": "Screen Capture with Import Tool",
+                "id": "dbe4b9c5-c254-4258-9688-d6af0b7967fd"
+            },
+            "rule_text": "title: Screen Capture with Import Tool\nid: dbe4b9c5-c254-4258-9688-d6af0b7967fd\nstatus: test\ndescription: 'Detects adversary creating screen capture of a desktop with Import Tool.\n\n  Highly recommended using rule on servers, due to high usage of screenshot utilities\n  on user workstations.\n\n  ImageMagick must be installed.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1113/T1113.md\n- https://linux.die.net/man/1/import\n- https://imagemagick.org/\nauthor: Pawel Mazur\ndate: 2021-09-21\nmodified: 2022-10-09\ntags:\n- attack.collection\n- attack.t1113\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  import:\n    type: EXECVE\n    a0: import\n  import_window_root:\n    a1: -window\n    a2: root\n    a3|endswith:\n    - .png\n    - .jpg\n    - .jpeg\n  import_no_window_root:\n    a1|endswith:\n    - .png\n    - .jpg\n    - .jpeg\n  condition: import and (import_window_root or import_no_window_root)\nfalsepositives:\n- Legitimate use of screenshot utility\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

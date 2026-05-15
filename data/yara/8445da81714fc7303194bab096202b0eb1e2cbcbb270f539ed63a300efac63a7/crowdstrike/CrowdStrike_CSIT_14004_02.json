@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/crowdstrike/CrowdStrike_CSIT_14004_02.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_CSIT_14004_02",
+                "tags": [
+                    "loader",
+                    "backdoor",
+                    "bouncer"
+                ],
+                "description": "Deep Panda Compiled ASP.NET <http://ASP.NET> Webshell",
+                "last_modified": "2014-04-25",
+                "version": "1.0",
+                "report": "CSIT-14004",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc",
+                "actor": "DEEP PANDA"
+            },
+            "rule_text": "rule CrowdStrike_CSIT_14004_02 : loader backdoor bouncer\n{\n\tmeta:\n\t\tdescription = \"Deep Panda Compiled ASP.NET <http://ASP.NET> Webshell\"\n\t\tlast_modified = \"2014-04-25\"\n\t\tversion = \"1.0\"\n\t\treport = \"CSIT-14004\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc\"\n\t\tactor = \"DEEP PANDA\"\n\n\tstrings:\n\t\t$cookie = \"zWiz\\x00\" wide\n\t\t$cp = \"es-DN\" wide\n\t\t$enum_fs1 = \"File system: {0}\" wide\n\t\t$enum_fs2 = \"Available: {0} bytes\" wide\n\t\t$enum_fs3 = \"Total space: {0} bytes\" wide\n\t\t$enum_fs4 = \"Total size: {0} bytes\" wide\n\n\tcondition:\n\t\t($cookie and $cp ) or all of ( $enum* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

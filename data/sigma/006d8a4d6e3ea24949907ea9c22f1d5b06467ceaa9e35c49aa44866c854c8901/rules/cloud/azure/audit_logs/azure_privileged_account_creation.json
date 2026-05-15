@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_privileged_account_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H', Tim Shelton",
+                "date": "2022-08-11",
+                "title": "Privileged Account Creation",
+                "id": "f7b5b004-dece-46e4-a4a5-f6fd0e1c6947"
+            },
+            "rule_text": "title: Privileged Account Creation\nid: f7b5b004-dece-46e4-a4a5-f6fd0e1c6947\nstatus: test\ndescription: Detects when a new admin is created.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-privileged-accounts#changes-to-privileged-accounts\nauthor: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H', Tim Shelton\ndate: 2022-08-11\nmodified: 2022-08-16\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078.004\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message|contains|all:\n    - Add user\n    - Add member to role\n    Status: Success\n  condition: selection\nfalsepositives:\n- A legitimate new admin account being created\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

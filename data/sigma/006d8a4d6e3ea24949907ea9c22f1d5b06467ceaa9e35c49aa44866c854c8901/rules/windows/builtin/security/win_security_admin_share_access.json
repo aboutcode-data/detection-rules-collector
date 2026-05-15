@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_admin_share_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-04",
+                "title": "Access To ADMIN$ Network Share",
+                "id": "098d7118-55bc-4912-a836-dc6483a8d150"
+            },
+            "rule_text": "title: Access To ADMIN$ Network Share\nid: 098d7118-55bc-4912-a836-dc6483a8d150\nstatus: test\ndescription: Detects access to ADMIN$ network share\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-5140\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-04\nmodified: 2024-01-16\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: The advanced audit policy setting \"Object Access > Audit\n    File Share\" must be configured for Success/Failure'\ndetection:\n  selection:\n    EventID: 5140\n    ShareName: Admin$\n  filter_main_computer_account:\n    SubjectUserName|endswith: $\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Legitimate administrative activity\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

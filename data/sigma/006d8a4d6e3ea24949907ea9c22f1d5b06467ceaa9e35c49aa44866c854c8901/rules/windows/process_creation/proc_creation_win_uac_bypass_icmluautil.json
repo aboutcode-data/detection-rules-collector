@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_icmluautil.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Elastic (idea)",
+                "date": "2022-09-13",
+                "title": "UAC Bypass via ICMLuaUtil",
+                "id": "49f2f17b-b4c8-4172-a68b-d5bf95d05130"
+            },
+            "rule_text": "title: UAC Bypass via ICMLuaUtil\nid: 49f2f17b-b4c8-4172-a68b-d5bf95d05130\nstatus: test\ndescription: Detects the pattern of UAC Bypass using ICMLuaUtil Elevated COM interface\nreferences:\n- https://www.elastic.co/guide/en/security/current/uac-bypass-via-icmluautil-elevated-com-interface.html\nauthor: Florian Roth (Nextron Systems), Elastic (idea)\ndate: 2022-09-13\nmodified: 2022-09-27\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\dllhost.exe\n    ParentCommandLine|contains:\n    - /Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}\n    - /Processid:{D2E7041B-2927-42FB-8E9F-7CE93B6DC937}\n  filter:\n  - Image|endswith: \\WerFault.exe\n  - OriginalFileName: WerFault.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

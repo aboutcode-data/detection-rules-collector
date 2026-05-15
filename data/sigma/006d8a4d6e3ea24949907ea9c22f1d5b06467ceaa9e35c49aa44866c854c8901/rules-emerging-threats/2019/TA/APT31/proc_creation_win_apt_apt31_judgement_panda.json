@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2019/TA/APT31/proc_creation_win_apt_apt31_judgement_panda.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-02-21",
+                "title": "APT31 Judgement Panda Activity",
+                "id": "03e2746e-2b31-42f1-ab7a-eb39365b2422"
+            },
+            "rule_text": "title: APT31 Judgement Panda Activity\nid: 03e2746e-2b31-42f1-ab7a-eb39365b2422\nstatus: test\ndescription: Detects APT31 Judgement Panda activity as described in the Crowdstrike\n  2019 Global Threat Report\nreferences:\n- https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-02-21\nmodified: 2023-03-10\ntags:\n- attack.collection\n- attack.lateral-movement\n- attack.credential-access\n- attack.g0128\n- attack.t1003.001\n- attack.t1560.001\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_ldifde:\n    CommandLine|contains|all:\n    - ldifde\n    - -f -n\n    - eprod.ldf\n  selection_lateral_movement:\n    CommandLine|contains|all:\n    - copy \\\\\\\\\n    - c$\n    CommandLine|contains:\n    - \\aaaa\\procdump64.exe\n    - \\aaaa\\netsess.exe\n    - \\aaaa\\7za.exe\n    - \\c$\\aaaa\\\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

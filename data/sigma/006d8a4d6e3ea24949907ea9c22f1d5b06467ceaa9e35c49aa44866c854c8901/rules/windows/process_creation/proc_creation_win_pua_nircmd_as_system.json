@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_nircmd_as_system.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-01-24",
+                "title": "PUA - NirCmd Execution As LOCAL SYSTEM",
+                "id": "d9047477-0359-48c9-b8c7-792cedcdc9c4"
+            },
+            "rule_text": "title: PUA - NirCmd Execution As LOCAL SYSTEM\nid: d9047477-0359-48c9-b8c7-792cedcdc9c4\nstatus: test\ndescription: Detects the use of NirCmd tool for command execution as SYSTEM user\nreferences:\n- https://www.nirsoft.net/utils/nircmd.html\n- https://www.winhelponline.com/blog/run-program-as-system-localsystem-account-windows/\n- https://www.nirsoft.net/utils/nircmd2.html#using\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-01-24\nmodified: 2023-02-13\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.s0029\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains: ' runassystem '\n  condition: selection\nfalsepositives:\n- Legitimate use by administrators\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_QakBot/win_qakbot_dropped_file_creation_sysmon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/17",
+                "title": "Malicious QakBot Dropped File Creation (Sysmon)",
+                "id": "8e401ffe-ca9b-4bb2-87aa-8e285811d43f"
+            },
+            "rule_text": "title: Malicious QakBot Dropped File Creation (Sysmon)\nid: 8e401ffe-ca9b-4bb2-87aa-8e285811d43f\nstatus: experimental\ndescription: Detects creation of files potentially associated with QakBot initial\n  infection, documented by Adithya Chandra and Sushant Kumar Arya of Trellix in August\n  2022.\nreferences:\n- https://www.trellix.com/en-us/about/newsroom/stories/research/demystifying-qbot-malware.html\nauthor: Micah Babinski\ndate: 2022/11/17\ntags:\n- attack.initial_access\n- attack.defense_evasion\n- attack.t1566\n- attack.t1027\n- attack.t1553\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - .html\n    - .zip\n    - .iso\n    - .lnk\n    TargetFilename|re: .*TXRTN_[0-9]{7}\\..*\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

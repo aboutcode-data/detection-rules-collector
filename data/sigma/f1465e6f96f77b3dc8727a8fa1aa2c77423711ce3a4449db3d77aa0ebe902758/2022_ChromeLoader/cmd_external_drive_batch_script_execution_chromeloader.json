@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_ChromeLoader/cmd_external_drive_batch_script_execution_chromeloader.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/07",
+                "title": "CMD Launching Batch Script Stored on External Drive (Chromeloader)",
+                "id": "79cd4f76-2df9-42e1-a957-34fb7ee5a3cc"
+            },
+            "rule_text": "title: CMD Launching Batch Script Stored on External Drive (Chromeloader)\nid: 79cd4f76-2df9-42e1-a957-34fb7ee5a3cc\nstatus: experimental\ndescription: Detects instances of CMD executing a batch stored on an externally-mounted\n  drives, in turn spawning a tar extraction process.\nreferences:\n- https://blogs.vmware.com/security/2022/09/the-evolution-of-the-chromeloader-malware.html\nauthor: Micah Babinski\ndate: 2022/11/07\ntags:\n- attack.defense_evasion\n- attack.t1553\n- attack.t1553.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\powershell.exe\n    - \\cmd.exe\n    ParentCommandLine|contains|windash: /c\n    ParentCommandLine|re: ^.*[D-Z]:\\\\.*\\.(bat|cmdline).*$\n  selection_child_proc:\n    Image|endswith: \\tar.exe\n  selection_extract_options:\n    CommandLine|contains:\n    - -xvf\n    - -xfv\n    - -vxf\n    - -vfx\n    - -fxv\n    - -fvx\n  selection_output_options:\n    CommandLine|contains: appdata\\\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Midie/Trojan_Win32_Midie_KAB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Midie_KAB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Midie.KAB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Midie_KAB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Midie.KAB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {3e 8d 0c b5 00 00 00 00 8b 0c 08 33 4d fc 3e 8d 14 b5 00 00 00 00 89 0c 10 83 c6 ?? 3b 75 0c 75 }\n\t\t$a_01_1 = {37 79 7a 2d 31 31 2e 64 6c 6c }\n\t\t$a_01_2 = {43 3a 5c 61 6f 77 5f 64 72 2e 63 6d 64 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 8 + ( #a_01_2 & 1 ) * 7 ) >= 35\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

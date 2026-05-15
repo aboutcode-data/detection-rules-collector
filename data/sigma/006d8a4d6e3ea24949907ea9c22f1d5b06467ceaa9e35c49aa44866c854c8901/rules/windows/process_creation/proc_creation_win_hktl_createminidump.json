@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_createminidump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-12-22",
+                "title": "HackTool - CreateMiniDump Execution",
+                "id": "36d88494-1d43-4dc0-b3fa-35c8fea0ca9d"
+            },
+            "rule_text": "title: HackTool - CreateMiniDump Execution\nid: 36d88494-1d43-4dc0-b3fa-35c8fea0ca9d\nstatus: test\ndescription: Detects the use of CreateMiniDump hack tool used to dump the LSASS process\n  memory for credential extraction on the attacker's machine\nreferences:\n- https://ired.team/offensive-security/credential-access-and-credential-dumping/dumping-lsass-passwords-without-mimikatz-minidumpwritedump-av-signature-bypass\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-12-22\nmodified: 2024-11-23\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\CreateMiniDump.exe\n  - Hashes|contains: IMPHASH=4a07f944a83e8a7c2525efa35dd30e2f\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

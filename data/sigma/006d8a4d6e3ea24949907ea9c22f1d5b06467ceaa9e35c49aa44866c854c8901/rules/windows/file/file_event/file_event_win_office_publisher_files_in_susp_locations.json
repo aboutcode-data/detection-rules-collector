@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_publisher_files_in_susp_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-08",
+                "title": "Publisher Attachment File Dropped In Suspicious Location",
+                "id": "3d2a2d59-929c-4b78-8c1a-145dfe9e07b1"
+            },
+            "rule_text": "title: Publisher Attachment File Dropped In Suspicious Location\nid: 3d2a2d59-929c-4b78-8c1a-145dfe9e07b1\nstatus: test\ndescription: Detects creation of files with the \".pub\" extension in suspicious or\n  uncommon locations. This could be a sign of attackers abusing Publisher documents\nreferences:\n- https://twitter.com/EmericNasi/status/1623224526220804098\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-08\ntags:\n- attack.stealth\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|contains:\n    - \\AppData\\Local\\Temp\\\n    - \\Users\\Public\\\n    - \\Windows\\Temp\\\n    - C:\\Temp\\\n    TargetFilename|endswith: .pub\n  condition: selection\nfalsepositives:\n- Legitimate usage of \".pub\" files from those locations\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

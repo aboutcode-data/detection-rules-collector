@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_public_folder_extension.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "The DFIR Report",
+                "date": "2025-01-23",
+                "title": "Suspicious Binaries and Scripts in Public Folder",
+                "id": "b447f7de-1e53-4cbf-bfb4-f1f6d0b04e4e"
+            },
+            "rule_text": "title: Suspicious Binaries and Scripts in Public Folder\nid: b447f7de-1e53-4cbf-bfb4-f1f6d0b04e4e\nstatus: experimental\ndescription: Detects the creation of a file with a suspicious extension in the public\n  folder, which could indicate potential malicious activity.\nreferences:\n- https://intel.thedfirreport.com/events/view/30032\n- https://intel.thedfirreport.com/eventReports/view/70\n- https://thedfirreport.com/2025/01/27/cobalt-strike-and-a-pair-of-socks-lead-to-lockbit-ransomware/\nauthor: The DFIR Report\ndate: 2025-01-23\ntags:\n- attack.execution\n- attack.t1204\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|contains: :\\Users\\Public\\\n    TargetFilename|endswith:\n    - .bat\n    - .dll\n    - .exe\n    - .hta\n    - .js\n    - .ps1\n    - .vbe\n    - .vbs\n  condition: selection\nfalsepositives:\n- Administrators deploying legitimate binaries to public folders.\nlevel: high\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_susp_public_folder_extension/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

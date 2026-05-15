@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/dns_query/dns_query_win_finger.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-19",
+                "title": "DNS Query by Finger Utility",
+                "id": "c082c2b0-525b-4dbc-9a26-a57dc4692074"
+            },
+            "rule_text": "title: DNS Query by Finger Utility\nid: c082c2b0-525b-4dbc-9a26-a57dc4692074\nrelated:\n- id: 2fdaf50b-9fd5-449f-ba69-f17248119af6\n  type: similar\n- id: af491bca-e752-4b44-9c86-df5680533dbc\n  type: similar\nstatus: experimental\ndescription: 'Detects DNS queries made by the finger utility, which can be abused\n  by threat actors to retrieve remote commands for execution on Windows devices.\n\n  In one ClickFix malware campaign, adversaries leveraged the finger protocol to fetch\n  commands from a remote server.\n\n  Since the finger utility is not commonly used in modern Windows environments, its\n  presence already raises suspicion.\n\n  Investigating such DNS queries can also help identify potential malicious infrastructure\n  used by threat actors for command and control (C2) communication.\n\n  '\nreferences:\n- https://www.bleepingcomputer.com/news/security/decades-old-finger-protocol-abused-in-clickfix-malware-attacks/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-19\ntags:\n- attack.command-and-control\n- attack.t1071.004\n- attack.execution\n- attack.t1059.003\nlogsource:\n  product: windows\n  category: dns_query\ndetection:\n  selection:\n    Image|endswith: \\finger.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

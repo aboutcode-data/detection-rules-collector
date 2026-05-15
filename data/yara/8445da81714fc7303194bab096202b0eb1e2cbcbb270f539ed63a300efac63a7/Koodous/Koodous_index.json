@@ -1,0 +1,53 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Koodous/Koodous_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "koler_domains",
+                "tags": [],
+                "description": "Old Koler.A domains examples",
+                "sample": "2e1ca3a9f46748e0e4aebdea1afe84f1015e3e7ce667a91e4cfabd0db8557cbf"
+            },
+            "rule_text": "import \"cuckoo\"\n\nrule koler_domains\n{\n\tmeta:\n\t\tdescription = \"Old Koler.A domains examples\"\n\t\tsample = \"2e1ca3a9f46748e0e4aebdea1afe84f1015e3e7ce667a91e4cfabd0db8557cbf\"\n\n\tcondition:\n\t\tcuckoo.network.dns_lookup( /police-scan-mobile.com/ ) or cuckoo.network.dns_lookup ( /police-secure-mobile.com/ ) or cuckoo.network.dns_lookup ( /mobile-policeblock.com/ ) or cuckoo.network.dns_lookup ( /police-strong-mobile.com/ ) or cuckoo.network.dns_lookup ( /video-porno-gratuit.eu/ ) or cuckoo.network.dns_lookup ( /video-sartex.us/ ) or cuckoo.network.dns_lookup ( /policemobile.biz/ )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "koler_builds",
+                "tags": [],
+                "description": "Koler.A builds"
+            },
+            "rule_text": "rule koler_builds\n{\n\tmeta:\n\t\tdescription = \"Koler.A builds\"\n\n\tstrings:\n\t\t$0 = \"buildid\"\n\t\t$a = \"DCEF055EEE3F76CABB27B3BD7233F6E3\"\n\t\t$b = \"C143D55D996634D1B761709372042474\"\n\n\tcondition:\n\t\t$0 and ( $a or $b )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "koler_class",
+                "tags": [],
+                "description": "Koler.A class"
+            },
+            "rule_text": "rule koler_class\n{\n\tmeta:\n\t\tdescription = \"Koler.A class\"\n\n\tstrings:\n\t\t$0 = \"FIND_VALID_DOMAIN\"\n\t\t$a = \"6589y459\"\n\n\tcondition:\n\t\t$0 and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "koler_D",
+                "tags": [],
+                "description": "Koler.D class"
+            },
+            "rule_text": "rule koler_D\n{\n\tmeta:\n\t\tdescription = \"Koler.D class\"\n\n\tstrings:\n\t\t$0 = \"ZActivity\"\n\t\t$a = \"Lcom/android/zics/ZRuntimeInterface\"\n\n\tcondition:\n\t\t($0 and $a )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dropper",
+                "tags": [
+                    "realshell"
+                ],
+                "source": "https://blog.malwarebytes.org/mobile-2/2015/06/complex-method-of-obfuscation-found-in-dropper-realshell/"
+            },
+            "rule_text": "rule dropper : realshell\n{\n\tmeta:\n\t\tsource = \"https://blog.malwarebytes.org/mobile-2/2015/06/complex-method-of-obfuscation-found-in-dropper-realshell/\"\n\n\tstrings:\n\t\t$a = \"hexKey:\"\n\t\t$b = \"Decrypt.malloc.memset.free.pluginSMS_encrypt.Java_com_skymobi_pay_common_util_LocalDataDecrpty_Encrypt.strcpy\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wuauclt_dll_loading.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), Florian Roth (Nextron Systems), Sreeman, FPT.EagleEye Team",
+                "date": "2020-10-12",
+                "title": "Proxy Execution Via Wuauclt.EXE",
+                "id": "af77cf95-c469-471c-b6a0-946c685c4798"
+            },
+            "rule_text": "title: Proxy Execution Via Wuauclt.EXE\nid: af77cf95-c469-471c-b6a0-946c685c4798\nrelated:\n- id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0\n  type: obsolete\n- id: d7825193-b70a-48a4-b992-8b5b3015cc11\n  type: obsolete\nstatus: test\ndescription: Detects the use of the Windows Update Client binary (wuauclt.exe) for\n  proxy execution.\nreferences:\n- https://dtm.uk/wuauclt/\n- https://blog.malwarebytes.com/threat-intelligence/2022/01/north-koreas-lazarus-apt-leverages-windows-update-client-github-in-latest-campaign/\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), Florian Roth\n  (Nextron Systems), Sreeman, FPT.EagleEye Team\ndate: 2020-10-12\nmodified: 2023-11-11\ntags:\n- attack.stealth\n- attack.t1218\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wuauclt.exe\n  - OriginalFileName: wuauclt.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - UpdateDeploymentProvider\n    - RunHandlerComServer\n  filter_main_generic:\n    CommandLine|contains: ' /UpdateDeploymentProvider UpdateDeploymentProvider.dll '\n  filter_main_wuaueng:\n    CommandLine|contains: ' wuaueng.dll '\n  filter_main_uus:\n    CommandLine|contains:\n    - :\\Windows\\UUS\\Packages\\Preview\\amd64\\updatedeploy.dll /ClassId\n    - :\\Windows\\UUS\\amd64\\UpdateDeploy.dll /ClassId\n  filter_main_winsxs:\n    CommandLine|contains|all:\n    - :\\Windows\\WinSxS\\\n    - '\\UpdateDeploy.dll /ClassId '\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

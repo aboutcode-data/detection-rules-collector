@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/alienvault/APT1_RARSilent_EXE_PDF.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT1_RARSilent_EXE_PDF",
+                "tags": [],
+                "author": "AlienVault Labs",
+                "info": "CommentCrew-threat-apt1"
+            },
+            "rule_text": "private rule APT1_RARSilent_EXE_PDF\n{\n\tmeta:\n\t\tauthor = \"AlienVault Labs\"\n\t\tinfo = \"CommentCrew-threat-apt1\"\n\n\tstrings:\n\t\t$winrar1 = \"WINRAR.SFX\" wide ascii\n\t\t$winrar2 = \";The comment below contains SFX script commands\" wide ascii\n\t\t$winrar3 = \"Silent=1\" wide ascii\n\t\t$str1 = /Setup=[\\s\\w\\\"]+\\.(exe|pdf|doc)/\n\t\t$str2 = \"Steup=\\\"\" wide ascii\n\n\tcondition:\n\t\tall of ( $winrar* ) and 1 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

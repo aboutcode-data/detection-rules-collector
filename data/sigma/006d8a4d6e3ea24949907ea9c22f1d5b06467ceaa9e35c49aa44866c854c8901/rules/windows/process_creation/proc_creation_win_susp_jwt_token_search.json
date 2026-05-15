@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_jwt_token_search.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), kagebunsher",
+                "date": "2022-10-25",
+                "title": "Potentially Suspicious JWT Token Search Via CLI",
+                "id": "6d3a3952-6530-44a3-8554-cf17c116c615"
+            },
+            "rule_text": "title: Potentially Suspicious JWT Token Search Via CLI\nid: 6d3a3952-6530-44a3-8554-cf17c116c615\nstatus: test\ndescription: 'Detects potentially suspicious search for JWT tokens via CLI by looking\n  for the string \"eyJ0eX\" or \"eyJhbG\".\n\n  JWT tokens are often used for access-tokens across various applications and services\n  like Microsoft 365, Azure, AWS, Google Cloud, and others.\n\n  Threat actors may search for these tokens to steal them for lateral movement or\n  privilege escalation.\n\n  '\nreferences:\n- https://mrd0x.com/stealing-tokens-from-office-applications/\n- https://www.scip.ch/en/?labs.20240523\nauthor: Nasreddine Bencherchali (Nextron Systems), kagebunsher\ndate: 2022-10-25\nmodified: 2025-10-21\ntags:\n- attack.credential-access\n- attack.t1528\n- attack.t1552.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_tools:\n    CommandLine|contains:\n    - 'find '\n    - find.exe\n    - findstr\n    - 'select-string '\n    - strings\n  selection_jwt_string:\n    CommandLine|contains:\n    - eyJ0eXAiOi\n    - eyJhbGciOi\n    - ' eyJ0eX'\n    - ' \"eyJ0eX\"'\n    - ' ''eyJ0eX'''\n    - ' eyJhbG'\n    - ' \"eyJhbG\"'\n    - ' ''eyJhbG'''\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

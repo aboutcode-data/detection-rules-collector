@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Regin/Backdoor_Win32_Regin_F_dha.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Regin_F_dha",
+                "tags": [],
+                "description": "Backdoor:Win32/Regin.F!dha,SIGNATURE_TYPE_PEHSTR_EXT,64 00 64 00 05 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Regin_F_dha\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Regin.F!dha,SIGNATURE_TYPE_PEHSTR_EXT,64 00 64 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {02 00 01 00 b9 b2 00 00 00 33 c0 }\n\t\t$a_01_1 = {80 3c 1e 2e 74 18 8b fb 83 c9 ff 33 c0 46 f2 ae }\n\t\t$a_03_2 = {6a 21 50 e8 ?? ?? ?? ?? 83 c4 08 [0-20] 6a 21 56 e8 }\n\t\t$a_01_3 = {7b 36 36 66 62 65 38 37 61 2d 34 33 37 32 2d 31 66 35 31 2d 31 30 31 64 2d 31 61 61 66 30 30 34 33 31 32 37 61 7d }\n\t\t$a_01_4 = {7b 34 34 66 64 67 32 33 61 2d 31 35 32 32 2d 36 66 39 65 2d 64 30 35 64 2d 31 61 61 66 30 31 37 36 31 33 38 61 7d }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 100\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

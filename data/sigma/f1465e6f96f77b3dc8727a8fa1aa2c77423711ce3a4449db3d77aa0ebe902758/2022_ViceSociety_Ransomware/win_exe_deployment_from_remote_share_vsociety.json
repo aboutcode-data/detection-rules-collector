@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_ViceSociety_Ransomware/win_exe_deployment_from_remote_share_vsociety.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/26",
+                "title": "Executable Deployment from Remote Share",
+                "id": "85f915d8-7cbc-4bd5-b1cc-03c7f3188c19"
+            },
+            "rule_text": "title: Executable Deployment from Remote Share\nid: 85f915d8-7cbc-4bd5-b1cc-03c7f3188c19\nstatus: experimental\ndescription: Detects use of the copy utility to deploy executable files from a remote\n  share to a temp directory, such as the procedure performed by Vice Ransomware gang.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/10/25/dev-0832-vice-society-opportunistic-ransomware-campaigns-impacting-us-education-sector/\nauthor: Micah Babinski\ndate: 2022/11/26\ntags:\n- attack.lateral_movement\n- attack.command_and_control\n- attack.t1105\n- attack.t1021\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    CommandLine|contains|windash: /c\n    CommandLine|contains|all:\n    - copy\n    - exe\n    - c$\n    - \\\\\\\\\n    CommandLine|contains:\n    - temp\n    - tmp\n    CommandLine|re: .*(?:[0-9]{1,3}\\.){3}[0-9]{1,3}.*\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

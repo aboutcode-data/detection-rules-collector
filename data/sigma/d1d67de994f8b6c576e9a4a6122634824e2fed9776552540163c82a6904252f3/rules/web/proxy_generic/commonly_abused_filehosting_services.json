@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/commonly_abused_filehosting_services.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2023-11-22",
+                "title": "Commonly Abused File Hosting Services",
+                "id": "15e4317b-76db-4a6e-b0f0-c122ccdba3c5"
+            },
+            "rule_text": "title: Commonly Abused File Hosting Services\nid: 15e4317b-76db-4a6e-b0f0-c122ccdba3c5\ndescription: Commonly abused file hosting services utilized to host malicious payloads\nstatus: stable\nauthor: NTT Security - Axel Olsson\nreferences:\n- https://www.securonix.com/blog/threat-labs-security-advisory-new-starkvortex-attack-campaign-threat-actors-use-drone-manual-lures-to-deliver-merlinagent-payloads/\n- https://www.rnbo.gov.ua/files/2023_YEAR/CYBERCENTER/november/APT29%20attacks%20Embassies%20using%20CVE-2023-38831%20-%20report%20en.pdf\ndate: '2023-11-22'\nmodified: '2023-12-04'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n  - url|startswith:\n    - https://files.catbox.moe/\n  - cs-host|endswith:\n    - .ngrok-free.app\n    - .ngrok-free.dev\n    - .ngrok.io\n  filter:\n  - url|endswith:\n    - .webp\n  - cs-host:\n    - c16d-35-240-187-111.ngrok.io\n  condition: selection and not filter\nfalsepositives:\n- Legitimate downloads\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": [
+                "CVE-2023-38831"
+            ]
+        }
+    ]
+}

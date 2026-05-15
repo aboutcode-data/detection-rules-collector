@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/path/lnx_auditd_magic_system_request_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Milad Cheraghi",
+                "date": "2025-05-23",
+                "title": "Potential Abuse of Linux Magic System Request Key",
+                "id": "ea61bb82-a5e0-42e6-8537-91d29500f1b9"
+            },
+            "rule_text": "title: Potential Abuse of Linux Magic System Request Key\nid: ea61bb82-a5e0-42e6-8537-91d29500f1b9\nstatus: experimental\ndescription: \"Detects the potential abuse of the Linux Magic SysRq (System Request)\\\n  \\ key by adversaries with root or sufficient privileges\\nto silently manipulate\\\n  \\ or destabilize a system. By writing to /proc/sysrq-trigger, they can crash the\\\n  \\ system, kill processes,\\nor disrupt forensic analysis\\u2014all while bypassing\\\n  \\ standard logging. Though intended for recovery and debugging, SysRq can be\\nmisused\\\n  \\ as a stealthy post-exploitation tool. It is controlled via /proc/sys/kernel/sysrq\\\n  \\ or permanently through /etc/sysctl.conf.\\n\"\nreferences:\n- https://www.kernel.org/doc/html/v4.10/_sources/admin-guide/sysrq.txt\n- https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/4/html/reference_guide/s3-proc-sys-kernel\n- https://www.splunk.com/en_us/blog/security/threat-update-awfulshred-script-wiper.html\nauthor: Milad Cheraghi\ndate: 2025-05-23\ntags:\n- attack.execution\n- attack.t1059.004\n- attack.impact\n- attack.t1529\n- attack.t1489\n- attack.t1499\nlogsource:\n  product: linux\n  service: auditd\n  definition: 'Required auditd configuration:\n\n    -w /proc/sysrq-trigger -p wa -k sysrq\n\n    -w /proc/sys/kernel/sysrq -p wa -k sysrq\n\n    '\ndetection:\n  selection:\n    type: PATH\n    name|endswith:\n    - /sysrq\n    - /sysctl.conf\n    - /sysrq-trigger\n  condition: selection\nfalsepositives:\n- Legitimate administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

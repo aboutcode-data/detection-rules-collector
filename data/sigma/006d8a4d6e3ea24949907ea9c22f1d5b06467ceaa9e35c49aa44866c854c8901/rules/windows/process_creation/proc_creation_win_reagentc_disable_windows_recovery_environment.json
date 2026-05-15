@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reagentc_disable_windows_recovery_environment.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Daniel Koifman (KoifSec), Michael Vilshin",
+                "date": "2025-07-31",
+                "title": "Windows Recovery Environment Disabled Via Reagentc",
+                "id": "db1c21e4-cd66-4b4e-85ca-590f0780529c"
+            },
+            "rule_text": "title: Windows Recovery Environment Disabled Via Reagentc\nid: db1c21e4-cd66-4b4e-85ca-590f0780529c\nstatus: experimental\ndescription: 'Detects attempts to disable windows recovery environment using Reagentc.\n\n  ReAgentc.exe is a command-line tool in Windows used to manage the Windows Recovery\n  Environment (WinRE).\n\n  It allows users to enable, disable, and configure WinRE, which is used for troubleshooting\n  and repairing common boot issues.\n\n  '\nreferences:\n- https://www.elastic.co/security-labs/maas-appeal-an-infostealer-rises-from-the-ashes\n- https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/reagentc-command-line-options?view=windows-11\nauthor: Daniel Koifman (KoifSec), Michael Vilshin\ndate: 2025-07-31\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\reagentc.exe\n  - OriginalFileName: reagentc.exe\n  selection_cli:\n    CommandLine|contains|windash: /disable\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

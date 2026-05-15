@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/expl_spring4shell.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WEBSHELL_JSP_Nov21_1",
+                "tags": [],
+                "description": "Detects JSP webshells",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.ic3.gov/Media/News/2021/211117-2.pdf",
+                "date": "2021-11-23",
+                "score": 70,
+                "id": "117eed28-c44e-5983-b4c7-b555fc06d923"
+            },
+            "rule_text": "rule WEBSHELL_JSP_Nov21_1\n{\n\tmeta:\n\t\tdescription = \"Detects JSP webshells\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.ic3.gov/Media/News/2021/211117-2.pdf\"\n\t\tdate = \"2021-11-23\"\n\t\tscore = 70\n\t\tid = \"117eed28-c44e-5983-b4c7-b555fc06d923\"\n\n\tstrings:\n\t\t$x1 = \"request.getParameter(\\\"pwd\\\")\" ascii\n\t\t$x2 = \"excuteCmd(request.getParameter(\" ascii\n\t\t$x3 = \"getRuntime().exec (request.getParameter(\" ascii\n\t\t$x4 = \"private static final String PW = \\\"whoami\\\"\" ascii\n\n\tcondition:\n\t\tfilesize < 400KB and 1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_POC_SpringCore_0day_Indicators_Mar22_1",
+                "tags": [],
+                "description": "Detects indicators found after SpringCore exploitation attempts and in the POC script",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/vxunderground/status/1509170582469943303",
+                "date": "2022-03-30",
+                "score": 70,
+                "id": "297e4b57-f831-56e0-a391-1ffbc9a4d438"
+            },
+            "rule_text": "rule EXPL_POC_SpringCore_0day_Indicators_Mar22_1\n{\n\tmeta:\n\t\tdescription = \"Detects indicators found after SpringCore exploitation attempts and in the POC script\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/vxunderground/status/1509170582469943303\"\n\t\tdate = \"2022-03-30\"\n\t\tscore = 70\n\t\tid = \"297e4b57-f831-56e0-a391-1ffbc9a4d438\"\n\n\tstrings:\n\t\t$x1 = \"java.io.InputStream%20in%20%3D%20%25%7Bc1%7Di\"\n\t\t$x2 = \"?pwd=j&cmd=whoami\"\n\t\t$x3 = \".getParameter(%22pwd%22)\"\n\t\t$x4 = \"class.module.classLoader.resources.context.parent.pipeline.first.pattern=%25%7B\"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_POC_SpringCore_0day_Webshell_Mar22_1",
+                "tags": [],
+                "description": "Detects webshell found after SpringCore exploitation attempts POC script",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/vxunderground/status/1509170582469943303",
+                "date": "2022-03-30",
+                "score": 70,
+                "id": "e7047c98-3c60-5211-9ad5-2bfdfb35d493"
+            },
+            "rule_text": "rule EXPL_POC_SpringCore_0day_Webshell_Mar22_1\n{\n\tmeta:\n\t\tdescription = \"Detects webshell found after SpringCore exploitation attempts POC script\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/vxunderground/status/1509170582469943303\"\n\t\tdate = \"2022-03-30\"\n\t\tscore = 70\n\t\tid = \"e7047c98-3c60-5211-9ad5-2bfdfb35d493\"\n\n\tstrings:\n\t\t$x1 = \".getInputStream(); int a = -1; byte[] b = new byte[2048];\"\n\t\t$x2 = \"if(\\\"j\\\".equals(request.getParameter(\\\"pwd\\\")\"\n\t\t$x3 = \".getRuntime().exec(request.getParameter(\\\"cmd\\\")).getInputStream();\"\n\n\tcondition:\n\t\tfilesize < 200KB and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

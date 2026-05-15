@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_uac_disable_secure_desktop_prompt.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2024-05-10",
+                "title": "UAC Secure Desktop Prompt Disabled",
+                "id": "0d7ceeef-3539-4392-8953-3dc664912714"
+            },
+            "rule_text": "title: UAC Secure Desktop Prompt Disabled\nid: 0d7ceeef-3539-4392-8953-3dc664912714\nrelated:\n- id: c5f6a85d-b647-40f7-bbad-c10b66bab038\n  type: similar\n- id: 48437c39-9e5f-47fb-af95-3d663c3f2919\n  type: similar\nstatus: test\ndescription: 'Detects when an attacker tries to change User Account Control (UAC)\n  elevation request destination via the \"PromptOnSecureDesktop\" value.\n\n  The \"PromptOnSecureDesktop\" setting specifically determines whether UAC prompts\n  are displayed on the secure desktop. The secure desktop is a separate desktop environment\n  that''s isolated from other processes running on the system. It''s designed to prevent\n  malicious software from intercepting or tampering with UAC prompts.\n\n  When \"PromptOnSecureDesktop\" is set to 0, UAC prompts are displayed on the user''s\n  current desktop instead of the secure desktop. This reduces the level of security\n  because it potentially exposes the prompts to manipulation by malicious software.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/7e11e9b79583545f208a6dc3fa062f2ed443d999/atomics/T1548.002/T1548.002.md\nauthor: frack113\ndate: 2024-05-10\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\PromptOnSecureDesktop\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Cerbu/Trojan_BAT_Cerbu_ARR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Cerbu_ARR_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Cerbu.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Cerbu_ARR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Cerbu.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {57 72 69 74 65 2d 48 6f 73 74 20 22 73 65 6e 64 20 74 6f 20 31 38 6f 38 65 4b 72 38 53 6e 33 45 42 70 47 6a 4e 6d 58 56 34 58 64 70 45 4d 35 48 63 31 46 7a 74 65 22 }\n\t\t$a_01_1 = {24 67 69 66 70 61 74 68 20 3d 20 24 70 77 64 2e 50 61 74 68 2b 27 5c 73 76 63 68 6f 73 74 2e 65 78 65 27 }\n\t\t$a_81_2 = {74 65 73 74 31 2e 65 78 65 }\n\t\t$a_03_3 = {11 14 02 11 15 9a 6f ?? ?? ?? ?? 13 16 11 16 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 10 + ( #a_81_2 & 1 ) * 19 + ( #a_03_3 & 1 ) * 1 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

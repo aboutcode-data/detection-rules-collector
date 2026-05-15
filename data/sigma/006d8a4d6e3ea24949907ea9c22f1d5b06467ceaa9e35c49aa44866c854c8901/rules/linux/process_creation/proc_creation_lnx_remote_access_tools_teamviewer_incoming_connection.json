@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_remote_access_tools_teamviewer_incoming_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Josh Nickels, Qi Nan",
+                "date": "2024-03-11",
+                "title": "Remote Access Tool - Team Viewer Session Started On Linux Host",
+                "id": "1f6b8cd4-3e60-47cc-b282-5aa1cbc9182d"
+            },
+            "rule_text": "title: Remote Access Tool - Team Viewer Session Started On Linux Host\nid: 1f6b8cd4-3e60-47cc-b282-5aa1cbc9182d\nrelated:\n- id: ab70c354-d9ac-4e11-bbb6-ec8e3b153357\n  type: similar\n- id: f459ccb4-9805-41ea-b5b2-55e279e2424a\n  type: similar\nstatus: test\ndescription: 'Detects the command line executed when TeamViewer starts a session started\n  by a remote host.\n\n  Once a connection has been started, an investigator can verify the connection details\n  by viewing the \"incoming_connections.txt\" log file in the TeamViewer folder.\n\n  '\nreferences:\n- Internal Research\nauthor: Josh Nickels, Qi Nan\ndate: 2024-03-11\ntags:\n- attack.persistence\n- attack.initial-access\n- attack.t1133\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    ParentImage|endswith: /TeamViewer_Service\n    Image|endswith: /TeamViewer_Desktop\n    CommandLine|endswith: /TeamViewer_Desktop --IPCport 5939 --Module 1\n  condition: selection\nfalsepositives:\n- Legitimate usage of TeamViewer\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

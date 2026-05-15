@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/KillAv/Trojan_Win32_Killav_DO.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Killav_DO",
+                "tags": [],
+                "description": "Trojan:Win32/Killav.DO,SIGNATURE_TYPE_PEHSTR_EXT,05 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Killav_DO\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Killav.DO,SIGNATURE_TYPE_PEHSTR_EXT,05 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {c6 45 f9 61 c6 45 fa 62 c6 45 fb 6c c6 45 fc 65 c6 45 fd 64 }\n\t\t$a_03_1 = {76 10 80 04 3e fd 57 46 e8 ?? ?? ?? 00 3b f0 59 72 f0 }\n\t\t$a_09_2 = {57 72 69 74 65 50 72 6f 63 65 73 73 4d 65 6d 6f 72 79 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 3 + ( #a_09_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

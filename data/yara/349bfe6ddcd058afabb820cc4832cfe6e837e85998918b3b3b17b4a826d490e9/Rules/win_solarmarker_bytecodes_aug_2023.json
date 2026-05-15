@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/embee-research/Yara-detection-rules/blob/master/Rules/win_solarmarker_bytecodes_aug_2023.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_solarmarker_bytecodes",
+                "tags": [],
+                "author": "Matthew @ Embee_Research",
+                "created": "2023/09/10",
+                "description": "Detects bytecodes present in solarmarker Packer",
+                "sha_256": "a433dad1e31f2e19ab5d22b6348c73fa4c874502acc20d5517d785b554754279"
+            },
+            "rule_text": "import \"dotnet\"\n\nrule win_solarmarker_bytecodes\n{\n\tmeta:\n\t\tauthor = \"Matthew @ Embee_Research\"\n\t\tcreated = \"2023/09/10\"\n\t\tdescription = \"Detects bytecodes present in solarmarker Packer\"\n\t\tsha_256 = \"a433dad1e31f2e19ab5d22b6348c73fa4c874502acc20d5517d785b554754279\"\n\n\tstrings:\n\t\t$s1 = {8C ?? ?? ?? ?? 28 ?? ?? ?? ?? 0A 20 ?? ?? ?? ?? 13 ?? 06 11 ?? 20 ?? ?? ?? ?? 58 D1 8C ?? ?? ?? ?? 28 ?? ?? ?? ?? 0A 20 ?? ?? ?? ?? 13 ?? 06 11 ?? 20 ?? ?? ?? ?? 58 D1 8C ?? ?? ?? ?? 28 ?? ?? ?? ??}\n\n\tcondition:\n\t\tdotnet.is_dotnet and filesize < 7000KB and $s1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

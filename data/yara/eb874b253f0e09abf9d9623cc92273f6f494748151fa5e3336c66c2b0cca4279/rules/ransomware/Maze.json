@@ -1,0 +1,28 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/ransomware/Maze.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Maze",
+                "tags": [],
+                "id": "4sTbmIEE40nSKc9rOEz4po",
+                "fingerprint": "305df5e5f0a4d5660dff22073881e65ff25528895abf26308ecd06dd70a97ec2",
+                "version": "1.0",
+                "creation_date": "2019-11-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Maze ransomware in memory or unpacked.",
+                "category": "MALWARE",
+                "malware": "MAZE",
+                "malware_type": "RANSOMWARE",
+                "mitre_att": "S0449"
+            },
+            "rule_text": "rule Maze\n{\n\tmeta:\n\t\tid = \"4sTbmIEE40nSKc9rOEz4po\"\n\t\tfingerprint = \"305df5e5f0a4d5660dff22073881e65ff25528895abf26308ecd06dd70a97ec2\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2019-11-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Maze ransomware in memory or unpacked.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"MAZE\"\n\t\tmalware_type = \"RANSOMWARE\"\n\t\tmitre_att = \"S0449\"\n\n\tstrings:\n\t\t$ = \"Enc: %s\" ascii wide\n\t\t$ = \"Encrypting whole system\" ascii wide\n\t\t$ = \"Encrypting specified folder in --path parameter...\" ascii wide\n\t\t$ = \"!Finished in %d ms!\" ascii wide\n\t\t$ = \"--logging\" ascii wide\n\t\t$ = \"--nomutex\" ascii wide\n\t\t$ = \"--noshares\" ascii wide\n\t\t$ = \"--path\" ascii wide\n\t\t$ = \"Logging enabled | Maze\" ascii wide\n\t\t$ = \"NO SHARES | \" ascii wide\n\t\t$ = \"NO MUTEX | \" ascii wide\n\t\t$ = \"Encrypting:\" ascii wide\n\t\t$ = \"You need to buy decryptor in order to restore the files.\" ascii wide\n\t\t$ = \"Dear %s, your files have been encrypted by RSA-2048 and ChaCha algorithms\" ascii wide\n\t\t$ = \"%s! Alert! %s! Alert! Dear %s Your files have been encrypted by %s! Attention! %s\" ascii wide\n\t\t$ = \"DECRYPT-FILES.txt\" ascii wide fullword\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

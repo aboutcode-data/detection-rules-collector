@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_qbot_rundll32_non_standard_file_proxy_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "QBot rundll32.exe Non-standard File Proxy Execution (RedCanary Threat Detection Report)",
+                "id": "bb1cfac0-eca2-4803-9acd-aa75f5b84ff4"
+            },
+            "rule_text": "title: QBot rundll32.exe Non-standard File Proxy Execution (RedCanary Threat Detection\n  Report)\nid: bb1cfac0-eca2-4803-9acd-aa75f5b84ff4\nstatus: experimental\ndescription: Detects Rundll32.exe process creations with non-standard file types denoted\n  by excluding the common file types from the command-=line selection. Part of the\n  RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/qbot/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.s0650\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n  filter:\n    CommandLine|contains:\n    - .dll\n    - .cpl\n    - .ax\n    - .ocx\n    - '.inf'\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

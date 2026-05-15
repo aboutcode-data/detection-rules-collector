@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_download_susp_file_sharing_domains.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-05",
+                "title": "Suspicious File Download From File Sharing Domain Via Curl.EXE",
+                "id": "56454143-524f-49fb-b1c6-3fb8b1ad41fb"
+            },
+            "rule_text": "title: Suspicious File Download From File Sharing Domain Via Curl.EXE\nid: 56454143-524f-49fb-b1c6-3fb8b1ad41fb\nstatus: test\ndescription: Detects potentially suspicious file download from file sharing domains\n  using curl.exe\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\n- https://github.com/WithSecureLabs/iocs/blob/344203de742bb7e68bd56618f66d34be95a9f9fc/FIN7VEEAM/iocs.csv\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-05\nmodified: 2025-12-10\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_websites:\n    CommandLine|contains:\n    - .githubusercontent.com\n    - anonfiles.com\n    - cdn.discordapp.com\n    - ddns.net\n    - dl.dropboxusercontent.com\n    - ghostbin.co\n    - github.com\n    - glitch.me\n    - gofile.io\n    - hastebin.com\n    - mediafire.com\n    - mega.nz\n    - onrender.com\n    - pages.dev\n    - paste.ee\n    - pastebin.com\n    - pastebin.pl\n    - pastetext.net\n    - pixeldrain.com\n    - privatlab.com\n    - privatlab.net\n    - send.exploit.in\n    - sendspace.com\n    - storage.googleapis.com\n    - storjshare.io\n    - supabase.co\n    - temp.sh\n    - transfer.sh\n    - trycloudflare.com\n    - ufile.io\n    - w3spaces.com\n    - workers.dev\n  selection_http:\n    CommandLine|contains: http\n  selection_flag:\n    CommandLine|contains:\n    - ' -O'\n    - --remote-name\n    - --output\n  selection_ext:\n    CommandLine|endswith:\n    - .ps1\n    - .ps1'\n    - .ps1\"\n    - .dat\n    - .dat'\n    - .dat\"\n    - .msi\n    - .msi'\n    - .msi\"\n    - .bat\n    - .bat'\n    - .bat\"\n    - .exe\n    - .exe'\n    - .exe\"\n    - .vbs\n    - .vbs'\n    - .vbs\"\n    - .vbe\n    - .vbe'\n    - .vbe\"\n    - .hta\n    - .hta'\n    - .hta\"\n    - .dll\n    - .dll'\n    - .dll\"\n    - .psm1\n    - .psm1'\n    - .psm1\"\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_download_susp_file_sharing_domains/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

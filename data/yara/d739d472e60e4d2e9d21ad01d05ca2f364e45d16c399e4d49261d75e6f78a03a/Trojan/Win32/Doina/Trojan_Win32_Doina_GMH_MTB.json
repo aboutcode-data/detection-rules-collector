@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Doina/Trojan_Win32_Doina_GMH_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Doina_GMH_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Doina.GMH!MTB,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Doina_GMH_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Doina.GMH!MTB,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {00 d3 80 cb 65 0f bd df 80 75 0c 20 66 0f b6 d9 }\n\t\t$a_03_1 = {88 04 24 89 44 24 ?? c7 44 24 ?? 88 af 81 4a c7 44 24 ?? 38 79 fe cc 88 74 24 ?? c6 04 24 45 ff 74 24 }\n\t\t$a_01_2 = {2e 76 6d 70 30 }\n\t\t$a_01_3 = {2e 76 6d 70 31 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 22\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mikesxrs/OSX_XSL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "XSLCMD",
+                "tags": [],
+                "Author": "mikesxrs",
+                "Description": "Looking for unique code",
+                "Reference": "https://totalhash.cymru.com/analysis/?46bb20aefd09ea0bad534d3aa9b567d89b5ae8c4",
+                "Reference2": "https://www.fireeye.com/blog/threat-research/2014/09/forced-to-adapt-xslcmd-backdoor-now-on-os-x.html",
+                "md5": "60242ad3e1b6c4d417d4dfeb8fb464a1"
+            },
+            "rule_text": "rule XSLCMD\n{\n\tmeta:\n\t\tAuthor = \"mikesxrs\"\n\t\tDescription = \"Looking for unique code\"\n\t\tReference = \"https://totalhash.cymru.com/analysis/?46bb20aefd09ea0bad534d3aa9b567d89b5ae8c4\"\n\t\tReference2 = \"https://www.fireeye.com/blog/threat-research/2014/09/forced-to-adapt-xslcmd-backdoor-now-on-os-x.html\"\n\t\tmd5 = \"60242ad3e1b6c4d417d4dfeb8fb464a1\"\n\n\tstrings:\n\t\t$STR1 = \"<!-- begin\"\n\t\t$STR2 = \"end -->\"\n\t\t$STR3 = \"12TUNNEL_ERROR\"\n\t\t$STR4 = \"Mozilla/5.0 (Macintosh; U; Mac OS X) Safari/532.5 X_MAC(\"\n\t\t$CMD1 = \"[End Time]\"\n\t\t$CMD2 = \"[FakeDomain]\"\n\t\t$CMD3 = \"[ListenMode]\"\n\t\t$CMD4 = \"[MServer]\"\n\t\t$CMD5 = \"[MWeb]\"\n\t\t$CMD6 = \"[MWebTrans]\"\n\t\t$CMD7 = \"[Proxy]\"\n\t\t$CMD8 = \"[SPACE]\"\n\t\t$CMD9 = \"[Start Time]\"\n\t\t$CMD10 = \"[Interval]\"\n\t\t$CMD11 = \"[Update]\"\n\t\t$CMD12 = \"[UpdateWeb]\"\n\n\tcondition:\n\t\t( uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xcefaedfe or uint32( 0 ) == 0xfeedfacf or uint32( 0 ) == 0xcffaedfe or uint32( 0 ) == 0xcafebabe or uint32( 0 ) == 0xbebafeca ) and all of ( $STR* ) and 5 of ( $CMD* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

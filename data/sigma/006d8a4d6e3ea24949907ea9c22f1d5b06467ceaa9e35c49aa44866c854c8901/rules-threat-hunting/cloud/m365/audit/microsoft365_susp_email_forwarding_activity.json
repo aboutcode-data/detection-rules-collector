@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/cloud/m365/audit/microsoft365_susp_email_forwarding_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "RedCanary Team (idea), Harjot Singh @cyb3rjy0t",
+                "date": "2023-10-11",
+                "title": "Mail Forwarding/Redirecting Activity In O365",
+                "id": "c726e007-2cd0-4a55-abfb-79730fbedee5"
+            },
+            "rule_text": "title: Mail Forwarding/Redirecting Activity In O365\nid: c726e007-2cd0-4a55-abfb-79730fbedee5\nstatus: test\ndescription: Detects email forwarding or redirecting activity in O365 Audit logs.\nreferences:\n- https://redcanary.com/blog/email-forwarding-rules/\n- https://github.com/PwC-IR/Business-Email-Compromise-Guide/blob/fe29ce06aef842efe4eb448c26bbe822bf5b895d/PwC-Business_Email_Compromise-Guide.pdf\nauthor: RedCanary Team (idea), Harjot Singh @cyb3rjy0t\ndate: 2023-10-11\nmodified: 2024-11-17\ntags:\n- attack.collection\n- attack.stealth\n- attack.t1114.003\n- attack.t1564.008\n- attack.exfiltration\n- attack.t1020\n- detection.threat-hunting\nlogsource:\n  service: audit\n  product: m365\n  definition: 'Requirements: The ''OperationProperties'' and ''Parameters'' fields\n    are a list of dict. A correct mapping to the ''Value'' field inside is recommended\n    to avoid greedy search'\ndetection:\n  selection_updateinbox:\n    Operation|contains: UpdateInboxRules\n    OperationProperties|contains:\n    - Forward\n    - Recipients\n  selection_setmailbox:\n    Operation|contains: Set-Mailbox\n    Parameters|contains:\n    - ForwardingSmtpAddress\n    - ForwardingAddress\n  selection_setinbox:\n    Operation|contains:\n    - New-InboxRule\n    - Set-InboxRule\n    Parameters|contains:\n    - ForwardAsAttachmentTo\n    - ForwardingAddress\n    - ForwardingSmtpAddress\n    - ForwardTo\n    - RedirectTo\n    - RedirectToRecipients\n  condition: 1 of selection_*\nfalsepositives:\n- False positives are expected from legitimate mail forwarding rules. You need organisation\n  specific knowledge. Filter out the domains that are allowed as forwarding targets\n  as well as any additional metadata that you can use for exclusion from trusted sources/targets\n  in order to promote this to a potential detection rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_tracker.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Avneet Singh @v3t0_, oscd.community",
+                "date": "2020-10-18",
+                "title": "Potential DLL Injection Or Execution Using Tracker.exe",
+                "id": "148431ce-4b70-403d-8525-fcc2993f29ea"
+            },
+            "rule_text": "title: Potential DLL Injection Or Execution Using Tracker.exe\nid: 148431ce-4b70-403d-8525-fcc2993f29ea\nstatus: test\ndescription: Detects potential DLL injection and execution using \"Tracker.exe\"\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Tracker/\nauthor: Avneet Singh @v3t0_, oscd.community\ndate: 2020-10-18\nmodified: 2023-01-09\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\tracker.exe\n  - Description: Tracker\n  selection_cli:\n    CommandLine|contains:\n    - ' /d '\n    - ' /c '\n  filter_msbuild1:\n    CommandLine|contains: ' /ERRORREPORT:PROMPT '\n  filter_msbuild2:\n    ParentImage|endswith:\n    - \\Msbuild\\Current\\Bin\\MSBuild.exe\n    - \\Msbuild\\Current\\Bin\\amd64\\MSBuild.exe\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

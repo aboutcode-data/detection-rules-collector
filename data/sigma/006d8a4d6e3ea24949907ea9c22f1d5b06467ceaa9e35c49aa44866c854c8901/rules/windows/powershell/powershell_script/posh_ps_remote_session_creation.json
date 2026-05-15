@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_remote_session_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-06",
+                "title": "PowerShell Remote Session Creation",
+                "id": "a0edd39f-a0c6-4c17-8141-261f958e8d8f"
+            },
+            "rule_text": "title: PowerShell Remote Session Creation\nid: a0edd39f-a0c6-4c17-8141-261f958e8d8f\nstatus: test\ndescription: 'Adversaries may abuse PowerShell commands and scripts for execution.\n\n  PowerShell is a powerful interactive command-line interface and scripting environment\n  included in the Windows operating system\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.001/T1059.001.md#atomic-test-10---powershell-invoke-downloadcradle\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-pssession?view=powershell-7.4\nauthor: frack113\ndate: 2022-01-06\nmodified: 2023-01-02\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - New-PSSession\n    - '-ComputerName '\n  condition: selection\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

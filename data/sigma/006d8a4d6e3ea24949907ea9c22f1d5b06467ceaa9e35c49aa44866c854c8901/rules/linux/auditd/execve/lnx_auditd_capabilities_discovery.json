@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_capabilities_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-11-28",
+                "title": "Linux Capabilities Discovery",
+                "id": "fe10751f-1995-40a5-aaa2-c97ccb4123fe"
+            },
+            "rule_text": "title: Linux Capabilities Discovery\nid: fe10751f-1995-40a5-aaa2-c97ccb4123fe\nstatus: test\ndescription: Detects attempts to discover the files with setuid/setgid capability\n  on them. That would allow adversary to escalate their privileges.\nreferences:\n- https://man7.org/linux/man-pages/man8/getcap.8.html\n- https://www.hackingarticles.in/linux-privilege-escalation-using-capabilities/\n- https://mn3m.info/posts/suid-vs-capabilities/\n- https://int0x33.medium.com/day-44-linux-capabilities-privilege-escalation-via-openssl-with-selinux-enabled-and-enforced-74d2bec02099\nauthor: Pawel Mazur\ndate: 2021-11-28\nmodified: 2022-12-25\ntags:\n- attack.discovery\n- attack.privilege-escalation\n- attack.t1083\n- attack.t1548\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0: getcap\n    a1: -r\n    a2: /\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

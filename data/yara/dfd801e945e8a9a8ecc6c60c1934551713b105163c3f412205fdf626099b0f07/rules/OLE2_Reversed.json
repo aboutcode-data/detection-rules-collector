@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/elceef/yara-rulz/blob/master/rules/OLE2_Reversed.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "OLE2_AutoOpen_Reversed_Payload",
+                "tags": [],
+                "description": "Detects suspiciously reversed payloads in OLE2 objects with auto-open macros",
+                "author": "marcin@ulikowski.pl",
+                "date": "2021-12-01",
+                "modified": "2023-04-04"
+            },
+            "rule_text": "rule OLE2_AutoOpen_Reversed_Payload\n{\n\tmeta:\n\t\tdescription = \"Detects suspiciously reversed payloads in OLE2 objects with auto-open macros\"\n\t\tauthor = \"marcin@ulikowski.pl\"\n\t\tdate = \"2021-12-01\"\n\t\tmodified = \"2023-04-04\"\n\n\tstrings:\n\t\t$auto_open = /(auto|document|workbook)_?(open|close)/ wide ascii nocase\n\t\t$http = /\\/\\/:s?ptth/ wide ascii\n\t\t$programdata = /\\\\ataDmargorP\\\\\\\\?:C/ wide ascii nocase\n\t\t$windows = /\\\\swodniW\\\\\\\\?:C/ wide ascii nocase\n\n\tcondition:\n\t\tfilesize < 1MB and uint32be( 0 ) == 0xd0cf11e0 and $auto_open and any of ( $http , $programdata , $windows )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

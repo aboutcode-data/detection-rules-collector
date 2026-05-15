@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_pnscan_binary_cli_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "David Burkett (@signalblur)",
+                "date": "2024-04-16",
+                "title": "Pnscan Binary Data Transmission Activity",
+                "id": "97de11cd-4b67-4abf-9a8b-1020e670aa9e"
+            },
+            "rule_text": "title: Pnscan Binary Data Transmission Activity\nid: 97de11cd-4b67-4abf-9a8b-1020e670aa9e\nstatus: test\ndescription: 'Detects command line patterns associated with the use of Pnscan for\n  sending and receiving binary data across the network.\n\n  This behavior has been identified in a Linux malware campaign targeting Docker,\n  Apache Hadoop, Redis, and Confluence and was previously used by the threat actor\n  known as TeamTNT\n\n  '\nauthor: David Burkett (@signalblur)\ndate: 2024-04-16\nreferences:\n- https://www.cadosecurity.com/blog/spinning-yarn-a-new-linux-malware-campaign-targets-docker-apache-hadoop-redis-and-confluence\n- https://intezer.com/wp-content/uploads/2021/09/TeamTNT-Cryptomining-Explosion.pdf\n- https://regex101.com/r/RugQYK/1\n- https://www.virustotal.com/gui/file/beddf70a7bab805f0c0b69ac0989db6755949f9f68525c08cb874988353f78a9/content\ntags:\n- attack.discovery\n- attack.t1046\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    CommandLine|re: -(W|R)\\s?(\\s|\"|')([0-9a-fA-F]{2}\\s?){2,20}(\\s|\"|')\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

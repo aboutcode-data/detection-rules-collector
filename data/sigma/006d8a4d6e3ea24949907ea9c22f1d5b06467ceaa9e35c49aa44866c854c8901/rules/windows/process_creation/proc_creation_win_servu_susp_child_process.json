@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_servu_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-07-14",
+                "title": "Suspicious Serv-U Process Pattern",
+                "id": "58f4ea09-0fc2-4520-ba18-b85c540b0eaf"
+            },
+            "rule_text": "title: Suspicious Serv-U Process Pattern\nid: 58f4ea09-0fc2-4520-ba18-b85c540b0eaf\nstatus: test\ndescription: Detects a suspicious process pattern which could be a sign of an exploited\n  Serv-U service\nreferences:\n- https://www.microsoft.com/security/blog/2021/07/13/microsoft-discovers-threat-actor-targeting-solarwinds-serv-u-software-with-0-day-exploit/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-07-14\nmodified: 2022-07-14\ntags:\n- attack.credential-access\n- attack.t1555\n- cve.2021-35211\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\Serv-U.exe\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\sh.exe\n    - \\bash.exe\n    - \\schtasks.exe\n    - \\regsvr32.exe\n    - \\wmic.exe\n    - \\mshta.exe\n    - \\rundll32.exe\n    - \\msiexec.exe\n    - \\forfiles.exe\n    - \\scriptrunner.exe\n  condition: selection\nfalsepositives:\n- Legitimate uses in which users or programs use the SSH service of Serv-U for remote\n  command execution\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

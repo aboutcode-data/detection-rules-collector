@@ -1,0 +1,28 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/hacktools/IISRaid.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IISRaid",
+                "tags": [],
+                "id": "40tj9tn6FNrr4xE042IPIm",
+                "fingerprint": "521b0798e25a620534f8e04c8fd62fd42c90ea5b785968806cb7538986dedac6",
+                "version": "1.0",
+                "creation_date": "2021-08-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-03-10",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies IISRaid.",
+                "category": "MALWARE",
+                "malware": "IISRAID",
+                "malware_type": "BACKDOOR",
+                "reference": "https://github.com/0x09AL/IIS-Raid"
+            },
+            "rule_text": "rule IISRaid\n{\n\tmeta:\n\t\tid = \"40tj9tn6FNrr4xE042IPIm\"\n\t\tfingerprint = \"521b0798e25a620534f8e04c8fd62fd42c90ea5b785968806cb7538986dedac6\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2021-08-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-03-10\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies IISRaid.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"IISRAID\"\n\t\tmalware_type = \"BACKDOOR\"\n\t\treference = \"https://github.com/0x09AL/IIS-Raid\"\n\n\tstrings:\n\t\t$pdb1 = \"\\\\IIS-Raid-master\\\\\" ascii wide\n\t\t$pdb2 = \"\\\\IIS-Backdoor.pdb\"\n\t\t$s1 = \"C:\\\\Windows\\\\System32\\\\credwiz.exe\" ascii wide\n\t\t$s2 = \"C:\\\\Windows\\\\Temp\\\\creds.db\" ascii wide\n\t\t$s3 = \"CHttpModule::\" ascii wide\n\t\t$s4 = \"%02d/%02d/%04d %02d:%02d:%02d | %s\" ascii wide\n\n\tcondition:\n\t\tany of ( $pdb* ) or 3 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

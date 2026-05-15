@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_agentexecutor_susp_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), memory-shards",
+                "date": "2022-12-24",
+                "title": "Suspicious AgentExecutor PowerShell Execution",
+                "id": "c0b40568-b1e9-4b03-8d6c-b096da6da9ab"
+            },
+            "rule_text": "title: Suspicious AgentExecutor PowerShell Execution\nid: c0b40568-b1e9-4b03-8d6c-b096da6da9ab\nrelated:\n- id: 7efd2c8d-8b18-45b7-947d-adfe9ed04f61\n  type: similar\nstatus: test\ndescription: Detects execution of the AgentExecutor.exe binary. Which can be abused\n  as a LOLBIN to execute powershell scripts with the ExecutionPolicy \"Bypass\" or any\n  binary named \"powershell.exe\" located in the path provided by 6th positional argument\nauthor: Nasreddine Bencherchali (Nextron Systems), memory-shards\nreferences:\n- https://twitter.com/lefterispan/status/1286259016436514816\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Agentexecutor/\n- https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension\n- https://twitter.com/jseerden/status/1247985304667066373/photo/1\ndate: 2022-12-24\nmodified: 2024-08-07\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\AgentExecutor.exe\n  - OriginalFileName: AgentExecutor.exe\n  selection_cli:\n    CommandLine|contains:\n    - ' -powershell'\n    - ' -remediationScript'\n  filter_main_pwsh:\n    CommandLine|contains:\n    - C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\\n    - C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\\n  filter_main_intune:\n    ParentImage|endswith: \\Microsoft.Management.Services.IntuneWindowsAgent.exe\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

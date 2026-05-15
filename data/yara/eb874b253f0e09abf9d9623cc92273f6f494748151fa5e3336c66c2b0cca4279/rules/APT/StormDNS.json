@@ -1,0 +1,28 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/APT/StormDNS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "StormDNS",
+                "tags": [],
+                "id": "75nX2TPCk53RAhU55yBeFd",
+                "fingerprint": "v1_sha256_542a8af37bd4bc18218190cd82495146a4daa5d01db24804b9ff16ff04023a5a",
+                "version": "1.0",
+                "date": "2025-07-24",
+                "modified": "2025-07-24",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies StormDNS, a DNS shell used by Storm-260 to receive and execute commands from a C2.",
+                "category": "MALWARE",
+                "malware": "STORMDNS",
+                "malware_type": "WEBSHELL",
+                "reference": "https://www.microsoft.com/en-us/security/blog/2025/07/22/disrupting-active-exploitation-of-on-premises-sharepoint-vulnerabilities",
+                "hash": "1eb914c09c873f0a7bcf81475ab0f6bdfaccc6b63bf7e5f2dbf19295106af192"
+            },
+            "rule_text": "rule StormDNS\n{\n\tmeta:\n\t\tid = \"75nX2TPCk53RAhU55yBeFd\"\n\t\tfingerprint = \"v1_sha256_542a8af37bd4bc18218190cd82495146a4daa5d01db24804b9ff16ff04023a5a\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2025-07-24\"\n\t\tmodified = \"2025-07-24\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies StormDNS, a DNS shell used by Storm-260 to receive and execute commands from a C2.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"STORMDNS\"\n\t\tmalware_type = \"WEBSHELL\"\n\t\treference = \"https://www.microsoft.com/en-us/security/blog/2025/07/22/disrupting-active-exploitation-of-on-premises-sharepoint-vulnerabilities\"\n\t\thash = \"1eb914c09c873f0a7bcf81475ab0f6bdfaccc6b63bf7e5f2dbf19295106af192\"\n\n\tstrings:\n\t\t$str_a = \"Slept for %d seconds\"\n\t\t$str_b = \"Failed to allocate memory\"\n\t\t$str_c = \"cmd.exe /c %s 2>&1\"\n\t\t$str_d = \"Failed to execute command\"\n\t\t$str_e = \"Failed to reallocate memory\"\n\t\t$str_f = \"Command executed with no output\"\n\t\t$str_g = \"fragment_received\"\n\t\t$str_h = \"result_received\"\n\t\t$str_i = \"s%st%04zup%04zu\"\n\t\t$pdb_part = \"\\\\work\\\\tools\\\\ak47c2\\\\\"\n\t\t$pdb_full = \"C:\\\\Users\\\\Administrator\\\\Desktop\\\\work\\\\tools\\\\ak47c2\\\\dnsclinet-c\\\\dnsclient\\\\x64\\\\Release\\\\dnsclient.pdb\"\n\n\tcondition:\n\t\t8 of ( $str_* ) or any of ( $pdb_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

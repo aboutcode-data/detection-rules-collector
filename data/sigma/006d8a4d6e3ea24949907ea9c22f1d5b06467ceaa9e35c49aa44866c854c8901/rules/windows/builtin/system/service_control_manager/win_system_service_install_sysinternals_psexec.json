@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_sysinternals_psexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thomas Patzke",
+                "date": "2017-06-12",
+                "title": "PsExec Service Installation",
+                "id": "42c575ea-e41e-41f1-b248-8093c3e82a28"
+            },
+            "rule_text": "title: PsExec Service Installation\nid: 42c575ea-e41e-41f1-b248-8093c3e82a28\nstatus: test\ndescription: Detects PsExec service installation and execution events\nreferences:\n- https://www.jpcert.or.jp/english/pub/sr/ir_research.html\n- https://jpcertcc.github.io/ToolAnalysisResultSheet\nauthor: Thomas Patzke\ndate: 2017-06-12\nmodified: 2023-08-04\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.s0029\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ServiceName: PSEXESVC\n  - ImagePath|endswith: \\PSEXESVC.exe\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

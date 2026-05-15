@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_Kovid.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_Kovid_b77dc7f4",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "b77dc7f4-fef1-4256-ac34-677ad1c5b618",
+                "fingerprint": "29ae4fc448eb746b7d6ec192befd03977e83a1ad5b4d1369621d6d42b482ae50",
+                "creation_date": "2024-11-13",
+                "last_modified": "2024-11-22",
+                "threat_name": "Linux.Rootkit.Kovid",
+                "reference_sample": "933273ff95a57dfe0162175dc6143395e23c69e36d8ca366481b795deaab4fd0",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_Kovid_b77dc7f4\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"b77dc7f4-fef1-4256-ac34-677ad1c5b618\"\n\t\tfingerprint = \"29ae4fc448eb746b7d6ec192befd03977e83a1ad5b4d1369621d6d42b482ae50\"\n\t\tcreation_date = \"2024-11-13\"\n\t\tlast_modified = \"2024-11-22\"\n\t\tthreat_name = \"Linux.Rootkit.Kovid\"\n\t\treference_sample = \"933273ff95a57dfe0162175dc6143395e23c69e36d8ca366481b795deaab4fd0\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$str1 = \"name=kovid\"\n\t\t$str2 = \"kovid.ko\"\n\t\t$str3 = \"dontblink\"\n\t\t$str4 = \"author=whatever coorp\"\n\t\t$str5 = \"Your module 'unhide' magic word is: '%s'\"\n\t\t$str6 = \".sshd_orig\"\n\t\t$str7 = \".lm.sh\"\n\t\t$str8 = \".kv.ko\"\n\t\t$str9 = \"whitenose\"\n\t\t$str10 = \"pinknose\"\n\t\t$str11 = \"rednose\"\n\t\t$str12 = \"blacknose\"\n\t\t$str13 = \"greynose\"\n\t\t$str14 = \"purplenose\"\n\t\t$str15 = \"fh_remove_hook\"\n\t\t$str16 = \"backdoor can only be unhidden either by exit or rmmod: %d\"\n\t\t$str17 = \"get_unhide_magic_word\"\n\t\t$str18 = \"invalid data: syscall hook setreuid will not work\"\n\t\t$str19 = \"Fuck-off\"\n\t\t$str20 = \"/KoviD/src/sys.c\"\n\t\t$func1 = \"kv_find_hidden_task\"\n\t\t$func2 = \"kv_for_each_hidden_backdoor_data\"\n\t\t$func3 = \"kv_bd_search_iph_source\"\n\t\t$func4 = \"kv_check_cursing\"\n\t\t$func5 = \"kv_for_each_hidden_backdoor_task\"\n\t\t$func6 = \"kv_find_hidden_pid\"\n\t\t$func7 = \"kv_hide_task_by_pid\"\n\t\t$func8 = \"kv_unhide_task_by_pid_exit_group\"\n\t\t$func9 = \"kv_util_random_AZ_string\"\n\n\tcondition:\n\t\t4 of ( $str* ) or 4 of ( $func* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

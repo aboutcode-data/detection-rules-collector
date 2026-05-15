@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/evild3ad /contains_ah_encoded_pe_file.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Contains_ah_encoded_PE_file",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect an &H encoded executable",
+                "method": "&Hxx is the hexadecimal notation for a byte in VBA",
+                "reference": "https://blog.didierstevens.com/2014/12/23/oledump-extracting-embedded-exe-from-doc/",
+                "hash": "6a574342b3e4e44ae624f7606bd60efa",
+                "date": "2016-04-23"
+            },
+            "rule_text": "rule Contains_ah_encoded_PE_file\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect an &H encoded executable\"\n\t\tmethod = \"&Hxx is the hexadecimal notation for a byte in VBA\"\n\t\treference = \"https://blog.didierstevens.com/2014/12/23/oledump-extracting-embedded-exe-from-doc/\"\n\t\thash = \"6a574342b3e4e44ae624f7606bd60efa\"\n\t\tdate = \"2016-04-23\"\n\n\tstrings:\n\t\t$MZ = \"&H4d&H5a\" nocase\n\t\t$DOS = \"&H21&H54&H68&H69&H73&H20&H70&H72&H6f&H67&H72&H61&H6d&H20&H63&H61&H6e&H6e&H6f&H74&H20&H62&H65&H20&H72&H75&H6e&H20&H69&H6e&H20&H44&H4f&H53&H20&H6d&H6f&H64&H65&H2e\" nocase\n\t\t$PE = \"&H50&H45&H00&H00\" nocase\n\n\tcondition:\n\t\t$MZ and $DOS and $PE\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

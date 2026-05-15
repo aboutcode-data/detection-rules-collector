@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_cobaltstrike_load_by_rundll32.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Wojciech Lesicki",
+                "date": "2021-06-01",
+                "title": "CobaltStrike Load by Rundll32",
+                "id": "ae9c6a7c-9521-42a6-915e-5aaa8689d529"
+            },
+            "rule_text": "title: CobaltStrike Load by Rundll32\nid: ae9c6a7c-9521-42a6-915e-5aaa8689d529\nstatus: test\ndescription: Rundll32 can be use by Cobalt Strike with StartW function to load DLLs\n  from the command line.\nreferences:\n- https://www.cobaltstrike.com/help-windows-executable\n- https://redcanary.com/threat-detection-report/\n- https://thedfirreport.com/2020/10/18/ryuk-in-5-hours/\nauthor: Wojciech Lesicki\ndate: 2021-06-01\nmodified: 2022-09-16\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_rundll:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  - CommandLine|contains:\n    - rundll32.exe\n    - 'rundll32 '\n  selection_params:\n    CommandLine|contains: .dll\n    CommandLine|endswith:\n    - ' StartW'\n    - ',StartW'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

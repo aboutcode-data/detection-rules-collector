@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_odbcconf_register_dll_regsvr_susp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-22",
+                "title": "Potentially Suspicious DLL Registered Via Odbcconf.EXE",
+                "id": "ba4cfc11-d0fa-4d94-bf20-7c332c412e76"
+            },
+            "rule_text": "title: Potentially Suspicious DLL Registered Via Odbcconf.EXE\nid: ba4cfc11-d0fa-4d94-bf20-7c332c412e76\nrelated:\n- id: 9f0a8bf3-a65b-440a-8c1e-5cb1547c8e70\n  type: derived\nstatus: test\ndescription: Detects execution of \"odbcconf\" with the \"REGSVR\" action where the DLL\n  in question doesn't contain a \".dll\" extension. Which is often used as a method\n  to evade defenses.\nreferences:\n- https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16\n- https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/\n- https://www.trendmicro.com/en_us/research/17/h/backdoor-carrying-emails-set-sights-on-russian-speaking-businesses.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-22\ntags:\n- attack.stealth\n- attack.t1218.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\odbcconf.exe\n  - OriginalFileName: odbcconf.exe\n  selection_cli:\n    CommandLine|contains: 'REGSVR '\n  filter_main_dll_ext:\n    CommandLine|contains: .dll\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/windefend/win_defender_asr_psexec_wmi.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2020-07-14",
+                "title": "PSExec and WMI Process Creations Block",
+                "id": "97b9ce1e-c5ab-11ea-87d0-0242ac130003"
+            },
+            "rule_text": "title: PSExec and WMI Process Creations Block\nid: 97b9ce1e-c5ab-11ea-87d0-0242ac130003\nstatus: test\ndescription: Detects blocking of process creations originating from PSExec and WMI\n  commands\nreferences:\n- https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-process-creations-originating-from-psexec-and-wmi-commands\n- https://twitter.com/duff22b/status/1280166329660497920\nauthor: Bhabesh Raj\ndate: 2020-07-14\nmodified: 2022-12-25\ntags:\n- attack.execution\n- attack.lateral-movement\n- attack.t1047\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: windefend\n  definition: 'Requirements:Enabled Block process creations originating from PSExec\n    and WMI commands from Attack Surface Reduction (GUID: d1e49aac-8f56-4280-b9ba-993a6d77406c)'\ndetection:\n  selection:\n    EventID: 1121\n    ProcessName|endswith:\n    - \\wmiprvse.exe\n    - \\psexesvc.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

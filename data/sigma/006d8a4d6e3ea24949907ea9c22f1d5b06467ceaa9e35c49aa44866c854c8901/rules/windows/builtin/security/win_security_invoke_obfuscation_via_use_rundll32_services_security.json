@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_invoke_obfuscation_via_use_rundll32_services_security.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-09",
+                "title": "Invoke-Obfuscation Via Use Rundll32 - Security",
+                "id": "cd0f7229-d16f-42de-8fe3-fba365fbcb3a"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Use Rundll32 - Security\nid: cd0f7229-d16f-42de-8fe3-fba365fbcb3a\nrelated:\n- id: 641a4bfb-c017-44f7-800c-2aee0184ce9b\n  type: derived\nstatus: test\ndescription: Detects Obfuscated Powershell via use Rundll32 in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-09\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|contains|all:\n    - '&&'\n    - rundll32\n    - shell32.dll\n    - shellexec_rundll\n    ServiceFileName|contains:\n    - value\n    - invoke\n    - comspec\n    - iex\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

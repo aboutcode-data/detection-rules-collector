@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_script_engine_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-01-16",
+                "title": "Suspicious PowerShell Invocation From Script Engines",
+                "id": "95eadcb2-92e4-4ed1-9031-92547773a6db"
+            },
+            "rule_text": "title: Suspicious PowerShell Invocation From Script Engines\nid: 95eadcb2-92e4-4ed1-9031-92547773a6db\nstatus: test\ndescription: Detects suspicious powershell invocations from interpreters or unusual\n  programs\nreferences:\n- https://www.securitynewspaper.com/2017/03/20/attackers-leverage-excel-powershell-dns-latest-non-malware-attack/\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-01-16\nmodified: 2023-01-05\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  filter_health_service:\n    CurrentDirectory|contains: \\Health Service State\\\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Microsoft Operations Manager (MOM)\n- Other scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

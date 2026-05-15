@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_defender_exclusion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-13",
+                "title": "Suspicious Windows Defender Folder Exclusion Added Via Reg.EXE",
+                "id": "48917adc-a28e-4f5d-b729-11e75da8941f"
+            },
+            "rule_text": "title: Suspicious Windows Defender Folder Exclusion Added Via Reg.EXE\nid: 48917adc-a28e-4f5d-b729-11e75da8941f\nstatus: test\ndescription: Detects the usage of \"reg.exe\" to add Defender folder exclusions. Qbot\n  has been seen using this technique to add exclusions for folders within AppData\n  and ProgramData.\nreferences:\n- https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/\n- https://redcanary.com/threat-detection-report/threats/qbot/\nauthor: frack113\ndate: 2022-02-13\nmodified: 2023-02-04\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\reg.exe\n    CommandLine|contains:\n    - SOFTWARE\\Microsoft\\Windows Defender\\Exclusions\\Paths\n    - SOFTWARE\\Microsoft\\Microsoft Antimalware\\Exclusions\\Paths\n    CommandLine|contains|all:\n    - 'ADD '\n    - '/t '\n    - 'REG_DWORD '\n    - '/v '\n    - '/d '\n    - '0'\n  condition: selection\nfalsepositives:\n- Legitimate use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

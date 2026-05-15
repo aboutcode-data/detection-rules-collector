@@ -1,0 +1,114 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/evild3ad /evild3ad_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Contains_ah_encoded_PE_file",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect an &H encoded executable",
+                "method": "&Hxx is the hexadecimal notation for a byte in VBA",
+                "reference": "https://blog.didierstevens.com/2014/12/23/oledump-extracting-embedded-exe-from-doc/",
+                "hash": "6a574342b3e4e44ae624f7606bd60efa",
+                "date": "2016-04-23"
+            },
+            "rule_text": "rule Contains_ah_encoded_PE_file\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect an &H encoded executable\"\n\t\tmethod = \"&Hxx is the hexadecimal notation for a byte in VBA\"\n\t\treference = \"https://blog.didierstevens.com/2014/12/23/oledump-extracting-embedded-exe-from-doc/\"\n\t\thash = \"6a574342b3e4e44ae624f7606bd60efa\"\n\t\tdate = \"2016-04-23\"\n\n\tstrings:\n\t\t$MZ = \"&H4d&H5a\" nocase\n\t\t$DOS = \"&H21&H54&H68&H69&H73&H20&H70&H72&H6f&H67&H72&H61&H6d&H20&H63&H61&H6e&H6e&H6f&H74&H20&H62&H65&H20&H72&H75&H6e&H20&H69&H6e&H20&H44&H4f&H53&H20&H6d&H6f&H64&H65&H2e\" nocase\n\t\t$PE = \"&H50&H45&H00&H00\" nocase\n\n\tcondition:\n\t\t$MZ and $DOS and $PE\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Contains_ASCII_Hex_encoded_PE_file",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect an ASCII Hex encoded executable",
+                "reference": "https://blogs.mcafee.com/mcafee-labs/w97m-downloader-serving-vawtrak/",
+                "hash": "e56a57acf528b8cd340ae039519d5150",
+                "date": "2016-03-28"
+            },
+            "rule_text": "rule Contains_ASCII_Hex_encoded_PE_file\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect an ASCII Hex encoded executable\"\n\t\treference = \"https://blogs.mcafee.com/mcafee-labs/w97m-downloader-serving-vawtrak/\"\n\t\thash = \"e56a57acf528b8cd340ae039519d5150\"\n\t\tdate = \"2016-03-28\"\n\n\tstrings:\n\t\t$MZ = \"4D5A\" nocase\n\t\t$DOS = \"21546869732070726F6772616D2063616E6E6F742062652072756E20696E20444F53206D6f64652E\" nocase\n\t\t$PE = \"50450000\" nocase\n\n\tcondition:\n\t\t$MZ and $DOS and $PE\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Contains_hidden_PE_File_inside_a_sequence_of_numbers",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect a hidden PE file inside a sequence of numbers (comma separated)",
+                "reference": "http://www.welivesecurity.com/2016/01/04/blackenergy-trojan-strikes-again-attacks-ukrainian-electric-power-industry/",
+                "date": "2016-01-09",
+                "filetype": "decompressed VBA macro code"
+            },
+            "rule_text": "rule Contains_hidden_PE_File_inside_a_sequence_of_numbers\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect a hidden PE file inside a sequence of numbers (comma separated)\"\n\t\treference = \"http://blog.didierstevens.com/2016/01/07/blackenergy-xls-dropper/\"\n\t\treference = \"http://www.welivesecurity.com/2016/01/04/blackenergy-trojan-strikes-again-attacks-ukrainian-electric-power-industry/\"\n\t\tdate = \"2016-01-09\"\n\t\tfiletype = \"decompressed VBA macro code\"\n\n\tstrings:\n\t\t$a = \"= Array(\"\n\t\t$b = \"77, 90,\"\n\t\t$c = \"33, 84, 104, 105, 115, 32, 112, 114, 111, 103, 114, 97, 109, 32, 99, 97, 110, 110, 111, 116, 32, 98, 101, 32, 114, 117, 110, 32, 105, 110, 32, 68, 79, 83, 32, 109, 111, 100, 101, 46,\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Contains_UserForm_Object_1",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect UserForm object in MS Office document. Attackers use UserForm objects to obfuscate their scripts and malicious code.",
+                "alert": "May used to store a URL as a property of a userform",
+                "reference": "http://blog.didierstevens.com/2016/03/11/update-oledump-py-version-0-0-23/",
+                "hash": "4e0c55054c4f7c32aece5cfbbea02846",
+                "date": "2016-03-11",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule Contains_UserForm_Object_1\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect UserForm object in MS Office document. Attackers use UserForm objects to obfuscate their scripts and malicious code.\"\n\t\talert = \"May used to store a URL as a property of a userform\"\n\t\treference = \"https://isc.sans.edu/forums/diary/Tip+Quick+Analysis+of+Office+Maldoc/20751/\"\n\t\treference = \"http://blog.didierstevens.com/2016/03/11/update-oledump-py-version-0-0-23/\"\n\t\thash = \"4e0c55054c4f7c32aece5cfbbea02846\"\n\t\tdate = \"2016-03-11\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$a = \"Microsoft Forms 2.0\"\n\t\t$b = \"http\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Contains_UserForm_Object_2",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect UserForm object in MS Office document. Attackers use UserForm objects to obfuscate their scripts and malicious code.",
+                "alert": "May used to store malicious code in a UserForm object embedded in a form object",
+                "reference": "https://msdn.microsoft.com/en-us/library/office/gg264663.aspx",
+                "hash": "3c013125ffe34b81e39f92b59ca26b6c",
+                "date": "2016-03-11",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule Contains_UserForm_Object_2\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect UserForm object in MS Office document. Attackers use UserForm objects to obfuscate their scripts and malicious code.\"\n\t\talert = \"May used to store malicious code in a UserForm object embedded in a form object\"\n\t\treference = \"https://msdn.microsoft.com/en-us/library/office/gg264663.aspx\"\n\t\thash = \"3c013125ffe34b81e39f92b59ca26b6c\"\n\t\tdate = \"2016-03-11\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$a = \"Microsoft Forms 2.0\"\n\t\t$b = \"UserForm1\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Contains_UserForm_Object_3",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect UserForm object in MS Office document. Attackers use UserForm objects to obfuscate their scripts and malicious code.",
+                "alert": "May used to store malicious code in a TextBox1 object embedded in a form object",
+                "reference": "https://blogs.mcafee.com/mcafee-labs/macro-malware-associated-dridex-finds-new-ways-hide/",
+                "hash": "13d4e6f0f7dc15ba17df91954de0b01d",
+                "date": "2016-03-11",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule Contains_UserForm_Object_3\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect UserForm object in MS Office document. Attackers use UserForm objects to obfuscate their scripts and malicious code.\"\n\t\talert = \"May used to store malicious code in a TextBox1 object embedded in a form object\"\n\t\treference = \"https://blogs.mcafee.com/mcafee-labs/macro-malware-associated-dridex-finds-new-ways-hide/\"\n\t\thash = \"13d4e6f0f7dc15ba17df91954de0b01d\"\n\t\tdate = \"2016-03-11\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$a = \"Microsoft Forms 2.0\"\n\t\t$b = \"UserForm1\"\n\t\t$c = \"TextBox1\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Contains_VBA_macro_code",
+                "tags": [],
+                "author": "evild3ad",
+                "description": "Detect a MS Office document with embedded VBA macro code",
+                "date": "2016-01-09",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule Contains_VBA_macro_code\n{\n\tmeta:\n\t\tauthor = \"evild3ad\"\n\t\tdescription = \"Detect a MS Office document with embedded VBA macro code\"\n\t\tdate = \"2016-01-09\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$officemagic = { D0 CF 11 E0 A1 B1 1A E1 }\n\t\t$zipmagic = \"PK\"\n\t\t$97str1 = \"_VBA_PROJECT_CUR\" wide\n\t\t$97str2 = \"VBAProject\"\n\t\t$97str3 = { 41 74 74 72 69 62 75 74 00 65 20 56 42 5F }\n\t\t$xmlstr1 = \"vbaProject.bin\"\n\t\t$xmlstr2 = \"vbaData.xml\"\n\n\tcondition:\n\t\t($officemagic at 0 and any of ( $97str* ) ) or ( $zipmagic at 0 and any of ( $xmlstr* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MIME_MSO_ActiveMime_base64",
+                "tags": [],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect MIME MSO Base64 encoded ActiveMime file",
+                "date": "2016-02-28",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule MIME_MSO_ActiveMime_base64\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect MIME MSO Base64 encoded ActiveMime file\"\n\t\tdate = \"2016-02-28\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$mime = \"MIME-Version:\"\n\t\t$base64 = \"Content-Transfer-Encoding: base64\"\n\t\t$mso = \"Content-Type: application/x-mso\"\n\n\tcondition:\n\t\t$mime at 0 and $base64 and $mso\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

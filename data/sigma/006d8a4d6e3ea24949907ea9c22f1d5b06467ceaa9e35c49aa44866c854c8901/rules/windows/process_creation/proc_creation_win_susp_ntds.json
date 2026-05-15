@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_ntds.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-11",
+                "title": "Suspicious Process Patterns NTDS.DIT Exfil",
+                "id": "8bc64091-6875-4881-aaf9-7bd25b5dda08"
+            },
+            "rule_text": "title: Suspicious Process Patterns NTDS.DIT Exfil\nid: 8bc64091-6875-4881-aaf9-7bd25b5dda08\nstatus: test\ndescription: Detects suspicious process patterns used in NTDS.DIT exfiltration\nreferences:\n- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration\n- https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/\n- https://pentestlab.blog/tag/ntds-dit/\n- https://github.com/samratashok/nishang/blob/414ee1104526d7057f9adaeee196d91ae447283e/Gather/Copy-VSS.ps1\n- https://github.com/zcgonvh/NTDSDumpEx\n- https://github.com/rapid7/metasploit-framework/blob/d297adcebb5c1df6fe30b12ca79b161deb71571c/data/post/powershell/NTDSgrab.ps1\n- https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-11\nmodified: 2022-11-10\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_tool:\n  - Image|endswith:\n    - \\NTDSDump.exe\n    - \\NTDSDumpEx.exe\n  - CommandLine|contains|all:\n    - ntds.dit\n    - system.hiv\n  - CommandLine|contains: NTDSgrab.ps1\n  selection_oneliner_1:\n    CommandLine|contains|all:\n    - ac i ntds\n    - create full\n  selection_onliner_2:\n    CommandLine|contains|all:\n    - '/c copy '\n    - \\windows\\ntds\\ntds.dit\n  selection_onliner_3:\n    CommandLine|contains|all:\n    - activate instance ntds\n    - create full\n  selection_powershell:\n    CommandLine|contains|all:\n    - powershell\n    - ntds.dit\n  set1_selection_ntds_dit:\n    CommandLine|contains: ntds.dit\n  set1_selection_image_folder:\n  - ParentImage|contains:\n    - \\apache\n    - \\tomcat\n    - \\AppData\\\n    - \\Temp\\\n    - \\Public\\\n    - \\PerfLogs\\\n  - Image|contains:\n    - \\apache\n    - \\tomcat\n    - \\AppData\\\n    - \\Temp\\\n    - \\Public\\\n    - \\PerfLogs\\\n  condition: 1 of selection* or all of set1*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

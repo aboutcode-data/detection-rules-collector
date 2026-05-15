@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_decode_gzip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Hieu Tran",
+                "date": "2023-03-13",
+                "title": "Gzip Archive Decode Via PowerShell",
+                "id": "98767d61-b2e8-4d71-b661-e36783ee24c1"
+            },
+            "rule_text": "title: Gzip Archive Decode Via PowerShell\nid: 98767d61-b2e8-4d71-b661-e36783ee24c1\nstatus: test\ndescription: Detects attempts of decoding encoded Gzip archives via PowerShell.\nreferences:\n- https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution\nauthor: Hieu Tran\ndate: 2023-03-13\ntags:\n- attack.command-and-control\n- attack.t1132.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - GZipStream\n    - ::Decompress\n  condition: selection\nfalsepositives:\n- Legitimate administrative scripts may use this functionality. Use \"ParentImage\"\n  in combination with the script names and allowed users and applications to filter\n  legitimate executions\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/NCCGroup/package_manager.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "exploit_ole_package_manager",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "Office Package Manager, may load unsafe content including scripts",
+                "ref": "http://quicksand.io/"
+            },
+            "rule_text": "rule exploit_ole_package_manager\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"Office Package Manager, may load unsafe content including scripts\"\n\t\tref = \"http://quicksand.io/\"\n\n\tstrings:\n\t\t$header_rtf = \"{\\\\rt\" nocase\n\t\t$header_office = { D0 CF 11 E0 }\n\t\t$header_xml = \"<?xml version=\" nocase wide ascii\n\t\t$embedded_object = \"\\\\object\" nocase\n\t\t$embedded_objdata = \"\\\\objdata\" nocase\n\t\t$embedded_ocx = \"\\\\objocx\" nocase\n\t\t$embedded_objclass = \"\\\\objclass\" nocase\n\t\t$embedded_oleclass = \"\\\\oleclsid\" nocase\n\t\t$embedded_axocx = \"<ax:ocx\" nocase wide ascii\n\t\t$embedded_axclassid = \"ax:classid\" nocase wide ascii\n\t\t$embedded_root_entry = \"Root Entry\" wide\n\t\t$embedded_comp_obj = \"Comp Obj\" wide\n\t\t$embedded_obj_info = \"Obj Info\" wide\n\t\t$embedded_ole10 = \"Ole10Native\" wide\n\t\t$data0 = \"0003000C-0000-0000-c000-000000000046\" nocase wide ascii\n\t\t$data1 = { 0C00030000000000c000000000000046 }\n\n\tcondition:\n\t\tfor any of ( $header* ) : ( @ == 0 ) and 1 of ( $embedded* ) and ( 1 of ( $data* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "exploit_ole_package_manager_poss",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "Office Package Manager, needs triage, these clsids are all surrogates"
+            },
+            "rule_text": "rule exploit_ole_package_manager_poss\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"Office Package Manager, needs triage, these clsids are all surrogates\"\n\n\tstrings:\n\t\t$header_rtf = \"{\\\\rt\" nocase\n\t\t$header_office = { D0 CF 11 E0 }\n\t\t$header_xml = \"<?xml version=\" nocase wide ascii\n\t\t$embedded_object = \"\\\\object\" nocase\n\t\t$embedded_objdata = \"\\\\objdata\" nocase\n\t\t$embedded_ocx = \"\\\\objocx\" nocase\n\t\t$embedded_objclass = \"\\\\objclass\" nocase\n\t\t$embedded_oleclass = \"\\\\oleclsid\" nocase\n\t\t$embedded_axocx = \"<ax:ocx\" nocase wide ascii\n\t\t$embedded_axclassid = \"ax:classid\" nocase wide ascii\n\t\t$embedded_root_entry = \"Root Entry\" wide\n\t\t$embedded_comp_obj = \"Comp Obj\" wide\n\t\t$embedded_obj_info = \"Obj Info\" wide\n\t\t$embedded_ole10 = \"Ole10Native\" wide\n\t\t$data0 = \"00020C01-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data1 = { 010C020000000000C000000000000046 }\n\t\t$data2 = \"00020C01-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data3 = { 010C020000000000C000000000000046 }\n\t\t$data4 = \"00022601-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data5 = { 0126020000000000C000000000000046 }\n\t\t$data6 = \"00022602-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data7 = { 0226020000000000C000000000000046 }\n\t\t$data8 = \"00022603-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data9 = { 0326020000000000C000000000000046 }\n\t\t$data10 = \"0003000D-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data11 = { 0D00030000000000C000000000000046 }\n\t\t$data12 = \"0003000E-0000-0000-C000-000000000046\" nocase wide ascii\n\t\t$data13 = { 0E00030000000000C000000000000046 }\n\t\t$data14 = \"F20DA720-C02F-11CE-927B-0800095AE340\" nocase wide ascii\n\t\t$data15 = { 20A70DF22FC0CE11927B0800095AE340 }\n\n\tcondition:\n\t\tfor any of ( $header* ) : ( @ == 0 ) and 1 of ( $embedded* ) and ( 1 of ( $data* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "exploit_Office_ActiveX_Packager",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "Generic rule to detect RTF or Office files using packager.dll ActiveX control",
+                "ref": "https://blogs.mcafee.com/mcafee-labs/dropping-files-temp-folder-raises-security-concerns/",
+                "md5": "d1bb6c0a522a689a880636e4d9b76600"
+            },
+            "rule_text": "rule exploit_Office_ActiveX_Packager\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"Generic rule to detect RTF or Office files using packager.dll ActiveX control\"\n\t\tref = \"https://blogs.mcafee.com/mcafee-labs/dropping-files-temp-folder-raises-security-concerns/\"\n\t\tmd5 = \"d1bb6c0a522a689a880636e4d9b76600\"\n\n\tstrings:\n\t\t$header_rtf = \"{\\\\rt\"\n\t\t$header_office = { D0 CF 11 E0 }\n\t\t$suspicious01 = \"\\\\objemb\"\n\t\t$suspicious02 = \"\\\\*\\\\objclass Package\"\n\t\t$suspicious03 = \"5061636b61676500\"\n\n\tcondition:\n\t\t1 of ( $header* ) and 2 of ( $suspicious* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

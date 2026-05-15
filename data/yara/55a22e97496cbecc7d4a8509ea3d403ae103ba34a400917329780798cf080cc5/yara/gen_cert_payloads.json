@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_cert_payloads.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_certificate_payload",
+                "tags": [],
+                "description": "Detects payloads that pretend to be certificates",
+                "date": "2018/08/02",
+                "author": "Didier Stevens, Florian Roth",
+                "reference": "https://blog.nviso.be/2018/08/02/powershell-inside-a-certificate-part-3/",
+                "score": 50,
+                "id": "6f1fe410-591a-5a59-a683-67cad9777dfe"
+            },
+            "rule_text": "rule SUSP_certificate_payload\n{\n\tmeta:\n\t\tdescription = \"Detects payloads that pretend to be certificates\"\n\t\tdate = \"2018/08/02\"\n\t\tauthor = \"Didier Stevens, Florian Roth\"\n\t\treference = \"https://blog.nviso.be/2018/08/02/powershell-inside-a-certificate-part-3/\"\n\t\tscore = 50\n\t\tid = \"6f1fe410-591a-5a59-a683-67cad9777dfe\"\n\n\tstrings:\n\t\t$re1 = \"-----BEGIN CERTIFICATE-----\"\n\t\t$fp1 = \"replace it with the PEM-encoded root certificate\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x2D2D2D2D and $re1 at 0 and not uint8( 29 ) == 0x4D and not uint8( 28 ) == 0x4D and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

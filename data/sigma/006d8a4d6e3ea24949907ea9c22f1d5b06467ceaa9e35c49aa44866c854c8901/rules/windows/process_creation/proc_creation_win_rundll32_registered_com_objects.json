@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_registered_com_objects.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-13",
+                "title": "Rundll32 Registered COM Objects",
+                "id": "f1edd233-30b5-4823-9e6a-c4171b24d316"
+            },
+            "rule_text": "title: Rundll32 Registered COM Objects\nid: f1edd233-30b5-4823-9e6a-c4171b24d316\nstatus: test\ndescription: load malicious registered COM objects\nreferences:\n- https://nasbench.medium.com/a-deep-dive-into-rundll32-exe-642344b41e90\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.015/T1546.015.md\nauthor: frack113\ndate: 2022-02-13\nmodified: 2023-02-09\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.015\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains:\n    - '-sta '\n    - '-localserver '\n    CommandLine|contains|all:\n    - '{'\n    - '}'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

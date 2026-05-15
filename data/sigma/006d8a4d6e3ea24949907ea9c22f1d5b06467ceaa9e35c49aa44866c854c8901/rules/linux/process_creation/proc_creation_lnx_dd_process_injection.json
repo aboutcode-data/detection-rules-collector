@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_dd_process_injection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseph Kamau",
+                "date": "2023-12-01",
+                "title": "Potential Linux Process Code Injection Via DD Utility",
+                "id": "4cad6c64-d6df-42d6-8dae-eb78defdc415"
+            },
+            "rule_text": "title: Potential Linux Process Code Injection Via DD Utility\nid: 4cad6c64-d6df-42d6-8dae-eb78defdc415\nstatus: test\ndescription: Detects the injection of code by overwriting the memory map of a Linux\n  process using the \"dd\" Linux command.\nreferences:\n- https://www.aon.com/cyber-solutions/aon_cyber_labs/linux-based-inter-process-code-injection-without-ptrace2/\n- https://github.com/AonCyberLabs/Cexigua/blob/34d338620afae4c6335ba8d8d499e1d7d3d5d7b5/overwrite.sh\nauthor: Joseph Kamau\ndate: 2023-12-01\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055.009\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /dd\n    CommandLine|contains|all:\n    - of=\n    - /proc/\n    - /mem\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

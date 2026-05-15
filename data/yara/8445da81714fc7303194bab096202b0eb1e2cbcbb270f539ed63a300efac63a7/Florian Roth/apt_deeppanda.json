@@ -1,0 +1,54 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/apt_deeppanda.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "DeepPanda_sl_txt_packed",
+                "tags": [],
+                "description": "Hack Deep Panda - ScanLine sl-txt-packed",
+                "author": "Florian Roth",
+                "date": "2015/02/08",
+                "hash": "ffb1d8ea3039d3d5eb7196d27f5450cac0ea4f34"
+            },
+            "rule_text": "rule DeepPanda_sl_txt_packed\n{\n\tmeta:\n\t\tdescription = \"Hack Deep Panda - ScanLine sl-txt-packed\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/08\"\n\t\thash = \"ffb1d8ea3039d3d5eb7196d27f5450cac0ea4f34\"\n\n\tstrings:\n\t\t$s0 = \"Command line port scanner\" fullword wide\n\t\t$s1 = \"sl.exe\" fullword wide\n\t\t$s2 = \"CPports.txt\" fullword ascii\n\t\t$s3 = \",GET / HTTP/.}\" fullword ascii\n\t\t$s4 = \"Foundstone Inc.\" fullword wide\n\t\t$s9 = \" 2002 Foundstone Inc.\" fullword wide\n\t\t$s15 = \", Inc. 2002\" fullword ascii\n\t\t$s20 = \"ICMP Time\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DeepPanda_lot1",
+                "tags": [],
+                "description": "Hack Deep Panda - lot1.tmp-pwdump",
+                "author": "Florian Roth",
+                "date": "2015/02/08",
+                "hash": "5d201a0fb0f4a96cefc5f73effb61acff9c818e1"
+            },
+            "rule_text": "rule DeepPanda_lot1\n{\n\tmeta:\n\t\tdescription = \"Hack Deep Panda - lot1.tmp-pwdump\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/08\"\n\t\thash = \"5d201a0fb0f4a96cefc5f73effb61acff9c818e1\"\n\n\tstrings:\n\t\t$s0 = \"Unable to open target process: %d, pid %d\" fullword ascii\n\t\t$s1 = \"Couldn't delete target executable from remote machine: %d\" fullword ascii\n\t\t$s2 = \"Target: Failed to load SAM functions.\" fullword ascii\n\t\t$s5 = \"Error writing the test file %s, skipping this share\" fullword ascii\n\t\t$s6 = \"Failed to create service (%s/%s), error %d\" fullword ascii\n\t\t$s8 = \"Service start failed: %d (%s/%s)\" fullword ascii\n\t\t$s12 = \"PwDump.exe\" fullword ascii\n\t\t$s13 = \"GetAvailableWriteableShare returned an error of %ld\" fullword ascii\n\t\t$s14 = \":\\\\\\\\.\\\\pipe\\\\%s\" fullword ascii\n\t\t$s15 = \"Couldn't copy %s to destination %s. (Error %d)\" fullword ascii\n\t\t$s16 = \"dump logon session\" fullword ascii\n\t\t$s17 = \"Timed out waiting to get our pipe back\" fullword ascii\n\t\t$s19 = \"SetNamedPipeHandleState failed, error %d\" fullword ascii\n\t\t$s20 = \"%s\\\\%s.exe\" fullword ascii\n\n\tcondition:\n\t\t10 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DeepPanda_htran_exe",
+                "tags": [],
+                "description": "Hack Deep Panda - htran-exe",
+                "author": "Florian Roth",
+                "date": "2015/02/08",
+                "hash": "38e21f0b87b3052b536408fdf59185f8b3d210b9"
+            },
+            "rule_text": "rule DeepPanda_htran_exe\n{\n\tmeta:\n\t\tdescription = \"Hack Deep Panda - htran-exe\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/08\"\n\t\thash = \"38e21f0b87b3052b536408fdf59185f8b3d210b9\"\n\n\tstrings:\n\t\t$s0 = \"%s -<listen|tran|slave> <option> [-log logfile]\" fullword ascii\n\t\t$s1 = \"[-] Gethostbyname(%s) error:%s\" fullword ascii\n\t\t$s2 = \"e:\\\\VS 2008 Project\\\\htran\\\\Release\\\\htran.pdb\" fullword ascii\n\t\t$s3 = \"[SERVER]connection to %s:%d error\" fullword ascii\n\t\t$s4 = \"-tran  <ConnectPort> <TransmitHost> <TransmitPort>\" fullword ascii\n\t\t$s5 = \"[-] ERROR: Must supply logfile name.\" fullword ascii\n\t\t$s6 = \"[-] There is a error...Create a new connection.\" fullword ascii\n\t\t$s7 = \"[+] Accept a Client on port %d from %s\" fullword ascii\n\t\t$s8 = \"======================== htran V%s =======================\" fullword ascii\n\t\t$s9 = \"[-] Socket Listen error.\" fullword ascii\n\t\t$s10 = \"[-] ERROR: open logfile\" fullword ascii\n\t\t$s11 = \"-slave  <ConnectHost> <ConnectPort> <TransmitHost> <TransmitPort>\" fullword ascii\n\t\t$s12 = \"[+] Make a Connection to %s:%d ......\" fullword ascii\n\t\t$s14 = \"Recv %5d bytes from %s:%d\" fullword ascii\n\t\t$s15 = \"[+] OK! I Closed The Two Socket.\" fullword ascii\n\t\t$s16 = \"[+] Waiting another Client on port:%d....\" fullword ascii\n\t\t$s17 = \"[+] Accept a Client on port %d from %s ......\" fullword ascii\n\t\t$s20 = \"-listen <ConnectPort> <TransmitPort>\" fullword ascii\n\n\tcondition:\n\t\t10 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DeepPanda_Trojan_Kakfum",
+                "tags": [],
+                "description": "Hack Deep Panda - Trojan.Kakfum sqlsrv32.dll",
+                "author": "Florian Roth",
+                "date": "2015/02/08",
+                "hash1": "ab58b6aa7dcc25d8f6e4b70a24e0ccede0d5f6129df02a9e61293c1d7d7640a2",
+                "hash2": "c6c3bb72896f8f0b9a5351614fd94e889864cf924b40a318c79560bbbcfa372f"
+            },
+            "rule_text": "rule DeepPanda_Trojan_Kakfum\n{\n\tmeta:\n\t\tdescription = \"Hack Deep Panda - Trojan.Kakfum sqlsrv32.dll\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/08\"\n\t\thash1 = \"ab58b6aa7dcc25d8f6e4b70a24e0ccede0d5f6129df02a9e61293c1d7d7640a2\"\n\t\thash2 = \"c6c3bb72896f8f0b9a5351614fd94e889864cf924b40a318c79560bbbcfa372f\"\n\n\tstrings:\n\t\t$s0 = \"%SystemRoot%\\\\System32\\\\svchost.exe -k sqlserver\" fullword ascii\n\t\t$s1 = \"%s\\\\sqlsrv32.dll\" fullword ascii\n\t\t$s2 = \"%s\\\\sqlsrv64.dll\" fullword ascii\n\t\t$s3 = \"%s\\\\%d.tmp\" fullword ascii\n\t\t$s4 = \"ServiceMaix\" fullword ascii\n\t\t$s15 = \"sqlserver\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

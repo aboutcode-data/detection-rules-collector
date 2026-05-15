@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CobaltStrike/Trojan_Win32_CobaltStrike_SK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CobaltStrike_SK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CobaltStrike.SK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CobaltStrike_SK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CobaltStrike.SK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 31 46 48 8b 46 ?? 83 f0 ?? 01 46 ?? 8b 46 ?? 2d ?? ?? ?? ?? 31 86 ?? ?? ?? ?? b8 ?? ?? ?? ?? 2b 46 ?? 01 86 ?? ?? ?? ?? 8b 8e ?? ?? ?? ?? 8b 46 }\n\t\t$a_00_1 = {52 65 67 69 73 74 65 72 53 65 72 76 65 72 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CobaltStrike_SK_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/CobaltStrike.SK!MTB,SIGNATURE_TYPE_PEHSTR,07 00 07 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CobaltStrike_SK_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CobaltStrike.SK!MTB,SIGNATURE_TYPE_PEHSTR,07 00 07 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2f 46 20 2f 43 72 65 61 74 65 20 2f 54 4e 20 54 65 6e 63 65 6e 74 69 64 20 2f 73 63 20 6d 69 6e 75 74 65 20 2f 4d 4f 20 31 20 2f 54 52 20 43 3a 5c 55 73 65 72 73 5c 50 75 62 6c 69 63 5c 4d 75 73 69 63 5c 74 65 6e 63 65 6e 74 73 6f 73 6f 2e 65 78 65 }\n\t\t$a_01_1 = {43 3a 5c 55 73 65 72 73 5c 50 75 62 6c 69 63 5c 4d 75 73 69 63 5c 63 69 61 2e 70 6c 61 6e }\n\t\t$a_01_2 = {43 3a 5c 55 73 65 72 73 5c 50 75 62 6c 69 63 5c 4d 75 73 69 63 5c 53 69 64 65 42 61 72 2e 64 6c 6c }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 5 + ( #a_01_2 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

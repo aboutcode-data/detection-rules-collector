@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_attrib_hiding_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sami Ruohonen",
+                "date": "2019-01-16",
+                "title": "Hiding Files with Attrib.exe",
+                "id": "4281cb20-2994-4580-aa63-c8b86d019934"
+            },
+            "rule_text": "title: Hiding Files with Attrib.exe\nid: 4281cb20-2994-4580-aa63-c8b86d019934\nstatus: test\ndescription: Detects usage of attrib.exe to hide files from users.\nreferences:\n- https://unit42.paloaltonetworks.com/unit42-sure-ill-take-new-combojack-malware-alters-clipboards-steal-cryptocurrency/\n- https://www.uptycs.com/blog/lolbins-are-no-laughing-matter\nauthor: Sami Ruohonen\ndate: 2019-01-16\nmodified: 2023-03-14\ntags:\n- attack.stealth\n- attack.t1564.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\attrib.exe\n  - OriginalFileName: ATTRIB.EXE\n  selection_cli:\n    CommandLine|contains: ' +h '\n  filter_main_msiexec:\n    CommandLine|contains: '\\desktop.ini '\n  filter_optional_intel:\n    ParentImage|endswith: \\cmd.exe\n    CommandLine: +R +H +S +A \\\\\\*.cui\n    ParentCommandLine: C:\\\\WINDOWS\\\\system32\\\\\\*.bat\n  condition: all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe\n  and igfxCUIService.exe is the parent of the cmd.exe)\n- Msiexec.exe hiding desktop.ini\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

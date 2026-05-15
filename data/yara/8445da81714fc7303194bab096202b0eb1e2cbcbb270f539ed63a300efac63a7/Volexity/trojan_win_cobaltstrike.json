@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/trojan_win_cobaltstrike.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_win_cobaltstrike",
+                "tags": [
+                    "Commodity"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-05-25",
+                "description": "The CobaltStrike malware family.",
+                "reference": "https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/",
+                "hash": "b041efb8ba2a88a3d172f480efa098d72eef13e42af6aa5fb838e6ccab500a7c",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule trojan_win_cobaltstrike : Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-05-25\"\n\t\tdescription = \"The CobaltStrike malware family.\"\n\t\treference = \"https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/\"\n\t\thash = \"b041efb8ba2a88a3d172f480efa098d72eef13e42af6aa5fb838e6ccab500a7c\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$s1 = \"%s (admin)\" fullword\n\t\t$s2 = {48 54 54 50 2F 31 2E 31 20 32 30 30 20 4F 4B 0D 0A 43 6F 6E 74 65 6E 74 2D 54 79 70 65 3A 20 61 70 70 6C 69 63 61 74 69 6F 6E 2F 6F 63 74 65 74 2D 73 74 72 65 61 6D 0D 0A 43 6F 6E 74 65 6E 74 2D 4C 65 6E 67 74 68 3A 20 25 64 0D 0A 0D 0A 00}\n\t\t$s3 = \"%02d/%02d/%02d %02d:%02d:%02d\" fullword\n\t\t$s4 = \"%s as %s\\\\%s: %d\" fullword\n\t\t$s5 = \"%s&%s=%s\" fullword\n\t\t$s6 = \"rijndael\" fullword\n\t\t$s7 = \"(null)\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

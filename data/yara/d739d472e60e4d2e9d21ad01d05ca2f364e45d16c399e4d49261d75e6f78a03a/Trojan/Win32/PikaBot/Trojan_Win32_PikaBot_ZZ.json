@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/PikaBot/Trojan_Win32_PikaBot_ZZ.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_PikaBot_ZZ",
+                "tags": [],
+                "description": "Trojan:Win32/PikaBot.ZZ,SIGNATURE_TYPE_PEHSTR_EXT,ffffffc9 00 ffffffc9 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_PikaBot_ZZ\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/PikaBot.ZZ,SIGNATURE_TYPE_PEHSTR_EXT,ffffffc9 00 ffffffc9 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f1 d5 00 fa 4c 62 cc f4 0f 0b }\n\t\t$a_03_1 = {33 d2 8a 9c ?? ?? ?? ?? ?? 6a ?? 8b c6 59 f7 f1 0f b6 cb 0f b6 84 ?? ?? ?? ?? ?? 03 c7 03 c8 0f b6 f9 8a 84 ?? ?? ?? ?? ?? 88 84 ?? ?? ?? ?? ?? 46 88 9c ?? ?? ?? ?? ?? 81 fe 00 01 00 00 72 }\n\t\t$a_03_2 = {8d 47 01 0f b6 f8 8a 8c ?? ?? ?? ?? ?? 0f b6 d1 8d 04 1a 0f b6 d8 8a 84 ?? ?? ?? ?? ?? 88 84 ?? ?? ?? ?? ?? 88 8c ?? ?? ?? ?? ?? 0f b6 84 ?? ?? ?? ?? ?? 03 c2 0f b6 c0 8a 84 ?? ?? ?? ?? ?? 32 44 ?? ?? 88 84 ?? ?? ?? ?? ?? 46 83 fe }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 100 + ( #a_03_2 & 1 ) * 100 ) >= 201\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

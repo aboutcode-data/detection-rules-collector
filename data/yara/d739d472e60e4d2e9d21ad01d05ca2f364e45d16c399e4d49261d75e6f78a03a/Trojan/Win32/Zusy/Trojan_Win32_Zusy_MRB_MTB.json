@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zusy/Trojan_Win32_Zusy_MRB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zusy_MRB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Zusy.MRB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zusy_MRB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zusy.MRB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {40 00 00 e0 2e 72 73 72 63 ?? ?? ?? f0 02 ?? ?? ?? 30 0e 01 00 02 }\n\t\t$a_03_1 = {40 00 00 c0 2e 69 64 61 74 61 20 20 00 10 ?? ?? ?? 40 0e 01 00 02 }\n\t\t$a_01_2 = {40 00 00 e0 63 6d 73 75 74 65 67 79 00 a0 16 00 00 e0 46 01 00 94 16 00 00 34 96 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 5 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

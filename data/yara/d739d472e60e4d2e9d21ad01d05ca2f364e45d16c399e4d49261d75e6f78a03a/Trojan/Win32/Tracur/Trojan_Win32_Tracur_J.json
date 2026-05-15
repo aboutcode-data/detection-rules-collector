@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Tracur/Trojan_Win32_Tracur_J.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Tracur_J",
+                "tags": [],
+                "description": "Trojan:Win32/Tracur.J,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Tracur_J\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Tracur.J,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ff 37 c7 45 70 20 4e 00 00 ff 15 ?? ?? ?? ?? 8b d8 3b de 74 6c }\n\t\t$a_01_1 = {25 73 3f 71 3d 25 73 26 73 75 3d 25 73 }\n\t\t$a_01_2 = {75 3d 25 73 26 61 3d 25 73 26 69 3d 25 73 26 73 3d 25 73 }\n\t\t$a_01_3 = {25 73 3f 70 69 6e 67 3d 31 26 25 73 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

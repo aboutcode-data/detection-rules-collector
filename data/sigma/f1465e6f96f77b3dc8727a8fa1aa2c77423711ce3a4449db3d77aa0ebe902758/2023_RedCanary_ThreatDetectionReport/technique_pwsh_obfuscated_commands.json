@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_pwsh_obfuscated_commands.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Powershell Obfuscated Commands (RedCanary Threat Detection Report)",
+                "id": "df39fa21-d6b5-490e-85ef-d9b379707ac8"
+            },
+            "rule_text": "title: Powershell Obfuscated Commands (RedCanary Threat Detection Report)\nid: df39fa21-d6b5-490e-85ef-d9b379707ac8\nstatus: experimental\ndescription: Detects powershell command line strings with high numbers of suspicious\n  characters, potentially for obfuscation. Part of the RedCanary 2023 Threat Detection\n  Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/powershell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\powershell.exe\n    CommandLine|re: ^([^^=%![(; ]*[\\^=%![(; ]){8,}[^^=%![(; ]*$\n  condition: selection\nfalsepositives:\n- Legitimate processes with long or convoluted command lines.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

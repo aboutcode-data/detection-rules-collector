@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_susp_saml_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer",
+                "date": "2021-09-22",
+                "title": "AWS Suspicious SAML Activity",
+                "id": "f43f5d2f-3f2a-4cc8-b1af-81fde7dbaf0e"
+            },
+            "rule_text": "title: AWS Suspicious SAML Activity\nid: f43f5d2f-3f2a-4cc8-b1af-81fde7dbaf0e\nstatus: test\ndescription: Identifies when suspicious SAML activity has occurred in AWS. An adversary\n  could gain backdoor access via SAML.\nreferences:\n- https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateSAMLProvider.html\n- https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithSAML.html\nauthor: Austin Songer\ndate: 2021-09-22\nmodified: 2022-12-18\ntags:\n- attack.initial-access\n- attack.lateral-movement\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078\n- attack.t1548\n- attack.t1550\n- attack.t1550.001\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection_sts:\n    eventSource: sts.amazonaws.com\n    eventName: AssumeRoleWithSAML\n  selection_iam:\n    eventSource: iam.amazonaws.com\n    eventName: UpdateSAMLProvider\n  condition: 1 of selection_*\nfalsepositives:\n- Automated processes that uses Terraform may lead to false positives.\n- SAML Provider could be updated by a system administrator. Verify whether the user\n  identity, user agent, and/or hostname should be making changes in your environment.\n- SAML Provider being updated from unfamiliar users should be investigated. If known\n  behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

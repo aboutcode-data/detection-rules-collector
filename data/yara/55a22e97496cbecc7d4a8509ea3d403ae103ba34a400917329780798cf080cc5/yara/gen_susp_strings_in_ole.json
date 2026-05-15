@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_susp_strings_in_ole.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_RTF_Embedded_OLE_PE",
+                "tags": [],
+                "description": "Detects a suspicious string often used in PE files in a hex encoded object stream",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.nextron-systems.com/2018/01/22/creating-yara-rules-detect-embedded-exe-files-ole-objects/",
+                "date": "2018-01-22",
+                "modified": "2023-11-25",
+                "score": 65,
+                "id": "20044f08-9574-5baf-b91e-47613e490d62"
+            },
+            "rule_text": "rule MAL_RTF_Embedded_OLE_PE\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious string often used in PE files in a hex encoded object stream\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.nextron-systems.com/2018/01/22/creating-yara-rules-detect-embedded-exe-files-ole-objects/\"\n\t\tdate = \"2018-01-22\"\n\t\tmodified = \"2023-11-25\"\n\t\tscore = 65\n\t\tid = \"20044f08-9574-5baf-b91e-47613e490d62\"\n\n\tstrings:\n\t\t$a1 = \"546869732070726f6772616d2063616e6e6f742062652072756e20696e20444f53206d6f6465\" ascii\n\t\t$a2 = \"4b45524e454c33322e646c6c\" ascii\n\t\t$a3 = \"433a5c66616b65706174685c\" ascii\n\t\t$m3 = \"4d5a40000100000006000000ffff\"\n\t\t$m2 = \"4d5a50000200000004000f00ffff\"\n\t\t$m1 = \"4d5a90000300000004000000ffff\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7B5C7274 and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

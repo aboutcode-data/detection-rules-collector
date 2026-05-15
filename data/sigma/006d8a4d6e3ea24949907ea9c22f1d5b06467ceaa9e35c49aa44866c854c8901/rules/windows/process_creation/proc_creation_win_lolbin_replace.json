@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_replace.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-03-06",
+                "title": "Replace.exe Usage",
+                "id": "9292293b-8496-4715-9db6-37028dcda4b3"
+            },
+            "rule_text": "title: Replace.exe Usage\nid: 9292293b-8496-4715-9db6-37028dcda4b3\nstatus: test\ndescription: Detects the use of Replace.exe which can be used to replace file with\n  another file\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Replace/\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/replace\nauthor: frack113\ndate: 2022-03-06\nmodified: 2024-03-13\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\replace.exe\n  argument:\n    CommandLine|contains|windash: -a\n  condition: selection and argument\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

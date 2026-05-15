@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/fboldewin/YARA-rules/blob/master/UNC2891_Slapstick.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "UNC2891_Slapstick",
+                "tags": [],
+                "description": "Detects UNC2891 Slapstick pam backdoor",
+                "author": "Frank Boldewin (@r3c0nst)",
+                "date": "2022-30-03",
+                "hash1": "9d0165e0484c31bd4ea467650b2ae2f359f67ae1016af49326bb374cead5f789"
+            },
+            "rule_text": "rule UNC2891_Slapstick\n{\n\tmeta:\n\t\tdescription = \"Detects UNC2891 Slapstick pam backdoor\"\n\t\tauthor = \"Frank Boldewin (@r3c0nst)\"\n\t\tdate = \"2022-30-03\"\n\t\thash1 = \"9d0165e0484c31bd4ea467650b2ae2f359f67ae1016af49326bb374cead5f789\"\n\n\tstrings:\n\t\t$code1 = {F6 50 04 48 FF C0 48 39 D0 75 F5}\n\t\t$code2 = {88 01 48 FF C1 8A 11 89 C8 29 F8 84 D2 0F 85}\n\t\t$str1 = \"/proc/self/exe\" fullword ascii\n\t\t$str2 = \"%-23s %-23s %-23s %-23s %-23s %s\" fullword ascii\n\t\t$str3 = \"pam_sm_authenticate\" ascii\n\t\t$str4 = \"ACCESS GRANTED & WELCOME\" xor\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and filesize < 100KB and ( all of ( $code* ) or all of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

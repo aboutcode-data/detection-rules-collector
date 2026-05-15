@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/DarkGate/darkgate_autoit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "darkgate_AutoIT",
+                "tags": [],
+                "description": "Detects DarkGate AutoIT script",
+                "author": "RussianPanda",
+                "date": "2024-01-26",
+                "reference": "https://yara.readthedocs.io/en/stable/writingrules.html?highlight=xor",
+                "hash": "e1803b01e3f187355dbeb87a0c91b76c"
+            },
+            "rule_text": "rule darkgate_AutoIT\n{\n\tmeta:\n\t\tdescription = \"Detects DarkGate AutoIT script\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2024-01-26\"\n\t\treference = \"https://yara.readthedocs.io/en/stable/writingrules.html?highlight=xor\"\n\t\thash = \"e1803b01e3f187355dbeb87a0c91b76c\"\n\n\tstrings:\n\t\t$h = \"AU3!EA06\"\n\t\t$s1 = \"just_test.txt\" xor(0x01-0xff)\n\t\t$s2 = \"c:\\\\temp\\\\data.txt\" xor(0x01-0xff)\n\t\t$s3 = \"test.txt\" xor(0x01-0xff)\n\t\t$s4 = \"cc.txt\" xor(0x01-0xff)\n\t\t$s5 = \"c:\\\\temp\\\\data.txt\" xor(0x01-0xff)\n\t\t$s6 = \"uu.txt\" xor(0x01-0xff)\n\n\tcondition:\n\t\t3 of ( $s* ) and $h\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

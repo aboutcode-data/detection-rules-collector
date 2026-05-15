@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_sofacy_zebrocy.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt28_win_zebrocy_golang_loader_modified",
+                "tags": [],
+                "description": "Detects unpacked modified APT28/Sofacy Zebrocy Golang.",
+                "author": "@VK_Intel",
+                "date": "2018-12-25",
+                "reference": "https://www.vkremez.com/2018/12/lets-learn-progression-of-apt28sofacy.html",
+                "id": "cce9ba6c-954c-5b13-a058-cdf7895d63fc"
+            },
+            "rule_text": "rule apt28_win_zebrocy_golang_loader_modified\n{\n\tmeta:\n\t\tdescription = \"Detects unpacked modified APT28/Sofacy Zebrocy Golang.\"\n\t\tauthor = \"@VK_Intel\"\n\t\tdate = \"2018-12-25\"\n\t\treference = \"https://www.vkremez.com/2018/12/lets-learn-progression-of-apt28sofacy.html\"\n\t\tid = \"cce9ba6c-954c-5b13-a058-cdf7895d63fc\"\n\n\tstrings:\n\t\t$go = { 47 6f 20 62 75 69 6c 64 20 49 44 3a 20 }\n\t\t$init = { 6d 61 69 6e 2e 69 6e 69 74 }\n\t\t$main = \"main\" ascii wide fullword\n\t\t$scr_git = {67 69 74 68 75 62 2e 63 6f 6d 2f 6b 62 69 6e 61}\n\t\t$s0 = \"os/exec.(*Cmd).Run\" fullword ascii\n\t\t$s1 = \"net/http.(*http2clientConnReadLoop).processHeaders\" fullword ascii\n\t\t$s2 = \"os.MkdirAll\" fullword ascii\n\t\t$s3 = \"os.Getenv\" fullword ascii\n\t\t$s4 = \"os.Create\" fullword ascii\n\t\t$s5 = \"io/ioutil.WriteFile\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $go and $init and all of ( $s* ) and #main > 10 and #scr_git > 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

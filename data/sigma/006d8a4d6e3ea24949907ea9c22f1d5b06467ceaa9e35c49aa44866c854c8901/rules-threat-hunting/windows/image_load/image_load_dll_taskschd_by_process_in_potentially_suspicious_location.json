@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/image_load/image_load_dll_taskschd_by_process_in_potentially_suspicious_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel",
+                "date": "2024-09-02",
+                "title": "Task Scheduler DLL Loaded By Application Located In Potentially Suspicious Location",
+                "id": "3b92a1d0-8d4b-4d28-a1b4-1e29d49a6a3e"
+            },
+            "rule_text": "title: Task Scheduler DLL Loaded By Application Located In Potentially Suspicious\n  Location\nid: 3b92a1d0-8d4b-4d28-a1b4-1e29d49a6a3e\nstatus: test\ndescription: 'Detects the loading of the \"taskschd.dll\" module from a process that\n  located in a potentially suspicious or uncommon directory.\n\n  The loading of this DLL might indicate that the application have the capability\n  to create a scheduled task via the \"Schedule.Service\" COM object.\n\n  Investigation of the loading application and its behavior is required to determining\n  if its malicious.\n\n  '\nreferences:\n- https://www.logpoint.com/en/blog/shenanigans-of-scheduled-tasks/\n- https://x.com/Max_Mal_/status/1826179497084739829\nauthor: Swachchhanda Shrawan Poudel\ndate: 2024-09-02\ntags:\n- attack.persistence\n- attack.execution\n- attack.privilege-escalation\n- attack.t1053.005\n- detection.threat-hunting\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection_dll:\n  - ImageLoaded|endswith: \\taskschd.dll\n  - OriginalFileName: taskschd.dll\n  selection_paths:\n    Image|contains:\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n    - \\Desktop\\\n    - \\Downloads\\\n  condition: all of selection_*\nfalsepositives:\n- Some installers might generate false positives, apply additional filters accordingly.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

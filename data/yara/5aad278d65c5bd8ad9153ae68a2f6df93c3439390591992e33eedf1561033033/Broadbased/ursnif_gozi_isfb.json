@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/ursnif_gozi_isfb.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ursnif_zip_2019",
+                "tags": [],
+                "author": "jeFF0Falltrades",
+                "reference": "https://www.fortinet.com/blog/threat-research/ursnif-variant-spreading-word-document.html"
+            },
+            "rule_text": "rule ursnif_zip_2019\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\t\treference = \"https://www.fortinet.com/blog/threat-research/ursnif-variant-spreading-word-document.html\"\n\n\tstrings:\n\t\t$doc_name = { 69 6e 66 6f 5f ?? ?? 2e ?? ?? 2e 64 6f 63 }\n\t\t$zip_header = { 50 4B 03 04 }\n\t\t$zip_footer = { 50 4B 05 06 00 }\n\n\tcondition:\n\t\t($zip_header at 0 ) and ( $doc_name in ( 0 .. 48 ) ) and ( $zip_footer in ( filesize - 150 .. filesize ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ursnif_dropper_doc_2019",
+                "tags": [],
+                "author": "jeFF0Falltrades",
+                "reference": "https://www.fortinet.com/blog/threat-research/ursnif-variant-spreading-word-document.html"
+            },
+            "rule_text": "rule ursnif_dropper_doc_2019\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\t\treference = \"https://www.fortinet.com/blog/threat-research/ursnif-variant-spreading-word-document.html\"\n\n\tstrings:\n\t\t$sleep = \"WScript.Sleep(56000)\" wide ascii nocase\n\t\t$js = \".js\" wide ascii\n\t\t$ret = { 72 65 74 75 72 6e 20 22 52 75 22 20 2b 20 22 5c 78 36 65 22 }\n\t\t$pse = { 70 6f 77 65 72 73 68 65 6c 6c 20 2d 45 6e 63 20 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0xcfd0 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

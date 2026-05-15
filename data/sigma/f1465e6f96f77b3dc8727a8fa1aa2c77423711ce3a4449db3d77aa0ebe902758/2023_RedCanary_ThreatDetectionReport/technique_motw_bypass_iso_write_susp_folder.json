@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_motw_bypass_iso_write_susp_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "ISO File Write to Suspicious Folder (RedCanary Threat Detection Report)",
+                "id": "bedf5cac-6332-4463-98ab-818f9e31234c"
+            },
+            "rule_text": "title: ISO File Write to Suspicious Folder (RedCanary Threat Detection Report)\nid: bedf5cac-6332-4463-98ab-818f9e31234c\nstatus: experimental\ndescription: Detects files written to user downloads folder or appdata folder, associated\n  with Mark-of-the-Web Bypass. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/mark-of-the-web-bypass/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.defense_evasion\n- attack.t1553.005\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_iso:\n    TargetFilename|endswith: .iso\n  selection_user_downloads:\n    TargetFilename|contains|all:\n    - Users\n    - Downloads\n  selection_appdata:\n    TargetFilename|contains: appdata\n  condition: selection_iso and (selection_user_downloads or selection_appdata)\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

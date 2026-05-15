@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/DumpHive/VirTool_Win32_DumpHive_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_DumpHive_C",
+                "tags": [],
+                "description": "VirTool:Win32/DumpHive.C,SIGNATURE_TYPE_CMDHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_DumpHive_C\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/DumpHive.C,SIGNATURE_TYPE_CMDHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {5c 00 72 00 65 00 67 00 2e 00 65 00 78 00 65 00 00 00 }\n\t\t$a_02_1 = {20 00 73 00 61 00 76 00 65 00 20 00 5c 00 5c 00 [0-30] 5c 00 68 00 6b 00 6c 00 6d 00 5c 00 73 00 61 00 6d 00 20 00 }\n\t\t$a_02_2 = {20 00 73 00 61 00 76 00 65 00 20 00 5c 00 5c 00 [0-30] 5c 00 68 00 6b 00 6c 00 6d 00 5c 00 73 00 65 00 63 00 75 00 72 00 69 00 74 00 79 00 20 00 }\n\t\t$a_02_3 = {20 00 73 00 61 00 76 00 65 00 20 00 5c 00 5c 00 [0-30] 5c 00 68 00 6b 00 6c 00 6d 00 5c 00 73 00 79 00 73 00 74 00 65 00 6d 00 20 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 4 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

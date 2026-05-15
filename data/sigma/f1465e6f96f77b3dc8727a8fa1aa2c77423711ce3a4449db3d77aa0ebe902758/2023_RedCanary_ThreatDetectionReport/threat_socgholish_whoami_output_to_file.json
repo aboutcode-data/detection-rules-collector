@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_socgholish_whoami_output_to_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "SocGholish Script File Whoami Output to File (RedCanary Threat Detection Report)",
+                "id": "0886986b-47e9-41e8-87c7-41b202503b24"
+            },
+            "rule_text": "title: SocGholish Script File Whoami Output to File (RedCanary Threat Detection Report)\nid: 0886986b-47e9-41e8-87c7-41b202503b24\nstatus: experimental\ndescription: Detects wscript spawning CMD which in turn runs whoami, with the output\n  of the command directed to a file. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/socgholish/#threat-socgholish\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.discovery\n- attack.t1033\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\wscript.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains|windash:\n    - whoami /all >\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

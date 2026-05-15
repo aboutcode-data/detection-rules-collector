@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Brian Carter -carterb/mal_pdf.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PDF_EMBEDDED_DOCM",
+                "tags": [],
+                "description": "Find pdf files that have an embedded docm with openaction",
+                "author": "Brian Carter",
+                "last_modified": "May 11, 2017"
+            },
+            "rule_text": "rule PDF_EMBEDDED_DOCM\n{\n\tmeta:\n\t\tdescription = \"Find pdf files that have an embedded docm with openaction\"\n\t\tauthor = \"Brian Carter\"\n\t\tlast_modified = \"May 11, 2017\"\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 2d }\n\t\t$txt1 = \"EmbeddedFile\"\n\t\t$txt2 = \"docm)\"\n\t\t$txt3 = \"JavaScript\" nocase\n\n\tcondition:\n\t\t$magic at 0 and all of ( $txt* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

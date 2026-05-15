@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/chuongdong/MountLocker5_0.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MountLocker5_0",
+                "tags": [],
+                "description": "YARA rule for MountLocker v5.0",
+                "reference": "http://chuongdong.com/reverse%20engineering/2021/05/23/MountLockerRansomware/",
+                "author": "@cPeterr",
+                "tlp": "white"
+            },
+            "rule_text": "rule MountLocker5_0\n{\n\tmeta:\n\t\tdescription = \"YARA rule for MountLocker v5.0\"\n\t\treference = \"http://chuongdong.com/reverse%20engineering/2021/05/23/MountLockerRansomware/\"\n\t\tauthor = \"@cPeterr\"\n\t\ttlp = \"white\"\n\n\tstrings:\n\t\t$worm_str = \"========== WORM ==========\" wide\n\t\t$ransom_note_str = \".ReadManual.%0.8X\" wide\n\t\t$version_str = \"5.0\" wide\n\t\t$chacha_str = \"ChaCha20 for x86_64, CRYPTOGAMS by <appro@openssl.org>\"\n\t\t$chacha_const = \"expand 32-byte k\"\n\t\t$lock_str = \"[OK] locker.file > time=%0.3f size=%0.3f KB speed=%\" wide\n\t\t$bat_str = \"attrib -s -r -h %1\"\n\t\t$IDirectorySearch_RIID = { EC A8 9B 10 F0 92 D0 11 A7 90 00 C0 4F D8 D5 A8 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

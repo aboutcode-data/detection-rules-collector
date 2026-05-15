@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_outlook_macro_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@ScoubiMtl",
+                "date": "2021-04-05",
+                "title": "New Outlook Macro Created",
+                "id": "8c31f563-f9a7-450c-bfa8-35f8f32f1f61"
+            },
+            "rule_text": "title: New Outlook Macro Created\nid: 8c31f563-f9a7-450c-bfa8-35f8f32f1f61\nrelated:\n- id: 117d3d3a-755c-4a61-b23e-9171146d094c\n  type: derived\nstatus: test\ndescription: Detects the creation of a macro file for Outlook.\nreferences:\n- https://www.mdsec.co.uk/2020/11/a-fresh-outlook-on-mail-based-persistence/\nauthor: '@ScoubiMtl'\ndate: 2021-04-05\nmodified: 2023-02-08\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.command-and-control\n- attack.t1137\n- attack.t1008\n- attack.t1546\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\outlook.exe\n    TargetFilename|endswith: \\Microsoft\\Outlook\\VbaProject.OTM\n  condition: selection\nfalsepositives:\n- User genuinely creates a VB Macro for their email\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

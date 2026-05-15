@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/RaccoonStealer_v2/raccoonstealer_v2.3.1.1.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RaccoonStealer",
+                "tags": [],
+                "author": "RussianPanda",
+                "decription": "Detects Raccoon Stealer v2.3.1.1",
+                "reference": "https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-raccoon-stealer-v2-0",
+                "date": "1/8/2024",
+                "hash": "c6d0d98dd43822fe12a1d785df4e391db3c92846b0473b54762fbb929de6f5cb"
+            },
+            "rule_text": "rule RaccoonStealer\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdecription = \"Detects Raccoon Stealer v2.3.1.1\"\n\t\treference = \"https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-raccoon-stealer-v2-0\"\n\t\tdate = \"1/8/2024\"\n\t\thash = \"c6d0d98dd43822fe12a1d785df4e391db3c92846b0473b54762fbb929de6f5cb\"\n\n\tstrings:\n\t\t$s1 = {8B 0D [2] 41 00 A3 [3] 00}\n\t\t$s2 = \"MachineGuid\"\n\t\t$s3 = \"SELECT name_on_card, card_number_encrypted, expiration_month, expiration_year FROM credit_cards\"\n\t\t$s4 = \"SELECT service, encrypted_token FROM token_service\"\n\t\t$s5 = \"&configId=\"\n\t\t$s6 = \"machineId=\"\n\n\tcondition:\n\t\tall of ( $s* ) and #s1 > 10 and uint16( 0 ) == 0x5A4D and filesize < 5MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

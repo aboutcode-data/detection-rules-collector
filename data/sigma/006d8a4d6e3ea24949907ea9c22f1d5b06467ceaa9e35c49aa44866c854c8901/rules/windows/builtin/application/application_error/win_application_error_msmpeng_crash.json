@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/application_error/win_application_error_msmpeng_crash.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-05-09",
+                "title": "Microsoft Malware Protection Engine Crash",
+                "id": "545a5da6-f103-4919-a519-e9aec1026ee4"
+            },
+            "rule_text": "title: Microsoft Malware Protection Engine Crash\nid: 545a5da6-f103-4919-a519-e9aec1026ee4\nrelated:\n- id: 6c82cf5c-090d-4d57-9188-533577631108\n  type: similar\nstatus: test\ndescription: This rule detects a suspicious crash of the Microsoft Malware Protection\n  Engine\nreferences:\n- https://bugs.chromium.org/p/project-zero/issues/detail?id=1252&desc=5\n- https://technet.microsoft.com/en-us/library/security/4022344\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-05-09\nmodified: 2023-04-14\ntags:\n- attack.stealth\n- attack.defense-impairment\n- attack.t1211\n- attack.t1685\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name: Application Error\n    EventID: 1000\n    Data|contains|all:\n    - MsMpEng.exe\n    - mpengine.dll\n  condition: selection\nfalsepositives:\n- MsMpEng might crash if the \"C:\\\" partition is full\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

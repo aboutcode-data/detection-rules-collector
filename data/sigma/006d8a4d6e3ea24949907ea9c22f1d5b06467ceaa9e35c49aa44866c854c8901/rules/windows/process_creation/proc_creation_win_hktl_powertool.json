@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_powertool.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-29",
+                "title": "HackTool - PowerTool Execution",
+                "id": "a34f79a3-8e5f-4cc3-b765-de00695452c2"
+            },
+            "rule_text": "title: HackTool - PowerTool Execution\nid: a34f79a3-8e5f-4cc3-b765-de00695452c2\nstatus: test\ndescription: Detects the execution of the tool PowerTool which has the ability to\n  kill a process, delete its process file, unload drivers, and delete the driver files\nreferences:\n- https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/\n- https://www.trendmicro.com/en_us/research/22/i/play-ransomware-s-attack-playbook-unmasks-it-as-another-hive-aff.html\n- https://twitter.com/gbti_sa/status/1249653895900602375?lang=en\n- https://www.softpedia.com/get/Antivirus/Removal-Tools/ithurricane-PowerTool.shtml\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-29\nmodified: 2023-02-04\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n  - Image|endswith:\n    - \\PowerTool.exe\n    - \\PowerTool64.exe\n  - OriginalFileName: PowerTool.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

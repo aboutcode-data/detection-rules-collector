@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/DarkCloud/Trojan_Win32_DarkCloud_GZA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_DarkCloud_GZA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/DarkCloud.GZA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_DarkCloud_GZA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/DarkCloud.GZA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b d0 8d 4d ?? ff d6 ba ?? ?? ?? ?? 8d 4d 94 ff d7 8b 55 ?? 89 5d ?? 8d 4d 98 ff d6 8d 4d 94 51 8d 55 98 52 }\n\t\t$a_80_1 = {43 68 72 6f 6d 65 4d 65 74 61 4d 61 73 6b 56 61 75 6c 74 44 61 74 61 2e 74 78 74 }\n\t\t$a_80_2 = {44 41 52 4b 43 4c 4f 55 44 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_80_1 & 1 ) * 1 + ( #a_80_2 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

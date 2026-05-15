@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_invoke_webrequest_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-02",
+                "title": "Suspicious Invoke-WebRequest Execution",
+                "id": "5e3cc4d8-3e68-43db-8656-eaaeefdec9cc"
+            },
+            "rule_text": "title: Suspicious Invoke-WebRequest Execution\nid: 5e3cc4d8-3e68-43db-8656-eaaeefdec9cc\nrelated:\n- id: e218595b-bbe7-4ee5-8a96-f32a24ad3468\n  type: derived\nstatus: test\ndescription: Detects a suspicious call to Invoke-WebRequest cmdlet where the and output\n  is located in a suspicious location\nreferences:\n- https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-02\nmodified: 2025-07-18\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - powershell_ise.EXE\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_commands:\n    CommandLine|contains:\n    - 'curl '\n    - Invoke-WebRequest\n    - 'iwr '\n    - 'wget '\n  selection_flags:\n    CommandLine|contains:\n    - ' -ur'\n    - ' -o'\n  selection_susp_locations:\n    CommandLine|contains:\n    - \\AppData\\\n    - \\Desktop\\\n    - \\Temp\\\n    - \\Users\\Public\\\n    - '%AppData%'\n    - '%Public%'\n    - '%Temp%'\n    - '%tmp%'\n    - :\\Windows\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

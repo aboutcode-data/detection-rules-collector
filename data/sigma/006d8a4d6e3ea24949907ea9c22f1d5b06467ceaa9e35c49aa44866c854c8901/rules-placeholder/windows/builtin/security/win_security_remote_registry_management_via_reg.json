@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_remote_registry_management_via_reg.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, oscd.community",
+                "date": "2019-10-22",
+                "title": "Remote Registry Management Using Reg Utility",
+                "id": "68fcba0d-73a5-475e-a915-e8b4c576827e"
+            },
+            "rule_text": "title: Remote Registry Management Using Reg Utility\nid: 68fcba0d-73a5-475e-a915-e8b4c576827e\nstatus: test\ndescription: Remote registry management using REG utility from non-admin workstation\nreferences:\n- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment\nauthor: Teymur Kheirkhabarov, oscd.community\ndate: 2019-10-22\nmodified: 2023-12-15\ntags:\n- attack.credential-access\n- attack.persistence\n- attack.discovery\n- attack.defense-impairment\n- attack.s0075\n- attack.t1012\n- attack.t1112\n- attack.t1552.002\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5145\n    RelativeTargetName|contains: \\winreg\n  filter_main:\n    IpAddress|expand: '%Admins_Workstations%'\n  condition: selection and not filter_main\nfalsepositives:\n- Legitimate usage of remote registry management by administrator\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

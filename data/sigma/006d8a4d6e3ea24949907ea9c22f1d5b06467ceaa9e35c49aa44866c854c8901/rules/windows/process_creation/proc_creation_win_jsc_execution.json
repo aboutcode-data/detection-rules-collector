@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_jsc_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-05-02",
+                "title": "JScript Compiler Execution",
+                "id": "52788a70-f1da-40dd-8fbd-73b5865d6568"
+            },
+            "rule_text": "title: JScript Compiler Execution\nid: 52788a70-f1da-40dd-8fbd-73b5865d6568\nstatus: test\ndescription: 'Detects the execution of the \"jsc.exe\" (JScript Compiler).\n\n  Attacker might abuse this in order to compile JScript files on the fly and bypassing\n  application whitelisting.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Jsc/\n- https://www.phpied.com/make-your-javascript-a-windows-exe/\n- https://twitter.com/DissectMalware/status/998797808907046913\nauthor: frack113\ndate: 2022-05-02\nmodified: 2024-04-24\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n  - Image|endswith: \\jsc.exe\n  - OriginalFileName: jsc.exe\n  condition: selection\nfalsepositives:\n- Legitimate use to compile JScript by developers.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

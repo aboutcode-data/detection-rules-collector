@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_perl_reverse_shell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@d4ns4n_, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-07",
+                "title": "Potential Perl Reverse Shell Execution",
+                "id": "259df6bc-003f-4306-9f54-4ff1a08fa38e"
+            },
+            "rule_text": "title: Potential Perl Reverse Shell Execution\nid: 259df6bc-003f-4306-9f54-4ff1a08fa38e\nstatus: test\ndescription: Detects execution of the perl binary with the \"-e\" flag and common strings\n  related to potential reverse shell activity\nreferences:\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\n- https://www.revshells.com/\nauthor: '@d4ns4n_, Nasreddine Bencherchali (Nextron Systems)'\ndate: 2023-04-07\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /perl\n    CommandLine|contains: ' -e '\n  selection_content:\n  - CommandLine|contains|all:\n    - fdopen(\n    - ::Socket::INET\n  - CommandLine|contains|all:\n    - Socket\n    - connect\n    - open\n    - exec\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

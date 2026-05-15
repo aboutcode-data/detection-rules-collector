@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wermgr_susp_exec_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-10-14",
+                "title": "Suspicious Execution Location Of Wermgr.EXE",
+                "id": "5394fcc7-aeb2-43b5-9a09-cac9fc5edcd5"
+            },
+            "rule_text": "title: Suspicious Execution Location Of Wermgr.EXE\nid: 5394fcc7-aeb2-43b5-9a09-cac9fc5edcd5\nrelated:\n- id: 396f6630-f3ac-44e3-bfc8-1b161bc00c4e\n  type: similar\nstatus: test\ndescription: Detects suspicious Windows Error Reporting manager (wermgr.exe) execution\n  location.\nreferences:\n- https://www.trendmicro.com/en_us/research/22/j/black-basta-infiltrates-networks-via-qakbot-brute-ratel-and-coba.html\n- https://www.echotrail.io/insights/search/wermgr.exe\n- https://github.com/binderlabs/DirCreate2System\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-10-14\nmodified: 2023-08-23\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wermgr.exe\n  filter_main_legit_location:\n    Image|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

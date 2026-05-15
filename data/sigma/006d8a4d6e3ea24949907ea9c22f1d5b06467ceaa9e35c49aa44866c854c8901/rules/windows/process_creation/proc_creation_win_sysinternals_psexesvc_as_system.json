@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_psexesvc_as_system.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "PsExec Service Child Process Execution as LOCAL SYSTEM",
+                "id": "7c0dcd3d-acf8-4f71-9570-f448b0034f94"
+            },
+            "rule_text": "title: PsExec Service Child Process Execution as LOCAL SYSTEM\nid: 7c0dcd3d-acf8-4f71-9570-f448b0034f94\nrelated:\n- id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba\n  type: similar\nstatus: test\ndescription: Detects suspicious launch of the PSEXESVC service on this system and\n  a sub process run as LOCAL_SYSTEM (-s), which means that someone remotely started\n  a command on this system running it with highest privileges and not only the privileges\n  of the login user account (e.g. the administrator account)\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/psexec\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-02-28\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage: C:\\Windows\\PSEXESVC.exe\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  condition: selection\nfalsepositives:\n- Users that debug Microsoft Intune issues using the commands mentioned in the official\n  documentation; see https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

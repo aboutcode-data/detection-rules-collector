@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/Truesightkiller/VirTool_Win64_Truesightkiller_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_Truesightkiller_A",
+                "tags": [],
+                "description": "VirTool:Win64/Truesightkiller.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_Truesightkiller_A\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/Truesightkiller.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 4c 24 60 41 b9 ff 01 0f 00 48 89 4c 24 58 4c 8b c6 48 89 4c 24 50 48 8b d6 48 89 4c 24 48 48 89 4c 24 40 48 89 44 24 38 89 4c 24 30 48 8b cf c7 44 24 28 03 00 00 00 c7 44 24 20 01 00 00 00 ff ?? ?? ?? ?? ?? 48 8b d8 48 85 c0 ?? ?? 48 8b }\n\t\t$a_03_1 = {45 33 c9 4c 89 7c 24 30 c7 44 24 28 80 00 00 00 ?? ?? ?? ?? ?? ?? ?? 45 33 c0 c7 44 24 20 03 00 00 00 ?? ?? ?? ?? ff ?? ?? ?? ?? ?? 48 8b ?? ?? ?? ?? ?? 48 8b f0 48 83 f8 ff }\n\t\t$a_01_2 = {ba 44 e0 22 00 }\n\t\t$a_80_3 = {5c 5c 2e 5c }\n\t\t$a_80_4 = {2e 73 79 73 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_80_3 & 1 ) * 1 + ( #a_80_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

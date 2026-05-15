@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/bits_client/win_bits_client_new_transfer_via_file_sharing_domains.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-28",
+                "title": "BITS Transfer Job Download From File Sharing Domains",
+                "id": "d635249d-86b5-4dad-a8c7-d7272b788586"
+            },
+            "rule_text": "title: BITS Transfer Job Download From File Sharing Domains\nid: d635249d-86b5-4dad-a8c7-d7272b788586\nstatus: test\ndescription: Detects BITS transfer job downloading files from a file sharing domain.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md\n- https://twitter.com/malmoeb/status/1535142803075960832\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker\n- https://www.microsoft.com/en-us/security/blog/2024/01/17/new-ttps-observed-in-mint-sandstorm-campaign-targeting-high-profile-individuals-at-universities-and-research-orgs/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-28\nmodified: 2025-12-10\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\nlogsource:\n  product: windows\n  service: bits-client\ndetection:\n  selection:\n    EventID: 16403\n    RemoteName|contains:\n    - .githubusercontent.com\n    - anonfiles.com\n    - cdn.discordapp.com\n    - ddns.net\n    - dl.dropboxusercontent.com\n    - ghostbin.co\n    - github.com\n    - glitch.me\n    - gofile.io\n    - hastebin.com\n    - mediafire.com\n    - mega.nz\n    - onrender.com\n    - pages.dev\n    - paste.ee\n    - pastebin.com\n    - pastebin.pl\n    - pastetext.net\n    - pixeldrain.com\n    - privatlab.com\n    - privatlab.net\n    - send.exploit.in\n    - sendspace.com\n    - storage.googleapis.com\n    - storjshare.io\n    - supabase.co\n    - temp.sh\n    - transfer.sh\n    - trycloudflare.com\n    - ufile.io\n    - w3spaces.com\n    - workers.dev\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

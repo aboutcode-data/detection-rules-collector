@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/vboxuserrat.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_vboxuserRAT",
+                "tags": [],
+                "description": "Hunt vboxuserRAT",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "47FB80593A1924AE4351C3A8C9EE9F1F365267719531387E88A4A82000088E48"
+            },
+            "rule_text": "rule malware_vboxuserRAT\n{\n\tmeta:\n\t\tdescription = \"Hunt vboxuserRAT\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"47FB80593A1924AE4351C3A8C9EE9F1F365267719531387E88A4A82000088E48\"\n\n\tstrings:\n\t\t$cmdfunc1 = { 65 78 65 5F 64 6C 6C 5F }\n\t\t$cmdfunc2 = { 72 75 6E 64 6C 6C 33 32 }\n\t\t$cmdfunc3 = { 73 68 65 6C 6C 5F 63 6C }\n\t\t$cmdfunc4 = { 72 75 6E 5F 77 69 74 68 }\n\t\t$cmdfunc5 = { 73 68 65 6C 6C 5F 73 79 }\n\t\t$cmdstr1 = \"run_dll_from_memory\" ascii\n\t\t$cmdstr2 = \"run_exe_from_memory\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D ) and ( uint32( uint32( 0x3c ) ) == 0x00004550 ) and ( filesize > 3MB ) and ( filesize < 10MB ) and ( 3 of ( $cmdfunc* ) ) and ( 1 of ( $cmdstr* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

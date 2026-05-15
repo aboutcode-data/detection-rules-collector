@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_ruby_reverse_shell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@d4ns4n_",
+                "date": "2023-04-07",
+                "title": "Potential Ruby Reverse Shell",
+                "id": "b8bdac18-c06e-4016-ac30-221553e74f59"
+            },
+            "rule_text": "title: Potential Ruby Reverse Shell\nid: b8bdac18-c06e-4016-ac30-221553e74f59\nstatus: test\ndescription: Detects execution of ruby with the \"-e\" flag and calls to \"socket\" related\n  functions. This could be an indication of a potential attempt to setup a reverse\n  shell\nreferences:\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\n- https://www.revshells.com/\nauthor: '@d4ns4n_'\ndate: 2023-04-07\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|contains: ruby\n    CommandLine|contains|all:\n    - ' -e'\n    - rsocket\n    - TCPSocket\n    CommandLine|contains:\n    - ' ash'\n    - ' bash'\n    - ' bsh'\n    - ' csh'\n    - ' ksh'\n    - ' pdksh'\n    - ' sh'\n    - ' tcsh'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

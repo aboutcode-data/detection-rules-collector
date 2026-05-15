@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vmware_toolbox_cmd_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-14",
+                "title": "Potential Persistence Via VMwareToolBoxCmd.EXE VM State Change Script",
+                "id": "7aa4e81a-a65c-4e10-9f81-b200eb229d7d"
+            },
+            "rule_text": "title: Potential Persistence Via VMwareToolBoxCmd.EXE VM State Change Script\nid: 7aa4e81a-a65c-4e10-9f81-b200eb229d7d\nrelated:\n- id: 236d8e89-ed95-4789-a982-36f4643738ba\n  type: derived\nstatus: test\ndescription: Detects execution of the \"VMwareToolBoxCmd.exe\" with the \"script\" and\n  \"set\" flag to setup a specific script to run for a specific VM state\nreferences:\n- https://bohops.com/2021/10/08/analyzing-and-detecting-a-vmtools-persistence-technique/\n- https://www.hexacorn.com/blog/2017/01/14/beyond-good-ol-run-key-part-53/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-14\ntags:\n- attack.execution\n- attack.persistence\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\VMwareToolBoxCmd.exe\n  - OriginalFileName: toolbox-cmd.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' script '\n    - ' set '\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

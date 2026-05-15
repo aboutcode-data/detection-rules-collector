@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/image_load/image_load_wmi_module_load_by_uncommon_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-08-10",
+                "title": "WMI Module Loaded By Uncommon Process",
+                "id": "671bb7e3-a020-4824-a00e-2ee5b55f385e"
+            },
+            "rule_text": "title: WMI Module Loaded By Uncommon Process\nid: 671bb7e3-a020-4824-a00e-2ee5b55f385e\nstatus: test\ndescription: Detects WMI modules being loaded by an uncommon process\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190811-WMIModuleLoad/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-08-10\nmodified: 2025-02-24\ntags:\n- attack.execution\n- attack.t1047\n- detection.threat-hunting\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith:\n    - \\fastprox.dll\n    - \\wbemcomn.dll\n    - \\wbemprox.dll\n    - \\wbemsvc.dll\n    - \\WmiApRpl.dll\n    - \\wmiclnt.dll\n    - \\WMINet_Utils.dll\n    - \\wmiprov.dll\n    - \\wmiutils.dll\n  filter_main_generic:\n    Image|contains:\n    - :\\Program Files (x86)\\\n    - :\\Program Files\\\n    - :\\Windows\\explorer.exe\n    - :\\Windows\\Microsoft.NET\\Framework\\\n    - :\\Windows\\Microsoft.NET\\FrameworkArm\\\n    - :\\Windows\\Microsoft.NET\\FrameworkArm64\\\n    - :\\Windows\\Microsoft.NET\\Framework64\\\n    - :\\Windows\\System32\\\n    - :\\Windows\\SysWOW64\\\n  filter_optional_other:\n    Image|endswith:\n    - \\WindowsAzureGuestAgent.exe\n    - \\WaAppAgent.exe\n  filter_optional_thor:\n    Image|endswith:\n    - \\thor.exe\n    - \\thor64.exe\n  filter_optional_defender:\n    Image|endswith: \\MsMpEng.exe\n  filter_optional_teams:\n    Image|contains:\n    - \\Microsoft\\Teams\\current\\Teams.exe\n    - \\Microsoft\\Teams\\Update.exe\n  filter_optional_sysmon:\n    Image|endswith:\n    - :\\Windows\\Sysmon.exe\n    - :\\Windows\\Sysmon64.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

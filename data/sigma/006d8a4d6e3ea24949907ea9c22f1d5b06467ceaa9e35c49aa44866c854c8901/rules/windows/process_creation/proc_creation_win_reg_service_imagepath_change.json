@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_service_imagepath_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-30",
+                "title": "Changing Existing Service ImagePath Value Via Reg.EXE",
+                "id": "9b0b7ac3-6223-47aa-a3fd-e8f211e637db"
+            },
+            "rule_text": "title: Changing Existing Service ImagePath Value Via Reg.EXE\nid: 9b0b7ac3-6223-47aa-a3fd-e8f211e637db\nstatus: test\ndescription: 'Adversaries may execute their own malicious payloads by hijacking the\n  Registry entries used by services.\n\n  Adversaries may use flaws in the permissions for registry to redirect from the originally\n  specified executable to one that they control, in order to launch their own code\n  at Service start.\n\n  Windows stores local service configuration information in the Registry under HKLM\\SYSTEM\\CurrentControlSet\\Services\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.011/T1574.011.md#atomic-test-2---service-imagepath-change-with-regexe\nauthor: frack113\ndate: 2021-12-30\nmodified: 2024-03-13\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\reg.exe\n    CommandLine|contains|all:\n    - 'add '\n    - SYSTEM\\CurrentControlSet\\Services\\\n    - ' ImagePath '\n  selection_value:\n    CommandLine|contains|windash: ' -d '\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

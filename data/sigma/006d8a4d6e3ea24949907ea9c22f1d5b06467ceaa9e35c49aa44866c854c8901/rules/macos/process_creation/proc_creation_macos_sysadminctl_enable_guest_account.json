@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_sysadminctl_enable_guest_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-02-18",
+                "title": "Guest Account Enabled Via Sysadminctl",
+                "id": "d7329412-13bd-44ba-a072-3387f804a106"
+            },
+            "rule_text": "title: Guest Account Enabled Via Sysadminctl\nid: d7329412-13bd-44ba-a072-3387f804a106\nstatus: test\ndescription: Detects attempts to enable the guest account using the sysadminctl utility\nreferences:\n- https://ss64.com/osx/sysadminctl.html\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-02-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.stealth\n- attack.t1078\n- attack.t1078.001\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /sysadminctl\n    CommandLine|contains|all:\n    - ' -guestAccount'\n    - ' on'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

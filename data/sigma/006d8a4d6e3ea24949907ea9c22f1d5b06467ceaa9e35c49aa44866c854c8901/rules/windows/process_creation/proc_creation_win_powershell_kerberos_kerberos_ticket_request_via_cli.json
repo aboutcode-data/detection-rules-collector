@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_kerberos_kerberos_ticket_request_via_cli.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-18",
+                "title": "Suspicious Kerberos Ticket Request via CLI",
+                "id": "caa9a802-8bd8-4b9e-a5cd-4d6221670219"
+            },
+            "rule_text": "title: Suspicious Kerberos Ticket Request via CLI\nid: caa9a802-8bd8-4b9e-a5cd-4d6221670219\nrelated:\n- id: a861d835-af37-4930-bcd6-5b178bfb54df\n  type: similar\nstatus: experimental\ndescription: 'Detects suspicious Kerberos ticket requests via command line using System.IdentityModel.Tokens.KerberosRequestorSecurityToken\n  class.\n\n  Threat actors may use command line interfaces to request Kerberos tickets for service\n  accounts in order to\n\n  perform offline password cracking attacks commonly known as Kerberoasting or other\n  Kerberos ticket abuse\n\n  techniques like silver ticket attacks.\n\n  '\nreferences:\n- https://www.huntress.com/blog/gootloader-threat-detection-woff2-obfuscation\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1558.003/T1558.003.md#atomic-test-4---request-a-single-ticket-via-powershell\n- https://learn.microsoft.com/en-us/dotnet/api/system.identitymodel.tokens.kerberosrequestorsecuritytoken?view=netframework-4.8.1\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-18\ntags:\n- attack.credential-access\n- attack.t1558.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - powershell.exe\n    - pwsh.dll\n  selection_cli:\n    CommandLine|contains|all:\n    - System.IdentityModel.Tokens.KerberosRequestorSecurityToken\n    - .GetRequest()\n  condition: all of selection_*\nfalsepositives:\n- Legitimate command line usage by administrators or security tools.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

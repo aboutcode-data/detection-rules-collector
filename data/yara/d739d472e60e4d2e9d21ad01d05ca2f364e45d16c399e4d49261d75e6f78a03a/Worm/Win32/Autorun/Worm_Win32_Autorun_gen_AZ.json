@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Autorun/Worm_Win32_Autorun_gen_AZ.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Autorun_gen_AZ",
+                "tags": [],
+                "description": "Worm:Win32/Autorun.gen!AZ,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Autorun_gen_AZ\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Autorun.gen!AZ,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {25 73 41 75 74 6f 52 75 6e 2e 69 6e 66 }\n\t\t$a_00_1 = {61 00 75 00 74 00 6f 00 72 00 75 00 6e 00 2e 00 69 00 6e 00 66 00 }\n\t\t$a_03_2 = {83 f8 02 0f 85 ?? ?? 00 00 68 ?? ?? ?? ?? 53 e8 ?? ?? ?? ?? 83 c4 08 85 c0 0f 85 ?? ?? 00 00 68 ?? ?? ?? ?? 53 e8 ?? ?? ?? ?? 83 c4 08 85 c0 0f 85 }\n\t\t$a_03_3 = {83 f8 02 0f 85 ?? ?? 00 00 8b 3d ?? ?? ?? ?? 68 ?? ?? ?? ?? 56 ff d7 83 c4 08 85 c0 0f 85 ?? ?? 00 00 68 ?? ?? ?? ?? 56 ff d7 83 c4 08 85 c0 0f 85 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 10 + ( #a_03_3 & 1 ) * 10 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

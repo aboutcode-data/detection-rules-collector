@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_screencaputre_xwd.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-09-13",
+                "title": "Screen Capture with Xwd",
+                "id": "e2f17c5d-b02a-442b-9052-6eb89c9fec9c"
+            },
+            "rule_text": "title: Screen Capture with Xwd\nid: e2f17c5d-b02a-442b-9052-6eb89c9fec9c\nstatus: test\ndescription: Detects adversary creating screen capture of a full with xwd. Highly\n  recommended using rule on servers, due high usage of screenshot utilities on user\n  workstations\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1113/T1113.md#atomic-test-3---x-windows-capture\n- https://linux.die.net/man/1/xwd\nauthor: Pawel Mazur\ndate: 2021-09-13\nmodified: 2022-12-18\ntags:\n- attack.collection\n- attack.t1113\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0: xwd\n  xwd_root_window:\n    a1: -root\n    a2: -out\n    a3|endswith: .xwd\n  xwd_no_root_window:\n    a1: -out\n    a2|endswith: .xwd\n  condition: selection and 1 of xwd_*\nfalsepositives:\n- Legitimate use of screenshot utility\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nick Hoffman/Check_DriveSize.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Check_DriveSize",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Rule tries to catch uses of DeviceIOControl being used to get the drive size",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_DriveSize\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Rule tries to catch uses of DeviceIOControl being used to get the drive size\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$physicaldrive = \"\\\\\\\\.\\\\PhysicalDrive0\" wide ascii nocase\n\t\t$dwIoControlCode = {68 5c 40 07 00 [0-5] FF 15}\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"CreateFileA\" ) and pe.imports ( \"kernel32.dll\" , \"DeviceIoControl\" ) and $dwIoControlCode and $physicaldrive\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

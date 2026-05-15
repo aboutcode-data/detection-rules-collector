@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_cp_passwd_or_shadow_tmp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-01-31",
+                "title": "Copy Passwd Or Shadow From TMP Path",
+                "id": "fa4aaed5-4fe0-498d-bbc0-08e3346387ba"
+            },
+            "rule_text": "title: Copy Passwd Or Shadow From TMP Path\nid: fa4aaed5-4fe0-498d-bbc0-08e3346387ba\nstatus: test\ndescription: Detects when the file \"passwd\" or \"shadow\" is copied from tmp path\nreferences:\n- https://blogs.blackberry.com/\n- https://twitter.com/Joseliyo_Jstnk/status/1620131033474822144\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-01-31\ntags:\n- attack.credential-access\n- attack.t1552.001\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_img:\n    Image|endswith: /cp\n  selection_path:\n    CommandLine|contains: /tmp/\n  selection_file:\n    CommandLine|contains:\n    - passwd\n    - shadow\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

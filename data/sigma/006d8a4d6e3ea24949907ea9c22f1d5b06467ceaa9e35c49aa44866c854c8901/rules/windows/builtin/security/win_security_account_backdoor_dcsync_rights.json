@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_account_backdoor_dcsync_rights.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden, Roberto Rodriguez @Cyb3rWard0g, oscd.community, Tim Shelton, Maxence Fossat",
+                "date": "2019-04-03",
+                "title": "Powerview Add-DomainObjectAcl DCSync AD Extend Right",
+                "id": "2c99737c-585d-4431-b61a-c911d86ff32f"
+            },
+            "rule_text": "title: Powerview Add-DomainObjectAcl DCSync AD Extend Right\nid: 2c99737c-585d-4431-b61a-c911d86ff32f\nstatus: test\ndescription: Backdooring domain object to grant the rights associated with DCSync\n  to a regular user or machine account using Powerview\\Add-DomainObjectAcl DCSync\n  Extended Right cmdlet, will allow to re-obtain the pwd hashes of any user/computer\nreferences:\n- https://twitter.com/menasec1/status/1111556090137903104\n- https://www.specterops.io/assets/resources/an_ace_up_the_sleeve.pdf\nauthor: Samir Bousseaden, Roberto Rodriguez @Cyb3rWard0g, oscd.community, Tim Shelton,\n  Maxence Fossat\ndate: 2019-04-03\nmodified: 2022-08-16\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1098\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: The \"Audit Directory Service Changes\" logging policy\n    must be configured in order to receive events. Audit events are generated only\n    for objects with configured system access control lists (SACLs). Audit events\n    are generated only for objects with configured system access control lists (SACLs)\n    and only when accessed in a manner that matches their SACL settings. This policy\n    covers the following events ids - 5136, 5137, 5138, 5139, 5141. Note that the\n    default policy does not cover User objects. For that a custom AuditRule need to\n    be setup (See https://github.com/OTRF/Set-AuditRule)'\ndetection:\n  selection:\n    EventID: 5136\n    AttributeLDAPDisplayName: ntSecurityDescriptor\n    AttributeValue|contains:\n    - 1131f6ad-9c07-11d1-f79f-00c04fc2dcd2\n    - 1131f6aa-9c07-11d1-f79f-00c04fc2dcd2\n    - 89e95b76-444d-4c62-991a-0facbeda640c\n  filter_main_dns_object_class:\n    ObjectClass:\n    - dnsNode\n    - dnsZoneScope\n    - dnsZone\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- New Domain Controller computer account, check user SIDs within the value attribute\n  of event 5136 and verify if it's a regular user or DC computer account.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_netsh_fw_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Fatih Sirin",
+                "date": "2019-11-01",
+                "title": "Firewall Disabled via Netsh.EXE",
+                "id": "57c4bf16-227f-4394-8ec7-1b745ee061c3"
+            },
+            "rule_text": "title: Firewall Disabled via Netsh.EXE\nid: 57c4bf16-227f-4394-8ec7-1b745ee061c3\nstatus: test\ndescription: Detects netsh commands that turns off the Windows firewall\nreferences:\n- https://www.winhelponline.com/blog/enable-and-disable-windows-firewall-quickly-using-command-line/\n- https://app.any.run/tasks/210244b9-0b6b-4a2c-83a3-04bd3175d017/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.004/T1562.004.md#atomic-test-1---disable-microsoft-defender-firewall\nauthor: Fatih Sirin\ndate: 2019-11-01\nmodified: 2023-02-13\ntags:\n- attack.defense-impairment\n- attack.t1686.003\n- attack.s0108\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\netsh.exe\n  - OriginalFileName: netsh.exe\n  selection_cli_1:\n    CommandLine|contains|all:\n    - firewall\n    - set\n    - opmode\n    - disable\n  selection_cli_2:\n    CommandLine|contains|all:\n    - advfirewall\n    - set\n    - state\n    - 'off'\n  condition: selection_img and 1 of selection_cli_*\nfalsepositives:\n- Legitimate administration activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

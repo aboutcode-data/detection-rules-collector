@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/M4r14ch1/Havex_NetScan.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Havex_NetScan_Malware",
+                "tags": [],
+                "description": "This rule will search for known indicators of a Havex Network Scan module infection. This module looks for hosts listening on known ICS-related ports to identify OPC or ICS systems and the file created when the scanning data is written.",
+                "author": "M4r14ch1",
+                "reference": "https://github.com/M4r14ch1/Havex-Network-Scanner-Modules",
+                "date": "2015/12/21"
+            },
+            "rule_text": "rule Havex_NetScan_Malware\n{\n\tmeta:\n\t\tdescription = \"This rule will search for known indicators of a Havex Network Scan module infection. This module looks for hosts listening on known ICS-related ports to identify OPC or ICS systems and the file created when the scanning data is written.\"\n\t\tauthor = \"M4r14ch1\"\n\t\treference = \"https://github.com/M4r14ch1/Havex-Network-Scanner-Modules\"\n\t\tdate = \"2015/12/21\"\n\n\tstrings:\n\t\t$s0 = \"~tracedscn.yls\" wide nocase\n\t\t$s1 = { 2B E2 ?? }\n\t\t$s2 = { 30 71 ?? }\n\n\tcondition:\n\t\t$s0 and ( $s1 or $s2 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

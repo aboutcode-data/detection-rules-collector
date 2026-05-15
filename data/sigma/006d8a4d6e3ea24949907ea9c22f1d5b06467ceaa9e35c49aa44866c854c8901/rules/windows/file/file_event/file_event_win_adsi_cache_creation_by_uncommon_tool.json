@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_adsi_cache_creation_by_uncommon_tool.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "xknow @xknow_infosec, Tim Shelton",
+                "date": "2019-03-24",
+                "title": "ADSI-Cache File Creation By Uncommon Tool",
+                "id": "75bf09fa-1dd7-4d18-9af9-dd9e492562eb"
+            },
+            "rule_text": "title: ADSI-Cache File Creation By Uncommon Tool\nid: 75bf09fa-1dd7-4d18-9af9-dd9e492562eb\nstatus: test\ndescription: Detects the creation of an \"Active Directory Schema Cache File\" (.sch)\n  file by an uncommon tool.\nreferences:\n- https://medium.com/@ivecodoe/detecting-ldapfragger-a-newly-released-cobalt-strike-beacon-using-ldap-for-c2-communication-c274a7f00961\n- https://blog.fox-it.com/2020/03/19/ldapfragger-command-and-control-over-ldap-attributes/\n- https://github.com/fox-it/LDAPFragger\nauthor: xknow @xknow_infosec, Tim Shelton\ndate: 2019-03-24\nmodified: 2023-10-18\ntags:\n- attack.t1001.003\n- attack.command-and-control\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|contains: \\Local\\Microsoft\\Windows\\SchCache\\\n    TargetFilename|endswith: .sch\n  filter_main_generic:\n  - Image|endswith:\n    - :\\Program Files\\Cylance\\Desktop\\CylanceSvc.exe\n    - :\\Windows\\CCM\\CcmExec.exe\n    - :\\windows\\system32\\dllhost.exe\n    - :\\Windows\\system32\\dsac.exe\n    - :\\Windows\\system32\\efsui.exe\n    - :\\windows\\system32\\mmc.exe\n    - :\\windows\\system32\\svchost.exe\n    - :\\Windows\\System32\\wbem\\WmiPrvSE.exe\n    - :\\windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe\n  - Image|contains:\n    - :\\Windows\\ccmsetup\\autoupgrade\\ccmsetup\n    - :\\Program Files\\SentinelOne\\Sentinel Agent\n  filter_main_office:\n    Image|contains|all:\n    - :\\Program Files\\\n    - \\Microsoft Office\n    Image|endswith: \\OUTLOOK.EXE\n  filter_optional_ldapwhoami:\n    Image|endswith: \\LANDesk\\LDCLient\\ldapwhoami.exe\n  filter_optional_citrix:\n    Image|endswith: :\\Program Files\\Citrix\\Receiver StoreFront\\Services\\DefaultDomainServices\\Citrix.DeliveryServices.DomainServices.ServiceHost.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Other legimate tools, which do ADSI (LDAP) operations, e.g. any remoting activity\n  by MMC, Powershell, Windows etc.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

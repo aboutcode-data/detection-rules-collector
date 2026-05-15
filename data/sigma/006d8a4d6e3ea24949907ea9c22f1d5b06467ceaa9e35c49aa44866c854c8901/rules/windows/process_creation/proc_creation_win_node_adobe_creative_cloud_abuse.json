@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_node_adobe_creative_cloud_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2022-04-06",
+                "title": "Node Process Executions",
+                "id": "df1f26d3-bea7-4700-9ea2-ad3e990cf90e"
+            },
+            "rule_text": "title: Node Process Executions\nid: df1f26d3-bea7-4700-9ea2-ad3e990cf90e\nstatus: test\ndescription: Detects the execution of other scripts using the Node executable packaged\n  with Adobe Creative Cloud\nreferences:\n- https://twitter.com/mttaggart/status/1511804863293784064\nauthor: Max Altgelt (Nextron Systems)\ndate: 2022-04-06\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\n- attack.t1059.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\Adobe Creative Cloud Experience\\libs\\node.exe\n  filter:\n    CommandLine|contains: Adobe Creative Cloud Experience\\js\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

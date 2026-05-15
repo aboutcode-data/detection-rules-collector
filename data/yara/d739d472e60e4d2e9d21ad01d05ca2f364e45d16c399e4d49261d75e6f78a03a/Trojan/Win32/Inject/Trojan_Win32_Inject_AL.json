@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Inject/Trojan_Win32_Inject_AL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Inject_AL",
+                "tags": [],
+                "description": "Trojan:Win32/Inject.AL,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Inject_AL\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Inject.AL,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {6a 40 68 00 10 00 00 05 2a 01 00 00 50 6a 00 57 ff 15 ?? ?? ?? ?? 8b f0 85 f6 74 ?? 8b 1d ?? ?? ?? ?? 8d 54 24 10 52 68 29 01 00 00 68 }\n\t\t$a_02_1 = {6a 40 68 00 10 00 00 05 2a 01 00 00 50 6a 00 ff 75 ?? ff 15 ?? ?? ?? ?? 89 45 ?? 85 c0 74 ?? 56 8b 35 ?? ?? ?? ?? 8d 4d ?? 51 68 29 01 00 00 68 }\n\t\t$a_00_2 = {2f 61 6a 61 78 2e 70 68 70 }\n\t\t$a_00_3 = {62 6e 5f 6d 61 69 6c }\n\t\t$a_00_4 = {64 61 6f 37 65 72 6d 73 5f }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

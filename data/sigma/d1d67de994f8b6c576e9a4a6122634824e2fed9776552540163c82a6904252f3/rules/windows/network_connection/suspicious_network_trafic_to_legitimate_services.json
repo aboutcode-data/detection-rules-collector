@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/network_connection/suspicious_network_trafic_to_legitimate_services.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2023-03-16",
+                "title": "Network traffic to services abused for C2 communication",
+                "id": "ab724af0-630c-4f00-b18a-f12bc582deae"
+            },
+            "rule_text": "title: Network traffic to services abused for C2 communication\nid: ab724af0-630c-4f00-b18a-f12bc582deae\ndescription: Network traffic to services abused for C2 communication from odd paths\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: 2023-03-16\nreference:\n- https://mrtiepolo.medium.com/sophisticated-apt29-campaign-abuses-notion-api-to-target-the-european-commission-200188059f58\n- https://ti.qianxin.com/blog/articles/analysis-of-apt29%27s-attack-activities-against-italy/\n- https://unit42.paloaltonetworks.com/cloaked-ursa-online-storage-services-campaigns/\n- https://www.microsoft.com/en-us/security/blog/2020/09/24/gadolinium-detecting-empires-cloud/\ntags:\n- attack.command_and_control\nlogsource:\n  product: windows\n  category: network_connection\ndetection:\n  selection:\n    DestinationHostname|endswith:\n    - api.notion.com\n    - dl.dropboxusercontent.com\n    - dropbox.com\n    - githubusercontent.com\n    - files.slack.com\n    - slack.com\n    - drive.google.com\n    - graph.microsoft.com\n    Image:\n    - '*\\appdata\\*'\n    - '*\\rundll32*'\n    - '*\\rundll32.exe*'\n  condition: selection\nfalsepositives:\n- Legitimate software using legitimate APIs\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

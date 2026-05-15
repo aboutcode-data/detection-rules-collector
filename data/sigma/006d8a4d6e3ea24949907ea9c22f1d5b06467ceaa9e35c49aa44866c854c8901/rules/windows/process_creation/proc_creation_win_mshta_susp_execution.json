@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mshta_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Diego Perez (@darkquassar), Markus Neis, Swisscom (Improve Rule), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2019-02-22",
+                "title": "MSHTA Execution with Suspicious File Extensions",
+                "id": "cc7abbd0-762b-41e3-8a26-57ad50d2eea3"
+            },
+            "rule_text": "title: MSHTA Execution with Suspicious File Extensions\nid: cc7abbd0-762b-41e3-8a26-57ad50d2eea3\nstatus: test\ndescription: 'Detects execution of mshta.exe with file types that looks like they\n  do not typically represent HTA (HTML Application) content,\n\n  such as .png, .jpg, .zip, .pdf, and others, which are often polyglots. MSHTA is\n  a legitimate Windows utility for executing HTML Applications\n\n  containing VBScript or JScript. Threat actors often abuse this lolbin utility to\n  download and\n\n  execute malicious scripts disguised as benign files or hosted under misleading extensions\n  to evade detection.\n\n  '\nreferences:\n- http://blog.sevagas.com/?Hacking-around-HTA-files\n- https://0x00sec.org/t/clientside-exploitation-in-2018-how-pentesting-has-changed/7356\n- https://learn.microsoft.com/en-us/previous-versions/dotnet/framework/data/xml/xslt/xslt-stylesheet-scripting-using-msxsl-script\n- https://medium.com/tsscyber/pentesting-and-hta-bypassing-powershell-constrained-language-mode-53a42856c997\n- https://twitter.com/mattifestation/status/1326228491302563846\n- https://www.virustotal.com/gui/file/c1f27d9795a2eba630db8a043580a0761798f06370fb1317067805f8a845b00c\nauthor: Diego Perez (@darkquassar), Markus Neis, Swisscom (Improve Rule), Swachchhanda\n  Shrawan Poudel (Nextron Systems)\ndate: 2019-02-22\nmodified: 2025-05-12\ntags:\n- attack.stealth\n- attack.t1140\n- attack.t1218.005\n- attack.execution\n- attack.t1059.007\n- cve.2020-1599\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\mshta.exe\n  - OriginalFileName: mshta.exe\n  selection_cli:\n    CommandLine|contains:\n    - .7z\n    - .avi\n    - .bat\n    - .bmp\n    - .conf\n    - .csv\n    - .dll\n    - .doc\n    - .gif\n    - .gz\n    - .ini\n    - .jpe\n    - .jpg\n    - .json\n    - .lnk\n    - .log\n    - .mkv\n    - .mp3\n    - .mp4\n    - .pdf\n    - .png\n    - .ppt\n    - .rar\n    - .rtf\n    - .svg\n    - .tar\n    - .tmp\n    - .txt\n    - .xls\n    - .xml\n    - .yaml\n    - .yml\n    - .zip\n    - vbscript\n  condition: all of selection_*\nfalsepositives:\n- False positives depend on scripts and administrative tools used in the monitored\n  environment\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

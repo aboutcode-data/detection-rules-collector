@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/APT/NikiGo.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NikiGo",
+                "tags": [],
+                "id": "1TfLvwe4Pw7svDq8aY4v5F",
+                "fingerprint": "v1_sha256_8ba5e84e750a707eacabbf1df13900ef96ef773745f0f623f41da5e7ca905420",
+                "version": "1.0",
+                "date": "2024-06",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze, @nsquar3",
+                "description": "Identifies NikiGo, a Go dropper by (likely) Kimsuky.",
+                "category": "MALWARE",
+                "malware": "NIKIHTTP",
+                "malware_type": "BACKDOOR",
+                "reference": "https://cyberarmor.tech/new-north-korean-based-backdoor-packs-a-punch/",
+                "hash": "000e2926f6e094d01c64ff972e958cd38590299e9128a766868088aa273599c7"
+            },
+            "rule_text": "rule NikiGo\n{\n\tmeta:\n\t\tid = \"1TfLvwe4Pw7svDq8aY4v5F\"\n\t\tfingerprint = \"v1_sha256_8ba5e84e750a707eacabbf1df13900ef96ef773745f0f623f41da5e7ca905420\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2024-06\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze, @nsquar3\"\n\t\tdescription = \"Identifies NikiGo, a Go dropper by (likely) Kimsuky.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"NIKIHTTP\"\n\t\tmalware_type = \"BACKDOOR\"\n\t\treference = \"https://cyberarmor.tech/new-north-korean-based-backdoor-packs-a-punch/\"\n\t\thash = \"000e2926f6e094d01c64ff972e958cd38590299e9128a766868088aa273599c7\"\n\n\tstrings:\n\t\t$go = \"Go build ID:\"\n\t\t$func1 = \"main.ParseCommandLine\" ascii wide fullword\n\t\t$func2 = \"main.RunCmd\" ascii wide fullword\n\t\t$func3 = \"main.HttpGet\" ascii wide fullword\n\t\t$func4 = \"main.SelfDel\" ascii wide fullword\n\t\t$func5 = \"main.RandomBytes\" ascii wide fullword\n\t\t$pdb_src = \"C:/Users/niki/go/src/niki/auxiliary/engine-binder/main.go\" ascii wide\n\t\t$pdb_path = \"/Users/niki/go/src/niki/auxiliary/engine-binder/\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and $go and ( all of ( $func* ) or any of ( $pdb* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

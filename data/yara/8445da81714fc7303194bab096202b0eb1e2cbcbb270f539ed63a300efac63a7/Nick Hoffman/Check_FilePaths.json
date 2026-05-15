@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nick Hoffman/Check_FilePaths.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Check_FilePaths",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for filepaths containing popular sandbox names",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_FilePaths\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for filepaths containing popular sandbox names\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$path1 = \"SANDBOX\" wide ascii\n\t\t$path2 = \"\\\\SAMPLE\" wide ascii\n\t\t$path3 = \"\\\\VIRUS\" wide ascii\n\n\tcondition:\n\t\tall of ( $path* ) and pe.imports ( \"kernel32.dll\" , \"GetModuleFileNameA\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

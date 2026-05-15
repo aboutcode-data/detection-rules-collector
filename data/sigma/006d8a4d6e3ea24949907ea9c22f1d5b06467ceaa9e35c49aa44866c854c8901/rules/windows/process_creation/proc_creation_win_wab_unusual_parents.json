@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wab_unusual_parents.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-12",
+                "title": "Wab/Wabmig Unusual Parent Or Child Processes",
+                "id": "63d1ccc0-2a43-4f4b-9289-361b308991ff"
+            },
+            "rule_text": "title: Wab/Wabmig Unusual Parent Or Child Processes\nid: 63d1ccc0-2a43-4f4b-9289-361b308991ff\nstatus: test\ndescription: Detects unusual parent or children of the wab.exe (Windows Contacts)\n  and Wabmig.exe (Microsoft Address Book Import Tool) processes as seen being used\n  with bumblebee activity\nreferences:\n- https://thedfirreport.com/2022/08/08/bumblebee-roasts-its-way-to-domain-admin/\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/bumblebee-loader-cybercrime\n- https://thedfirreport.com/2022/09/26/bumblebee-round-two/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-12\nmodified: 2022-09-27\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\WmiPrvSE.exe\n    - \\svchost.exe\n    - \\dllhost.exe\n    Image|endswith:\n    - \\wab.exe\n    - \\wabmig.exe\n  selection_child:\n    ParentImage|endswith:\n    - \\wab.exe\n    - \\wabmig.exe\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

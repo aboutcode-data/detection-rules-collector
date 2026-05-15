@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/R-T/socat.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "socat",
+                "tags": [],
+                "description": "Detection patterns for the tool 'socat' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "socat",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule socat\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'socat' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"socat\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \"socat exec:\"\n\t\t$string2 = /socat\\sFILE\\:.{0,1000}tty.{0,1000}raw.{0,1000}echo\\=0\\sTCP.{0,1000}\\:/\n\t\t$string3 = /socat\\sfile\\:.{0,1000}tty.{0,1000}raw.{0,1000}echo\\=0\\stcp\\-listen\\:/\n\t\t$string4 = \"socat http://0x0\"\n\t\t$string5 = /socat\\s\\-lp\\s.{0,1000}\\shttp\\:\\/\\/0x0/\n\t\t$string6 = \"socat -O /tmp/\"\n\t\t$string7 = /socat\\sTCP4\\-LISTEN\\:.{0,1000}\\sfork\\sTCP4\\:.{0,1000}\\:/\n\t\t$string8 = \"socat tcp-connect\"\n\t\t$string9 = /socat\\stcp\\-connect\\:.{0,1000}\\:.{0,1000}\\sexec\\:.{0,1000}bash\\s\\-li.{0,1000}.{0,1000}pty.{0,1000}stderr.{0,1000}setsid.{0,1000}sigint.{0,1000}sane/\n\t\t$string10 = /socat\\stcp\\-connect\\:.{0,1000}\\:.{0,1000}\\sexec\\:\\/bin\\/sh/\n\t\t$string11 = /socat\\sTCP\\-LISTEN\\:.{0,1000}.{0,1000}reuseaddr.{0,1000}fork\\sEXEC\\:\\/bin\\/sh/\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

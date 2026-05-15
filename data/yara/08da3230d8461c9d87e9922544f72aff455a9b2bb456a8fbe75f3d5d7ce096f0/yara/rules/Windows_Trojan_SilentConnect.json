@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_SilentConnect.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_SilentConnect_cdc03e84",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "cdc03e84-1d8e-4d4f-a2b1-5c55cb473cab",
+                "fingerprint": "dbcd8043a8359acc62f54b5ea202fac81e857e8216c336f5cc345d2b9a42996d",
+                "creation_date": "2026-03-04",
+                "last_modified": "2026-03-17",
+                "threat_name": "Windows.Trojan.SilentConnect",
+                "reference_sample": "8bab731ac2f7d015b81c2002f518fff06ea751a34a711907e80e98cf70b557db",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_SilentConnect_cdc03e84\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"cdc03e84-1d8e-4d4f-a2b1-5c55cb473cab\"\n\t\tfingerprint = \"dbcd8043a8359acc62f54b5ea202fac81e857e8216c336f5cc345d2b9a42996d\"\n\t\tcreation_date = \"2026-03-04\"\n\t\tlast_modified = \"2026-03-17\"\n\t\tthreat_name = \"Windows.Trojan.SilentConnect\"\n\t\treference_sample = \"8bab731ac2f7d015b81c2002f518fff06ea751a34a711907e80e98cf70b557db\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$peb_evade = \"winhlp32.exe\" wide fullword\n\t\t$rev_elevation = \"wen!rotartsinimdA:noitavelE\" wide fullword\n\t\t$masquerade_peb_str = \"MasqueradePEB\" ascii fullword\n\t\t$guid = \"3E5FC7F9-9A51-4367-9063-A120244FBEC7\" wide fullword\n\t\t$unique_str = \"PebFucker\" ascii fullword\n\t\t$peb_shellcode = { 53 48 31 DB 48 31 C0 65 48 8B 1C 25 60 00 00 00 }\n\t\t$rev_screenconnect = \"tcennoCneercS\" ascii wide\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

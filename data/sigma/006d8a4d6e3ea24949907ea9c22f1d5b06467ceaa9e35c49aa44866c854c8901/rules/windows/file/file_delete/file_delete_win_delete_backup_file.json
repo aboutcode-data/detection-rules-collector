@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_delete/file_delete_win_delete_backup_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-02",
+                "title": "Backup Files Deleted",
+                "id": "06125661-3814-4e03-bfa2-1e4411c60ac3"
+            },
+            "rule_text": "title: Backup Files Deleted\nid: 06125661-3814-4e03-bfa2-1e4411c60ac3\nstatus: test\ndescription: Detects deletion of files with extensions often used for backup files.\n  Adversaries may delete or remove built-in operating system data and turn off services\n  designed to aid in the recovery of a corrupted system to prevent recovery.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-6---windows---delete-backup-files\nauthor: frack113\ndate: 2022-01-02\nmodified: 2023-02-15\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  product: windows\n  category: file_delete\ndetection:\n  selection:\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wt.exe\n    - \\rundll32.exe\n    - \\regsvr32.exe\n    TargetFilename|endswith:\n    - .VHD\n    - .bac\n    - .bak\n    - .wbcat\n    - .bkf\n    - .set\n    - .win\n    - .dsk\n  condition: selection\nfalsepositives:\n- Legitimate usage\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

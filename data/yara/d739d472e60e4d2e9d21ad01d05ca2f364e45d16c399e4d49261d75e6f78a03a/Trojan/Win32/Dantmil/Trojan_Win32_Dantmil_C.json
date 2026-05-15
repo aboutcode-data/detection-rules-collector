@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Dantmil/Trojan_Win32_Dantmil_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Dantmil_C",
+                "tags": [],
+                "description": "Trojan:Win32/Dantmil.C,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Dantmil_C\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Dantmil.C,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 c4 0c 8d 45 d4 50 8d 45 d8 50 6a 02 e8 ?? ?? ?? ?? 83 c4 0c c7 45 fc 06 00 00 00 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b d0 8d 4d bc e8 ?? ?? ?? ?? 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b d0 8d 4d b8 }\n\t\t$a_03_1 = {8d 85 fc fe ff ff 50 6a 10 68 80 08 00 00 e8 ?? ?? ?? ?? 83 c4 1c c7 85 f4 fe ff ff }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

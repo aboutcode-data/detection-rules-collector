@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/WipMBR/Trojan_Win64_WipMBR_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_WipMBR_A",
+                "tags": [],
+                "description": "Trojan:Win64/WipMBR.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_WipMBR_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/WipMBR.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {5c 00 69 00 6e 00 66 00 5c 00 6e 00 65 00 74 00 66 00 74 00 ?? ?? ?? ?? ?? ?? 2e 00 70 00 6e 00 66 00 00 }\n\t\t$a_01_1 = {45 00 24 00 5c 00 57 00 49 00 4e 00 44 00 4f 00 57 00 53 00 00 00 }\n\t\t$a_03_2 = {48 8b cf ff d0 85 c0 75 ?? 8d 50 30 33 c9 44 8d 48 04 41 b8 00 30 00 00 ff 15 ?? ?? ?? ?? 4c 8b d8 b3 01 48 85 c0 74 ?? 8b 4d ?? 89 48 2c }\n\t\t$a_03_3 = {57 ff d0 3b c3 74 05 88 5d ?? eb ?? 6a 04 68 00 30 00 00 6a 30 53 ff 15 ?? ?? ?? ?? 8b f0 3b f3 74 ?? 8b 45 ?? 89 46 2c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

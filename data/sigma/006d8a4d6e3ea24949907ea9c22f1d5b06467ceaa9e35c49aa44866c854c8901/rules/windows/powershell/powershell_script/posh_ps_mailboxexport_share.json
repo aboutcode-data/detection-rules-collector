@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_mailboxexport_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-26",
+                "title": "Suspicious PowerShell Mailbox Export to Share - PS",
+                "id": "4a241dea-235b-4a7e-8d76-50d817b146c4"
+            },
+            "rule_text": "title: Suspicious PowerShell Mailbox Export to Share - PS\nid: 4a241dea-235b-4a7e-8d76-50d817b146c4\nrelated:\n- id: 889719ef-dd62-43df-86c3-768fb08dc7c0\n  type: derived\nstatus: test\ndescription: Detects usage of the powerShell New-MailboxExportRequest Cmdlet to exports\n  a mailbox to a remote or local share, as used in ProxyShell exploitations\nreferences:\n- https://youtu.be/5mqid-7zp8k?t=2481\n- https://blog.orange.tw/2021/08/proxylogon-a-new-attack-surface-on-ms-exchange-part-1.html\n- https://peterjson.medium.com/reproducing-the-proxyshell-pwn2own-exploit-49743a4ea9a1\n- https://m365internals.com/2022/10/07/hunting-in-on-premises-exchange-server-logs/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-26\ntags:\n- attack.exfiltration\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - New-MailboxExportRequest\n    - ' -Mailbox '\n    - ' -FilePath \\\\\\\\'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

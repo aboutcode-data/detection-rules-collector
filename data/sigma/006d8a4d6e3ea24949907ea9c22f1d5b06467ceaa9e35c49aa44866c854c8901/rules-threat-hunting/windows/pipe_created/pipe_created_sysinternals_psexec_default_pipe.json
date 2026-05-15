@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/pipe_created/pipe_created_sysinternals_psexec_default_pipe.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thomas Patzke",
+                "date": "2017-06-12",
+                "title": "PsExec Default Named Pipe",
+                "id": "f3f3a972-f982-40ad-b63c-bca6afdfad7c"
+            },
+            "rule_text": "title: PsExec Default Named Pipe\nid: f3f3a972-f982-40ad-b63c-bca6afdfad7c\nrelated:\n- id: 42c575ea-e41e-41f1-b248-8093c3e82a28\n  type: derived\nstatus: test\ndescription: Detects PsExec service default pipe creation\nreferences:\n- https://www.jpcert.or.jp/english/pub/sr/ir_research.html\n- https://jpcertcc.github.io/ToolAnalysisResultSheet\nauthor: Thomas Patzke\ndate: 2017-06-12\nmodified: 2022-10-09\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.s0029\n- detection.threat-hunting\nlogsource:\n  category: pipe_created\n  product: windows\n  definition: Note that you have to configure logging for Named Pipe Events in Sysmon\n    config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon\n    configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth\n    verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,\n    https://github.com/olafhartong/sysmon-modular. How to test detection? You can\n    check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575\ndetection:\n  selection:\n    PipeName: \\PSEXESVC\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

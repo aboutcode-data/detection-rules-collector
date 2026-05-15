@@ -1,0 +1,33 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_teampcp_mar26.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_LiteLLM_SupplyChain_Mar26",
+                "tags": [],
+                "description": "Detects malicious indicators used in LiteLLM supply chain attack",
+                "author": "Marius Benthin",
+                "date": "2026-03-28",
+                "reference": "https://github.com/BerriAI/litellm/issues/24512",
+                "hash": "71e35aef03099cd1f2d6446734273025a163597de93912df321ef118bf135238",
+                "score": 80
+            },
+            "rule_text": "rule MAL_LiteLLM_SupplyChain_Mar26\n{\n\tmeta:\n\t\tdescription = \"Detects malicious indicators used in LiteLLM supply chain attack\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-03-28\"\n\t\treference = \"https://github.com/BerriAI/litellm/issues/24512\"\n\t\thash = \"71e35aef03099cd1f2d6446734273025a163597de93912df321ef118bf135238\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$s1 = \"exec(base64.b64decode(\"\n\t\t$s2 = \"litellm.\" base64\n\t\t$s3 = \"subprocess.DEVNULL\"\n\n\tcondition:\n\t\tfilesize < 500KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_Telnyx_SupplyChain_Mar26",
+                "tags": [],
+                "description": "Detects malicious indicators used in Telnyx supply chain attack",
+                "author": "Marius Benthin",
+                "date": "2026-03-28",
+                "reference": "https://www.aikido.dev/blog/telnyx-pypi-compromised-teampcp-canisterworm",
+                "hash": "ab4c4aebb52027bf3d2f6b2dcef593a1a2cff415774ea4711f7d6e0aa1451d4e",
+                "score": 80
+            },
+            "rule_text": "rule MAL_Telnyx_SupplyChain_Mar26\n{\n\tmeta:\n\t\tdescription = \"Detects malicious indicators used in Telnyx supply chain attack\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-03-28\"\n\t\treference = \"https://www.aikido.dev/blog/telnyx-pypi-compromised-teampcp-canisterworm\"\n\t\thash = \"ab4c4aebb52027bf3d2f6b2dcef593a1a2cff415774ea4711f7d6e0aa1451d4e\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$s1 = \"bXNidWlsZC5leGU=\"\n\t\t$s2 = \"TW96aWxsY\"\n\t\t$s3 = \".getnframes(\"\n\t\t$s4 = \"exec(base64.b64decode(\"\n\n\tcondition:\n\t\tfilesize < 500KB and 3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

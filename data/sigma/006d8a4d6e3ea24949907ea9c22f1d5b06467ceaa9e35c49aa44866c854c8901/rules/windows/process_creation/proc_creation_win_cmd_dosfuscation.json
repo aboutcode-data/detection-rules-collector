@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_dosfuscation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-02-15",
+                "title": "Potential Dosfuscation Activity",
+                "id": "a77c1610-fc73-4019-8e29-0f51efc04a51"
+            },
+            "rule_text": "title: Potential Dosfuscation Activity\nid: a77c1610-fc73-4019-8e29-0f51efc04a51\nstatus: test\ndescription: Detects possible payload obfuscation via the commandline\nreferences:\n- https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf\n- https://github.com/danielbohannon/Invoke-DOSfuscation\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-02-15\nmodified: 2023-03-06\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - ^^\n    - ^|^\n    - ',;,'\n    - ;;;;\n    - ;; ;;\n    - (,(,\n    - '%COMSPEC:~'\n    - ' c^m^d'\n    - ^c^m^d\n    - ' c^md'\n    - ' cm^d'\n    - ^cm^d\n    - ' s^et '\n    - ' s^e^t '\n    - ' se^t '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

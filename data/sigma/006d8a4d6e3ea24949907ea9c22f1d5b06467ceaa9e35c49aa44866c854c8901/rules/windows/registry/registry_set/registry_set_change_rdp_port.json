@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_change_rdp_port.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-01",
+                "title": "Default RDP Port Changed to Non Standard Port",
+                "id": "509e84b9-a71a-40e0-834f-05470369bd1e"
+            },
+            "rule_text": "title: Default RDP Port Changed to Non Standard Port\nid: 509e84b9-a71a-40e0-834f-05470369bd1e\nstatus: test\ndescription: 'Detects changes to the default RDP port.\n\n  Remote desktop is a common feature in operating systems. It allows a user to log\n  into a remote system using an interactive session with a graphical user interface.\n\n  Microsoft refers to its implementation of the Remote Desktop Protocol (RDP) as Remote\n  Desktop Services (RDS).\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.001/T1021.001.md\nauthor: frack113\ndate: 2022-01-01\nmodified: 2024-03-25\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.010\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Control\\Terminal Server\\WinStations\\RDP-Tcp\\PortNumber\n  filter_main_port:\n    Details: DWORD (0x00000d3d)\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_change_rdp_port/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Changing RDP Port to Non Standard Port via Powershell\n  technique: T1021.001\n  atomic_guid: 2f840dd4-8a2e-4f44-beb3-6b2399ea3771\n- type: atomic-red-team\n  name: Changing RDP Port to Non Standard Port via Command_Prompt\n  technique: T1021.001\n  atomic_guid: 74ace21e-a31c-4f7d-b540-53e4eb6d1f73\n",
+            "vulnerabilities": []
+        }
+    ]
+}

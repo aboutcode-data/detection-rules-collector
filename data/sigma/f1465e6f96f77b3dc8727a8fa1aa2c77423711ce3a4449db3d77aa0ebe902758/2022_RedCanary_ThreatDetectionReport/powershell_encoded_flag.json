@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/powershell_encoded_flag.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "PowerShell -encodedcommand Switch",
+                "id": "5c0fcaac-e5e9-44a3-811f-b43b7709c339"
+            },
+            "rule_text": "title: PowerShell -encodedcommand Switch\nid: 5c0fcaac-e5e9-44a3-811f-b43b7709c339\nstatus: experimental\ndescription: Looks for the execution of powershell.exe with command lines that include\n  variations of the -encodedcommand argument. Inspired by the 2022 Red Canary Threat\n  Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/powershell/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.defense_evasion\n- attack.t1140\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|windash:\n    - -ec\n    - -en\n    - -enc\n    - -enco\n    Image|endswith: \\powershell.exe\n  condition: selection\nfalsepositives:\n- Windows Config Manager (https://wtfbins.wtf/1)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

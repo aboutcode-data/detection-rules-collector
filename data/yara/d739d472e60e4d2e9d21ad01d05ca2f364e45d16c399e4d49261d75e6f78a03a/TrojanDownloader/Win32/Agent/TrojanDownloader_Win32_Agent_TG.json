@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Agent/TrojanDownloader_Win32_Agent_TG.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Agent_TG",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Agent.TG,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Agent_TG\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Agent.TG,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {64 3a 5c 33 36 30 5c 33 36 30 53 61 66 65 2e 72 65 67 }\n\t\t$a_03_1 = {68 c8 00 00 00 e8 ?? ?? ff ff e8 ?? ?? ff ff 68 c8 00 00 00 e8 ?? ?? ff ff e8 ?? ?? ff ff }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

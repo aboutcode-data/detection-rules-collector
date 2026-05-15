@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_execution_from_guid_folder_names.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-01",
+                "title": "Potential Suspicious Execution From GUID Like Folder Names",
+                "id": "90b63c33-2b97-4631-a011-ceb0f47b77c3"
+            },
+            "rule_text": "title: Potential Suspicious Execution From GUID Like Folder Names\nid: 90b63c33-2b97-4631-a011-ceb0f47b77c3\nstatus: test\ndescription: 'Detects potential suspicious execution of a GUID like folder name located\n  in a suspicious location such as %TEMP% as seen being used in IcedID attacks.\n\n  Use this rule to hunt for potentially suspicious activity stemming from uncommon\n  folders.\n\n  '\nreferences:\n- https://twitter.com/Kostastsale/status/1565257924204986369\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-01\nmodified: 2023-03-02\ntags:\n- attack.stealth\n- attack.t1027\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_folder:\n    CommandLine|contains:\n    - \\AppData\\Roaming\\\n    - \\AppData\\Local\\Temp\\\n  selection_guid:\n    CommandLine|contains|all:\n    - \\{\n    - '}\\'\n  filter_main_image_guid:\n    Image|contains|all:\n    - \\{\n    - '}\\'\n  filter_main_null:\n    Image: null\n  filter_main_driver_inst:\n    Image: C:\\Windows\\System32\\drvinst.exe\n  filter_main_msiexec:\n    Image:\n    - C:\\Windows\\System32\\msiexec.exe\n    - C:\\Windows\\SysWOW64\\msiexec.exe\n  condition: all of selection_* and not 1 of filter*\nfalsepositives:\n- Installers are sometimes known for creating temporary folders with GUID like names.\n  Add appropriate filters accordingly\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

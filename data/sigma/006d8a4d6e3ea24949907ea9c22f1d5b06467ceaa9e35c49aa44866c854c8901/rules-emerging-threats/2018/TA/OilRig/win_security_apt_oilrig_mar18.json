@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2018/TA/OilRig/win_security_apt_oilrig_mar18.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy, oscd.community",
+                "date": "2018-03-23",
+                "title": "OilRig APT Schedule Task Persistence - Security",
+                "id": "c0580559-a6bd-4ef6-b9b7-83703d98b561"
+            },
+            "rule_text": "title: OilRig APT Schedule Task Persistence - Security\nid: c0580559-a6bd-4ef6-b9b7-83703d98b561\nrelated:\n- id: 53ba33fd-3a50-4468-a5ef-c583635cfa92\n  type: similar\n- id: 7bdf2a7c-3acc-4091-9581-0a77dad1c5b5\n  type: similar\n- id: ce6e34ca-966d-41c9-8d93-5b06c8b97a06\n  type: similar\nstatus: test\ndescription: Detects OilRig schedule task persistence as reported by Nyotron in their\n  March 2018 report\nreferences:\n- https://web.archive.org/web/20180402134442/https://nyotron.com/wp-content/uploads/2018/03/Nyotron-OilRig-Malware-Report-March-2018C.pdf\nauthor: Florian Roth (Nextron Systems), Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy,\n  oscd.community\ndate: 2018-03-23\nmodified: 2023-03-08\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.defense-impairment\n- attack.g0049\n- attack.t1053.005\n- attack.s0111\n- attack.t1543.003\n- attack.t1112\n- attack.command-and-control\n- attack.t1071.004\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection_service:\n    EventID: 4698\n    TaskName:\n    - SC Scheduled Scan\n    - UpdatMachine\n  condition: selection_service\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

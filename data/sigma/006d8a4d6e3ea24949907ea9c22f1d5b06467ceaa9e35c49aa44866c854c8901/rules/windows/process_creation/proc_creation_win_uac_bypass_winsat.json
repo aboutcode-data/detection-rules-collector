@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_winsat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-30",
+                "title": "UAC Bypass Abusing Winsat Path Parsing - Process",
+                "id": "7a01183d-71a2-46ad-ad5c-acd989ac1793"
+            },
+            "rule_text": "title: UAC Bypass Abusing Winsat Path Parsing - Process\nid: 7a01183d-71a2-46ad-ad5c-acd989ac1793\nstatus: test\ndescription: Detects the pattern of UAC Bypass using a path parsing issue in winsat.exe\n  (UACMe 52)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-30\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n    ParentImage|endswith: \\AppData\\Local\\Temp\\system32\\winsat.exe\n    ParentCommandLine|contains: C:\\Windows \\system32\\winsat.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

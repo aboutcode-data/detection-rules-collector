@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_itaskschedulerservice_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "Remote Schedule Task Recon via ITaskSchedulerService",
+                "id": "7f7c49eb-2977-4ac8-8ab0-ab1bae14730e"
+            },
+            "rule_text": "title: Remote Schedule Task Recon via ITaskSchedulerService\nid: 7f7c49eb-2977-4ac8-8ab0-ab1bae14730e\nstatus: test\ndescription: Detects remote RPC calls to read information about scheduled tasks\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-tsch/d1058a28-7e02-4948-8b8d-4a347fa64931\n- https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/ddd4608fe8684fcf2fcf9b48c5f0b3c28097f8a3/documents/MS-TSCH.md\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.discovery\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes with\n    \"audit:true action:block uuid:86d35949-83c9-4044-b424-db363231fd0c\"'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid: 86d35949-83c9-4044-b424-db363231fd0c\n  filter:\n    OpNum:\n    - 1\n    - 3\n    - 4\n    - 10\n    - 11\n    - 12\n    - 13\n    - 14\n    - 15\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

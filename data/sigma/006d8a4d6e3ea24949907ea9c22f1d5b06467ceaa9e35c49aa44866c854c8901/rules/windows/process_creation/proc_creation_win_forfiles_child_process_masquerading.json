@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_forfiles_child_process_masquerading.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Anish Bogati",
+                "date": "2024-01-05",
+                "title": "Forfiles.EXE Child Process Masquerading",
+                "id": "f53714ec-5077-420e-ad20-907ff9bb2958"
+            },
+            "rule_text": "title: Forfiles.EXE Child Process Masquerading\nid: f53714ec-5077-420e-ad20-907ff9bb2958\nstatus: test\ndescription: 'Detects the execution of \"forfiles\" from a non-default location, in\n  order to potentially spawn a custom \"cmd.exe\" from the current working directory.\n\n  '\nreferences:\n- https://www.hexacorn.com/blog/2023/12/31/1-little-known-secret-of-forfiles-exe/\nauthor: Nasreddine Bencherchali (Nextron Systems), Anish Bogati\ndate: 2024-01-05\ntags:\n- attack.stealth\n- attack.t1036\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentCommandLine|endswith:\n    - .exe\n    - .exe\"\n    Image|endswith: \\cmd.exe\n    CommandLine|startswith: /c echo \"\n  filter_main_parent_not_sys:\n    ParentImage|contains:\n    - :\\Windows\\System32\\\n    - :\\Windows\\SysWOW64\\\n    ParentImage|endswith: \\forfiles.exe\n    Image|contains:\n    - :\\Windows\\System32\\\n    - :\\Windows\\SysWOW64\\\n    Image|endswith: \\cmd.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

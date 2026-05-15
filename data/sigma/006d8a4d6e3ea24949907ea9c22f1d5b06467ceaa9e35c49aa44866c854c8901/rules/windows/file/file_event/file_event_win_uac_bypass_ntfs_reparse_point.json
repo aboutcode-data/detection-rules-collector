@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_uac_bypass_ntfs_reparse_point.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-30",
+                "title": "UAC Bypass Using NTFS Reparse Point - File",
+                "id": "7fff6773-2baa-46de-a24a-b6eec1aba2d1"
+            },
+            "rule_text": "title: UAC Bypass Using NTFS Reparse Point - File\nid: 7fff6773-2baa-46de-a24a-b6eec1aba2d1\nstatus: test\ndescription: Detects the pattern of UAC Bypass using NTFS reparse point and wusa.exe\n  DLL hijacking (UACMe 36)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-30\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|endswith: \\AppData\\Local\\Temp\\api-ms-win-core-kernel32-legacy-l1.DLL\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

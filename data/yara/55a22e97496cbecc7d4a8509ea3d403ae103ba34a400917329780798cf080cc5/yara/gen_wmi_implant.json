@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_wmi_implant.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WMImplant",
+                "tags": [],
+                "description": "Auto-generated rule - file WMImplant.ps1",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.fireeye.com/blog/threat-research/2017/03/wmimplant_a_wmi_ba.html",
+                "date": "2017-03-24",
+                "hash1": "860d7c237c2395b4f51b8c9bd0ee6cab06af38fff60ce3563d160d50c11d2f78",
+                "id": "18dadc55-e12f-5c4c-9e11-27dc2d6c8dd2"
+            },
+            "rule_text": "rule WMImplant\n{\n\tmeta:\n\t\tdescription = \"Auto-generated rule - file WMImplant.ps1\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2017/03/wmimplant_a_wmi_ba.html\"\n\t\tdate = \"2017-03-24\"\n\t\thash1 = \"860d7c237c2395b4f51b8c9bd0ee6cab06af38fff60ce3563d160d50c11d2f78\"\n\t\tid = \"18dadc55-e12f-5c4c-9e11-27dc2d6c8dd2\"\n\n\tstrings:\n\t\t$x1 = \"Invoke-ProcessPunisher -Creds $RemoteCredential\" fullword ascii\n\t\t$x2 = \"$Target -query \\\"SELECT * FROM Win32_NTLogEvent WHERE (logfile='security')\" ascii\n\t\t$x3 = \"WMImplant -Creds\" fullword ascii\n\t\t$x4 = \"-Download -RemoteFile C:\\\\passwords.txt\" ascii\n\t\t$x5 = \"-Command 'powershell.exe -command \\\"Enable-PSRemoting\" fullword ascii\n\t\t$x6 = \"Invoke-WMImplant\" fullword ascii\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Fidelis/apt_nix_elf_Derusbi_Linux_Strings.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_nix_elf_Derusbi_Linux_Strings",
+                "tags": [],
+                "author": "Fidelis Cybersecurity",
+                "reference": "https://www.fidelissecurity.com/resources/turbo-campaign-featuring-derusbi-64-bit-linux"
+            },
+            "rule_text": "rule apt_nix_elf_Derusbi_Linux_Strings\n{\n\tmeta:\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\treference = \"https://www.fidelissecurity.com/resources/turbo-campaign-featuring-derusbi-64-bit-linux\"\n\n\tstrings:\n\t\t$a1 = \"loadso\" wide ascii fullword\n\t\t$a2 = \"\\nuname -a\\n\\n\" wide ascii\n\t\t$a3 = \"/dev/shm/.x11.id\" wide ascii\n\t\t$a4 = \"LxMain64\" wide ascii nocase\n\t\t$a5 = \"# \\\\u@\\\\h:\\\\w \\\\$ \" wide ascii\n\t\t$b1 = \"0123456789abcdefghijklmnopqrstuvwxyz\" wide\n\t\t$b2 = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\" wide\n\t\t$b3 = \"ret %d\" wide fullword\n\t\t$b4 = \"uname -a\\n\\n\" wide ascii\n\t\t$b5 = \"/proc/%u/cmdline\" wide ascii\n\t\t$b6 = \"/proc/self/exe\" wide ascii\n\t\t$b7 = \"cp -a %s %s\" wide ascii\n\t\t$c1 = \"/dev/pts/4\" wide ascii fullword\n\t\t$c2 = \"/tmp/1408.log\" wide ascii fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and ( ( 1 of ( $a* ) and 4 of ( $b* ) ) or ( 1 of ( $a* ) and 1 of ( $c* ) ) or 2 of ( $a* ) or all of ( $b* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

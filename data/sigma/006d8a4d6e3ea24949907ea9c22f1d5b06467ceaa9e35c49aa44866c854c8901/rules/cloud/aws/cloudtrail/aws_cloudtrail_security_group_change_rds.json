@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_security_group_change_rds.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "jamesc-grafana",
+                "date": "2024-07-11",
+                "title": "RDS Database Security Group Modification",
+                "id": "14f3f1c8-02d5-43a2-a191-91ffb52d3015"
+            },
+            "rule_text": "title: RDS Database Security Group Modification\nid: 14f3f1c8-02d5-43a2-a191-91ffb52d3015\nstatus: test\ndescription: 'Detects changes to the security group entries for RDS databases.\n\n  This can indicate that a misconfiguration has occurred which potentially exposes\n  the database to the public internet, a wider audience within the VPC or that removal\n  of valid rules has occurred which could impact the availability of the database\n  to legitimate services and users.\n\n  '\nreferences:\n- https://www.gorillastack.com/blog/real-time-events/important-aws-cloudtrail-security-events-tracking/\nauthor: jamesc-grafana\ndate: 2024-07-11\ntags:\n- attack.initial-access\n- attack.t1190\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: rds.amazonaws.com\n    eventName:\n    - AuthorizeDBSecurityGroupIngress\n    - CreateDBSecurityGroup\n    - DeleteDBSecurityGroup\n    - RevokeDBSecurityGroupIngress\n  condition: selection\nfalsepositives:\n- Creation of a new Database that needs new security group rules\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

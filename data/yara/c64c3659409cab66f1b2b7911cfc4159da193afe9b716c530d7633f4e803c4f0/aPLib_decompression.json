@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/fboldewin/YARA-rules/blob/master/aPLib_decompression.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "aPLib_decompression",
+                "tags": [],
+                "description": "Detects aPLib decompression code often used in malware",
+                "author": "@r3c0nst",
+                "date": "2021-24-03",
+                "reference": "https://ibsensoftware.com/files/aPLib-1.1.1.zip"
+            },
+            "rule_text": "rule aPLib_decompression\n{\n\tmeta:\n\t\tdescription = \"Detects aPLib decompression code often used in malware\"\n\t\tauthor = \"@r3c0nst\"\n\t\tdate = \"2021-24-03\"\n\t\treference = \"https://ibsensoftware.com/files/aPLib-1.1.1.zip\"\n\n\tstrings:\n\t\t$pattern1 = { FC B2 80 31 DB A4 B3 02 }\n\t\t$pattern2 = { AC D1 E8 74 ?? 11 C9 EB }\n\t\t$pattern3 = { 73 0A 80 FC 05 73 ?? 83 F8 7F 77 }\n\n\tcondition:\n\t\tfilesize < 10MB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

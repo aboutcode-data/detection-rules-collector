@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/elceef/yara-rulz/blob/master/rules/Suspicious_SFX.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Suspicious_SFX",
+                "tags": [],
+                "description": "Detects self-extracting archives (SFX) executing cmd.exe or powershell.exe",
+                "author": "marcin@ulikowski.pl",
+                "date": "2023-04-04",
+                "reference": "https://www.crowdstrike.com/blog/self-extracting-archives-decoy-files-and-their-hidden-payloads/"
+            },
+            "rule_text": "rule Suspicious_SFX\n{\n\tmeta:\n\t\tdescription = \"Detects self-extracting archives (SFX) executing cmd.exe or powershell.exe\"\n\t\tauthor = \"marcin@ulikowski.pl\"\n\t\tdate = \"2023-04-04\"\n\t\treference = \"https://www.crowdstrike.com/blog/self-extracting-archives-decoy-files-and-their-hidden-payloads/\"\n\n\tstrings:\n\t\t$rar = { 52 61 72 21 }\n\t\t$zip = { 50 4b 03 04 }\n\t\t$setup_cmd = \"\\nSetup=cmd\"\n\t\t$setup_powershell = \"\\nSetup=powershell\"\n\t\t$silent = \"\\nSilent=1\"\n\n\tcondition:\n\t\tfilesize < 1MB and uint16be( 0 ) == 0x4d5a and any of ( $zip , $rar ) and any of ( $setup_* ) and $silent\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

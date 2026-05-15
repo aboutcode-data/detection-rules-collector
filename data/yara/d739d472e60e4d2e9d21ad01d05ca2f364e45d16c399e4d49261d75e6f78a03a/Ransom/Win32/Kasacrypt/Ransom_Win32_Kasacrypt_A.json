@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Kasacrypt/Ransom_Win32_Kasacrypt_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Kasacrypt_A",
+                "tags": [],
+                "description": "Ransom:Win32/Kasacrypt.A,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Kasacrypt_A\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Kasacrypt.A,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2e 6b 6f 72 72 65 6b 74 6f 72 }\n\t\t$a_01_1 = {6b 6f 72 72 65 6b 74 6f 72 66 69 6c 65 5c 73 68 65 6c 6c 5c 6f 70 65 6e 5c 63 6f 6d 6d 61 6e 64 }\n\t\t$a_01_2 = {63 3a 5c 6c 6f 6f 6b 2e 6a 70 67 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

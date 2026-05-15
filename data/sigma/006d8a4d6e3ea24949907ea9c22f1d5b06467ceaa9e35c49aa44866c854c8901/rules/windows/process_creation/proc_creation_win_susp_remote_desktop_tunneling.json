@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_remote_desktop_tunneling.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-27",
+                "title": "Potential Remote Desktop Tunneling",
+                "id": "8a3038e8-9c9d-46f8-b184-66234a160f6f"
+            },
+            "rule_text": "title: Potential Remote Desktop Tunneling\nid: 8a3038e8-9c9d-46f8-b184-66234a160f6f\nstatus: test\ndescription: Detects potential use of an SSH utility to establish RDP over a reverse\n  SSH Tunnel. This can be used by attackers to enable routing of network packets that\n  would otherwise not reach their intended destination.\nreferences:\n- https://www.elastic.co/guide/en/security/current/potential-remote-desktop-tunneling-detected.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-27\ntags:\n- attack.lateral-movement\n- attack.t1021\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains: :3389\n  selection_opt:\n    CommandLine|contains:\n    - ' -L '\n    - ' -P '\n    - ' -R '\n    - ' -pw '\n    - ' -ssh '\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

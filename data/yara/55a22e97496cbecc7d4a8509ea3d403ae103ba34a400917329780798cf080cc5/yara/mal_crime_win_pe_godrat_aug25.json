@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_crime_win_pe_godrat_aug25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_CRIME_RAT_WIN_PE_GodRat_Aug25",
+                "tags": "RAT, Windows, GodRAT, Gh0st RAT, GETGOD",
+                "description": "Detects GodRAT malware targeting Windows systems",
+                "author": "Arda Buyukkaya",
+                "date": "2025-08-23",
+                "family": "GodRAT",
+                "reference": "https://securelist.com/godrat/117119/",
+                "victims": "Financial services",
+                "sha256": "154e800ed1719dbdcb188c00d5822444717c2a89017f2d12b8511eeeda0c2f41"
+            },
+            "rule_text": "import \"pe\"\n\nrule MAL_CRIME_RAT_WIN_PE_GodRat_Aug25 : GodRAT\n{\n\tmeta:\n\t\tdescription = \"Detects GodRAT malware targeting Windows systems\"\n\t\tauthor = \"Arda Buyukkaya\"\n\t\tdate = \"2025-08-23\"\n\t\tfamily = \"GodRAT\"\n\t\treference = \"https://securelist.com/godrat/117119/\"\n\t\ttags = \"RAT, Windows, GodRAT, Gh0st RAT, GETGOD\"\n\t\tvictims = \"Financial services\"\n\t\tsha256 = \"154e800ed1719dbdcb188c00d5822444717c2a89017f2d12b8511eeeda0c2f41\"\n\n\tstrings:\n\t\t$winrt_txt = \"C++/WinRT version\" ascii wide nocase\n\t\t$api_blob = {\n         4E 74 43 72 65 61 74 65 53 65 63 74 69 6F 6E 00                          // NtCreateSection\n         4E 74 4D 61 70 56 69 65 77 4F 66 53 65 63 74 69 6F 6E 00 00              // NtMapViewOfSection\n         4E 74 55 6E 6D 61 70 56 69 65 77 4F 66 53 65 63 74 69 6F 6E 00 00 00 00  // NtUnmapViewOfSection\n      }\n\t\t$ld_movups = { 0F 10 05 ?? ?? ?? ?? }\n\t\t$ld_movq = { F3 0F 7E 05 ?? ?? ?? ?? }\n\t\t$st_movups = { 0F 11 85 ?? ?? ?? ?? }\n\t\t$st_movq = { 66 0F D6 85 ?? ?? ?? ?? }\n\t\t$scan_loop = { 8A 01 41 84 C0 75 F9 }\n\t\t$cmp_len_770 = { 81 FF 70 07 00 00 0F 82 ?? ?? ?? ?? }\n\t\t$cmp_len_76C = { 81 FF 6C 07 00 00 0F 82 ?? ?? ?? ?? }\n\n\tcondition:\n\t\tpe.is_pe and filesize <= 10MB and ( ( $winrt_txt and ( pe.imphash ( ) == \"0f4b0270c84616ce594b6a84c47a7717\" ) ) or ( ( $ld_movups or $ld_movq ) and ( ( #st_movups >= 2 ) or ( #st_movq >= 2 ) or ( #st_movups >= 1 and #st_movq >= 1 ) ) and $scan_loop and $api_blob and ( $cmp_len_770 or $cmp_len_76C ) ) or pe.imphash ( ) == \"ee5ea868d8233000216e7b29bc8cb4e2\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/StopCrypt/Ransom_Win32_StopCrypt_MGK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_StopCrypt_MGK_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/StopCrypt.MGK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_StopCrypt_MGK_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/StopCrypt.MGK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {55 8b ec 8b 45 08 8b 4d 0c 33 08 8b 55 08 89 0a 5d c2 }\n\t\t$a_01_1 = {55 8b ec 8b 45 08 8b 08 33 4d 0c 8b 55 08 89 0a 5d c2 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

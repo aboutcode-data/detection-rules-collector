@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_adfind_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-13",
+                "title": "PUA - Suspicious ActiveDirectory Enumeration Via AdFind.EXE",
+                "id": "455b9d50-15a1-4b99-853f-8d37655a4c1b"
+            },
+            "rule_text": "title: PUA - Suspicious ActiveDirectory Enumeration Via AdFind.EXE\nid: 455b9d50-15a1-4b99-853f-8d37655a4c1b\nrelated:\n- id: 9a132afa-654e-11eb-ae93-0242ac130002\n  type: similar\n- id: 514e7e3e-b3b4-4a67-af60-be20f139198b\n  type: similar\nstatus: test\ndescription: Detects active directory enumeration activity using known AdFind CLI\n  flags\nreferences:\n- https://www.joeware.net/freetools/tools/adfind/\n- https://social.technet.microsoft.com/wiki/contents/articles/7535.adfind-command-examples.aspx\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1087.002/T1087.002.md\nauthor: frack113\ndate: 2021-12-13\nmodified: 2023-03-05\ntags:\n- attack.discovery\n- attack.t1087.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_password:\n    CommandLine|contains:\n    - lockoutduration\n    - lockoutthreshold\n    - lockoutobservationwindow\n    - maxpwdage\n    - minpwdage\n    - minpwdlength\n    - pwdhistorylength\n    - pwdproperties\n  selection_enum_ad:\n    CommandLine|contains: -sc admincountdmp\n  selection_enum_exchange:\n    CommandLine|contains: -sc exchaddresses\n  condition: 1 of selection_*\nfalsepositives:\n- Authorized administrative activity\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_pua_adfind_enumeration/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

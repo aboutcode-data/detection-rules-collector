@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_new_kernel_driver.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-14",
+                "title": "New Kernel Driver Via SC.EXE",
+                "id": "431a1fdb-4799-4f3b-91c3-a683b003fc49"
+            },
+            "rule_text": "title: New Kernel Driver Via SC.EXE\nid: 431a1fdb-4799-4f3b-91c3-a683b003fc49\nstatus: test\ndescription: Detects creation of a new service (kernel driver) with the type \"kernel\"\nreferences:\n- https://www.aon.com/cyber-solutions/aon_cyber_labs/yours-truly-signed-av-driver-weaponizing-an-antivirus-driver/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-14\nmodified: 2025-10-07\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1543.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\sc.exe\n    CommandLine|contains:\n    - create\n    - config\n    CommandLine|contains|all:\n    - binPath\n    - type\n    - kernel\n  filter_optional_avira_driver:\n  - CommandLine|contains|all:\n    - create netprotection_network_filter\n    - 'type= kernel start= '\n    - binPath= System32\\drivers\\netprotection_network_filter\n    - DisplayName= netprotection_network_filter\n    - group= PNP_TDI tag= yes\n  - CommandLine|contains|all:\n    - create avelam binpath=C:\\Windows\\system32\\drivers\\avelam.sys\n    - type=kernel start=boot error=critical group=Early-Launch\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Rare legitimate installation of kernel drivers via sc.exe\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

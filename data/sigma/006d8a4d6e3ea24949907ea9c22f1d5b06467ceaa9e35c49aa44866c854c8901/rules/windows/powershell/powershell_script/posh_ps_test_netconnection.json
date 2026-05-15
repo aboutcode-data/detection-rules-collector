@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_test_netconnection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-23",
+                "title": "Testing Usage of Uncommonly Used Port",
+                "id": "adf876b3-f1f8-4aa9-a4e4-a64106feec06"
+            },
+            "rule_text": "title: Testing Usage of Uncommonly Used Port\nid: adf876b3-f1f8-4aa9-a4e4-a64106feec06\nstatus: test\ndescription: 'Adversaries may communicate using a protocol and port paring that are\n  typically not associated.\n\n  For example, HTTPS over port 8088(Citation: Symantec Elfin Mar 2019) or port 587(Citation:\n  Fortinet Agent Tesla April 2018) as opposed to the traditional port 443.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1571/T1571.md#atomic-test-1---testing-usage-of-uncommonly-used-port-with-powershell\n- https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2022-ps\nauthor: frack113\ndate: 2022-01-23\ntags:\n- attack.command-and-control\n- attack.t1571\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Test-NetConnection\n    - '-ComputerName '\n    - '-port '\n  filter:\n    ScriptBlockText|contains:\n    - ' 443 '\n    - ' 80 '\n  condition: selection and not filter\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

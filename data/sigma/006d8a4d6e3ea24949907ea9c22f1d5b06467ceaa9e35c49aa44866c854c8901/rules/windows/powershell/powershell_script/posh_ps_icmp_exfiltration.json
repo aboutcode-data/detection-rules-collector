@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_icmp_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bartlomiej Czyz @bczyz1, oscd.community",
+                "date": "2020-10-10",
+                "title": "PowerShell ICMP Exfiltration",
+                "id": "4c4af3cd-2115-479c-8193-6b8bfce9001c"
+            },
+            "rule_text": "title: PowerShell ICMP Exfiltration\nid: 4c4af3cd-2115-479c-8193-6b8bfce9001c\nstatus: test\ndescription: Detects Exfiltration Over Alternative Protocol - ICMP. Adversaries may\n  steal data by exfiltrating it over an un-encrypted network protocol other than that\n  of the existing command and control channel.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-2---exfiltration-over-alternative-protocol---icmp\nauthor: Bartlomiej Czyz @bczyz1, oscd.community\ndate: 2020-10-10\nmodified: 2022-12-25\ntags:\n- attack.exfiltration\n- attack.t1048.003\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - New-Object\n    - System.Net.NetworkInformation.Ping\n    - .Send(\n  condition: selection\nfalsepositives:\n- Legitimate usage of System.Net.NetworkInformation.Ping class\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_raspberry_robin_msiexec_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Windows Installer (msiexec.exe) Downloading and Executing Packages",
+                "id": "2b09f558-14dc-40ac-b962-66386b5785c1"
+            },
+            "rule_text": "title: Windows Installer (msiexec.exe) Downloading and Executing Packages\nid: 2b09f558-14dc-40ac-b962-66386b5785c1\nstatus: experimental\ndescription: \"To detect suspicious use of msiexec.exe by Raspberry Robin or other\\\n  \\ threats, \\nit\\u2019s essential to take a look at the command line and the URL.\\\n  \\ Detecting \\nmsiexec.exe making outbound network connections to download and install\\\n  \\ packages \\nin the command-line interface will give you the opportunity to examine\\\n  \\ the \\nactivity and determine if it\\u2019s malicious or not. Part of the RedCanary\\\n  \\ 2024 \\nThreat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/raspberry-robin/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.defense_evasion\n- attack.t1218\n- attack.t1218.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    Image|endswith: \\msiexec\n  selection2:\n    CommandLine|contains:\n    - 'http:'\n    - 'https:'\n  selection3:\n    CommandLine|contains|windash: /q\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

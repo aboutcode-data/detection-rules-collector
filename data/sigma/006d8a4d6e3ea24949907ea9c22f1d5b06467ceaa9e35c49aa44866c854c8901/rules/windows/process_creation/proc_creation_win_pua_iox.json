@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_iox.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-10-08",
+                "title": "PUA- IOX Tunneling Tool Execution",
+                "id": "d7654f02-e04b-4934-9838-65c46f187ebc"
+            },
+            "rule_text": "title: PUA- IOX Tunneling Tool Execution\nid: d7654f02-e04b-4934-9838-65c46f187ebc\nstatus: test\ndescription: Detects the use of IOX - a tool for port forwarding and intranet proxy\n  purposes\nreferences:\n- https://github.com/EddieIvan01/iox\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-10-08\nmodified: 2024-11-23\ntags:\n- attack.command-and-control\n- attack.t1090\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\iox.exe\n  selection_commandline:\n    CommandLine|contains:\n    - '.exe fwd -l '\n    - '.exe fwd -r '\n    - '.exe proxy -l '\n    - '.exe proxy -r '\n  selection_hashes:\n    Hashes|contains:\n    - MD5=9DB2D314DD3F704A02051EF5EA210993\n    - SHA1=039130337E28A6623ECF9A0A3DA7D92C5964D8DD\n    - SHA256=C6CF82919B809967D9D90EA73772A8AA1C1EB3BC59252D977500F64F1A0D6731\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate use\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

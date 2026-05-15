@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ldifde_file_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@gott_cyber",
+                "date": "2022-09-02",
+                "title": "Import LDAP Data Interchange Format File Via Ldifde.EXE",
+                "id": "6f535e01-ca1f-40be-ab8d-45b19c0c8b7f"
+            },
+            "rule_text": "title: Import LDAP Data Interchange Format File Via Ldifde.EXE\nid: 6f535e01-ca1f-40be-ab8d-45b19c0c8b7f\nstatus: test\ndescription: 'Detects the execution of \"Ldifde.exe\" with the import flag \"-i\". The\n  can be abused to include HTTP-based arguments which will allow the arbitrary download\n  of files from a remote server.\n\n  '\nreferences:\n- https://twitter.com/0gtweet/status/1564968845726580736\n- https://strontic.github.io/xcyclopedia/library/ldifde.exe-979DE101F5059CEC1D2C56967CA2BAC0.html\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc731033(v=ws.11)\nauthor: '@gott_cyber'\ndate: 2022-09-02\nmodified: 2023-03-14\ntags:\n- attack.command-and-control\n- attack.stealth\n- attack.t1218\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\ldifde.exe\n  - OriginalFileName: ldifde.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - -i\n    - -f\n  condition: all of selection_*\nfalsepositives:\n- Since the content of the files are unknown, false positives are expected\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

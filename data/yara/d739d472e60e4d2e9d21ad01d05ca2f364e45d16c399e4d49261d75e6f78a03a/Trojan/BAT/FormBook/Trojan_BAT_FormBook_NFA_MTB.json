@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/FormBook/Trojan_BAT_FormBook_NFA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_FormBook_NFA_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/FormBook.NFA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_FormBook_NFA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/FormBook.NFA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {02 28 40 00 00 0a 0a 28 ?? ?? ?? 0a 06 28 ?? ?? ?? 06 6f ?? ?? ?? 0a 0b 2b 00 07 2a }\n\t\t$a_01_1 = {61 6e 64 72 6f 5a 69 64 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

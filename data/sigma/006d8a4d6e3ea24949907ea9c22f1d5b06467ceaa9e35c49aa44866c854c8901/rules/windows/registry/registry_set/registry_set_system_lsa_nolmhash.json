@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_system_lsa_nolmhash.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-12-15",
+                "title": "Enable LM Hash Storage",
+                "id": "c420410f-c2d8-4010-856b-dffe21866437"
+            },
+            "rule_text": "title: Enable LM Hash Storage\nid: c420410f-c2d8-4010-856b-dffe21866437\nrelated:\n- id: 98dedfdd-8333-49d4-9f23-d7018cccae53\n  type: similar\nstatus: test\ndescription: 'Detects changes to the \"NoLMHash\" registry value in order to allow Windows\n  to store LM Hashes.\n\n  By setting this registry value to \"0\" (DWORD), Windows will be allowed to store\n  a LAN manager hash of your password in Active Directory and local SAM databases.\n\n  '\nreferences:\n- https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-347a\n- https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/prevent-windows-store-lm-hash-password\n- https://www.sans.org/blog/protecting-privileged-domain-accounts-lm-hashes-the-good-the-bad-and-the-ugly/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-12-15\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|endswith: System\\CurrentControlSet\\Control\\Lsa\\NoLMHash\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

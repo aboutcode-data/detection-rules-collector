@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Banker/TrojanSpy_Win32_Banker_ABU.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Banker_ABU",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Banker.ABU,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Banker_ABU\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Banker.ABU,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 55 f8 a1 30 2f 47 00 8b 08 ff 51 38 8d 45 f0 50 8b 0d 30 2f 47 00 ba ?? ?? ?? ?? 8b 83 00 03 00 00 e8 }\n\t\t$a_03_1 = {73 75 62 6a 65 63 74 3d ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 6d 65 73 73 61 67 65 3d ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 68 74 74 70 3a 2f 2f }\n\t\t$a_01_2 = {54 65 63 6c 61 64 6f 20 76 69 72 74 75 61 6c 20 64 65 73 61 62 69 6c 69 74 61 64 6f 2c 20 70 6f 72 20 66 61 76 6f 72 20 75 74 69 6c 69 7a 65 20 73 65 75 20 74 65 63 6c 61 64 6f }\n\t\t$a_01_3 = {41 74 75 61 6c 69 7a 61 6e 64 6f 20 2d 20 45 74 61 70 61 20 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

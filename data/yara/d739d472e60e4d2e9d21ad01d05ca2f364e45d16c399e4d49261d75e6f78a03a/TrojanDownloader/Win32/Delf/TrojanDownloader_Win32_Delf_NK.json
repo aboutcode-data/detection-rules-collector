@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Delf/TrojanDownloader_Win32_Delf_NK.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Delf_NK",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Delf.NK,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0a 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Delf_NK\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Delf.NK,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0a 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {36 30 2e 31 39 31 2e 32 35 34 2e 32 35 33 }\n\t\t$a_01_1 = {73 74 64 33 33 32 32 2e 63 6f 6d }\n\t\t$a_01_2 = {67 6c 61 64 31 32 33 2e 63 6f 6d }\n\t\t$a_01_3 = {63 6c 75 64 33 33 2e 63 6f 6d }\n\t\t$a_01_4 = {5c 73 65 74 6f 70 33 30 31 30 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Delf_NK_2",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Delf.NK,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Delf_NK_2\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Delf.NK,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {61 00 69 00 79 00 61 00 79 00 75 00 6d 00 6e 00 65 00 }\n\t\t$a_01_1 = {2e 00 64 00 6f 00 77 00 6e 00 78 00 69 00 61 00 2e 00 6e 00 65 00 74 00 }\n\t\t$a_03_2 = {8b 14 98 b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 85 c0 7f 16 a1 ?? ?? ?? ?? 8b 14 98 b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 85 c0 7e 6b }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

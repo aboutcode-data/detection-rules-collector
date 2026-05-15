@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/uncommon_microsoft_oauth_api_call.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2023-08-02",
+                "title": "Uncommon Microsoft Oauth2 API call",
+                "id": "adc9d94f-7c57-4ed1-8711-5afc12fd6fed"
+            },
+            "rule_text": "title: Uncommon Microsoft Oauth2 API call\nid: adc9d94f-7c57-4ed1-8711-5afc12fd6fed\ndescription: Uncommon Microsoft Oauth2 API call observed to renew access token by\n  BlueBravo\nstatus: experimental\nauthor: NTT Security - Axel Olsson\ndate: '2023-08-02'\nreferences:\n- https://go.recordedfuture.com/hubfs/reports/cta-2023-0727-1.pdf\n- https://blog.cluster25.duskrise.com/2022/09/23/in-the-footsteps-of-the-fancy-bear-powerpoint-graphite/\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri: /common/oauth2/v2.0/token\n    cs-referer: ''\n  filter:\n    c-useragent|contains:\n    - Mozilla/5.0 (Windows\n  condition: selection and not filter\nfalsepositives:\n- Legitimate requests to renew the token using this rare API path, investigate the\n  traffic from the host if it looks to be from a legitimate product or if it looks\n  suspicious.\n- It could be a sign of exfiltration and/or C2 communication if it is not seen in\n  relation to web surf or other legitimate activity.\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_iexpress_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-02-05",
+                "title": "Self Extracting Package Creation Via Iexpress.EXE From Potentially Suspicious Location",
+                "id": "b2b048b0-7857-4380-b0fb-d3f0ab820b71"
+            },
+            "rule_text": "title: Self Extracting Package Creation Via Iexpress.EXE From Potentially Suspicious\n  Location\nid: b2b048b0-7857-4380-b0fb-d3f0ab820b71\nstatus: test\ndescription: 'Detects the use of iexpress.exe to create binaries via Self Extraction\n  Directive (SED) files located in potentially suspicious locations.\n\n  This behavior has been observed in-the-wild by different threat actors.\n\n  '\nreferences:\n- https://strontic.github.io/xcyclopedia/library/iexpress.exe-D594B2A33EFAFD0EABF09E3FDC05FCEA.html\n- https://en.wikipedia.org/wiki/IExpress\n- https://decoded.avast.io/janvojtesek/raspberry-robins-roshtyak-a-little-lesson-in-trickery/\n- https://www.virustotal.com/gui/file/602f4ae507fa8de57ada079adff25a6c2a899bd25cd092d0af7e62cdb619c93c/behavior\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk, Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-02-05\nmodified: 2024-06-04\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\iexpress.exe\n  - OriginalFileName: IEXPRESS.exe\n  selection_cli:\n    CommandLine|contains|windash: ' /n '\n  selection_paths:\n    CommandLine|contains:\n    - :\\ProgramData\\\n    - :\\Temp\\\n    - :\\Windows\\System32\\Tasks\\\n    - :\\Windows\\Tasks\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n  condition: all of selection_*\nfalsepositives:\n- Administrators building packages using iexpress.exe\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

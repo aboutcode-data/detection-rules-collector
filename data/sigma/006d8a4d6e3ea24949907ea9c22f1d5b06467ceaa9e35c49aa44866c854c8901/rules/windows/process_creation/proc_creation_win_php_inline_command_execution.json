@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_php_inline_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-02",
+                "title": "Php Inline Command Execution",
+                "id": "d81871ef-5738-47ab-9797-7a9c90cd4bfb"
+            },
+            "rule_text": "title: Php Inline Command Execution\nid: d81871ef-5738-47ab-9797-7a9c90cd4bfb\nstatus: test\ndescription: Detects execution of php using the \"-r\" flag. This is could be used as\n  a way to launch a reverse shell or execute live php code.\nreferences:\n- https://www.php.net/manual/en/features.commandline.php\n- https://www.revshells.com/\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\php.exe\n  - OriginalFileName: php.exe\n  selection_cli:\n    CommandLine|contains: ' -r'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

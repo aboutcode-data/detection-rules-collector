@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Bancos/TrojanSpy_Win32_Bancos_MZ.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Bancos_MZ",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Bancos.MZ,SIGNATURE_TYPE_PEHSTR_EXT,1f 00 1e 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Bancos_MZ\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Bancos.MZ,SIGNATURE_TYPE_PEHSTR_EXT,1f 00 1e 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {41 72 71 75 69 76 6f 20 28 45 78 3a 20 54 6f 6b 65 6e 2c 20 43 44 2d 52 6f 6d 2c 20 64 69 73 71 75 65 74 65 }\n\t\t$a_01_1 = {42 72 61 64 65 73 63 6f }\n\t\t$a_02_2 = {2d 00 2d 00 4e 00 65 00 78 00 74 00 4d 00 69 00 6d 00 65 00 50 00 61 00 72 00 74 00 [0-08] 42 00 61 00 6e 00 63 00 6f 00 }\n\t\t$a_00_3 = {4e 00 6f 00 72 00 74 00 6f 00 6e 00 20 00 52 00 65 00 63 00 65 00 62 00 65 00 75 00 20 00 30 00 20 00 2d 00 20 00 66 00 72 00 6d 00 5f 00 53 00 65 00 72 00 76 00 69 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_02_2 & 1 ) * 10 + ( #a_00_3 & 1 ) * 1 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

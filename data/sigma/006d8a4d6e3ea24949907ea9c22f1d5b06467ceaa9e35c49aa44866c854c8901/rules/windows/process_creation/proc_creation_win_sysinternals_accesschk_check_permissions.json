@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_accesschk_check_permissions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov (idea), Mangatas Tondang, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2020-10-13",
+                "title": "Permission Check Via Accesschk.EXE",
+                "id": "c625d754-6a3d-4f65-9c9a-536aea960d37"
+            },
+            "rule_text": "title: Permission Check Via Accesschk.EXE\nid: c625d754-6a3d-4f65-9c9a-536aea960d37\nstatus: test\ndescription: Detects the usage of the \"Accesschk\" utility, an access and privilege\n  audit tool developed by SysInternal and often being abused by attacker to verify\n  process privileges\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment?slide=43\n- https://www.youtube.com/watch?v=JGs-aKf2OtU&ab_channel=OFFZONEMOSCOW\n- https://github.com/carlospolop/PEASS-ng/blob/fa0f2e17fbc1d86f1fd66338a40e665e7182501d/winPEAS/winPEASbat/winPEAS.bat\n- https://github.com/gladiatx0r/Powerless/blob/04f553bbc0c65baf4e57344deff84e3f016e6b51/Powerless.bat\nauthor: Teymur Kheirkhabarov (idea), Mangatas Tondang, oscd.community, Nasreddine\n  Bencherchali (Nextron Systems)\ndate: 2020-10-13\nmodified: 2023-02-20\ntags:\n- attack.discovery\n- attack.t1069.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Product|endswith: AccessChk\n  - Description|contains: Reports effective permissions\n  - Image|endswith:\n    - \\accesschk.exe\n    - \\accesschk64.exe\n  - OriginalFileName: accesschk.exe\n  selection_cli:\n    CommandLine|contains:\n    - 'uwcqv '\n    - 'kwsu '\n    - 'qwsu '\n    - 'uwdqs '\n  condition: all of selection*\nfalsepositives:\n- System administrator Usage\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

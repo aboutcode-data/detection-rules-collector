@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Sycomder/TrojanSpy_Win32_Sycomder_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Sycomder_A",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Sycomder.A,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Sycomder_A\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Sycomder.A,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8d 45 d0 50 e8 ?? ?? ?? ?? 6a 00 ff 75 08 6a 00 6a 00 68 ?? ?? 00 00 68 ?? ?? 00 00 6a 6b 68 ?? ?? 00 00 68 00 00 0a 00 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 6a 00 e8 ?? ?? ?? ?? 89 45 b0 6a 01 }\n\t\t$a_00_1 = {44 65 74 65 63 74 69 76 65 }\n\t\t$a_00_2 = {44 49 54 34 3e 20 25 54 45 4d 50 25 }\n\t\t$a_02_3 = {3e 3e 20 25 54 45 4d 50 25 5c [0-08] 2e 5f 65 67 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

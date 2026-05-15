@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_psexesvc.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thomas Patzke, Romaissa Adjailia, Florian Roth (Nextron Systems)",
+                "date": "2017-06-12",
+                "title": "PsExec Service Execution",
+                "id": "fdfcbd78-48f1-4a4b-90ac-d82241e368c5"
+            },
+            "rule_text": "title: PsExec Service Execution\nid: fdfcbd78-48f1-4a4b-90ac-d82241e368c5\nrelated:\n- id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba\n  type: obsolete\nstatus: test\ndescription: Detects launch of the PSEXESVC service, which means that this system\n  was the target of a psexec remote execution\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/psexec\n- https://www.youtube.com/watch?v=ro2QuZTIMBM\nauthor: Thomas Patzke, Romaissa Adjailia, Florian Roth (Nextron Systems)\ndate: 2017-06-12\nmodified: 2023-02-28\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image: C:\\Windows\\PSEXESVC.exe\n  - OriginalFileName: psexesvc.exe\n  condition: selection\nfalsepositives:\n- Legitimate administrative tasks\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

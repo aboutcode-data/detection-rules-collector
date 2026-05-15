@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sndvol_susp_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-06-09",
+                "title": "Uncommon Child Processes Of SndVol.exe",
+                "id": "ba42babc-0666-4393-a4f7-ceaf5a69191e"
+            },
+            "rule_text": "title: Uncommon Child Processes Of SndVol.exe\nid: ba42babc-0666-4393-a4f7-ceaf5a69191e\nstatus: test\ndescription: Detects potentially uncommon child processes of SndVol.exe (the Windows\n  volume mixer)\nreferences:\n- https://twitter.com/Max_Mal_/status/1661322732456353792\nauthor: X__Junior (Nextron Systems)\ndate: 2023-06-09\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|endswith: \\SndVol.exe\n  filter_main_rundll32:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains: ' shell32.dll,Control_RunDLL '\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

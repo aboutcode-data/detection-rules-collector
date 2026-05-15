@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_encode.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-02",
+                "title": "Suspicious Execution of Powershell with Base64",
+                "id": "fb843269-508c-4b76-8b8d-88679db22ce7"
+            },
+            "rule_text": "title: Suspicious Execution of Powershell with Base64\nid: fb843269-508c-4b76-8b8d-88679db22ce7\nstatus: test\ndescription: Commandline to launch powershell with a base64 payload\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.001/T1059.001.md#atomic-test-20---powershell-invoke-known-malicious-cmdlets\n- https://unit42.paloaltonetworks.com/unit42-pulling-back-the-curtains-on-encodedcommand-powershell-attacks/\n- https://mikefrobbins.com/2017/06/15/simple-obfuscation-with-powershell-using-base64-encoding/\nauthor: frack113\ndate: 2022-01-02\nmodified: 2023-01-05\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    CommandLine|contains:\n    - ' -e '\n    - ' -en '\n    - ' -enc '\n    - ' -enco'\n    - ' -ec '\n  filter_encoding:\n    CommandLine|contains: ' -Encoding '\n  filter_azure:\n    ParentImage|contains:\n    - C:\\Packages\\Plugins\\Microsoft.GuestConfiguration.ConfigurationforWindows\\\n    - \\gc_worker.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

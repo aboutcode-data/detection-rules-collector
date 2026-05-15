@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_amsi_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-12-25",
+                "title": "AMSI Disabled via Registry Modification",
+                "id": "aa37cbb0-da36-42cb-a90f-fdf216fc7467"
+            },
+            "rule_text": "title: AMSI Disabled via Registry Modification\nid: aa37cbb0-da36-42cb-a90f-fdf216fc7467\nrelated:\n- id: 7dbbcac2-57a0-45ac-b306-ff30a8bd2981\n  type: similar\nstatus: experimental\ndescription: 'Detects attempts to disable AMSI (Anti-Malware Scan Interface) by modifying\n  the AmsiEnable registry value.\n\n  Anti-Malware Scan Interface (AMSI) is a security feature in Windows that allows\n  applications and services to integrate with anti-malware products for enhanced protection\n  against malicious content.\n\n  Adversaries may attempt to disable AMSI to evade detection by security software,\n  allowing them to execute malicious scripts or code without being scanned.\n\n  '\nreferences:\n- https://mostafayahiax.medium.com/hunting-for-amsi-bypassing-methods-9886dda0bf9d\n- https://docs.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal\n- https://www.mdsec.co.uk/2019/02/macros-and-more-with-sharpshooter-v2-0/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-12-25\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Software\\Microsoft\\Windows Script\\Settings\\AmsiEnable\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_amsi_disable/info.yml\nsimulation:\n- type: atomic-red-team\n  name: AMSI Bypass - Create AMSIEnable Reg Key\n  technique: T1562.001\n  atomic_guid: 728eca7b-0444-4f6f-ac36-437e3d751dc0\n",
+            "vulnerabilities": []
+        }
+    ]
+}

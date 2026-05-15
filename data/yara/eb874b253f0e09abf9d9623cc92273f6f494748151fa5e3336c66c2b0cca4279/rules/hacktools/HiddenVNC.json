@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/hacktools/HiddenVNC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HiddenVNC",
+                "tags": [],
+                "id": "15zXm5IVJkjh5ERo8y3PsR",
+                "fingerprint": "4910c9889e5940a74cb40eab4738c519c045a4ffa48fbb69c175e65421e86563",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies HiddenVNC, which can start remote sessions.",
+                "category": "MALWARE",
+                "mitre_att": "T1021.005"
+            },
+            "rule_text": "import \"pe\"\n\nrule HiddenVNC\n{\n\tmeta:\n\t\tid = \"15zXm5IVJkjh5ERo8y3PsR\"\n\t\tfingerprint = \"4910c9889e5940a74cb40eab4738c519c045a4ffa48fbb69c175e65421e86563\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies HiddenVNC, which can start remote sessions.\"\n\t\tcategory = \"MALWARE\"\n\t\tmitre_att = \"T1021.005\"\n\n\tstrings:\n\t\t$ = \"#hvnc\" ascii wide\n\t\t$ = \"VNC is starting your browser...\" ascii wide\n\t\t$ = \"HvncAction\" ascii wide\n\t\t$ = \"HvncCommunication\" ascii wide\n\t\t$ = \"hvncDesktop\" ascii wide\n\n\tcondition:\n\t\t2 of them or ( pe.exports ( \"VncStartServer\" ) and pe.exports ( \"VncStopServer\" ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

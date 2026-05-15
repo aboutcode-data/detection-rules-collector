@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powercfg_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-11-18",
+                "title": "Suspicious Powercfg Execution To Change Lock Screen Timeout",
+                "id": "f8d6a15e-4bc8-4c27-8e5d-2b10f0b73e5b"
+            },
+            "rule_text": "title: Suspicious Powercfg Execution To Change Lock Screen Timeout\nid: f8d6a15e-4bc8-4c27-8e5d-2b10f0b73e5b\nstatus: test\ndescription: Detects suspicious execution of 'Powercfg.exe' to change lock screen\n  timeout\nreferences:\n- https://blogs.vmware.com/security/2022/11/batloader-the-evasive-downloader-malware.html\n- https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options\nauthor: frack113\ndate: 2022-11-18\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_power:\n  - Image|endswith: \\powercfg.exe\n  - OriginalFileName: PowerCfg.exe\n  selection_standby:\n  - CommandLine|contains|all:\n    - '/setacvalueindex '\n    - SCHEME_CURRENT\n    - SUB_VIDEO\n    - VIDEOCONLOCK\n  - CommandLine|contains|all:\n    - '-change '\n    - -standby-timeout-\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

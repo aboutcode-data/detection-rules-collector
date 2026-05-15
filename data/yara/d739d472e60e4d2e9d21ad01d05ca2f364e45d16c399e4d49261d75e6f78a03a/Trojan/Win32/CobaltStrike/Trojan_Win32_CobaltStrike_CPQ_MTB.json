@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CobaltStrike/Trojan_Win32_CobaltStrike_CPQ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CobaltStrike_CPQ_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CobaltStrike.CPQ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CobaltStrike_CPQ_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CobaltStrike.CPQ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {0f b6 04 0a 88 04 1a 42 84 c0 75 }\n\t\t$a_03_1 = {c1 cf 1b 47 33 d9 c1 eb ?? 03 1d ?? ?? ?? ?? 21 ?? ?? ?? ?? ?? 3b fb 78 ?? c1 ?? ?? 81 ?? ?? ?? ?? ?? ?? ?? ?? ?? 81 ?? ?? ?? ?? ?? 81 ?? ?? ?? ?? ?? e2 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

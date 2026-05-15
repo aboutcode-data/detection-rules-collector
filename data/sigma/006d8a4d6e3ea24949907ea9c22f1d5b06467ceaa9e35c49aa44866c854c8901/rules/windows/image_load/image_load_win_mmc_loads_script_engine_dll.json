@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_win_mmc_loads_script_engine_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-05",
+                "title": "MMC Loading Script Engines DLLs",
+                "id": "a9c73e8b-3b2d-4c45-8ef2-5f9a9c9998ad"
+            },
+            "rule_text": "title: MMC Loading Script Engines DLLs\nid: a9c73e8b-3b2d-4c45-8ef2-5f9a9c9998ad\nstatus: experimental\ndescription: 'Detects when the Microsoft Management Console (MMC) loads the DLL libraries\n  like vbscript, jscript etc which might indicate an attempt\n\n  to execute malicious scripts within a trusted system process for bypassing application\n  whitelisting or defense evasion.\n\n  '\nreferences:\n- https://tria.ge/241015-l98snsyeje/behavioral2\n- https://www.elastic.co/security-labs/grimresource\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-05\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.005\n- attack.t1218.014\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\mmc.exe\n    ImageLoaded|endswith:\n    - \\vbscript.dll\n    - \\jscript.dll\n    - \\jscript9.dll\n  condition: selection\nfalsepositives:\n- Legitimate MMC operations or extensions loading these libraries\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

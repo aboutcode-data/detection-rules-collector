@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Warece/Trojan_Win32_Warece_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Warece_B",
+                "tags": [],
+                "description": "Trojan:Win32/Warece.B,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Warece_B\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Warece.B,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {77 6f 77 66 78 2e 64 6c 6c 00 4d 47 42 00 4d 47 4f }\n\t\t$a_03_1 = {66 8b 45 0a 66 3b 05 ?? ?? ?? ?? 75 02 b3 01 56 }\n\t\t$a_01_2 = {2d 2d 53 41 56 45 54 4f }\n\t\t$a_01_3 = {50 50 4a 4f 42 00 }\n\t\t$a_01_4 = {47 45 54 54 41 53 4b 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

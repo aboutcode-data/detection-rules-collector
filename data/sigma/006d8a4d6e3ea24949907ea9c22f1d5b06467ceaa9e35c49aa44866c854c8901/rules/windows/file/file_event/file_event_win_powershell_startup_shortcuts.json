@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_powershell_startup_shortcuts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock '@securepeacock', SCYTHE",
+                "date": "2021-10-24",
+                "title": "Potential Startup Shortcut Persistence Via PowerShell.EXE",
+                "id": "92fa78e7-4d39-45f1-91a3-8b23f3f1088d"
+            },
+            "rule_text": "title: Potential Startup Shortcut Persistence Via PowerShell.EXE\nid: 92fa78e7-4d39-45f1-91a3-8b23f3f1088d\nstatus: test\ndescription: 'Detects PowerShell writing startup shortcuts.\n\n  This procedure was highlighted in Red Canary Intel Insights Oct. 2021, \"We frequently\n  observe adversaries using PowerShell to write malicious .lnk files into the startup\n  directory to establish persistence.\n\n  Accordingly, this detection opportunity is likely to identify persistence mechanisms\n  in multiple threats.\n\n  In the context of Yellow Cockatoo, this persistence mechanism eventually launches\n  the command-line script that leads to the installation of a malicious DLL\"\n\n  '\nreferences:\n- https://redcanary.com/blog/intelligence-insights-october-2021/\n- https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1547.001/T1547.001.md#atomic-test-7---add-executable-shortcut-link-to-user-startup-folder\nauthor: Christopher Peacock '@securepeacock', SCYTHE\ndate: 2021-10-24\nmodified: 2023-02-23\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    TargetFilename|contains: \\start menu\\programs\\startup\\\n    TargetFilename|endswith: .lnk\n  condition: selection\nfalsepositives:\n- Depending on your environment accepted applications may leverage this at times.\n  It is recommended to search for anomalies inidicative of malware.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

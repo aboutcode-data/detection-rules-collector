@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Didier Stevens/JPEG_EXIF_Contains_eval.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "JPEG_EXIF_Contains_eval",
+                "tags": [],
+                "author": "Didier Stevens (https://DidierStevens.com)",
+                "description": "Detect eval function inside JPG EXIF header (http://blog.sucuri.net/2013/07/malware-hidden-inside-jpg-exif-headers.html)",
+                "method": "Detect JPEG file and EXIF header ($a) and eval function ($b) inside EXIF data"
+            },
+            "rule_text": "rule JPEG_EXIF_Contains_eval\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\t\tdescription = \"Detect eval function inside JPG EXIF header (http://blog.sucuri.net/2013/07/malware-hidden-inside-jpg-exif-headers.html)\"\n\t\tmethod = \"Detect JPEG file and EXIF header ($a) and eval function ($b) inside EXIF data\"\n\n\tstrings:\n\t\t$a = {FF E1 ?? ?? 45 78 69 66 00}\n\t\t$b = /\\beval\\s*\\(/\n\n\tcondition:\n\t\tuint16be( 0x00 ) == 0xFFD8 and $a and $b in ( @a + 0x12 .. @a + 0x02 + uint16be( @a + 0x02 ) - 0x06 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

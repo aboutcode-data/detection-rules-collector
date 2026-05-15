@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_mpnotify.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Potential Persistence Via Mpnotify",
+                "id": "92772523-d9c1-4c93-9547-b0ca500baba3"
+            },
+            "rule_text": "title: Potential Persistence Via Mpnotify\nid: 92772523-d9c1-4c93-9547-b0ca500baba3\nstatus: test\ndescription: Detects when an attacker register a new SIP provider for persistence\n  and defense evasion\nreferences:\n- https://persistence-info.github.io/Data/mpnotify.html\n- https://www.youtube.com/watch?v=ggY3srD9dYs&ab_channel=GrzegorzTworek\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-08-17\ntags:\n- attack.persistence\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\mpnotify\n  condition: selection\nfalsepositives:\n- Might trigger if a legitimate new SIP provider is registered. But this is not a\n  common occurrence in an environment and should be investigated either way\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

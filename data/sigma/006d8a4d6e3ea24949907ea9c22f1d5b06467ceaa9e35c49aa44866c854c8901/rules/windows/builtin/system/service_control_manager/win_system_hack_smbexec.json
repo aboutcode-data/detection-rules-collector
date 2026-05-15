@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_hack_smbexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Omer Faruk Celik",
+                "date": "2018-03-20",
+                "title": "smbexec.py Service Installation",
+                "id": "52a85084-6989-40c3-8f32-091e12e13f09"
+            },
+            "rule_text": "title: smbexec.py Service Installation\nid: 52a85084-6989-40c3-8f32-091e12e13f09\nstatus: test\ndescription: Detects the use of smbexec.py tool by detecting a specific service installation\nreferences:\n- https://blog.ropnop.com/using-credentials-to-own-windows-boxes-part-2-psexec-and-services/\n- https://github.com/fortra/impacket/blob/33058eb2fde6976ea62e04bc7d6b629d64d44712/examples/smbexec.py#L286-L296\n- https://github.com/fortra/impacket/blob/edef71f17bc1240f9f8c957bbda98662951ac3ec/examples/smbexec.py#L60\nauthor: Omer Faruk Celik\ndate: 2018-03-20\nmodified: 2023-11-09\ntags:\n- attack.lateral-movement\n- attack.execution\n- attack.t1021.002\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service_name:\n    ServiceName: BTOBTO\n  selection_service_image:\n    ImagePath|contains:\n    - '.bat & del '\n    - __output 2^>^&1 >\n  condition: selection_eid and 1 of selection_service_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

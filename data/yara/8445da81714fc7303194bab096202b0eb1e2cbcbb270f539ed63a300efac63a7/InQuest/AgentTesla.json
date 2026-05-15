@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/AgentTesla.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AgentTesla",
+                "tags": [],
+                "author": "InQuest Labs",
+                "source": "http://blog.inquest.net/blog/2018/05/22/field-notes-agent-tesla-open-directory/",
+                "created": "05/18/2018",
+                "TLP": "WHITE"
+            },
+            "rule_text": "rule AgentTesla\n{\n\tmeta:\n\t\tauthor = \"InQuest Labs\"\n\t\tsource = \"http://blog.inquest.net/blog/2018/05/22/field-notes-agent-tesla-open-directory/\"\n\t\tcreated = \"05/18/2018\"\n\t\tTLP = \"WHITE\"\n\n\tstrings:\n\t\t$s0 = \"SecretId1\" ascii\n\t\t$s1 = \"#GUID\" ascii\n\t\t$s2 = \"#Strings\" ascii\n\t\t$s3 = \"#Blob\" ascii\n\t\t$s4 = \"get_URL\" ascii\n\t\t$s5 = \"set_URL\" ascii\n\t\t$s6 = \"DecryptIePassword\" ascii\n\t\t$s8 = \"GetURLHashString\" ascii\n\t\t$s9 = \"DoesURLMatchWithHash\" ascii\n\t\t$f0 = \"GetSavedPasswords\" ascii\n\t\t$f1 = \"IESecretHeader\" ascii\n\t\t$f2 = \"RecoveredBrowserAccount\" ascii\n\t\t$f4 = \"PasswordDerivedBytes\" ascii\n\t\t$f5 = \"get_ASCII\" ascii\n\t\t$f6 = \"get_ComputerName\" ascii\n\t\t$f7 = \"get_WebServices\" ascii\n\t\t$f8 = \"get_UserName\" ascii\n\t\t$f9 = \"get_OSFullName\" ascii\n\t\t$f10 = \"ComputerInfo\" ascii\n\t\t$f11 = \"set_Sendwebcam\" ascii\n\t\t$f12 = \"get_Clipboard\" ascii\n\t\t$f13 = \"get_TotalFreeSpace\" ascii\n\t\t$f14 = \"get_IsAttached\" ascii\n\t\t$x0 = \"IELibrary.dll\" ascii wide\n\t\t$x1 = \"webpanel\" ascii wide nocase\n\t\t$x2 = \"smtp\" ascii wide nocase\n\t\t$v5 = \"vmware\" ascii wide nocase\n\t\t$v6 = \"VirtualBox\" ascii wide nocase\n\t\t$v7 = \"vbox\" ascii wide nocase\n\t\t$v9 = \"avghookx.dll\" ascii wide nocase\n\t\t$pdb = \"IELibrary.pdb\" ascii\n\n\tcondition:\n\t\t(( 5 of ( $s* ) or 7 of ( $f* ) ) and all of ( $x* ) and all of ( $v* ) and $pdb )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

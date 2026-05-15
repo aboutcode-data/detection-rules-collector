@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/lnx_auditd_audio_capture.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur, Milad Cheraghi",
+                "date": "2021-09-04",
+                "title": "Audio Capture",
+                "id": "a7af2487-9c2f-42e4-9bb9-ff961f0561d5"
+            },
+            "rule_text": "title: Audio Capture\nid: a7af2487-9c2f-42e4-9bb9-ff961f0561d5\nstatus: test\ndescription: Detects attempts to record audio using the arecord and ecasound utilities.\nreferences:\n- https://linux.die.net/man/1/arecord\n- https://linuxconfig.org/how-to-test-microphone-with-audio-linux-sound-architecture-alsa\n- https://manpages.debian.org/unstable/ecasound/ecasound.1.en.html\n- https://ecasound.seul.org/ecasound/Documentation/examples.html#fconversions\nauthor: Pawel Mazur, Milad Cheraghi\ndate: 2021-09-04\nmodified: 2025-12-05\ntags:\n- attack.collection\n- attack.t1123\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection_execve:\n    type: EXECVE\n    a0: arecord\n    a1: -vv\n    a2: -fdat\n  selection_syscall_memfd_create:\n    type: SYSCALL\n    exe|endswith: /ecasound\n    SYSCALL: memfd_create\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

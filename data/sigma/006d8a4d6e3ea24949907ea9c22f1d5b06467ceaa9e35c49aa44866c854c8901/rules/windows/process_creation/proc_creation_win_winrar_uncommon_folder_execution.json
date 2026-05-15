@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winrar_uncommon_folder_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Tigzy",
+                "date": "2021-11-17",
+                "title": "WinRAR Execution in Non-Standard Folder",
+                "id": "4ede543c-e098-43d9-a28f-dd784a13132f"
+            },
+            "rule_text": "title: WinRAR Execution in Non-Standard Folder\nid: 4ede543c-e098-43d9-a28f-dd784a13132f\nstatus: test\ndescription: Detects a suspicious WinRAR execution in a folder which is not the default\n  installation folder\nreferences:\n- https://twitter.com/cyb3rops/status/1460978167628406785\nauthor: Florian Roth (Nextron Systems), Tigzy\ndate: 2021-11-17\nmodified: 2025-07-16\ntags:\n- attack.collection\n- attack.t1560.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith:\n    - \\rar.exe\n    - \\winrar.exe\n  - Description:\n    - Command line RAR\n    - WinRAR\n  filter_main_unrar:\n    Image|endswith: \\UnRAR.exe\n  filter_main_path:\n    Image|contains:\n    - :\\Program Files (x86)\\WinRAR\\\n    - :\\Program Files\\WinRAR\\\n  filter_optional_temp:\n    Image|contains: :\\Windows\\Temp\\\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate use of WinRAR in a folder of a software that bundles WinRAR\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,81 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_middle_east_talosreport.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ME_Campaign_Malware_1",
+                "tags": [],
+                "description": "Detects malware from Middle Eastern campaign reported by Talos",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html",
+                "date": "2018-02-07",
+                "hash1": "1176642841762b3bc1f401a5987dc55ae4b007367e98740188468642ffbd474e",
+                "id": "7c844c5c-caf0-5968-ac1a-72886fcf97cf"
+            },
+            "rule_text": "import \"pe\"\n\nrule ME_Campaign_Malware_1\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Middle Eastern campaign reported by Talos\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html\"\n\t\tdate = \"2018-02-07\"\n\t\thash1 = \"1176642841762b3bc1f401a5987dc55ae4b007367e98740188468642ffbd474e\"\n\t\tid = \"7c844c5c-caf0-5968-ac1a-72886fcf97cf\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 5000KB and ( pe.imphash ( ) == \"618f76eaf4bd95c690d43e84d617efe9\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ME_Campaign_Malware_2",
+                "tags": [],
+                "description": "Detects malware from Middle Eastern campaign reported by Talos",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html",
+                "date": "2018-02-07",
+                "hash1": "76a9b603f1f901020f65358f1cbf94c1a427d9019f004a99aa8bff1dea01a881",
+                "id": "a0beec30-62ff-54c3-ab62-c54454b89f8d"
+            },
+            "rule_text": "import \"pe\"\n\nrule ME_Campaign_Malware_2\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Middle Eastern campaign reported by Talos\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html\"\n\t\tdate = \"2018-02-07\"\n\t\thash1 = \"76a9b603f1f901020f65358f1cbf94c1a427d9019f004a99aa8bff1dea01a881\"\n\t\tid = \"a0beec30-62ff-54c3-ab62-c54454b89f8d\"\n\n\tstrings:\n\t\t$s1 = \"QuickAssist.exe\" fullword wide\n\t\t$s2 = \"<description>Microsoft Modern Sharing Solution</description>\" fullword ascii\n\t\t$s3 = \"GBEWCWA\" fullword ascii\n\t\t$s4 = \"name=\\\"QuickAssist\\\" \" fullword ascii\n\t\t$s5 = \"Cimzal\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 600KB and ( pe.imphash ( ) == \"b06055e6cc2a804111ab6964df1ca4ae\" or 4 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ME_Campaign_Malware_3",
+                "tags": [],
+                "description": "Detects malware from Middle Eastern campaign reported by Talos",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html",
+                "date": "2018-02-07",
+                "hash1": "15f5aaa71bfa3d62fd558a3e88dd5ba26f7638bf2ac653b8d6b8d54dc7e5926b",
+                "id": "d8bfd426-ff42-5332-8206-67a558509494"
+            },
+            "rule_text": "rule ME_Campaign_Malware_3\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Middle Eastern campaign reported by Talos\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html\"\n\t\tdate = \"2018-02-07\"\n\t\thash1 = \"15f5aaa71bfa3d62fd558a3e88dd5ba26f7638bf2ac653b8d6b8d54dc7e5926b\"\n\t\tid = \"d8bfd426-ff42-5332-8206-67a558509494\"\n\n\tstrings:\n\t\t$x1 = \"objWShell.Run \\\"powershell.exe -ExecutionPolicy Bypass -File \\\"\\\"%appdata%\\\"\\\"\\\\sys.ps1\\\", 0 \" fullword ascii\n\t\t$x2 = \"objFile.WriteLine \\\"New-Item -Path \\\"\\\"$ENV:APPDATA\\\\Microsoft\\\\Templates\\\"\\\" -ItemType Directory -Force }\\\" \" fullword ascii\n\t\t$x3 = \"objFile.WriteLine \\\"$path = \\\"\\\"$ENV:APPDATA\\\\Microsoft\\\\Templates\\\\Report.doc\\\"\\\"\\\" \" fullword ascii\n\t\t$s4 = \"File=appData & \\\"\\\\sys.ps1\\\"\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x6553 and filesize < 400KB and 1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ME_Campaign_Malware_4",
+                "tags": [],
+                "description": "Detects malware from Middle Eastern campaign reported by Talos",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html",
+                "date": "2018-02-07",
+                "hash1": "c5bfb5118a999d21e9f445ad6ccb08eb71bc7bd4de9e88a41be9cf732156c525",
+                "id": "1ff83ac6-e3f1-55e2-a811-e526b8235c78"
+            },
+            "rule_text": "import \"pe\"\n\nrule ME_Campaign_Malware_4\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Middle Eastern campaign reported by Talos\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html\"\n\t\tdate = \"2018-02-07\"\n\t\thash1 = \"c5bfb5118a999d21e9f445ad6ccb08eb71bc7bd4de9e88a41be9cf732156c525\"\n\t\tid = \"1ff83ac6-e3f1-55e2-a811-e526b8235c78\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 1000KB and pe.imphash ( ) == \"fb7da233a35ac523d6059fff543627ab\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ME_Campaign_Malware_5",
+                "tags": [],
+                "description": "Detects malware from Middle Eastern campaign reported by Talos",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html",
+                "date": "2018-02-07",
+                "modified": "2022-08-18",
+                "hash1": "d49e9fdfdce1e93615c406ae13ac5f6f68fb7e321ed4f275f328ac8146dd0fc1",
+                "hash2": "e66af059f37bdd35056d1bb6a1ba3695fc5ce333dc96b5a7d7cc9167e32571c5",
+                "id": "241a4236-2688-5920-87f7-eed33963ec60"
+            },
+            "rule_text": "rule ME_Campaign_Malware_5\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Middle Eastern campaign reported by Talos\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.talosintelligence.com/2018/02/targeted-attacks-in-middle-east.html\"\n\t\tdate = \"2018-02-07\"\n\t\tmodified = \"2022-08-18\"\n\t\thash1 = \"d49e9fdfdce1e93615c406ae13ac5f6f68fb7e321ed4f275f328ac8146dd0fc1\"\n\t\thash2 = \"e66af059f37bdd35056d1bb6a1ba3695fc5ce333dc96b5a7d7cc9167e32571c5\"\n\t\tid = \"241a4236-2688-5920-87f7-eed33963ec60\"\n\n\tstrings:\n\t\t$s1 = \"D:\\\\me\\\\do\\\\do\\\\obj\\\\\" ascii\n\t\t$s2 = \"Select * from Win32_ComputerSystem\" fullword wide\n\t\t$s3 = \"Get_Antivirus\" fullword ascii\n\t\t$s4 = \"{{\\\"id\\\":\\\"{0}\\\",\\\"user\\\":\\\"{1}\\\",\\\"path\\\":\\\"{2}\\\"}}\" fullword wide\n\t\t$s5 = \"update software online\" fullword wide\n\t\t$s6 = \"time.nist.gov\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 60KB and 5 of them or all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

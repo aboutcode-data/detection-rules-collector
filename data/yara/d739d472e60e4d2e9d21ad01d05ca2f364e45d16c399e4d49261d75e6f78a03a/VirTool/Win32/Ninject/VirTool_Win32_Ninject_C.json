@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/Ninject/VirTool_Win32_Ninject_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_Ninject_C",
+                "tags": [],
+                "description": "VirTool:Win32/Ninject.C,SIGNATURE_TYPE_PEHSTR_EXT,03 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_Ninject_C\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/Ninject.C,SIGNATURE_TYPE_PEHSTR_EXT,03 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 04 10 32 03 88 01 8d 85 ?? ?? ?? ?? ff }\n\t\t$a_03_1 = {0f b6 04 10 32 03 88 01 8b 45 ?? 8b 8d ?? ?? ?? ?? 01 c1 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 99 f7 3e }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

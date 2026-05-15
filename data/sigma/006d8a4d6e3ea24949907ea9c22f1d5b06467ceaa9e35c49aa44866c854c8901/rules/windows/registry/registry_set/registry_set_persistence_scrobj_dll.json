@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_scrobj_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-08-20",
+                "title": "Potential Persistence Via Scrobj.dll COM Hijacking",
+                "id": "fe20dda1-6f37-4379-bbe0-a98d400cae90"
+            },
+            "rule_text": "title: Potential Persistence Via Scrobj.dll COM Hijacking\nid: fe20dda1-6f37-4379-bbe0-a98d400cae90\nstatus: test\ndescription: Detect use of scrobj.dll as this DLL looks for the ScriptletURL key to\n  get the location of the script to execute\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1546.015/T1546.015.md\nauthor: frack113\ndate: 2022-08-20\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.015\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: InprocServer32\\(Default)\n    Details: C:\\WINDOWS\\system32\\scrobj.dll\n  condition: selection\nfalsepositives:\n- Legitimate use of the dll.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

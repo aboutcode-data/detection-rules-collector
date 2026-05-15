@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winrshost_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Liran Ravich",
+                "date": "2025-10-22",
+                "title": "Potential Lateral Movement via Windows Remote Shell",
+                "id": "79df3f68-dccb-48e9-9171-b75cbc37c51d"
+            },
+            "rule_text": "title: Potential Lateral Movement via Windows Remote Shell\nid: 79df3f68-dccb-48e9-9171-b75cbc37c51d\nstatus: experimental\ndescription: 'Detects a child process spawned by ''winrshost.exe'', which suggests\n  remote command execution through Windows Remote Shell (WinRs) and may indicate potential\n  lateral movement activity.\n\n  '\nreferences:\n- https://cardinalops.com/blog/living-off-winrm-abusing-complexity-in-remote-management/\n- https://www.ired.team/offensive-security/lateral-movement/winrs-for-lateral-movement\nauthor: Liran Ravich\ndate: 2025-10-22\ntags:\n- attack.lateral-movement\n- attack.t1021.006\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\winrshost.exe\n  filter_main_conhost:\n    Image: C:\\Windows\\System32\\conhost.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate use of WinRM within the organization\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

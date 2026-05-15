@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_kubernetes_pods_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-07-24",
+                "title": "Azure Kubernetes Pods Deleted",
+                "id": "b02f9591-12c3-4965-986a-88028629b2e1"
+            },
+            "rule_text": "title: Azure Kubernetes Pods Deleted\nid: b02f9591-12c3-4965-986a-88028629b2e1\nstatus: test\ndescription: Identifies the deletion of Azure Kubernetes Pods.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\n- https://github.com/elastic/detection-rules/blob/065bf48a9987cd8bd826c098a30ce36e6868ee46/rules/integrations/azure/impact_kubernetes_pod_deleted.toml\nauthor: Austin Songer @austinsonger\ndate: 2021-07-24\nmodified: 2022-08-23\ntags:\n- attack.impact\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName: MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/PODS/DELETE\n  condition: selection\nfalsepositives:\n- Pods may be deleted by a system administrator. Verify whether the user identity,\n  user agent, and/or hostname should be making changes in your environment.\n- Pods deletions from unfamiliar users or hosts should be investigated. If known behavior\n  is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

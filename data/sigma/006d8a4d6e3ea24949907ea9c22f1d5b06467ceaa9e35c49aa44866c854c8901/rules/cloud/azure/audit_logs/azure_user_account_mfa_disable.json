@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_user_account_mfa_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Harjot Singh (@cyb3rjy0t)",
+                "date": "2024-08-21",
+                "title": "Multi Factor Authentication Disabled For User Account",
+                "id": "b18454c8-0be3-41f7-86bc-9c614611b839"
+            },
+            "rule_text": "title: Multi Factor Authentication Disabled For User Account\nid: b18454c8-0be3-41f7-86bc-9c614611b839\nstatus: test\ndescription: 'Detects changes to the \"StrongAuthenticationRequirement\" value, where\n  the state is set to \"0\" or \"Disabled\".\n\n  Threat actors were seen disabling multi factor authentication for users in order\n  to maintain or achieve access to the account. Also see in SIM Swap attacks.\n\n  '\nreferences:\n- https://www.sans.org/blog/defending-against-scattered-spider-and-the-com-with-cybercrime-intelligence/\nauthor: Harjot Singh (@cyb3rjy0t)\ndate: 2024-08-21\ntags:\n- attack.credential-access\n- attack.persistence\nlogsource:\n  product: azure\n  service: auditlogs\n  definition: 'Requirements: The TargetResources array needs to be mapped accurately\n    in order for this rule to work'\ndetection:\n  selection:\n    LoggedByService: Core Directory\n    Category: UserManagement\n    OperationName: Update user\n    TargetResources.ModifiedProperties.DisplayName: StrongAuthenticationRequirement\n    TargetResources.ModifiedProperties.NewValue|contains: State\":0\n  condition: selection\nfalsepositives:\n- Legitimate authorized activity.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

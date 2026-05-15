@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_windows_wmi_implant.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_windows_wmi_implant",
+                "tags": [],
+                "description": "A PowerShell based tool that is designed to act like a RAT",
+                "reference": "https://www.fireeye.com/blog/threat-research/2017/03/wmimplant_a_wmi_ba.html",
+                "author": "@fusionrace"
+            },
+            "rule_text": "rule hacktool_windows_wmi_implant\n{\n\tmeta:\n\t\tdescription = \"A PowerShell based tool that is designed to act like a RAT\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2017/03/wmimplant_a_wmi_ba.html\"\n\t\tauthor = \"@fusionrace\"\n\n\tstrings:\n\t\t$s1 = \"This really isn't applicable unless you are using WMImplant interactively.\" fullword ascii wide\n\t\t$s2 = \"What command do you want to run on the remote system? >\" fullword ascii wide\n\t\t$s3 = \"Do you want to [create] or [delete] a string registry value? >\" fullword ascii wide\n\t\t$s4 = \"Do you want to run a WMImplant against a list of computers from a file? [yes] or [no] >\" fullword ascii wide\n\t\t$s5 = \"What is the name of the service you are targeting? >\" fullword ascii wide\n\t\t$s6 = \"This function enables the user to upload or download files to/from the attacking machine to/from the targeted machine\" fullword ascii wide\n\t\t$s7 = \"gen_cli - Generate the CLI command to execute a command via WMImplant\" fullword ascii wide\n\t\t$s8 = \"exit - Exit WMImplant\" fullword ascii wide\n\t\t$s9 = \"Lateral Movement Facilitation\" fullword ascii wide\n\t\t$s10 = \"vacant_system - Determine if a user is away from the system.\" fullword ascii wide\n\t\t$s11 = \"Please provide the ProcessID or ProcessName flag to specify the process to kill!\" fullword ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

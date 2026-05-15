@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_get_process_security_software_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Anish Bogati, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-12-16",
+                "title": "Security Software Discovery Via Powershell Script",
+                "id": "904e8e61-8edf-4350-b59c-b905fc8e810c"
+            },
+            "rule_text": "title: Security Software Discovery Via Powershell Script\nid: 904e8e61-8edf-4350-b59c-b905fc8e810c\nstatus: test\ndescription: 'Detects calls to \"get-process\" where the output is piped to a \"where-object\"\n  filter to search for security solution processes.\n\n  Adversaries may attempt to get a listing of security software, configurations, defensive\n  tools, and sensors that are installed on a system or in a cloud environment. This\n  may include things such as firewall rules and anti-virus\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md#atomic-test-2---security-software-discovery---powershell\nauthor: frack113, Anish Bogati, Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-12-16\nmodified: 2023-10-24\ntags:\n- attack.discovery\n- attack.t1518.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains:\n    - get-process | \\?\n    - get-process | where\n    - gps | \\?\n    - gps | where\n  selection_field:\n    ScriptBlockText|contains:\n    - Company -like\n    - Description -like\n    - Name -like\n    - Path -like\n    - Product -like\n  selection_keywords:\n    ScriptBlockText|contains:\n    - \\*avira\\*\n    - \\*carbonblack\\*\n    - \\*cylance\\*\n    - \\*defender\\*\n    - \\*kaspersky\\*\n    - \\*malware\\*\n    - \\*sentinel\\*\n    - \\*symantec\\*\n    - \\*virus\\*\n  condition: all of selection_*\nfalsepositives:\n- False positives might occur due to the nature of the ScriptBlock being ingested\n  as a big blob. Initial tuning is required.\n- As the \"selection_cmdlet\" is common in scripts the matching engine might slow down\n  the search. Change into regex or a more accurate string to avoid heavy resource\n  consumption if experienced\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

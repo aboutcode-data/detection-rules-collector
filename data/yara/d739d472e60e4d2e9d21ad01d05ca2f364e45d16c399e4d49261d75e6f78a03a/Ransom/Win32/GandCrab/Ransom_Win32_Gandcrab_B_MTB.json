@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/GandCrab/Ransom_Win32_Gandcrab_B_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Gandcrab_B_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Gandcrab.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Gandcrab_B_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Gandcrab.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8d 45 ff 50 6a 00 ff d3 6a 00 ff 15 ?? ?? ?? ?? e8 ?? ?? ff ff 30 04 37 83 ee 01 79 db }\n\t\t$a_02_1 = {8d 45 f0 50 56 56 56 56 56 56 ff 15 ?? ?? ?? ?? e8 ?? ?? ff ff 30 04 3b 4f 79 dd }\n\t\t$a_00_2 = {00 40 3d 00 01 00 00 75 f2 }\n\t\t$a_02_3 = {8d 45 f8 50 6a 00 ff 15 ?? ?? ?? ?? 6a 00 ff 15 ?? ?? ?? ?? 8b 0d ?? ?? ?? ?? 8b 15 ?? ?? ?? ?? 41 88 9a ?? ?? ?? ?? 89 0d ?? ?? ?? ?? 81 f9 00 01 00 00 0f 85 ?? ff ff ff }\n\t\t$a_02_4 = {8d 45 f4 50 56 ff 15 ?? ?? ?? ?? 8b 0d ?? ?? ?? ?? a1 ?? ?? ?? ?? 41 88 98 ?? ?? ?? ?? 89 0d ?? ?? ?? ?? 81 f9 00 01 00 00 0f 85 ?? ff ff ff }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_02_4 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

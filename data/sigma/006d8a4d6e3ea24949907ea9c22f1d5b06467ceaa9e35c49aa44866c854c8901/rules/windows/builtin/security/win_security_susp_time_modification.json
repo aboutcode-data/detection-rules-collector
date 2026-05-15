@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_time_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron",
+                "date": "2019-02-05",
+                "title": "Unauthorized System Time Modification",
+                "id": "faa031b5-21ed-4e02-8881-2591f98d82ed"
+            },
+            "rule_text": "title: Unauthorized System Time Modification\nid: faa031b5-21ed-4e02-8881-2591f98d82ed\nstatus: test\ndescription: Detect scenarios where a potentially unauthorized application or user\n  is modifying the system time.\nreferences:\n- Private Cuckoo Sandbox (from many years ago, no longer have hash, NDA as well)\n- Live environment caused by malware\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4616\nauthor: '@neu5ron'\ndate: 2019-02-05\nmodified: 2025-12-03\ntags:\n- attack.stealth\n- attack.t1070.006\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Policy : System > Audit Security State Change,\n    Group Policy : Computer Configuration\\Windows Settings\\Security Settings\\Advanced\n    Audit Policy Configuration\\Audit Policies\\System\\Audit Security State Change'\ndetection:\n  selection:\n    EventID: 4616\n  filter_main_svchost:\n    ProcessName: C:\\Windows\\System32\\svchost.exe\n    SubjectUserSid: S-1-5-19\n  filter_optional_vmtools:\n    ProcessName:\n    - C:\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe\n    - C:\\Program Files (x86)\\VMware\\VMware Tools\\vmtoolsd.exe\n    - C:\\Windows\\System32\\VBoxService.exe\n    - C:\\Windows\\System32\\oobe\\msoobe.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- HyperV or other virtualization technologies with binary not listed in filter portion\n  of detection\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

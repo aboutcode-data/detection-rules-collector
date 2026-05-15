@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_change/file_change_win_date_changed_to_another_year.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Florian Roth (Nextron Systems)",
+                "date": "2022-08-12",
+                "title": "File Creation Date Changed to Another Year",
+                "id": "558eebe5-f2ba-4104-b339-36f7902bcc1a"
+            },
+            "rule_text": "title: File Creation Date Changed to Another Year\nid: 558eebe5-f2ba-4104-b339-36f7902bcc1a\nstatus: test\ndescription: 'Detects when the file creation time is changed to a year before 2020.\n\n  Attackers may change the file creation time of a backdoor to make it look like it\n  was installed with the operating system.\n\n  Note that many processes legitimately change the creation time of a file; it does\n  not necessarily indicate malicious activity.\n\n  In order to use this rule in production, it is recommended first baseline normal\n  behavior in your environment and then tune the rule accordingly.\n\n  Hunting Recommendation: Focus on files with creation times set to years significantly\n  before the current date, especially those in user-writable directories.\n\n  Correlate with process execution logs to identify the source of the modification\n  and investigate any unsigned or suspicious binaries involved.\n\n  '\nreferences:\n- https://www.inversecos.com/2022/04/defence-evasion-technique-timestomping.html\nauthor: frack113, Florian Roth (Nextron Systems)\ndate: 2022-08-12\nmodified: 2026-01-20\ntags:\n- attack.stealth\n- attack.t1070.006\n- detection.threat-hunting\nlogsource:\n  category: file_change\n  product: windows\ndetection:\n  selection:\n    PreviousCreationUtcTime|startswith: '202'\n  filter_main_creation_time:\n    CreationUtcTime|startswith: '202'\n  filter_main_program_files:\n  - TargetFilename|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  - Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  filter_optional_updates:\n  - Image:\n    - C:\\Windows\\system32\\ProvTool.exe\n    - C:\\Windows\\System32\\usocoreworker.exe\n    - C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe\n  - TargetFilename|startswith: C:\\ProgramData\\USOPrivate\\UpdateStore\\\n  - TargetFilename|endswith:\n    - .tmp\n    - .temp\n  filter_optional_cab:\n    Image|startswith: C:\\WINDOWS\\System32\\\n    Image|endswith:\n    - \\TiWorker.exe\n    - \\svchost.exe\n    - \\sihclient.exe\n    TargetFilename|endswith: .cab\n  filter_optional_msiexec:\n    Image: C:\\Windows\\system32\\msiexec.exe\n  filter_optional_vcredist:\n    Image|startswith: C:\\Windows\\Temp\\\n    Image|endswith: \\VCREDI~1.EXE\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Changes made to or by the local NTP service\n- Software installations and updates\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

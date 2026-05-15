@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_non_exe_image.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2021-12-09",
+                "title": "Execution of Suspicious File Type Extension",
+                "id": "c09dad97-1c78-4f71-b127-7edb2b8e491a"
+            },
+            "rule_text": "title: Execution of Suspicious File Type Extension\nid: c09dad97-1c78-4f71-b127-7edb2b8e491a\nstatus: test\ndescription: 'Detects whether the image specified in a process creation event doesn''t\n  refer to an \".exe\" (or other known executable extension) file. This can be caused\n  by process ghosting or other unorthodox methods to start a process.\n\n  This rule might require some initial baselining to align with some third party tooling\n  in the user environment.\n\n  '\nreferences:\n- https://pentestlaboratories.com/2021/12/08/process-ghosting/\nauthor: Max Altgelt (Nextron Systems)\ndate: 2021-12-09\nmodified: 2023-11-23\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  known_image_extension:\n    Image|endswith:\n    - .bin\n    - .cgi\n    - .com\n    - .exe\n    - .scr\n    - .tmp\n  filter_main_image:\n    Image:\n    - System\n    - Registry\n    - MemCompression\n    - vmmem\n  filter_main_msi_installers:\n    Image|contains: :\\Windows\\Installer\\MSI\n  filter_main_driver_store:\n    Image|contains: :\\Windows\\System32\\DriverStore\\FileRepository\\\n  filter_main_msi_rollbackfiles:\n    Image|contains: :\\Config.Msi\\\n    Image|endswith:\n    - .rbf\n    - .rbs\n  filter_main_windows_temp:\n  - ParentImage|contains: :\\Windows\\Temp\\\n  - Image|contains: :\\Windows\\Temp\\\n  filter_main_deleted:\n    Image|contains: :\\$Extend\\$Deleted\\\n  filter_main_empty:\n    Image:\n    - '-'\n    - ''\n  filter_main_null:\n    Image: null\n  filter_optional_avira:\n    ParentImage|contains: :\\ProgramData\\Avira\\\n  filter_optional_nvidia:\n    Image|contains: NVIDIA\\NvBackend\\\n    Image|endswith: .dat\n  filter_optional_winpakpro:\n    Image|contains:\n    - :\\Program Files (x86)\\WINPAKPRO\\\n    - :\\Program Files\\WINPAKPRO\\\n    Image|endswith: .ngn\n  filter_optional_myq_server:\n    Image|endswith:\n    - :\\Program Files (x86)\\MyQ\\Server\\pcltool.dll\n    - :\\Program Files\\MyQ\\Server\\pcltool.dll\n  filter_optional_wsl:\n    Image|contains|all:\n    - \\AppData\\Local\\Packages\\\n    - \\LocalState\\rootfs\\\n  filter_optional_lzma_exe:\n    Image|endswith: \\LZMA_EXE\n  filter_optional_firefox:\n    Image|contains: :\\Program Files\\Mozilla Firefox\\\n  filter_optional_docker:\n    ParentImage: C:\\Windows\\System32\\services.exe\n    Image|endswith: com.docker.service\n  condition: not known_image_extension and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

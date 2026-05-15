@@ -1,0 +1,32 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/CobaltStrike/Trojan_Win64_CobaltStrike_CC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_CobaltStrike_CC_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/CobaltStrike.CC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_CobaltStrike_CC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/CobaltStrike.CC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 8b 4c 24 ?? 48 8b 49 ?? 48 c1 e9 1e 66 90 90 48 83 f9 04 73 }\n\t\t$a_01_1 = {61 6e 74 69 53 61 6e 64 62 6f 78 43 68 65 63 6b 73 }\n\t\t$a_01_2 = {65 78 65 63 75 74 65 53 68 65 6c 6c 63 6f 64 65 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 3 + ( #a_01_2 & 1 ) * 3 ) >= 8\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_CobaltStrike_CC_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win64/CobaltStrike.CC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_CobaltStrike_CC_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/CobaltStrike.CC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ff c0 48 63 f8 4c 8d 84 ?? ?? ?? ?? ?? 45 0f b6 0c ?? 41 03 d1 81 e2 ?? ?? ?? ?? 90 13 48 63 c2 48 8d 8c ?? ?? ?? ?? ?? 48 03 c8 0f b6 01 41 88 04 ?? 44 88 09 41 0f b6 04 ?? 41 03 c1 0f b6 c0 0f b6 8c ?? ?? ?? ?? ?? 41 30 0a 49 ff c2 49 83 eb 01 75 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_CobaltStrike_CC_MTB_3",
+                "tags": [],
+                "description": "Trojan:Win64/CobaltStrike.CC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_CobaltStrike_CC_MTB_3\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/CobaltStrike.CC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {41 8b 0c 80 41 31 0c ?? 8b 8e ?? ?? ?? ?? 23 cb 90 13 48 8b 96 ?? ?? ?? ?? 48 63 86 ?? ?? ?? ?? 44 8b 04 82 85 c9 90 13 48 63 86 ?? ?? ?? ?? 45 03 ce 44 01 04 82 8b 86 }\n\t\t$a_03_1 = {8b 0c 81 31 0a 8b 8b ?? ?? ?? ?? 81 e1 ?? ?? ?? ?? 90 13 48 8b 93 ?? ?? ?? ?? 48 63 83 ?? ?? ?? ?? 44 8b 04 82 85 c9 90 13 48 63 83 ?? ?? ?? ?? 41 ff c1 44 01 04 82 0f b6 05 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

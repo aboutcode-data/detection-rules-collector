@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_spool_drivers_color_drop.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-28",
+                "title": "Drop Binaries Into Spool Drivers Color Folder",
+                "id": "ce7066a6-508a-42d3-995b-2952c65dc2ce"
+            },
+            "rule_text": "title: Drop Binaries Into Spool Drivers Color Folder\nid: ce7066a6-508a-42d3-995b-2952c65dc2ce\nstatus: test\ndescription: Detects the creation of suspcious binary files inside the \"\\windows\\system32\\spool\\drivers\\color\\\"\n  as seen in the blog referenced below\nreferences:\n- https://www.microsoft.com/security/blog/2022/07/27/untangling-knotweed-european-private-sector-offensive-actor-using-0-day-exploits/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-28\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|startswith: C:\\Windows\\System32\\spool\\drivers\\color\\\n    TargetFilename|endswith:\n    - .dll\n    - .exe\n    - .sys\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

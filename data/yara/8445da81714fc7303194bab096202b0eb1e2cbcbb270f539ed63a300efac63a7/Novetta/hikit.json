@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/hikit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hikit",
+                "tags": [],
+                "Author": "Novetta",
+                "Reference": "https://www.novetta.com/wp-content/uploads/2014/11/HiKit.pdf"
+            },
+            "rule_text": "rule hikit\n{\n\tmeta:\n\t\tAuthor = \"Novetta\"\n\t\tReference = \"https://www.novetta.com/wp-content/uploads/2014/11/HiKit.pdf\"\n\n\tstrings:\n\t\t$hikit_pdb1 = /(H|h)ikit_/\n\t\t$hikit_pdb2 = \"hikit\\\\\"\n\t\t$hikit_str3 = \"hikit>\" wide\n\t\t$driver = \"w7fw.sys\" wide\n\t\t$device = \"\\\\Device\\\\w7fw\" wide\n\t\t$global = \"Global\\\\%s__HIDE__\" wide nocase\n\t\t$backdr = \"backdoor closed\" wide\n\t\t$hidden = \"*****Hidden:\" wide\n\n\tcondition:\n\t\t(1 of ( $hikit_pdb1 , $hikit_pdb2 , $hikit_str3 ) ) and ( $driver or $device or $global or $backdr or $hidden )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

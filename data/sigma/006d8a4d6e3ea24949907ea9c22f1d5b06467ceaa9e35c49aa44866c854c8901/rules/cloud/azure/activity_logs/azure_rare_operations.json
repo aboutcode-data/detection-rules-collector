@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_rare_operations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "sawwinnnaung",
+                "date": "2020-05-07",
+                "title": "Rare Subscription-level Operations In Azure",
+                "id": "c1182e02-49a3-481c-b3de-0fadc4091488"
+            },
+            "rule_text": "title: Rare Subscription-level Operations In Azure\nid: c1182e02-49a3-481c-b3de-0fadc4091488\nstatus: test\ndescription: Identifies IPs from which users grant access to other users on azure\n  resources and alerts when a previously unseen source IP address is used.\nreferences:\n- https://github.com/Azure/Azure-Sentinel/blob/e534407884b1ec5371efc9f76ead282176c9e8bb/Detections/AzureActivity/RareOperations.yaml\nauthor: sawwinnnaung\ndate: 2020-05-07\nmodified: 2023-10-11\ntags:\n- attack.t1003\n- attack.credential-access\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  keywords:\n  - Microsoft.DocumentDB/databaseAccounts/listKeys/action\n  - Microsoft.Maps/accounts/listKeys/action\n  - Microsoft.Media/mediaservices/listKeys/action\n  - Microsoft.CognitiveServices/accounts/listKeys/action\n  - Microsoft.Storage/storageAccounts/listKeys/action\n  - Microsoft.Compute/snapshots/write\n  - Microsoft.Network/networkSecurityGroups/write\n  condition: keywords\nfalsepositives:\n- Valid change\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

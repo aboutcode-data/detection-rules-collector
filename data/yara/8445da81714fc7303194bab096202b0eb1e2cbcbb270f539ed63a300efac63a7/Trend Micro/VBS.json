@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Trend Micro/VBS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "layer1_vbs",
+                "tags": [],
+                "author": "Trendmicro",
+                "reference": "http://blog.trendmicro.com/trendlabs-security-intelligence/from-cybercrime-to-cyberpropaganda/"
+            },
+            "rule_text": "rule layer1_vbs\n{\n\tmeta:\n\t\tauthor = \"Trendmicro\"\n\t\treference = \"http://blog.trendmicro.com/trendlabs-security-intelligence/from-cybercrime-to-cyberpropaganda/\"\n\n\tstrings:\n\t\t$vbs = /[a-z]+ = [a-z]+ & ChrW\\(AscW\\(Mid\\([a-z]+, [a-z]+, 1\\)\\) - [a-z]+ \\* [a-z]+\\)/ wide\n\n\tcondition:\n\t\t$vbs\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "layer0_vbs",
+                "tags": [],
+                "author": "Trendmicro",
+                "reference": "http://blog.trendmicro.com/trendlabs-security-intelligence/from-cybercrime-to-cyberpropaganda/"
+            },
+            "rule_text": "rule layer0_vbs\n{\n\tmeta:\n\t\tauthor = \"Trendmicro\"\n\t\treference = \"http://blog.trendmicro.com/trendlabs-security-intelligence/from-cybercrime-to-cyberpropaganda/\"\n\n\tstrings:\n\t\t$code = /Dim \\w+\\s+\\r\\n\\s+For Each \\w+ In split\\(\\w+,\".+\"\\)\\r\\n\\s+\\w+ = \\w+ & ChrW\\(\\w+ - \"\\d+\"\\)/\n\n\tcondition:\n\t\t$code\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

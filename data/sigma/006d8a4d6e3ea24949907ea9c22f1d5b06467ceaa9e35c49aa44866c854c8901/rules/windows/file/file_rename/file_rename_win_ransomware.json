@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_rename/file_rename_win_ransomware.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-07-16",
+                "title": "Suspicious Appended Extension",
+                "id": "e3f673b3-65d1-4d80-9146-466f8b63fa99"
+            },
+            "rule_text": "title: Suspicious Appended Extension\nid: e3f673b3-65d1-4d80-9146-466f8b63fa99\nstatus: test\ndescription: Detects file renames where the target filename uses an uncommon double\n  extension. Could indicate potential ransomware activity renaming files and adding\n  a custom extension to the encrypted files, such as \".jpg.crypted\", \".docx.locky\",\n  etc.\nreferences:\n- https://app.any.run/tasks/d66ead5a-faf4-4437-93aa-65785afaf9e5/\n- https://blog.cyble.com/2022/08/10/onyx-ransomware-renames-its-leak-site-to-vsop/\nauthor: frack113\ndate: 2022-07-16\nmodified: 2023-11-11\ntags:\n- attack.impact\n- attack.t1486\nlogsource:\n  product: windows\n  category: file_rename\n  definition: 'Requirements: Microsoft-Windows-Kernel-File Provider with at least\n    the KERNEL_FILE_KEYWORD_RENAME_SETLINK_PATH keyword'\ndetection:\n  selection:\n    SourceFilename|endswith:\n    - .doc\n    - .docx\n    - .jpeg\n    - .jpg\n    - .lnk\n    - .pdf\n    - .png\n    - .pst\n    - .rtf\n    - .xls\n    - .xlsx\n    TargetFilename|contains:\n    - .doc.\n    - .docx.\n    - .jpeg.\n    - .jpg.\n    - .lnk.\n    - .pdf.\n    - .png.\n    - .pst.\n    - .rtf.\n    - .xls.\n    - .xlsx.\n  filter_main_generic:\n    TargetFilename|endswith:\n    - .backup\n    - .bak\n    - .old\n    - .orig\n    - .temp\n    - .tmp\n  filter_optional_anaconda:\n    TargetFilename|contains: :\\ProgramData\\Anaconda3\\\n    TargetFilename|endswith: .c~\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Backup software\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

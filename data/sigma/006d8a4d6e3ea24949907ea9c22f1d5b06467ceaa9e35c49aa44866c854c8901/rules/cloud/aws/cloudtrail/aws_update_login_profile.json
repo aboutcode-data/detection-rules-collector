@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_update_login_profile.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "toffeebr33k",
+                "date": "2021-08-09",
+                "title": "AWS User Login Profile Was Modified",
+                "id": "055fb148-60f8-462d-ad16-26926ce050f1"
+            },
+            "rule_text": "title: AWS User Login Profile Was Modified\nid: 055fb148-60f8-462d-ad16-26926ce050f1\nstatus: test\ndescription: 'Detects activity when someone is changing passwords on behalf of other\n  users.\n\n  An attacker with the \"iam:UpdateLoginProfile\" permission on other users can change\n  the password used to login to the AWS console on any user that already has a login\n  profile setup.\n\n  '\nreferences:\n- https://github.com/RhinoSecurityLabs/AWS-IAM-Privilege-Escalation\nauthor: toffeebr33k\ndate: 2021-08-09\nmodified: 2024-04-26\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1098\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: iam.amazonaws.com\n    eventName: UpdateLoginProfile\n  filter_main_user_identity:\n    userIdentity.arn|fieldref: requestParameters.userName\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate user account administration\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

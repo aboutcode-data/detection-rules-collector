@@ -1,0 +1,102 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_turla_neuron.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Neuron_common_strings",
+                "tags": [],
+                "description": "Rule for detection of Neuron based on commonly used strings",
+                "author": "NCSC UK",
+                "hash": "d1d7a96fcadc137e80ad866c838502713db9cdfe59939342b8e3beacf9c7fe29",
+                "date": "2017/11/23",
+                "reference": "https://www.ncsc.gov.uk/alerts/turla-group-malware",
+                "id": "168214d4-7436-531e-9c1f-48ca22215a1b"
+            },
+            "rule_text": "rule Neuron_common_strings\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Neuron based on commonly used strings\"\n\t\tauthor = \"NCSC UK\"\n\t\thash = \"d1d7a96fcadc137e80ad866c838502713db9cdfe59939342b8e3beacf9c7fe29\"\n\t\tdate = \"2017/11/23\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/turla-group-malware\"\n\t\tid = \"168214d4-7436-531e-9c1f-48ca22215a1b\"\n\n\tstrings:\n\t\t$strServiceName = \"MSExchangeService\" ascii\n\t\t$strReqParameter_1 = \"cadataKey\" wide\n\t\t$strReqParameter_3 = \"cadata\" wide\n\t\t$strReqParameter_4 = \"cadataSig\" wide\n\t\t$strEmbeddedKey = \"PFJTQUtleVZhbHVlPjxNb2R1bHVzPnZ3WXRKcnNRZjVTcCtWVG9Rb2xuaEVkMHVwWDFrVElFTUNTNEFnRkRCclNm clpKS0owN3BYYjh2b2FxdUtseXF2RzBJcHV0YXhDMVRYazRoeFNrdEpzbHljU3RFaHBUc1l4OVBEcURabVVZVklVb HlwSFN1K3ljWUJWVFdubTZmN0JTNW1pYnM0UWhMZElRbnl1ajFMQyt6TUhwZ0xmdEc2b1d5b0hyd1ZNaz08L01vZH VsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+\" wide\n\t\t$strDefaultKey = \"8d963325-01b8-4671-8e82-d0904275ab06\" wide\n\t\t$strIdentifier = \"MSXEWS\" wide\n\t\t$strListenEndpoint = \"443/ews/exchange/\" wide\n\t\t$strB64RegKeySubstring = \"U09GVFdBUkVcTWljcm9zb2Z0XENyeXB0b2dyYXBo\" wide\n\t\t$strName = \"neuron_service\" ascii\n\t\t$dotnetMagic = \"BSJB\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and $dotnetMagic and 6 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Neuron_standalone_signature",
+                "tags": [],
+                "description": "Rule for detection of Neuron based on a standalone signature from .NET metadata",
+                "author": "NCSC UK",
+                "hash": "d1d7a96fcadc137e80ad866c838502713db9cdfe59939342b8e3beacf9c7fe29",
+                "date": "2017/11/23",
+                "reference": "https://www.ncsc.gov.uk/alerts/turla-group-malware",
+                "id": "e0be2fe2-32fd-5bdf-bfac-a596264be7ba"
+            },
+            "rule_text": "rule Neuron_standalone_signature\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Neuron based on a standalone signature from .NET metadata\"\n\t\tauthor = \"NCSC UK\"\n\t\thash = \"d1d7a96fcadc137e80ad866c838502713db9cdfe59939342b8e3beacf9c7fe29\"\n\t\tdate = \"2017/11/23\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/turla-group-malware\"\n\t\tid = \"e0be2fe2-32fd-5bdf-bfac-a596264be7ba\"\n\n\tstrings:\n\t\t$a = { eb073d151231011234080e12818d1d051281311d1281211d1281211d128121081d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281211d1281 }\n\t\t$dotnetMagic = \"BSJB\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Nautilus_modified_rc4_loop",
+                "tags": [],
+                "description": "Rule for detection of Nautilus based on assembly code for a modified RC4 loop",
+                "author": "NCSC UK",
+                "hash": "a415ab193f6cd832a0de4fcc48d5f53d6f0b06d5e13b3c359878c6c31f3e7ec3",
+                "date": "2017/11/23",
+                "reference": "https://www.ncsc.gov.uk/alerts/turla-group-malware",
+                "id": "0c5da057-0f1d-5852-ad75-94bf40c133e4"
+            },
+            "rule_text": "rule Nautilus_modified_rc4_loop\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Nautilus based on assembly code for a modified RC4 loop\"\n\t\tauthor = \"NCSC UK\"\n\t\thash = \"a415ab193f6cd832a0de4fcc48d5f53d6f0b06d5e13b3c359878c6c31f3e7ec3\"\n\t\tdate = \"2017/11/23\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/turla-group-malware\"\n\t\tid = \"0c5da057-0f1d-5852-ad75-94bf40c133e4\"\n\n\tstrings:\n\t\t$a = {42 0F B6 14 04 41 FF C0 03 D7 0F B6 CA 8A 14 0C 43 32 14 13 41 88 12 49 FF C2 49 FF C9}\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Nautilus_rc4_key",
+                "tags": [],
+                "description": "Rule for detection of Nautilus based on a hardcoded RC4 key",
+                "author": "NCSC UK",
+                "hash": "a415ab193f6cd832a0de4fcc48d5f53d6f0b06d5e13b3c359878c6c31f3e7ec3",
+                "date": "2017/11/23",
+                "reference": "https://www.ncsc.gov.uk/alerts/turla-group-malware",
+                "id": "124c8b95-46fb-5cc1-9b10-b10536e1781d"
+            },
+            "rule_text": "rule Nautilus_rc4_key\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Nautilus based on a hardcoded RC4 key\"\n\t\tauthor = \"NCSC UK\"\n\t\thash = \"a415ab193f6cd832a0de4fcc48d5f53d6f0b06d5e13b3c359878c6c31f3e7ec3\"\n\t\tdate = \"2017/11/23\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/turla-group-malware\"\n\t\tid = \"124c8b95-46fb-5cc1-9b10-b10536e1781d\"\n\n\tstrings:\n\t\t$key = {31 42 31 34 34 30 44 39 30 46 43 39 42 43 42 34 36 41 39 41 43 39 36 34 33 38 46 45 45 41 38 42}\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and $key\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Nautilus_common_strings",
+                "tags": [],
+                "description": "Rule for detection of Nautilus based on common plaintext strings",
+                "author": "NCSC UK",
+                "hash": "a415ab193f6cd832a0de4fcc48d5f53d6f0b06d5e13b3c359878c6c31f3e7ec3",
+                "date": "2017/11/23",
+                "reference": "https://www.ncsc.gov.uk/alerts/turla-group-malware",
+                "id": "0e3af6ef-1a97-5324-a186-95e6f3d836f4"
+            },
+            "rule_text": "rule Nautilus_common_strings\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Nautilus based on common plaintext strings\"\n\t\tauthor = \"NCSC UK\"\n\t\thash = \"a415ab193f6cd832a0de4fcc48d5f53d6f0b06d5e13b3c359878c6c31f3e7ec3\"\n\t\tdate = \"2017/11/23\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/turla-group-malware\"\n\t\tid = \"0e3af6ef-1a97-5324-a186-95e6f3d836f4\"\n\n\tstrings:\n\t\t$ = \"nautilus-service.dll\" ascii\n\t\t$ = \"oxygen.dll\" ascii\n\t\t$ = \"config_listen.system\" ascii\n\t\t$ = \"ctx.system\" ascii\n\t\t$ = \"3FDA3998-BEF5-426D-82D8-1A71F29ADDC3\" ascii\n\t\t$ = \"C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Caches\\\\{%s}.2.ver0x0000000000000001.db\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Nautilus_forensic_artificats",
+                "tags": [],
+                "description": "Rule for detection of Nautilus related strings",
+                "author": "NCSC UK / Florian Roth",
+                "date": "2017/11/23",
+                "score": 60,
+                "reference": "https://www.ncsc.gov.uk/alerts/turla-group-malware",
+                "id": "0c0a24da-4dbc-543a-9ec0-a5b1ec75c889"
+            },
+            "rule_text": "rule Nautilus_forensic_artificats\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Nautilus related strings\"\n\t\tauthor = \"NCSC UK / Florian Roth\"\n\t\tdate = \"2017/11/23\"\n\t\tscore = 60\n\t\treference = \"https://www.ncsc.gov.uk/alerts/turla-group-malware\"\n\t\tid = \"0c0a24da-4dbc-543a-9ec0-a5b1ec75c889\"\n\n\tstrings:\n\t\t$ = \"App_Web_juvjerf3.dll\" fullword ascii\n\t\t$ = \"App_Web_vcplrg8q.dll\" fullword ascii\n\t\t$ = \"ar_all2.txt\" fullword ascii\n\t\t$ = \"ar_sa.txt\" fullword ascii\n\t\t$ = \"Convert.FromBase64String(temp[1])\" fullword ascii\n\t\t$ = \"D68gq#5p0(3Ndsk!\" fullword ascii\n\t\t$ = \"dcomnetsrv\" fullword ascii\n\t\t$ = \"ERRORF~1.ASP\" fullword ascii\n\t\t$ = \"intelliAdminRpc\" fullword ascii\n\t\t$ = \"J8fs4F4rnP7nFl#f\" fullword ascii\n\t\t$ = \"Msnb.exe\" fullword ascii\n\t\t$ = \"nautilus-service.dll\"\n\t\t$ = \"Neuron_service\" fullword ascii\n\t\t$ = \"owa_ar2.bat\" fullword ascii\n\t\t$ = \"payload.x64.dll.system\" fullword ascii\n\t\t$ = \"service.x64.dll.system\" fullword ascii\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Neuron2_Loader_Strings",
+                "tags": [],
+                "description": "Rule for detection of Neuron2 based on strings within the loader",
+                "author": "NCSC",
+                "referer": "https://otx.alienvault.com/pulse/5dad718fa5ec6c21e85c1c66",
+                "hash": "51616b207fde2ff1360a1364ff58270e0d46cf87a4c0c21b374a834dd9676927",
+                "id": "eaef4710-1971-55a2-9079-07a9b8bd86eb"
+            },
+            "rule_text": "rule APT_Neuron2_Loader_Strings\n{\n\tmeta:\n\t\tdescription = \"Rule for detection of Neuron2 based on strings within the loader\"\n\t\tauthor = \"NCSC\"\n\t\treferer = \"https://otx.alienvault.com/pulse/5dad718fa5ec6c21e85c1c66\"\n\t\thash = \"51616b207fde2ff1360a1364ff58270e0d46cf87a4c0c21b374a834dd9676927\"\n\t\tid = \"eaef4710-1971-55a2-9079-07a9b8bd86eb\"\n\n\tstrings:\n\t\t$ = \"dcom_api\" ascii\n\t\t$ = \"http://*:80/OWA/OAB/\" ascii\n\t\t$ = \"https://*:443/OWA/OAB/\" ascii\n\t\t$ = \"dcomnetsrv.cpp\" wide\n\t\t$ = \"dcomnet.dll\" ascii\n\t\t$ = \"D:\\\\Develop\\\\sps\\\\neuron2\\\\x64\\\\Release\\\\dcomnet.pdb\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and 2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

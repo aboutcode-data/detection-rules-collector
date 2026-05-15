@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/NCCGroup/metaStealer_memory.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "metaStealer_memory",
+                "tags": [],
+                "description": "MetaStealer Memory",
+                "reference": "https://research.nccgroup.com/2022/05/20/metastealer-filling-the-racoon-void/",
+                "author": "Peter Gurney",
+                "date": "2022-04-29"
+            },
+            "rule_text": "rule metaStealer_memory\n{\n\tmeta:\n\t\tdescription = \"MetaStealer Memory\"\n\t\treference = \"https://research.nccgroup.com/2022/05/20/metastealer-filling-the-racoon-void/\"\n\t\tauthor = \"Peter Gurney\"\n\t\tdate = \"2022-04-29\"\n\n\tstrings:\n\t\t$str_c2_parse = {B8 56 55 55 55 F7 6D C4 8B C2 C1 E8 1F 03 C2 8B 55 C0 8D 04 40 2B 45 C4}\n\t\t$str_filename = \".xyz -newname hyper-v.exe\" fullword wide\n\t\t$str_stackstring = {FF FF FF C7 85 ?? ?? ?? ?? ?? ?? ?? ?? C7 85 ?? ?? ?? ?? ?? ?? ?? ?? C7 85 ?? ?? ?? ?? ?? ?? ?? ?? C7 85 ?? ?? ?? ?? ?? ?? ?? ?? 66 0F EF}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 2 of ( $str_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

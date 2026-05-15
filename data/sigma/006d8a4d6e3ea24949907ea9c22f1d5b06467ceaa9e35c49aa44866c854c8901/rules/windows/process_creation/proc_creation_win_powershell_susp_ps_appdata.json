@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_susp_ps_appdata.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community",
+                "date": "2019-01-09",
+                "title": "PowerShell Script Run in AppData",
+                "id": "ac175779-025a-4f12-98b0-acdaeb77ea85"
+            },
+            "rule_text": "title: PowerShell Script Run in AppData\nid: ac175779-025a-4f12-98b0-acdaeb77ea85\nstatus: test\ndescription: Detects a suspicious command line execution that invokes PowerShell with\n  reference to an AppData folder\nreferences:\n- https://twitter.com/JohnLaTwC/status/1082851155481288706\n- https://app.any.run/tasks/f87f1c4e-47e2-4c46-9cf4-31454c06ce03\nauthor: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community\ndate: 2019-01-09\nmodified: 2022-07-14\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    CommandLine|contains:\n    - powershell.exe\n    - \\powershell\n    - \\pwsh\n    - pwsh.exe\n  selection2:\n    CommandLine|contains|all:\n    - '/c '\n    - \\AppData\\\n    CommandLine|contains:\n    - Local\\\n    - Roaming\\\n  condition: all of selection*\nfalsepositives:\n- Administrative scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Stairwell/NK_GOLDBACKDOOR_LNK.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NK_GOLDBACKDOOR_LNK",
+                "tags": [],
+                "author": "Silas Cutler (silas@Stairwell.com)",
+                "description": "Detection for LNK file used to deploy GOLDBACKDOOR",
+                "reference": "https://stairwell.com/news/threat-research-the-ink-stained-trail-of-goldbackdoor/",
+                "version": "0.1"
+            },
+            "rule_text": "rule NK_GOLDBACKDOOR_LNK\n{\n\tmeta:\n\t\tauthor = \"Silas Cutler (silas@Stairwell.com)\"\n\t\tdescription = \"Detection for LNK file used to deploy GOLDBACKDOOR\"\n\t\treference = \"https://stairwell.com/news/threat-research-the-ink-stained-trail-of-goldbackdoor/\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$ = \"WINWORD.exe\" wide nocase\n\t\t$ = \"$won11 =\\\"$temple=\" wide\n\t\t$ = \"dirPath -Match 'System32' -or $dirPath -Match 'Program Files'\" wide\n\n\tcondition:\n\t\t2 of them and uint16( 0 ) == 0x4c\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sysmoneop.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-12-04",
+                "title": "HackTool - SysmonEOP Execution",
+                "id": "8a7e90c5-fe6e-45dc-889e-057fe4378bd9"
+            },
+            "rule_text": "title: HackTool - SysmonEOP Execution\nid: 8a7e90c5-fe6e-45dc-889e-057fe4378bd9\nstatus: test\ndescription: Detects the execution of the PoC that can be used to exploit Sysmon CVE-2022-41120\nreferences:\n- https://github.com/Wh04m1001/SysmonEoP\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-12-04\nmodified: 2024-11-23\ntags:\n- cve.2022-41120\n- attack.t1068\n- attack.privilege-escalation\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\SysmonEOP.exe\n  selection_hash:\n    Hashes|contains:\n    - IMPHASH=22F4089EB8ABA31E1BB162C6D9BF72E5\n    - IMPHASH=5123FA4C4384D431CD0D893EEB49BBEC\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": [
+                "CVE-2022-41120"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Poison/Backdoor_Win32_Poison_CE.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Poison_CE",
+                "tags": [],
+                "description": "Backdoor:Win32/Poison.CE,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Poison_CE\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Poison.CE,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {3d 6d 1b 00 00 77 ?? 8a 98 ?? ?? ?? ?? 32 da 80 eb 05 88 98 ?? ?? ?? 00 8d bc 06 ?? ?? ?? 00 81 ff ?? ?? ?? 00 77 ?? 8a 98 ?? ?? ?? 00 32 d9 80 eb ?? 88 98 ?? ?? ?? 00 83 c0 02 3d ?? ?? ?? 00 }\n\t\t$a_03_1 = {43 81 e3 ff 00 ?? ?? 79 ?? 4b 81 cb ?? ?? ?? ?? 43 8b 44 24 ?? 33 c9 8a 0c 03 8d 3c 03 03 e9 81 e5 ?? ?? ?? ?? 79 ?? 4d 81 cd ?? ?? ?? ?? 45 03 c5 50 57 89 44 24 ?? e8 ?? ?? ?? 00 8b 4c 24 ?? 33 d2 8a 17 33 c0 8a 01 83 c4 ?? 03 d0 81 e2 ff ?? ?? ?? 79 ?? 4a 81 ca 00 ?? ?? ?? 42 8b 44 24 ?? 8a 0c 02 8b 44 24 ?? 8a 14 06 32 d1 88 14 06 8b 44 24 ?? 46 3b f0 7c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

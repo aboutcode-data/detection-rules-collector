@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/AsyncRat/Trojan_Win32_AsyncRat_CBK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_AsyncRat_CBK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/AsyncRat.CBK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_AsyncRat_CBK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/AsyncRat.CBK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b ce 8b c3 83 e1 ?? 8b d7 e8 ?? ?? 00 00 30 86 ?? ?? ?? ?? 46 81 fe 00 ?? 00 00 72 }\n\t\t$a_03_1 = {80 f9 40 73 ?? 80 f9 20 73 ?? 0f ad d0 d3 fa c3 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Fireeye/APT32_ActiveMime_Lure.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT32_ActiveMime_Lure",
+                "tags": [],
+                "filetype": "MIME entity",
+                "author": "Ian Ahl (@TekDefense) and Nick Carr (@ItsReallyNick)",
+                "date": "2017-03-02",
+                "description": "Developed to detect APT32 (OceanLotus Group phishing lures used to target Fireeye Customers in 2016 and 2017",
+                "reference": "https://www.fireeye.com/blog/threat-research/2017/05/cyber-espionage-apt32.html"
+            },
+            "rule_text": "rule APT32_ActiveMime_Lure\n{\n\tmeta:\n\t\tfiletype = \"MIME entity\"\n\t\tauthor = \"Ian Ahl (@TekDefense) and Nick Carr (@ItsReallyNick)\"\n\t\tdate = \"2017-03-02\"\n\t\tdescription = \"Developed to detect APT32 (OceanLotus Group phishing lures used to target Fireeye Customers in 2016 and 2017\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2017/05/cyber-espionage-apt32.html\"\n\n\tstrings:\n\t\t$a1 = \"office_text\" wide ascii\n\t\t$a2 = \"schtasks /create /tn\" wide ascii\n\t\t$a3 = \"scrobj.dll\" wide ascii\n\t\t$a4 = \"new-object net.webclient\" wide ascii\n\t\t$a5 = \"GetUserName\" wide ascii\n\t\t$a6 = \"WSHnet.UserDomain\" wide ascii\n\t\t$a7 = \"WSHnet.UserName\" wide ascii\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

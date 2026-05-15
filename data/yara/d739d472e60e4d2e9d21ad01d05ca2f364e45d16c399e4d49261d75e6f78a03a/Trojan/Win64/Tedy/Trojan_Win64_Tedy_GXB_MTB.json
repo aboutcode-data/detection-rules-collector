@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Tedy/Trojan_Win64_Tedy_GXB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Tedy_GXB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Tedy.GXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Tedy_GXB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Tedy.GXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {66 89 4c 24 28 80 f1 ?? 80 74 24 29 ?? 34 ?? c6 44 24 20 69 88 44 24 2a 48 8d 44 24 20 88 4c 24 28 0f 1f 44 00 00 49 ff c0 42 80 3c 00 00 }\n\t\t$a_03_1 = {37 80 74 24 ?? 38 80 74 24 ?? 39 80 74 24 ?? 3a 80 74 24 ?? 3b 80 74 24 ?? 3c 80 74 24 }\n\t\t$a_03_2 = {34 80 74 24 ?? 35 80 74 24 ?? 36 80 74 24 ?? 37 80 74 24 ?? 38 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 5 + ( #a_03_2 & 1 ) * 5 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

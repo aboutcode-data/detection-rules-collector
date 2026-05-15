@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_ProjectSauron_encrypted_container.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_ProjectSauron_encrypted_container",
+                "tags": [],
+                "copyright": "Kaspersky Lab",
+                "description": "Rule to detect ProjectSauron samples encrypted container",
+                "version": "1.0",
+                "reference": "https://securelist.com/blog/"
+            },
+            "rule_text": "import \"math\"\n\nrule apt_ProjectSauron_encrypted_container\n{\n\tmeta:\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdescription = \"Rule to detect ProjectSauron samples encrypted container\"\n\t\tversion = \"1.0\"\n\t\treference = \"https://securelist.com/blog/\"\n\n\tstrings:\n\t\t$vfs_header = {02 AA 02 C1 02 0?}\n\t\t$salt = {91 0A E0 CC 0D FE CE 36 78 48 9B 9C 97 F7 F5 55}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( ( @vfs_header < 0x4000 ) or $salt ) and math.entropy ( 0x400 , filesize ) >= 6.5 and ( filesize > 0x400 ) and filesize < 10000000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

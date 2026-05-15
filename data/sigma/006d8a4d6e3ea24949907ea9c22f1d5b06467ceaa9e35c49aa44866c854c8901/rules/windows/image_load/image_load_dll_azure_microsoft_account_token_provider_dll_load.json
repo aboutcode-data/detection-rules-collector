@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_dll_azure_microsoft_account_token_provider_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Den Iuzvyk",
+                "date": "2020-07-15",
+                "title": "Potential Azure Browser SSO Abuse",
+                "id": "50f852e6-af22-4c78-9ede-42ef36aa3453"
+            },
+            "rule_text": "title: Potential Azure Browser SSO Abuse\nid: 50f852e6-af22-4c78-9ede-42ef36aa3453\nstatus: test\ndescription: 'Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh tokens\n  for an Azure-AD-authenticated Windows user (i.e. the machine is joined to Azure\n  AD and a user logs in with their Azure AD account) wanting to perform SSO authentication\n  in the browser.\n\n  An attacker can use this to authenticate to Azure AD in a browser as that user.\n\n  '\nreferences:\n- https://posts.specterops.io/requesting-azure-ad-request-tokens-on-azure-ad-joined-machines-for-browser-sso-2b0409caad30\nauthor: Den Iuzvyk\ndate: 2020-07-15\nmodified: 2023-04-18\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded: C:\\Windows\\System32\\MicrosoftAccountTokenProvider.dll\n  filter_main_bgtaskhost:\n    Image|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    Image|endswith: \\BackgroundTaskHost.exe\n  filter_optional_devenv:\n    Image|startswith:\n    - C:\\Program Files\\Microsoft Visual Studio\\\n    - C:\\Program Files (x86)\\Microsoft Visual Studio\\\n    Image|endswith: \\IDE\\devenv.exe\n  filter_optional_ie:\n    Image:\n    - C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe\n    - C:\\Program Files\\Internet Explorer\\iexplore.exe\n  filter_optional_edge_1:\n  - Image|startswith: C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\\n  - Image|endswith: \\WindowsApps\\MicrosoftEdge.exe\n  - Image:\n    - C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\n    - C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe\n  filter_optional_edge_2:\n    Image|startswith:\n    - C:\\Program Files (x86)\\Microsoft\\EdgeCore\\\n    - C:\\Program Files\\Microsoft\\EdgeCore\\\n    Image|endswith:\n    - \\msedge.exe\n    - \\msedgewebview2.exe\n  filter_optional_onedrive:\n    Image|endswith: \\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe\n  filter_optional_null:\n    Image: null\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- False positives are expected since this rules is only looking for the DLL load event.\n  This rule is better used in correlation with related activity\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msbuild_susp_parent_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-11-17",
+                "title": "Suspicious Msbuild Execution By Uncommon Parent Process",
+                "id": "33be4333-2c6b-44f4-ae28-102cdbde0a31"
+            },
+            "rule_text": "title: Suspicious Msbuild Execution By Uncommon Parent Process\nid: 33be4333-2c6b-44f4-ae28-102cdbde0a31\nstatus: test\ndescription: Detects suspicious execution of 'Msbuild.exe' by a uncommon parent process\nreferences:\n- https://app.any.run/tasks/abdf586e-df0c-4d39-89a7-06bf24913401/\n- https://www.echotrail.io/insights/search/msbuild.exe\nauthor: frack113\ndate: 2022-11-17\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\MSBuild.exe\n  - OriginalFileName: MSBuild.exe\n  filter_parent:\n    ParentImage|endswith:\n    - \\devenv.exe\n    - \\cmd.exe\n    - \\msbuild.exe\n    - \\python.exe\n    - \\explorer.exe\n    - \\nuget.exe\n  condition: selection and not filter_parent\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

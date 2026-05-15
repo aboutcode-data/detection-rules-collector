@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/Genpck/VirTool_Win64_Genpck_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_Genpck_A",
+                "tags": [],
+                "description": "VirTool:Win64/Genpck.A,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_Genpck_A\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/Genpck.A,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {5d 68 fa 3c [0-04] 8b }\n\t\t$a_01_1 = {5b bc 4a 6a 0f 85 }\n\t\t$a_01_2 = {48 81 c4 f0 00 00 00 41 5e 5f 5e 5b 5d c3 }\n\t\t$a_01_3 = {48 81 c4 d8 07 00 00 41 5f 41 5e 41 5d 41 5c 5f 5e 5b 5d c3 }\n\t\t$a_03_4 = {49 8b ce ff ?? ?? ?? ?? ?? 48 8b d3 48 8b ce 41 ff d6 85 c0 48 0f 4f de 48 03 f5 48 3b f7 76 e0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 5 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

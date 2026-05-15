@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Vbideproc/Trojan_Win32_Vbideproc_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Vbideproc_A",
+                "tags": [],
+                "description": "Trojan:Win32/Vbideproc.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Vbideproc_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Vbideproc.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {3a 00 5c 00 44 00 65 00 73 00 6b 00 74 00 6f 00 70 00 5c 00 44 00 65 00 76 00 69 00 63 00 65 00 52 00 65 00 6d 00 6f 00 74 00 65 00 5c 00 50 00 72 00 6f 00 67 00 72 00 61 00 6d 00 5c 00 [0-10] 5c 00 [0-10] 2e 00 76 00 62 00 70 00 }\n\t\t$a_00_1 = {53 74 61 72 74 48 69 64 65 }\n\t\t$a_00_2 = {4b 65 65 70 50 72 6f 63 52 75 6e 6e 69 6e 67 41 6e 64 52 65 67 69 73 74 72 79 }\n\t\t$a_00_3 = {5c 00 73 00 76 00 63 00 68 00 6f 00 73 00 74 00 33 00 32 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_00_4 = {5c 00 57 00 69 00 6e 00 73 00 79 00 73 00 74 00 65 00 6d 00 2e 00 65 00 78 00 65 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

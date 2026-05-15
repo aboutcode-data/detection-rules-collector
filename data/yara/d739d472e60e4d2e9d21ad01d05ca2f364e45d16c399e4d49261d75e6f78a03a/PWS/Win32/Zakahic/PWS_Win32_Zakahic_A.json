@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Zakahic/PWS_Win32_Zakahic_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Zakahic_A",
+                "tags": [],
+                "description": "PWS:Win32/Zakahic.A,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Zakahic_A\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Zakahic.A,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {80 f9 4f 7f 05 80 c1 30 eb 03 80 e9 30 88 0a 42 }\n\t\t$a_03_1 = {43 49 43 60 [0-08] 5e 34 3c 3c }\n\t\t$a_01_2 = {35 3c 35 3d 35 3e 44 33 3c 39 35 3e 44 5e 35 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

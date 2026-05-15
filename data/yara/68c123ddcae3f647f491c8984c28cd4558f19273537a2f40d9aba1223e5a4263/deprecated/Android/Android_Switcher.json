@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_Switcher.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Android_Switcher",
+                "tags": [],
+                "description": "This rule detects Android wifi Switcher variants",
+                "sample": "d3aee0e8fa264a33f77bdd59d95759de8f6d4ed6790726e191e39bcfd7b5e150",
+                "source": "https://securelist.com/blog/mobile/76969/switcher-android-joins-the-attack-the-router-club/",
+                "source2": "https://koodous.com/rulesets/2049",
+                "author": "https://twitter.com/5h1vang"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_Switcher\n{\n\tmeta:\n\t\tdescription = \"This rule detects Android wifi Switcher variants\"\n\t\tsample = \"d3aee0e8fa264a33f77bdd59d95759de8f6d4ed6790726e191e39bcfd7b5e150\"\n\t\tsource = \"https://securelist.com/blog/mobile/76969/switcher-android-joins-the-attack-the-router-club/\"\n\t\tsource2 = \"https://koodous.com/rulesets/2049\"\n\t\tauthor = \"https://twitter.com/5h1vang\"\n\n\tstrings:\n\t\t$str_1 = \"javascript:scrollTo\"\n\t\t$str_5 = \"javascript:document.getElementById('dns1')\"\n\t\t$str_6 = \"admin:\"\n\t\t$dns_2 = \"101.200.147.153\"\n\t\t$dns_3 = \"112.33.13.11\"\n\t\t$dns_4 = \"120.76.249.59\"\n\n\tcondition:\n\t\tandroguard.certificate.sha1( \"2421686AE7D976D19AB72DA1BDE273C537D2D4F9\" ) or ( androguard.permission ( /android.permission.INTERNET/ ) and androguard.permission ( /android.permission.ACCESS_WIFI_STATE/ ) and ( $dns_2 or $dns_3 or $dns_4 ) and all of ( $str_* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

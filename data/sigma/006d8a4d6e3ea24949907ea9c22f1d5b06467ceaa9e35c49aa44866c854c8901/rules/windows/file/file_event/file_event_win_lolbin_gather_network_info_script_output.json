@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_lolbin_gather_network_info_script_output.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-08",
+                "title": "GatherNetworkInfo.VBS Reconnaissance Script Output",
+                "id": "f92a6f1e-a512-4a15-9735-da09e78d7273"
+            },
+            "rule_text": "title: GatherNetworkInfo.VBS Reconnaissance Script Output\nid: f92a6f1e-a512-4a15-9735-da09e78d7273\nrelated:\n- id: 575dce0c-8139-4e30-9295-1ee75969f7fe\n  type: similar\n- id: 07aa184a-870d-413d-893a-157f317f6f58\n  type: similar\nstatus: test\ndescription: Detects creation of files which are the results of executing the built-in\n  reconnaissance script \"C:\\Windows\\System32\\gatherNetworkInfo.vbs\".\nreferences:\n- https://posts.slayerlabs.com/living-off-the-land/#gathernetworkinfovbs\n- https://www.mandiant.com/resources/blog/trojanized-windows-installers-ukrainian-government\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-08\ntags:\n- attack.discovery\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|startswith: C:\\Windows\\System32\\config\n    TargetFilename|endswith:\n    - \\Hotfixinfo.txt\n    - \\netiostate.txt\n    - \\sysportslog.txt\n    - \\VmSwitchLog.evtx\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

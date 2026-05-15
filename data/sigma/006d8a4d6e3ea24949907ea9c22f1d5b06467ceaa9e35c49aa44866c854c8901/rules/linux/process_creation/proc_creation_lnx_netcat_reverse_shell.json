@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_netcat_reverse_shell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@d4ns4n_, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-07",
+                "title": "Potential Netcat Reverse Shell Execution",
+                "id": "7f734ed0-4f47-46c0-837f-6ee62505abd9"
+            },
+            "rule_text": "title: Potential Netcat Reverse Shell Execution\nid: 7f734ed0-4f47-46c0-837f-6ee62505abd9\nstatus: test\ndescription: Detects execution of netcat with the \"-e\" flag followed by common shells.\n  This could be a sign of a potential reverse shell setup.\nreferences:\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\n- https://www.revshells.com/\n- https://www.hackingtutorials.org/networking/hacking-netcat-part-2-bind-reverse-shells/\n- https://www.infosecademy.com/netcat-reverse-shells/\n- https://man7.org/linux/man-pages/man1/ncat.1.html\nauthor: '@d4ns4n_, Nasreddine Bencherchali (Nextron Systems)'\ndate: 2023-04-07\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_nc:\n    Image|endswith:\n    - /nc\n    - /ncat\n  selection_flags:\n    CommandLine|contains:\n    - ' -c '\n    - ' -e '\n  selection_shell:\n    CommandLine|contains:\n    - ' ash'\n    - ' bash'\n    - ' bsh'\n    - ' csh'\n    - ' ksh'\n    - ' pdksh'\n    - ' sh'\n    - ' tcsh'\n    - /bin/ash\n    - /bin/bash\n    - /bin/bsh\n    - /bin/csh\n    - /bin/ksh\n    - /bin/pdksh\n    - /bin/sh\n    - /bin/tcsh\n    - /bin/zsh\n    - $IFSash\n    - $IFSbash\n    - $IFSbsh\n    - $IFScsh\n    - $IFSksh\n    - $IFSpdksh\n    - $IFSsh\n    - $IFStcsh\n    - $IFSzsh\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

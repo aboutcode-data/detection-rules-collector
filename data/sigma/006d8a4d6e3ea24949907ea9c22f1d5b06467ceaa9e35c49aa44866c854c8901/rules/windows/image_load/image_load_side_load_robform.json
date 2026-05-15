@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_robform.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-14",
+                "title": "Potential RoboForm.DLL Sideloading",
+                "id": "f64c9b2d-b0ad-481d-9d03-7fc75020892a"
+            },
+            "rule_text": "title: Potential RoboForm.DLL Sideloading\nid: f64c9b2d-b0ad-481d-9d03-7fc75020892a\nstatus: test\ndescription: Detects potential DLL sideloading of \"roboform.dll\", a DLL used by RoboForm\n  Password Manager\nreferences:\n- https://twitter.com/StopMalvertisin/status/1648604148848549888\n- https://twitter.com/t3ft3lb/status/1656194831830401024\n- https://www.roboform.com/\nauthor: X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-14\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith:\n    - \\roboform.dll\n    - \\roboform-x64.dll\n  filter_main_path:\n    Image|startswith:\n    - ' C:\\Program Files (x86)\\Siber Systems\\AI RoboForm\\'\n    - ' C:\\Program Files\\Siber Systems\\AI RoboForm\\'\n    Image|endswith:\n    - \\robotaskbaricon.exe\n    - \\robotaskbaricon-x64.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- If installed on a per-user level, the path would be located in \"AppData\\Local\".\n  Add additional filters to reflect this mode of installation\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

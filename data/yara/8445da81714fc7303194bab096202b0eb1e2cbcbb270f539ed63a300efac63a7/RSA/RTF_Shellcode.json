@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/RSA/RTF_Shellcode.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RTF_Shellcode",
+                "tags": [],
+                "author": "RSA-IR – Jared Greenhill",
+                "date": "01/21/13",
+                "description": "identifies RTF's with potential shellcode",
+                "reference": "https://community.rsa.com/community/products/netwitness/blog/2014/02/12/triaging-malicious-microsoft-office-documents-cve-2012-0158",
+                "filetype": "RTF"
+            },
+            "rule_text": "rule RTF_Shellcode\n{\n\tmeta:\n\t\tauthor = \"RSA-IR – Jared Greenhill\"\n\t\tdate = \"01/21/13\"\n\t\tdescription = \"identifies RTF's with potential shellcode\"\n\t\treference = \"https://community.rsa.com/community/products/netwitness/blog/2014/02/12/triaging-malicious-microsoft-office-documents-cve-2012-0158\"\n\t\tfiletype = \"RTF\"\n\n\tstrings:\n\t\t$rtfmagic = {7B 5C 72 74 66}\n\t\t$scregex = /[39 30]{2,20}/\n\n\tcondition:\n\t\t($rtfmagic at 0 ) and ( $scregex )\n}\n",
+            "vulnerabilities": [
+                "CVE-2012-0158"
+            ]
+        }
+    ]
+}

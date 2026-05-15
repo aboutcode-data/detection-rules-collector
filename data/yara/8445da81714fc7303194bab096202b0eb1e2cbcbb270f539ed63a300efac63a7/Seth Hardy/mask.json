@@ -1,0 +1,60 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/mask.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Careto",
+                "tags": [],
+                "author": "AlienVault (Alberto Ortega)",
+                "description": "TheMask / Careto generic malware signature",
+                "reference": "www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf"
+            },
+            "rule_text": "rule Careto\n{\n\tmeta:\n\t\tauthor = \"AlienVault (Alberto Ortega)\"\n\t\tdescription = \"TheMask / Careto generic malware signature\"\n\t\treference = \"www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf\"\n\n\tstrings:\n\t\t$name1 = \"Careto\" ascii wide\n\t\t$s_1 = \"GetSystemReport\" ascii wide\n\t\t$s_2 = \"SystemReport.txt\" ascii wide\n\t\t$s_3 = /URL_AUX\\w*=/ ascii wide\n\t\t$s_4 = /CaretoPruebas.+release/\n\t\t$sign_0 = \"Sofia\"\n\t\t$sign_1 = \"TecSystem Ltd\"\n\t\t$sign_2 = \"<<<Obsolete>>>\" wide\n\t\t$rc4_1 = \"!$7be&.Kaw-12[}\" ascii wide\n\t\t$rc4_2 = \"Caguen1aMar\" ascii wide\n\t\t$rc4_3 = {8d 85 86 8a 8f 80 88 83 8d 82 88 85 86 8f 8f 87 8d 82 83 82 8c 8e 83 8d 89 82 86 87 82 83 83 81}\n\t\t$dec_1 = {8b 4d 08 0f be 04 59 0f be 4c 59 01 2b c7 c1 e0 04 2b cf 0b c1 50 8d 85 f0 fe ff ff}\n\t\t$dec_2 = {8b 4d f8 8b 16 88 04 11 8b 06 41 89 4d f8 c6 04 01 00 43 3b 5d fc}\n\n\tcondition:\n\t\t$name1 and ( any of ( $s_* ) ) or all of ( $sign_* ) or any of ( $rc4_* ) or all of ( $dec_* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Careto_SGH",
+                "tags": [],
+                "author": "AlienVault (Alberto Ortega)",
+                "description": "TheMask / Careto SGH component signature",
+                "reference": "www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf"
+            },
+            "rule_text": "rule Careto_SGH\n{\n\tmeta:\n\t\tauthor = \"AlienVault (Alberto Ortega)\"\n\t\tdescription = \"TheMask / Careto SGH component signature\"\n\t\treference = \"www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf\"\n\n\tstrings:\n\t\t$m1 = \"PGPsdkDriver\" ascii wide fullword\n\t\t$m2 = \"jpeg1x32\" ascii wide fullword\n\t\t$m3 = \"SkypeIE6Plugin\" ascii wide fullword\n\t\t$m4 = \"CDllUninstall\" ascii wide fullword\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Careto_OSX_SBD",
+                "tags": [],
+                "author": "AlienVault (Alberto Ortega)",
+                "description": "TheMask / Careto OSX component signature",
+                "reference": "www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf"
+            },
+            "rule_text": "rule Careto_OSX_SBD\n{\n\tmeta:\n\t\tauthor = \"AlienVault (Alberto Ortega)\"\n\t\tdescription = \"TheMask / Careto OSX component signature\"\n\t\treference = \"www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf\"\n\n\tstrings:\n\t\t$1 = {FF 16 64 0A 7E 1A 63 4D 21 4D 3E 1E 60 0F 7C 1A 65 0F 74 0B 3E 1C 7F 12}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Careto_CnC",
+                "tags": [],
+                "author": "AlienVault (Alberto Ortega)",
+                "description": "TheMask / Careto CnC communication signature",
+                "reference": "www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf"
+            },
+            "rule_text": "rule Careto_CnC\n{\n\tmeta:\n\t\tauthor = \"AlienVault (Alberto Ortega)\"\n\t\tdescription = \"TheMask / Careto CnC communication signature\"\n\t\treference = \"www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf\"\n\n\tstrings:\n\t\t$1 = \"cgi-bin/commcgi.cgi\" ascii wide\n\t\t$2 = \"Group\" ascii wide\n\t\t$3 = \"Install\" ascii wide\n\t\t$4 = \"Bn\" ascii wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Careto_CnC_domains",
+                "tags": [],
+                "author": "AlienVault (Alberto Ortega)",
+                "description": "TheMask / Careto known command and control domains",
+                "reference": "www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf"
+            },
+            "rule_text": "rule Careto_CnC_domains\n{\n\tmeta:\n\t\tauthor = \"AlienVault (Alberto Ortega)\"\n\t\tdescription = \"TheMask / Careto known command and control domains\"\n\t\treference = \"www.securelist.com/en/downloads/vlpdfs/unveilingthemask_v1.0.pdf\"\n\n\tstrings:\n\t\t$1 = \"linkconf.net\" ascii wide nocase\n\t\t$2 = \"redirserver.net\" ascii wide nocase\n\t\t$3 = \"swupdt.com\" ascii wide nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

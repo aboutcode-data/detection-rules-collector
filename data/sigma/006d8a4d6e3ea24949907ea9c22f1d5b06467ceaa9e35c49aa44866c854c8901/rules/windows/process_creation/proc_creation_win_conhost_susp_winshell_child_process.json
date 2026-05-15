@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_conhost_susp_winshell_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-05",
+                "title": "Potentially Suspicious Child Processes Spawned by ConHost",
+                "id": "dfa03a09-8b92-4d83-8e74-f72839b1c407"
+            },
+            "rule_text": "title: Potentially Suspicious Child Processes Spawned by ConHost\nid: dfa03a09-8b92-4d83-8e74-f72839b1c407\nrelated:\n- id: 7dc2dedd-7603-461a-bc13-15803d132355\n  type: similar\nstatus: experimental\ndescription: Detects suspicious child processes related to Windows Shell utilities\n  spawned by `conhost.exe`, which could indicate malicious activity using trusted\n  system components.\nreferences:\n- https://tria.ge/241015-l98snsyeje/behavioral2\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-05\ntags:\n- attack.stealth\n- attack.t1202\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\conhost.exe\n  selection_child:\n  - Image|endswith:\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\wscript.exe\n  - OriginalFileName:\n    - cmd.exe\n    - cscript.exe\n    - mshta.exe\n    - powershell_ise.exe\n    - powershell.exe\n    - pwsh.dll\n    - regsvr32.exe\n    - wscript.exe\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative tasks using `conhost.exe` to spawn child processes such\n  as `cmd.exe`, `powershell.exe`, or `regsvr32.exe`.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

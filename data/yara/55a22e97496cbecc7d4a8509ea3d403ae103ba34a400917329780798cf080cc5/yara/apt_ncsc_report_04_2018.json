@@ -1,0 +1,145 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_ncsc_report_04_2018.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Bytes_used_in_AES_key_generation",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects Backdoor.goodor",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46",
+                "id": "26a549dd-cbd2-5abc-8d9d-5ea354d0ece8"
+            },
+            "rule_text": "rule Bytes_used_in_AES_key_generation\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects Backdoor.goodor\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46\"\n\t\tid = \"26a549dd-cbd2-5abc-8d9d-5ea354d0ece8\"\n\n\tstrings:\n\t\t$a1 = {35 34 36 35 4B 4A 55 54 5E 49 55 5F 29 7B 68 36 35 67 34 36 64 66 35 68}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 5000KB and all of ( $a* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Partial_Implant_ID",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects implant from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46",
+                "id": "15144f4a-2c96-57f0-b7e9-adbac477c38a"
+            },
+            "rule_text": "rule Partial_Implant_ID\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects implant from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46\"\n\t\tid = \"15144f4a-2c96-57f0-b7e9-adbac477c38a\"\n\n\tstrings:\n\t\t$a1 = {38 38 31 34 35 36 46 43}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 1000KB and all of ( $a* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Sleep_Timer_Choice",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects malware from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46",
+                "id": "c64db0dd-2858-5508-ac51-d3318113a060"
+            },
+            "rule_text": "rule Sleep_Timer_Choice\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects malware from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46\"\n\t\tid = \"c64db0dd-2858-5508-ac51-d3318113a060\"\n\n\tstrings:\n\t\t$a1 = {8b0424b90f00000083f9ff743499f7f98d420f}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 1000KB and all of ( $a* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "User_Function_String",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects user function string from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46",
+                "id": "563ac6af-6b37-53c6-ae13-d97e31edb088"
+            },
+            "rule_text": "rule User_Function_String\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects user function string from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"b5278301da06450fe4442a25dda2d83d21485be63598642573f59c59e980ad46\"\n\t\tid = \"563ac6af-6b37-53c6-ae13-d97e31edb088\"\n\n\tstrings:\n\t\t$a2 = \"e.RandomHashString\"\n\t\t$a3 = \"e.Decode\"\n\t\t$a4 = \"e.Decrypt\"\n\t\t$a5 = \"e.HashStr\"\n\t\t$a6 = \"e.FromB64\"\n\n\tcondition:\n\t\t4 of ( $a* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "generic_shellcode_downloader_specific",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects Doorshell from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "b8bc0611a7fd321d2483a0a9a505251e15c22402e0cfdc62c0258af53ed3658a",
+                "id": "ddd25add-ff84-5106-ac3c-5d5b4c1ef2a9"
+            },
+            "rule_text": "rule generic_shellcode_downloader_specific\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects Doorshell from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"b8bc0611a7fd321d2483a0a9a505251e15c22402e0cfdc62c0258af53ed3658a\"\n\t\tid = \"ddd25add-ff84-5106-ac3c-5d5b4c1ef2a9\"\n\n\tstrings:\n\t\t$push1 = {68 6C 6C 6F 63}\n\t\t$push2 = {68 75 61 6C 41}\n\t\t$push3 = {68 56 69 72 74}\n\t\t$a = {BA 90 02 00 00 46 C1 C6 19 03 DD 2B F4 33 DE}\n\t\t$b = {87 C0 81 F2 D1 19 89 14 C1 C8 1F FF E0}\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3C ) ) == 0x4550 ) and ( $a or $b ) and @push1 < @push2 and @push2 < @push3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Batch_Script_To_Run_PsExec",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects malicious batch file from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "b7d7c4bc8f9fd0e461425747122a431f93062358ed36ce281147998575ee1a18",
+                "id": "1fbeeec8-a5bd-569e-b435-c7d82d32e47b"
+            },
+            "rule_text": "rule Batch_Script_To_Run_PsExec\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects malicious batch file from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"b7d7c4bc8f9fd0e461425747122a431f93062358ed36ce281147998575ee1a18\"\n\t\tid = \"1fbeeec8-a5bd-569e-b435-c7d82d32e47b\"\n\n\tstrings:\n\t\t$ = \"Tokens=1 delims=\" ascii\n\t\t$ = \"SET ws=%1\" ascii\n\t\t$ = \"Checking %ws%\" ascii\n\t\t$ = \"%TEMP%\\\\%ws%ns.txt\" ascii\n\t\t$ = \"ps.exe -accepteula\" ascii\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Batch_Powershell_Invoke_Inveigh",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects malicious batch file from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "0a6b1b29496d4514f6485e78680ec4cd0296ef4d21862d8bf363900a4f8e3fd2",
+                "id": "c5dab029-6515-5d58-9ccd-bf438ba692d5"
+            },
+            "rule_text": "rule Batch_Powershell_Invoke_Inveigh\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects malicious batch file from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"0a6b1b29496d4514f6485e78680ec4cd0296ef4d21862d8bf363900a4f8e3fd2\"\n\t\tid = \"c5dab029-6515-5d58-9ccd-bf438ba692d5\"\n\n\tstrings:\n\t\t$ = \"Inveigh.ps1\" ascii\n\t\t$ = \"Invoke-Inveigh\" ascii\n\t\t$ = \"-LLMNR N -HTTP N -FileOutput Y\" ascii\n\t\t$ = \"powershell.exe\" ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lnk_detect",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects malicious LNK file from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "id": "76d382f3-b2f2-5ede-94b2-5ae8b766c194"
+            },
+            "rule_text": "rule lnk_detect\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects malicious LNK file from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\tid = \"76d382f3-b2f2-5ede-94b2-5ae8b766c194\"\n\n\tstrings:\n\t\t$lnk_magic = {4C 00 00 00 01 14 02 00 00 00 00 00 C0 00 00 00 00 00 00 46}\n\t\t$lnk_target = {41 00 55 00 54 00 4F 00 45 00 58 00 45 00 43 00 2E 00 42 00 41 00 54}\n\t\t$s1 = {5C 00 5C 00 31 00}\n\t\t$s2 = {5C 00 5C 00 32 00}\n\t\t$s3 = {5C 00 5C 00 33 00}\n\t\t$s4 = {5C 00 5C 00 34 00}\n\t\t$s5 = {5C 00 5C 00 35 00}\n\t\t$s6 = {5C 00 5C 00 36 00}\n\t\t$s7 = {5C 00 5C 00 37 00}\n\t\t$s8 = {5C 00 5C 00 38 00}\n\t\t$s9 = {5C 00 5C 00 39 00}\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x4c000000 and uint32be( 4 ) == 0x01140200 and ( ( $lnk_magic at 0 ) and $lnk_target ) and 1 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RDP_Brute_Strings",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects RDP brute forcer from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "hash": "8234bf8a1b53efd2a452780a69666d1aedcec9eb1bb714769283ccc2c2bdcc65",
+                "id": "d6f0cdbc-a910-5826-b25a-61c2924f8e2a"
+            },
+            "rule_text": "rule RDP_Brute_Strings\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects RDP brute forcer from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\thash = \"8234bf8a1b53efd2a452780a69666d1aedcec9eb1bb714769283ccc2c2bdcc65\"\n\t\tid = \"d6f0cdbc-a910-5826-b25a-61c2924f8e2a\"\n\n\tstrings:\n\t\t$ = \"RDP Brute\" ascii wide\n\t\t$ = \"RdpChecker\" ascii\n\t\t$ = \"RdpBrute\" ascii\n\t\t$ = \"Brute_Count_Password\" ascii\n\t\t$ = \"BruteIPList\" ascii\n\t\t$ = \"Chilkat_Socket_Key\" ascii\n\t\t$ = \"Brute_Sync_Stat\" ascii\n\t\t$ = \"(Error! Hyperlink reference not valid.)\" wide\n\t\t$ = \"BadRDP\" wide\n\t\t$ = \"GoodRDP\" wide\n\t\t$ = \"@echo off{0}:loop{0}del {1}{0}if exist {1} goto loop{0}del {2}{0}del \\\"{2}\\\"\" wide\n\t\t$ = \"Coded by z668\" wide\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WEBSHELL_Z_WebShell_1",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Detects Z Webshell from NCSC report",
+                "reference": "https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control",
+                "date": "2018/04/06",
+                "old_rule_name": "Z_WebShell",
+                "hash": "ace12552f3a980f1eed4cadb02afe1bfb851cafc8e58fb130e1329719a07dbf0",
+                "id": "f4b50760-bd3a-5e1f-bf32-50f16a42c381"
+            },
+            "rule_text": "rule WEBSHELL_Z_WebShell_1\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Detects Z Webshell from NCSC report\"\n\t\treference = \"https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control\"\n\t\tdate = \"2018/04/06\"\n\t\told_rule_name = \"Z_WebShell\"\n\t\thash = \"ace12552f3a980f1eed4cadb02afe1bfb851cafc8e58fb130e1329719a07dbf0\"\n\t\tid = \"f4b50760-bd3a-5e1f-bf32-50f16a42c381\"\n\n\tstrings:\n\t\t$ = \"Z_PostBackJS\" ascii wide\n\t\t$ = \"z_file_download\" ascii wide\n\t\t$ = \"z_WebShell\" ascii wide\n\t\t$ = \"1367948c7859d6533226042549228228\" ascii wide\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

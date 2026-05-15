@@ -1,0 +1,167 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/US CERT/hatman.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hatman_filesize",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private global rule hatman_filesize : hatman\n{\n\tcondition:\n\t\tfilesize < 100KB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_setstatus",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_setstatus : hatman\n{\n\tstrings:\n\t\t$preset = { 80 00 40 3c 00 00 62 80 40 00 80 3c 40 20 03 7c\n?? ?? 82 40 04 00 62 80 60 00 80 3c 40 20 03 7c\n?? ?? 82 40 ?? ?? 42 38 }\n\n\tcondition:\n\t\t$preset\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_memcpy",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_memcpy : hatman\n{\n\tstrings:\n\t\t$memcpy_be = { 7c a9 03 a6 38 84 ff ff 38 63 ff ff 8c a4 00 01\n9c a3 00 01 42 00 ff f8 4e 80 00 20 }\n\t\t$memcpy_le = { a6 03 a9 7c ff ff 84 38 ff ff 63 38 01 00 a4 8c\n01 00 a3 9c f8 ff 00 42 20 00 80 4e }\n\n\tcondition:\n\t\t$memcpy_be or $memcpy_le\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_dividers",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_dividers : hatman\n{\n\tstrings:\n\t\t$div1 = { 9a 78 56 00 }\n\t\t$div2 = { 34 12 00 00 }\n\n\tcondition:\n\t\t$div1 and $div2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_nullsub",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_nullsub : hatman\n{\n\tstrings:\n\t\t$nullsub = { ff ff 60 38 02 00 00 44 20 00 80 4e }\n\n\tcondition:\n\t\t$nullsub\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_origaddr",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_origaddr : hatman\n{\n\tstrings:\n\t\t$oaddr_be = { 3c 60 00 03 60 63 96 f4 4e 80 00 20 }\n\t\t$oaddr_le = { 03 00 60 3c f4 96 63 60 20 00 80 4e }\n\n\tcondition:\n\t\t$oaddr_be or $oaddr_le\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_origcode",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_origcode : hatman\n{\n\tstrings:\n\t\t$ocode_be = { 3c 00 00 03 60 00 a0 b0 7c 09 03 a6 4e 80 04 20 }\n\t\t$ocode_le = { 03 00 00 3c b0 a0 00 60 a6 03 09 7c 20 04 80 4e }\n\n\tcondition:\n\t\t$ocode_be or $ocode_le\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_mftmsr",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_mftmsr : hatman\n{\n\tstrings:\n\t\t$mfmsr_be = { 7c 63 00 a6 }\n\t\t$mfmsr_le = { a6 00 63 7c }\n\t\t$mtmsr_be = { 7c 63 01 24 }\n\t\t$mtmsr_le = { 24 01 63 7c }\n\n\tcondition:\n\t\t($mfmsr_be and $mtmsr_be ) or ( $mfmsr_le and $mtmsr_le )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_loadoff",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_loadoff : hatman\n{\n\tstrings:\n\t\t$loadoff_be = { 80 60 00 04 48 00 ?? ?? 70 60 ff ff 28 00 00 00\n40 82 ?? ?? 28 03 00 00 41 82 ?? ?? }\n\t\t$loadoff_le = { 04 00 60 80 ?? ?? 00 48 ff ff 60 70 00 00 00 28\n?? ?? 82 40 00 00 03 28 ?? ?? 82 41 }\n\n\tcondition:\n\t\t$loadoff_be or $loadoff_le\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_injector_int",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_injector_int : hatman\n{\n\tcondition:\n\t\thatman_memcpy and hatman_origaddr and hatman_loadoff\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_payload_int",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "private rule hatman_payload_int : hatman\n{\n\tcondition:\n\t\thatman_memcpy and hatman_origcode and hatman_mftmsr\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_compiled_python",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "rule hatman_compiled_python : hatman\n{\n\tcondition:\n\t\thatman_nullsub and hatman_setstatus and hatman_dividers\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_injector",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "rule hatman_injector : hatman\n{\n\tcondition:\n\t\thatman_injector_int and not hatman_payload_int\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_payload",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "rule hatman_payload : hatman\n{\n\tcondition:\n\t\thatman_payload_int and not hatman_injector_int\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman_combined",
+                "tags": [
+                    "hatman"
+                ]
+            },
+            "rule_text": "rule hatman_combined : hatman\n{\n\tcondition:\n\t\thatman_injector_int and hatman_payload_int and hatman_dividers\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hatman",
+                "tags": [
+                    "hatman"
+                ],
+                "author": "DHS/NCCIC/ICS-CERT",
+                "description": "Matches the known samples of the HatMan malware."
+            },
+            "rule_text": "rule hatman : hatman\n{\n\tmeta:\n\t\tauthor = \"DHS/NCCIC/ICS-CERT\"\n\t\tdescription = \"Matches the known samples of the HatMan malware.\"\n\n\tcondition:\n\t\thatman_compiled_python or hatman_injector or hatman_payload or hatman_combined\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

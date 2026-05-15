@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_getprocess_lsass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-04-23",
+                "title": "PowerShell Get-Process LSASS",
+                "id": "b2815d0d-7481-4bf0-9b6c-a4c48a94b349"
+            },
+            "rule_text": "title: PowerShell Get-Process LSASS\nid: b2815d0d-7481-4bf0-9b6c-a4c48a94b349\nstatus: test\ndescription: Detects a \"Get-Process\" cmdlet and it's aliases on lsass process, which\n  is in almost all cases a sign of malicious activity\nreferences:\n- https://web.archive.org/web/20220205033028/https://twitter.com/PythonResponder/status/1385064506049630211\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-04-23\nmodified: 2023-01-05\ntags:\n- attack.credential-access\n- attack.t1552.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - Get-Process lsas\n    - ps lsas\n    - gps lsas\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_recon_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-20",
+                "title": "Linux Recon Indicators",
+                "id": "0cf7a157-8879-41a2-8f55-388dd23746b7"
+            },
+            "rule_text": "title: Linux Recon Indicators\nid: 0cf7a157-8879-41a2-8f55-388dd23746b7\nstatus: test\ndescription: Detects events with patterns found in commands used for reconnaissance\n  on linux systems\nreferences:\n- https://github.com/sleventyeleven/linuxprivchecker/blob/0d701080bbf92efd464e97d71a70f97c6f2cd658/linuxprivchecker.py\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-20\ntags:\n- attack.reconnaissance\n- attack.t1592.004\n- attack.credential-access\n- attack.t1552.001\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    CommandLine|contains:\n    - ' -name .htpasswd'\n    - ' -perm -4000 '\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

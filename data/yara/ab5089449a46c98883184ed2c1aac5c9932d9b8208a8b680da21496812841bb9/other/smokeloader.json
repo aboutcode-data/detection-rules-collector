@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/smokeloader.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_SmokeLoader",
+                "tags": [],
+                "description": "detect SmokeLoader in memory",
+                "author": "JPCERT/CC Incident Response Group",
+                "rule_usage": "memory scan",
+                "reference": "https://www.cert.pl/en/news/single/dissecting-smoke-loader/"
+            },
+            "rule_text": "rule malware_SmokeLoader\n{\n\tmeta:\n\t\tdescription = \"detect SmokeLoader in memory\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\trule_usage = \"memory scan\"\n\t\treference = \"https://www.cert.pl/en/news/single/dissecting-smoke-loader/\"\n\n\tstrings:\n\t\t$a1 = { B8 25 30 38 58 }\n\t\t$b1 = { 81 3D ?? ?? ?? ?? 25 00 41 00 }\n\t\t$c1 = { C7 ?? ?? ?? 25 73 25 73 }\n\n\tcondition:\n\t\t$a1 and $b1 and $c1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

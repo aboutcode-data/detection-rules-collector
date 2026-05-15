@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mssql_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "FPT.EagleEye Team, wagga",
+                "date": "2020-12-11",
+                "title": "Suspicious Child Process Of SQL Server",
+                "id": "869b9ca7-9ea2-4a5a-8325-e80e62f75445"
+            },
+            "rule_text": "title: Suspicious Child Process Of SQL Server\nid: 869b9ca7-9ea2-4a5a-8325-e80e62f75445\nrelated:\n- id: 344482e4-a477-436c-aa70-7536d18a48c7\n  type: obsolete\nstatus: test\ndescription: Detects suspicious child processes of the SQLServer process. This could\n  indicate potential RCE or SQL Injection.\nreferences:\n- Internal Research\nauthor: FPT.EagleEye Team, wagga\ndate: 2020-12-11\nmodified: 2023-05-04\ntags:\n- attack.t1505.003\n- attack.t1190\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\sqlservr.exe\n    Image|endswith:\n    - \\bash.exe\n    - \\bitsadmin.exe\n    - \\cmd.exe\n    - \\netstat.exe\n    - \\nltest.exe\n    - \\ping.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\sh.exe\n    - \\systeminfo.exe\n    - \\tasklist.exe\n    - \\wsl.exe\n  filter_optional_datev:\n    ParentImage|startswith: C:\\Program Files\\Microsoft SQL Server\\\n    ParentImage|endswith: DATEV_DBENGINE\\MSSQL\\Binn\\sqlservr.exe\n    Image: C:\\Windows\\System32\\cmd.exe\n    CommandLine|startswith: '\"C:\\Windows\\system32\\cmd.exe\" '\n  condition: selection and not 1 of filter_optional_*\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

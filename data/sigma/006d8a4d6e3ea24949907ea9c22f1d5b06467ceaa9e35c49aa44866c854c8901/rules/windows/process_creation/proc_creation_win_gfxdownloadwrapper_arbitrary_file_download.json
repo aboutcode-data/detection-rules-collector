@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_gfxdownloadwrapper_arbitrary_file_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Victor Sergeev, oscd.community",
+                "date": "2020-10-09",
+                "title": "Arbitrary File Download Via GfxDownloadWrapper.EXE",
+                "id": "eee00933-a761-4cd0-be70-c42fe91731e7"
+            },
+            "rule_text": "title: Arbitrary File Download Via GfxDownloadWrapper.EXE\nid: eee00933-a761-4cd0-be70-c42fe91731e7\nstatus: test\ndescription: Detects execution of GfxDownloadWrapper.exe with a URL as an argument\n  to download file.\nreferences:\n- https://lolbas-project.github.io/lolbas/HonorableMentions/GfxDownloadWrapper/\nauthor: Victor Sergeev, oscd.community\ndate: 2020-10-09\nmodified: 2023-10-18\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\GfxDownloadWrapper.exe\n    CommandLine|contains:\n    - http://\n    - https://\n  filter_main_known_urls:\n    CommandLine|contains: https://gameplayapi.intel.com/\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

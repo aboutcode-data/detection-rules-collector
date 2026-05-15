@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mshta_susp_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael Haag",
+                "date": "2019-01-16",
+                "title": "Suspicious MSHTA Child Process",
+                "id": "03cc0c25-389f-4bf8-b48d-11878079f1ca"
+            },
+            "rule_text": "title: Suspicious MSHTA Child Process\nid: 03cc0c25-389f-4bf8-b48d-11878079f1ca\nstatus: test\ndescription: Detects a suspicious process spawning from an \"mshta.exe\" process, which\n  could be indicative of a malicious HTA script execution\nreferences:\n- https://www.trustedsec.com/july-2015/malicious-htas/\nauthor: Michael Haag\ndate: 2019-01-16\nmodified: 2023-02-06\ntags:\n- attack.stealth\n- attack.t1218.005\n- car.2013-02-003\n- car.2013-03-001\n- car.2014-04-003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\mshta.exe\n  selection_child:\n  - Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\sh.exe\n    - \\bash.exe\n    - \\reg.exe\n    - \\regsvr32.exe\n    - \\bitsadmin.exe\n  - OriginalFileName:\n    - Cmd.Exe\n    - PowerShell.EXE\n    - pwsh.dll\n    - wscript.exe\n    - cscript.exe\n    - Bash.exe\n    - reg.exe\n    - REGSVR32.EXE\n    - bitsadmin.exe\n  condition: all of selection*\nfalsepositives:\n- Printer software / driver installations\n- HP software\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

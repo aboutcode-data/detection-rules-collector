@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/SmartApeSG/SmartApeSG_JS_NetSupportRAT_stage2.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SmartApeSG_JS_NetSupportRAT_stage2",
+                "tags": [],
+                "author": "RussianPanda",
+                "description": "Detects SmartApeSG JavaScript Stage 2 retrieving NetSupportRAT",
+                "date": "1/11/2024",
+                "modified": "1/12/2024",
+                "hash": "67d8f84b37732cf85e05b327ad6b6a9f"
+            },
+            "rule_text": "rule SmartApeSG_JS_NetSupportRAT_stage2\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdescription = \"Detects SmartApeSG JavaScript Stage 2 retrieving NetSupportRAT\"\n\t\tdate = \"1/11/2024\"\n\t\tmodified = \"1/12/2024\"\n\t\thash = \"67d8f84b37732cf85e05b327ad6b6a9f\"\n\n\tstrings:\n\t\t$x1 = \"powershell.exe -Ex Bypass -NoP -C $\"\n\t\t$x2 = \"Get-Random -Minimum -1000 -Maximum 1000\"\n\t\t$s1 = \"HKCU:\\\\\\\\SOFTWARE\\\\\\\\Microsoft\\\\\\\\Windows\\\\\\\\CurrentVersion\\\\\\\\Run\"\n\t\t$s2 = \"=new ActiveXObject('W\"\n\t\t$s3 = \"System.Net.WebClient).DownloadString($\"\n\t\t$s4 = \"FromBase64String\"\n\t\t$s5 = \"Start-Process -FilePath $\"\n\n\tcondition:\n\t\tfilesize < 1MB and ( ( 1 of ( $x* ) and 3 of them ) or 5 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

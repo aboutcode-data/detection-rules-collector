@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_module/posh_pm_susp_netfirewallrule_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2023-07-13",
+                "title": "Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet",
+                "id": "ea207a23-b441-4a17-9f76-ad5be47d51d3"
+            },
+            "rule_text": "title: Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet\nid: ea207a23-b441-4a17-9f76-ad5be47d51d3\nstatus: test\ndescription: Detects execution of \"Get-NetFirewallRule\" or \"Show-NetFirewallRule\"\n  to enumerate the local firewall rules on a host.\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/netsecurity/get-netfirewallrule?view=windowsserver2022-ps\n- https://learn.microsoft.com/en-us/powershell/module/netsecurity/show-netfirewallrule?view=windowsserver2022-ps\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2023-07-13\ntags:\n- detection.threat-hunting\n- attack.discovery\n- attack.t1518.001\n- attack.t1016\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_payload:\n    Payload|contains:\n    - Get-NetFirewallRule\n    - Show-NetFirewallRule\n  selection_contextinfo:\n    ContextInfo|contains:\n    - Get-NetFirewallRule\n    - Show-NetFirewallRule\n  condition: 1 of selection_*\nfalsepositives:\n- Administration scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

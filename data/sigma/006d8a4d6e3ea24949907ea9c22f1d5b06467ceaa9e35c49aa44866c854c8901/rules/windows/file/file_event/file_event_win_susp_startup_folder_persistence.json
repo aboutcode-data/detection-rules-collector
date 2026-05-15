@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_startup_folder_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2022-08-10",
+                "title": "Suspicious Startup Folder Persistence",
+                "id": "28208707-fe31-437f-9a7f-4b1108b94d2e"
+            },
+            "rule_text": "title: Suspicious Startup Folder Persistence\nid: 28208707-fe31-437f-9a7f-4b1108b94d2e\nrelated:\n- id: 2aa0a6b4-a865-495b-ab51-c28249537b75\n  type: similar\nstatus: test\ndescription: 'Detects the creation of potentially malicious script and executable\n  files in Windows startup folders, which is a common persistence technique used by\n  threat actors.\n\n  These files (.ps1, .vbs, .js, .bat, etc.) are automatically executed when a user\n  logs in, making the Startup folder an attractive target for attackers.\n\n  This technique is frequently observed in malvertising campaigns and malware distribution\n  where attackers attempt to maintain long-term access to compromised systems.\n\n  '\nreferences:\n- https://github.com/last-byte/PersistenceSniper\n- https://www.microsoft.com/en-us/security/blog/2025/03/06/malvertising-campaign-leads-to-info-stealers-hosted-on-github/\n- https://github.com/redcanaryco/atomic-red-team/blob/5ede8f21e42ebe37e0a6eff757dba60bcfa85859/atomics/T1547.001/T1547.001.md\nauthor: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron\n  Systems)\ndate: 2022-08-10\nmodified: 2025-10-12\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.t1204.002\n- attack.persistence\n- attack.t1547.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|contains: \\Windows\\Start Menu\\Programs\\Startup\\\n    TargetFilename|endswith:\n    - .bat\n    - .cmd\n    - .dll\n    - .hta\n    - .jar\n    - .js\n    - .jse\n    - .msi\n    - .ps1\n    - .psd1\n    - .psm1\n    - .scr\n    - .url\n    - .vba\n    - .vbe\n    - .vbs\n    - .wsf\n  condition: selection\nfalsepositives:\n- Rare legitimate usage of some of the extensions mentioned in the rule\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

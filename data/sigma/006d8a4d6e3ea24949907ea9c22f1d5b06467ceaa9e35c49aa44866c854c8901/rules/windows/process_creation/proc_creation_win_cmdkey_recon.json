@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmdkey_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "jmallette, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-01-16",
+                "title": "Potential Reconnaissance For Cached Credentials Via Cmdkey.EXE",
+                "id": "07f8bdc2-c9b3-472a-9817-5a670b872f53"
+            },
+            "rule_text": "title: Potential Reconnaissance For Cached Credentials Via Cmdkey.EXE\nid: 07f8bdc2-c9b3-472a-9817-5a670b872f53\nstatus: test\ndescription: Detects usage of cmdkey to look for cached credentials on the system\nreferences:\n- https://www.peew.pw/blog/2017/11/26/exploring-cmdkey-an-edge-case-for-privilege-escalation\n- https://technet.microsoft.com/en-us/library/cc754243(v=ws.11).aspx\n- https://github.com/redcanaryco/atomic-red-team/blob/b27a3cb25025161d49ac861cb216db68c46a3537/atomics/T1003.005/T1003.005.md#atomic-test-1---cached-credential-dump-via-cmdkey\nauthor: jmallette, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron\n  Systems)\ndate: 2019-01-16\nmodified: 2024-03-05\ntags:\n- attack.credential-access\n- attack.t1003.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cmdkey.exe\n  - OriginalFileName: cmdkey.exe\n  selection_cli:\n    CommandLine|contains|windash: ' -l'\n  condition: all of selection*\nfalsepositives:\n- Legitimate administrative tasks\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_cmdkey_recon/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Cached Credential Dump via Cmdkey\n  technique: T1003.005\n  atomic_guid: 56506854-89d6-46a3-9804-b7fde90791f9\n",
+            "vulnerabilities": []
+        }
+    ]
+}

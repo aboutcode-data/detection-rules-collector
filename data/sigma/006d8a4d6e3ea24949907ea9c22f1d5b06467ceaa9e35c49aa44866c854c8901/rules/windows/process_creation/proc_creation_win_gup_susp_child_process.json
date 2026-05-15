@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_gup_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-02-03",
+                "title": "Suspicious Child Process of Notepad++ Updater - GUP.Exe",
+                "id": "bb0e87ce-c89f-4857-84fa-095e4483e9cb"
+            },
+            "rule_text": "title: Suspicious Child Process of Notepad++ Updater - GUP.Exe\nid: bb0e87ce-c89f-4857-84fa-095e4483e9cb\nstatus: experimental\ndescription: 'Detects suspicious child process creation by the Notepad++ updater process\n  (gup.exe).\n\n  This could indicate potential exploitation of the updater component to deliver unwanted\n  malware.\n\n  '\nreferences:\n- https://notepad-plus-plus.org/news/v889-released/\n- https://www.heise.de/en/news/Notepad-updater-installed-malware-11109726.html\n- https://www.rapid7.com/blog/post/tr-chrysalis-backdoor-dive-into-lotus-blossoms-toolkit/\n- https://www.validin.com/blog/exploring_notepad_plus_plus_network_indicators/\n- https://securelist.com/notepad-supply-chain-attack/118708/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-02-03\ntags:\n- attack.collection\n- attack.credential-access\n- attack.t1195.002\n- attack.initial-access\n- attack.t1557\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\gup.exe\n  selection_child_img:\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\cscript.exe\n    - \\wscript.exe\n    - \\mshta.exe\n  selection_child_cli:\n    CommandLine|contains:\n    - bitsadmin\n    - certutil\n    - curl\n    - finger\n    - forfiles\n    - regsvr32\n    - rundll32\n    - wget\n  condition: selection_parent and 1 of selection_child_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

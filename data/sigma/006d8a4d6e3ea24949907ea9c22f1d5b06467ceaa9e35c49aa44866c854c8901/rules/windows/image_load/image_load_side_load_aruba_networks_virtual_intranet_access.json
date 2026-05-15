@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_aruba_networks_virtual_intranet_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-22",
+                "title": "Aruba Network Service Potential DLL Sideloading",
+                "id": "90ae0469-0cee-4509-b67f-e5efcef040f7"
+            },
+            "rule_text": "title: Aruba Network Service Potential DLL Sideloading\nid: 90ae0469-0cee-4509-b67f-e5efcef040f7\nstatus: test\ndescription: Detects potential DLL sideloading activity via the Aruba Networks Virtual\n  Intranet Access \"arubanetsvc.exe\" process using DLL Search Order Hijacking\nreferences:\n- https://twitter.com/wdormann/status/1616581559892545537?t=XLCBO9BziGzD7Bmbt8oMEQ&s=09\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-22\nmodified: 2023-03-15\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\arubanetsvc.exe\n    ImageLoaded|endswith:\n    - \\wtsapi32.dll\n    - \\msvcr100.dll\n    - \\msvcp100.dll\n    - \\dbghelp.dll\n    - \\dbgcore.dll\n    - \\wininet.dll\n    - \\iphlpapi.dll\n    - \\version.dll\n    - \\cryptsp.dll\n    - \\cryptbase.dll\n    - \\wldp.dll\n    - \\profapi.dll\n    - \\sspicli.dll\n    - \\winsta.dll\n    - \\dpapi.dll\n  filter:\n    ImageLoaded|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

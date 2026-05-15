@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_sensitive_file_access_shadowcopy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems), Tobias Michalski (Nextron Systems)",
+                "date": "2021-08-09",
+                "title": "Sensitive File Access Via Volume Shadow Copy Backup",
+                "id": "f57f8d16-1f39-4dcb-a604-6c73d9b54b3d"
+            },
+            "rule_text": "title: Sensitive File Access Via Volume Shadow Copy Backup\nid: f57f8d16-1f39-4dcb-a604-6c73d9b54b3d\nstatus: test\ndescription: 'Detects a command that accesses the VolumeShadowCopy in order to extract\n  sensitive files such as the Security or SAM registry hives or the AD database (ntds.dit)\n\n  '\nreferences:\n- https://twitter.com/vxunderground/status/1423336151860002816?s=20\n- https://www.virustotal.com/gui/file/03e9b8c2e86d6db450e5eceec057d7e369ee2389b9daecaf06331a95410aa5f8/detection\n- https://pentestlab.blog/2018/07/04/dumping-domain-password-hashes/\nauthor: Max Altgelt (Nextron Systems), Tobias Michalski (Nextron Systems)\ndate: 2021-08-09\nmodified: 2024-01-18\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains: \\\\\\\\\\?\\\\GLOBALROOT\\\\Device\\\\HarddiskVolumeShadowCopy\n  selection_2:\n    CommandLine|contains:\n    - \\\\NTDS.dit\n    - \\\\SYSTEM\n    - \\\\SECURITY\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

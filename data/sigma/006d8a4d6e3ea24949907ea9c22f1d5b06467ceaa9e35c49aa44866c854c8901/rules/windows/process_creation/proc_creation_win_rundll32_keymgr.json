@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_keymgr.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-04-21",
+                "title": "Suspicious Key Manager Access",
+                "id": "a4694263-59a8-4608-a3a0-6f8d3a51664c"
+            },
+            "rule_text": "title: Suspicious Key Manager Access\nid: a4694263-59a8-4608-a3a0-6f8d3a51664c\nstatus: test\ndescription: Detects the invocation of the Stored User Names and Passwords dialogue\n  (Key Manager)\nreferences:\n- https://twitter.com/NinjaParanoid/status/1516442028963659777\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-04-21\nmodified: 2023-02-09\ntags:\n- attack.credential-access\n- attack.t1555.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains|all:\n    - keymgr\n    - KRShowKeyMgr\n  condition: all of selection_*\nfalsepositives:\n- Administrative activity\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

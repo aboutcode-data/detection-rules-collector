@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_createdump_lolbin_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-01-04",
+                "title": "CreateDump Process Dump",
+                "id": "515c8be5-e5df-4c5e-8f6d-a4a2f05e4b48"
+            },
+            "rule_text": "title: CreateDump Process Dump\nid: 515c8be5-e5df-4c5e-8f6d-a4a2f05e4b48\nrelated:\n- id: 1a1ed54a-2ba4-4221-94d5-01dee560d71e\n  type: similar\nstatus: test\ndescription: Detects uses of the createdump.exe LOLOBIN utility to dump process memory\nreferences:\n- https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/\n- https://twitter.com/bopin2020/status/1366400799199272960\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-01-04\nmodified: 2022-08-19\ntags:\n- attack.stealth\n- attack.t1036\n- attack.t1003.001\n- attack.credential-access\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\createdump.exe\n  - OriginalFileName: FX_VER_INTERNALNAME_STR\n  selection_cli:\n    CommandLine|contains:\n    - ' -u '\n    - ' --full '\n    - ' -f '\n    - ' --name '\n    - '.dmp '\n  condition: all of selection_*\nfalsepositives:\n- Command lines that use the same flags\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

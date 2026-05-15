@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_metasploit_or_impacket_smb_psexec_service_install.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bartlomiej Czyz, Relativity",
+                "date": "2021-01-21",
+                "title": "Metasploit Or Impacket Service Installation Via SMB PsExec",
+                "id": "6fb63b40-e02a-403e-9ffd-3bcc1d749442"
+            },
+            "rule_text": "title: Metasploit Or Impacket Service Installation Via SMB PsExec\nid: 6fb63b40-e02a-403e-9ffd-3bcc1d749442\nrelated:\n- id: 1a17ce75-ff0d-4f02-9709-2b7bb5618cf0\n  type: derived\nstatus: test\ndescription: Detects usage of Metasploit SMB PsExec (exploit/windows/smb/psexec) and\n  Impacket psexec.py by triggering on specific service installation\nreferences:\n- https://bczyz1.github.io/2021/01/30/psexec.html\nauthor: Bartlomiej Czyz, Relativity\ndate: 2021-01-21\nmodified: 2022-10-05\ntags:\n- attack.lateral-movement\n- attack.t1021.002\n- attack.t1570\n- attack.execution\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|re: ^%systemroot%\\\\[a-zA-Z]{8}\\.exe$\n    ServiceName|re: (^[a-zA-Z]{4}$)|(^[a-zA-Z]{8}$)|(^[a-zA-Z]{16}$)\n    ServiceStartType: 3\n    ServiceType: '0x10'\n  filter:\n    ServiceName: PSEXESVC\n  condition: selection and not filter\nfalsepositives:\n- Possible, different agents with a 8 character binary and a 4, 8 or 16 character\n  service name\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

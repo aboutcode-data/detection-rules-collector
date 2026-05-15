@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_schtasks_creation_from_susp_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-23",
+                "title": "Scheduled Task Creation From Potential Suspicious Parent Location",
+                "id": "9494479d-d994-40bf-a8b1-eea890237021"
+            },
+            "rule_text": "title: Scheduled Task Creation From Potential Suspicious Parent Location\nid: 9494479d-d994-40bf-a8b1-eea890237021\nstatus: test\ndescription: 'Detects the execution of \"schtasks.exe\" from a parent that is located\n  in a potentially suspicious location.\n\n  Multiple malware strains were seen exhibiting a similar behavior in order to achieve\n  persistence.\n\n  '\nreferences:\n- https://app.any.run/tasks/649e7b46-9bec-4d05-98a5-dfa9a13eaae5/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-23\nmodified: 2024-05-13\ntags:\n- attack.execution\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1053.005\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|contains:\n    - :\\Temp\\\n    - \\AppData\\Local\\\n    - \\AppData\\Roaming\\\n    - \\Temporary Internet\n    - \\Users\\Public\\\n    - \\Windows\\Temp\\\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains: '/Create '\n  filter_optional_common:\n    CommandLine|contains:\n    - update_task.xml\n    - unattended.ini\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Software installers that run from temporary folders and also install scheduled tasks\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

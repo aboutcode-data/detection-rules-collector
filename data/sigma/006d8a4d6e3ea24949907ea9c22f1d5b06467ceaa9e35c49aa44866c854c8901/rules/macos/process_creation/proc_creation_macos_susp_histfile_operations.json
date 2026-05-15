@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_histfile_operations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mikhail Larin, oscd.community",
+                "date": "2020-10-17",
+                "title": "Suspicious History File Operations",
+                "id": "508a9374-ad52-4789-b568-fc358def2c65"
+            },
+            "rule_text": "title: Suspicious History File Operations\nid: 508a9374-ad52-4789-b568-fc358def2c65\nstatus: test\ndescription: Detects commandline operations on shell history files\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.003/T1552.003.md\nauthor: Mikhail Larin, oscd.community\ndate: 2020-10-17\nmodified: 2021-11-27\ntags:\n- attack.credential-access\n- attack.t1552.003\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains:\n    - .bash_history\n    - .zsh_history\n    - .zhistory\n    - .history\n    - .sh_history\n    - fish_history\n  condition: selection\nfalsepositives:\n- Legitimate administrative activity\n- Legitimate software, cleaning hist file\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

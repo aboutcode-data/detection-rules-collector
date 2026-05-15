@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_lnk_exec_hidden_cmd.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-03-19",
+                "title": "Suspicious LNK Command-Line Padding with Whitespace Characters",
+                "id": "dd8756e7-a3a0-4768-b47e-8f545d1a751c"
+            },
+            "rule_text": "title: Suspicious LNK Command-Line Padding with Whitespace Characters\nid: dd8756e7-a3a0-4768-b47e-8f545d1a751c\nstatus: experimental\ndescription: \"Detects exploitation of LNK file command-line length discrepancy, where\\\n  \\ attackers hide malicious commands beyond the 260-character UI limit while the\\\n  \\ actual command-line argument field supports 4096 characters using whitespace padding\\\n  \\ (e.g., 0x20, 0x09-0x0D).\\nAdversaries insert non-printable whitespace characters\\\n  \\ (e.g., Line Feed \\\\x0A, Carriage Return \\\\x0D) to pad the visible section of the\\\n  \\ LNK file, pushing malicious commands past the UI-visible boundary.\\nThe hidden\\\n  \\ payload, executed at runtime but invisible in Windows Explorer properties, enables\\\n  \\ stealthy execution and evasion\\u2014commonly used for social engineering attacks.\\n\\\n  This rule flags suspicious use of such padding observed in real-world attacks.\\n\"\nreferences:\n- https://syedhasan010.medium.com/forensics-analysis-of-an-lnk-file-da68a98b8415\n- https://thehackernews.com/2025/03/unpatched-windows-zero-day-flaw.html\n- https://www.trendmicro.com/en_us/research/25/c/windows-shortcut-zero-day-exploit.html\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-03-19\ntags:\n- attack.initial-access\n- attack.execution\n- attack.t1204.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - ParentImage|endswith: \\explorer.exe\n  - ParentCommandLine|contains: .lnk\n  selection_cmd:\n  - CommandLine|contains:\n    - '                 '\n    - \\u0009\n    - \\u000A\n    - \\u0011\n    - \\u0012\n    - \\u0013\n    - \\u000B\n    - \\u000C\n    - \\u000D\n  - CommandLine|re: \\n\\n\\n\\n\\n\\n\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

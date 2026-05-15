@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/APT/dtrack_lazarus_group.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "dtrack_2020",
+                "tags": [],
+                "author": "jeFF0Falltrades"
+            },
+            "rule_text": "rule dtrack_2020\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\n\tstrings:\n\t\t$pdb = \"Users\\\\user\\\\Documents\\\\Visual Studio 2008\\\\Projects\\\\MyStub\\\\Release\\\\MyStub.pdb\" wide ascii\n\t\t$str_log = \"------------------------------ Log File Create....\" wide ascii\n\t\t$str_ua = \"CCS_Mozilla/5.0 (Windows NT 6.1\" wide ascii\n\t\t$str_chrome = \"Local Settings\\\\Application Data\\\\Google\\\\Chrome\\\\User Data\\\\Default\\\\History\" wide ascii\n\t\t$str_tmp = \"%s\\\\~%d.tmp\" wide ascii\n\t\t$str_exc = \"Execute_%s.log\" wide ascii\n\t\t$str_reg_use = /net use \\\\\\\\[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\\\C\\$ \\/delete/\n\t\t$str_reg_move = /move \\/y %s \\\\\\\\[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\\\C\\$\\\\Windows\\\\Temp\\\\MpLogs\\\\/\n\t\t$hex_1 = { d1 ?? 33 ?? fc 81 ?? ff 00 00 00 c1 ?? 17 }\n\t\t$hex_2 = { c1 ?? 08 8b ?? fc c1 ?? 10 }\n\t\t$hex_3 = { 81 0D [4] 1C 31 39 29 }\n\n\tcondition:\n\t\t2 of them or $hex_3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

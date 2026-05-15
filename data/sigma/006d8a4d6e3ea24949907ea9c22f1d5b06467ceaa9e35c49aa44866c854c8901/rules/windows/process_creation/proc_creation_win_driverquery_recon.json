@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_driverquery_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-19",
+                "title": "Potential Recon Activity Using DriverQuery.EXE",
+                "id": "9fc3072c-dc8f-4bf7-b231-18950000fadd"
+            },
+            "rule_text": "title: Potential Recon Activity Using DriverQuery.EXE\nid: 9fc3072c-dc8f-4bf7-b231-18950000fadd\nrelated:\n- id: a20def93-0709-4eae-9bd2-31206e21e6b2\n  type: similar\nstatus: test\ndescription: Detect usage of the \"driverquery\" utility to perform reconnaissance on\n  installed drivers\nreferences:\n- https://thedfirreport.com/2023/01/09/unwrapping-ursnifs-gifts/\n- https://www.vmray.com/cyber-security-blog/analyzing-ursnif-behavior-malware-sandbox/\n- https://www.fireeye.com/blog/threat-research/2020/01/saigon-mysterious-ursnif-fork.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-19\nmodified: 2023-09-29\ntags:\n- attack.discovery\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: driverquery.exe\n  - OriginalFileName: drvqry.exe\n  selection_parent:\n  - ParentImage|endswith:\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\wscript.exe\n  - ParentImage|contains:\n    - \\AppData\\Local\\\n    - \\Users\\Public\\\n    - \\Windows\\Temp\\\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage by some scripts might trigger this as well\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_driverquery_recon/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

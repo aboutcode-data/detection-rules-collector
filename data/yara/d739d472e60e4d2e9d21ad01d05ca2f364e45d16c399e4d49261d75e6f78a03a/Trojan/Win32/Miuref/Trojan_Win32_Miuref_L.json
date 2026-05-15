@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Miuref/Trojan_Win32_Miuref_L.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Miuref_L",
+                "tags": [],
+                "description": "Trojan:Win32/Miuref.L,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Miuref_L\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Miuref.L,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {10 73 37 8b 85 ?? ?? ?? ?? 33 d2 b9 1a 00 00 00 f7 f1 83 c2 41 8b 85 ?? ?? ?? ?? 66 89 94 45 ?? ?? ?? ?? 8b 8d ?? ?? ?? ?? 69 c9 83 00 00 00 83 c1 07 90 09 06 00 83 bd }\n\t\t$a_01_1 = {3d ee 86 47 cf }\n\t\t$a_01_2 = {77 6f 72 6b 73 00 00 00 74 69 6f 6e 00 00 00 00 73 6f 66 74 00 00 00 00 69 63 73 00 6d 65 64 69 61 00 00 00 50 61 63 6b }\n\t\t$a_01_3 = {2e 00 69 00 64 00 78 00 00 00 00 00 2e 00 6c 00 63 00 6b 00 00 00 00 00 2e 00 64 00 61 00 74 00 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

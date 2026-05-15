@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_WebDAV_SearchMS/proxy_webdav_search_ms.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2023/07/31",
+                "title": "Search-ms and WebDAV Indicators in URL",
+                "id": "5039f3d2-406a-4c1a-9350-7a5a85dc84c2"
+            },
+            "rule_text": "title: Search-ms and WebDAV Indicators in URL\nid: 5039f3d2-406a-4c1a-9350-7a5a85dc84c2\nstatus: experimental\ndescription: Detects URL pattern used by search(-ms)/WebDAV initial access campaign.\nreferences:\n- https://www.trellix.com/en-us/about/newsroom/stories/research/beyond-file-search-a-novel-method.html\nauthor: Micah Babinski\ndate: 2023/07/31\nmodified: 2023/08/04\ntags:\n- attack.initial_access\n- attack.t1584\n- attack.t1566\nlogsource:\n  category: proxy\ndetection:\n  selection_search_ms:\n    c-uri|contains|all:\n    - search\n    - :query=\n    - webdav\n  selection_search_term:\n    c-uri|contains:\n    - invoice\n    - payment\n    - notice\n    - agreement\n  filter:\n    dst_ip:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n  condition: all of selection_* and not filter\nfalsepositives:\n- Legitimate use of search-ms/search URI protocol\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

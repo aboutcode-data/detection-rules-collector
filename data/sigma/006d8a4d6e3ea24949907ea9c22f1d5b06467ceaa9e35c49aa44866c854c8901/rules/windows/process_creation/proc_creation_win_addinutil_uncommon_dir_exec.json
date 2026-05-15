@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_addinutil_uncommon_dir_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)",
+                "date": "2023-09-18",
+                "title": "AddinUtil.EXE Execution From Uncommon Directory",
+                "id": "6120ac2a-a34b-42c0-a9bd-1fb9f459f348"
+            },
+            "rule_text": "title: AddinUtil.EXE Execution From Uncommon Directory\nid: 6120ac2a-a34b-42c0-a9bd-1fb9f459f348\nstatus: test\ndescription: Detects execution of the Add-In deployment cache updating utility (AddInutil.exe)\n  from a non-standard directory.\nreferences:\n- https://www.blue-prints.blog/content/blog/posts/lolbin/addinutil-lolbas.html\nauthor: Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)\ndate: 2023-09-18\nmodified: 2025-02-24\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\addinutil.exe\n  - OriginalFileName: AddInUtil.exe\n  filter_main_legit_location:\n    Image|contains:\n    - :\\Windows\\Microsoft.NET\\Framework\\\n    - :\\Windows\\Microsoft.NET\\Framework64\\\n    - :\\Windows\\Microsoft.NET\\FrameworkArm\\\n    - :\\Windows\\Microsoft.NET\\FrameworkArm64\\\n    - :\\Windows\\WinSxS\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

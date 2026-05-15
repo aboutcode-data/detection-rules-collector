@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_shim_database_uncommon_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-01",
+                "title": "Potential Persistence Via Shim Database In Uncommon Location",
+                "id": "6b6976a3-b0e6-4723-ac24-ae38a737af41"
+            },
+            "rule_text": "title: Potential Persistence Via Shim Database In Uncommon Location\nid: 6b6976a3-b0e6-4723-ac24-ae38a737af41\nstatus: test\ndescription: Detects the installation of a new shim database where the file is located\n  in a non-default location\nreferences:\n- https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html\n- https://andreafortuna.org/2018/11/12/process-injection-and-persistence-using-application-shimming/\n- https://www.blackhat.com/docs/asia-14/materials/Erickson/Asia-14-Erickson-Persist-It-Using-And-Abusing-Microsofts-Fix-It-Patches.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-01\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.011\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\InstalledSDB\\\n    - \\DatabasePath\n  filter_main_known_locations:\n    Details|contains: :\\Windows\\AppPatch\\Custom\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

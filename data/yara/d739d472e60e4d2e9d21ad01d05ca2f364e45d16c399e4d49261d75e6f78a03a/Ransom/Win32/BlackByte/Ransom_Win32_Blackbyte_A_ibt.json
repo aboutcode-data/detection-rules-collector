@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/BlackByte/Ransom_Win32_Blackbyte_A_ibt.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Blackbyte_A_ibt",
+                "tags": [],
+                "description": "Ransom:Win32/Blackbyte.A!ibt,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Blackbyte_A_ibt\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Blackbyte.A!ibt,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {40 56 65 48 8b 04 25 60 00 00 00 8b f1 80 78 02 00 0f 85 ?? ?? ?? 00 48 89 5c 24 10 33 db 48 89 7c 24 20 48 8b 78 18 48 83 c7 20 4c 8b 1f 4c 3b df 0f 84 ?? 00 00 00 }\n\t\t$a_03_1 = {65 48 8b 04 25 60 00 00 00 45 33 db 8b e9 44 38 58 02 0f 85 ?? ?? 00 00 48 89 5c 24 ?? 48 89 7c 24 ?? 48 8b 78 18 48 83 c7 20 48 8b 1f 48 3b df 0f 84 ?? 00 00 00 }\n\t\t$a_03_2 = {65 48 8b 04 25 60 00 00 00 48 8d 55 ?? 33 f6 89 75 ?? 48 8b 48 20 48 8b 49 78 e8 ?? ?? ?? ?? 83 7d ?? 03 48 8b d8 7d ?? 33 c9 ff 15 ?? ?? ?? 00 }\n\t\t$a_03_3 = {ff c1 48 8d 40 01 80 38 00 75 f5 44 3b c1 7d 13 49 0f be 01 48 8d 14 52 48 03 d0 41 ff c0 49 ff c1 eb cd 48 3b d6 74 0c 4d 8b 1b 4c 3b df 0f 85 ?? ff ff ff }\n\t\t$a_03_4 = {4d 8d 49 02 41 f7 e8 c1 fa 04 8b c2 c1 e8 1f 03 d0 0f b7 c2 6b c8 ?? 41 0f b7 c0 41 ff c0 66 2b c1 66 83 c0 ?? 66 41 31 41 fe 41 83 f8 ?? 7c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 2 + ( #a_03_3 & 1 ) * 2 + ( #a_03_4 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

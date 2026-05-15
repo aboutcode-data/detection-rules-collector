@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_obfuscation_zipfile_spawning_javascript.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "ZIP File Spawning JavaScript",
+                "id": "b99b32f3-aa61-495d-a6a1-2595e1551ba8"
+            },
+            "rule_text": "title: ZIP File Spawning JavaScript\nid: b99b32f3-aa61-495d-a6a1-2595e1551ba8\nstatus: experimental\ndescription: \"RedCanary detected high volumes of obfuscation this year looking for\\\n  \\ apparent phishing \\nschemes where adversaries conceal JavaScript payloads in ZIP\\\n  \\ files and write them \\nto the users and temp directories. Part of the RedCanary\\\n  \\ 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/obfuscated-files-information/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.defense_evasion\n- attack.t1027\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wscript.exe\n    CommandLine|contains|all:\n    - users\n    - temp\n    - .zip\n    - .js\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_mal_creddumper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Teymur Kheirkhabarov, Daniil Yugoslavskiy, oscd.community",
+                "date": "2017-03-05",
+                "title": "Credential Dumping Tools Service Execution - Security",
+                "id": "f0d1feba-4344-4ca9-8121-a6c97bd6df52"
+            },
+            "rule_text": "title: Credential Dumping Tools Service Execution - Security\nid: f0d1feba-4344-4ca9-8121-a6c97bd6df52\nrelated:\n- id: 4976aa50-8f41-45c6-8b15-ab3fc10e79ed\n  type: derived\nstatus: test\ndescription: Detects well-known credential dumping tools execution via service execution\n  events\nreferences:\n- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment\nauthor: Florian Roth (Nextron Systems), Teymur Kheirkhabarov, Daniil Yugoslavskiy,\n  oscd.community\ndate: 2017-03-05\nmodified: 2022-11-29\ntags:\n- attack.credential-access\n- attack.execution\n- attack.t1003.001\n- attack.t1003.002\n- attack.t1003.004\n- attack.t1003.005\n- attack.t1003.006\n- attack.t1569.002\n- attack.s0005\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|contains:\n    - cachedump\n    - dumpsvc\n    - fgexec\n    - gsecdump\n    - mimidrv\n    - pwdump\n    - servpw\n  condition: selection\nfalsepositives:\n- Legitimate Administrator using credential dumping tool for password recovery\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

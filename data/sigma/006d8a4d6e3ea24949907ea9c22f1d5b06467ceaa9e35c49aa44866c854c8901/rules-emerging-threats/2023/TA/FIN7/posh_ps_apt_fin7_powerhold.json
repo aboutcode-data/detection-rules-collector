@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/FIN7/posh_ps_apt_fin7_powerhold.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-04",
+                "title": "Potential APT FIN7 POWERHOLD Execution",
+                "id": "71c432c4-e4da-4eab-ba49-e60ea9a81bca"
+            },
+            "rule_text": "title: Potential APT FIN7 POWERHOLD Execution\nid: 71c432c4-e4da-4eab-ba49-e60ea9a81bca\nstatus: test\ndescription: Detects execution of the POWERHOLD script seen used by FIN7 as reported\n  by WithSecureLabs\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-04\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.g0046\n- detection.emerging-threats\nlogsource:\n  product: windows\n  category: ps_script\n  definition: bade5735-5ab0-4aa7-a642-a11be0e40872\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - $env:APPDATA\n    - function MainPayload\n    - ::WriteAllBytes\n    - wscript.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

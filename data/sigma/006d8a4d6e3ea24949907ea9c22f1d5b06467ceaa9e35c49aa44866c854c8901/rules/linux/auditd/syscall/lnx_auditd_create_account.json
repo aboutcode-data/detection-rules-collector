@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/syscall/lnx_auditd_create_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Marie Euler, Pawel Mazur",
+                "date": "2020-05-18",
+                "title": "Creation Of An User Account",
+                "id": "759d0d51-bc99-4b5e-9add-8f5b2c8e7512"
+            },
+            "rule_text": "title: Creation Of An User Account\nid: 759d0d51-bc99-4b5e-9add-8f5b2c8e7512\nstatus: test\ndescription: Detects the creation of a new user account. Such accounts may be used\n  for persistence that do not require persistent remote access tools to be deployed\n  on the system.\nreferences:\n- https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-understanding_audit_log_files\n- https://access.redhat.com/articles/4409591#audit-record-types-2\n- https://www.youtube.com/watch?v=VmvY5SQm5-Y&ab_channel=M45C07\nauthor: Marie Euler, Pawel Mazur\ndate: 2020-05-18\nmodified: 2022-12-20\ntags:\n- attack.t1136.001\n- attack.persistence\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection_syscall_record_type:\n    type: SYSCALL\n    exe|endswith: /useradd\n  selection_add_user_record_type:\n    type: ADD_USER\n  condition: 1 of selection_*\nfalsepositives:\n- Admin activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

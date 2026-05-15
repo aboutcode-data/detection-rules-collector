@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_net_quic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-07-21",
+                "title": "SMB over QUIC Via Net.EXE",
+                "id": "2238d337-42fb-4971-9a68-63570f2aede4"
+            },
+            "rule_text": "title: SMB over QUIC Via Net.EXE\nid: 2238d337-42fb-4971-9a68-63570f2aede4\nrelated:\n- id: 6df07c3b-8456-4f8b-87bb-fe31ec964cae\n  type: similar\nstatus: test\ndescription: Detects the mounting of Windows SMB shares over QUIC, which can be an\n  unexpected event in some enterprise environments.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/74438b0237d141ee9c99747976447dc884cb1a39/atomics/T1570/T1570.md\n- https://www.trustedsec.com/blog/making-smb-accessible-with-ntlmquic/\nauthor: frack113\ndate: 2023-07-21\ntags:\n- attack.lateral-movement\n- attack.t1570\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  selection_cli:\n    CommandLine|contains: /TRANSPORT:QUIC\n  condition: all of selection_*\nfalsepositives:\n- Administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

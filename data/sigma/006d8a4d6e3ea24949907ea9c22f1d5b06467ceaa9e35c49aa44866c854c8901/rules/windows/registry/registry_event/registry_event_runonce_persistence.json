@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_runonce_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Avneet Singh @v3t0_, oscd.community",
+                "date": "2020-11-15",
+                "title": "Run Once Task Configuration in Registry",
+                "id": "c74d7efc-8826-45d9-b8bb-f04fac9e4eff"
+            },
+            "rule_text": "title: Run Once Task Configuration in Registry\nid: c74d7efc-8826-45d9-b8bb-f04fac9e4eff\nstatus: test\ndescription: Rule to detect the configuration of Run Once registry key. Configured\n  payload can be run by runonce.exe /AlternateShellStartup\nreferences:\n- https://twitter.com/pabraeken/status/990717080805789697\n- https://lolbas-project.github.io/lolbas/Binaries/Runonce/\nauthor: Avneet Singh @v3t0_, oscd.community\ndate: 2020-11-15\nmodified: 2024-03-25\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  product: windows\n  category: registry_event\ndetection:\n  selection:\n    TargetObject|contains: \\Microsoft\\Active Setup\\Installed Components\n    TargetObject|endswith: \\StubPath\n  filter_optional_chrome:\n    Details|contains|all:\n    - C:\\Program Files\\Google\\Chrome\\Application\\\n    - \\Installer\\chrmstp.exe\" --configure-user-settings --verbose-logging --system-level\n  filter_optional_edge:\n    Details|contains:\n    - C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\\n    - C:\\Program Files\\Microsoft\\Edge\\Application\\\n    Details|endswith: \\Installer\\setup.exe\" --configure-user-settings --verbose-logging\n      --system-level --msedge --channel=stable\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate modification of the registry key by legitimate program\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

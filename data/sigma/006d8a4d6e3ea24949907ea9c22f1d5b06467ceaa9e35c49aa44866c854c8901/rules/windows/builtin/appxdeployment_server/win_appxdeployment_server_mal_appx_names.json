@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxdeployment_server_mal_appx_names.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "Potential Malicious AppX Package Installation Attempts",
+                "id": "09d3b48b-be17-47f5-bf4e-94e7e75d09ce"
+            },
+            "rule_text": "title: Potential Malicious AppX Package Installation Attempts\nid: 09d3b48b-be17-47f5-bf4e-94e7e75d09ce\nstatus: test\ndescription: Detects potential installation or installation attempts of known malicious\n  appx packages\nreferences:\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\n- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/\n- https://forensicitguy.github.io/analyzing-magnitude-magniber-appx/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\nmodified: 2023-01-12\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID:\n    - 400\n    - 401\n    PackageFullName|contains: 3669e262-ec02-4e9d-bcb4-3d008b4afac9\n  condition: selection\nfalsepositives:\n- Rare occasions where a malicious package uses the exact same name and version as\n  a legitimate application.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

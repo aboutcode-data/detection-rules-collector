@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Staser/Trojan_Win32_Staser_BB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Staser_BB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Staser.BB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Staser_BB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Staser.BB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 08 8b 10 31 15 [0-04] c7 45 d8 01 00 00 00 eb 10 }\n\t\t$a_01_1 = {33 4a 01 bb d0 f6 46 00 3b c8 75 24 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

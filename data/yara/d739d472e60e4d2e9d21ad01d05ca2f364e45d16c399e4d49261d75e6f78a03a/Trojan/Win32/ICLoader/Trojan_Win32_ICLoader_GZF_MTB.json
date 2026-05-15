@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ICLoader/Trojan_Win32_ICLoader_GZF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ICLoader_GZF_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/ICLoader.GZF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ICLoader_GZF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ICLoader.GZF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {55 8b ec 83 ec ?? a1 ?? ?? ?? ?? 8b 15 ?? ?? ?? ?? c7 45 ?? ?? ?? ?? ?? 8d 0c c5 ?? ?? ?? ?? a1 ?? ?? ?? ?? 0b c8 33 d0 89 4d f8 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ICLoader_GZF_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/ICLoader.GZF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ICLoader_GZF_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ICLoader.GZF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {31 cf c1 ca 00 00 ee 01 fb c1 ce ?? 01 e9 8b 7c 24 ?? 31 ee }\n\t\t$a_01_1 = {31 f9 c1 ca 05 00 00 89 74 24 1c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

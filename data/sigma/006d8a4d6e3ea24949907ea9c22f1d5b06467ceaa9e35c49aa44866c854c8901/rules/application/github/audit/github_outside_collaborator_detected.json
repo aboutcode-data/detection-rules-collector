@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_outside_collaborator_detected.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal (@faisalusuf)",
+                "date": "2023-01-20",
+                "title": "Github Outside Collaborator Detected",
+                "id": "eaa9ac35-1730-441f-9587-25767bde99d7"
+            },
+            "rule_text": "title: Github Outside Collaborator Detected\nid: eaa9ac35-1730-441f-9587-25767bde99d7\nstatus: test\ndescription: 'Detects when an organization member or an outside collaborator is added\n  to or removed from a project board or has their permission level changed or when\n  an owner removes an outside collaborator from an organization or when two-factor\n  authentication is required in an organization and an outside collaborator does not\n  use 2FA or disables 2FA.\n\n  '\nauthor: Muhammad Faisal (@faisalusuf)\ndate: 2023-01-20\nreferences:\n- https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/reviewing-the-audit-log-for-your-organization#audit-log-actions\n- https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-two-factor-authentication-for-your-organization/requiring-two-factor-authentication-in-your-organization\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.collection\n- attack.t1098.001\n- attack.t1098.003\n- attack.t1213.003\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action:\n    - org.remove_outside_collaborator\n    - project.update_user_permission\n  condition: selection\nfalsepositives:\n- Validate the actor if permitted to access the repo.\n- Validate the Multifactor Authentication changes.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

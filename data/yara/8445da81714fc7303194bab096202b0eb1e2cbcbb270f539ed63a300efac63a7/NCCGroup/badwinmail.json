@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/NCCGroup/badwinmail.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "exploit_Office_Badwinmail",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "Specific rule to detect files containing SWF objects, e.g. Badwinmail",
+                "ref": "https://cansecwest.com/slides/2016/CSW2016_Li-Xu_BadWinmail_and_EmailSecurityOutlook_final.pdf"
+            },
+            "rule_text": "rule exploit_Office_Badwinmail\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"Specific rule to detect files containing SWF objects, e.g. Badwinmail\"\n\t\tref = \"https://cansecwest.com/slides/2016/CSW2016_Li-Xu_BadWinmail_and_EmailSecurityOutlook_final.pdf\"\n\n\tstrings:\n\t\t$header_tnef = { 78 9F 3E 22 }\n\t\t$header_docf = { D0 CF 11 E0 }\n\t\t$msg_recip = \"__recip_version1.0\" wide\n\t\t$msg_attach = \"__attach_version1.0\" wide\n\t\t$msg_props = \"__properties_version\" wide\n\t\t$embedded_clsid_hex = \"D27CDB6E-AE6D-11cf-96B8-444553540000\" nocase wide ascii\n\t\t$embedded_class = \"objclass ShockwaveFlash.\"\n\t\t$embedded_clsid = { 6e db 7c d2 6d ae cf 11 96 b8 44 45 53 54 00 00 }\n\n\tcondition:\n\t\t($header_tnef at 0 or ( $header_docf at 0 and 2 of ( $msg_* ) ) ) and 1 of ( $embedded* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

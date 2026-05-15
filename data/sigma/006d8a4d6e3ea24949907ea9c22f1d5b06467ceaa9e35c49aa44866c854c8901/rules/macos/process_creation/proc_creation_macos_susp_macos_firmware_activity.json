@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_macos_firmware_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-09-30",
+                "title": "Suspicious MacOS Firmware Activity",
+                "id": "7ed2c9f7-c59d-4c82-a7e2-f859aa676099"
+            },
+            "rule_text": "title: Suspicious MacOS Firmware Activity\nid: 7ed2c9f7-c59d-4c82-a7e2-f859aa676099\nstatus: test\ndescription: Detects when a user manipulates with Firmward Password on MacOS. NOTE\n  - this command has been disabled on silicon-based apple computers.\nreferences:\n- https://github.com/usnistgov/macos_security/blob/932a51f3e819dd3e02ebfcf3ef433cfffafbe28b/rules/os/os_firmware_password_require.yaml\n- https://www.manpagez.com/man/8/firmwarepasswd/\n- https://support.apple.com/guide/security/firmware-password-protection-sec28382c9ca/web\nauthor: Austin Songer @austinsonger\ndate: 2021-09-30\nmodified: 2022-10-09\ntags:\n- attack.impact\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection1:\n    Image: /usr/sbin/firmwarepasswd\n    CommandLine|contains:\n    - setpasswd\n    - full\n    - delete\n    - check\n  condition: selection1\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

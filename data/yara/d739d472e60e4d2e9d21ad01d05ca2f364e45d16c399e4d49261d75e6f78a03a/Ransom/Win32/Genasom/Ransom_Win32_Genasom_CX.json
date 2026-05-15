@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Genasom/Ransom_Win32_Genasom_CX.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Genasom_CX",
+                "tags": [],
+                "description": "Ransom:Win32/Genasom.CX,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Genasom_CX\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Genasom.CX,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {5c 6f 75 6e 64 [0-03] 2e 65 78 65 }\n\t\t$a_03_1 = {73 74 61 72 74 20 6f 75 6e 64 [0-03] 2e 65 78 65 }\n\t\t$a_03_2 = {68 00 04 00 00 8d 44 24 04 50 e8 ?? ?? ?? ?? 8b c3 8b d4 b9 01 04 00 00 e8 ?? ?? ?? ?? 81 c4 04 04 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 3 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

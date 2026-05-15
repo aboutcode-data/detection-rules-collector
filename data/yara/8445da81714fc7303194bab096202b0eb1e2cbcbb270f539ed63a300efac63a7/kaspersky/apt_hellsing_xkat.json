@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_hellsing_xkat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_hellsing_xkat",
+                "tags": [],
+                "version": "1.0",
+                "filetype": "PE",
+                "author": "Costin Raiu, Kaspersky Lab",
+                "copyright": "Kaspersky Lab",
+                "date": "2015-04-07",
+                "description": "detection for Hellsing xKat tool"
+            },
+            "rule_text": "rule apt_hellsing_xkat\n{\n\tmeta:\n\t\tversion = \"1.0\"\n\t\tfiletype = \"PE\"\n\t\tauthor = \"Costin Raiu, Kaspersky Lab\"\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdate = \"2015-04-07\"\n\t\tdescription = \"detection for Hellsing xKat tool\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = \"\\\\Dbgv.sys\"\n\t\t$a2 = \"XKAT_BIN\"\n\t\t$a3 = \"release sys file error.\"\n\t\t$a4 = \"driver_load error. \"\n\t\t$a5 = \"driver_create error.\"\n\t\t$a6 = \"delete file:%s error.\"\n\t\t$a7 = \"delete file:%s ok.\"\n\t\t$a8 = \"kill pid:%d error.\"\n\t\t$a9 = \"kill pid:%d ok.\"\n\t\t$a10 = \"-pid-delete\"\n\t\t$a11 = \"kill and delete pid:%d error.\"\n\t\t$a12 = \"kill and delete pid:%d ok.\"\n\n\tcondition:\n\t\t($mz at 0 ) and ( 6 of ( $a* ) ) and filesize < 300000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

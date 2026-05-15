@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/VB/Trojan_Win32_VB_PQ.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_VB_PQ",
+                "tags": [],
+                "description": "Trojan:Win32/VB.PQ,SIGNATURE_TYPE_PEHSTR_EXT,1b 00 1b 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_VB_PQ\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/VB.PQ,SIGNATURE_TYPE_PEHSTR_EXT,1b 00 1b 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {5c 00 28 67 6c 9a 9f 53 0b 7a 8f 5e [0-04] 5c 00 45 00 6d 00 61 00 69 00 6c 00 2e 00 76 00 62 00 70 00 }\n\t\t$a_02_1 = {48 00 45 00 4c 00 4f 00 [0-20] 41 00 55 00 54 00 48 00 20 00 4c 00 4f 00 47 00 49 00 4e 00 }\n\t\t$a_00_2 = {64 00 61 00 70 00 68 00 61 00 2e 00 6e 00 65 00 74 00 }\n\t\t$a_00_3 = {4d 61 6b 65 6d 61 69 6c }\n\t\t$a_00_4 = {74 78 74 73 65 72 76 65 72 }\n\t\t$a_00_5 = {74 78 74 6b 65 79 6c 6f 67 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 + ( #a_00_2 & 1 ) * 5 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 + ( #a_00_5 & 1 ) * 1 ) >= 27\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

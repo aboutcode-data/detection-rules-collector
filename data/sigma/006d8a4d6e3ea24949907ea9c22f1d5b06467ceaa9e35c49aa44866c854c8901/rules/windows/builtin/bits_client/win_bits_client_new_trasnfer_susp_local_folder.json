@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/bits_client/win_bits_client_new_trasnfer_susp_local_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-28",
+                "title": "BITS Transfer Job Download To Potential Suspicious Folder",
+                "id": "f8a56cb7-a363-44ed-a82f-5926bb44cd05"
+            },
+            "rule_text": "title: BITS Transfer Job Download To Potential Suspicious Folder\nid: f8a56cb7-a363-44ed-a82f-5926bb44cd05\nstatus: test\ndescription: Detects new BITS transfer job where the LocalName/Saved file is stored\n  in a potentially suspicious location\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-28\nmodified: 2023-03-27\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\nlogsource:\n  product: windows\n  service: bits-client\ndetection:\n  selection:\n    EventID: 16403\n    LocalName|contains:\n    - \\Desktop\\\n    - C:\\Users\\Public\\\n    - C:\\PerfLogs\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

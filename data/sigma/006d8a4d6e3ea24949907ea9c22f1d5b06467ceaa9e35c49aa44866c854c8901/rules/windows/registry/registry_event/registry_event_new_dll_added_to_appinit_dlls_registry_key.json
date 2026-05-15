@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_new_dll_added_to_appinit_dlls_registry_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ilyas Ochkov, oscd.community, Tim Shelton",
+                "date": "2019-10-25",
+                "title": "New DLL Added to AppInit_DLLs Registry Key",
+                "id": "4f84b697-c9ed-4420-8ab5-e09af5b2345d"
+            },
+            "rule_text": "title: New DLL Added to AppInit_DLLs Registry Key\nid: 4f84b697-c9ed-4420-8ab5-e09af5b2345d\nstatus: test\ndescription: DLLs that are specified in the AppInit_DLLs value in the Registry key\n  HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows are loaded by user32.dll\n  into every process that loads user32.dll\nreferences:\n- https://eqllib.readthedocs.io/en/latest/analytics/822dc4c5-b355-4df8-bd37-29c458997b8f.html\nauthor: Ilyas Ochkov, oscd.community, Tim Shelton\ndate: 2019-10-25\nmodified: 2022-12-25\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.010\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection:\n  - TargetObject|endswith:\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls\n    - \\SOFTWARE\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls\n  - NewName|endswith:\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls\n    - \\SOFTWARE\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls\n  filter:\n    Details: (Empty)\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

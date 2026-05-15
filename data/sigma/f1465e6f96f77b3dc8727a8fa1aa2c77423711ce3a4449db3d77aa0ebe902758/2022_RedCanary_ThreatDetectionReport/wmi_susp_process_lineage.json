@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/wmi_susp_process_lineage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "WMIC Suspicious Commands",
+                "id": "9c3367de-94fd-4a46-bc9f-d2943bd32025"
+            },
+            "rule_text": "title: WMIC Suspicious Commands\nid: 9c3367de-94fd-4a46-bc9f-d2943bd32025\nstatus: experimental\ndescription: Detects suspicious parent-child relationships with the wmiprvse command.\n  Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\wmiprvse.exe\n    Image|endswith:\n    - \\rundll32.exe\n    - \\msbuild.exe\n    - \\powershell.exe\n    - \\cmd.exe\n    - \\mshta.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

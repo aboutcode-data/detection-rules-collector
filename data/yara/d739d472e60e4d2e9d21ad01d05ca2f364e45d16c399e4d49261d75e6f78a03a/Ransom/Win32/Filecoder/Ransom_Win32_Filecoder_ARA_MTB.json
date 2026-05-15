@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Filecoder/Ransom_Win32_Filecoder_ARA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Filecoder_ARA_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Filecoder.ARA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Filecoder_ARA_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Filecoder.ARA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b ce 8b 55 ?? 83 e1 07 c1 e1 03 e8 ?? ?? ?? ?? 8b 4d 08 30 04 0e 83 c6 01 83 d3 00 3b 5d }\n\t\t$a_03_1 = {8a 44 0d ec 88 81 ?? ?? ?? ?? 83 c1 01 83 d2 00 75 07 83 f9 0e 72 e9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

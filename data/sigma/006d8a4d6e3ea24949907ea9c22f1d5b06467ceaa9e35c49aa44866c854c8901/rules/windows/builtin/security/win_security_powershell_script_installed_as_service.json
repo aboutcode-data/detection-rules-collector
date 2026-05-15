@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_powershell_script_installed_as_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Natalia Shornikova",
+                "date": "2020-10-06",
+                "title": "PowerShell Scripts Installed as Services - Security",
+                "id": "2a926e6a-4b81-4011-8a96-e36cc8c04302"
+            },
+            "rule_text": "title: PowerShell Scripts Installed as Services - Security\nid: 2a926e6a-4b81-4011-8a96-e36cc8c04302\nrelated:\n- id: a2e5019d-a658-4c6a-92bf-7197b54e2cae\n  type: derived\nstatus: test\ndescription: Detects powershell script installed as a Service\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: oscd.community, Natalia Shornikova\ndate: 2020-10-06\nmodified: 2022-11-29\ntags:\n- attack.execution\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|contains:\n    - powershell\n    - pwsh\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/g00dv1n/Adware.WebTools.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RootkitSampleDriverAgony",
+                "tags": [],
+                "Description": "Trojan.Agony.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule RootkitSampleDriverAgony\n{\n\tmeta:\n\t\tDescription = \"Trojan.Agony.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$ = \"DosDevices\\\\agony\" ascii wide\n\t\t$ = \"Device\\\\agony\" ascii wide\n\t\t$ = \"VOLUME.INI\" ascii wide\n\t\t$ = \"ERVICES.EXE\" ascii wide\n\t\t$ = \"ervices.exe\" ascii wide\n\t\t$ = \"agony rootkit\" ascii wide\n\t\t$ = \"agony\" ascii wide\n\t\t$ = \"for exemple: agony -p process1.exe process2.exe\" ascii wide\n\t\t$a = \"i386\\\\agony.pdb\" ascii wide\n\n\tcondition:\n\t\t(3 of them ) or $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "AdwareSampleWebTools",
+                "tags": [],
+                "Description": "Adware.WebTools.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule AdwareSampleWebTools\n{\n\tmeta:\n\t\tDescription = \"Adware.WebTools.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$ = \"IEctrl.log\" ascii wide\n\t\t$ = \"agony\" ascii wide\n\t\t$s1 = \"Gates.pdb\" ascii wide\n\t\t$s0 = \"GatesInstall.pdb\" ascii wide\n\t\t$s2 = \"IECtrl.pdb\" ascii wide\n\t\t$s3 = \"svch0st.exe\" ascii wide\n\t\t$s4 = \"SESDKDummy.dll\" ascii wide\n\t\t$s5 = \"SESDKDummy64.dll\" ascii wide\n\n\tcondition:\n\t\t(3 of them ) or ( any of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

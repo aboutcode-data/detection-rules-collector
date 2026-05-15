@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_execution_macos_script_editor.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch (rule), Elastic (idea)",
+                "date": "2022-10-21",
+                "title": "Suspicious Execution via macOS Script Editor",
+                "id": "6e4dcdd1-e48b-42f7-b2d8-3b413fc58cb4"
+            },
+            "rule_text": "title: Suspicious Execution via macOS Script Editor\nid: 6e4dcdd1-e48b-42f7-b2d8-3b413fc58cb4\nstatus: test\ndescription: Detects when the macOS Script Editor utility spawns an unusual child\n  process.\nauthor: Tim Rauch (rule), Elastic (idea)\nreferences:\n- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-7f541fbc4a4a28a92970e8bf53effea5bd934604429112c920affb457f5b2685\n- https://wojciechregula.blog/post/macos-red-teaming-initial-access-via-applescript-url/\ndate: 2022-10-21\nmodified: 2022-12-28\nlogsource:\n  category: process_creation\n  product: macos\ntags:\n- attack.defense-impairment\n- attack.t1566\n- attack.t1566.002\n- attack.initial-access\n- attack.t1059\n- attack.t1059.002\n- attack.t1204\n- attack.t1204.001\n- attack.execution\n- attack.persistence\n- attack.t1553\ndetection:\n  selection_parent:\n    ParentImage|endswith: /Script Editor\n  selection_img:\n  - Image|endswith:\n    - /curl\n    - /bash\n    - /sh\n    - /zsh\n    - /dash\n    - /fish\n    - /osascript\n    - /mktemp\n    - /chmod\n    - /php\n    - /nohup\n    - /openssl\n    - /plutil\n    - /PlistBuddy\n    - /xattr\n    - /sqlite\n    - /funzip\n    - /popen\n  - Image|contains:\n    - python\n    - perl\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

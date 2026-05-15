@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_certutil_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-15",
+                "title": "Suspicious Download Via Certutil.EXE",
+                "id": "19b08b1c-861d-4e75-a1ef-ea0c1baf202b"
+            },
+            "rule_text": "title: Suspicious Download Via Certutil.EXE\nid: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b\nrelated:\n- id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829\n  type: similar\nstatus: test\ndescription: Detects the execution of certutil with certain flags that allow the utility\n  to download files.\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/certutil\n- https://forensicitguy.github.io/agenttesla-vba-certutil-download/\n- https://news.sophos.com/en-us/2021/04/13/compromised-exchange-server-hosting-cryptojacker-targeting-other-exchange-servers/\n- https://twitter.com/egre55/status/1087685529016193025\n- https://lolbas-project.github.io/lolbas/Binaries/Certutil/\n- https://www.hexacorn.com/blog/2020/08/23/certutil-one-more-gui-lolbin\nauthor: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community, Nasreddine\n  Bencherchali (Nextron Systems)\ndate: 2023-02-15\nmodified: 2025-12-01\ntags:\n- attack.stealth\n- attack.t1027\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\certutil.exe\n  - OriginalFileName: CertUtil.exe\n  selection_flags:\n    CommandLine|contains:\n    - 'urlcache '\n    - 'verifyctl '\n    - 'URL '\n  selection_http:\n    CommandLine|contains: http\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_certutil_download/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

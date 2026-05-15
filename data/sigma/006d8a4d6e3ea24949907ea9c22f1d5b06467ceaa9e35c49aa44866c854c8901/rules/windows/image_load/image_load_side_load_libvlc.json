@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_libvlc.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior",
+                "date": "2023-04-17",
+                "title": "Potential Libvlc.DLL Sideloading",
+                "id": "bf9808c4-d24f-44a2-8398-b65227d406b6"
+            },
+            "rule_text": "title: Potential Libvlc.DLL Sideloading\nid: bf9808c4-d24f-44a2-8398-b65227d406b6\nstatus: test\ndescription: Detects potential DLL sideloading of \"libvlc.dll\", a DLL that is legitimately\n  used by \"VLC.exe\"\nreferences:\n- https://www.trendmicro.com/en_us/research/23/c/earth-preta-updated-stealthy-strategies.html\n- https://hijacklibs.net/entries/3rd_party/vlc/libvlc.html\nauthor: X__Junior\ndate: 2023-04-17\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\libvlc.dll\n  filter_main_vlc:\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\VideoLAN\\VLC\\\n    - C:\\Program Files\\VideoLAN\\VLC\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- False positives are expected if VLC is installed in non-default locations\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

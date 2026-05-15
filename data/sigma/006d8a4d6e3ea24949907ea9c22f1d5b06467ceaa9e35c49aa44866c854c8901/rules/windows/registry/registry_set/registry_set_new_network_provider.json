@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_new_network_provider.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-23",
+                "title": "Potential Credential Dumping Attempt Using New NetworkProvider - REG",
+                "id": "0442defa-b4a2-41c9-ae2c-ea7042fc4701"
+            },
+            "rule_text": "title: Potential Credential Dumping Attempt Using New NetworkProvider - REG\nid: 0442defa-b4a2-41c9-ae2c-ea7042fc4701\nrelated:\n- id: baef1ec6-2ca9-47a3-97cc-4cf2bda10b77\n  type: similar\nstatus: test\ndescription: Detects when an attacker tries to add a new network provider in order\n  to dump clear text credentials, similar to how the NPPSpy tool does it\nreferences:\n- https://learn.microsoft.com/en-us/troubleshoot/windows-client/setup-upgrade-and-drivers/network-provider-settings-removed-in-place-upgrade\n- https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-23\nmodified: 2023-08-17\ntags:\n- attack.credential-access\n- attack.t1003\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\System\\CurrentControlSet\\Services\\\n    - \\NetworkProvider\n  filter:\n    TargetObject|contains:\n    - \\System\\CurrentControlSet\\Services\\WebClient\\NetworkProvider\n    - \\System\\CurrentControlSet\\Services\\LanmanWorkstation\\NetworkProvider\n    - \\System\\CurrentControlSet\\Services\\RDPNP\\NetworkProvider\n  filter_valid_procs:\n    Image: C:\\Windows\\System32\\poqexec.exe\n  condition: selection and not 1 of filter*\nfalsepositives:\n- Other legitimate network providers used and not filtred in this rule\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

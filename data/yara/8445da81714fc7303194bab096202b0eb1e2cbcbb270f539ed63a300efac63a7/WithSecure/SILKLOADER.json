@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/WithSecure/SILKLOADER.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SILKLOADER",
+                "tags": [],
+                "author": "WithSecure",
+                "description": "Detects SILKLOADER samples",
+                "date": "2023-03-15",
+                "version": "1.0",
+                "reference": "https://labs.withsecure.com/publications/silkloader",
+                "hash1": "c83ac6dc96febd49c7c558e8cf85dd8bcb3a84fdc78b3ba72ebf681566dc1865",
+                "hash2": "e4dadabd1cee7215ff6e31e01f6b0dd820851685836592a14f982f2c7972fc25",
+                "hash3": "d77a59e6ba3a8f3c000a8a8955af77d2898f220f7bf3c0968bf0d7c8ac25a5ad",
+                "report": "https://www.withsecure.com/content/dam/with-secure/ja/news-library/20230316_WithSecure_Silkloader_Report_ENG.pdf"
+            },
+            "rule_text": "import \"pe\"\n\nrule SILKLOADER\n{\n\tmeta:\n\t\tauthor = \"WithSecure\"\n\t\tdescription = \"Detects SILKLOADER samples\"\n\t\tdate = \"2023-03-15\"\n\t\tversion = \"1.0\"\n\t\treference = \"https://labs.withsecure.com/publications/silkloader\"\n\t\thash1 = \"c83ac6dc96febd49c7c558e8cf85dd8bcb3a84fdc78b3ba72ebf681566dc1865\"\n\t\thash2 = \"e4dadabd1cee7215ff6e31e01f6b0dd820851685836592a14f982f2c7972fc25\"\n\t\thash3 = \"d77a59e6ba3a8f3c000a8a8955af77d2898f220f7bf3c0968bf0d7c8ac25a5ad\"\n\t\treport = \"https://www.withsecure.com/content/dam/with-secure/ja/news-library/20230316_WithSecure_Silkloader_Report_ENG.pdf\"\n\n\tstrings:\n\t\t$str1 = {5400520041004e005300460045005200}\n\t\t$str2 = {760062006300630073006200}\n\n\tcondition:\n\t\tpe.is_pe and pe.characteristics & pe.DLL and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

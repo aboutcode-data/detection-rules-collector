@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Rafoti/Trojan_Win32_Rafoti_C_dll.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Rafoti_C_dll",
+                "tags": [],
+                "description": "Trojan:Win32/Rafoti.C!dll,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Rafoti_C_dll\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Rafoti.C!dll,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {74 22 c6 45 ?? 64 c6 45 ?? 6d c6 45 ?? 73 c6 45 ?? 65 c6 45 ?? 72 c6 45 ?? 76 c6 45 ?? 65 c6 45 ?? 72 eb 14 c6 45 ?? 72 c6 45 ?? 70 c6 45 ?? 63 c6 45 ?? 73 c6 45 ?? 73 33 c0 }\n\t\t$a_00_1 = {00 53 65 72 76 69 63 65 4d 61 69 6e 00 }\n\t\t$a_00_2 = {00 32 30 30 00 68 74 74 70 3a 2f 2f 25 73 3a 39 30 30 31 2f 25 64 25 73 30 30 }\n\t\t$a_00_3 = {00 48 54 54 50 3a 2f 2f 25 73 3a 25 64 2f 25 73 25 64 25 73 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/cylance/SType_Backdoor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SType_Backdoor",
+                "tags": [],
+                "author": "Cylance SPEAR Team"
+            },
+            "rule_text": "rule SType_Backdoor\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\n\tstrings:\n\t\t$stype = \"stype=info&data=\"\n\t\t$mmid = \"?mmid=\"\n\t\t$status = \"&status=run succeed\"\n\t\t$mutex = \"_KB10B2D1_CIlFD2C\"\n\t\t$decode = {8B 1A 8A 1B 80 EB 02 8B 74 24 08 32 1E 8B 31 88 1E 8B 1A 43}\n\n\tcondition:\n\t\t$stype or ( $mmid and $status ) or $mutex or $decode\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

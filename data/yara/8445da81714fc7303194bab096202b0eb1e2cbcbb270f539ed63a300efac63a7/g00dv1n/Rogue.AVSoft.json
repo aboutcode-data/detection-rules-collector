@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/g00dv1n/Rogue.AVSoft.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RogueDownloaderLoaderAVSoftA",
+                "tags": [],
+                "Description": "Trojan.Loader.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule RogueDownloaderLoaderAVSoftA\n{\n\tmeta:\n\t\tDescription = \"Trojan.Loader.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$ = \"/info.php?idd=\" ascii wide\n\t\t$ = \"{95B8F20E-4BC6-4E22-9442-BFB69ED62879}\" ascii wide\n\t\t$ = \"ELEVATECREATEPROCESS\" ascii wide\n\t\t$ = \"srvdev.dll\" ascii wide\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RogueModuleAVSoftA",
+                "tags": [],
+                "Description": "Rogue.AVSoft.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule RogueModuleAVSoftA\n{\n\tmeta:\n\t\tDescription = \"Rogue.AVSoft.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$ = \"sec-red-alert-s.gif\" ascii wide\n\t\t$ = \"sec-red-alert-b.gif\" ascii wide\n\t\t$ = \"scaning.gif\" ascii wide\n\t\t$ = \"scaning-stopped.gif\" ascii wide\n\t\t$ = \"rezult-table-head-bg.gif\" ascii wide\n\t\t$ = \"banner-get-protection.gif\" ascii wide\n\t\t$ = \"netalrt.htm\" ascii wide\n\t\t$ = \"alrt.htm\" ascii wide\n\t\t$hex1 = { e8 ?? ?? ?? ?? 83 ?? ?? ?? ?? 74 ?? 83 ?? ?? ?? ?? ?? ?? 74 ?? e8 ?? ?? ?? ?? 3b ?? ?? ?? ?? ?? 73 ?? e8 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? 84 c0 75 ?? e8 ?? ?? ?? ?? 6a 1e 99 59 f7 f9 83 c2 14 69 d2 60 ea 00 00 52 ff d7 e8 ?? ?? ?? ?? 83 f8 01 75 ?? e8 ?? ?? ?? ??}\n\n\tcondition:\n\t\t(3 of them ) or ( any of ( $hex* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

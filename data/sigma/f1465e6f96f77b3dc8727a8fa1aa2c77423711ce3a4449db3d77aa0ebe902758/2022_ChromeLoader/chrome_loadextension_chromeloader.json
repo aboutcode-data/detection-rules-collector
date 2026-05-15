@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_ChromeLoader/chrome_loadextension_chromeloader.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/07",
+                "title": "Chrome Spawned by Powershell with Load-Extension in Command Line",
+                "id": "4007bc45-1727-405d-a7bc-4b3d441bf08f"
+            },
+            "rule_text": "title: Chrome Spawned by Powershell with Load-Extension in Command Line\nid: 4007bc45-1727-405d-a7bc-4b3d441bf08f\nstatus: experimental\ndescription: Detects instances of the Chrome browser executable spawning from PowerShell\n  with a corresponding command line that includes appdata\\local as a parameter.\nreferences:\n- https://redcanary.com/blog/chromeloader/\n- https://blogs.vmware.com/security/2022/09/the-evolution-of-the-chromeloader-malware.html\nauthor: Micah Babinski\ndate: 2022/11/07\ntags:\n- attack.persistence\n- attack.t1176\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\powershell.exe\n    Image|endswith: \\chrome.exe\n    CommandLine|contains|all:\n    - appdata\\local\n    - load-extension\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

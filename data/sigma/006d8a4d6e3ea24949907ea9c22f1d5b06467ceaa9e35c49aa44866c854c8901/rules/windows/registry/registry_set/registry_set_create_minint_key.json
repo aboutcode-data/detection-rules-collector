@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_create_minint_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-04-09",
+                "title": "Security Event Logging Disabled via MiniNt Registry Key - Registry Set",
+                "id": "8839e550-52d7-4958-9f2f-e13c1e736838"
+            },
+            "rule_text": "title: Security Event Logging Disabled via MiniNt Registry Key - Registry Set\nid: 8839e550-52d7-4958-9f2f-e13c1e736838\nrelated:\n- id: 1a4bd6af-99ac-4466-b5b2-7b72b4a05462\n  type: similar\nstatus: experimental\ndescription: 'Detects the addition of the ''MiniNt'' key to the registry. Upon a reboot,\n  Windows Event Log service will stop writing events.\n\n  Windows Event Log is a service that collects and stores event logs from the operating\n  system and applications. It is an important component of Windows security and auditing.\n\n  Adversary may want to disable this service to disable logging of security events\n  which could be used to detect their activities.\n\n  '\nreferences:\n- https://www.hackingarticles.in/defense-evasion-windows-event-logging-t1562-002/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-04-09\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1685.001\n- attack.t1112\n- car.2022-03-001\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject: HKLM\\System\\CurrentControlSet\\Control\\MiniNt\\(Default)\n  condition: selection\nfalsepositives:\n- Highly Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

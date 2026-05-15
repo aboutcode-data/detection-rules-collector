@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Delf/TrojanDownloader_Win32_Delf_ZDG.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Delf_ZDG",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Delf.ZDG,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Delf_ZDG\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Delf.ZDG,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {7b 38 46 35 33 37 45 32 41 2d 30 31 37 33 2d 34 36 41 41 2d 42 42 31 42 2d 31 45 35 45 41 34 37 44 45 36 34 34 7d }\n\t\t$a_00_1 = {54 69 6d 65 44 6c 6c 5c 7a 6c 75 45 78 70 54 6f 6f 6c 73 2e 70 61 73 }\n\t\t$a_02_2 = {64 ff 30 64 89 20 8d 45 ?? e8 ?? ?? ?? ?? ff 75 ?? 68 ?? ?? ?? ?? 8d 55 ?? b8 04 00 00 00 e8 ?? ?? ?? ?? ff 75 ?? 8d 45 f8 ba 03 00 00 00 e8 ?? ?? ?? ?? a0 ?? ?? ?? ?? 50 8d 45 ?? 50 33 c9 ba ?? ?? ?? ?? b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8d 45 f8 8b 55 f0 e8 ?? ?? ?? ?? ba ?? ?? ?? ?? b9 ?? ?? ?? ?? 8b 45 f8 e8 ?? ?? ?? ?? 33 c0 5a 59 59 64 89 10 eb 14 }\n\t\t$a_02_3 = {8b 45 f4 50 ba ?? ?? ?? ?? b9 ?? ?? ?? ?? 8b 45 ?? 8b 18 ff 53 0c 8b 45 e4 50 ba ?? ?? ?? ?? b9 ?? ?? ?? ?? 8b 45 ?? 8b 18 ff 53 04 83 7d e0 00 74 ?? 6a 00 8b 45 e0 e8 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? eb 0c b8 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 2 + ( #a_02_3 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

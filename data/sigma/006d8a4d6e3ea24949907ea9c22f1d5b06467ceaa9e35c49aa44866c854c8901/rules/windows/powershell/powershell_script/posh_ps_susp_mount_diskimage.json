@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_mount_diskimage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-01",
+                "title": "Suspicious Mount-DiskImage",
+                "id": "29e1c216-6408-489d-8a06-ee9d151ef819"
+            },
+            "rule_text": "title: Suspicious Mount-DiskImage\nid: 29e1c216-6408-489d-8a06-ee9d151ef819\nstatus: test\ndescription: Adversaries may abuse container files such as disk image (.iso, .vhd)\n  file formats to deliver malicious payloads that may not be tagged with MOTW.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.005/T1553.005.md#atomic-test-1---mount-iso-image\n- https://learn.microsoft.com/en-us/powershell/module/storage/mount-diskimage?view=windowsserver2022-ps\nauthor: frack113\ndate: 2022-02-01\ntags:\n- attack.defense-impairment\n- attack.t1553.005\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - 'Mount-DiskImage '\n    - '-ImagePath '\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

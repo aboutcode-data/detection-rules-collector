@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/SnakeLogger/Trojan_BAT_SnakeLogger_ACH_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_SnakeLogger_ACH_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/SnakeLogger.ACH!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_SnakeLogger_ACH_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/SnakeLogger.ACH!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0a 0f 00 28 ?? 00 00 0a 0b 0f 00 28 ?? 00 00 0a 0c 04 }\n\t\t$a_03_1 = {0a 06 0e 07 0e 08 28 ?? 00 00 06 0b 03 04 0e 06 28 ?? 00 00 06 0c 03 07 08 0e 06 0e 08 }\n\t\t$a_01_2 = {06 16 61 d2 0a 07 20 ff 00 00 00 5f d2 0b 08 16 60 d2 0c 04 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 3 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

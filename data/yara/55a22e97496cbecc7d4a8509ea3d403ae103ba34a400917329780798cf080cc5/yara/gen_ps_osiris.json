@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_ps_osiris.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Invoke_OSiRis",
+                "tags": [],
+                "description": "Osiris Device Guard Bypass - file Invoke-OSiRis.ps1",
+                "author": "Florian Roth",
+                "reference": "Internal Research",
+                "date": "2017-03-27",
+                "modified": "2025-03-21",
+                "score": 70,
+                "hash1": "19e4a8b07f85c3d4c396d0c4e839495c9fba9405c06a631d57af588032d2416e"
+            },
+            "rule_text": "rule Invoke_OSiRis\n{\n\tmeta:\n\t\tdescription = \"Osiris Device Guard Bypass - file Invoke-OSiRis.ps1\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2017-03-27\"\n\t\tmodified = \"2025-03-21\"\n\t\tscore = 70\n\t\thash1 = \"19e4a8b07f85c3d4c396d0c4e839495c9fba9405c06a631d57af588032d2416e\"\n\n\tstrings:\n\t\t$x1 = \"$null = Iwmi Win32_Process -EnableA -Impers 3 -AuthenPacketprivacy -Name Create -Arg $ObfusK -Computer $Target\" ascii wide\n\t\t$x3 = \"-Arg@{Name=$VarName;VariableValue=$OSiRis;UserName=$env:Username}\" ascii wide\n\t\t$x4 = \"Device Guard Bypass Command Execution\" ascii wide\n\n\tcondition:\n\t\tfilesize < 8MB and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

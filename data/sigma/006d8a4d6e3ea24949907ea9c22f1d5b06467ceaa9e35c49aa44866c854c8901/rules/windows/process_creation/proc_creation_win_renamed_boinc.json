@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_boinc.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Matt Anderson (Huntress)",
+                "date": "2024-07-23",
+                "title": "Renamed BOINC Client Execution",
+                "id": "30d07da2-83ab-45d8-ae75-ec7c0edcaffc"
+            },
+            "rule_text": "title: Renamed BOINC Client Execution\nid: 30d07da2-83ab-45d8-ae75-ec7c0edcaffc\nstatus: test\ndescription: Detects the execution of a renamed BOINC binary.\nreferences:\n- https://boinc.berkeley.edu/\n- https://www.virustotal.com/gui/file/91e405e8a527023fb8696624e70498ae83660fe6757cef4871ce9bcc659264d3/details\n- https://www.huntress.com/blog/fake-browser-updates-lead-to-boinc-volunteer-computing-software\nauthor: Matt Anderson (Huntress)\ndate: 2024-07-23\ntags:\n- attack.defense-impairment\n- attack.t1553\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: BOINC.exe\n  filter_main_legit_name:\n    Image|endswith: \\BOINC.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/other/godmode_sigma_rule.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-12-22",
+                "title": "Godmode Sigma Rule",
+                "id": "def6caac-a999-4fc9-8800-cfeff700ba98"
+            },
+            "rule_text": "title: Godmode Sigma Rule\nid: def6caac-a999-4fc9-8800-cfeff700ba98\ndescription: 'PoC rule to detect malicious activity - following the principle: if\n  you had only one shot, what would you look for?'\nstatus: experimental\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-12-22\nmodified: 2022-08-04\nlevel: high\naction: global\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "status": null,
+                "author": null,
+                "date": null,
+                "title": null,
+                "id": null
+            },
+            "rule_text": "logsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_plain:\n    CommandLine|contains:\n    - ' -NoP '\n    - ' -W Hidden '\n    - ' -decode '\n    - ' /decode '\n    - ' -e* JAB'\n    - ' -e* SUVYI'\n    - ' -e* SQBFAFgA'\n    - ' -e* aWV4I'\n    - ' -e* IAB'\n    - ' -e* PAA'\n    - ' -e* aQBlAHgA'\n    - vssadmin delete shadows\n    - reg SAVE HKLM\\SAM\n    - ' -ma '\n    - Microsoft\\Windows\\CurrentVersion\\Run\n    - .downloadstring(\n    - .downloadfile(\n    - ' /ticket:'\n    - ' sekurlsa'\n    - ' p::d '\n    - ;iex(\n    - schtasks* /create *AppData\n    - ' comsvcs.dll,MiniDump'\n    - ' comsvcs.dll,#24'\n    - ' comsvcs.dll MiniDump'\n    - ' comsvcs.dll #24'\n    - ' comsvcs `#'\n    - ' comsvcs #'\n    - ' comsvcs MiniDump'\n    - .dmp full\n  selection_parent_child:\n    ParentImage|contains:\n    - \\WINWORD.EXE\n    - \\EXCEL.EXE\n    - \\POWERPNT.exe\n    - \\MSPUB.exe\n    - \\VISIO.exe\n    - \\OUTLOOK.EXE\n    Image|contains:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\schtasks.exe\n    - '*\\scrcons.exe'\n    - \\regsvr32.exe\n    - \\hh.exe\n    - \\wmic.exe\n    - \\mshta.exe\n    - \\msiexec.exe\n    - \\forfiles.exe\n    - \\AppData\\\n  selection_webshells:\n    Image|contains:\n    - \\apache*\n    - \\tomcat*\n    - \\w3wp.exe\n    - \\php-cgi.exe\n    - \\nginx.exe\n    - \\httpd.exe\n    CommandLine|contains:\n    - whoami\n    - 'net user '\n    - 'ping -n '\n    - systeminfo\n    - '&cd&echo'\n    - 'cd /d '\n  selection_whoami:\n    Image|contains: \\whoami.exe\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  condition: 1 of them\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "status": null,
+                "author": null,
+                "date": null,
+                "title": null,
+                "id": null
+            },
+            "rule_text": "logsource:\n  product: windows\n  service: sysmon\ndetection:\n  selection_file_creation:\n    EventID: 11\n    TargetFilename|contains:\n    - .dmp\n    - Desktop\\how\n    - Desktop\\decrypt\n  selection_registry_modifications:\n    EventID:\n    - 12\n    - 13\n    TargetObject|contains:\n    - UserInitMprLogonScript\n    - \\CurrentVersion\\Image File Execution Options\\\n  selection_registry_run:\n    EventID:\n    - 12\n    - 13\n    TargetObject|contains:\n    - \\Microsoft\\Windows\\CurrentVersion\\Run\\\n    - \\Microsoft\\Windows\\CurrentVersion\\RunOnce\\\n    Details|contains:\n    - AppData\n    - \\Users\\Public\\\n    - \\Temp\\\n    - powershell\n    - wscript\n    - cscript\n  condition: 1 of them\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "status": null,
+                "author": null,
+                "date": null,
+                "title": null,
+                "id": null
+            },
+            "rule_text": "logsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    EventID: 7045\n    ServiceName|contains:\n    - WCESERVICE\n    - WCE SERVICE\n    - winexesvc\n    - DumpSvc\n    - pwdump\n    - gsecdump\n    - cachedump\n  condition: 1 of them\n",
+            "vulnerabilities": []
+        }
+    ]
+}

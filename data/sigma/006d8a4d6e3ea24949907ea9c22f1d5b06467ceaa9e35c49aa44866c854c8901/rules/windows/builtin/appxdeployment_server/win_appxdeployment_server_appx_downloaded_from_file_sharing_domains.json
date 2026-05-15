@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxdeployment_server_appx_downloaded_from_file_sharing_domains.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "Remote AppX Package Downloaded from File Sharing or CDN Domain",
+                "id": "8b48ad89-10d8-4382-a546-50588c410f0d"
+            },
+            "rule_text": "title: Remote AppX Package Downloaded from File Sharing or CDN Domain\nid: 8b48ad89-10d8-4382-a546-50588c410f0d\nstatus: test\ndescription: 'Detects an appx package that was added to the pipeline of the \"to be\n  processed\" packages which was downloaded from a file sharing or CDN domain.\n\n  '\nreferences:\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\n- https://learn.microsoft.com/en-us/windows/win32/appxpkg/troubleshooting\n- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\nmodified: 2025-12-10\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID: 854\n    Path|contains:\n    - .githubusercontent.com\n    - anonfiles.com\n    - cdn.discordapp.com\n    - ddns.net\n    - dl.dropboxusercontent.com\n    - ghostbin.co\n    - github.com\n    - glitch.me\n    - gofile.io\n    - hastebin.com\n    - mediafire.com\n    - mega.nz\n    - onrender.com\n    - pages.dev\n    - paste.ee\n    - pastebin.com\n    - pastebin.pl\n    - pastetext.net\n    - privatlab.com\n    - privatlab.net\n    - send.exploit.in\n    - sendspace.com\n    - storage.googleapis.com\n    - storjshare.io\n    - supabase.co\n    - temp.sh\n    - transfer.sh\n    - trycloudflare.com\n    - ufile.io\n    - w3spaces.com\n    - workers.dev\n  condition: selection\nfalsepositives:\n- Unlikely, unless the organization uses file sharing or CDN services to distribute\n  internal applications.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

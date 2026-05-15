@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_file_and_directory_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, oscd.community",
+                "date": "2020-10-19",
+                "title": "File and Directory Discovery - MacOS",
+                "id": "089dbdf6-b960-4bcc-90e3-ffc3480c20f6"
+            },
+            "rule_text": "title: File and Directory Discovery - MacOS\nid: 089dbdf6-b960-4bcc-90e3-ffc3480c20f6\nstatus: test\ndescription: Detects usage of system utilities to discover files and directories\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md\nauthor: Daniil Yugoslavskiy, oscd.community\ndate: 2020-10-19\nmodified: 2022-11-25\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  select_file_with_asterisk:\n    Image: /usr/bin/file\n    CommandLine|re: (.){200,}\n  select_recursive_ls:\n    Image: /bin/ls\n    CommandLine|contains: -R\n  select_find_execution:\n    Image: /usr/bin/find\n  select_mdfind_execution:\n    Image: /usr/bin/mdfind\n  select_tree_execution|endswith:\n    Image: /tree\n  condition: 1 of select*\nfalsepositives:\n- Legitimate activities\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_mimipenguin.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Mimipenguin_SH",
+                "tags": [],
+                "description": "Detects Mimipenguin Password Extractor - Linux",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/huntergregal/mimipenguin",
+                "date": "2017-04-01",
+                "id": "c670f6fe-562d-598f-a73f-45e4ab234f7d"
+            },
+            "rule_text": "rule Mimipenguin_SH\n{\n\tmeta:\n\t\tdescription = \"Detects Mimipenguin Password Extractor - Linux\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/huntergregal/mimipenguin\"\n\t\tdate = \"2017-04-01\"\n\t\tid = \"c670f6fe-562d-598f-a73f-45e4ab234f7d\"\n\n\tstrings:\n\t\t$s1 = \"$(echo $thishash | cut -d'$' -f 3)\" ascii\n\t\t$s2 = \"ps -eo pid,command | sed -rn '/gnome\\\\-keyring\\\\-daemon/p' | awk\" ascii\n\t\t$s3 = \"MimiPenguin Results:\" ascii\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mimipenguin_1",
+                "tags": [],
+                "description": "Detects Mimipenguin hack tool",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/huntergregal/mimipenguin",
+                "date": "2017-07-08",
+                "hash1": "9e8d13fe27c93c7571075abf84a839fd1d31d8f2e3e48b3f4c6c13f7afcf8cbd",
+                "id": "62754337-52ef-5d3f-af2f-52f820ba0476"
+            },
+            "rule_text": "rule mimipenguin_1\n{\n\tmeta:\n\t\tdescription = \"Detects Mimipenguin hack tool\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/huntergregal/mimipenguin\"\n\t\tdate = \"2017-07-08\"\n\t\thash1 = \"9e8d13fe27c93c7571075abf84a839fd1d31d8f2e3e48b3f4c6c13f7afcf8cbd\"\n\t\tid = \"62754337-52ef-5d3f-af2f-52f820ba0476\"\n\n\tstrings:\n\t\t$x1 = \"self._strings_dump += strings(dump_process(target_pid))\" fullword ascii\n\t\t$x2 = \"def _dump_target_processes(self):\" fullword ascii\n\t\t$x3 = \"self._target_processes = ['sshd:']\" fullword ascii\n\t\t$x4 = \"GnomeKeyringPasswordFinder()\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x2123 and filesize < 20KB and 1 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mimipenguin_2",
+                "tags": [],
+                "description": "Detects Mimipenguin hack tool",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/huntergregal/mimipenguin",
+                "date": "2017-07-08",
+                "hash1": "453bffa90d99a820e4235de95ec3f7cc750539e4023f98ffc8858f9b3c15d89a",
+                "id": "b3bb1ba9-cbfc-53fd-81d0-256466ace4de"
+            },
+            "rule_text": "rule mimipenguin_2\n{\n\tmeta:\n\t\tdescription = \"Detects Mimipenguin hack tool\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/huntergregal/mimipenguin\"\n\t\tdate = \"2017-07-08\"\n\t\thash1 = \"453bffa90d99a820e4235de95ec3f7cc750539e4023f98ffc8858f9b3c15d89a\"\n\t\tid = \"b3bb1ba9-cbfc-53fd-81d0-256466ace4de\"\n\n\tstrings:\n\t\t$x1 = \"DUMP=$(strings \\\"/tmp/dump.${pid}\\\" | grep -E\" fullword ascii\n\t\t$x2 = \"strings /tmp/apache* | grep -E '^Authorization: Basic.+=$'\" fullword ascii\n\t\t$x3 = \"grep -E '^_pammodutil_getpwnam_root_1$' -B 5 -A\" fullword ascii\n\t\t$x4 = \"strings \\\"/tmp/dump.${pid}\\\" | grep -E -m 1 '^\\\\$.\\\\$.+\\\\$')\\\"\" fullword ascii\n\t\t$x5 = \"if [[ -n $(ps -eo pid,command | grep -v 'grep' | grep gnome-keyring) ]]; then\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x2123 and filesize < 20KB and 1 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

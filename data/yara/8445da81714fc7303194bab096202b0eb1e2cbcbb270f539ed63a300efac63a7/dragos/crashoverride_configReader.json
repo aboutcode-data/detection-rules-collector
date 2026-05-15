@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/dragos/crashoverride_configReader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "crashoverride_configReader",
+                "tags": [],
+                "description": "CRASHOVERRIDE v1 Config File Parsing",
+                "author": "Dragos Inc",
+                "sha256": "7907dd95c1d36cf3dc842a1bd804f0db511a0f68f4b3d382c23a3c974a383cad",
+                "reference": "https://troopers.de/downloads/troopers18/TR18_DM_Mind-The-Gap.pdf"
+            },
+            "rule_text": "rule crashoverride_configReader\n{\n\tmeta:\n\t\tdescription = \"CRASHOVERRIDE v1 Config File Parsing\"\n\t\tauthor = \"Dragos Inc\"\n\t\tsha256 = \"7907dd95c1d36cf3dc842a1bd804f0db511a0f68f4b3d382c23a3c974a383cad\"\n\t\treference = \"https://troopers.de/downloads/troopers18/TR18_DM_Mind-The-Gap.pdf\"\n\n\tstrings:\n\t\t$s0 = { 68 e8 ?? ?? ?? 6a 00 e8 a3 ?? ?? ?? 8b f8 83 c4 ?8 }\n\t\t$s1 = { 8a 10 3a 11 75 ?? 84 d2 74 12 }\n\t\t$s2 = { 33 c0 eb ?? 1b c0 83 c8 ?? }\n\t\t$s3 = { 85 c0 75 ?? 8d 95 ?? ?? ?? ?? 8b cf ?? ?? }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

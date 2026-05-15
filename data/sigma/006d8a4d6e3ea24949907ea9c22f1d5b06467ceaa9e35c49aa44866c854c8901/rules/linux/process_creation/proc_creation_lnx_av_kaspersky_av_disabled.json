@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_av_kaspersky_av_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Milad Cheraghi",
+                "date": "2025-10-18",
+                "title": "Kaspersky Endpoint Security Stopped Via CommandLine - Linux",
+                "id": "36388120-b3f1-4ce9-b50b-280d9a7f4c04"
+            },
+            "rule_text": "title: Kaspersky Endpoint Security Stopped Via CommandLine - Linux\nid: 36388120-b3f1-4ce9-b50b-280d9a7f4c04\nstatus: experimental\ndescription: 'Detects execution of the Kaspersky init.d stop script on Linux systems\n  either directly or via systemctl.\n\n  This activity may indicate a manual interruption of the antivirus service by an\n  administrator, or it could be a sign of potential tampering or evasion attempts\n  by malicious actors.\n\n  '\nreferences:\n- https://support.kaspersky.com/KES4Linux/12.0.0/en-US/197929.htm\nauthor: Milad Cheraghi\ndate: 2025-10-18\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith:\n    - /systemctl\n    - /bash\n    - /sh\n    CommandLine|contains|all:\n    - stop\n    - kesl\n  condition: selection\nfalsepositives:\n- System administrator manually stopping Kaspersky services\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

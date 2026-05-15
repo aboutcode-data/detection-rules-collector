@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_lambda_function_url.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Ivan Saakov",
+                "date": "2024-12-19",
+                "title": "New AWS Lambda Function URL Configuration Created",
+                "id": "ec541962-c05a-4420-b9ea-84de072d18f4"
+            },
+            "rule_text": "title: New AWS Lambda Function URL Configuration Created\nid: ec541962-c05a-4420-b9ea-84de072d18f4\nstatus: experimental\ndescription: 'Detects when a user creates a Lambda function URL configuration, which\n  could be used to expose the function to the internet and potentially allow unauthorized\n  access to the function''s IAM role for AWS API calls.\n\n  This could give an adversary access to the privileges associated with the Lambda\n  service role that is attached to that function.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunctionUrlConfig.html\n- https://cloud.hacktricks.xyz/pentesting-cloud/aws-security/aws-privilege-escalation/aws-lambda-privesc\n- https://www.wiz.io/blog/how-to-set-secure-defaults-on-aws\nauthor: Ivan Saakov\ndate: 2024-12-19\ntags:\n- attack.initial-access\n- attack.privilege-escalation\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: lambda.amazonaws.com\n    eventName: CreateFunctionUrlConfig\n  condition: selection\nfalsepositives:\n- Creating a Lambda function URL configuration may be performed by a system administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Creating a Lambda function URL configuration from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

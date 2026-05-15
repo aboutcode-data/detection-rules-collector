@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_hacktools.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-21",
+                "title": "HackTool Service Registration or Execution",
+                "id": "d26ce60c-2151-403c-9a42-49420d87b5e4"
+            },
+            "rule_text": "title: HackTool Service Registration or Execution\nid: d26ce60c-2151-403c-9a42-49420d87b5e4\nstatus: test\ndescription: Detects installation or execution of services\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-21\nmodified: 2023-08-07\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.s0029\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID:\n    - 7045\n    - 7036\n  selection_service_name:\n    ServiceName|contains:\n    - cachedump\n    - DumpSvc\n    - gsecdump\n    - pwdump\n    - UACBypassedService\n    - WCE SERVICE\n    - WCESERVICE\n    - winexesvc\n  selection_service_image:\n    ImagePath|contains: bypass\n  condition: selection_eid and 1 of selection_service_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

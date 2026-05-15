@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_mycomputer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-09",
+                "title": "Potential Persistence Via MyComputer Registry Keys",
+                "id": "8fbe98a8-8f9d-44f8-aa71-8c572e29ef06"
+            },
+            "rule_text": "title: Potential Persistence Via MyComputer Registry Keys\nid: 8fbe98a8-8f9d-44f8-aa71-8c572e29ef06\nstatus: test\ndescription: Detects modification to the \"Default\" value of the \"MyComputer\" key and\n  subkeys to point to a custom binary that will be launched whenever the associated\n  action is executed (see reference section for example)\nreferences:\n- https://www.hexacorn.com/blog/2017/01/18/beyond-good-ol-run-key-part-55/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-09\nmodified: 2024-01-11\ntags:\n- attack.persistence\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\n    TargetObject|endswith: (Default)\n  condition: selection\nfalsepositives:\n- Unlikely but if you experience FPs add specific processes and locations you would\n  like to monitor for\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

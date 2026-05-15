@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Hacktool_Certify.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Hacktool_Certify_ffe1cca2",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "ffe1cca2-106c-4197-9d26-eb90331435d9",
+                "fingerprint": "b5f40c2d70d3bde02561a275a4fff6033dce9e82964dc82144c040327877221b",
+                "creation_date": "2024-03-27",
+                "last_modified": "2025-12-18",
+                "threat_name": "Windows.Hacktool.Certify",
+                "reference_sample": "3c7f759a6c38d0c0780fba2d43be6dcf9e4869d54b66f16c0703ec8e58124953",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Hacktool_Certify_ffe1cca2\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"ffe1cca2-106c-4197-9d26-eb90331435d9\"\n\t\tfingerprint = \"b5f40c2d70d3bde02561a275a4fff6033dce9e82964dc82144c040327877221b\"\n\t\tcreation_date = \"2024-03-27\"\n\t\tlast_modified = \"2025-12-18\"\n\t\tthreat_name = \"Windows.Hacktool.Certify\"\n\t\treference_sample = \"3c7f759a6c38d0c0780fba2d43be6dcf9e4869d54b66f16c0703ec8e58124953\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"<DisplayNtAuthCertificates>b_\"\n\t\t$a2 = \"<PrintAllowPermissions>b_\"\n\t\t$a3 = \"<ShowVulnerableTemplates>b_\"\n\t\t$a4 = \"<ParseCertificateApplicationPolicies>b_\"\n\t\t$a5 = \"<PrintCertTemplate>b_\"\n\t\t$b1 = \"64524ca5-e4d0-41b3-acc3-3bdbefd40c97\" ascii wide\n\t\t$b2 = \"64524CA5-E4D0-41B3-ACC3-3BDBEFD40C97\" ascii wide\n\t\t$b3 = \"Certify.exe find /vulnerable\" wide\n\t\t$b4 = \"Certify.exe request /ca\" wide\n\n\tcondition:\n\t\tall of ( $a* ) or 2 of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

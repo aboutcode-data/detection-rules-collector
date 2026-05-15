@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_iviewers.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-03-21",
+                "title": "Potential Iviewers.DLL Sideloading",
+                "id": "4c21b805-4dd7-469f-b47d-7383a8fcb437"
+            },
+            "rule_text": "title: Potential Iviewers.DLL Sideloading\nid: 4c21b805-4dd7-469f-b47d-7383a8fcb437\nstatus: test\ndescription: Detects potential DLL sideloading of \"iviewers.dll\" (OLE/COM Object Interface\n  Viewer)\nreferences:\n- https://www.secureworks.com/research/shadowpad-malware-analysis\nauthor: X__Junior (Nextron Systems)\ndate: 2023-03-21\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\iviewers.dll\n  filter:\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\Windows Kits\\\n    - C:\\Program Files\\Windows Kits\\\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

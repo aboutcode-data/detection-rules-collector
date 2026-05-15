@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mstsc_remote_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-07",
+                "title": "New Remote Desktop Connection Initiated Via Mstsc.EXE",
+                "id": "954f0af7-62dd-418f-b3df-a84bc2c7a774"
+            },
+            "rule_text": "title: New Remote Desktop Connection Initiated Via Mstsc.EXE\nid: 954f0af7-62dd-418f-b3df-a84bc2c7a774\nstatus: test\ndescription: 'Detects the usage of \"mstsc.exe\" with the \"/v\" flag to initiate a connection\n  to a remote server.\n\n  Adversaries may use valid accounts to log into a computer using the Remote Desktop\n  Protocol (RDP). The adversary may then perform actions as the logged-on user.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.001/T1021.001.md#t1021001---remote-desktop-protocol\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/mstsc\nauthor: frack113\ndate: 2022-01-07\nmodified: 2024-06-04\ntags:\n- attack.lateral-movement\n- attack.t1021.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\mstsc.exe\n  - OriginalFileName: mstsc.exe\n  selection_cli:\n    CommandLine|contains|windash: ' /v:'\n  filter_optional_wsl:\n    ParentImage: C:\\Windows\\System32\\lxss\\wslhost.exe\n    CommandLine|contains: C:\\ProgramData\\Microsoft\\WSL\\wslg.rdp\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- WSL (Windows Sub System For Linux)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

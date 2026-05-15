@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_advpack_obfuscated_ordinal_call.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-17",
+                "title": "Suspicious Advpack Call Via Rundll32.EXE",
+                "id": "a1473adb-5338-4a20-b4c3-126763e2d3d3"
+            },
+            "rule_text": "title: Suspicious Advpack Call Via Rundll32.EXE\nid: a1473adb-5338-4a20-b4c3-126763e2d3d3\nstatus: test\ndescription: Detects execution of \"rundll32\" calling \"advpack.dll\" with potential\n  obfuscated ordinal calls in order to leverage the \"RegisterOCX\" function\nreferences:\n- https://twitter.com/Hexacorn/status/1224848930795552769\n- http://www.hexacorn.com/blog/2020/02/05/stay-positive-lolbins-not/\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-17\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  - CommandLine|contains: rundll32\n  selection_cli_dll:\n    CommandLine|contains: advpack\n  selection_cli_ordinal:\n  - CommandLine|contains|all:\n    - '#+'\n    - '12'\n  - CommandLine|contains: '#-'\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

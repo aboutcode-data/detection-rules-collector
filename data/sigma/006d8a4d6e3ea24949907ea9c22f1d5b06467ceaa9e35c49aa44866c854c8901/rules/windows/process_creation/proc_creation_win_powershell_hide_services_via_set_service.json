@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_hide_services_via_set_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-17",
+                "title": "Abuse of Service Permissions to Hide Services Via Set-Service",
+                "id": "514e4c3a-c77d-4cde-a00f-046425e2301e"
+            },
+            "rule_text": "title: Abuse of Service Permissions to Hide Services Via Set-Service\nid: 514e4c3a-c77d-4cde-a00f-046425e2301e\nrelated:\n- id: a537cfc3-4297-4789-92b5-345bfd845ad0\n  type: derived\n- id: 953945c5-22fe-4a92-9f8a-a9edc1e522da\n  type: similar\nstatus: test\ndescription: Detects usage of the \"Set-Service\" powershell cmdlet to configure a new\n  SecurityDescriptor that allows a service to be hidden from other utilities such\n  as \"sc.exe\", \"Get-Service\"...etc. (Works only in powershell 7)\nreferences:\n- https://twitter.com/Alh4zr3d/status/1580925761996828672\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-service?view=powershell-7.2\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-17\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\pwsh.exe\n  - OriginalFileName: pwsh.dll\n  selection_sddl:\n    CommandLine|contains|all:\n    - 'Set-Service '\n    - DCLCWPDTSD\n  selection_cmdlet:\n    CommandLine|contains:\n    - '-SecurityDescriptorSddl '\n    - '-sd '\n  condition: all of selection_*\nfalsepositives:\n- Rare intended use of hidden services\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

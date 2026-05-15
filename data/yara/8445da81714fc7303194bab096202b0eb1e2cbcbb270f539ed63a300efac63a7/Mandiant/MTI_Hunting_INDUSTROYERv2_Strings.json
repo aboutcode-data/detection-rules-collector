@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/MTI_Hunting_INDUSTROYERv2_Strings.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MTI_Hunting_INDUSTROYERv2_Strings",
+                "tags": [],
+                "author": "Mandiant",
+                "date": "04-09-2022",
+                "description": "Searching for executables containing strings associated with the INDUSTROYER.V2 malware family.",
+                "reference": "https://www.mandiant.com/resources/industroyer-v2-old-malware-new-tricks"
+            },
+            "rule_text": "rule MTI_Hunting_INDUSTROYERv2_Strings\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate = \"04-09-2022\"\n\t\tdescription = \"Searching for executables containing strings associated with the INDUSTROYER.V2 malware family.\"\n\t\treference = \"https://www.mandiant.com/resources/industroyer-v2-old-malware-new-tricks\"\n\n\tstrings:\n\t\t$a1 = \"M%X - %02d:%02d:%02d\" nocase ascii wide\n\t\t$a2 = \"%02hu:%02hu:%02hu:%04hu\" nocase ascii wide\n\t\t$a3 = \"%s M%X \" nocase ascii wide\n\t\t$a4 = \"%s: %d: %d\" nocase ascii wide\n\t\t$a5 = \"%s M%X %d (%s)\" nocase ascii wide\n\t\t$a6 = \"%s M%X SGCNT %d\" nocase ascii wide\n\t\t$a7 = \"%s ST%X %d\" nocase ascii wide\n\t\t$a8 = \"Current operation : %s\" nocase ascii wide\n\t\t$a9 = \"Sent=x%X | Received=x%X\" nocase ascii wide\n\t\t$a10 = \"ASDU:%u | OA:%u | IOA:%u | \" nocase ascii wide\n\t\t$a11 = \"Cause: %s (x%X) | Telegram type: %s (x%X\" nocase ascii wide\n\t\t$b1 = \"Length:%u bytes | \" nocase ascii wide\n\t\t$b2 = \"Unknown APDU format !!!\" nocase ascii wide\n\t\t$b3 = \"MSTR ->> SLV\" nocase ascii wide\n\t\t$b4 = \"MSTR <<- SLV\" nocase ascii wide\n\n\tcondition:\n\t\tfilesize < 3MB and uint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and ( 1 of ( $a* ) and 1 of ( $b* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

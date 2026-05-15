@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/ReversingLabs/CVE_2017_11882.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "potential_CVE_2017_11882",
+                "tags": [],
+                "author": "ReversingLabs",
+                "reference": "https://www.reversinglabs.com/newsroom/news/reversinglabs-yara-rule-detects-cobalt-strike-payload-exploiting-cve-2017-11882.html"
+            },
+            "rule_text": "rule potential_CVE_2017_11882\n{\n\tmeta:\n\t\tauthor = \"ReversingLabs\"\n\t\treference = \"https://www.reversinglabs.com/newsroom/news/reversinglabs-yara-rule-detects-cobalt-strike-payload-exploiting-cve-2017-11882.html\"\n\n\tstrings:\n\t\t$docfilemagic = { D0 CF 11 E0 A1 B1 1A E1 }\n\t\t$equation1 = \"Equation Native\" wide ascii\n\t\t$equation2 = \"Microsoft Equation 3.0\" wide ascii\n\t\t$mshta = \"mshta\"\n\t\t$http = \"http://\"\n\t\t$https = \"https://\"\n\t\t$cmd = \"cmd\"\n\t\t$pwsh = \"powershell\"\n\t\t$exe = \".exe\"\n\t\t$address = { 12 0C 43 00 }\n\n\tcondition:\n\t\t$docfilemagic at 0 and any of ( $mshta , $http , $https , $cmd , $pwsh , $exe ) and any of ( $equation1 , $equation2 ) and $address\n}\n",
+            "vulnerabilities": [
+                "CVE-2017-11882"
+            ]
+        }
+    ]
+}

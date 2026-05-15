@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/O97M/Emotet/TrojanDownloader_O97M_Emotet_SAS_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_O97M_Emotet_SAS_MTB",
+                "tags": [],
+                "description": "TrojanDownloader:O97M/Emotet.SAS!MTB,SIGNATURE_TYPE_MACROHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_O97M_Emotet_SAS_MTB\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:O97M/Emotet.SAS!MTB,SIGNATURE_TYPE_MACROHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {20 3d 20 22 73 67 20 79 77 20 61 68 72 6f 73 67 20 79 77 20 61 68 73 67 20 79 77 20 61 68 63 65 73 67 20 79 77 20 61 68 73 73 67 20 79 77 20 61 68 73 73 67 20 79 77 20 61 68 73 67 20 79 77 20 61 68 22 }\n\t\t$a_01_1 = {20 3d 20 22 73 67 20 79 77 20 61 68 3a 77 73 67 20 79 77 20 61 68 73 67 20 79 77 20 61 68 69 6e 73 67 20 79 77 20 61 68 33 73 67 20 79 77 20 61 68 32 73 67 20 79 77 20 61 68 5f 73 67 20 79 77 20 61 68 22 }\n\t\t$a_01_2 = {20 3d 20 22 77 73 67 20 79 77 20 61 68 69 6e 73 67 20 79 77 20 61 68 6d 73 67 20 79 77 20 61 68 67 6d 73 67 20 79 77 20 61 68 74 73 67 20 79 77 20 61 68 73 67 20 79 77 20 61 68 22 }\n\t\t$a_03_3 = {20 3d 20 52 65 70 6c 61 63 65 28 [0-20] 2c 20 22 73 67 20 79 77 20 61 68 22 2c 20 [0-20] 29 }\n\t\t$a_03_4 = {2e 43 72 65 61 74 65 20 [0-20] 2c 20 [0-20] 2c }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

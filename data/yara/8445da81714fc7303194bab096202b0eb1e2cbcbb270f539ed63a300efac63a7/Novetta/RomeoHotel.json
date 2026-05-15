@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/RomeoHotel.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RomeoHotel",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source_64": "440cb3f6dd07e2f9e3d3614fd23d3863ecfc08b463b0b327eedf08504f838c90",
+                "Source_diskSpace": "1b1496f8f35d32a93c7f16ebff6e9b560a158cc6fce061491f91bc9f43ef5be4"
+            },
+            "rule_text": "import \"pe\"\n\nrule RomeoHotel\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource_64 = \"440cb3f6dd07e2f9e3d3614fd23d3863ecfc08b463b0b327eedf08504f838c90\"\n\t\tSource_diskSpace = \"1b1496f8f35d32a93c7f16ebff6e9b560a158cc6fce061491f91bc9f43ef5be4\"\n\n\tstrings:\n\t\t$randBuff64 = {\n\t\t\tE8 [4]\n\t\t\t44 [2]\n\t\t\t44 [2] \n\t\t\tB? 1F 85 EB 51 \n\t\t\t48 [2] \n\t\t\t41 [2]\n\t\t\tC1 ?? 05 \n\t\t\t8B ?? \n\t\t\tC1 ?? 1F \n\t\t\t03 ?? \n\t\t\t6B ?? 64 \n\t\t\t44 [2] \n\t\t\t41 [2] 3C \n\t\t}\n\t\t$diskSpace = {\n\t\t\tFF 15 [4]\n\t\t\t85 C0 \n\t\t\t74 ??\n\t\t\t8B [6]\n\t\t\t6A 00 \n\t\t\t99 \n\t\t\t68 00 00 10 00 \n\t\t\t5? \n\t\t\t5? \n\t\t\tE8\n\t\t}\n\t\t$winst = \"winsta0\\\\default\" wide\n\n\tcondition:\n\t\t$randBuff64 in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or ( $diskSpace in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) and $winst )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

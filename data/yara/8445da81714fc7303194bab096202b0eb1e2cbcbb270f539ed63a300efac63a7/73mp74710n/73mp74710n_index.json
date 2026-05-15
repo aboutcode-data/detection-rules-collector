@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/73mp74710n/73mp74710n_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "android_meterpreter",
+                "tags": [],
+                "author": "73mp74710n",
+                "comment": "Metasploit Android Meterpreter Payload"
+            },
+            "rule_text": "rule android_meterpreter\n{\n\tmeta:\n\t\tauthor = \"73mp74710n\"\n\t\tcomment = \"Metasploit Android Meterpreter Payload\"\n\n\tstrings:\n\t\t$checkPK = \"META-INF/PK\"\n\t\t$checkHp = \"[Hp^\"\n\t\t$checkSdeEncode = /;.Sk/\n\t\t$stopEval = \"eval\"\n\t\t$stopBase64 = \"base64_decode\"\n\n\tcondition:\n\t\tany of ( $check* ) or any of ( $stop* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "isExecutable",
+                "tags": [],
+                "author": "73mp74710n",
+                "description": "Yara rule to check for unobfuscated rat created with njrat"
+            },
+            "rule_text": "global rule isExecutable\n{\n\tmeta:\n\t\tauthor = \"73mp74710n\"\n\t\tdescription = \"Yara rule to check for unobfuscated rat created with njrat\"\n\n\tstrings:\n\t\t$MZ = { 4D 5A 90 00 }\n\t\t$PE = { 50 45 00 00 }\n\n\tcondition:\n\t\t$MZ at 0 and $PE\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

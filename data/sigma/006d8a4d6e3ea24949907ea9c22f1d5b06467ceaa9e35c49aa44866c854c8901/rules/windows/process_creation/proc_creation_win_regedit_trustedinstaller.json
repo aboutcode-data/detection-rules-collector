@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regedit_trustedinstaller.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-05-27",
+                "title": "Regedit as Trusted Installer",
+                "id": "883835a7-df45-43e4-bf1d-4268768afda4"
+            },
+            "rule_text": "title: Regedit as Trusted Installer\nid: 883835a7-df45-43e4-bf1d-4268768afda4\nstatus: test\ndescription: Detects a regedit started with TrustedInstaller privileges or by ProcessHacker.exe\nreferences:\n- https://twitter.com/1kwpeter/status/1397816101455765504\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-05-27\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.t1548\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\regedit.exe\n    ParentImage|endswith:\n    - \\TrustedInstaller.exe\n    - \\ProcessHacker.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_shim_database_susp_application.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-01",
+                "title": "Suspicious Shim Database Patching Activity",
+                "id": "bf344fea-d947-4ef4-9192-34d008315d3a"
+            },
+            "rule_text": "title: Suspicious Shim Database Patching Activity\nid: bf344fea-d947-4ef4-9192-34d008315d3a\nstatus: test\ndescription: Detects installation of new shim databases that try to patch sections\n  of known processes for potential process injection or persistence.\nreferences:\n- https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/pillowmint-fin7s-monkey-thief/\n- https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-01\nmodified: 2023-12-06\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.011\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Custom\\\n    TargetObject|endswith:\n    - \\csrss.exe\n    - \\dllhost.exe\n    - \\explorer.exe\n    - \\RuntimeBroker.exe\n    - \\services.exe\n    - \\sihost.exe\n    - \\svchost.exe\n    - \\taskhostw.exe\n    - \\winlogon.exe\n    - \\WmiPrvSe.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

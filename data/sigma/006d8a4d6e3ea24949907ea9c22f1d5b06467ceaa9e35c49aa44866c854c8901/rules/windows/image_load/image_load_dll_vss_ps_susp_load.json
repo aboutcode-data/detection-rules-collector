@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_dll_vss_ps_susp_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis, @markus_neis",
+                "date": "2021-07-07",
+                "title": "Suspicious Volume Shadow Copy VSS_PS.dll Load",
+                "id": "333cdbe8-27bb-4246-bf82-b41a0dca4b70"
+            },
+            "rule_text": "title: Suspicious Volume Shadow Copy VSS_PS.dll Load\nid: 333cdbe8-27bb-4246-bf82-b41a0dca4b70\nrelated:\n- id: 48bfd177-7cf2-412b-ad77-baf923489e82\n  type: similar\n- id: 37774c23-25a1-4adb-bb6d-8bb9fd59c0f8\n  type: similar\nstatus: test\ndescription: 'Detects the image load of vss_ps.dll by uncommon executables. This DLL\n  is used by the Volume Shadow Copy Service (VSS) to manage shadow copies of files\n  and volumes.\n\n  It is often abused by attackers to delete or manipulate shadow copies, which can\n  hinder forensic investigations and data recovery efforts.\n\n  The fact that it is loaded by processes that are not typically associated with VSS\n  operations can indicate suspicious activity.\n\n  '\nreferences:\n- https://www.virustotal.com/gui/file/ba88ca45589fae0139a40ca27738a8fc2dfbe1be5a64a9558f4e0f52b35c5add\n- https://twitter.com/am0nsec/status/1412232114980982787\nauthor: Markus Neis, @markus_neis\ndate: 2021-07-07\nmodified: 2025-07-11\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\vss_ps.dll\n  filter_main_legit:\n    Image|startswith: C:\\Windows\\\n    Image|endswith:\n    - \\clussvc.exe\n    - \\dismhost.exe\n    - \\dllhost.exe\n    - \\inetsrv\\appcmd.exe\n    - \\inetsrv\\iissetup.exe\n    - \\msiexec.exe\n    - \\rundll32.exe\n    - \\searchindexer.exe\n    - \\srtasks.exe\n    - \\svchost.exe\n    - \\System32\\SystemPropertiesAdvanced.exe\n    - \\taskhostw.exe\n    - \\thor.exe\n    - \\thor64.exe\n    - \\tiworker.exe\n    - \\vssvc.exe\n    - \\vssadmin.exe\n    - \\WmiPrvSE.exe\n    - \\wsmprovhost.exe\n  filter_main_update:\n    CommandLine|startswith: C:\\$WinREAgent\\Scratch\\\n    CommandLine|contains: \\dismhost.exe {\n  filter_main_image_null:\n    Image: null\n  filter_optional_programfiles:\n    Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

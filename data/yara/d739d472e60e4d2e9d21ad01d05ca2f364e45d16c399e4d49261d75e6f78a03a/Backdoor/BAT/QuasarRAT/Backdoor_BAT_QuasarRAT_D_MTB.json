@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/BAT/QuasarRAT/Backdoor_BAT_QuasarRAT_D_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_BAT_QuasarRAT_D_MTB",
+                "tags": [],
+                "description": "Backdoor:BAT/QuasarRAT.D!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 05 00 00 "
+            },
+            "rule_text": "rule Backdoor_BAT_QuasarRAT_D_MTB\n{\n\tmeta:\n\t\tdescription = \"Backdoor:BAT/QuasarRAT.D!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {00 00 01 25 16 1f ?? 9d 6f ?? 00 00 0a 90 09 06 00 00 00 0a 17 8d }\n\t\t$a_03_1 = {07 11 06 06 11 06 9a 1f ?? 28 ?? 00 00 0a 9c 11 06 17 58 }\n\t\t$a_03_2 = {00 00 01 25 16 1f ?? 9d 6f ?? 00 00 0a 90 09 06 00 00 00 04 17 8d }\n\t\t$a_01_3 = {47 65 74 54 79 70 65 }\n\t\t$a_01_4 = {47 65 74 45 78 70 6f 72 74 65 64 54 79 70 65 73 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

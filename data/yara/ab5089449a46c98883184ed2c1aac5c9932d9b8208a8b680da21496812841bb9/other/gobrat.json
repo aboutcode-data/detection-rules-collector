@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/gobrat.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_GobRAT",
+                "tags": [],
+                "description": "GobRAT",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "C9345377CAB1A878803C3E3450BE06E0CF18B94E930090DD56F4641812FC4858"
+            },
+            "rule_text": "import \"elf\"\n\nrule malware_GobRAT\n{\n\tmeta:\n\t\tdescription = \"GobRAT\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"C9345377CAB1A878803C3E3450BE06E0CF18B94E930090DD56F4641812FC4858\"\n\n\tstrings:\n\t\t$func0 = { BE 01 00 00 00 49 89 C0 49 89 D9 31 C0 48 89 CB 48 89 D1 }\n\t\t$func1 = { 48 FF CF 48 89 FE 48 F7 DF 48 C1 FF 3F 83 E7 10 }\n\t\t$func2 = { 48 89 C8 48 89 FB B9 42 00 00 00 BF ED 01 00 00 }\n\t\t$func3 = { 48 81 C4 90 00 00 00 C3 48 89 C1 BA 14 00 00 00 }\n\t\t$func4 = { 48 89 CA 48 69 CB 00 CA 9A 3B 81 E2 FF FF FF 3F 48 63 D2 48 01 D1 48 BA 00 00 1A 3D EB 03 B2 A1 }\n\t\t$func5 = { 48 89 D8 FF D1 B9 0E 00 00 00 48 89 C7 48 89 DE 31 C0 }\n\t\t$func6 = { 48 81 C4 00 02 00 00 C3 48 83 C2 30 4C 89 DE 4C 89 D7 }\n\t\t$func7 = { 31 FF BE 02 00 00 00 41 B8 01 00 00 00 31 C9 }\n\t\t$func8 = { 48 81 C4 F8 04 00 00 C3 49 89 C1 89 D0 48 89 DA 48 89 FB 48 89 CF 48 89 F1 4C 89 C6 4D 89 C8 }\n\t\t$func9 = { 48 D1 E2 48 C1 EA 1F 48 BE 80 7F B1 D7 0D 00 00 00 48 01 F2 }\n\t\t$func10 = { 4C 29 C7 48 89 FA 48 F7 DF 49 C1 E0 02 48 C1 FF 3F 49 21 F8 }\n\t\t$func11 = { 48 89 F8 90 FF D1 B9 14 00 00 00 48 89 C7 48 89 DE 31 C0 }\n\t\t$func13 = { BF 00 20 00 00 48 89 F9 FF D2 66 90 48 85 DB }\n\t\t$func14 = { B9 0F 00 00 00 BF 00 20 00 00 FF D6 48 85 DB }\n\t\t$func15 = { 48 81 C4 10 02 00 00 C3 48 89 D9 48 89 C3 }\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x464C457F ) and ( elf.machine == elf.EM_X86_64 ) and ( filesize > 2MB ) and ( filesize < 4MB ) and ( 8 of ( $func* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_GobRATLoader",
+                "tags": [],
+                "description": "GobRAT Loader ShellScript",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "3e44c807a25a56f4068b5b8186eee5002eed6f26d665a8b791c472ad154585d1"
+            },
+            "rule_text": "rule malware_GobRATLoader\n{\n\tmeta:\n\t\tdescription = \"GobRAT Loader ShellScript\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"3e44c807a25a56f4068b5b8186eee5002eed6f26d665a8b791c472ad154585d1\"\n\n\tstrings:\n\t\t$str1 = \"CACHEDEV3_DATA CACHEDEV2_DATA CACHEDEV1_DATA MD0_DATA\"\n\t\t$str2 = \"#clean old program cache\"\n\t\t$str3 = \"firewalld stop error\"\n\t\t$str4 = \"firewalld disable  error\"\n\t\t$str5 = \"CPU architecture: 8\"\n\t\t$str6 = \"#download elf with rate 200k\"\n\t\t$str7 = \"#kill old elf process\"\n\t\t$str8 = \"#normal daemon to hold backdoor running\"\n\t\t$str9 = \"#autorun own, insert to qnap autorun script\"\n\t\t$str10 = \"# insert ssh public backdoor\"\n\t\t$str11 = \"Pi5papdFA0M9z6AQoa9Y31ww65f8P5slNf1Q8vloVIwg\"\n\t\t$str12 = \"#set a daemon script\"\n\t\t$str13 = \"#autorun 2 \"\n\t\t$str14 = \"grep frpc |grep -v grep | awk\"\n\t\t$str15 = \"iptables error\"\n\n\tcondition:\n\t\t( filesize < 15KB ) and ( 3 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

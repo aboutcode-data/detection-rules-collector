@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_default_domain_gpo_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-22",
+                "title": "Windows Default Domain GPO Modification",
+                "id": "e5ac86dd-2da1-454b-be74-05d26c769d7d"
+            },
+            "rule_text": "title: Windows Default Domain GPO Modification\nid: e5ac86dd-2da1-454b-be74-05d26c769d7d\nrelated:\n- id: dcff7e85-d01f-4eb5-badd-84e2e6be8294\n  type: similar\nstatus: experimental\ndescription: 'Detects modifications to Default Domain or Default Domain Controllers\n  Group Policy Objects (GPOs).\n\n  Adversaries may modify these default GPOs to deploy malicious configurations across\n  the domain.\n\n  '\nreferences:\n- https://www.trendmicro.com/en_us/research/25/i/unmasking-the-gentlemen-ransomware.html\n- https://adsecurity.org/?p=3377\n- https://www.pentestpartners.com/security-blog/living-off-the-land-gpo-style/\n- https://jgspiers.com/audit-group-policy-changes/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-22\ntags:\n- attack.privilege-escalation\n- attack.defense-impairment\n- attack.t1484.001\nlogsource:\n  product: windows\n  service: security\n  definition: 'Enable ''Audit Directory Service Changes'' in the Default Domain Controllers\n    Policy under:\n\n    Computer Configuration -> Policies -> Windows Settings -> Security Settings ->\n    Advanced Audit Policy Configuration -> Audit Policies -> DS Access -> Audit Directory\n    Service Changes (Success).\n\n    Additionally, proper SACL needs to be configured on the ''CN=Policies,CN=System,DC=<domain>,DC=<tld>''\n    container in Active Directory to capture changes to Group Policy Objects.\n\n    '\ndetection:\n  selection:\n    EventID: 5136\n    ObjectClass: groupPolicyContainer\n    ObjectDN|startswith:\n    - CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=POLICIES,CN=SYSTEM\n    - CN={6AC1786C-016F-11D2-945F-00C04FB984F9},CN=POLICIES,CN=SYSTEM\n  condition: selection\nfalsepositives:\n- Legitimate modifications to Default Domain or Default Domain Controllers GPOs\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

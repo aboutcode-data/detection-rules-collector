@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/syscall/lnx_auditd_web_rce.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ilyas Ochkov, Beyu Denis, oscd.community",
+                "date": "2019-10-12",
+                "title": "Webshell Remote Command Execution",
+                "id": "c0d3734d-330f-4a03-aae2-65dacc6a8222"
+            },
+            "rule_text": "title: Webshell Remote Command Execution\nid: c0d3734d-330f-4a03-aae2-65dacc6a8222\nstatus: test\ndescription: Detects possible command execution by web application/web shell\nreferences:\n- Personal Experience of the Author\n- https://www.vaadata.com/blog/what-is-command-injection-exploitations-and-security-best-practices/\nauthor: Ilyas Ochkov, Beyu Denis, oscd.community\ndate: 2019-10-12\nmodified: 2025-12-05\ntags:\n- attack.persistence\n- attack.t1505.003\nlogsource:\n  product: linux\n  service: auditd\n  definition: 'Required auditd configuration:\n\n    -a always,exit -F arch=b32 -S execve -F euid=33 -k detect_execve_www\n\n    -a always,exit -F arch=b64 -S execve -F euid=33 -k detect_execve_www\n\n    -a always,exit -F arch=b32 -S execveat -F euid=33 -k detect_execve_www\n\n    -a always,exit -F arch=b64 -S execveat -F euid=33 -k detect_execve_www\n\n    Change the number \"33\" to the ID of your WebServer user. Default: www-data:x:33:33\n\n    '\ndetection:\n  selection:\n    type: SYSCALL\n    SYSCALL:\n    - execve\n    - execveat\n    euid: 33\n  condition: selection\nfalsepositives:\n- Admin activity\n- Crazy web applications\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

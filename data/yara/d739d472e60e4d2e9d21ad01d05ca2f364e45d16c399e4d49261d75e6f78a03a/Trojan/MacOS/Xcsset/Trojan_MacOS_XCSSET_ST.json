@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/MacOS/Xcsset/Trojan_MacOS_XCSSET_ST.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_MacOS_XCSSET_ST",
+                "tags": [],
+                "description": "Trojan:MacOS/XCSSET.ST,SIGNATURE_TYPE_CMDHSTR_EXT,0c 00 0c 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_MacOS_XCSSET_ST\n{\n\tmeta:\n\t\tdescription = \"Trojan:MacOS/XCSSET.ST,SIGNATURE_TYPE_CMDHSTR_EXT,0c 00 0c 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {63 00 75 00 72 00 6c 00 20 00 2d 00 66 00 73 00 6b 00 4c 00 20 00 2d 00 64 00 20 00 }\n\t\t$a_02_1 = {6f 00 73 00 3d 00 [0-20] 26 00 70 00 3d 00 78 00 63 00 6f 00 64 00 65 00 26 00 75 00 3d 00 }\n\t\t$a_02_2 = {6f 00 73 00 3d 00 [0-20] 26 00 70 00 3d 00 64 00 65 00 66 00 61 00 75 00 6c 00 74 00 }\n\t\t$a_02_3 = {68 00 74 00 74 00 70 00 [0-30] 2e 00 72 00 75 00 2f 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 10 + ( #a_02_2 & 1 ) * 10 + ( #a_02_3 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

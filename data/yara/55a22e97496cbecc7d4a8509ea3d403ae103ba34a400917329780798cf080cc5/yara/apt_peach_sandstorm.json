@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_peach_sandstorm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_FalseFont_Backdoor_Jan24",
+                "tags": [],
+                "description": "Detects FalseFont backdoor, related to Peach Sandstorm APT",
+                "author": "X__Junior, Jonathan Peters",
+                "date": "2024-01-11",
+                "reference": "https://twitter.com/MsftSecIntel/status/1737895710169628824",
+                "hash": "364275326bbfc4a3b89233dabdaf3230a3d149ab774678342a40644ad9f8d614",
+                "score": 80,
+                "id": "b6a3efff-2abf-5ac1-9a2b-c7b30b51f92c"
+            },
+            "rule_text": "rule APT_MAL_FalseFont_Backdoor_Jan24\n{\n\tmeta:\n\t\tdescription = \"Detects FalseFont backdoor, related to Peach Sandstorm APT\"\n\t\tauthor = \"X__Junior, Jonathan Peters\"\n\t\tdate = \"2024-01-11\"\n\t\treference = \"https://twitter.com/MsftSecIntel/status/1737895710169628824\"\n\t\thash = \"364275326bbfc4a3b89233dabdaf3230a3d149ab774678342a40644ad9f8d614\"\n\t\tscore = 80\n\t\tid = \"b6a3efff-2abf-5ac1-9a2b-c7b30b51f92c\"\n\n\tstrings:\n\t\t$x1 = \"Agent.Core.WPF.App\" ascii\n\t\t$x2 = \"3EzuNZ0RN3h3oV7rzILktSHSaHk+5rtcWOr0mlA1CUA=\" wide\n\t\t$x3 = \"viOIZ9cX59qDDjMHYsz1Yw==\" wide\n\t\t$sa1 = \"StopSendScreen\" wide\n\t\t$sa2 = \"Decryption failed :(\" wide\n\t\t$sb1 = \"{0}     {1}     {2}     {3}\" wide\n\t\t$sb2 = \"\\\\BraveSoftware\\\\Brave-Browser\\\\User Data\\\\\" wide\n\t\t$sb3 = \"select * from logins\" wide\n\t\t$sb4 = \"Loginvault.db\" wide\n\t\t$sb5 = \"password_value\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 1 of ( $x* ) or all of ( $sa* ) or all of ( $sb* ) or ( 1 of ( $sa* ) and 4 of ( $sb* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

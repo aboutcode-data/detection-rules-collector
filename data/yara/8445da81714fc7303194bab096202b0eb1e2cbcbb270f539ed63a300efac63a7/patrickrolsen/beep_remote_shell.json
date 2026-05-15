@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/patrickrolsen/beep_remote_shell.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "beep_remote_shell",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "reference": "0625b5b010a1acb92f02338b8e61bb34",
+                "filetype": "EXE",
+                "version": "0.1",
+                "date": "1/29/2014"
+            },
+            "rule_text": "rule beep_remote_shell\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\treference = \"0625b5b010a1acb92f02338b8e61bb34\"\n\t\tfiletype = \"EXE\"\n\t\tversion = \"0.1\"\n\t\tdate = \"1/29/2014\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s1 = \"%s\\\\admin$\\\\system32\\\\%s\"\n\t\t$s2 = \"BeepService\"\n\t\t$s3 = \"In ControlService\"\n\t\t$s4 = \"In OpenScManager\"\n\t\t$s5 = \"In CreateService\"\n\t\t$s6 = \"Service is RUNNING\"\n\t\t$s7 = \"Service is not running\"\n\t\t$s8 = \"In DeleteService\"\n\t\t$s9 = \"Remove the service OK\"\n\n\tcondition:\n\t\t($mz at 0 ) and ( all of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

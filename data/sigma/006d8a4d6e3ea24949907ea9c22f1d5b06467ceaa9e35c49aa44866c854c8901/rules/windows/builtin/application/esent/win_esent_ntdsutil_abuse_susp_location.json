@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/esent/win_esent_ntdsutil_abuse_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-14",
+                "title": "Dump Ntds.dit To Suspicious Location",
+                "id": "94dc4390-6b7c-4784-8ffc-335334404650"
+            },
+            "rule_text": "title: Dump Ntds.dit To Suspicious Location\nid: 94dc4390-6b7c-4784-8ffc-335334404650\nstatus: test\ndescription: Detects potential abuse of ntdsutil to dump ntds.dit database to a suspicious\n  location\nreferences:\n- https://twitter.com/mgreen27/status/1558223256704122882\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj574207(v=ws.11)\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-14\nmodified: 2023-10-23\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection_root:\n    Provider_Name: ESENT\n    EventID: 325\n    Data|contains: ntds.dit\n  selection_paths:\n    Data|contains:\n    - :\\ntds.dit\n    - \\Appdata\\\n    - \\Desktop\\\n    - \\Downloads\\\n    - \\Perflogs\\\n    - \\Temp\\\n    - \\Users\\Public\\\n  condition: all of selection_*\nfalsepositives:\n- Legitimate backup operation/creating shadow copies\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

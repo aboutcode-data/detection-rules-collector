@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2024/TA/Forest-Blizzard/proc_creation_win_apt_forest_blizzard_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-04-23",
+                "title": "Forest Blizzard APT - Process Creation Activity",
+                "id": "07db928c-8632-488e-ac7d-3db847489175"
+            },
+            "rule_text": "title: Forest Blizzard APT - Process Creation Activity\nid: 07db928c-8632-488e-ac7d-3db847489175\nstatus: experimental\ndescription: 'Detects the execution of specific processes and command line combination.\n\n  These were seen being created by Forest Blizzard as described by MSFT.\n\n  '\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2024/04/22/analyzing-forest-blizzards-custom-post-compromise-tool-for-exploiting-cve-2022-38028-to-obtain-credentials/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-04-23\nmodified: 2025-01-22\ntags:\n- attack.execution\n- detection.emerging-threats\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_hashes:\n    Hashes|contains:\n    - SHA256=6b311c0a977d21e772ac4e99762234da852bbf84293386fbe78622a96c0b052f\n    - SHA256=c60ead92cd376b689d1b4450f2578b36ea0bf64f3963cfa5546279fa4424c2a5\n  selection_schtasks_create:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|all:\n    - Create\n    - /RU\n    - SYSTEM\n    - \\Microsoft\\Windows\\WinSrv\n    CommandLine|contains:\n    - servtask.bat\n    - execute.bat\n    - doit.bat\n  selection_schtasks_delete:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|all:\n    - Delete\n    - '/F '\n    - \\Microsoft\\Windows\\WinSrv\n  selection_powershell:\n    CommandLine|contains|all:\n    - Get-ChildItem\n    - .save\n    - Compress-Archive -DestinationPath C:\\ProgramData\\\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2022-38028"
+            ]
+        }
+    ]
+}

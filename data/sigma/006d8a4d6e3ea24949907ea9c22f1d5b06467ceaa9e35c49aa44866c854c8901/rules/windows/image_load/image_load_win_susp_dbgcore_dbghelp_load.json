@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_win_susp_dbgcore_dbghelp_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-27",
+                "title": "Suspicious Loading of Dbgcore/Dbghelp DLLs from Uncommon Location",
+                "id": "416bc4a2-7217-4519-8dc7-c3271817f1d5"
+            },
+            "rule_text": "title: Suspicious Loading of Dbgcore/Dbghelp DLLs from Uncommon Location\nid: 416bc4a2-7217-4519-8dc7-c3271817f1d5\nrelated:\n- id: 9f5c1d59-33be-4e60-bcab-85d2f566effd\n  type: similar\nstatus: experimental\ndescription: 'Detects loading of dbgcore.dll or dbghelp.dll from uncommon locations\n  such as user directories.\n\n  These DLLs contain the MiniDumpWriteDump function, which can be abused for credential\n  dumping purposes or in some cases for evading EDR/AV detection by suspending processes.\n\n  '\nreferences:\n- https://blog.axelarator.net/hunting-for-edr-freeze/\n- https://www.zerosalarium.com/2025/09/EDR-Freeze-Puts-EDRs-Antivirus-Into-Coma.html\n- https://www.splunk.com/en_us/blog/security/you-bet-your-lsass-hunting-lsass-access.html\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-27\nmodified: 2026-01-09\ntags:\n- attack.credential-access\n- attack.defense-impairment\n- attack.t1003\n- attack.t1685\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection_img:\n    Image|contains:\n    - :\\Perflogs\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - \\$Recycle.Bin\\\n    - \\Contacts\\\n    - \\Documents\\\n    - \\Favorites\\\n    - \\Favourites\\\n    - \\inetpub\\wwwroot\\\n    - \\Music\\\n    - \\Pictures\\\n    - \\Start Menu\\Programs\\Startup\\\n    - \\Users\\Default\\\n    - \\Videos\\\n  selection_dll:\n    ImageLoaded|endswith:\n    - \\dbgcore.dll\n    - \\dbghelp.dll\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/image_load/image_load_win_susp_dbgcore_dbghelp_load/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

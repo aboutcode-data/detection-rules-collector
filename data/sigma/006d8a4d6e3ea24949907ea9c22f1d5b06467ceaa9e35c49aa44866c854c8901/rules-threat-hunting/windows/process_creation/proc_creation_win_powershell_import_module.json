@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_import_module.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-09",
+                "title": "Import New Module Via PowerShell CommandLine",
+                "id": "4ad74d01-f48c-42d0-b88c-b31efa4d2262"
+            },
+            "rule_text": "title: Import New Module Via PowerShell CommandLine\nid: 4ad74d01-f48c-42d0-b88c-b31efa4d2262\nstatus: test\ndescription: Detects usage of the \"Import-Module\" cmdlet in order to add new Cmdlets\n  to the current PowerShell session\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/import-module?view=powershell-7.3\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/import-module?view=powershell-5.1\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-09\nmodified: 2023-12-01\ntags:\n- attack.execution\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cmdlet:\n    CommandLine|contains:\n    - 'Import-Module '\n    - 'ipmo '\n  filter_main_vsstudio:\n    ParentImage|contains:\n    - :\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal_\n    - :\\Windows\\System32\\cmd.exe\n    CommandLine|contains|all:\n    - :\\Program Files\\Microsoft Visual Studio\\\n    - Tools\\Microsoft.VisualStudio.DevShell.dll\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Depending on the environement, many legitimate scripts will import modules inline.\n  This rule is targeted for hunting purposes.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

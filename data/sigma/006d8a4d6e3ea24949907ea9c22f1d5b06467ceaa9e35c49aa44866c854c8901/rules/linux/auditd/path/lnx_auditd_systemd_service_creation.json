@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/path/lnx_auditd_systemd_service_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2022-02-03",
+                "title": "Systemd Service Creation",
+                "id": "1bac86ba-41aa-4f62-9d6b-405eac99b485"
+            },
+            "rule_text": "title: Systemd Service Creation\nid: 1bac86ba-41aa-4f62-9d6b-405eac99b485\nstatus: test\ndescription: Detects a creation of systemd services which could be used by adversaries\n  to execute malicious code.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.002/T1543.002.md\nauthor: Pawel Mazur\ndate: 2022-02-03\nmodified: 2022-02-06\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1543.002\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  path:\n    type: PATH\n    nametype: CREATE\n  name_1:\n    name|startswith:\n    - /usr/lib/systemd/system/\n    - /etc/systemd/system/\n  name_2:\n    name|contains: /.config/systemd/user/\n  condition: path and 1 of name_*\nfalsepositives:\n- Admin work like legit service installs.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

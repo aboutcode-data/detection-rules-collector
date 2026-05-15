@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_network_scan_loop.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-03-12",
+                "title": "Suspicious Scan Loop Network",
+                "id": "f8ad2e2c-40b6-4117-84d7-20b89896ab23"
+            },
+            "rule_text": "title: Suspicious Scan Loop Network\nid: f8ad2e2c-40b6-4117-84d7-20b89896ab23\nstatus: test\ndescription: Adversaries may attempt to get a listing of other systems by IP address,\n  hostname, or other logical identifier on a network that may be used for Lateral\n  Movement from the current system\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md\n- https://ss64.com/nt/for.html\n- https://ss64.com/ps/foreach-object.html\nauthor: frack113\ndate: 2022-03-12\ntags:\n- attack.execution\n- attack.t1059\n- attack.discovery\n- attack.t1018\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_loop:\n    CommandLine|contains:\n    - 'for '\n    - 'foreach '\n  selection_tools:\n    CommandLine|contains:\n    - nslookup\n    - ping\n  condition: all of selection_*\nfalsepositives:\n- Legitimate script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

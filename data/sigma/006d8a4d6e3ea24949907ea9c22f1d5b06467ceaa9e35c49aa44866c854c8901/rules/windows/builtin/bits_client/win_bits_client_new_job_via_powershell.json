@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/bits_client/win_bits_client_new_job_via_powershell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-03-01",
+                "title": "New BITS Job Created Via PowerShell",
+                "id": "fe3a2d49-f255-4d10-935c-bda7391108eb"
+            },
+            "rule_text": "title: New BITS Job Created Via PowerShell\nid: fe3a2d49-f255-4d10-935c-bda7391108eb\nstatus: test\ndescription: Detects the creation of a new bits job by PowerShell\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md\nauthor: frack113\ndate: 2022-03-01\nmodified: 2023-03-27\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\nlogsource:\n  product: windows\n  service: bits-client\ndetection:\n  selection:\n    EventID: 3\n    processPath|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  condition: selection\nfalsepositives:\n- Administrator PowerShell scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

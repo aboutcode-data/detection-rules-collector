@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/HackTool/Win32/CiscoGetPass/HackTool_Win32_CiscoGetPass.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HackTool_Win32_CiscoGetPass",
+                "tags": [],
+                "description": "HackTool:Win32/CiscoGetPass,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule HackTool_Win32_CiscoGetPass\n{\n\tmeta:\n\t\tdescription = \"HackTool:Win32/CiscoGetPass,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {47 65 74 50 61 73 73 21 20 20 76 }\n\t\t$a_01_1 = {23 45 6e 74 65 72 20 74 68 65 20 43 69 73 63 6f 20 45 6e 63 72 79 70 74 65 64 20 50 61 73 73 77 6f 72 64 3a }\n\t\t$a_01_2 = {54 68 65 20 64 65 63 72 79 70 74 65 64 20 70 61 73 73 77 6f 72 64 20 69 73 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

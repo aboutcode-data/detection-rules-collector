@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_rclone_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj, Sittikorn S, Aaron Greetham (@beardofbinary) - NCC Group",
+                "date": "2021-05-10",
+                "title": "PUA - Rclone Execution",
+                "id": "e37db05d-d1f9-49c8-b464-cee1a4b11638"
+            },
+            "rule_text": "title: PUA - Rclone Execution\nid: e37db05d-d1f9-49c8-b464-cee1a4b11638\nrelated:\n- id: a0d63692-a531-4912-ad39-4393325b2a9c\n  type: obsolete\n- id: cb7286ba-f207-44ab-b9e6-760d82b84253\n  type: obsolete\nstatus: test\ndescription: Detects execution of RClone utility for exfiltration as used by various\n  ransomwares strains like REvil, Conti, FiveHands, etc\nreferences:\n- https://research.nccgroup.com/2021/05/27/detecting-rclone-an-effective-tool-for-exfiltration/\n- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware\n- https://us-cert.cisa.gov/ncas/analysis-reports/ar21-126a\n- https://labs.sentinelone.com/egregor-raas-continues-the-chaos-with-cobalt-strike-and-rclone\n- https://www.splunk.com/en_us/blog/security/darkside-ransomware-splunk-threat-update-and-detections.html\nauthor: Bhabesh Raj, Sittikorn S, Aaron Greetham (@beardofbinary) - NCC Group\ndate: 2021-05-10\nmodified: 2023-03-05\ntags:\n- attack.exfiltration\n- attack.t1567.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_specific_options:\n    CommandLine|contains|all:\n    - '--config '\n    - '--no-check-certificate '\n    - ' copy '\n  selection_rclone_img:\n  - Image|endswith: \\rclone.exe\n  - Description: Rsync for cloud storage\n  selection_rclone_cli:\n    CommandLine|contains:\n    - pass\n    - user\n    - copy\n    - sync\n    - config\n    - lsd\n    - remote\n    - ls\n    - mega\n    - pcloud\n    - ftp\n    - ignore-existing\n    - auto-confirm\n    - transfers\n    - multi-thread-streams\n    - 'no-check-certificate '\n  condition: selection_specific_options or all of selection_rclone_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

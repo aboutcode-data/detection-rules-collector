@@ -1,0 +1,61 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_soupdealer_java_aug25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_Scheduled_Task_Java_JAR_Aug25",
+                "tags": [],
+                "description": "Detects scheduled tasks that execute Java JAR files, which is suspicious but not necessarily malicious",
+                "author": "Florian Roth",
+                "date": "2025-08-07",
+                "score": 60,
+                "reference": "Internal Research",
+                "hash": "7c5999082d9c5f3dd342ca05191311ddd1e24ba7675d1e9763fb4d962be3a933"
+            },
+            "rule_text": "rule SUSP_Scheduled_Task_Java_JAR_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects scheduled tasks that execute Java JAR files, which is suspicious but not necessarily malicious\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2025-08-07\"\n\t\tscore = 60\n\t\treference = \"Internal Research\"\n\t\thash = \"7c5999082d9c5f3dd342ca05191311ddd1e24ba7675d1e9763fb4d962be3a933\"\n\n\tstrings:\n\t\t$a0 = \"<Task version=\" wide\n\t\t$a1 = \"xmlns=\\\"http://schemas.microsoft.com/windows/\" wide\n\t\t$sa1 = \"java.exe</Command>\" wide\n\t\t$sa2 = \"javaw.exe</Command>\" wide\n\t\t$sb1 = \"<Arguments>-jar \" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0xfeff and filesize < 500KB and all of ( $a* ) and 1 of ( $sa* ) and 1 of ( $sb* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_JAVA_Loader_Indicators_Aug25",
+                "tags": [],
+                "description": "Detects indicators of a Java loader used in phishing campaigns",
+                "author": "Florian Roth",
+                "reference": "https://www.malwation.com/blog/technical-analysis-of-a-stealth-java-loader-used-in-phishing-campaigns-targeting-turkiye",
+                "date": "2025-08-07",
+                "score": 70,
+                "hash1": "c4cf746fce283878dde567e5457a8ebdbb7ff3414be46569ecdd57338bd96fa1"
+            },
+            "rule_text": "rule SUSP_JAVA_Loader_Indicators_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects indicators of a Java loader used in phishing campaigns\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.malwation.com/blog/technical-analysis-of-a-stealth-java-loader-used-in-phishing-campaigns-targeting-turkiye\"\n\t\tdate = \"2025-08-07\"\n\t\tscore = 70\n\t\thash1 = \"c4cf746fce283878dde567e5457a8ebdbb7ff3414be46569ecdd57338bd96fa1\"\n\n\tstrings:\n\t\t$s1 = \"Loader.classPK\" ascii fullword\n\t\t$s2 = \"stubPK\" ascii\n\t\t$s3 = \"META-INF/MANIFEST.MFPK\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x4b50 and filesize < 500KB and $s1 in ( filesize - 224 .. filesize ) and $s2 in ( filesize - 224 .. filesize ) and $s3 in ( filesize - 224 .. filesize )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_JAVA_Loader_Final_Jar_Aug25",
+                "tags": [],
+                "description": "Detects a final Java loader JAR file used in phishing campaigns",
+                "author": "Florian Roth",
+                "reference": "https://www.malwation.com/blog/technical-analysis-of-a-stealth-java-loader-used-in-phishing-campaigns-targeting-turkiye",
+                "date": "2025-08-07",
+                "score": 85,
+                "hash1": "0a7fddd91b332c8daee2c0727b884fc92cfaede02883dbad75f7efc299e884e3"
+            },
+            "rule_text": "rule MAL_JAVA_Loader_Final_Jar_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects a final Java loader JAR file used in phishing campaigns\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.malwation.com/blog/technical-analysis-of-a-stealth-java-loader-used-in-phishing-campaigns-targeting-turkiye\"\n\t\tdate = \"2025-08-07\"\n\t\tscore = 85\n\t\thash1 = \"0a7fddd91b332c8daee2c0727b884fc92cfaede02883dbad75f7efc299e884e3\"\n\n\tstrings:\n\t\t$s1 = \"Obfuscation by Allatori Obfuscator\" ascii fullword\n\t\t$s2 = \"MANIFEST.MFM\" ascii fullword\n\t\t$s3 = \"GetCpu.classPK\" ascii fullword\n\t\t$s4 = \"extra/spreader\" ascii fullword\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_JAVA_Class_Allatori_Obfuscator_Aug25",
+                "tags": [],
+                "description": "Detects a relatively small Java class file obfuscated by Allatori Obfuscator",
+                "author": "Florian Roth",
+                "reference": "https://www.malwation.com/blog/technical-analysis-of-a-stealth-java-loader-used-in-phishing-campaigns-targeting-turkiye",
+                "date": "2025-08-07",
+                "score": 50,
+                "hash1": "0a7fddd91b332c8daee2c0727b884fc92cfaede02883dbad75f7efc299e884e3"
+            },
+            "rule_text": "rule SUSP_JAVA_Class_Allatori_Obfuscator_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects a relatively small Java class file obfuscated by Allatori Obfuscator\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.malwation.com/blog/technical-analysis-of-a-stealth-java-loader-used-in-phishing-campaigns-targeting-turkiye\"\n\t\tdate = \"2025-08-07\"\n\t\tscore = 50\n\t\thash1 = \"0a7fddd91b332c8daee2c0727b884fc92cfaede02883dbad75f7efc299e884e3\"\n\n\tstrings:\n\t\t$x1 = \"Obfuscation by Allatori Obfuscator\" ascii fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x4b50 and filesize < 500KB and $x1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

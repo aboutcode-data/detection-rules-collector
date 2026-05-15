@@ -1,0 +1,95 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/dragos/Crashoverride.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_exporting_dlls",
+                "tags": [],
+                "description": "CRASHOVERRIDE v1 Suspicious Export",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "import \"pe\"\n\nrule dragos_crashoverride_exporting_dlls\n{\n\tmeta:\n\t\tdescription = \"CRASHOVERRIDE v1 Suspicious Export\"\n\t\tauthor = \"Dragos Inc\"\n\n\tcondition:\n\t\tpe.exports( \"Crash\" ) & pe.characteristics\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_suspcious",
+                "tags": [],
+                "description": "CRASHOVERRIDE v1 Wiper",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "import \"pe\"\n\nrule dragos_crashoverride_suspcious\n{\n\tmeta:\n\t\tdescription = \"CRASHOVERRIDE v1 Wiper\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s0 = \"SYS_BASCON.COM\" fullword nocase wide\n\t\t$s1 = \".pcmp\" fullword nocase wide\n\t\t$s2 = \".pcmi\" fullword nocase wide\n\t\t$s3 = \".pcmt\" fullword nocase wide\n\t\t$s4 = \".cin\" fullword nocase wide\n\n\tcondition:\n\t\tpe.exports( \"Crash\" ) and any of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_name_search",
+                "tags": [],
+                "description": "CRASHOVERRIDE v1 Suspicious Strings and Export",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "import \"pe\"\n\nrule dragos_crashoverride_name_search\n{\n\tmeta:\n\t\tdescription = \"CRASHOVERRIDE v1 Suspicious Strings and Export\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s0 = \"101.dll\" fullword nocase wide\n\t\t$s1 = \"Crash101.dll\" fullword nocase wide\n\t\t$s2 = \"104.dll\" fullword nocase wide\n\t\t$s3 = \"Crash104.dll\" fullword nocase wide\n\t\t$s4 = \"61850.dll\" fullword nocase wide\n\t\t$s5 = \"Crash61850.dll\" fullword nocase wide\n\t\t$s6 = \"OPCClientDemo.dll\" fullword nocase wide\n\t\t$s7 = \"OPC\" fullword nocase wide\n\t\t$s8 = \"CrashOPCClientDemo.dll\" fullword nocase wide\n\t\t$s9 = \"D2MultiCommService.exe\" fullword nocase wide\n\t\t$s10 = \"CrashD2MultiCommService.exe\" fullword nocase wide\n\t\t$s11 = \"61850.exe\" fullword nocase wide\n\t\t$s12 = \"OPC.exe\" fullword nocase wide\n\t\t$s13 = \"haslo.exe\" fullword nocase wide\n\t\t$s14 = \"haslo.dat\" fullword nocase wide\n\n\tcondition:\n\t\tany of ( $s* ) and pe.exports ( \"Crash\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_moduleStrings",
+                "tags": [],
+                "description": "IEC-104 Interaction Module Program Strings",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "rule dragos_crashoverride_moduleStrings\n{\n\tmeta:\n\t\tdescription = \"IEC-104 Interaction Module Program Strings\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s1 = \"IEC-104 client: ip=%s; port=%s; ASDU=%u\" nocase wide ascii\n\t\t$s2 = \" MSTR ->> SLV\" nocase wide ascii\n\t\t$s3 = \" MSTR <<- SLV\" nocase wide ascii\n\t\t$s4 = \"Unknown APDU format !!!\" nocase wide ascii\n\t\t$s5 = \"iec104.log\" nocase wide ascii\n\n\tcondition:\n\t\tany of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_configReader",
+                "tags": [],
+                "description": "CRASHOVERRIDE v1 Config File Parsing",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "rule dragos_crashoverride_configReader\n{\n\tmeta:\n\t\tdescription = \"CRASHOVERRIDE v1 Config File Parsing\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s0 = { 68 e8 ?? ?? ?? 6a 00 e8 a3 ?? ?? ?? 8b f8 83 c4 ?8 }\n\t\t$s1 = { 8a 10 3a 11 75 ?? 84 d2 74 12 }\n\t\t$s2 = { 33 c0 eb ?? 1b c0 83 c8 ?? }\n\t\t$s3 = { 85 c0 75 ?? 8d 95 ?? ?? ?? ?? 8b cf ?? ?? }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_weirdMutex",
+                "tags": [],
+                "description": "Blank mutex creation assoicated with CRASHOVERRIDE",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "rule dragos_crashoverride_weirdMutex\n{\n\tmeta:\n\t\tdescription = \"Blank mutex creation assoicated with CRASHOVERRIDE\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s1 = { 81 ec 08 02 00 00 57 33 ff 57 57 57 ff 15 ?? ?? 40 00 a3 ?? ?? ?? 00\n85 c0 }\n\t\t$s2 = { 8d 85 ?? ?? ?? ff 50 57 57 6a 2e 57 ff 15 ?? ?? ?? 00 68 ?? ?? 40 00}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_serviceStomper",
+                "tags": [],
+                "description": "Identify service hollowing and persistence setting",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "rule dragos_crashoverride_serviceStomper\n{\n\tmeta:\n\t\tdescription = \"Identify service hollowing and persistence setting\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s0 = { 33 c9 51 51 51 51 51 51 ?? ?? ?? }\n\t\t$s1 = { 6a ff 6a ff 6a ff 50 ff 15 24 ?? 40 00 ff ?? ?? ff 15 20 ?? 40 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_wiperModuleRegistry",
+                "tags": [],
+                "description": "Registry Wiper functionality assoicated with CRASHOVERRIDE",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "rule dragos_crashoverride_wiperModuleRegistry\n{\n\tmeta:\n\t\tdescription = \"Registry Wiper functionality assoicated with CRASHOVERRIDE\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s0 = { 8d 85 a0 ?? ?? ?? 46 50 8d 85 a0 ?? ?? ?? 68 68 0d ?? ?? 50 }\n\t\t$s1 = { 6a 02 68 78 0b ?? ?? 6a 02 50 68 b4 0d ?? ?? ff b5 98 ?? ?? ?? ff 15\n04 ?? ?? ?? }\n\t\t$s2 = { 68 00 02 00 00 8d 85 a0 ?? ?? ?? 50 56 ff b5 9c ?? ?? ?? ff 15 00 ??\n?? ?? 85 c0 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_wiperFileManipulation",
+                "tags": [],
+                "description": "File manipulation actions associated with CRASHOVERRIDE wip- er",
+                "author": "Dragos Inc"
+            },
+            "rule_text": "rule dragos_crashoverride_wiperFileManipulation\n{\n\tmeta:\n\t\tdescription = \"File manipulation actions associated with CRASHOVERRIDE wip- er\"\n\t\tauthor = \"Dragos Inc\"\n\n\tstrings:\n\t\t$s0 = { 6a 00 68 80 00 00 00 6a 03 6a 00 6a 02 8b f9 68 00 00 00 40 57 ff 15\n1c ?? ?? ?? 8b d8 }\n\t\t$s2 = { 6a 00 50 57 56 53 ff 15 4c ?? ?? ?? 56 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

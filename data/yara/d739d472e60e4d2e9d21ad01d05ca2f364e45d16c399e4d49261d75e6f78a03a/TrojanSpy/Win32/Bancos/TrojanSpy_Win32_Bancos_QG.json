@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Bancos/TrojanSpy_Win32_Bancos_QG.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Bancos_QG",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Bancos.QG,SIGNATURE_TYPE_PEHSTR_EXT,05 00 04 00 06 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Bancos_QG\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Bancos.QG,SIGNATURE_TYPE_PEHSTR_EXT,05 00 04 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {84 c0 75 3c 8b 87 ?? ?? ?? ?? 66 be eb ff e8 ?? ?? ?? ?? 8d 45 f8 ba ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 55 f8 8b 87 ?? ?? ?? ?? 8b 80 ?? ?? ?? ?? 8b 08 ff 51 74 }\n\t\t$a_01_1 = {63 6f 6d 70 75 74 61 64 6f 72 3d 00 }\n\t\t$a_01_2 = {75 73 75 61 72 69 6f 3d 00 }\n\t\t$a_01_3 = {73 68 64 5f 66 69 73 69 63 6f 3d 00 }\n\t\t$a_01_4 = {73 68 64 5f 66 69 72 6d 77 61 72 65 3d 00 }\n\t\t$a_01_5 = {70 61 67 5f 69 6e 69 63 3d 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 3 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

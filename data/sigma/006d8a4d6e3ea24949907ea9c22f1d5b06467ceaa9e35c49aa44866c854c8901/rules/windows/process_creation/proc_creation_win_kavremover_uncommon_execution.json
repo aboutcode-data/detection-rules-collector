@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_kavremover_uncommon_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-01",
+                "title": "Kavremover Dropped Binary LOLBIN Usage",
+                "id": "d047726b-c71c-4048-a99b-2e2f50dc107d"
+            },
+            "rule_text": "title: Kavremover Dropped Binary LOLBIN Usage\nid: d047726b-c71c-4048-a99b-2e2f50dc107d\nstatus: test\ndescription: Detects the execution of a signed binary dropped by Kaspersky Lab Products\n  Remover (kavremover) which can be abused as a LOLBIN to execute arbitrary commands\n  and binaries.\nreferences:\n- https://nasbench.medium.com/lolbined-using-kaspersky-endpoint-security-kes-installer-to-execute-arbitrary-commands-1c999f1b7fea\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-01\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains: ' run run-cmd '\n  filter_main_legit_parents:\n    ParentImage|endswith:\n    - \\cleanapi.exe\n    - \\kavremover.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

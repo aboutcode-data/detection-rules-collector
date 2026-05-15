@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/jvm/java_local_file_read.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Moti Harmats",
+                "date": "2023-02-11",
+                "title": "Potential Local File Read Vulnerability In JVM Based Application",
+                "id": "e032f5bc-4563-4096-ae3b-064bab588685"
+            },
+            "rule_text": "title: Potential Local File Read Vulnerability In JVM Based Application\nid: e032f5bc-4563-4096-ae3b-064bab588685\nstatus: test\ndescription: 'Detects potential local file read vulnerability in JVM based apps.\n\n  If the exceptions are caused due to user input and contain path traversal payloads\n  then it''s a red flag.\n\n  '\nreferences:\n- https://www.wix.engineering/post/threat-and-vulnerability-hunting-with-application-server-error-logs\nauthor: Moti Harmats\ndate: 2023-02-11\ntags:\n- attack.initial-access\n- attack.t1190\nlogsource:\n  category: application\n  product: jvm\n  definition: 'Requirements: application error logs must be collected (with LOG_LEVEL=ERROR\n    and above)'\ndetection:\n  keywords_local_file_read:\n    '|all':\n    - FileNotFoundException\n    - /../../..\n  condition: keywords_local_file_read\nfalsepositives:\n- Application bugs\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

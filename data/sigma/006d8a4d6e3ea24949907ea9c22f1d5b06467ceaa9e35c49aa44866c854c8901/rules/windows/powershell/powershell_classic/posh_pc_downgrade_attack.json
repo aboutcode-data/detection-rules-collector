@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_classic/posh_pc_downgrade_attack.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Lee Holmes (idea), Harish Segar (improvements)",
+                "date": "2017-03-22",
+                "title": "PowerShell Downgrade Attack - PowerShell",
+                "id": "6331d09b-4785-4c13-980f-f96661356249"
+            },
+            "rule_text": "title: PowerShell Downgrade Attack - PowerShell\nid: 6331d09b-4785-4c13-980f-f96661356249\nstatus: test\ndescription: Detects PowerShell downgrade attack by comparing the host versions with\n  the actually used engine version 2.0\nreferences:\n- http://www.leeholmes.com/blog/2017/03/17/detecting-and-preventing-powershell-downgrade-attacks/\nauthor: Florian Roth (Nextron Systems), Lee Holmes (idea), Harish Segar (improvements)\ndate: 2017-03-22\nmodified: 2023-10-27\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_classic_start\ndetection:\n  selection:\n    Data|contains: EngineVersion=2.\n  filter_main:\n    Data|contains: HostVersion=2.\n  condition: selection and not filter_main\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

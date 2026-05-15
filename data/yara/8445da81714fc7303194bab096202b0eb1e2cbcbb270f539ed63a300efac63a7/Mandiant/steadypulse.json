@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/steadypulse.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Webshell_PL_STEADYPULSE_1",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "sha256": "168976797d5af7071df257e91fcc31ce1d6e59c72ca9e2f50c8b5b3177ad83cc",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Webshell_PL_STEADYPULSE_1\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tsha256 = \"168976797d5af7071df257e91fcc31ce1d6e59c72ca9e2f50c8b5b3177ad83cc\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$s1 = \"parse_parameters\"\n\t\t$s2 = \"s/\\\\+/ /g\"\n\t\t$s3 = \"s/%(..)/pack(\"\n\t\t$s4 = \"MIME::Base64::encode($\"\n\t\t$s5 = \"$|=1;\"\n\t\t$s6 = \"RC4(\"\n\t\t$s7 = \"$FORM{'cmd'}\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

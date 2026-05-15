@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_impacket_wmiexec_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Wmiexec.py Execution",
+                "id": "2968dbf6-77ee-4932-b42b-b453d3ac8915"
+            },
+            "rule_text": "title: Wmiexec.py Execution\nid: 2968dbf6-77ee-4932-b42b-b453d3ac8915\nstatus: experimental\ndescription: \"This detection analytic looks for wmiprvse.exe spawn cmd.exe with the\\\n  \\ following command line, \\n`cmd.exe /Q /c ', ' 1 \\\\\\\\', ' 2 &1`. These strings\\\n  \\ are specific to the execution of wmiexe.py, \\nwhich allows a semi-interactive\\\n  \\ shell used via WMI. Part of the RedCanary 2024 Threat Detection \\nReport.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/impacket/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.s0357\n- attack.execution\n- attack.t1047\n- attack.lateral_movement\n- attack.t1021\n- attack.t1021.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\wmiprvse.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains:\n    - 'cmd.exe /Q /c '\n    - ' 1> \\\\'\n    - ' 2>&1'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

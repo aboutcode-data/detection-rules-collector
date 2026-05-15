@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/ntlm/win_susp_ntlm_rdp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "James Pemberton",
+                "date": "2020-05-22",
+                "title": "Potential Remote Desktop Connection to Non-Domain Host",
+                "id": "ce5678bb-b9aa-4fb5-be4b-e57f686256ad"
+            },
+            "rule_text": "title: Potential Remote Desktop Connection to Non-Domain Host\nid: ce5678bb-b9aa-4fb5-be4b-e57f686256ad\nstatus: test\ndescription: Detects logons using NTLM to hosts that are potentially not part of the\n  domain.\nreferences:\n- n/a\nauthor: James Pemberton\ndate: 2020-05-22\nmodified: 2021-11-27\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  service: ntlm\n  definition: Requires events from Microsoft-Windows-NTLM/Operational\ndetection:\n  selection:\n    EventID: 8001\n    TargetName|startswith: TERMSRV\n  condition: selection\nfalsepositives:\n- Host connections to valid domains, exclude these.\n- Host connections not using host FQDN.\n- Host connections to external legitimate domains.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

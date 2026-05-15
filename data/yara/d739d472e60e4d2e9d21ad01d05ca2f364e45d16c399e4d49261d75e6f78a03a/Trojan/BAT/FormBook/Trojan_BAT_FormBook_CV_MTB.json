@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/FormBook/Trojan_BAT_FormBook_CV_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_FormBook_CV_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/FormBook.CV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_FormBook_CV_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/FormBook.CV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {06 16 11 02 11 00 1a 28 }\n\t\t$a_01_1 = {11 04 17 58 13 04 }\n\t\t$a_03_2 = {11 07 5a 1a 5a 8d ?? 00 00 01 13 02 }\n\t\t$a_01_3 = {11 02 1a 11 03 16 11 03 8e 69 28 }\n\t\t$a_03_4 = {11 02 16 28 ?? 00 00 06 8d ?? 00 00 01 13 03 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 4 + ( #a_03_4 & 1 ) * 2 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

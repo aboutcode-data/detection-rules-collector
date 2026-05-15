@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Basta/Ransom_Win32_Basta_PAGY_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Basta_PAGY_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Basta.PAGY!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Basta_PAGY_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Basta.PAGY!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 86 8c 00 00 00 88 0c 02 ff 05 ?? ?? ?? ?? 8b 46 58 8b 8e 8c 00 00 00 88 1c 01 ff 46 58 a1 ?? ?? ?? ?? 8b 8e e0 00 00 00 2b 88 cc }\n\t\t$a_03_1 = {89 86 c0 00 00 00 a1 ?? ?? ?? ?? 8b 8e 8c 00 00 00 88 14 08 8b d3 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

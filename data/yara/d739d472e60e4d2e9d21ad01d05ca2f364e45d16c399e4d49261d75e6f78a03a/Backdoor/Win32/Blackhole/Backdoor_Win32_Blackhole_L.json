@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Blackhole/Backdoor_Win32_Blackhole_L.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Blackhole_L",
+                "tags": [],
+                "description": "Backdoor:Win32/Blackhole.L,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Blackhole_L\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Blackhole.L,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {31 33 38 73 6f 66 74 2e 63 6f 6d 2f 62 6c 61 63 6b 68 6f 6c 65 2f 76 65 72 69 66 79 2e 61 73 70 3f 6d 64 35 3d }\n\t\t$a_00_1 = {3a 28 52 61 6d 20 44 69 73 6b 29 }\n\t\t$a_00_2 = {42 72 63 53 65 72 76 65 72 32 2e 45 78 65 }\n\t\t$a_02_3 = {0f 84 8e 00 00 00 b8 ?? ?? ?? ?? ba 1c 00 00 00 e8 ?? ?? ?? ?? c7 05 ?? ?? ?? ?? 10 01 00 00 c7 05 ?? ?? ?? ?? 02 00 00 00 c7 05 ?? ?? ?? ?? 03 00 00 00 c7 05 ?? ?? ?? ?? e8 03 00 00 68 ?? ?? ?? ?? a1 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? c6 05 ?? ?? ?? ?? 00 c6 05 ?? ?? ?? ?? 00 c7 05 ?? ?? ?? ?? 04 00 00 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 10 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

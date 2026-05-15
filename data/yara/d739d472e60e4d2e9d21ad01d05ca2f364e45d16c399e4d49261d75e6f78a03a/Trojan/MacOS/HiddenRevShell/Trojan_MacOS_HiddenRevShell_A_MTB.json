@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/MacOS/HiddenRevShell/Trojan_MacOS_HiddenRevShell_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_MacOS_HiddenRevShell_A_MTB",
+                "tags": [],
+                "description": "Trojan:MacOS/HiddenRevShell.A!MTB,SIGNATURE_TYPE_MACHOHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_MacOS_HiddenRevShell_A_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:MacOS/HiddenRevShell.A!MTB,SIGNATURE_TYPE_MACHOHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {40 00 80 52 21 00 80 52 02 00 80 52 d9 }\n\t\t$a_01_1 = {e0 1f 00 b9 e1 63 00 91 e0 03 13 aa 02 02 80 52 a9 }\n\t\t$a_03_2 = {f4 03 00 aa 01 00 80 52 61 ?? ?? ?? e0 03 14 aa 21 00 80 52 5e ?? ?? ?? e0 03 14 aa 41 00 80 52 5b }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

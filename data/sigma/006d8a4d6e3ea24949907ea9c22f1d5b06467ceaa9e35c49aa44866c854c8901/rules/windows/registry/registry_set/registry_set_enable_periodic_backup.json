@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_enable_periodic_backup.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-07-01",
+                "title": "Periodic Backup For System Registry Hives Enabled",
+                "id": "973ef012-8f1a-4c40-93b4-7e659a5cd17f"
+            },
+            "rule_text": "title: Periodic Backup For System Registry Hives Enabled\nid: 973ef012-8f1a-4c40-93b4-7e659a5cd17f\nstatus: test\ndescription: 'Detects the enabling of the \"EnablePeriodicBackup\" registry value. Once\n  enabled, The OS will backup System registry hives on restarts to the \"C:\\Windows\\System32\\config\\RegBack\"\n  folder. Windows creates a \"RegIdleBackup\" task to manage subsequent backups.\n\n  Registry backup was a default behavior on Windows and was disabled as of \"Windows\n  10, version 1803\".\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/troubleshoot/windows-client/installing-updates-features-roles/system-registry-no-backed-up-regback-folder\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-07-01\ntags:\n- attack.collection\n- attack.t1113\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Control\\Session Manager\\Configuration Manager\\EnablePeriodicBackup\n    Details: DWORD (0x00000001)\n  condition: selection\nfalsepositives:\n- Legitimate need for RegBack feature by administrators.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

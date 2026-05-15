@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_cl_mutexverifiers.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), oscd.community, Natalia Shornikova, frack113",
+                "date": "2022-05-21",
+                "title": "Potential Script Proxy Execution Via CL_Mutexverifiers.ps1",
+                "id": "1e0e1a81-e79b-44bc-935b-ddb9c8006b3d"
+            },
+            "rule_text": "title: Potential Script Proxy Execution Via CL_Mutexverifiers.ps1\nid: 1e0e1a81-e79b-44bc-935b-ddb9c8006b3d\nstatus: test\ndescription: Detects the use of the Microsoft signed script \"CL_mutexverifiers\" to\n  proxy the execution of additional PowerShell script commands\nreferences:\n- https://lolbas-project.github.io/lolbas/Scripts/CL_mutexverifiers/\nauthor: Nasreddine Bencherchali (Nextron Systems), oscd.community, Natalia Shornikova,\n  frack113\ndate: 2022-05-21\nmodified: 2023-08-17\ntags:\n- attack.stealth\n- attack.t1216\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_pwsh:\n    ParentImage|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    Image|endswith: \\powershell.exe\n    CommandLine|contains: ' -nologo -windowstyle minimized -file '\n  selection_temp:\n    CommandLine|contains:\n    - \\AppData\\Local\\Temp\\\n    - \\Windows\\Temp\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

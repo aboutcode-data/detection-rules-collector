@@ -1,0 +1,39 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/RestyLink.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_droplink_str",
+                "tags": [],
+                "description": "malware using dropbox api(TRANSBOX, PLUGBOX)",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "6e5e2ed25155428b8da15ac78c8d87d2c108737402ecba90d70f305056aeabaa"
+            },
+            "rule_text": "rule malware_droplink_str\n{\n\tmeta:\n\t\tdescription = \"malware using dropbox api(TRANSBOX, PLUGBOX)\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"bdc15b09b78093a1a5503a1a7bfb487f7ef4ca2cb8b4d1d1bdf9a54cdc87fae4\"\n\t\thash = \"6e5e2ed25155428b8da15ac78c8d87d2c108737402ecba90d70f305056aeabaa\"\n\n\tstrings:\n\t\t$data1 = \"%u/%u_%08X_%u_%u.jpg\" ascii wide\n\t\t$data2 = \"%u/%u.jpg\" ascii wide\n\t\t$data3 = \"%u/%s\" ascii wide\n\t\t$data4 = \"%u/%u.3_bk.jpg\"\n\t\t$data5 = \"%u/%u.2_bk.jpg\" ascii wide\n\t\t$data6 = \"%u/%u_%08X_%d.jpg\" ascii wide\n\t\t$data7 = \"%s\\\",\\\"mode\\\":\\\"overwrite\" ascii wide\n\t\t$data8 = \"Dropbox-API-Art-Type:\" ascii wide\n\t\t$data9 = \"/2/files/upload\" ascii wide\n\t\t$data10 = \"Dropbox-API-Arg: {\\\"path\\\":\\\"/\" ascii wide\n\t\t$data11 = \"/oauth2/token\" ascii wide\n\t\t$data12 = \"LoadPlgFromRemote.dll\" ascii wide\n\t\t$data13 = \"FILETRANDLL.dll\" ascii wide\n\t\t$data14 = \"NVIDLA\" ascii wide\n\t\t$data15 = \"start.ini\" ascii wide\n\t\t$data16 = \"RunMain\" ascii wide\n\t\t$data17 = \"cfg.png\" ascii wide\n\t\t$data18 = \"DWrite.dll\" ascii wide\n\t\t$pdb1 = \"\\\\\\\\daddev\\\\office10\\\\2609.0\\\\setup\\\\x86\\\\ship\\\\program files\\\\common files\\\\microsoft shared\\\\office10\\\\1033\\\\DWINTLO.PDB\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and filesize < 1MB and ( 1 of ( $pdb* ) or 5 of ( $data* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_RestyLink_lnk",
+                "tags": [],
+                "description": "RestyLink lnk file",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "3feb9275050827543292a97cbf18c50c552a1771c4423c4df4f711a39696ed93"
+            },
+            "rule_text": "rule malware_RestyLink_lnk\n{\n\tmeta:\n\t\tdescription = \"RestyLink lnk file\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"90a223625738e398d2cf0be8d37144392cc2e7d707b096a7bfc0a52b408d98b1\"\n\t\thash = \"9aa2187dbdeef231651769ec8dc5f792c2a9a7233fbbbcf383b05ff3d6179fcf\"\n\t\thash = \"3feb9275050827543292a97cbf18c50c552a1771c4423c4df4f711a39696ed93\"\n\n\tstrings:\n\t\t$cmd1 = \"C:\\\\Windows\\\\System32\\\\cmd.exe\" wide\n\t\t$cmd2 = \"Windows\\\\system32\\\\ScriptRunner.exe\" wide\n\t\t$command1 = \"/c set a=start winword.exe /aut&&set\" wide\n\t\t$command2 = \"&&set n=omation /vu /q&&cmd /c %a%%n% %m%\" wide\n\t\t$command3 = \"-appvscript explorer.exe https://\" wide\n\t\t$command4 = \"-appvscript curl.exe -s https://\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x004c and filesize < 100KB and 1 of ( $cmd* ) and 1 of ( $command* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "restylink_Secur32_dll_downloader",
+                "tags": [],
+                "description": "Hunting no stripped Binaries by AutoYara4ELFsig JPCERT/CC",
+                "author": "AutoYara4ELFsig",
+                "rule_usage": "Hunting",
+                "hash": "107426B7B30D613E694F9153B415037C4E8194B7E7C96F0760EB59DE8F349809"
+            },
+            "rule_text": "rule restylink_Secur32_dll_downloader\n{\n\tmeta:\n\t\tdescription = \"Hunting no stripped Binaries by AutoYara4ELFsig JPCERT/CC\"\n\t\tauthor = \"AutoYara4ELFsig\"\n\t\trule_usage = \"Hunting\"\n\t\thash = \"107426B7B30D613E694F9153B415037C4E8194B7E7C96F0760EB59DE8F349809\"\n\n\tstrings:\n\t\t$func0 = { 41 B8 00 20 00 00 48 8B D3 49 8B CE FF D6 B9 64 00 00 00 FF D7 48 81 C3 00 20 00 00 }\n\t\t$func1 = { 44 8B C7 BB A3 00 00 00 0F 1F 80 00 00 00 00 FF C0 25 FF 00 00 80 7D 09 FF C8 0D 00 FF FF FF FF C0 48 63 C8 }\n\t\t$func2 = { 6A 23 67 68 73 6A 40 25  64 68 67 23 38 37 75 2A 23 52 59 43 49 48 66 76  64 20 29 37 }\n\t\t$func3 = { 61 62 63 2E 6D 62 75 73 61 62 63 2E 63 6F 6D 00}\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D ) and ( filesize < 1MB ) and ( 1 of ( $func* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

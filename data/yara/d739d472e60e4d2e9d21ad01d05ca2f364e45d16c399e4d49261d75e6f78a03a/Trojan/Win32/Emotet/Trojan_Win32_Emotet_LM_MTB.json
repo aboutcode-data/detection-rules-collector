@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Emotet/Trojan_Win32_Emotet_LM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Emotet_LM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Emotet.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Emotet_LM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Emotet.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8d 64 24 00 69 c9 fd 43 03 00 81 c1 c3 9e 26 00 8b d1 c1 ea 10 30 14 30 40 3b c7 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 ) >= 20\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Emotet_LM_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Emotet.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Emotet_LM_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Emotet.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 44 24 1c b9 01 00 00 00 8b 54 24 20 81 f2 ?? ?? ?? ?? 8b 74 24 24 89 74 24 34 89 54 24 30 8b 54 24 2c f7 d2 89 54 24 2c 66 8b 38 66 8b 58 02 c7 44 24 2c 00 00 00 00 }\n\t\t$a_03_1 = {8b 4d 08 c7 44 24 2c 00 00 00 00 c7 44 24 ?? ?? ?? ?? ?? c7 44 24 34 00 00 00 00 c7 44 24 30 00 00 00 00 8b 54 24 24 89 ce 09 d6 89 74 24 24 8b 54 24 28 8b 74 24 2c }\n\t\t$a_03_2 = {66 89 c8 88 c2 0f b6 c2 2d cd 00 00 00 0f 94 c2 8b 74 24 20 81 ce ?? ?? ?? ?? 8b 7c 24 24 89 7c 24 34 89 74 24 30 89 04 24 88 54 24 07 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 5 + ( #a_03_2 & 1 ) * 10 ) >= 35\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

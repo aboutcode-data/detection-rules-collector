@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Rafta/TrojanDownloader_Win32_Rafta_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Rafta_A",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Rafta.A,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Rafta_A\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Rafta.A,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {33 c0 8a 8b f0 9e 00 00 8b bd ?? ?? ?? ?? 30 0c 38 40 3d 00 10 00 00 72 f5 8a 0f }\n\t\t$a_03_1 = {80 78 02 0e 75 ?? c6 46 02 0e c6 46 03 02 39 bb a0 97 00 00 75 ?? c6 46 03 03 }\n\t\t$a_03_2 = {80 78 02 0a 75 ?? c6 46 02 0a c6 46 03 02 83 bb a0 97 00 00 01 75 ?? c6 46 03 03 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_hktl_inveigh_artefacts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-24",
+                "title": "HackTool - Inveigh Execution Artefacts",
+                "id": "bb09dd3e-2b78-4819-8e35-a7c1b874e449"
+            },
+            "rule_text": "title: HackTool - Inveigh Execution Artefacts\nid: bb09dd3e-2b78-4819-8e35-a7c1b874e449\nstatus: test\ndescription: Detects the presence and execution of Inveigh via dropped artefacts\nreferences:\n- https://github.com/Kevin-Robertson/Inveigh/blob/29d9e3c3a625b3033cdaf4683efaafadcecb9007/Inveigh/Support/Output.cs\n- https://github.com/Kevin-Robertson/Inveigh/blob/29d9e3c3a625b3033cdaf4683efaafadcecb9007/Inveigh/Support/Control.cs\n- https://thedfirreport.com/2020/11/23/pysa-mespinoza-ransomware/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-24\nmodified: 2024-06-27\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\Inveigh-Log.txt\n    - \\Inveigh-Cleartext.txt\n    - \\Inveigh-NTLMv1Users.txt\n    - \\Inveigh-NTLMv2Users.txt\n    - \\Inveigh-NTLMv1.txt\n    - \\Inveigh-NTLMv2.txt\n    - \\Inveigh-FormInput.txt\n    - \\Inveigh.dll\n    - \\Inveigh.exe\n    - \\Inveigh.ps1\n    - \\Inveigh-Relay.ps1\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

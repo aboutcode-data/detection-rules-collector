@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dns_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-27",
+                "title": "Unusual Child Process of dns.exe",
+                "id": "a4e3d776-f12e-42c2-8510-9e6ed1f43ec3"
+            },
+            "rule_text": "title: Unusual Child Process of dns.exe\nid: a4e3d776-f12e-42c2-8510-9e6ed1f43ec3\nstatus: test\ndescription: Detects an unexpected process spawning from dns.exe which may indicate\n  activity related to remote code execution or other forms of exploitation as seen\n  in CVE-2020-1350 (SigRed)\nreferences:\n- https://www.elastic.co/guide/en/security/current/unusual-child-process-of-dns-exe.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-27\nmodified: 2023-02-05\ntags:\n- attack.persistence\n- attack.initial-access\n- attack.t1133\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\dns.exe\n  filter:\n    Image|endswith: \\conhost.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2020-1350"
+            ]
+        }
+    ]
+}

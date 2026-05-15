@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_sharptongue.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_SharpTongue_JS_SharpExt_Chrome_Extension",
+                "tags": [
+                    "SharpTongue"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-09-14",
+                "description": "A malicious Chrome browser extention used by the SharpTongue threat actor to steal mail data from a victim",
+                "reference": "https://www.volexity.com/blog/2022/07/28/sharptongue-deploys-clever-mail-stealing-browser-extension-sharpext/",
+                "hash1": "1c9664513fe226beb53268b58b11dacc35b80a12c50c22b76382304badf4eb00",
+                "hash2": "6025c66c2eaae30c0349731beb8a95f8a5ba1180c5481e9a49d474f4e1bb76a4",
+                "hash3": "6594b75939bcdab4253172f0fa9066c8aee2fa4911bd5a03421aeb7edcd9c90c",
+                "memory_suitable": 1,
+                "score": 85,
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "id": "61b5176a-ff73-5fce-bc70-c9e09bb5afed"
+            },
+            "rule_text": "rule APT_SharpTongue_JS_SharpExt_Chrome_Extension : SharpTongue\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-09-14\"\n\t\tdescription = \"A malicious Chrome browser extention used by the SharpTongue threat actor to steal mail data from a victim\"\n\t\treference = \"https://www.volexity.com/blog/2022/07/28/sharptongue-deploys-clever-mail-stealing-browser-extension-sharpext/\"\n\t\thash1 = \"1c9664513fe226beb53268b58b11dacc35b80a12c50c22b76382304badf4eb00\"\n\t\thash2 = \"6025c66c2eaae30c0349731beb8a95f8a5ba1180c5481e9a49d474f4e1bb76a4\"\n\t\thash3 = \"6594b75939bcdab4253172f0fa9066c8aee2fa4911bd5a03421aeb7edcd9c90c\"\n\t\tmemory_suitable = 1\n\t\tscore = 85\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\tid = \"61b5176a-ff73-5fce-bc70-c9e09bb5afed\"\n\n\tstrings:\n\t\t$s1 = \"\\\"mode=attach&name=\\\"\" ascii\n\t\t$s2 = \"\\\"mode=new&mid=\\\"\" ascii\n\t\t$s3 = \"\\\"mode=attlist\\\"\" ascii\n\t\t$s4 = \"\\\"mode=list\\\"\" ascii\n\t\t$s5 = \"\\\"mode=domain\\\"\" ascii\n\t\t$s6 = \"\\\"mode=black\\\"\" ascii\n\t\t$s7 = \"\\\"mode=newD&d=\\\"\" ascii\n\t\t$mark1 = \"chrome.runtime.onMessage.addListener\" ascii\n\t\t$mark2 = \"chrome.webNavigation.onCompleted.addListener\" ascii\n\t\t$enc1 = \"function BSue(string){\" ascii\n\t\t$enc2 = \"function BSE(input){\" ascii\n\t\t$enc3 = \"function bin2hex(byteArray)\" ascii\n\t\t$xhr1 = \".send(\\\"mode=cd1\" ascii\n\t\t$xhr2 = \".send(\\\"mode=black\" ascii\n\t\t$xhr3 = \".send(\\\"mode=domain\" ascii\n\t\t$xhr4 = \".send(\\\"mode=list\" ascii\n\t\t$manifest1 = \"\\\"description\\\":\\\"advanced font\\\",\" ascii\n\t\t$manifest2 = \"\\\"scripts\\\":[\\\"bg.js\\\"]\" ascii\n\t\t$manifest3 = \"\\\"devtools_page\\\":\\\"dev.html\\\"\" ascii\n\n\tcondition:\n\t\t(5 of ( $s* ) and all of ( $mark* ) ) or all of ( $enc* ) or 3 of ( $xhr* ) or 2 of ( $manifest* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

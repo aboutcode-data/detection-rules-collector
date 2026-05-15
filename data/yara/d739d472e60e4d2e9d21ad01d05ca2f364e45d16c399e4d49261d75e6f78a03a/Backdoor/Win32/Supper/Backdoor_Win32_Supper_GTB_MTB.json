@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Supper/Backdoor_Win32_Supper_GTB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Supper_GTB_MTB",
+                "tags": [],
+                "description": "Backdoor:Win32/Supper.GTB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Supper_GTB_MTB\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Supper.GTB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 8b 04 1f 48 33 45 ?? 48 89 04 1e e8 }\n\t\t$a_03_1 = {48 8b 07 48 89 45 ?? 48 83 c7 ?? 48 31 db e8 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_squirrel_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Karneades / Markus Neis, Jonhnathan Ribeiro, oscd.community",
+                "date": "2022-06-09",
+                "title": "Arbitrary File Download Via Squirrel.EXE",
+                "id": "1e75c1cc-c5d4-42aa-ac3d-91b0b68b3b4c"
+            },
+            "rule_text": "title: Arbitrary File Download Via Squirrel.EXE\nid: 1e75c1cc-c5d4-42aa-ac3d-91b0b68b3b4c\nrelated:\n- id: 45239e6a-b035-4aaf-b339-8ad379fcb67e\n  type: similar\n- id: fa4b21c9-0057-4493-b289-2556416ae4d7\n  type: obsolete\nstatus: test\ndescription: 'Detects the usage of the \"Squirrel.exe\" to download arbitrary files.\n  This binary is part of multiple Electron based software installations (Slack, Teams,\n  Discord, etc.)\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Squirrel/\n- http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/\n- http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/\nauthor: Nasreddine Bencherchali (Nextron Systems), Karneades / Markus Neis, Jonhnathan\n  Ribeiro, oscd.community\ndate: 2022-06-09\nmodified: 2023-11-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith:\n    - \\squirrel.exe\n    - \\update.exe\n  selection_download_cli:\n    CommandLine|contains:\n    - ' --download '\n    - ' --update '\n    - ' --updateRollback='\n  selection_download_http_keyword:\n    CommandLine|contains: http\n  condition: all of selection_*\nfalsepositives:\n- Expected FP with some Electron based applications such as (1Clipboard, Beaker Browser,\n  Caret, Discord, GitHub Desktop, etc.)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

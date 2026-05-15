@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regsvr32_remote_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-31",
+                "title": "Suspicious Regsvr32 Execution From Remote Share",
+                "id": "88a87a10-384b-4ad7-8871-2f9bf9259ce5"
+            },
+            "rule_text": "title: Suspicious Regsvr32 Execution From Remote Share\nid: 88a87a10-384b-4ad7-8871-2f9bf9259ce5\nstatus: test\ndescription: Detects REGSVR32.exe to execute DLL hosted on remote shares\nreferences:\n- https://thedfirreport.com/2022/10/31/follina-exploit-leads-to-domain-compromise/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-31\ntags:\n- attack.stealth\n- attack.t1218.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\regsvr32.exe\n  - OriginalFileName: \\REGSVR32.EXE\n  selection_cli:\n    CommandLine|contains: ' \\\\\\\\'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

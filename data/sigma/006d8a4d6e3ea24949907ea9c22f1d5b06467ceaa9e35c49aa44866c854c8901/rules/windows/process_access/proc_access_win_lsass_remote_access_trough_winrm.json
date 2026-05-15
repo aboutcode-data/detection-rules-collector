@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_lsass_remote_access_trough_winrm.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Patryk Prauze - ING Tech",
+                "date": "2019-05-20",
+                "title": "Remote LSASS Process Access Through Windows Remote Management",
+                "id": "aa35a627-33fb-4d04-a165-d33b4afca3e8"
+            },
+            "rule_text": "title: Remote LSASS Process Access Through Windows Remote Management\nid: aa35a627-33fb-4d04-a165-d33b4afca3e8\nstatus: stable\ndescription: Detects remote access to the LSASS process via WinRM. This could be a\n  sign of credential dumping from tools like mimikatz.\nreferences:\n- https://pentestlab.blog/2018/05/15/lateral-movement-winrm/\nauthor: Patryk Prauze - ING Tech\ndate: 2019-05-20\nmodified: 2023-11-29\ntags:\n- attack.credential-access\n- attack.execution\n- attack.t1003.001\n- attack.t1059.001\n- attack.lateral-movement\n- attack.t1021.006\n- attack.s0002\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    TargetImage|endswith: \\lsass.exe\n    SourceImage|endswith: :\\Windows\\system32\\wsmprovhost.exe\n  filter_main_access:\n    GrantedAccess: '0x80000000'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

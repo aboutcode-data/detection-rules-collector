@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/syscall/lnx_auditd_susp_exe_folders.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2018-01-23",
+                "title": "Program Executions in Suspicious Folders",
+                "id": "a39d7fa7-3fbd-4dc2-97e1-d87f546b1bbc"
+            },
+            "rule_text": "title: Program Executions in Suspicious Folders\nid: a39d7fa7-3fbd-4dc2-97e1-d87f546b1bbc\nstatus: test\ndescription: Detects program executions in suspicious non-program folders related\n  to malware or hacking activity\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2018-01-23\nmodified: 2021-11-27\ntags:\n- attack.t1587\n- attack.t1584\n- attack.resource-development\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: SYSCALL\n    exe|startswith:\n    - /tmp/\n    - /var/www/\n    - /home/*/public_html/\n    - /usr/local/apache2/\n    - /usr/local/httpd/\n    - /var/apache/\n    - /srv/www/\n    - /home/httpd/html/\n    - /srv/http/\n    - /usr/share/nginx/html/\n    - /var/lib/pgsql/data/\n    - /usr/local/mysql/data/\n    - /var/lib/mysql/\n    - /var/vsftpd/\n    - /etc/bind/\n    - /var/named/\n  condition: selection\nfalsepositives:\n- Admin activity (especially in /tmp folders)\n- Crazy web applications\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

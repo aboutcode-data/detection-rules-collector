@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_python_inline_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-02",
+                "title": "Python Inline Command Execution",
+                "id": "899133d5-4d7c-4a7f-94ee-27355c879d90"
+            },
+            "rule_text": "title: Python Inline Command Execution\nid: 899133d5-4d7c-4a7f-94ee-27355c879d90\nstatus: test\ndescription: Detects execution of python using the \"-c\" flag. This is could be used\n  as a way to launch a reverse shell or execute live python code.\nreferences:\n- https://docs.python.org/3/using/cmdline.html#cmdoption-c\n- https://www.revshells.com/\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-02\nmodified: 2025-10-07\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: python.exe\n  - Image|endswith:\n    - python.exe\n    - python3.exe\n    - python2.exe\n  selection_cli:\n    CommandLine|contains: ' -c'\n  filter_main_python_1:\n    ParentImage|startswith:\n    - C:\\Program Files\\Python\n    - C:\\Program Files (x86)\\Python\n    ParentImage|endswith: \\python.exe\n    ParentCommandLine|contains: -E -s -m ensurepip -U --default-pip\n  filter_main_python_trace:\n    ParentImage|startswith:\n    - C:\\Program Files\\Python\n    - C:\\Program Files (x86)\\Python\n    CommandLine|contains|all:\n    - -W ignore::DeprecationWarning\n    - '[''install'', ''--no-cache-dir'', ''--no-index'', ''--find-links'','\n    - '''--upgrade'', ''pip'''\n  filter_optional_vscode:\n  - ParentImage|endswith: \\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\n  - ParentImage:\n    - C:\\Program Files\\Microsoft VS Code\\Code.exe\n    - C:\\Program Files (x86)\\Microsoft VS Code\\Code.exe\n  filter_optional_pip:\n    CommandLine|contains|all:\n    - <pip-setuptools-caller>\n    - exec(compile(\n  condition: all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Python libraries that use a flag starting with \"-c\". Filter according to your environment\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

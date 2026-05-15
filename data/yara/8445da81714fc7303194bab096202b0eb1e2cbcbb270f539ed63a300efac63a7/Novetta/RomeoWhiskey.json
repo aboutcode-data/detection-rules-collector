@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/RomeoWhiskey.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RomeoWhiskey_Two",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "a8d88714f0bc643e76163d1b8972565e78a159292d45a8218d0ad0754c8f561d"
+            },
+            "rule_text": "import \"pe\"\n\nrule RomeoWhiskey_Two\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"a8d88714f0bc643e76163d1b8972565e78a159292d45a8218d0ad0754c8f561d\"\n\n\tstrings:\n\t\t$a = {\n\t\t\tFF 15 [4] \n\t\t\t66 8B C8 \n\t\t\t[3-4] \n\t\t\t66 81 F1 40 1C \n\t\t\t66 D1 E9 \n\t\t\t81 C1 E0 56 00 00 \n\t\t\t0F B7 C9 \n\t\t\t0F B7 C0 \n\t\t\t81 F1 30 32 00 00 \n\t\t\tC1 E0 10 \n\t\t\t0B C8 \n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RomeoWhiskey_One",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "5d21e865d57e9798ac7c14a6ad09c4034d103f3ea993295dcdf8a208ea825ad7"
+            },
+            "rule_text": "import \"pe\"\n\nrule RomeoWhiskey_One\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"5d21e865d57e9798ac7c14a6ad09c4034d103f3ea993295dcdf8a208ea825ad7\"\n\n\tstrings:\n\t\t$a = {\n\t\t\tFF 15 [4]  \n\t\t\t0F B7 C0\n\t\t\t8B C8\n\t\t\t[2-4] \n\t\t\tC1 E9 ?? \n\t\t\t81 F1 [2] 00 00 \n\t\t\t[0-2] \n\t\t\tC1 E0 10 \n\t\t\t0B C8 \n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

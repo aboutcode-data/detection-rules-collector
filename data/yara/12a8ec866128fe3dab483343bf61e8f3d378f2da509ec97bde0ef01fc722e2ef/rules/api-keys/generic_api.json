@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/ail-project/ail-yara-rules/blob/master/rules/api-keys/generic_api.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "generic_api",
+                "tags": [],
+                "author": "@KevTheHermit",
+                "info": "Part of PasteHunter",
+                "reference": "https://github.com/kevthehermit/PasteHunter"
+            },
+            "rule_text": "rule generic_api\n{\n\tmeta:\n\t\tauthor = \"@KevTheHermit\"\n\t\tinfo = \"Part of PasteHunter\"\n\t\treference = \"https://github.com/kevthehermit/PasteHunter\"\n\n\tstrings:\n\t\t$a1 = \"apikey\" nocase\n\t\t$a2 = \"api_key\" nocase\n\t\t$hash32 = /\\b[a-fA-F\\d]{32}\\b/\n\t\t$hash64 = /\\b[a-fA-F\\d]{64}\\b/\n\t\t$n1 = \"#EXTINF\"\n\t\t$n2 = \"m3u8\"\n\t\t$n3 = \"Chocolatey is running\"\n\n\tcondition:\n\t\t( any of ( $a* ) ) and ( any of ( $hash* ) ) and ( not any of ( $n* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

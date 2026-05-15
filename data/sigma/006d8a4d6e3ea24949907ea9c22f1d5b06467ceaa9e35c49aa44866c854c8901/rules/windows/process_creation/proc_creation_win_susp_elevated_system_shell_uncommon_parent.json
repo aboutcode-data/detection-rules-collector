@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_elevated_system_shell_uncommon_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Tim Shelton (update fp)",
+                "date": "2022-12-05",
+                "title": "Elevated System Shell Spawned From Uncommon Parent Location",
+                "id": "178e615d-e666-498b-9630-9ed363038101"
+            },
+            "rule_text": "title: Elevated System Shell Spawned From Uncommon Parent Location\nid: 178e615d-e666-498b-9630-9ed363038101\nrelated:\n- id: 61065c72-5d7d-44ef-bf41-6a36684b545f\n  type: similar\nstatus: test\ndescription: Detects when a shell program such as the Windows command prompt or PowerShell\n  is launched with system privileges from a uncommon parent location.\nreferences:\n- https://github.com/Wh04m1001/SysmonEoP\nauthor: frack113, Tim Shelton (update fp)\ndate: 2022-12-05\nmodified: 2025-03-06\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.t1059\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_shell:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\pwsh.exe\n    - \\cmd.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - powershell_ise.EXE\n    - pwsh.dll\n    - Cmd.Exe\n  selection_user:\n    User|contains:\n    - AUTHORI\n    - AUTORI\n    LogonId: '0x3e7'\n  filter_main_generic:\n    ParentImage|contains:\n    - :\\Program Files (x86)\\\n    - :\\Program Files\\\n    - :\\ProgramData\\\n    - :\\Windows\\System32\\\n    - :\\Windows\\SysWOW64\\\n    - :\\Windows\\Temp\\\n    - :\\Windows\\WinSxS\\\n  filter_optional_manageengine:\n    ParentImage|endswith: :\\ManageEngine\\ADManager Plus\\pgsql\\bin\\postgres.exe\n    Image|endswith: \\cmd.exe\n  filter_optional_asgard:\n    CommandLine|contains: :\\WINDOWS\\system32\\cmd.exe /c \"\n    CurrentDirectory|contains: :\\WINDOWS\\Temp\\asgard2-agent\\\n  filter_optional_ibm_spectrumprotect:\n    ParentImage|contains: :\\IBM\\SpectrumProtect\\webserver\\scripts\\\n    CommandLine|contains: :\\IBM\\SpectrumProtect\\webserver\\scripts\\\n  filter_main_parent_null:\n    ParentImage: null\n  filter_main_parent_empty:\n    ParentImage:\n    - ''\n    - '-'\n  condition: all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Some legitimate applications may spawn shells from uncommon parent locations. Apply\n  additional filters and perform an initial baseline before deploying.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

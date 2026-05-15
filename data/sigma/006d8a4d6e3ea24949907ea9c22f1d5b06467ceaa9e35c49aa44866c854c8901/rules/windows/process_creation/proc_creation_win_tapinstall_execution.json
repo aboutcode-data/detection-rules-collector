@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_tapinstall_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, Ian Davis, oscd.community",
+                "date": "2019-10-24",
+                "title": "Tap Installer Execution",
+                "id": "99793437-3e16-439b-be0f-078782cf953d"
+            },
+            "rule_text": "title: Tap Installer Execution\nid: 99793437-3e16-439b-be0f-078782cf953d\nstatus: test\ndescription: Well-known TAP software installation. Possible preparation for data exfiltration\n  using tunneling techniques\nreferences:\n- https://community.openvpn.net/openvpn/wiki/ManagingWindowsTAPDrivers\nauthor: Daniil Yugoslavskiy, Ian Davis, oscd.community\ndate: 2019-10-24\nmodified: 2023-12-11\ntags:\n- attack.exfiltration\n- attack.t1048\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\tapinstall.exe\n  filter_optional_avast:\n    Image|contains:\n    - :\\Program Files\\Avast Software\\SecureLine VPN\\\n    - :\\Program Files (x86)\\Avast Software\\SecureLine VPN\\\n  filter_optional_openvpn:\n    Image|contains: :\\Program Files\\OpenVPN Connect\\drivers\\tap\\\n  filter_optional_protonvpn:\n    Image|contains: :\\Program Files (x86)\\Proton Technologies\\ProtonVPNTap\\installer\\\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate OpenVPN TAP installation\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sharp_dpapi_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-06-26",
+                "title": "HackTool - SharpDPAPI Execution",
+                "id": "c7d33b50-f690-4b51-8cfb-0fb912a31e57"
+            },
+            "rule_text": "title: HackTool - SharpDPAPI Execution\nid: c7d33b50-f690-4b51-8cfb-0fb912a31e57\nstatus: test\ndescription: 'Detects the execution of the SharpDPAPI tool based on CommandLine flags\n  and PE metadata.\n\n  SharpDPAPI is a C# port of some DPAPI functionality from the Mimikatz project.\n\n  '\nreferences:\n- https://github.com/GhostPack/SharpDPAPI\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-06-26\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134.001\n- attack.t1134.003\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\SharpDPAPI.exe\n  - OriginalFileName: SharpDPAPI.exe\n  selection_other_cli:\n    CommandLine|contains:\n    - ' backupkey '\n    - ' blob '\n    - ' certificates '\n    - ' credentials '\n    - ' keepass '\n    - ' masterkeys '\n    - ' rdg '\n    - ' vaults '\n  selection_other_options_guid:\n    CommandLine|contains|all:\n    - ' {'\n    - '}:'\n  selection_other_options_flags:\n    CommandLine|contains:\n    - ' /file:'\n    - ' /machine'\n    - ' /mkfile:'\n    - ' /password:'\n    - ' /pvk:'\n    - ' /server:'\n    - ' /target:'\n    - ' /unprotect'\n  condition: selection_img or (selection_other_cli and 1 of selection_other_options_*)\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rdrleakdiag_process_dumping.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Cedric MAURUGEON, Florian Roth (Nextron Systems), Swachchhanda Shrawan Poudel, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-09-24",
+                "title": "Process Memory Dump via RdrLeakDiag.EXE",
+                "id": "edadb1e5-5919-4e4c-8462-a9e643b02c4b"
+            },
+            "rule_text": "title: Process Memory Dump via RdrLeakDiag.EXE\nid: edadb1e5-5919-4e4c-8462-a9e643b02c4b\nrelated:\n- id: 6355a919-2e97-4285-a673-74645566340d\n  type: obsolete\nstatus: test\ndescription: Detects the use of the Microsoft Windows Resource Leak Diagnostic tool\n  \"rdrleakdiag.exe\" to dump process memory\nreferences:\n- https://www.pureid.io/dumping-abusing-windows-credentials-part-1/\n- https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/\n- https://lolbas-project.github.io/lolbas/Binaries/Rdrleakdiag/\n- https://twitter.com/0gtweet/status/1299071304805560321?s=21\n- https://news.sophos.com/en-us/2024/06/05/operation-crimson-palace-a-technical-deep-dive\nauthor: Cedric MAURUGEON, Florian Roth (Nextron Systems), Swachchhanda Shrawan Poudel,\n  Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-09-24\nmodified: 2024-08-15\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rdrleakdiag.exe\n  - OriginalFileName: RdrLeakDiag.exe\n  selection_cli_dump:\n    CommandLine|contains|windash:\n    - /memdmp\n    - fullmemdmp\n  selection_cli_output_process:\n    CommandLine|contains|windash:\n    - ' /o '\n    - ' /p '\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

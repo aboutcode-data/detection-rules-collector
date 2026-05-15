@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/VBInject/VirTool_Win32_VBInject_AEL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_VBInject_AEL",
+                "tags": [],
+                "description": "VirTool:Win32/VBInject.AEL,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_VBInject_AEL\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/VBInject.AEL,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {e5 e8 8b 45 ?? 66 c7 40 ?? a4 03 90 09 04 00 66 c7 40 }\n\t\t$a_03_1 = {ff 66 89 83 ?? ?? 00 00 8b 5d cc 66 89 83 ?? ?? 00 00 90 09 04 00 b8 90 90 90 90 ff }\n\t\t$a_03_2 = {00 00 31 37 8b 45 ?? 66 c7 80 ?? ?? 00 00 83 c7 8b 45 ?? 66 c7 80 ?? ?? 00 00 04 85 90 09 05 00 66 c7 80 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

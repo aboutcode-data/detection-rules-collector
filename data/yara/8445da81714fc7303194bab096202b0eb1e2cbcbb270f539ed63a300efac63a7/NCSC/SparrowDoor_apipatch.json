@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/NCSC/SparrowDoor_apipatch.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SparrowDoor_apipatch",
+                "tags": [],
+                "author": "NCSC",
+                "description": "Identifies code segments in SparrowDoor responsible for patching APIs. No MZ/PE match as the backdoor has no header. Targeting in memory.",
+                "reference": "https://www.ncsc.gov.uk/files/NCSC-MAR-SparrowDoor.pdf",
+                "date": "2022-02-28",
+                "hash1": "c1890a6447c991880467b86a013dbeaa66cc615f"
+            },
+            "rule_text": "rule SparrowDoor_apipatch\n{\n\tmeta:\n\t\tauthor = \"NCSC\"\n\t\tdescription = \"Identifies code segments in SparrowDoor responsible for patching APIs. No MZ/PE match as the backdoor has no header. Targeting in memory.\"\n\t\treference = \"https://www.ncsc.gov.uk/files/NCSC-MAR-SparrowDoor.pdf\"\n\t\tdate = \"2022-02-28\"\n\t\thash1 = \"c1890a6447c991880467b86a013dbeaa66cc615f\"\n\n\tstrings:\n\t\t$save = {8B 06 89 07 8A 4E 04}\n\t\t$vp_1 = {89 10 8A 4E 04 8B D6 2B D0 88 48 04 83 EA 05 C6 40 05 E9 89 50 06}\n\t\t$vp_2 = {50 8B D6 6A 40 2B D7 88 4F 04 83 EA 05 6A 05 C6 47 05 E9 89 57 06 56}\n\t\t$vp_3 = {51 52 2B DE 6A 05 83 EB 05 56 C6 06 E9 89 5E 01}\n\t\t$va = {6A 40 68 00 10 00 00 68 00 10 00 00 6A 00}\n\t\t$s_patch = {50 68 7F FF FF FF 68 FF FF 00 00 56}\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

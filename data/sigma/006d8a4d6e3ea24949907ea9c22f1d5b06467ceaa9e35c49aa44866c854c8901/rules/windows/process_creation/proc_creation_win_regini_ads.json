@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regini_ads.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Eli Salem, Sander Wiebing, oscd.community",
+                "date": "2020-10-12",
+                "title": "Suspicious Registry Modification From ADS Via Regini.EXE",
+                "id": "77946e79-97f1-45a2-84b4-f37b5c0d8682"
+            },
+            "rule_text": "title: Suspicious Registry Modification From ADS Via Regini.EXE\nid: 77946e79-97f1-45a2-84b4-f37b5c0d8682\nrelated:\n- id: 5f60740a-f57b-4e76-82a1-15b6ff2cb134\n  type: derived\nstatus: test\ndescription: Detects the import of an alternate data stream with regini.exe, regini.exe\n  can be used to modify registry keys.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Regini/\n- https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/regini\nauthor: Eli Salem, Sander Wiebing, oscd.community\ndate: 2020-10-12\nmodified: 2023-02-08\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\regini.exe\n  - OriginalFileName: REGINI.EXE\n  selection_re:\n    CommandLine|re: :[^ \\\\]\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

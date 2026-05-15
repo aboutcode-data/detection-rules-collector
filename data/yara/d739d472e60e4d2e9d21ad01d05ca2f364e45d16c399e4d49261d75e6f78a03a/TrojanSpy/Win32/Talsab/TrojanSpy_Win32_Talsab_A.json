@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Talsab/TrojanSpy_Win32_Talsab_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Talsab_A",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Talsab.A,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Talsab_A\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Talsab.A,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {b8 68 58 4d 56 bb 00 00 00 00 b9 0a 00 00 00 ba 58 56 00 00 ed 81 fb 68 58 4d 56 0f 94 45 ff }\n\t\t$a_02_1 = {69 63 65 72 69 6b 3d 00 [0-10] 50 4f 53 54 20 2f 31 73 74 65 6d 61 69 6c 2e 70 68 70 20 48 54 54 50 2f 31 2e 31 }\n\t\t$a_02_2 = {75 73 65 72 3d 00 [0-10] 64 65 73 74 69 6e 6f 3d 00 [0-10] 26 63 6f 6e 74 65 75 64 6f 3d 00 [0-10] 68 74 74 70 3a 2f 2f 77 77 77 2e 00 [0-10] 2e 69 6e 66 6f 2f 31 73 74 65 6d 61 69 6c 2e 70 68 70 00 }\n\t\t$a_02_3 = {26 63 6f 6e 74 65 75 64 6f 3d 00 [0-10] 50 4f 53 54 20 2f 31 73 74 65 6d 61 69 6c 2e 70 68 70 20 48 54 54 50 2f 31 2e 31 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 6 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

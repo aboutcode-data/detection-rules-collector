@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Banload/TrojanDownloader_Win32_Banload_QD.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Banload_QD",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Banload.QD,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Banload_QD\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Banload.QD,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {52 00 65 00 63 00 65 00 69 00 74 00 61 00 ?? ?? 2e 00 64 00 63 00 78 00 }\n\t\t$a_00_1 = {64 00 65 00 73 00 63 00 6f 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_00_2 = {63 00 73 00 73 00 79 00 73 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_03_3 = {68 00 04 00 00 68 ?? ?? ?? ?? a1 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? 6a 00 ba ?? ?? ?? ?? 8b 0d ?? ?? ?? ?? b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 83 3d ?? ?? ?? ?? 00 75 c1 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

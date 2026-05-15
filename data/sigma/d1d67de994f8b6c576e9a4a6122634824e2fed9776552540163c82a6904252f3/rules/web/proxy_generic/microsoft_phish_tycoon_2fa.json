@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/microsoft_phish_tycoon_2fa.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-05-06",
+                "title": "Tycoon 2FA Microsoft Phishing-as-a-Service",
+                "id": "6ff81703-9a0f-4f6b-b3a9-e59a0d1baef7"
+            },
+            "rule_text": "title: Tycoon 2FA Microsoft Phishing-as-a-Service\nid: 6ff81703-9a0f-4f6b-b3a9-e59a0d1baef7\ndescription: Detects URL patterns used by Tycoon 2FA\nreferences:\n- https://blog.sekoia.io/tycoon-2fa-an-in-depth-analysis-of-the-latest-version-of-the-aitm-phishing-kit/\n- https://www.msxfaq.de/cloud/security/qrcode_phishing_mit_microsoft_365.htm\n- https://www-msxfaq-de.translate.goog/cloud/security/qrcode_phishing_mit_microsoft_365.htm?_x_tr_sl=auto&_x_tr_tl=en\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2024-05-06\nmodified: 2025-07-25\nlogsource:\n  category: proxy\ndetection:\n  selection_socketio:\n    uri_path|startswith:\n    - /web6socket/socket.io/\n    - /web8socket/socket.io/\n  selection_post_pattern:\n    http_method|cased: POST\n    uri_path|re: ^/[A-Za-z0-9]{20,35}[A-Z]{32}[A-Za-z0-9]{20,35}\\b\n  selection_get_pattern:\n    http_method|cased: GET\n    uri_query|re: ^id=([a-f0-9]{8,20}-){8,16}[a-f0-9]{8,20}$\n  condition: 1 of selection_*\nfalsepositives:\n- The user might not have entered any credentials on the phishing page. Correlate\n  in logs, look for suspicious logons\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

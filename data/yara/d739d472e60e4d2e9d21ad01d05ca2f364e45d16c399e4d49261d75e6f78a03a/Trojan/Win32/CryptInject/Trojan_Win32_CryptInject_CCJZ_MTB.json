@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CryptInject/Trojan_Win32_CryptInject_CCJZ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CryptInject_CCJZ_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CryptInject.CCJZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CryptInject_CCJZ_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CryptInject.CCJZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {99 83 e2 1f 01 d0 c1 f8 05 83 e8 01 0f b6 44 05 ?? 31 c8 88 45 ?? c7 45 }\n\t\t$a_03_1 = {01 ca 0f b6 1a 8d 4d ?? 8b 55 ?? 01 ca 0f b6 12 31 da 88 10 83 45 ?? 01 83 7d ?? 03 7e }\n\t\t$a_01_2 = {50 41 59 4c 4f 41 44 5f }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 6 + ( #a_03_1 & 1 ) * 4 + ( #a_01_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

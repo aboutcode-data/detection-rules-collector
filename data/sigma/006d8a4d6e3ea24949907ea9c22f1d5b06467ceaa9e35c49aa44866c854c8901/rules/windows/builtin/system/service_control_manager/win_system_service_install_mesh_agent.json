@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_mesh_agent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-28",
+                "title": "Mesh Agent Service Installation",
+                "id": "e0d1ad53-c7eb-48ec-a87a-72393cc6cedc"
+            },
+            "rule_text": "title: Mesh Agent Service Installation\nid: e0d1ad53-c7eb-48ec-a87a-72393cc6cedc\nstatus: test\ndescription: Detects a Mesh Agent service installation. Mesh Agent is used to remotely\n  manage computers\nreferences:\n- https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-28\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_root:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ImagePath|contains: MeshAgent.exe\n  - ServiceName|contains: Mesh Agent\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the tool\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

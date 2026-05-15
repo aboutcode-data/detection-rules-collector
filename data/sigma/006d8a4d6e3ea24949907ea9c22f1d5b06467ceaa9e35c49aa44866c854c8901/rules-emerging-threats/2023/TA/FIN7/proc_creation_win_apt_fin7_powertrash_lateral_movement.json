@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/FIN7/proc_creation_win_apt_fin7_powertrash_lateral_movement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-04",
+                "title": "Potential APT FIN7 Reconnaissance/POWERTRASH Related Activity",
+                "id": "911389c7-5ae3-43ea-bab3-a947ebdeb85e"
+            },
+            "rule_text": "title: Potential APT FIN7 Reconnaissance/POWERTRASH Related Activity\nid: 911389c7-5ae3-43ea-bab3-a947ebdeb85e\nstatus: test\ndescription: Detects specific command line execution used by FIN7 as reported by WithSecureLabs\n  for reconnaissance and POWERTRASH execution\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers/jcr:content/root/responsivegrid/responsivegrid/responsivegrid/image_253944286.img.png/1682500394900.png\n- https://github.com/WithSecureLabs/iocs/blob/344203de742bb7e68bd56618f66d34be95a9f9fc/FIN7VEEAM/iocs.csv\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-04\ntags:\n- attack.execution\n- attack.g0046\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains|all:\n    - -noni -nop -exe bypass -f \\\\\\\\\n    - ADMIN$\n  selection_2:\n    CommandLine|contains|all:\n    - -ex bypass -noprof -nolog -nonint -f\n    - C:\\Windows\\Temp\\\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

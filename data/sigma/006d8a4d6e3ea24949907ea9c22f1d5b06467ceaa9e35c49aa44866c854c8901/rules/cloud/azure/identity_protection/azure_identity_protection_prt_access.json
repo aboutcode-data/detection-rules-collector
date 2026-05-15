@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/identity_protection/azure_identity_protection_prt_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'",
+                "date": "2023-09-07",
+                "title": "Primary Refresh Token Access Attempt",
+                "id": "a84fc3b1-c9ce-4125-8e74-bdcdb24021f1"
+            },
+            "rule_text": "title: Primary Refresh Token Access Attempt\nid: a84fc3b1-c9ce-4125-8e74-bdcdb24021f1\nstatus: test\ndescription: Indicates access attempt to the PRT resource which can be used to move\n  laterally into an organization or perform credential theft\nreferences:\n- https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#possible-attempt-to-access-primary-refresh-token-prt\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-user-accounts#unusual-sign-ins\nauthor: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'\ndate: 2023-09-07\ntags:\n- attack.t1528\n- attack.credential-access\nlogsource:\n  product: azure\n  service: riskdetection\ndetection:\n  selection:\n    riskEventType: attemptedPrtAccess\n  condition: selection\nfalsepositives:\n- This detection is low-volume and is seen infrequently in most organizations. When\n  this detection appears it's high risk, and users should be remediated.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

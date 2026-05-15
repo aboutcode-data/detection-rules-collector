@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Virus/Win32/Virlock/Virus_Win32_Virlock_PAGD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Virus_Win32_Virlock_PAGD_MTB",
+                "tags": [],
+                "description": "Virus:Win32/Virlock.PAGD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Virus_Win32_Virlock_PAGD_MTB\n{\n\tmeta:\n\t\tdescription = \"Virus:Win32/Virlock.PAGD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {81 c4 c0 03 00 00 c3 e9 ?? ?? ?? ?? 88 07 42 ?? 46 ?? 47 ?? 49 83 f9 }\n\t\t$a_03_1 = {8b f8 8b df ?? b9 c0 03 00 00 e9 ?? ?? ?? ?? ba 30 00 00 00 8a 06 ?? 32 c2 ?? e9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

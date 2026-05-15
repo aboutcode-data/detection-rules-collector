@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Elastic/Windows_Trojan_Deimos_DLL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_Deimos_DLL",
+                "tags": [],
+                "author": "Elastic Security",
+                "creation_date": "2021-09-18",
+                "last_modified": "2021-09-18",
+                "os": "Windows",
+                "arch": "x86",
+                "category_type": "Trojan",
+                "family": "Deimos",
+                "threat_name": "Windows.Trojan.Deimos",
+                "description": "Detects the presence of the Deimos trojan DLL file.",
+                "reference": "https://www.elastic.co/security-labs/going-coast-to-coast-climbing-the-pyramid-with-the-deimos-implant",
+                "reference_sample": "2c1941847f660a99bbc6de16b00e563f70d900f9dbc40c6734871993961d3d3e"
+            },
+            "rule_text": "rule Windows_Trojan_Deimos_DLL\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tcreation_date = \"2021-09-18\"\n\t\tlast_modified = \"2021-09-18\"\n\t\tos = \"Windows\"\n\t\tarch = \"x86\"\n\t\tcategory_type = \"Trojan\"\n\t\tfamily = \"Deimos\"\n\t\tthreat_name = \"Windows.Trojan.Deimos\"\n\t\tdescription = \"Detects the presence of the Deimos trojan DLL file.\"\n\t\treference = \"https://www.elastic.co/security-labs/going-coast-to-coast-climbing-the-pyramid-with-the-deimos-implant\"\n\t\treference_sample = \"2c1941847f660a99bbc6de16b00e563f70d900f9dbc40c6734871993961d3d3e\"\n\n\tstrings:\n\t\t$a1 = \"\\\\APPDATA\\\\ROAMING\" wide fullword\n\t\t$a2 = \"{\\\"action\\\":\\\"ping\\\",\\\"\" wide fullword\n\t\t$a3 = \"Deimos\" ascii fullword\n\t\t$b1 = { 00 57 00 58 00 59 00 5A 00 5F 00 00 17 75 00 73 00 65 00 72 00 }\n\t\t$b2 = { 0C 08 16 1F 68 9D 08 17 1F 77 9D 08 18 1F 69 9D 08 19 1F 64 9D }\n\n\tcondition:\n\t\tall of ( $a* ) or 1 of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

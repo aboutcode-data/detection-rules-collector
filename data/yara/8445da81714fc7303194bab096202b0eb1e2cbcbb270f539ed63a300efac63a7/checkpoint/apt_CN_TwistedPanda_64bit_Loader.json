@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/apt_CN_TwistedPanda_64bit_Loader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_CN_TwistedPanda_64bit_Loader",
+                "tags": [],
+                "author": "Check Point Research",
+                "description": "Detect the 64bit Loader DLL used by TwistedPanda",
+                "reference": "https://research.checkpoint.com/2022/twisted-panda-chinese-apt-espionage-operation-against-russians-state-owned-defense-institutes/",
+                "date": "2022-04-14",
+                "hash": "e0d4ef7190ff50e6ad2a2403c87cc37254498e8cc5a3b2b8798983b1b3cdc94f"
+            },
+            "rule_text": "rule apt_CN_TwistedPanda_64bit_Loader\n{\n\tmeta:\n\t\tauthor = \"Check Point Research\"\n\t\tdescription = \"Detect the 64bit Loader DLL used by TwistedPanda\"\n\t\treference = \"https://research.checkpoint.com/2022/twisted-panda-chinese-apt-espionage-operation-against-russians-state-owned-defense-institutes/\"\n\t\tdate = \"2022-04-14\"\n\t\thash = \"e0d4ef7190ff50e6ad2a2403c87cc37254498e8cc5a3b2b8798983b1b3cdc94f\"\n\n\tstrings:\n\t\t$path_check = { 48 8D [6] 48 8B ?? 48 81 [5] 72 }\n\t\t$shellcode_read = { 48 8B D0 41 B8 F0 16 00 00 48 8B CF 48 8B D8 FF}\n\t\t$shellcode_allocate = { BA F0 16 00 00 44 8D 4E 40 33 C9 41 B8 00 30 00 00 FF }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and filesize < 3000KB and $path_check and $shellcode_allocate and $shellcode_read\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_push_protection_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal (@faisalusuf)",
+                "date": "2024-03-07",
+                "title": "Github Push Protection Disabled",
+                "id": "ccd55945-badd-4bae-936b-823a735d37dd"
+            },
+            "rule_text": "title: Github Push Protection Disabled\nid: ccd55945-badd-4bae-936b-823a735d37dd\nstatus: test\ndescription: Detects if the push protection feature is disabled for an organization,\n  enterprise, repositories or custom pattern rules.\nreferences:\n- https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/push-protection-for-repositories-and-organizations\n- https://thehackernews.com/2024/03/github-rolls-out-default-secret.html\nauthor: Muhammad Faisal (@faisalusuf)\ndate: 2024-03-07\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action:\n    - business_secret_scanning_custom_pattern_push_protection.disabled\n    - business_secret_scanning_push_protection.disable\n    - business_secret_scanning_push_protection.disabled_for_new_repos\n    - org.secret_scanning_custom_pattern_push_protection_disabled\n    - org.secret_scanning_push_protection_disable\n    - org.secret_scanning_push_protection_new_repos_disable\n    - repository_secret_scanning_custom_pattern_push_protection.disabled\n  condition: selection\nfalsepositives:\n- Allowed administrative activities.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

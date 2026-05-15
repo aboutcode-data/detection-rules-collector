@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_Impacket/atexec/win_schtasks_impacket_atexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2023/01/05",
+                "title": "Possible Impacket AtExec Activity",
+                "id": "eb2713cd-6e7d-4813-81d0-ced79de4c7da"
+            },
+            "rule_text": "title: Possible Impacket AtExec Activity\nid: eb2713cd-6e7d-4813-81d0-ced79de4c7da\nstatus: experimental\ndescription: Detect Impacket atexec.py usage in Windows task scheduler logs. If detected,\n  these events will appear to be logged simultaneously and will all contain the same\n  eight-letter task name.\nreferences:\n- https://www.13cubed.com/downloads/impacket_exec_commands_cheat_sheet.pdf\n- https://www.hackingarticles.in/impacket-guide-smb-msrpc/\nauthor: Micah Babinski\ndate: 2023/01/05\ntags:\n- attack.s0357\n- attack.execution\n- attack.t1053\n- attack.t1053.002\nlogsource:\n  product: windows\n  service: taskscheduler\ndetection:\n  selection_task_registered:\n    EventID: 106\n    Message|re: ^.*registered\\sTask\\sScheduler\\stask\\s\\\"\\\\[A-Za-z]{8}\\\"$\n  selection_created_task_process:\n    EventID: 129\n    Message|re: ^.*Task\\sScheduler\\slaunch\\stask\\s\\\"\\\\[A-Za-z]{8}\\\"\\s,\\sinstance\\s\\\"cmd\\.exe\\\".*$\n  selection_action_started:\n    EventID: 200\n    Message|re: ^.*Task\\sScheduler\\slaunched\\saction\\s\\\"cmd\\.exe\\\"\\sin\\sinstance\\s\\\"\\{.*\\}\\\"\\sof\\stask\\s\"\\\\[A-Za-z]{8}\\\"\\.$\n  selection_registration_deleted:\n    EventID: 141\n    Message|re: ^.*deleted\\sTask\\sScheduler\\stask\\s\"\\\\[A-Za-z]{8}\\\"$\n  selection_action_completed:\n    EventID: 201\n    Message|re: ^Task\\sScheduler\\ssuccessfully\\scompleted\\stask\\s\"\\\\[A-Za-z]{8}\\\".*action\\s\\\"cmd\\.exe\\\"\\swith\\sreturn\\scode\\s\\d\\.$\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

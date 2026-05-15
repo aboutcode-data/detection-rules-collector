@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_repo_or_org_transferred.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Romain Gaillard (@romain-gaillard)",
+                "date": "2024-07-29",
+                "title": "Github Repository/Organization Transferred",
+                "id": "04ad83ef-1a37-4c10-b57a-81092164bf33"
+            },
+            "rule_text": "title: Github Repository/Organization Transferred\nid: 04ad83ef-1a37-4c10-b57a-81092164bf33\nstatus: test\ndescription: Detects when a repository or an organization is being transferred to\n  another location.\nreferences:\n- https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository\n- https://docs.github.com/en/organizations/managing-organization-settings/transferring-organization-ownership\n- https://docs.github.com/en/migrations\n- https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/audit-log-events-for-your-enterprise#migration\nauthor: Romain Gaillard (@romain-gaillard)\ndate: 2024-07-29\ntags:\n- attack.persistence\n- attack.exfiltration\n- attack.t1020\n- attack.t1537\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action:\n    - migration.create\n    - org.transfer_outgoing\n    - org.transfer\n    - repo.transfer_outgoing\n  condition: selection\nfalsepositives:\n- Allowed administrative activities.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

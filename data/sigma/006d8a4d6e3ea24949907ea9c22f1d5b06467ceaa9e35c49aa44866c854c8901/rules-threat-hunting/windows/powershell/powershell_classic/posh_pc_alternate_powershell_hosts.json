@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_classic/posh_pc_alternate_powershell_hosts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-08-11",
+                "title": "Uncommon PowerShell Hosts",
+                "id": "d7326048-328b-4d5e-98af-86e84b17c765"
+            },
+            "rule_text": "title: Uncommon PowerShell Hosts\nid: d7326048-328b-4d5e-98af-86e84b17c765\nrelated:\n- id: 64e8e417-c19a-475a-8d19-98ea705394cc\n  type: derived\nstatus: test\ndescription: Detects alternate PowerShell hosts potentially bypassing detections looking\n  for powershell.exe\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190815-RemoteServiceInstallation/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-08-11\nmodified: 2025-10-22\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_classic_start\ndetection:\n  selection:\n    Data|contains: HostApplication=\n  filter_main_ps:\n    Data|contains:\n    - HostApplication=?:/Windows/System32/WindowsPowerShell/v1.0/powershell\n    - HostApplication=?:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell\n    - HostApplication=?:\\Windows\\System32\\sdiagnhost.exe\n    - HostApplication=?:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell\n    - HostApplication=?:\\Windows\\SysWOW64\\sdiagnhost.exe\n    - HostApplication=?:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell\n    - HostApplication=powershell\n  filter_optional_citrix:\n    Data|contains: Citrix\\ConfigSync\\ConfigSync.ps1\n  filter_optional_hexnode:\n    Data|contains: HostApplication=C:\\Hexnode\\Hexnode Agent\\Current\\HexnodeAgent.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Programs using PowerShell directly without invocation of a dedicated interpreter\n- MSP Detection Searcher\n- Citrix ConfigSync.ps1\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_base64_frombase64string.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-08-24",
+                "title": "PowerShell Base64 Encoded FromBase64String Cmdlet",
+                "id": "fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c"
+            },
+            "rule_text": "title: PowerShell Base64 Encoded FromBase64String Cmdlet\nid: fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c\nstatus: test\ndescription: Detects usage of a base64 encoded \"FromBase64String\" cmdlet in a process\n  command line\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-08-24\nmodified: 2023-04-06\ntags:\n- attack.stealth\n- attack.t1140\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - CommandLine|base64offset|contains: ::FromBase64String\n  - CommandLine|contains:\n    - OgA6AEYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcA\n    - oAOgBGAHIAbwBtAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnA\n    - 6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZw\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

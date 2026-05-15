@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_winlogon_helper_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2019-10-21",
+                "title": "Winlogon Helper DLL",
+                "id": "851c506b-6b7c-4ce2-8802-c703009d03c0"
+            },
+            "rule_text": "title: Winlogon Helper DLL\nid: 851c506b-6b7c-4ce2-8802-c703009d03c0\nstatus: test\ndescription: 'Winlogon.exe is a Windows component responsible for actions at logon/logoff\n  as well as the secure attention sequence (SAS) triggered by Ctrl-Alt-Delete.\n\n  Registry entries in HKLM\\Software[Wow6432Node]Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\\n  and HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\ are\n\n  used to manage additional helper programs and functionalities that support Winlogon.\n  Malicious modifications to these Registry keys may cause Winlogon to\n\n  load and execute malicious DLLs and/or executables.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.004/T1547.004.md\nauthor: Timur Zinniatullin, oscd.community\ndate: 2019-10-21\nmodified: 2022-07-07\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.004\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains: CurrentVersion\\Winlogon\n  selection2:\n    ScriptBlockText|contains:\n    - Set-ItemProperty\n    - New-Item\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

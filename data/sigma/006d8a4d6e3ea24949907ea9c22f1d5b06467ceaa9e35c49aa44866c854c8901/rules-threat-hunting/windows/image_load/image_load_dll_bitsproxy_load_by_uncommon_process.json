@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/image_load/image_load_dll_bitsproxy_load_by_uncommon_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "UnicornOfHunt",
+                "date": "2025-06-04",
+                "title": "BITS Client BitsProxy DLL Loaded By Uncommon Process",
+                "id": "e700ff14-1bff-4d1d-9438-738dff5f0466"
+            },
+            "rule_text": "title: BITS Client BitsProxy DLL Loaded By Uncommon Process\nid: e700ff14-1bff-4d1d-9438-738dff5f0466\nstatus: experimental\ndescription: 'Detects an uncommon process loading the \"BitsProxy.dll\". This DLL is\n  used when the BITS COM instance or API is used.\n\n  This detection can be used to hunt for uncommon processes loading this DLL in your\n  environment. Which may indicate potential suspicious activity occurring.\n\n  '\nreferences:\n- https://unicornofhunt.com/2025/05/22/When-Unicorns-Go-Quiet-BITS-Jobs-and-the-Art-of-Stealthy-Transfers/\nauthor: UnicornOfHunt\ndate: 2025-06-04\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\n- detection.threat-hunting\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\BitsProxy.dll\n  filter_main_system:\n    Image:\n    - C:\\Windows\\System32\\aitstatic.exe\n    - C:\\Windows\\System32\\bitsadmin.exe\n    - C:\\Windows\\System32\\desktopimgdownldr.exe\n    - C:\\Windows\\System32\\DeviceEnroller.exe\n    - C:\\Windows\\System32\\MDMAppInstaller.exe\n    - C:\\Windows\\System32\\ofdeploy.exe\n    - C:\\Windows\\System32\\RecoveryDrive.exe\n    - C:\\Windows\\System32\\Speech_OneCore\\common\\SpeechModelDownload.exe\n    - C:\\Windows\\SysWOW64\\bitsadmin.exe\n    - C:\\Windows\\SysWOW64\\OneDriveSetup.exe\n    - C:\\Windows\\SysWOW64\\Speech_OneCore\\Common\\SpeechModelDownload.exe\n  filter_optional_chrome:\n    Image: C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Allowed binaries in the environment that do BITS Jobs\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

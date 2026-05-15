@@ -1,0 +1,147 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_apt15.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT15_Malware_Mar18_RoyalCli",
+                "tags": [],
+                "description": "Detects malware from APT 15 report by NCC Group",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/HZ5XMN",
+                "date": "2018-03-10",
+                "hash1": "6df9b712ff56009810c4000a0ad47e41b7a6183b69416251e060b5c80cd05785",
+                "id": "165bfa6c-1a8d-5628-8c35-da4e4a2ae04f"
+            },
+            "rule_text": "rule APT15_Malware_Mar18_RoyalCli\n{\n\tmeta:\n\t\tdescription = \"Detects malware from APT 15 report by NCC Group\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/HZ5XMN\"\n\t\tdate = \"2018-03-10\"\n\t\thash1 = \"6df9b712ff56009810c4000a0ad47e41b7a6183b69416251e060b5c80cd05785\"\n\t\tid = \"165bfa6c-1a8d-5628-8c35-da4e4a2ae04f\"\n\n\tstrings:\n\t\t$s1 = \"\\\\Release\\\\RoyalCli.pdb\" ascii\n\t\t$s2 = \"%snewcmd.exe\" fullword ascii\n\t\t$s3 = \"Run cmd error %d\" fullword ascii\n\t\t$s4 = \"%s~clitemp%08x.ini\" fullword ascii\n\t\t$s5 = \"run file failed\" fullword ascii\n\t\t$s6 = \"Cmd timeout %d\" fullword ascii\n\t\t$s7 = \"2 %s  %d 0 %d\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT15_Malware_Mar18_RoyalDNS",
+                "tags": [],
+                "description": "Detects malware from APT 15 report by NCC Group",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/HZ5XMN",
+                "date": "2018-03-10",
+                "hash1": "bc937f6e958b339f6925023bc2af375d669084e9551fd3753e501ef26e36b39d",
+                "id": "c2f519db-2750-53ce-ae18-697ea041faaf"
+            },
+            "rule_text": "import \"pe\"\n\nrule APT15_Malware_Mar18_RoyalDNS\n{\n\tmeta:\n\t\tdescription = \"Detects malware from APT 15 report by NCC Group\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/HZ5XMN\"\n\t\tdate = \"2018-03-10\"\n\t\thash1 = \"bc937f6e958b339f6925023bc2af375d669084e9551fd3753e501ef26e36b39d\"\n\t\tid = \"c2f519db-2750-53ce-ae18-697ea041faaf\"\n\n\tstrings:\n\t\t$x1 = \"del c:\\\\windows\\\\temp\\\\r.exe /f /q\" fullword ascii\n\t\t$x2 = \"%s\\\\r.exe\" fullword ascii\n\t\t$s1 = \"rights.dll\" fullword ascii\n\t\t$s2 = \"\\\"%s\\\">>\\\"%s\\\"\\\\s.txt\" fullword ascii\n\t\t$s3 = \"Nwsapagent\" fullword ascii\n\t\t$s4 = \"%s\\\\r.bat\" fullword ascii\n\t\t$s5 = \"%s\\\\s.txt\" fullword ascii\n\t\t$s6 = \"runexe\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and ( ( pe.exports ( \"RunInstallA\" ) and pe.exports ( \"RunUninstallA\" ) ) or 1 of ( $x* ) or 2 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT15_Malware_Mar18_BS2005",
+                "tags": [],
+                "description": "Detects malware from APT 15 report by NCC Group",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/HZ5XMN",
+                "date": "2018-03-10",
+                "hash1": "750d9eecd533f89b8aa13aeab173a1cf813b021b6824bc30e60f5db6fa7b950b",
+                "id": "700bbe14-d79e-5a35-aab3-31eacd5bd950"
+            },
+            "rule_text": "rule APT15_Malware_Mar18_BS2005\n{\n\tmeta:\n\t\tdescription = \"Detects malware from APT 15 report by NCC Group\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/HZ5XMN\"\n\t\tdate = \"2018-03-10\"\n\t\thash1 = \"750d9eecd533f89b8aa13aeab173a1cf813b021b6824bc30e60f5db6fa7b950b\"\n\t\tid = \"700bbe14-d79e-5a35-aab3-31eacd5bd950\"\n\n\tstrings:\n\t\t$x1 = \"AAAAKQAASCMAABi+AABnhEBj8vep7VRoAEPRWLweGc0/eiDrXGajJXRxbXsTXAcZAABK4QAAPWwAACzWAAByrg==\" fullword ascii\n\t\t$x2 = \"AAAAKQAASCMAABi+AABnhKv3kXJJousn5YzkjGF46eE3G8ZGse4B9uoqJo8Q2oF0AABK4QAAPWwAACzWAAByrg==\" fullword ascii\n\t\t$a1 = \"http://%s/content.html?id=%s\" fullword ascii\n\t\t$a2 = \"http://%s/main.php?ssid=%s\" fullword ascii\n\t\t$a3 = \"http://%s/webmail.php?id=%s\" fullword ascii\n\t\t$a9 = \"http://%s/error.html?tab=%s\" fullword ascii\n\t\t$s1 = \"%s\\\\~tmp.txt\" fullword ascii\n\t\t$s2 = \"%s /C %s >>\\\"%s\\\" 2>&1\" fullword ascii\n\t\t$s3 = \"DisableFirstRunCustomize\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and ( 1 of ( $x* ) or 2 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT15_Malware_Mar18_MSExchangeTool",
+                "tags": [],
+                "description": "Detects malware from APT 15 report by NCC Group",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/HZ5XMN",
+                "date": "2018-03-10",
+                "hash1": "16b868d1bef6be39f69b4e976595e7bd46b6c0595cf6bc482229dbb9e64f1bce",
+                "id": "81b826b6-8c2e-5a8a-a626-9515d40dbbb0"
+            },
+            "rule_text": "rule APT15_Malware_Mar18_MSExchangeTool\n{\n\tmeta:\n\t\tdescription = \"Detects malware from APT 15 report by NCC Group\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/HZ5XMN\"\n\t\tdate = \"2018-03-10\"\n\t\thash1 = \"16b868d1bef6be39f69b4e976595e7bd46b6c0595cf6bc482229dbb9e64f1bce\"\n\t\tid = \"81b826b6-8c2e-5a8a-a626-9515d40dbbb0\"\n\n\tstrings:\n\t\t$s1 = \"\\\\Release\\\\EWSTEW.pdb\" ascii\n\t\t$s2 = \"EWSTEW.exe\" fullword wide\n\t\t$s3 = \"Microsoft.Exchange.WebServices.Data\" fullword ascii\n\t\t$s4 = \"tmp.dat\" fullword wide\n\t\t$s6 = \"/v or /t is null\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 40KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "clean_apt15_patchedcmd",
+                "tags": [],
+                "author": "Ahmed Zaki",
+                "description": "This is a patched CMD. This is the CMD that RoyalCli uses.",
+                "sha256": "90d1f65cfa51da07e040e066d4409dc8a48c1ab451542c894a623bc75c14bf8f",
+                "id": "c6867ad4-f7f2-5d63-bffd-07599ede635d"
+            },
+            "rule_text": "rule clean_apt15_patchedcmd\n{\n\tmeta:\n\t\tauthor = \"Ahmed Zaki\"\n\t\tdescription = \"This is a patched CMD. This is the CMD that RoyalCli uses.\"\n\t\tsha256 = \"90d1f65cfa51da07e040e066d4409dc8a48c1ab451542c894a623bc75c14bf8f\"\n\t\tid = \"c6867ad4-f7f2-5d63-bffd-07599ede635d\"\n\n\tstrings:\n\t\t$ = \"eisableCMD\" wide\n\t\t$ = \"%WINDOWS_COPYRIGHT%\" wide\n\t\t$ = \"Cmd.Exe\" wide\n\t\t$ = \"Windows Command Processor\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_apt15_royalcli_1",
+                "tags": [],
+                "description": "Generic strings found in the Royal CLI tool",
+                "author": "David Cannings",
+                "sha256": "6df9b712ff56009810c4000a0ad47e41b7a6183b69416251e060b5c80cd05785",
+                "id": "432c09bf-3c44-5a2c-ba69-7b4fe7eb43cc"
+            },
+            "rule_text": "rule malware_apt15_royalcli_1\n{\n\tmeta:\n\t\tdescription = \"Generic strings found in the Royal CLI tool\"\n\t\tauthor = \"David Cannings\"\n\t\tsha256 = \"6df9b712ff56009810c4000a0ad47e41b7a6183b69416251e060b5c80cd05785\"\n\t\tid = \"432c09bf-3c44-5a2c-ba69-7b4fe7eb43cc\"\n\n\tstrings:\n\t\t$ = \"%s~clitemp%08x.tmp\" fullword\n\t\t$ = \"%s /c %s>%s\" fullword\n\t\t$ = \"%snewcmd.exe\" fullword\n\t\t$ = \"%shkcmd.exe\" fullword\n\t\t$ = \"%s~clitemp%08x.ini\" fullword\n\t\t$ = \"myRObject\" fullword\n\t\t$ = \"myWObject\" fullword\n\t\t$ = \"2 %s  %d 0 %d\\x0D\\x0A\"\n\t\t$ = \"2 %s  %d 1 %d\\x0D\\x0A\"\n\t\t$ = \"%s file not exist\" fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and 5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_apt15_royalcli_2",
+                "tags": [],
+                "author": "Nikolaos Pantazopoulos",
+                "description": "APT15 RoyalCli backdoor",
+                "id": "d4acfd2d-385d-5063-898e-d339b50733eb"
+            },
+            "rule_text": "rule malware_apt15_royalcli_2\n{\n\tmeta:\n\t\tauthor = \"Nikolaos Pantazopoulos\"\n\t\tdescription = \"APT15 RoyalCli backdoor\"\n\t\tid = \"d4acfd2d-385d-5063-898e-d339b50733eb\"\n\n\tstrings:\n\t\t$string1 = \"%shkcmd.exe\" fullword\n\t\t$string2 = \"myRObject\" fullword\n\t\t$string3 = \"%snewcmd.exe\" fullword\n\t\t$string4 = \"%s~clitemp%08x.tmp\" fullword\n\t\t$string6 = \"myWObject\" fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_apt15_royaldll",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "DLL implant, originally rights.dll and runs as a service",
+                "sha256": "bc937f6e958b339f6925023bc2af375d669084e9551fd3753e501ef26e36b39d",
+                "id": "26baef92-1055-56dc-b274-e2a6bc05d85b"
+            },
+            "rule_text": "rule malware_apt15_royaldll\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"DLL implant, originally rights.dll and runs as a service\"\n\t\tsha256 = \"bc937f6e958b339f6925023bc2af375d669084e9551fd3753e501ef26e36b39d\"\n\t\tid = \"26baef92-1055-56dc-b274-e2a6bc05d85b\"\n\n\tstrings:\n\t\t$opcodes_jshash = { B8 A7 C6 67 4E 83 C1 02 BA 04 00 00 00 57 90 }\n\t\t$opcodes_encode = { 0F B6 1C 03 8B 55 08 30 1C 17 47 3B 7D 0C }\n\t\t$opcodes_sleep_loop = { 68 (88|B8) (13|0B) 00 00 FF D6 4F 75 F6 }\n\t\t$ = \"Nwsapagent\" fullword\n\t\t$ = \"\\\"%s\\\">>\\\"%s\\\"\\\\s.txt\"\n\t\t$ = \"myWObject\" fullword\n\t\t$ = \"del c:\\\\windows\\\\temp\\\\r.exe /f /q\"\n\t\t$ = \"del c:\\\\windows\\\\temp\\\\r.ini /f /q\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_apt15_royaldll_2",
+                "tags": [],
+                "author": "Ahmed Zaki",
+                "sha256": "bc937f6e958b339f6925023bc2af375d669084e9551fd3753e501ef26e36b39d",
+                "description": "DNS backdoor used by APT15",
+                "id": "3bc546a5-38b9-5504-b09e-305ba7bbd6bc"
+            },
+            "rule_text": "import \"pe\"\n\nrule malware_apt15_royaldll_2\n{\n\tmeta:\n\t\tauthor = \"Ahmed Zaki\"\n\t\tsha256 = \"bc937f6e958b339f6925023bc2af375d669084e9551fd3753e501ef26e36b39d\"\n\t\tdescription = \"DNS backdoor used by APT15\"\n\t\tid = \"3bc546a5-38b9-5504-b09e-305ba7bbd6bc\"\n\n\tstrings:\n\t\t$ = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Svchost\" wide ascii\n\t\t$ = \"netsvcs\" wide ascii fullword\n\t\t$ = \"%SystemRoot%\\\\System32\\\\svchost.exe -k netsvcs\" wide ascii fullword\n\t\t$ = \"SYSTEM\\\\CurrentControlSet\\\\Services\\\\\" wide ascii\n\t\t$ = \"myWObject\" wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them and pe.exports ( \"ServiceMain\" ) and filesize > 50KB and filesize < 600KB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_apt15_exchange_tool",
+                "tags": [],
+                "author": "Ahmed Zaki",
+                "md5": "d21a7e349e796064ce10f2f6ede31c71",
+                "description": "This is a an exchange enumeration/hijacking tool used by an APT 15",
+                "id": "f07b9537-0741-51c8-a9fa-836430fe4855"
+            },
+            "rule_text": "rule malware_apt15_exchange_tool\n{\n\tmeta:\n\t\tauthor = \"Ahmed Zaki\"\n\t\tmd5 = \"d21a7e349e796064ce10f2f6ede31c71\"\n\t\tdescription = \"This is a an exchange enumeration/hijacking tool used by an APT 15\"\n\t\tid = \"f07b9537-0741-51c8-a9fa-836430fe4855\"\n\n\tstrings:\n\t\t$s1 = \"subjectname\" fullword\n\t\t$s2 = \"sendername\" fullword\n\t\t$s3 = \"WebCredentials\" fullword\n\t\t$s4 = \"ExchangeVersion\" fullword\n\t\t$s5 = \"ExchangeCredentials\" fullword\n\t\t$s6 = \"slfilename\" fullword\n\t\t$s7 = \"EnumMail\" fullword\n\t\t$s8 = \"EnumFolder\" fullword\n\t\t$s9 = \"set_Credentials\" fullword\n\t\t$s18 = \"/v or /t is null\" wide\n\t\t$s24 = \"2013sp1\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_apt15_generic",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "Find generic data potentially relating to AP15 tools",
+                "id": "4eb50731-22df-5f7a-bf5f-166ef84cf8b5"
+            },
+            "rule_text": "rule malware_apt15_generic\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"Find generic data potentially relating to AP15 tools\"\n\t\tid = \"4eb50731-22df-5f7a-bf5f-166ef84cf8b5\"\n\n\tstrings:\n\t\t$str01 = \"myWObject\" fullword\n\t\t$str02 = \"myRObject\" fullword\n\t\t$opcodes01 = { 6A (02|03) 6A 00 6A 00 68 00 00 00 C0 50 FF 15 }\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

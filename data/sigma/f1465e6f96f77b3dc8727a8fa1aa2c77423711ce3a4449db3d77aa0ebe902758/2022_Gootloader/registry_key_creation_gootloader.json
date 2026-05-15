@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_Gootloader/registry_key_creation_gootloader.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/07",
+                "title": "Gootloader Stage 2 Registry Key Creation",
+                "id": "10ad1627-1a0a-4323-b3da-3a9394b9535a"
+            },
+            "rule_text": "title: Gootloader Stage 2 Registry Key Creation\nid: 10ad1627-1a0a-4323-b3da-3a9394b9535a\nstatus: experimental\ndescription: Detects potential stage 2 Gootloader registry key creation.\nreferences:\n- https://redcanary.com/blog/gootloader/\n- https://thedfirreport.com/2022/05/09/seo-poisoning-a-gootloader-story/\n- https://blog.nviso.eu/2022/07/20/analysis-of-a-trojanized-jquery-script-gootloader-unleashed/\nauthor: Micah Babinski\ndate: 2022/11/07\ntags:\n- attack.execution\n- attack.defense_evasion\n- attack.t1620\nlogsource:\n  category: registry_add\n  product: windows\ndetection:\n  selection:\n    EventType: CreateKey\n    TargetObject|contains:\n    - SOFTWARE\\Microsoft\\Phone\\\n    - SOFTWARE\\Microsoft\\Personalization\\\n    TargetObject|endswith: '0'\n    Image|endswith: \\wscript.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

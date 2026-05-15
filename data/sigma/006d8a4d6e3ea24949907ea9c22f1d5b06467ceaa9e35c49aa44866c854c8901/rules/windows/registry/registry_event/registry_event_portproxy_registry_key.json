@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_portproxy_registry_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades)",
+                "date": "2021-06-22",
+                "title": "New PortProxy Registry Entry Added",
+                "id": "a54f842a-3713-4b45-8c84-5f136fdebd3c"
+            },
+            "rule_text": "title: New PortProxy Registry Entry Added\nid: a54f842a-3713-4b45-8c84-5f136fdebd3c\nstatus: test\ndescription: Detects the modification of the PortProxy registry key which is used\n  for port forwarding.\nreferences:\n- https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html\n- https://adepts.of0x.cc/netsh-portproxy-code/\n- https://www.dfirnotes.net/portproxy_detection/\nauthor: Andreas Hunkeler (@Karneades)\ndate: 2021-06-22\nmodified: 2024-03-25\ntags:\n- attack.lateral-movement\n- attack.command-and-control\n- attack.t1090\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Services\\PortProxy\\v4tov4\\tcp\\\n  condition: selection\nfalsepositives:\n- WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)\n- Synergy Software KVM (https://symless.com/synergy)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

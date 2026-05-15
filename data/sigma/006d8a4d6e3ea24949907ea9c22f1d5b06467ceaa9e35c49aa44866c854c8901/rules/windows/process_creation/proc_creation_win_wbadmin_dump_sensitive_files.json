@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wbadmin_dump_sensitive_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), frack113",
+                "date": "2024-05-10",
+                "title": "Sensitive File Dump Via Wbadmin.EXE",
+                "id": "8b93a509-1cb8-42e1-97aa-ee24224cdc15"
+            },
+            "rule_text": "title: Sensitive File Dump Via Wbadmin.EXE\nid: 8b93a509-1cb8-42e1-97aa-ee24224cdc15\nstatus: test\ndescription: 'Detects the dump of highly sensitive files such as \"NTDS.DIT\" and \"SECURITY\"\n  hive.\n\n  Attackers can leverage the \"wbadmin\" utility in order to dump sensitive files that\n  might contain credential or sensitive information.\n\n  '\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/blob/2cc01b01132b5c304027a658c698ae09dd6a92bf/yml/OSBinaries/Wbadmin.yml\n- https://lolbas-project.github.io/lolbas/Binaries/Wbadmin/\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wbadmin-start-recovery\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wbadmin-start-backup\nauthor: Nasreddine Bencherchali (Nextron Systems), frack113\ndate: 2024-05-10\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wbadmin.exe\n  - OriginalFileName: WBADMIN.EXE\n  selection_backup:\n    CommandLine|contains:\n    - start\n    - backup\n  selection_path:\n    CommandLine|contains:\n    - \\config\\SAM\n    - \\config\\SECURITY\n    - \\config\\SYSTEM\n    - \\Windows\\NTDS\\NTDS.dit\n  condition: all of selection_*\nfalsepositives:\n- Legitimate backup operation by authorized administrators. Matches must be investigated\n  and allowed on a case by case basis.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

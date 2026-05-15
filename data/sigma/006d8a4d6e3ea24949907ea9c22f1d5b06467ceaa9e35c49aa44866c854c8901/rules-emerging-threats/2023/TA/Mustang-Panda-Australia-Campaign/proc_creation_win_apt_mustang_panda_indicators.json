@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Mustang-Panda-Australia-Campaign/proc_creation_win_apt_mustang_panda_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-15",
+                "title": "Potential APT Mustang Panda Activity Against Australian Gov",
+                "id": "7806bb49-f653-48d3-a915-5115c1a85234"
+            },
+            "rule_text": "title: Potential APT Mustang Panda Activity Against Australian Gov\nid: 7806bb49-f653-48d3-a915-5115c1a85234\nstatus: test\ndescription: Detects specific command line execution used by Mustang Panda in a targeted\n  attack against the Australian government as reported by Lab52\nreferences:\n- https://lab52.io/blog/new-mustang-pandas-campaing-against-australia/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-15\ntags:\n- attack.execution\n- attack.g0129\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains|all:\n    - copy SolidPDFCreator.dll\n    - C:\\Users\\Public\\Libraries\\PhotoTvRHD\\SolidPDFCreator.dll\n  selection_2:\n    CommandLine|contains|all:\n    - 'reg '\n    - \\Windows\\CurrentVersion\\Run\n    - SolidPDF\n    - C:\\Users\\Public\\Libraries\\PhotoTvRHD\\\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

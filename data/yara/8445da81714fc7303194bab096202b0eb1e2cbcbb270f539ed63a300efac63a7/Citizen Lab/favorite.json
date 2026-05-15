@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/favorite.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FavoriteCode",
+                "tags": [
+                    "Favorite",
+                    "Family"
+                ],
+                "description": "Favorite code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule FavoriteCode : Favorite Family\n{\n\tmeta:\n\t\tdescription = \"Favorite code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$ = { C6 45 ?? 3B C6 45 ?? 27 C6 45 ?? 34 C6 45 ?? 75 C6 45 ?? 6B C6 45 ?? 6C C6 45 ?? 3B C6 45 ?? 2F }\n\t\t$ = { C6 45 ?? 6F C6 45 ?? 73 C6 45 ?? 73 C6 45 ?? 76 C6 45 ?? 63 C6 45 ?? 65 C6 45 ?? 78 C6 45 ?? 65 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FavoriteStrings",
+                "tags": [
+                    "Favorite",
+                    "Family"
+                ],
+                "description": "Favorite Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule FavoriteStrings : Favorite Family\n{\n\tmeta:\n\t\tdescription = \"Favorite Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$string1 = \"!QAZ4rfv\"\n\t\t$file1 = \"msupdater.exe\"\n\t\t$file2 = \"FAVORITES.DAT\"\n\n\tcondition:\n\t\tany of ( $string* ) or all of ( $file* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Favorite",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Favorite",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "rule Favorite : Family\n{\n\tmeta:\n\t\tdescription = \"Favorite\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tcondition:\n\t\tFavoriteCode or FavoriteStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

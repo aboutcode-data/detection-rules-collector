@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Injector/Trojan_Win32_Injector_ARR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Injector_ARR_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Injector.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Injector_ARR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Injector.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 4d f4 83 c1 01 8b 55 fc 8b 02 99 f7 f9 0f af 45 f4 89 45 f4 c7 85 48 }\n\t\t$a_01_1 = {8b 45 fc 0b 45 f8 8b 4d f8 23 4d f8 0f af c1 0f af 45 f8 89 45 f8 eb }\n\t\t$a_01_2 = {8b 85 3c ff ff ff 8b 0c 90 33 0d c4 a1 43 00 8b 95 60 ff ff ff 8b 85 3c ff ff ff }\n\t\t$a_01_3 = {8b 4d fc 83 c1 01 8b 45 fc 99 f7 f9 0f af 45 fc 89 45 fc 8d 55 fc }\n\t\t$a_01_4 = {8d 45 dc 89 45 b4 8b 4d b4 8b 55 ac 0f af 11 0f af 55 a8 89 55 a8 c7 45 e4 }\n\t\t$a_01_5 = {8b 4d 08 83 c1 01 8b 45 fc 99 f7 f9 0f af 45 10 89 45 10 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 30 + ( #a_01_1 & 1 ) * 20 + ( #a_01_2 & 1 ) * 30 + ( #a_01_3 & 1 ) * 20 + ( #a_01_4 & 1 ) * 30 + ( #a_01_5 & 1 ) * 20 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_security_group_change_loadbalancer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "jamesc-grafana",
+                "date": "2024-07-11",
+                "title": "LoadBalancer Security Group Modification",
+                "id": "7a4409fc-f8ca-45f6-8006-127d779eaad9"
+            },
+            "rule_text": "title: LoadBalancer Security Group Modification\nid: 7a4409fc-f8ca-45f6-8006-127d779eaad9\nstatus: test\ndescription: 'Detects changes to the security groups associated with an Elastic Load\n  Balancer (ELB) or Application Load Balancer (ALB).\n\n  This can indicate that a misconfiguration allowing more traffic into the system\n  than required, or could indicate that an attacker is attempting to enable new connections\n  into a VPC or subnet controlled by the account.\n\n  '\nreferences:\n- https://www.gorillastack.com/blog/real-time-events/important-aws-cloudtrail-security-events-tracking/\nauthor: jamesc-grafana\ndate: 2024-07-11\ntags:\n- attack.initial-access\n- attack.t1190\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: elasticloadbalancing.amazonaws.com\n    eventName:\n    - ApplySecurityGroupsToLoadBalancer\n    - SetSecurityGroups\n  condition: selection\nfalsepositives:\n- Repurposing of an ELB or ALB to serve a different or additional application\n- Changes to security groups to allow for new services to be deployed\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

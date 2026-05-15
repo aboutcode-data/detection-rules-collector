@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_impacket_psexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2020-12-14",
+                "title": "Impacket PsExec Execution",
+                "id": "32d56ea1-417f-44ff-822b-882873f5f43b"
+            },
+            "rule_text": "title: Impacket PsExec Execution\nid: 32d56ea1-417f-44ff-822b-882873f5f43b\nstatus: test\ndescription: Detects execution of Impacket's psexec.py.\nreferences:\n- https://web.archive.org/web/20230329171218/https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html\nauthor: Bhabesh Raj\ndate: 2020-12-14\nmodified: 2022-09-22\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  service: security\n  definition: The advanced audit policy setting \"Object Access > Audit Detailed File\n    Share\" must be configured for Success/Failure\ndetection:\n  selection1:\n    EventID: 5145\n    ShareName: \\\\\\\\\\*\\\\IPC$\n    RelativeTargetName|contains:\n    - RemCom_stdin\n    - RemCom_stdout\n    - RemCom_stderr\n  condition: selection1\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/dcrat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "dcrat",
+                "tags": [],
+                "author": "jeFF0Falltrades"
+            },
+            "rule_text": "rule dcrat\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\n\tstrings:\n\t\t$venom_1 = \"VenomRAT\" wide ascii nocase\n\t\t$venom_2 = \"HVNC_REPLY_MESSAGE\" wide ascii\n\t\t$str_aes_exc = \"masterKey can not be null or empty\" wide ascii\n\t\t$str_b64_amsi = \"YW1zaS5kbGw=\" wide ascii\n\t\t$str_b64_virtual_protect = \"VmlydHVhbFByb3RlY3Q=\" wide ascii\n\t\t$str_dcrat = \"dcrat\" wide ascii nocase\n\t\t$str_plugin = \"save_Plugin\" wide ascii\n\t\t$str_qwqdan = \"qwqdan\" wide ascii\n\t\t$byte_aes_key_base = { 7E [3] 04 73 [3] 06 80 }\n\t\t$patt_config = { 72 [3] 70 80 [3] 04 }\n\t\t$patt_verify_hash = { 7e [3] 04 6f [3] 0a 6f [3] 0a 74 [3] 01 }\n\n\tcondition:\n\t\t( not any of ( $venom* ) ) and 5 of them and #patt_config >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

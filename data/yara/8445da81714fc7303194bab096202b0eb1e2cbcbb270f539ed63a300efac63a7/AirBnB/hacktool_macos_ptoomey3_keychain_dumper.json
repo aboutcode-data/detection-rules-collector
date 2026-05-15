@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_macos_ptoomey3_keychain_dumper.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_macos_ptoomey3_keychain_dumper",
+                "tags": [],
+                "description": "Keychain dumping utility.",
+                "reference": "https://github.com/ptoomey3/Keychain-Dumper",
+                "author": "@mimeframe"
+            },
+            "rule_text": "rule hacktool_macos_ptoomey3_keychain_dumper\n{\n\tmeta:\n\t\tdescription = \"Keychain dumping utility.\"\n\t\treference = \"https://github.com/ptoomey3/Keychain-Dumper\"\n\t\tauthor = \"@mimeframe\"\n\n\tstrings:\n\t\t$a1 = \"keychain_dumper\" wide ascii\n\t\t$a2 = \"/var/Keychains/keychain-2.db\" wide ascii\n\t\t$a3 = \"<key>keychain-access-groups</key>\" wide ascii\n\t\t$a4 = \"SELECT DISTINCT agrp FROM genp UNION SELECT DISTINCT agrp FROM inet\" wide ascii\n\t\t$a5 = \"dumpEntitlements\" wide ascii\n\n\tcondition:\n\t\tall of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

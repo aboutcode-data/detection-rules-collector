@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_adws_unusual_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2024-01-26",
+                "title": "Uncommon Connection to Active Directory Web Services",
+                "id": "b3ad3c0f-c949-47a1-a30e-b0491ccae876"
+            },
+            "rule_text": "title: Uncommon Connection to Active Directory Web Services\nid: b3ad3c0f-c949-47a1-a30e-b0491ccae876\nstatus: test\ndescription: 'Detects uncommon network connections to the Active Directory Web Services\n  (ADWS) from processes not typically associated with ADWS management.\n\n  '\nreferences:\n- https://medium.com/falconforce/soaphound-tool-to-collect-active-directory-data-via-adws-165aca78288c\n- https://github.com/FalconForceTeam/FalconFriday/blob/a9219dfcfd89836f34660223f47d766982bdce46/Discovery/ADWS_Connection_from_Unexpected_Binary-Win.md\nauthor: '@kostastsale'\ndate: 2024-01-26\ntags:\n- attack.discovery\n- attack.t1087\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: true\n    DestinationPort: 9389\n  filter_main_dsac:\n    Image: C:\\Windows\\system32\\dsac.exe\n  filter_main_ms_monitoring_agent:\n    Image: C:\\Program Files\\Microsoft Monitoring Agent\\\n  filter_main_powershell:\n    Image|startswith:\n    - C:\\Program Files\\PowerShell\\7\\pwsh.exe\n    - C:\\Program Files\\PowerShell\\7-preview\\pwsh.ex\n    - C:\\Windows\\System32\\WindowsPowerShell\\\n    - C:\\Windows\\SysWOW64\\WindowsPowerShell\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- ADWS is used by a number of legitimate applications that need to interact with Active\n  Directory. These applications should be added to the allow-listing to avoid false\n  positives.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

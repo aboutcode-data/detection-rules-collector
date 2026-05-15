@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/SleepyFileDeleter/Trojan_Win64_SleepyFileDeleter_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_SleepyFileDeleter_A",
+                "tags": [],
+                "description": "Trojan:Win64/SleepyFileDeleter.A,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_SleepyFileDeleter_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/SleepyFileDeleter.A,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {55 48 89 e5 48 83 ec 40 48 c7 c1 10 27 00 00 e8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 48 89 c1 48 8d 55 f8 e8 ?? ?? ?? ?? 48 8b 48 08 e8 ?? ?? ?? ?? 48 c7 c1 00 00 00 00 e8 }\n\t\t$a_03_1 = {8b 85 50 26 00 00 83 e8 02 39 85 98 26 00 00 ?? ?? 8b 85 50 26 00 00 83 e8 02 48 8b 95 40 26 00 00 48 98 c6 04 02 00 48 8b 95 40 26 00 00 48 8b 85 78 26 00 00 48 89 c1 e8 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * - 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

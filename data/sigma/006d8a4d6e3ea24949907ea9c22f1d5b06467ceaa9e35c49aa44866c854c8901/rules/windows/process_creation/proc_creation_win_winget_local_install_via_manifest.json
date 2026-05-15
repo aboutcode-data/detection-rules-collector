@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winget_local_install_via_manifest.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman, Florian Roth (Nextron Systems), frack113",
+                "date": "2020-04-21",
+                "title": "Install New Package Via Winget Local Manifest",
+                "id": "313d6012-51a0-4d93-8dfc-de8553239e25"
+            },
+            "rule_text": "title: Install New Package Via Winget Local Manifest\nid: 313d6012-51a0-4d93-8dfc-de8553239e25\nstatus: test\ndescription: 'Detects usage of winget to install applications via manifest file. Adversaries\n  can abuse winget to download payloads remotely and execute them.\n\n  The manifest option enables you to install an application by passing in a YAML file\n  directly to the client.\n\n  Winget can be used to download and install exe, msi or msix files later.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/package-manager/winget/install#local-install\n- https://lolbas-project.github.io/lolbas/Binaries/Winget/\n- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget\nauthor: Sreeman, Florian Roth (Nextron Systems), frack113\ndate: 2020-04-21\nmodified: 2023-04-17\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\winget.exe\n  - OriginalFileName: winget.exe\n  selection_install_flag:\n    CommandLine|contains:\n    - install\n    - ' add '\n  selection_manifest_flag:\n    CommandLine|contains:\n    - '-m '\n    - --manifest\n  condition: all of selection_*\nfalsepositives:\n- Some false positives are expected in some environment that may use this functionality\n  to install and test their custom applications\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

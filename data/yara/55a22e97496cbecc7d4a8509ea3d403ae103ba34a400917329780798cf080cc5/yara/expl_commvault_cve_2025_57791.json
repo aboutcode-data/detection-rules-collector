@@ -1,0 +1,95 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/expl_commvault_cve_2025_57791.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_EXPL_CommVault_CVE_2025_57791_Aug25_1",
+                "tags": [],
+                "description": "Detects potential exploit for WT-2025-0050, authentication bypass through QCommand argument injection",
+                "reference": "https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/",
+                "author": "X__Junior",
+                "date": "2025-08-21",
+                "score": 60
+            },
+            "rule_text": "rule SUSP_EXPL_CommVault_CVE_2025_57791_Aug25_1\n{\n\tmeta:\n\t\tdescription = \"Detects potential exploit for WT-2025-0050, authentication bypass through QCommand argument injection\"\n\t\treference = \"https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/\"\n\t\tauthor = \"X__Junior\"\n\t\tdate = \"2025-08-21\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$sa1 = \"_localadmin__\"\n\t\t$sa2 = \"-localadmin\"\n\n\tcondition:\n\t\tnot uint16( 0 ) == 0x5a4d and filesize < 20MB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-57791"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_EXPL_CommVault_CVE_2025_57791_Aug25_2",
+                "tags": [],
+                "description": "Detects potential exploit for WT-2025-0050, authentication bypass through QCommand argument injection",
+                "reference": "https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/",
+                "author": "X__Junior",
+                "date": "2025-08-21",
+                "score": 65
+            },
+            "rule_text": "rule SUSP_EXPL_CommVault_CVE_2025_57791_Aug25_2\n{\n\tmeta:\n\t\tdescription = \"Detects potential exploit for WT-2025-0050, authentication bypass through QCommand argument injection\"\n\t\treference = \"https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/\"\n\t\tauthor = \"X__Junior\"\n\t\tdate = \"2025-08-21\"\n\t\tscore = 65\n\n\tstrings:\n\t\t$sa1 = \"_localadmin__\"\n\t\t$sa2 = \"-localadmin\" base64\n\n\tcondition:\n\t\tfilesize < 20MB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-57791"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_EXPL_CommVault_CVE_2025_57791_Artifact_Aug25",
+                "tags": [],
+                "description": "Detects exploit artifact for WT-2025-0050, authentication bypass through QCommand argument injection",
+                "reference": "https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/",
+                "author": "X__Junior",
+                "date": "2025-08-21",
+                "score": 75
+            },
+            "rule_text": "rule SUSP_EXPL_CommVault_CVE_2025_57791_Artifact_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects exploit artifact for WT-2025-0050, authentication bypass through QCommand argument injection\"\n\t\treference = \"https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/\"\n\t\tauthor = \"X__Junior\"\n\t\tdate = \"2025-08-21\"\n\t\tscore = 75\n\n\tstrings:\n\t\t$sa1 = \"_localadmin__\"\n\t\t$sa2 = /-cs [a-zA-Z0-9-{}]{3,32} -cs /\n\t\t$sb2 = \"-localadmin\" base64\n\t\t$sb1 = \"-localadmin\"\n\n\tcondition:\n\t\tfilesize < 20MB and all of ( $sa* ) and 1 of ( $sb* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-57791"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_JSP_CommVault_CVE_2025_57791_Aug25_1",
+                "tags": [],
+                "description": "Detects potential exploit for WT-2025-0049, Post-Auth RCE with QCommand Path Traversal",
+                "author": "X__Junior",
+                "date": "2025-08-21",
+                "reference": "https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/",
+                "score": 75
+            },
+            "rule_text": "rule EXPL_JSP_CommVault_CVE_2025_57791_Aug25_1\n{\n\tmeta:\n\t\tdescription = \"Detects potential exploit for WT-2025-0049, Post-Auth RCE with QCommand Path Traversal\"\n\t\tauthor = \"X__Junior\"\n\t\tdate = \"2025-08-21\"\n\t\treference = \"https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/\"\n\t\tscore = 75\n\n\tstrings:\n\t\t$s1 = \"<App_GetUserPropertiesResponse>\" ascii\n\t\t$s2 = \"getMethod('getRuntime').invoke(null).exec(param.cmd)\" ascii\n\n\tcondition:\n\t\tfilesize < 50KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-57791"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_JSP_CommVault_CVE_2025_57791_Aug25_2",
+                "tags": [],
+                "description": "Detects potential exploit for WT-2025-0049, Post-Auth RCE with QCommand Path Traversal",
+                "author": "X__Junior",
+                "date": "2025-08-21",
+                "reference": "https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/",
+                "score": 75
+            },
+            "rule_text": "rule EXPL_JSP_CommVault_CVE_2025_57791_Aug25_2\n{\n\tmeta:\n\t\tdescription = \"Detects potential exploit for WT-2025-0049, Post-Auth RCE with QCommand Path Traversal\"\n\t\tauthor = \"X__Junior\"\n\t\tdate = \"2025-08-21\"\n\t\treference = \"https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/\"\n\t\tscore = 75\n\n\tstrings:\n\t\t$s1 = \"<App_UpdateUserPropertiesRequest>\" ascii\n\t\t$s2 = \"<description>\" ascii\n\t\t$s3 = \"getMethod('getRuntime').invoke(null).exec(param.cmd)\" ascii\n\n\tcondition:\n\t\tfilesize < 50KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-57791"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_LOG_CommVault_CVE_2025_57791_Indicator_Shell_Drop_Aug25",
+                "tags": [],
+                "description": "Detects suspicious log lines that indicate web shell drops into the Apache root folder of a Commvault installation",
+                "author": "Florian Roth",
+                "reference": "https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/",
+                "date": "2025-08-21",
+                "score": 70
+            },
+            "rule_text": "rule EXPL_LOG_CommVault_CVE_2025_57791_Indicator_Shell_Drop_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious log lines that indicate web shell drops into the Apache root folder of a Commvault installation\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://labs.watchtowr.com/guess-who-would-be-stupid-enough-to-rob-the-same-vault-twice-pre-auth-rce-chains-in-commvault/\"\n\t\tdate = \"2025-08-21\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$xr1 = /Results written to \\[[C-Z]:\\\\Program Files\\\\Commvault\\\\ContentStore\\\\Apache\\\\webapps\\\\ROOT\\\\[^\\\\]{1,20}\\.jsp\\]/\n\n\tcondition:\n\t\t$xr1\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-57791"
+            ]
+        }
+    ]
+}

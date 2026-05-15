@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Ransomware_Helloxd.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Ransomware_Helloxd_0c50f01b",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "0c50f01b-5f3d-4112-9930-ca1150fc12fa",
+                "fingerprint": "462d8c231d608e28e66d810b811f9fdf82d0b3770d21267a4375669a26bbaafd",
+                "creation_date": "2022-06-14",
+                "last_modified": "2022-07-18",
+                "threat_name": "Windows.Ransomware.Helloxd",
+                "reference_sample": "435781ab608ff908123d9f4758132fa45d459956755d27027a52b8c9e61f9589",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Ransomware_Helloxd_0c50f01b\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"0c50f01b-5f3d-4112-9930-ca1150fc12fa\"\n\t\tfingerprint = \"462d8c231d608e28e66d810b811f9fdf82d0b3770d21267a4375669a26bbaafd\"\n\t\tcreation_date = \"2022-06-14\"\n\t\tlast_modified = \"2022-07-18\"\n\t\tthreat_name = \"Windows.Ransomware.Helloxd\"\n\t\treference_sample = \"435781ab608ff908123d9f4758132fa45d459956755d27027a52b8c9e61f9589\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$mutex = \"With best wishes And good intentions...\"\n\t\t$ransomnote0 = \":: our TOX below >:)\"\n\t\t$ransomnote1 = \"You can download TOX here\"\n\t\t$ransomnote2 = \"...!XD ::\"\n\t\t$productname = \"HelloXD\" ascii wide\n\t\t$legalcopyright = \"uKn0w\" ascii wide\n\t\t$description = \"VhlamAV\" ascii wide\n\t\t$companyname = \"MicloZ0ft\" ascii wide\n\n\tcondition:\n\t\t($mutex and all of ( $ransomnote* ) ) or ( 3 of ( $productname , $legalcopyright , $description , $companyname ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

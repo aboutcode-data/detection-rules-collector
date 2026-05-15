@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_msiexec_http.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-16",
+                "title": "Msiexec.EXE Initiated Network Connection Over HTTP",
+                "id": "8e5e38e4-5350-4c0b-895a-e872ce0dd54f"
+            },
+            "rule_text": "title: Msiexec.EXE Initiated Network Connection Over HTTP\nid: 8e5e38e4-5350-4c0b-895a-e872ce0dd54f\nstatus: test\ndescription: 'Detects a network connection initiated by an \"Msiexec.exe\" process over\n  port 80 or 443.\n\n  Adversaries might abuse \"msiexec.exe\" to install and execute remotely hosted packages.\n\n  Use this rule to hunt for potentially anomalous or suspicious communications.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md\nauthor: frack113\ndate: 2022-01-16\nmodified: 2024-07-16\ntags:\n- attack.stealth\n- attack.t1218.007\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith: \\msiexec.exe\n    DestinationPort:\n    - 80\n    - 443\n  condition: selection\nfalsepositives:\n- Likely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

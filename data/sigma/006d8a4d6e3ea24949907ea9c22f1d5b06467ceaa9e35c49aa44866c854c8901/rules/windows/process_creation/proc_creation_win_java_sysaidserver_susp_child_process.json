@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_java_sysaidserver_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-26",
+                "title": "Suspicious SysAidServer Child",
+                "id": "60bfeac3-0d35-4302-8efb-1dd16f715bc6"
+            },
+            "rule_text": "title: Suspicious SysAidServer Child\nid: 60bfeac3-0d35-4302-8efb-1dd16f715bc6\nstatus: test\ndescription: Detects suspicious child processes of SysAidServer (as seen in MERCURY\n  threat actor intrusions)\nreferences:\n- https://www.microsoft.com/security/blog/2022/08/25/mercury-leveraging-log4j-2-vulnerabilities-in-unpatched-systems-to-target-israeli-organizations/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-26\ntags:\n- attack.lateral-movement\n- attack.t1210\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\java.exe\n    - \\javaw.exe\n    ParentCommandLine|contains: SysAidServer\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

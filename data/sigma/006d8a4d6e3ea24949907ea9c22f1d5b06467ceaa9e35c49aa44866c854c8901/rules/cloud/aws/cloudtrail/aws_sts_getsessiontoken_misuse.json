@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_sts_getsessiontoken_misuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-07-24",
+                "title": "AWS STS GetSessionToken Misuse",
+                "id": "b45ab1d2-712f-4f01-a751-df3826969807"
+            },
+            "rule_text": "title: AWS STS GetSessionToken Misuse\nid: b45ab1d2-712f-4f01-a751-df3826969807\nstatus: test\ndescription: Identifies the suspicious use of GetSessionToken. Tokens could be created\n  and used by attackers to move laterally and escalate privileges.\nreferences:\n- https://github.com/elastic/detection-rules/pull/1213\n- https://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html\nauthor: Austin Songer @austinsonger\ndate: 2021-07-24\nmodified: 2022-10-09\ntags:\n- attack.lateral-movement\n- attack.privilege-escalation\n- attack.t1548\n- attack.t1550\n- attack.t1550.001\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: sts.amazonaws.com\n    eventName: GetSessionToken\n    userIdentity.type: IAMUser\n  condition: selection\nfalsepositives:\n- GetSessionToken may be done by a system or network administrator. Verify whether\n  the user identity, user agent, and/or hostname should be making changes in your\n  environment. GetSessionToken from unfamiliar users or hosts should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

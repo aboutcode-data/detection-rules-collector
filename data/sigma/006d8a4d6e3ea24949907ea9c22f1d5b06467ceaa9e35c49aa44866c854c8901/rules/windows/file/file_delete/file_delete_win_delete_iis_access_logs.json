@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_delete/file_delete_win_delete_iis_access_logs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-16",
+                "title": "IIS WebServer Access Logs Deleted",
+                "id": "3eb8c339-a765-48cc-a150-4364c04652bf"
+            },
+            "rule_text": "title: IIS WebServer Access Logs Deleted\nid: 3eb8c339-a765-48cc-a150-4364c04652bf\nrelated:\n- id: 0649be4a-aeb0-45b0-b89e-7f1668f6d9c0\n  type: similar\nstatus: test\ndescription: Detects the deletion of IIS WebServer access logs which may indicate\n  an attempt to destroy forensic evidence\nreferences:\n- https://www.elastic.co/guide/en/security/current/webserver-access-logs-deleted.html\nauthor: Tim Rauch (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-16\nmodified: 2023-02-15\ntags:\n- attack.stealth\n- attack.t1070\nlogsource:\n  category: file_delete\n  product: windows\ndetection:\n  selection:\n    TargetFilename|contains: \\inetpub\\logs\\LogFiles\\\n    TargetFilename|endswith: .log\n  condition: selection\nfalsepositives:\n- During uninstallation of the IIS service\n- During log rotation\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

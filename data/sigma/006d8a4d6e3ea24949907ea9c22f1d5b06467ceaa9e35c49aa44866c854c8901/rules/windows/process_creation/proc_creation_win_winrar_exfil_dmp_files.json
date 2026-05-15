@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winrar_exfil_dmp_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-04",
+                "title": "Winrar Compressing Dump Files",
+                "id": "1ac14d38-3dfc-4635-92c7-e3fd1c5f5bfc"
+            },
+            "rule_text": "title: Winrar Compressing Dump Files\nid: 1ac14d38-3dfc-4635-92c7-e3fd1c5f5bfc\nrelated:\n- id: ec570e53-4c76-45a9-804d-dc3f355ff7a7\n  type: similar\nstatus: test\ndescription: Detects execution of WinRAR in order to compress a file with a \".dmp\"/\".dump\"\n  extension, which could be a step in a process of dump file exfiltration.\nreferences:\n- https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-04\nmodified: 2023-09-12\ntags:\n- attack.collection\n- attack.t1560.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\rar.exe\n    - \\winrar.exe\n  - Description: Command line RAR\n  selection_extension:\n    CommandLine|contains:\n    - .dmp\n    - .dump\n    - .hdmp\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of WinRAR with a command line in which \".dmp\" or \".dump\" appears\n  accidentally\n- Legitimate use of WinRAR to compress WER \".dmp\" files for troubleshooting\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

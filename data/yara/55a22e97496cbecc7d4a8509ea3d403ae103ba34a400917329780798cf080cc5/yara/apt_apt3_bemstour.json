@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_apt3_bemstour.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt3_bemstour_strings",
+                "tags": [],
+                "description": "Detects strings used by the Bemstour exploitation tool",
+                "author": "Mark Lechtik",
+                "company": "Check Point Software Technologies LTD.",
+                "date": "2019-06-25",
+                "sha256": "0b28433a2b7993da65e95a45c2adf7bc37edbd2a8db717b85666d6c88140698a",
+                "uuid": "8b76e10a-040f-505e-9dff-cd0a689b121e"
+            },
+            "rule_text": "rule apt3_bemstour_strings\n{\n\tmeta:\n\t\tdescription = \"Detects strings used by the Bemstour exploitation tool\"\n\t\tauthor = \"Mark Lechtik\"\n\t\tcompany = \"Check Point Software Technologies LTD.\"\n\t\tdate = \"2019-06-25\"\n\t\tsha256 = \"0b28433a2b7993da65e95a45c2adf7bc37edbd2a8db717b85666d6c88140698a\"\n\t\tuuid = \"8b76e10a-040f-505e-9dff-cd0a689b121e\"\n\n\tstrings:\n\t\t$dbg_print_1 = \"leaked address is 0x%llx\" ascii wide\n\t\t$dbg_print_2 = \"========== %s ==========\" ascii wide\n\t\t$dbg_print_3 = \"detailVersion:%d\" ascii wide\n\t\t$dbg_print_4 = \"create pipe twice failed\" ascii wide\n\t\t$dbg_print_5 = \"WSAStartup function failed with error: %d\" ascii wide\n\t\t$dbg_print_6 = \"can't open input file.\" ascii wide\n\t\t$dbg_print_7 = \"Allocate Buffer Failed.\" ascii wide\n\t\t$dbg_print_8 = \"Connect to target failed.\" ascii wide\n\t\t$dbg_print_9 = \"connect successful.\" ascii wide\n\t\t$dbg_print_10 = \"not supported Platform\" ascii wide\n\t\t$dbg_print_11 = \"Wait several seconds.\" ascii wide\n\t\t$dbg_print_12 = \"not set where to write ListEntry .\" ascii wide\n\t\t$dbg_print_13 = \"backdoor not installed.\" ascii wide\n\t\t$dbg_print_14 = \"REConnect to target failed.\" ascii wide\n\t\t$dbg_print_15 = \"Construct TreeConnectAndX Request Failed.\" ascii wide\n\t\t$dbg_print_16 = \"Construct NTCreateAndXRequest  Failed.\" ascii wide\n\t\t$dbg_print_17 = \"Construct Trans2  Failed.\" ascii wide\n\t\t$dbg_print_18 = \"Construct ConsWXR  Failed.\" ascii wide\n\t\t$dbg_print_19 = \"Construct ConsTransSecondary  Failed.\" ascii wide\n\t\t$dbg_print_20 = \"if you don't want to input password , use server2003 version..\" ascii wide\n\t\t$cmdline_1 = \"Command format  %s TargetIp domainname username password 2\" ascii wide\n\t\t$cmdline_2 = \"Command format  %s TargetIp domainname username password 1\" ascii wide\n\t\t$cmdline_3 = \"cmd.exe /c net user test test /add && cmd.exe /c net localgroup administrators test /add\" ascii wide\n\t\t$cmdline_4 = \"hello.exe  \\\"C:\\\\WINDOWS\\\\DEBUG\\\\test.exe\\\"\" ascii wide\n\t\t$cmdline_5 = \"parameter not right\" ascii wide\n\t\t$smb_param_1 = \"browser\" ascii wide\n\t\t$smb_param_2 = \"spoolss\" ascii wide\n\t\t$smb_param_3 = \"srvsvc\" ascii wide\n\t\t$smb_param_4 = \"\\\\PIPE\\\\LANMAN\" ascii wide\n\t\t$smb_param_5 = \"Werttys for Workgroups 3.1a\" ascii wide\n\t\t$smb_param_6 = \"PC NETWORK PROGRAM 1.0\" ascii wide\n\t\t$smb_param_7 = \"LANMAN1.0\" ascii wide\n\t\t$smb_param_8 = \"LM1.2X002\" ascii wide\n\t\t$smb_param_9 = \"LANMAN2.1\" ascii wide\n\t\t$smb_param_10 = \"NT LM 0.12\" ascii wide\n\t\t$smb_param_12 = \"WORKGROUP\" ascii wide\n\t\t$smb_param_13 = \"Windows Server 2003 3790 Service Pack 2\" ascii wide\n\t\t$smb_param_14 = \"Windows Server 2003 5.2\" ascii wide\n\t\t$smb_param_15 = \"Windows 2002 Service Pack 2 2600\" ascii wide\n\t\t$smb_param_16 = \"Windows 2002 5.1\" ascii wide\n\t\t$smb_param_17 = \"PC NETWORK PROGRAM 1.0\" ascii wide\n\t\t$smb_param_18 = \"Windows 2002 5.1\" ascii wide\n\t\t$smb_param_19 = \"Windows for Workgroups 3.1a\" ascii wide\n\t\t$unique_str_1 = \"WIN-NGJ7GKNROVS\"\n\t\t$unique_str_2 = \"XD-A31C2E0087B2\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 5 of ( $dbg_print* ) or 2 of ( $cmdline* ) or 1 of ( $unique_str* ) ) and 3 of ( $smb_param* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt3_bemstour_implant_byte_patch",
+                "tags": [],
+                "description": "Detects an implant used by Bemstour exploitation tool (APT3)",
+                "author": "Mark Lechtik",
+                "company": "Check Point Software Technologies LTD.",
+                "date": "2019-06-25",
+                "sha256": "0b28433a2b7993da65e95a45c2adf7bc37edbd2a8db717b85666d6c88140698a",
+                "uuid": "c30434c3-8949-566c-b6a6-29bffdaf961d"
+            },
+            "rule_text": "rule apt3_bemstour_implant_byte_patch\n{\n\tmeta:\n\t\tdescription = \"Detects an implant used by Bemstour exploitation tool (APT3)\"\n\t\tauthor = \"Mark Lechtik\"\n\t\tcompany = \"Check Point Software Technologies LTD.\"\n\t\tdate = \"2019-06-25\"\n\t\tsha256 = \"0b28433a2b7993da65e95a45c2adf7bc37edbd2a8db717b85666d6c88140698a\"\n\t\tuuid = \"c30434c3-8949-566c-b6a6-29bffdaf961d\"\n\n\tstrings:\n\t\t$chunk_1 = {\n\nC7 45 ?? 55 8B EC 83\nC7 45 ?? EC 74 53 56\nC7 45 ?? 8B 75 08 33\nC7 45 ?? C9 57 C7 45\nC7 45 ?? 8C 4C 6F 61\n\n}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt3_bemstour_implant_command_stack_variable",
+                "tags": [],
+                "description": "Detecs an implant used by Bemstour exploitation tool (APT3)",
+                "author": "Mark Lechtik",
+                "company": "Check Point Software Technologies LTD.",
+                "date": "2019-06-25",
+                "sha256": "0b28433a2b7993da65e95a45c2adf7bc37edbd2a8db717b85666d6c88140698a",
+                "uuid": "c773da5a-2d3f-5a0a-af2e-28ad382622b3"
+            },
+            "rule_text": "rule apt3_bemstour_implant_command_stack_variable\n{\n\tmeta:\n\t\tdescription = \"Detecs an implant used by Bemstour exploitation tool (APT3)\"\n\t\tauthor = \"Mark Lechtik\"\n\t\tcompany = \"Check Point Software Technologies LTD.\"\n\t\tdate = \"2019-06-25\"\n\t\tsha256 = \"0b28433a2b7993da65e95a45c2adf7bc37edbd2a8db717b85666d6c88140698a\"\n\t\tuuid = \"c773da5a-2d3f-5a0a-af2e-28ad382622b3\"\n\n\tstrings:\n\t\t$chunk_1 = {\n\nC7 85 ?? ?? ?? ?? 63 6D 64 2E\nC7 85 ?? ?? ?? ?? 65 78 65 20\nC7 85 ?? ?? ?? ?? 2F 63 20 63\nC7 85 ?? ?? ?? ?? 6F 70 79 20\nC7 85 ?? ?? ?? ?? 25 77 69 6E\nC7 85 ?? ?? ?? ?? 64 69 72 25\nC7 85 ?? ?? ?? ?? 5C 73 79 73\nC7 85 ?? ?? ?? ?? 74 65 6D 33\nC7 85 ?? ?? ?? ?? 32 5C 63 6D\nC7 85 ?? ?? ?? ?? 64 2E 65 78\nC7 85 ?? ?? ?? ?? 65 20 25 77\nC7 85 ?? ?? ?? ?? 69 6E 64 69\nC7 85 ?? ?? ?? ?? 72 25 5C 73\nC7 85 ?? ?? ?? ?? 79 73 74 65\nC7 85 ?? ?? ?? ?? 6D 33 32 5C\nC7 85 ?? ?? ?? ?? 73 65 74 68\nC7 85 ?? ?? ?? ?? 63 2E 65 78\nC7 85 ?? ?? ?? ?? 65 20 2F 79\n83 A5 ?? ?? ?? ?? 00\n}\n\t\t$chunk_2 = {\n\nC7 85 ?? ?? ?? ?? 63 6D 64 20\nC7 85 ?? ?? ?? ?? 2F 63 20 22\nC7 85 ?? ?? ?? ?? 6E 65 74 20\nC7 85 ?? ?? ?? ?? 75 73 65 72\nC7 85 ?? ?? ?? ?? 20 63 65 73\nC7 85 ?? ?? ?? ?? 73 75 70 70\nC7 85 ?? ?? ?? ?? 6F 72 74 20\nC7 85 ?? ?? ?? ?? 31 71 61 7A\nC7 85 ?? ?? ?? ?? 23 45 44 43\nC7 85 ?? ?? ?? ?? 20 2F 61 64\nC7 85 ?? ?? ?? ?? 64 20 26 26\nC7 85 ?? ?? ?? ?? 20 6E 65 74\nC7 85 ?? ?? ?? ?? 20 6C 6F 63\nC7 85 ?? ?? ?? ?? 61 6C 67 72\nC7 85 ?? ?? ?? ?? 6F 75 70 20\nC7 85 ?? ?? ?? ?? 61 64 6D 69\nC7 85 ?? ?? ?? ?? 6E 69 73 74\nC7 85 ?? ?? ?? ?? 72 61 74 6F\nC7 85 ?? ?? ?? ?? 72 73 20 63\nC7 85 ?? ?? ?? ?? 65 73 73 75\nC7 85 ?? ?? ?? ?? 70 70 6F 72\nC7 85 ?? ?? ?? ?? 74 20 2F 61\nC7 85 ?? ?? ?? ?? 64 64 22 00\n6A 5C\n\n}\n\t\t$chunk_3 = {\n\nC7 45 ?? 57 69 6E 45\nC7 45 ?? 78 65 63 00\nC7 45 ?? 47 65 74 50\nC7 45 ?? 72 6F 63 41\nC7 45 ?? 64 64 72 65\nC7 45 ?? 73 73 00 00\nC7 45 ?? 43 72 65 61\nC7 45 ?? 74 65 46 69\nC7 45 ?? 6C 65 41 00\nC7 45 ?? 57 72 69 74\nC7 45 ?? 65 46 69 6C\nC7 45 ?? 65 00 00 00\nC7 45 ?? 43 6C 6F 73\nC7 45 ?? 65 48 61 6E\nC7 45 ?? 64 6C 65 00\n89 4D ??\n\n}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

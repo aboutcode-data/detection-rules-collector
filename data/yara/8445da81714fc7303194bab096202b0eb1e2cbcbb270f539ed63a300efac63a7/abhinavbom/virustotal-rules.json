@@ -1,0 +1,70 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/abhinavbom/virustotal-rules.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "catch_intelligence_files",
+                "tags": [],
+                "author": "@abhinavbom",
+                "maltype": "NA",
+                "version": "0.1",
+                "date": "21/09/2015",
+                "description": "catch files"
+            },
+            "rule_text": "rule catch_intelligence_files\n{\n\tmeta:\n\t\tauthor = \"@abhinavbom\"\n\t\tmaltype = \"NA\"\n\t\tversion = \"0.1\"\n\t\tdate = \"21/09/2015\"\n\t\tdescription = \"catch files\"\n\n\tstrings:\n\t\t$meta1 = \"National Security Agency\"\n\t\t$meta3 = \"Israeli Secret Intelligence\"\n\t\t$tag1 = \"docx\"\n\t\t$tag2 = \"doc\"\n\t\t$tag3 = \"xls\"\n\t\t$tag4 = \"xlxs\"\n\t\t$tag5 = \"pdf\"\n\t\t$tag6 = \"zip\"\n\t\t$tag7 = \"rar\"\n\t\t$tag8 = \"xlsb\"\n\n\tcondition:\n\t\tany of ( $meta* ) and any of ( $tag* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FE_PCAPs",
+                "tags": [],
+                "author": "@abhinavbom",
+                "maltype": "NA",
+                "version": "0.1",
+                "description": "All pcaps uploaded to VT",
+                "date": "29/07/2015"
+            },
+            "rule_text": "rule FE_PCAPs\n{\n\tmeta:\n\t\tauthor = \"@abhinavbom\"\n\t\tmaltype = \"NA\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"All pcaps uploaded to VT\"\n\t\tdate = \"29/07/2015\"\n\n\tstrings:\n\t\t$magic = {D4 C3 B2 A1}\n\n\tcondition:\n\t\t$magic at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "pcap_positives",
+                "tags": [],
+                "author": "@abhinavbom",
+                "maltype": "NA",
+                "version": "0.1",
+                "description": "All pcaps uploaded to VT with +3 detection rate",
+                "date": "21/06/2015"
+            },
+            "rule_text": "rule pcap_positives\n{\n\tmeta:\n\t\tauthor = \"@abhinavbom\"\n\t\tmaltype = \"NA\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"All pcaps uploaded to VT with +3 detection rate\"\n\t\tdate = \"21/06/2015\"\n\n\tstrings:\n\t\t$magic = {D4 C3 B2 A1}\n\n\tcondition:\n\t\t$magic at 0 and positives > 3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ek_submissions",
+                "tags": [],
+                "author": "@abhinavbom",
+                "maltype": "NA",
+                "version": "0.1",
+                "description": "Detects pcaps uploaded to VT and matches IDS detections for Exploit kits",
+                "date": "23/06/2015"
+            },
+            "rule_text": "rule ek_submissions\n{\n\tmeta:\n\t\tauthor = \"@abhinavbom\"\n\t\tmaltype = \"NA\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"Detects pcaps uploaded to VT and matches IDS detections for Exploit kits\"\n\t\tdate = \"23/06/2015\"\n\n\tstrings:\n\t\t$magic = {D4 C3 B2 A1}\n\n\tcondition:\n\t\t$magic at 0 and tags contains \"exploit-kit\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ek_submissions_2",
+                "tags": [],
+                "author": "@abhinavbom",
+                "maltype": "NA",
+                "version": "0.1",
+                "description": "Detects pcaps uploaded to VT and matches IDS detections for Exploit kits",
+                "date": "23/06/2015"
+            },
+            "rule_text": "rule ek_submissions_2\n{\n\tmeta:\n\t\tauthor = \"@abhinavbom\"\n\t\tmaltype = \"NA\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"Detects pcaps uploaded to VT and matches IDS detections for Exploit kits\"\n\t\tdate = \"23/06/2015\"\n\n\tstrings:\n\t\t$magic = {D4 C3 B2 A1}\n\n\tcondition:\n\t\t$magic at 0 and tags contains \"exploit-kit\" and positives > 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

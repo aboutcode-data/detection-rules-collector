@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_office_dotnet_clr_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Antonlovesdnb",
+                "date": "2020-02-19",
+                "title": "CLR DLL Loaded Via Office Applications",
+                "id": "d13c43f0-f66b-4279-8b2c-5912077c1780"
+            },
+            "rule_text": "title: CLR DLL Loaded Via Office Applications\nid: d13c43f0-f66b-4279-8b2c-5912077c1780\nstatus: test\ndescription: Detects CLR DLL being loaded by an Office Product\nreferences:\n- https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16\nauthor: Antonlovesdnb\ndate: 2020-02-19\nmodified: 2023-03-29\ntags:\n- attack.execution\n- attack.t1204.002\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\excel.exe\n    - \\mspub.exe\n    - \\outlook.exe\n    - \\onenote.exe\n    - \\onenoteim.exe\n    - \\powerpnt.exe\n    - \\winword.exe\n    ImageLoaded|contains: \\clr.dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

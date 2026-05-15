@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_rename/file_rename_win_non_dll_to_dll_ext.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-19",
+                "title": "Non-DLL Extension File Renamed With DLL Extension",
+                "id": "bbfd974c-248e-4435-8de6-1e938c79c5c1"
+            },
+            "rule_text": "title: Non-DLL Extension File Renamed With DLL Extension\nid: bbfd974c-248e-4435-8de6-1e938c79c5c1\nstatus: test\ndescription: 'Detects rename operations of files with non-DLL extensions to files\n  with a DLL extension. This is often performed by malware in order to avoid initial\n  detections based on extensions.\n\n  '\nreferences:\n- https://twitter.com/ffforward/status/1481672378639912960\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1036/T1036.md#atomic-test-1---system-file-copied-to-unusual-location\nauthor: frack113\ndate: 2022-02-19\nmodified: 2023-11-11\ntags:\n- attack.stealth\n- attack.t1036.008\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: file_rename\n  definition: 'Requirements: Microsoft-Windows-Kernel-File Provider with at least\n    the KERNEL_FILE_KEYWORD_RENAME_SETLINK_PATH keyword'\ndetection:\n  selection:\n    TargetFilename|endswith: .dll\n  filter_main_dll:\n    SourceFilename|endswith: .dll\n  filter_main_installers:\n    SourceFilename|endswith: .tmp\n  filter_main_empty_source:\n    SourceFilename: ''\n  filter_main_null_source:\n    SourceFilename: null\n  filter_main_tiworker:\n    Image|contains: :\\Windows\\WinSxS\\\n    Image|endswith: \\TiWorker.exe\n  filter_main_upgrade:\n  - Image|endswith: :\\Windows\\System32\\wuauclt.exe\n  - TargetFilename|contains: :\\$WINDOWS.~BT\\Sources\\\n  filter_main_generic:\n    Image|contains:\n    - :\\Program Files (x86)\\\n    - :\\Program Files\\\n  filter_optional_squirrel:\n    SourceFilename|contains: \\SquirrelTemp\\temp\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Likely from installers and temporary locations\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_infdefaultinstall_execute_sct_scripts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-13",
+                "title": "InfDefaultInstall.exe .inf Execution",
+                "id": "ce7cf472-6fcc-490a-9481-3786840b5d9b"
+            },
+            "rule_text": "title: InfDefaultInstall.exe .inf Execution\nid: ce7cf472-6fcc-490a-9481-3786840b5d9b\nstatus: test\ndescription: Executes SCT script using scrobj.dll from a command in entered into a\n  specially prepared INF file.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md#atomic-test-4---infdefaultinstallexe-inf-execution\n- https://lolbas-project.github.io/lolbas/Binaries/Infdefaultinstall/\nauthor: frack113\ndate: 2021-07-13\nmodified: 2022-10-09\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - 'InfDefaultInstall.exe '\n    - '.inf'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

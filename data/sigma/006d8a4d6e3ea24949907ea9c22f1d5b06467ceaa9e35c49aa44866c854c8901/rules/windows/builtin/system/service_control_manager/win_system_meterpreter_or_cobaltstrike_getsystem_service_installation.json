@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_meterpreter_or_cobaltstrike_getsystem_service_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, Ecco, Florian Roth (Nextron Systems)",
+                "date": "2019-10-26",
+                "title": "Meterpreter or Cobalt Strike Getsystem Service Installation - System",
+                "id": "843544a7-56e0-4dcc-a44f-5cc266dd97d6"
+            },
+            "rule_text": "title: Meterpreter or Cobalt Strike Getsystem Service Installation - System\nid: 843544a7-56e0-4dcc-a44f-5cc266dd97d6\nstatus: test\ndescription: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting\n  a specific service installation\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment\n- https://blog.cobaltstrike.com/2014/04/02/what-happens-when-i-type-getsystem/\nauthor: Teymur Kheirkhabarov, Ecco, Florian Roth (Nextron Systems)\ndate: 2019-10-26\nmodified: 2023-11-15\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134.001\n- attack.t1134.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_id:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_cli_cmd:\n    ImagePath|contains|all:\n    - /c\n    - echo\n    - \\pipe\\\n    ImagePath|contains:\n    - cmd\n    - '%COMSPEC%'\n  selection_cli_rundll:\n    ImagePath|contains|all:\n    - rundll32\n    - .dll,a\n    - '/p:'\n  selection_cli_share:\n    ImagePath|startswith: \\\\\\\\127.0.0.1\\\\ADMIN$\\\n  condition: selection_id and 1 of selection_cli_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

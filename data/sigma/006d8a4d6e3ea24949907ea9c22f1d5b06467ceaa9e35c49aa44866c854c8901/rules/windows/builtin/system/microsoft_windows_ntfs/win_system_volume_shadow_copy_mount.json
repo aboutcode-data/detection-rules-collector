@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/microsoft_windows_ntfs/win_system_volume_shadow_copy_mount.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)",
+                "date": "2020-10-20",
+                "title": "Volume Shadow Copy Mount",
+                "id": "f512acbf-e662-4903-843e-97ce4652b740"
+            },
+            "rule_text": "title: Volume Shadow Copy Mount\nid: f512acbf-e662-4903-843e-97ce4652b740\nstatus: test\ndescription: Detects volume shadow copy mount via Windows event log\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy\nauthor: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)\ndate: 2020-10-20\nmodified: 2022-12-25\ntags:\n- attack.credential-access\n- attack.t1003.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Microsoft-Windows-Ntfs\n    EventID: 98\n    DeviceName|contains: HarddiskVolumeShadowCopy\n  condition: selection\nfalsepositives:\n- Legitimate use of volume shadow copy mounts (backups maybe).\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

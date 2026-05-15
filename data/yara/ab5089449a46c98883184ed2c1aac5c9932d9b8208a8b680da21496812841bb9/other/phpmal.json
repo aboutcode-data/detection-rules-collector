@@ -1,0 +1,49 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/phpmal.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_lvscam_phpwebshell",
+                "tags": [],
+                "description": "PHP malware used in lucky visitor scam",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "aebeadc7a6c5b76d842c7852705152930c636866c7e6e5a9fa3be1c15433446c"
+            },
+            "rule_text": "rule malware_lvscam_phpwebshell\n{\n\tmeta:\n\t\tdescription = \"PHP malware used in lucky visitor scam\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"1c7fe8ee16da73a337c1502b1fe600462ce4b9a3220f923d02f900ea61c63020\"\n\t\thash = \"aebeadc7a6c5b76d842c7852705152930c636866c7e6e5a9fa3be1c15433446c\"\n\n\tstrings:\n\t\t$s1 = \"http://136.12.78.46/app/assets/api\"\n\t\t$s2 = \"['a'] == 'doorway2')\"\n\t\t$s3 = \"['sa'] == 'eval')\"\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_seospam_php",
+                "tags": [],
+                "description": "PHP using Japanese SEO Spam",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "619cf6a757a1967382287c30d95b55bed3750e029a7040878d2f23efda29f8f0"
+            },
+            "rule_text": "rule malware_seospam_php\n{\n\tmeta:\n\t\tdescription = \"PHP using Japanese SEO Spam\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"619cf6a757a1967382287c30d95b55bed3750e029a7040878d2f23efda29f8f0\"\n\n\tstrings:\n\t\t$func1 = \"function dageget($\" ascii\n\t\t$func2 = \"function sbot()\" ascii\n\t\t$func3 = \"function st_uri()\" ascii\n\t\t$func4 = \"function is_htps()\" ascii\n\t\t$query1 = /sha1\\(sha1\\(@\\$_GET\\[\\\"(a|\\\\x61|\\\\141)\"\\]\\)\\);/ ascii\n\t\t$query2 = /sha1\\(sha1\\(@\\$_GET\\[\\\"(b|\\\\x62|\\\\142)\"\\]\\)\\);/ ascii\n\t\t$query3 = /@\\$_GET\\[\\\"(p|\\\\x70|\\\\160)(d|\\\\x64|\\\\144)\\\"\\]/ ascii\n\t\t$content1 = \"nobotuseragent\" ascii\n\t\t$content2 = \"okhtmlgetcontent\" ascii\n\t\t$content3 = \"okxmlgetcontent\" ascii\n\t\t$content4 = \"pingxmlgetcontent\" ascii\n\n\tcondition:\n\t\t7 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_ruoji_phpwebshell",
+                "tags": [],
+                "description": "ruoji webshell",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "8a389390a9ce4aba962e752218c5e9ab879b58280049a5e02b9143e750265064"
+            },
+            "rule_text": "rule malware_ruoji_phpwebshell\n{\n\tmeta:\n\t\tdescription = \"ruoji webshell\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"8a389390a9ce4aba962e752218c5e9ab879b58280049a5e02b9143e750265064\"\n\n\tstrings:\n\t\t$s1 = \"zxcszxctzxcrzxc_zxcrzxcezxc\" ascii\n\t\t$s2 = \"<?php if ($_COOKIE[\" ascii\n\t\t$s3 = \"'] !== $_GET['\" ascii\n\t\t$s4 = \"'] && @md5($_GET['\" ascii\n\t\t$s5 = \"']) === @md5($_GET['\" ascii\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_spider_phpwebshell",
+                "tags": [],
+                "description": "Spider PHP Shell",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "ae17d97d8f7fd5216776e2ec457a2d60567bc6cc175206d0641861f71a7e7614"
+            },
+            "rule_text": "rule malware_spider_phpwebshell\n{\n\tmeta:\n\t\tdescription = \"Spider PHP Shell\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"ae17d97d8f7fd5216776e2ec457a2d60567bc6cc175206d0641861f71a7e7614\"\n\n\tstrings:\n\t\t$s1 = \"<title> Spider PHP Shell\" ascii\n\t\t$s2 = \"<li><a href=\\\"?s=k\\\" id=\\\"t_10\\\" onclick=\\\"switchTab('t_10')\\\" target=\\\"main\\\"> Linux\" ascii\n\t\t$s3 = \"if($_COOKIE['admin_spiderpass'] != md5($password))\" ascii\n\t\t$s4 = \"case \\\"b\\\" : Guama_b(); break;\" ascii\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

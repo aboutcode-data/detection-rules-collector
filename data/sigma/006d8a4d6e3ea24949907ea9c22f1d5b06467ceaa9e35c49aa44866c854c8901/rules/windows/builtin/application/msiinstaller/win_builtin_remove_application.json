@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/msiinstaller/win_builtin_remove_application.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-28",
+                "title": "Application Uninstalled",
+                "id": "570ae5ec-33dc-427c-b815-db86228ad43e"
+            },
+            "rule_text": "title: Application Uninstalled\nid: 570ae5ec-33dc-427c-b815-db86228ad43e\nstatus: test\ndescription: An application has been removed. Check if it is critical.\nreferences:\n- https://github.com/nasbench/EVTX-ETW-Resources/blob/f1b010ce0ee1b71e3024180de1a3e67f99701fe4/ETWProvidersManifests/Windows11/22H2/W11_22H2_Pro_20221220_22621.963/WEPExplorer/Microsoft-Windows-MsiServer.xml\n- https://learn.microsoft.com/en-us/windows/win32/msi/event-logging\nauthor: frack113\ndate: 2022-01-28\nmodified: 2022-09-17\ntags:\n- attack.impact\n- attack.t1489\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name: MsiInstaller\n    EventID:\n    - 1034\n    - 11724\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

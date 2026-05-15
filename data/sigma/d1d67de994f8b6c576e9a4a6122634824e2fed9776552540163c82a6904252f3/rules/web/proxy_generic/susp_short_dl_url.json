@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/susp_short_dl_url.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2022-09-06",
+                "title": "Suspiciously Short Download URL of Anomalous Style",
+                "id": "e9b0c604-707b-44e2-a87c-fbf390eaf8ef"
+            },
+            "rule_text": "title: Suspiciously Short Download URL of Anomalous Style\nid: e9b0c604-707b-44e2-a87c-fbf390eaf8ef\ndescription: Suspiciously short download URL of anomalous style commonly seen during\n  malicious activity.\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: '2022-09-06'\nmodified: '2023-10-31'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri|endswith:\n    - .exe\n    - .vbs\n    - .bat\n    - .rar\n    - .ps1\n    - .dll\n    - .zip\n    - .sh\n    - .tar.gz\n    - .tar\n    - .7z\n    - .psm\n    - .ps\n    c-uri|re: ^(/[^/]*){0,2}\\/(\\w|\\d)\\.(exe|vbs|bat|zip|rar|ps1|dll|sh|tar\\.gz|tar|7z|psm|ps)$\n  filter:\n  - cs-host|endswith:\n    - .sharepoint.com\n  condition: selection and not filter\nfalsepositives:\n- Benign downloads\nlevel: low\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

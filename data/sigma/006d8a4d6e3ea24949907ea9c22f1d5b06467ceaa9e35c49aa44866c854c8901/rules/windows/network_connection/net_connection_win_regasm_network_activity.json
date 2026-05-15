@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_regasm_network_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2024-04-25",
+                "title": "RegAsm.EXE Initiating Network Connection To Public IP",
+                "id": "0531e43a-d77d-47c2-b89f-5fe50321c805"
+            },
+            "rule_text": "title: RegAsm.EXE Initiating Network Connection To Public IP\nid: 0531e43a-d77d-47c2-b89f-5fe50321c805\nstatus: test\ndescription: Detects \"RegAsm.exe\" initiating a network connection to public IP adresses\nreferences:\n- https://app.any.run/tasks/ec207948-4916-47eb-a0f4-4c6abb2e7668/\n- https://research.splunk.com/endpoint/07921114-6db4-4e2e-ae58-3ea8a52ae93f/\n- https://lolbas-project.github.io/lolbas/Binaries/Regasm/\nauthor: frack113\ndate: 2024-04-25\ntags:\n- attack.stealth\n- attack.t1218.009\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith: \\regasm.exe\n  filter_main_local_ranges:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 169.254.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

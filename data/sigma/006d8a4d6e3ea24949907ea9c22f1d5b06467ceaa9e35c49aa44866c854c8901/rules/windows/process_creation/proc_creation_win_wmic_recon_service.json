@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-14",
+                "title": "Service Reconnaissance Via Wmic.EXE",
+                "id": "76f55eaa-d27f-4213-9d45-7b0e4b60bbae"
+            },
+            "rule_text": "title: Service Reconnaissance Via Wmic.EXE\nid: 76f55eaa-d27f-4213-9d45-7b0e4b60bbae\nrelated:\n- id: 68bcd73b-37ef-49cb-95fc-edc809730be6\n  type: similar\nstatus: test\ndescription: 'An adversary might use WMI to check if a certain remote service is running\n  on a remote device.\n\n  When the test completes, a service information will be displayed on the screen if\n  it exists.\n\n  A common feedback message is that \"No instance(s) Available\" if the service queried\n  is not running.\n\n  A common error message is \"Node - (provided IP or default) ERROR Description =The\n  RPC server is unavailable\" if the provided remote host is unreachable\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1047/T1047.md\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wmic\n- https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-service\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-14\nmodified: 2026-01-07\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WMIC.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains: service\n  filter_main_win32_methods:\n    CommandLine|contains:\n    - Change\n    - Create\n    - Delete\n    - PauseService\n    - ResumeService\n    - SetSecurityDescriptor\n    - StartService\n    - StopService\n    - UserControlService\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

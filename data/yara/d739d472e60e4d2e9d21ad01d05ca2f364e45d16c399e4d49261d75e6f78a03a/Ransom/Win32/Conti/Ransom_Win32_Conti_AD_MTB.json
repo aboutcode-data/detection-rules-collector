@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Conti/Ransom_Win32_Conti_AD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Conti_AD_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Conti.AD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Conti_AD_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Conti.AD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {80 39 00 75 ?? 53 56 57 bf ?? 00 00 00 8d 71 01 8d 5f ?? 8a 06 8d 76 01 0f b6 c0 83 e8 }\n\t\t$a_03_1 = {99 f7 fb 8d 42 ?? 99 f7 fb 88 56 ff 83 ef 01 75 ?? 5f 5e 5b 8d 41 01 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

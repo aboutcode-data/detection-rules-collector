@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_systemsettingsadminflows_turn_on_dev_features.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "Potential Signing Bypass Via Windows Developer Features",
+                "id": "a383dec4-deec-4e6e-913b-ed9249670848"
+            },
+            "rule_text": "title: Potential Signing Bypass Via Windows Developer Features\nid: a383dec4-deec-4e6e-913b-ed9249670848\nrelated:\n- id: b110ebaf-697f-4da1-afd5-b536fa27a2c1\n  type: similar\nstatus: test\ndescription: Detects when a user enable developer features such as \"Developer Mode\"\n  or \"Application Sideloading\". Which allows the user to install untrusted packages.\nreferences:\n- Internal Research\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\SystemSettingsAdminFlows.exe\n  - OriginalFileName: SystemSettingsAdminFlows.EXE\n  selection_flag:\n    CommandLine|contains: TurnOnDeveloperFeatures\n  selection_options:\n    CommandLine|contains:\n    - DeveloperUnlock\n    - EnableSideloading\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

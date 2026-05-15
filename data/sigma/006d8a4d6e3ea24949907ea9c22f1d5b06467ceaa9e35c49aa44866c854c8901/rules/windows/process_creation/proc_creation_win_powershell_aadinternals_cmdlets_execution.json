@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_aadinternals_cmdlets_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer (@austinsonger), Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2022-12-23",
+                "title": "AADInternals PowerShell Cmdlets Execution - ProccessCreation",
+                "id": "c86500e9-a645-4680-98d7-f882c70c1ea3"
+            },
+            "rule_text": "title: AADInternals PowerShell Cmdlets Execution - ProccessCreation\nid: c86500e9-a645-4680-98d7-f882c70c1ea3\nrelated:\n- id: 91e69562-2426-42ce-a647-711b8152ced6\n  type: similar\nstatus: test\ndescription: Detects ADDInternals Cmdlet execution. A tool for administering Azure\n  AD and Office 365. Which can be abused by threat actors to attack Azure AD or Office\n  365.\nreferences:\n- https://o365blog.com/aadinternals/\n- https://github.com/Gerenios/AADInternals\nauthor: Austin Songer (@austinsonger), Nasreddine Bencherchali (Nextron Systems),\n  Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2022-12-23\nmodified: 2025-02-06\ntags:\n- attack.execution\n- attack.reconnaissance\n- attack.discovery\n- attack.credential-access\n- attack.impact\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.Exe\n    - pwsh.dll\n  selection_cli:\n    CommandLine|contains:\n    - Add-AADInt\n    - ConvertTo-AADInt\n    - Disable-AADInt\n    - Enable-AADInt\n    - Export-AADInt\n    - Find-AADInt\n    - Get-AADInt\n    - Grant-AADInt\n    - Initialize-AADInt\n    - Install-AADInt\n    - Invoke-AADInt\n    - Join-AADInt\n    - New-AADInt\n    - Open-AADInt\n    - Read-AADInt\n    - Register-AADInt\n    - Remove-AADInt\n    - Reset-AADInt\n    - Resolve-AADInt\n    - Restore-AADInt\n    - Save-AADInt\n    - Search-AADInt\n    - Send-AADInt\n    - Set-AADInt\n    - Start-AADInt\n    - Unprotect-AADInt\n    - Update-AADInt\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the library for administrative activity\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

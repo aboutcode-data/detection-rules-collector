@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cdb_arbitrary_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Beyu Denis, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-10-26",
+                "title": "Potential Binary Proxy Execution Via Cdb.EXE",
+                "id": "b5c7395f-e501-4a08-94d4-57fe7a9da9d2"
+            },
+            "rule_text": "title: Potential Binary Proxy Execution Via Cdb.EXE\nid: b5c7395f-e501-4a08-94d4-57fe7a9da9d2\nstatus: test\ndescription: Detects usage of \"cdb.exe\" to launch arbitrary processes or commands\n  from a debugger script file\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Cdb/\n- https://web.archive.org/web/20170715043507/http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html\n- https://twitter.com/nas_bench/status/1534957360032120833\nauthor: Beyu Denis, oscd.community, Nasreddine Bencherchali (Nextron Systems)\ndate: 2019-10-26\nmodified: 2024-04-22\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1106\n- attack.t1218\n- attack.t1127\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cdb.exe\n  - OriginalFileName: CDB.Exe\n  selection_cli:\n    CommandLine|contains:\n    - ' -c '\n    - ' -cf '\n  condition: all of selection*\nfalsepositives:\n- Legitimate use of debugging tools\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

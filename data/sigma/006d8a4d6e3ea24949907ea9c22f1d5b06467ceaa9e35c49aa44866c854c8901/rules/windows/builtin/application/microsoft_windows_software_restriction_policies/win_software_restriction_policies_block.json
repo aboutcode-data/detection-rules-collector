@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/microsoft_windows_software_restriction_policies/win_software_restriction_policies_block.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-01-12",
+                "title": "Restricted Software Access By SRP",
+                "id": "b4c8da4a-1c12-46b0-8a2b-0a8521d03442"
+            },
+            "rule_text": "title: Restricted Software Access By SRP\nid: b4c8da4a-1c12-46b0-8a2b-0a8521d03442\nstatus: test\ndescription: Detects restricted access to applications by the Software Restriction\n  Policies (SRP) policy\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/identity/software-restriction-policies/software-restriction-policies\n- https://github.com/nasbench/EVTX-ETW-Resources/blob/7a806a148b3d9d381193d4a80356016e6e8b1ee8/ETWEventsList/CSV/Windows11/22H2/W11_22H2_Pro_20220920_22621.382/Providers/Microsoft-Windows-AppXDeployment-Server.csv\nauthor: frack113\ndate: 2023-01-12\ntags:\n- attack.lateral-movement\n- attack.execution\n- attack.t1072\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name: Microsoft-Windows-SoftwareRestrictionPolicies\n    EventID:\n    - 865\n    - 866\n    - 867\n    - 868\n    - 882\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

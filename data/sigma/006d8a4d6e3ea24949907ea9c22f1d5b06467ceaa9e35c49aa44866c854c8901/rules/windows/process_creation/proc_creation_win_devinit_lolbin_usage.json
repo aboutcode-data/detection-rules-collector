@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_devinit_lolbin_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-11",
+                "title": "Arbitrary MSI Download Via Devinit.EXE",
+                "id": "90d50722-0483-4065-8e35-57efaadd354d"
+            },
+            "rule_text": "title: Arbitrary MSI Download Via Devinit.EXE\nid: 90d50722-0483-4065-8e35-57efaadd354d\nstatus: test\ndescription: Detects a certain command line flag combination used by \"devinit.exe\",\n  which can be abused as a LOLBIN to download arbitrary MSI packages on a Windows\n  system\nreferences:\n- https://twitter.com/mrd0x/status/1460815932402679809\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Devinit/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-11\nmodified: 2023-04-06\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - ' -t msi-install '\n    - ' -i http'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_download_direct_ip_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-18",
+                "title": "File Download From IP URL Via Curl.EXE",
+                "id": "9cc85849-3b02-4cb5-b371-3a1ff54f2218"
+            },
+            "rule_text": "title: File Download From IP URL Via Curl.EXE\nid: 9cc85849-3b02-4cb5-b371-3a1ff54f2218\nrelated:\n- id: 5cb299fc-5fb1-4d07-b989-0644c68b6043\n  type: similar\nstatus: test\ndescription: Detects file downloads directly from IP address URL using curl.exe\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\n- https://github.com/WithSecureLabs/iocs/blob/344203de742bb7e68bd56618f66d34be95a9f9fc/FIN7VEEAM/iocs.csv\n- https://github.com/pr0xylife/IcedID/blob/8dd1e218460db4f750d955b4c65b2f918a1db906/icedID_09.28.2023.txt\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-18\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_ip:\n    CommandLine|re: ://[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\n  selection_http:\n    CommandLine|contains: http\n  selection_flag:\n    CommandLine|contains:\n    - ' -O'\n    - --remote-name\n    - --output\n  filter_main_ext:\n    CommandLine|endswith:\n    - .bat\n    - .bat\"\n    - .dat\n    - .dat\"\n    - .dll\n    - .dll\"\n    - .exe\n    - .exe\"\n    - .gif\n    - .gif\"\n    - .hta\n    - .hta\"\n    - .jpeg\n    - .jpeg\"\n    - .log\n    - .log\"\n    - .msi\n    - .msi\"\n    - .png\n    - .png\"\n    - .ps1\n    - .ps1\"\n    - .psm1\n    - .psm1\"\n    - .vbe\n    - .vbe\"\n    - .vbs\n    - .vbs\"\n    - .bat'\n    - .dat'\n    - .dll'\n    - .exe'\n    - .gif'\n    - .hta'\n    - .jpeg'\n    - .log'\n    - .msi'\n    - .png'\n    - .ps1'\n    - .psm1'\n    - .vbe'\n    - .vbs'\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_download_direct_ip_exec/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/1aN0rmus/exe_rules.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "backdoor_apt_pcclient",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "maltype": "APT.PCCLient",
+                "filetype": "DLL",
+                "version": "0.1",
+                "description": "Detects the dropper: 869fa4dfdbabfabe87d334f85ddda234 AKA dw20.dll/msacm32.drv dropped by 4a85af37de44daf5917f545c6fd03902 (RTF)",
+                "date": "2012-10"
+            },
+            "rule_text": "rule backdoor_apt_pcclient\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\tmaltype = \"APT.PCCLient\"\n\t\tfiletype = \"DLL\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"Detects the dropper: 869fa4dfdbabfabe87d334f85ddda234 AKA dw20.dll/msacm32.drv dropped by 4a85af37de44daf5917f545c6fd03902 (RTF)\"\n\t\tdate = \"2012-10\"\n\n\tstrings:\n\t\t$magic = { 4d 5a }\n\t\t$string1 = \"www.micro1.zyns.com\"\n\t\t$string2 = \"Mozilla/4.0 (compatible; MSIE 8.0; Win32)\"\n\t\t$string3 = \"msacm32.drv\" wide\n\t\t$string4 = \"C:\\\\Windows\\\\Explorer.exe\" wide\n\t\t$string5 = \"Elevation:Administrator!\" wide\n\t\t$string6 = \"C:\\\\Users\\\\cmd\\\\Desktop\\\\msacm32\\\\Release\\\\msacm32.pdb\"\n\n\tcondition:\n\t\t$magic at 0 and 4 of ( $string* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

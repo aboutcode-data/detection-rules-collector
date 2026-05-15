@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_local_file_read.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-27",
+                "title": "Local File Read Using Curl.EXE",
+                "id": "aa6f6ea6-0676-40dd-b510-6e46f02d8867"
+            },
+            "rule_text": "title: Local File Read Using Curl.EXE\nid: aa6f6ea6-0676-40dd-b510-6e46f02d8867\nstatus: test\ndescription: Detects execution of \"curl.exe\" with the \"file://\" protocol handler in\n  order to read local files.\nreferences:\n- https://curl.se/docs/manpage.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-27\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_cli:\n    CommandLine|contains: file:///\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_local_file_read/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

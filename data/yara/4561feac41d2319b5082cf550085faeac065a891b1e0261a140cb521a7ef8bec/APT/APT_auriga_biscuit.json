@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/advanced-threat-research/Yara-Rules/blob/master/APT/APT_auriga_biscuit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_auriga_driver",
+                "tags": [],
+                "description": "Rule to detect the Auriga driver",
+                "author": "Marc Rivero | McAfee ATR Team",
+                "date": "2013-03-13",
+                "reference": "https://www.fireeye.com/content/dam/fireeye-www/services/pdfs/mandiant-apt1-report.pdf",
+                "rule_version": "v1",
+                "malware_type": "kerneldriver",
+                "malware_family": "Driver:W32/Auriga",
+                "actor_type": "APT",
+                "actor_group": "APT1",
+                "hash": "207eee627a76449ac6d2ca43338d28087c8b184e7b7b50fdc60a11950c8283ec"
+            },
+            "rule_text": "rule apt_auriga_driver\n{\n\tmeta:\n\t\tdescription = \"Rule to detect the Auriga driver\"\n\t\tauthor = \"Marc Rivero | McAfee ATR Team\"\n\t\tdate = \"2013-03-13\"\n\t\treference = \"https://www.fireeye.com/content/dam/fireeye-www/services/pdfs/mandiant-apt1-report.pdf\"\n\t\trule_version = \"v1\"\n\t\tmalware_type = \"kerneldriver\"\n\t\tmalware_family = \"Driver:W32/Auriga\"\n\t\tactor_type = \"APT\"\n\t\tactor_group = \"APT1\"\n\t\thash = \"207eee627a76449ac6d2ca43338d28087c8b184e7b7b50fdc60a11950c8283ec\"\n\n\tstrings:\n\t\t$s1 = \"\\\\SystemRoot\\\\System32\\\\netui.dll\" fullword wide\n\t\t$s2 = \"\\\\SystemRoot\\\\System32\\\\drivers\\\\riodrv32.sys\" fullword wide\n\t\t$s3 = \"\\\\SystemRoot\\\\System32\\\\arp.exe\" fullword wide\n\t\t$s4 = \"netui.dll\" fullword ascii\n\t\t$s5 = \"riodrv32.sys\" fullword wide\n\t\t$s6 = \"\\\\netui.dll\" fullword wide\n\t\t$s7 = \"d:\\\\drizt\\\\projects\\\\auriga\\\\branches\\\\stone_~1\\\\server\\\\exe\\\\i386\\\\riodrv32.pdb\" fullword ascii\n\t\t$s8 = \"\\\\riodrv32.sys\" fullword wide\n\t\t$s9 = \"\\\\Registry\\\\Machine\\\\System\\\\CurrentControlSet\\\\Services\\\\riodrv32\" fullword wide\n\t\t$s10 = \"\\\\DosDevices\\\\rio32drv\" fullword wide\n\t\t$s11 = \"e\\\\Driver\\\\nsiproxy\" fullword wide\n\t\t$s12 = \"(C) S3/Diamond Multimedia Systems. All rights reserved.\" fullword wide\n\t\t$s13 = \"\\\\Device\\\\rio32drv\" fullword wide\n\t\t$s14 = \"\\\\Registry\\\\Machine\\\\SOFTWARE\\\\riodrv\" fullword wide\n\t\t$s15 = \"\\\\Registry\\\\Machine\\\\SOFTWARE\\\\riodrv32\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 50KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

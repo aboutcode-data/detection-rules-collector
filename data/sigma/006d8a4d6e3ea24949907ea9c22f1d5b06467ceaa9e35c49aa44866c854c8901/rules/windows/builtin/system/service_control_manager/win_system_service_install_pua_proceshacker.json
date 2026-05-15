@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_pua_proceshacker.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-05-27",
+                "title": "ProcessHacker Privilege Elevation",
+                "id": "c4ff1eac-84ad-44dd-a6fb-d56a92fc43a9"
+            },
+            "rule_text": "title: ProcessHacker Privilege Elevation\nid: c4ff1eac-84ad-44dd-a6fb-d56a92fc43a9\nstatus: test\ndescription: Detects a ProcessHacker tool that elevated privileges to a very high\n  level\nreferences:\n- https://twitter.com/1kwpeter/status/1397816101455765504\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-05-27\nmodified: 2022-12-25\ntags:\n- attack.persistence\n- attack.execution\n- attack.privilege-escalation\n- attack.t1543.003\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ServiceName|startswith: ProcessHacker\n    AccountName: LocalSystem\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

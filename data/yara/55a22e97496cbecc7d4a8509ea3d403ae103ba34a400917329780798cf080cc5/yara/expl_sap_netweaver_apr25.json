@@ -1,0 +1,55 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/expl_sap_netweaver_apr25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_SAP_NetWeaver_Exploitation_Activity_Apr25_1",
+                "tags": [
+                    "SCRIPT"
+                ],
+                "description": "Detects forensic artefacts related to exploitation activity of SAP NetWeaver CVE-2025-31324",
+                "reference": "https://reliaquest.com/blog/threat-spotlight-reliaquest-uncovers-vulnerability-behind-sap-netweaver-compromise/",
+                "author": "Florian Roth",
+                "date": "2025-04-25",
+                "score": 70
+            },
+            "rule_text": "rule APT_SAP_NetWeaver_Exploitation_Activity_Apr25_1 : SCRIPT\n{\n\tmeta:\n\t\tdescription = \"Detects forensic artefacts related to exploitation activity of SAP NetWeaver CVE-2025-31324\"\n\t\treference = \"https://reliaquest.com/blog/threat-spotlight-reliaquest-uncovers-vulnerability-behind-sap-netweaver-compromise/\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2025-04-25\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$x01 = \"/helper.jsp?cmd=\" ascii wide\n\t\t$x02 = \"/cache.jsp?cmd=\" ascii wide\n\n\tcondition:\n\t\tfilesize < 20MB and 1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-31324"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_SAP_NetWeaver_Exploitation_Activity_Apr25_2",
+                "tags": [
+                    "SCRIPT"
+                ],
+                "description": "Detects forensic artefacts related to exploitation activity of SAP NetWeaver CVE-2025-31324",
+                "reference": "https://reliaquest.com/blog/threat-spotlight-reliaquest-uncovers-vulnerability-behind-sap-netweaver-compromise/",
+                "author": "Florian Roth",
+                "date": "2025-04-25",
+                "score": 70
+            },
+            "rule_text": "rule APT_SAP_NetWeaver_Exploitation_Activity_Apr25_2 : SCRIPT\n{\n\tmeta:\n\t\tdescription = \"Detects forensic artefacts related to exploitation activity of SAP NetWeaver CVE-2025-31324\"\n\t\treference = \"https://reliaquest.com/blog/threat-spotlight-reliaquest-uncovers-vulnerability-behind-sap-netweaver-compromise/\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2025-04-25\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$x03 = \"MSBuild.exe c:\\\\programdata\\\\\" ascii wide\n\n\tcondition:\n\t\tfilesize < 20MB and 1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-31324"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_WEBSHELL_Cmd_Indicator_Apr25",
+                "tags": [],
+                "description": "Detects a pattern which is often related to web shell activity",
+                "reference": "https://regex101.com/r/N6oZ2h/2",
+                "author": "Florian Roth",
+                "date": "2025-04-25",
+                "modified": "2025-05-07",
+                "score": 60
+            },
+            "rule_text": "rule SUSP_WEBSHELL_Cmd_Indicator_Apr25\n{\n\tmeta:\n\t\tdescription = \"Detects a pattern which is often related to web shell activity\"\n\t\treference = \"https://regex101.com/r/N6oZ2h/2\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2025-04-25\"\n\t\tmodified = \"2025-05-07\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$xr01 = /\\.(asp|aspx|jsp|php)\\?cmd=[a-z0-9%+\\-\\/\\.]{3,20} HTTP\\/1\\.[01][\"']? 200/\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-31324"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Farfli/Trojan_Win32_Farfli_BV_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Farfli_BV_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Farfli.BV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Farfli_BV_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Farfli.BV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8a 0c 38 80 f1 19 80 c1 7a 88 0c 38 40 3b c6 7c }\n\t\t$a_01_1 = {5b 45 78 65 63 75 74 65 5d }\n\t\t$a_01_2 = {4c 65 74 20 6d 65 20 65 78 69 74 }\n\t\t$a_01_3 = {43 6f 6e 6e 65 63 74 20 4f 4b 21 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

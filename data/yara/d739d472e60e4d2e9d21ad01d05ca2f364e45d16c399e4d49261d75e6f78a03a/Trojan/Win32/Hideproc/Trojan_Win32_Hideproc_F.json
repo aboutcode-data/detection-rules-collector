@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Hideproc/Trojan_Win32_Hideproc_F.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Hideproc_F",
+                "tags": [],
+                "description": "Trojan:Win32/Hideproc.F,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Hideproc_F\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Hideproc.F,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {57 89 c7 88 cd 89 c8 c1 e0 10 66 89 c8 89 d1 c1 f9 02 78 09 f3 ab }\n\t\t$a_11_1 = {74 48 69 64 65 46 69 6c 65 4d 61 70 70 69 6e 67 01 }\n\t\t$a_6e_2 = {68 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_11_1 & 1 ) * 1 + ( #a_6e_2 & 1 ) * 8704 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

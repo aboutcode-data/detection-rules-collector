@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/paloalto/findpos.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "findpos",
+                "tags": [],
+                "description": "FindPOS is a newly discovered POS family.",
+                "category": "Point of Sale",
+                "author": "Josh Grunzweig"
+            },
+            "rule_text": "import \"cuckoo\"\n\nrule findpos\n{\n\tmeta:\n\t\tdescription = \"FindPOS is a newly discovered POS family.\"\n\t\tcategory = \"Point of Sale\"\n\t\tauthor = \"Josh Grunzweig\"\n\n\tstrings:\n\t\t$s1 = \"oprat=2&uid=%I64u&uinfo=%s&win=%d.%d&vers=%s\" nocase wide ascii\n\t\t$pdb1 = \"H:\\\\Work\\\\Current\\\\FindStr\\\\Release\\\\FindStr.pdb\" nocase wide ascii\n\t\t$pdb2 = \"H:\\\\Work\\\\FindStrX\\\\Release\\\\FindStr.pdb\" nocase wide ascii\n\t\t$pdb3 = \"H:\\\\Work\\\\Current\\\\KeyLogger\\\\Release\\\\KeyLogger.pdb\" nocase wide ascii\n\n\tcondition:\n\t\tany of ( $s* ) or any of ( $pdb* ) or ( cuckoo.sync.mutex ( /WIN_[a-fA-F0-9]{16}/ ) and cuckoo.registry.key_access ( /\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run/ ) and ( cuckoo.filesystem.file_access ( /C\\:\\\\WINDOWS\\\\System32\\\\\\w{8}\\.exe/ ) or cuckoo.filesystem.file_access ( /C\\:\\\\Documents\\ and\\ Settings\\\\[^\\\\]+\\\\\\w{8}\\.exe/ ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

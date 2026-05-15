@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/gen_deviceguard_evasion.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "DeviceGuard_WDS_Evasion",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Detects WDS file used to circumvent Device Guard",
+                "score": 80,
+                "reference": "http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html"
+            },
+            "rule_text": "rule DeviceGuard_WDS_Evasion\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Detects WDS file used to circumvent Device Guard\"\n\t\tscore = 80\n\t\treference = \"http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html\"\n\n\tstrings:\n\t\t$s1 = \"r @$ip=@$t0\" ascii fullword\n\t\t$s2 = \";eb @$t0+\" ascii\n\t\t$s3 = \".foreach /pS\" ascii fullword\n\n\tcondition:\n\t\tfilesize < 50KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

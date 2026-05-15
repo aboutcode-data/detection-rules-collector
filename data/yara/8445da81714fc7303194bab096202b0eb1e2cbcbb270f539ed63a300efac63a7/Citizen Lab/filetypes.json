@@ -1,0 +1,43 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/filetypes.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IsRTF",
+                "tags": [
+                    "RTF"
+                ],
+                "description": "Identifier for RTF files",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-05"
+            },
+            "rule_text": "private rule IsRTF : RTF\n{\n\tmeta:\n\t\tdescription = \"Identifier for RTF files\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-05\"\n\n\tstrings:\n\t\t$magic = /^\\s*{\\\\rt/\n\n\tcondition:\n\t\t$magic\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsOLE",
+                "tags": [
+                    "OLE"
+                ],
+                "description": "Identifier for OLE files",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-06"
+            },
+            "rule_text": "private rule IsOLE : OLE\n{\n\tmeta:\n\t\tdescription = \"Identifier for OLE files\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-06\"\n\n\tstrings:\n\t\t$magic = {d0 cf 11 e0 a1 b1 1a e1}\n\n\tcondition:\n\t\t$magic at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsPE",
+                "tags": [
+                    "PE"
+                ],
+                "description": "Identifier for PE files",
+                "last_modified": "2014-07-11"
+            },
+            "rule_text": "private rule IsPE : PE\n{\n\tmeta:\n\t\tdescription = \"Identifier for PE files\"\n\t\tlast_modified = \"2014-07-11\"\n\n\tstrings:\n\t\t$magic = { 5a 4d }\n\n\tcondition:\n\t\t$magic at 0 and uint32( uint32( 0x3C ) ) == 0x00004550\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

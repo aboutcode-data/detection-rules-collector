@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_solidpdfcreator.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-05-07",
+                "title": "Potential SolidPDFCreator.DLL Sideloading",
+                "id": "a2edbce1-95c8-4291-8676-0d45146862b3"
+            },
+            "rule_text": "title: Potential SolidPDFCreator.DLL Sideloading\nid: a2edbce1-95c8-4291-8676-0d45146862b3\nstatus: test\ndescription: Detects potential DLL sideloading of \"SolidPDFCreator.dll\"\nreferences:\n- https://lab52.io/blog/new-mustang-pandas-campaing-against-australia/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-05-07\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\SolidPDFCreator.dll\n  filter_main_path:\n    Image|endswith: \\SolidPDFCreator.exe\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\SolidDocuments\\SolidPDFCreator\\\n    - C:\\Program Files\\SolidDocuments\\SolidPDFCreator\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

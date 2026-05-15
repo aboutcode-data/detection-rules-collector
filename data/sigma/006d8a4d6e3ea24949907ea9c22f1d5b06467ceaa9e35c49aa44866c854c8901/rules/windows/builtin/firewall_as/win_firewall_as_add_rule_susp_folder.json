@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/firewall_as/win_firewall_as_add_rule_susp_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-02-26",
+                "title": "New Firewall Rule Added In Windows Firewall Exception List For Potential Suspicious Application",
+                "id": "9e2575e7-2cb9-4da1-adc8-ed94221dca5e"
+            },
+            "rule_text": "title: New Firewall Rule Added In Windows Firewall Exception List For Potential Suspicious\n  Application\nid: 9e2575e7-2cb9-4da1-adc8-ed94221dca5e\nrelated:\n- id: cde0a575-7d3d-4a49-9817-b8004a7bf105\n  type: derived\nstatus: test\ndescription: Detects the addition of a new rule to the Windows Firewall exception\n  list for an application located in a potentially suspicious location.\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)\n- https://app.any.run/tasks/7123e948-c91e-49e0-a813-00e8d72ab393/#\nauthor: frack113\ndate: 2023-02-26\nmodified: 2024-05-10\ntags:\n- attack.defense-impairment\n- attack.t1686.003\nlogsource:\n  product: windows\n  service: firewall-as\ndetection:\n  selection:\n    EventID:\n    - 2004\n    - 2071\n    - 2097\n    ApplicationPath|contains:\n    - :\\PerfLogs\\\n    - :\\Temp\\\n    - :\\Tmp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Tasks\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n  filter_main_block:\n    Action: 2\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

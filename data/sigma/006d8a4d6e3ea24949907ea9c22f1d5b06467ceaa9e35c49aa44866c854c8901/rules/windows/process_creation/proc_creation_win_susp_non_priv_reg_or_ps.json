@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_non_priv_reg_or_ps.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov (idea), Ryan Plas (rule), oscd.community",
+                "date": "2020-10-05",
+                "title": "Non-privileged Usage of Reg or Powershell",
+                "id": "8f02c935-effe-45b3-8fc9-ef8696a9e41d"
+            },
+            "rule_text": "title: Non-privileged Usage of Reg or Powershell\nid: 8f02c935-effe-45b3-8fc9-ef8696a9e41d\nstatus: test\ndescription: Search for usage of reg or Powershell by non-privileged users to modify\n  service configuration in registry\nreferences:\n- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-20-638.jpg\nauthor: Teymur Kheirkhabarov (idea), Ryan Plas (rule), oscd.community\ndate: 2020-10-05\nmodified: 2024-12-01\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cli:\n  - CommandLine|contains|all:\n    - 'reg '\n    - add\n  - CommandLine|contains:\n    - powershell\n    - set-itemproperty\n    - ' sp '\n    - new-itemproperty\n  selection_data:\n    IntegrityLevel:\n    - Medium\n    - S-1-16-8192\n    CommandLine|contains|all:\n    - ControlSet\n    - Services\n    CommandLine|contains:\n    - ImagePath\n    - FailureCommand\n    - ServiceDLL\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/pulsesecure.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_pulsesecure_webshell",
+                "tags": [],
+                "description": "Webshell installed due to Pluse Connect Secure vulnerability(CVE-2021-22893)",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "463023f0969b2b52bc491d8787de876e59f0d48446f908d16d1ce763bbe05ee9"
+            },
+            "rule_text": "rule malware_pulsesecure_webshell\n{\n\tmeta:\n\t\tdescription = \"Webshell installed due to Pluse Connect Secure vulnerability(CVE-2021-22893)\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"e3137135f4ad5ecdc7900a619d7f1b88ba252b963b38ae9a156299cc9bce92a1\"\n\t\thash = \"0fe1758397e55084b05efcaeb056c10c7b991f6adbda10eee8c131b4b52f6534\"\n\t\thash = \"1243b0bb3dc9ac428c76b57cf5f341923d49e35fcade0302c38d5d912d05fb7c\"\n\t\thash = \"463023f0969b2b52bc491d8787de876e59f0d48446f908d16d1ce763bbe05ee9\"\n\n\tstrings:\n\t\t$webshellA1 = \"Cache-Control: no-cache\"\n\t\t$webshellA2 = \"Content-type: text/html\"\n\t\t$webshellA3 = \"system(\"\n\t\t$webshellA4 = \"if(CGI::param(\"\n\t\t$webshellA5 = \"else{&main();}\"\n\t\t$webshellB1 = \"my $psalLaunch = CGI::param(\"\n\t\t$webshellB2 = \"MIME::Base64::encode\"\n\t\t$webshellB3 = \"if ($psalLaunch =\"\n\t\t$webshellB4 = \"<button type=\\\"button\\\" onclick = \\\"submitData()\\\" >submit</botton>\"\n\t\t$webshellB5 = \"<input type=\\\"submit\\\" value=\\\"Run\\\">\"\n\t\t$webshellB6 = \"RC4($\"\n\t\t$webshellB7 = \"Could not execute command\"\n\t\t$webshellC1 = \"MIME::Base64::encode(RC4($\"\n\t\t$webshellC2 = \"Content-type:text/html\"\n\t\t$webshellC3 = \"HTTP_X_KEY\"\n\t\t$webshellC4 = \"HTTP_X_CMD\"\n\t\t$webshellC5 = \"HTTP_X_CNT\"\n\n\tcondition:\n\t\tall of ( $webshellA* ) or 4 of ( $webshellB* ) or all of ( $webshellC* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-22893"
+            ]
+        }
+    ]
+}

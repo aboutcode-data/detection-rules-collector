@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_kubernetes_events_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-07-24",
+                "title": "Azure Kubernetes Events Deleted",
+                "id": "225d8b09-e714-479c-a0e4-55e6f29adf35"
+            },
+            "rule_text": "title: Azure Kubernetes Events Deleted\nid: 225d8b09-e714-479c-a0e4-55e6f29adf35\nstatus: test\ndescription: Detects when Events are deleted in Azure Kubernetes. An adversary may\n  delete events in Azure Kubernetes in an attempt to evade detection.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\n- https://github.com/elastic/detection-rules/blob/da3852b681cf1a33898b1535892eab1f3a76177a/rules/integrations/azure/defense_evasion_kubernetes_events_deleted.toml\nauthor: Austin Songer @austinsonger\ndate: 2021-07-24\nmodified: 2022-08-23\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName: MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/EVENTS.K8S.IO/EVENTS/DELETE\n  condition: selection\nfalsepositives:\n- Event deletions may be done by a system or network administrator. Verify whether\n  the username, hostname, and/or resource name should be making changes in your environment.\n  Events deletions from unfamiliar users or hosts should be investigated. If known\n  behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

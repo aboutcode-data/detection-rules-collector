@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_webdav_process_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-06-13",
+                "title": "Process Execution From WebDAV Share",
+                "id": "f8de9dd5-7a63-4cfd-9d0c-ae124878b5a9"
+            },
+            "rule_text": "title: Process Execution From WebDAV Share\nid: f8de9dd5-7a63-4cfd-9d0c-ae124878b5a9\nstatus: experimental\ndescription: 'Detects execution of processes with image paths starting with WebDAV\n  shares (\\\\), which might indicate malicious file execution from remote web shares.\n\n  Execution of processes from WebDAV shares can be a sign of lateral movement or exploitation\n  attempts, especially if the process is not a known legitimate application.\n\n  Exploitation Attempt of vulnerabilities like CVE-2025-33053 also involves executing\n  processes from WebDAV paths.\n\n  '\nreferences:\n- https://research.checkpoint.com/2025/stealth-falcon-zero-day/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-06-13\ntags:\n- attack.execution\n- attack.command-and-control\n- attack.lateral-movement\n- attack.t1105\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|startswith: \\\\\\\\\n    Image|contains: \\DavWWWRoot\\\n  condition: selection\nfalsepositives:\n- Legitimate use of WebDAV shares for process execution\n- Known applications executing from WebDAV paths\nlevel: low\n",
+            "vulnerabilities": [
+                "CVE-2025-33053"
+            ]
+        }
+    ]
+}

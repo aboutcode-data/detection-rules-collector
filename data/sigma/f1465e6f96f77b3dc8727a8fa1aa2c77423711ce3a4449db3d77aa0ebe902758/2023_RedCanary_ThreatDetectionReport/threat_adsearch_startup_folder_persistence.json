@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_adsearch_startup_folder_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "AdSearch Startup Folder Persistence File Creation (RedCanary Threat Detection Report)",
+                "id": "739d97f7-96e3-4e96-aebb-574b4f19d034"
+            },
+            "rule_text": "title: AdSearch Startup Folder Persistence File Creation (RedCanary Threat Detection\n  Report)\nid: 739d97f7-96e3-4e96-aebb-574b4f19d034\nstatus: experimental\ndescription: Detects file creations by cscript in the startup folder, associated with\n  AdSearch. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/adsearch/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.persistence\n- attack.t1547.001\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cscript.exe\n    TargetFilename|contains: start menu\\programs\\startup\n  condition: selection\nfalsepositives:\n- Rule is likely to require tuning to exclude normal, authorized activity\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

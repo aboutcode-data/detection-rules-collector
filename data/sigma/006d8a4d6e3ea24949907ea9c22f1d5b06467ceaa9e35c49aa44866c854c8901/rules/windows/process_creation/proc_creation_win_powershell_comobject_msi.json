@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_comobject_msi.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Meroujan Antonyan (vx3r)",
+                "date": "2025-05-27",
+                "title": "Obfuscated PowerShell MSI Install via WindowsInstaller COM",
+                "id": "7b6a7418-3afc-11f0-aff4-000d3abf478c"
+            },
+            "rule_text": "title: Obfuscated PowerShell MSI Install via WindowsInstaller COM\nid: 7b6a7418-3afc-11f0-aff4-000d3abf478c\nstatus: experimental\ndescription: 'Detects the execution of obfuscated PowerShell commands that attempt\n  to install MSI packages via the Windows Installer COM object (`WindowsInstaller.Installer`).\n\n  The technique involves manipulating strings to hide functionality, such as constructing\n  class names using string insertion (e.g., ''indowsInstaller.Installer''.Insert(0,''W''))\n  and correcting\n\n  malformed URLs (e.g., converting ''htps://'' to ''https://'') at runtime. This behavior\n  is commonly associated with malware loaders or droppers that aim to bypass static\n  detection\n\n  by hiding intent in runtime-generated strings and using legitimate tools for code\n  execution. The use of `InstallProduct` and COM object creation, particularly combined\n  with\n\n  hidden window execution and suppressed UI, indicates an attempt to install software\n  (likely malicious) without user interaction.\n\n  '\nreferences:\n- https://informationsecuritybuzz.com/the-real-danger-behind-a-simple-windows-shortcut/\n- https://redcanary.com/blog/threat-intelligence/intelligence-insights-may-2025/\n- https://www.virustotal.com/gui/file/f9710b0ba4de5fa0e7ec27da462d4d2fc6838eba83a19f23f6617a466bbad457\nauthor: Meroujan Antonyan (vx3r)\ndate: 2025-05-27\ntags:\n- attack.stealth\n- attack.t1027.010\n- attack.t1218.007\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell_ISE.EXE\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli:\n    CommandLine|contains|all:\n    - -ComObject\n    - InstallProduct(\n    - .Insert(\n    - UILevel\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

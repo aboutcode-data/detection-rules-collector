@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_task_write.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-11-16",
+                "title": "Suspicious Scheduled Task Write to System32 Tasks",
+                "id": "80e1f67a-4596-4351-98f5-a9c3efabac95"
+            },
+            "rule_text": "title: Suspicious Scheduled Task Write to System32 Tasks\nid: 80e1f67a-4596-4351-98f5-a9c3efabac95\nstatus: test\ndescription: Detects the creation of tasks from processes executed from suspicious\n  locations\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-11-16\nmodified: 2022-01-12\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.t1053\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|contains: \\Windows\\System32\\Tasks\n    Image|contains:\n    - \\AppData\\\n    - C:\\PerfLogs\n    - \\Windows\\System32\\config\\systemprofile\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

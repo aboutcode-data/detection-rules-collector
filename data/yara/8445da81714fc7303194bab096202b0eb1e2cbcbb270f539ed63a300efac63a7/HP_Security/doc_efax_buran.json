@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/HP_Security/doc_efax_buran.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "doc_efax_buran",
+                "tags": [],
+                "author": "Alex Holland (@cryptogramfan)",
+                "reference": "https://threatresearch.ext.hp.com/buran-ransomware-targets-german-organisations-through-malicious-spam-campaign/",
+                "date": "2019-10-10",
+                "sample_1": "7DD46D28AAEC9F5B6C5F7C907BA73EA012CDE5B5DC2A45CDA80F28F7D630F1B0",
+                "sample_2": "856D0C14850BE7D45FA6EE58425881E5F7702FBFBAD987122BB4FF59C72507E2",
+                "sample_3": "33C8E805D8D8A37A93D681268ACCA252314FF02CF9488B6B2F7A27DD07A1E33A"
+            },
+            "rule_text": "rule doc_efax_buran\n{\n\tmeta:\n\t\tauthor = \"Alex Holland (@cryptogramfan)\"\n\t\treference = \"https://threatresearch.ext.hp.com/buran-ransomware-targets-german-organisations-through-malicious-spam-campaign/\"\n\t\tdate = \"2019-10-10\"\n\t\tsample_1 = \"7DD46D28AAEC9F5B6C5F7C907BA73EA012CDE5B5DC2A45CDA80F28F7D630F1B0\"\n\t\tsample_2 = \"856D0C14850BE7D45FA6EE58425881E5F7702FBFBAD987122BB4FF59C72507E2\"\n\t\tsample_3 = \"33C8E805D8D8A37A93D681268ACCA252314FF02CF9488B6B2F7A27DD07A1E33A\"\n\n\tstrings:\n\t\t$vba = \"vbaProject.bin\" ascii nocase\n\t\t$image = \"image1.jpeg\" ascii nocase\n\t\t$padding_xml = /[a-zA-Z0-9]{5,40}\\d{10}\\.xml/ ascii\n\n\tcondition:\n\t\tall of them and filesize < 800KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

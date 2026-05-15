@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/SmokeLdr/Trojan_Win32_SmokeLdr_GI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_SmokeLdr_GI_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/SmokeLdr.GI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_SmokeLdr_GI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/SmokeLdr.GI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {30 0c 3e 46 3b f3 7c 90 0a 28 00 a1 ?? ?? ?? ?? 69 c0 ?? ?? ?? ?? 05 ?? ?? ?? ?? a3 ?? ?? ?? ?? 8a 0d }\n\t\t$a_02_1 = {8a 04 0f 88 04 0e 81 fa 03 02 00 00 75 ?? 89 ?? ?? ?? ?? ?? 41 3b ?? 72 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

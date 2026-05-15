@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/M_APT_Downloader_BEATDROP.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "M_APT_Downloader_BEATDROP",
+                "tags": [],
+                "author": "Mandiant",
+                "description": "Rule looking for BEATDROP malware",
+                "reference": "https://www.mandiant.com/resources/tracking-apt29-phishing-campaigns"
+            },
+            "rule_text": "rule M_APT_Downloader_BEATDROP\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdescription = \"Rule looking for BEATDROP malware\"\n\t\treference = \"https://www.mandiant.com/resources/tracking-apt29-phishing-campaigns\"\n\n\tstrings:\n\t\t$ntdll1 = \"ntdll\" ascii fullword\n\t\t$ntdll2 = \"C:\\\\Windows\\\\System32\\\\ntdll.dll\" ascii fullword nocase\n\t\t$url1 = \"api.trello.com\" ascii\n\t\t$url2 = \"/members/me/boards?key=\" ascii\n\t\t$url3 = \"/cards?key=\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and uint32( uint32( 0x3C ) ) == 0x00004550 and filesize < 1MB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_16bit_application.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-07-16",
+                "title": "Start of NT Virtual DOS Machine",
+                "id": "16905e21-66ee-42fe-b256-1318ada2d770"
+            },
+            "rule_text": "title: Start of NT Virtual DOS Machine\nid: 16905e21-66ee-42fe-b256-1318ada2d770\nstatus: test\ndescription: Ntvdm.exe allows the execution of 16-bit Windows applications on 32-bit\n  Windows operating systems, as well as the execution of both 16-bit and 32-bit DOS\n  applications\nreferences:\n- https://learn.microsoft.com/en-us/windows/compatibility/ntvdm-and-16-bit-app-support\n- https://support.microsoft.com/fr-fr/topic/an-ms-dos-based-program-that-uses-the-ms-dos-protected-mode-interface-crashes-on-a-computer-that-is-running-windows-7-5dc739ea-987b-b458-15e4-d28d5cca63c7\n- https://app.any.run/tasks/93fe92fa-8b2b-4d92-8c09-a841aed2e793/\n- https://app.any.run/tasks/214094a7-0abc-4a7b-a564-1b757faed79d/\nauthor: frack113\ndate: 2022-07-16\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\ntvdm.exe\n    - \\csrstub.exe\n  condition: selection\nfalsepositives:\n- Legitimate use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

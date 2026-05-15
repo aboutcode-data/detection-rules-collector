@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_MazarBot_z.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "android_mazarBot_z",
+                "tags": [
+                    "android"
+                ],
+                "author": "https://twitter.com/5h1vang",
+                "reference_1": "https://heimdalsecurity.com/blog/security-alert-mazar-bot-active-attacks-android-malware/",
+                "description": "Yara detection for MazarBOT",
+                "sample": "73c9bf90cb8573db9139d028fa4872e93a528284c02616457749d40878af8cf8"
+            },
+            "rule_text": "import \"androguard\"\n\nrule android_mazarBot_z : android\n{\n\tmeta:\n\t\tauthor = \"https://twitter.com/5h1vang\"\n\t\treference_1 = \"https://heimdalsecurity.com/blog/security-alert-mazar-bot-active-attacks-android-malware/\"\n\t\tdescription = \"Yara detection for MazarBOT\"\n\t\tsample = \"73c9bf90cb8573db9139d028fa4872e93a528284c02616457749d40878af8cf8\"\n\n\tstrings:\n\t\t$str_1 = \"android.app.extra.ADD_EXPLANATION\"\n\t\t$str_2 = \"device_policy\"\n\t\t$str_3 = \"content://sms/\"\n\t\t$str_4 = \"#admin_start\"\n\t\t$str_5 = \"kill call\"\n\t\t$str_6 = \"unstop all numbers\"\n\n\tcondition:\n\t\tandroguard.certificate.sha1( \"50FD99C06C2EE360296DCDA9896AD93CAE32266B\" ) or ( androguard.package_name ( \"com.mazar\" ) and androguard.activity ( /\\.DevAdminDisabler/ ) and androguard.receiver ( /\\.DevAdminReceiver/ ) and androguard.service ( /\\.WorkerService/i ) ) or androguard.permission ( /android.permission.INTERNET/ ) and androguard.permission ( /android.permission.SEND_SMS/ ) and androguard.permission ( /android.permission.CALL_PHONE/ ) and all of ( $str_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

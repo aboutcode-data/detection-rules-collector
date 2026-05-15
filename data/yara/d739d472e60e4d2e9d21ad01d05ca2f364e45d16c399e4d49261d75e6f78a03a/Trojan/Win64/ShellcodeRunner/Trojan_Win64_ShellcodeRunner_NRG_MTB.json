@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/ShellcodeRunner/Trojan_Win64_ShellcodeRunner_NRG_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_ShellcodeRunner_NRG_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/ShellcodeRunner.NRG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_ShellcodeRunner_NRG_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/ShellcodeRunner.NRG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {31 c0 41 89 c1 4c 8d 05 ?? ?? ?? ?? 31 c0 4c 89 c9 4c 89 ca }\n\t\t$a_03_1 = {0f 94 c0 24 01 88 44 24 ?? 8a 44 24 ?? 24 01 48 83 c4 38 }\n\t\t$a_03_2 = {48 8b 44 24 ?? 8a 4c 24 ?? 32 08 88 08 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

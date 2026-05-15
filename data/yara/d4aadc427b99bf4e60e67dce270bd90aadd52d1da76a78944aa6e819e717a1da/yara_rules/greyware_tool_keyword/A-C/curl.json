@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/A-C/curl.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "curl",
+                "tags": [],
+                "description": "Detection patterns for the tool 'curl' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "curl",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule curl\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'curl' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"curl\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /cmd\\.exe.{0,1000}\\s\\/c\\secho\\scurl\\shttps\\:\\/\\/.{0,1000}\\s\\-\\-output\\s\\\\\"\\%temp\\%.{0,1000}\\s\\-\\-ssl\\sno\\-revoke\\s\\-\\-insecure\\s\\-\\-location\\s\\>\\s\\\\\"\\%temp\\%/ nocase ascii wide\n\t\t$string2 = /curl\\shttp\\:\\/\\/.{0,1000}\\.png\\s\\-k\\|dd\\sskip\\=2446\\sbs\\=1\\|sh/\n\t\t$string3 = /curl\\shttps\\:\\/\\/.{0,1000}\\.png\\s\\-k\\|dd\\sskip\\=2446\\sbs\\=1\\|sh/\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

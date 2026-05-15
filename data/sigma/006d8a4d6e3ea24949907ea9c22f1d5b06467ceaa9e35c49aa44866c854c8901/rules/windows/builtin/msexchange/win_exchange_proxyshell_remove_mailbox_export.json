@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/msexchange/win_exchange_proxyshell_remove_mailbox_export.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-27",
+                "title": "Remove Exported Mailbox from Exchange Webserver",
+                "id": "09570ae5-889e-43ea-aac0-0e1221fb3d95"
+            },
+            "rule_text": "title: Remove Exported Mailbox from Exchange Webserver\nid: 09570ae5-889e-43ea-aac0-0e1221fb3d95\nstatus: test\ndescription: Detects removal of an exported Exchange mailbox which could be to cover\n  tracks from ProxyShell exploit\nreferences:\n- https://github.com/rapid7/metasploit-framework/blob/1416b5776d963f21b7b5b45d19f3e961201e0aed/modules/exploits/windows/http/exchange_proxyshell_rce.rb#L430\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-27\nmodified: 2023-01-23\ntags:\n- attack.stealth\n- attack.t1070\nlogsource:\n  service: msexchange-management\n  product: windows\ndetection:\n  keywords:\n    '|all':\n    - Remove-MailboxExportRequest\n    - ' -Identity '\n    - ' -Confirm \"False\"'\n  condition: keywords\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/MyloBot/Trojan_Win32_MyloBot_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_MyloBot_A_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/MyloBot.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_MyloBot_A_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/MyloBot.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 32 33 f0 81 e6 ?? ?? ?? ?? c1 e8 ?? 33 04 b5 ?? ?? ?? ?? 42 49 }\n\t\t$a_01_1 = {4d 6f 7a 69 6c 6c 61 2f 34 2e 30 20 28 63 6f 6d 70 61 74 69 62 6c 65 3b 20 4d 53 49 45 20 38 2e 30 3b 20 57 69 6e 64 6f 77 73 20 4e 54 20 35 2e 31 3b 20 54 72 69 64 65 6e 74 2f 34 2e 30 29 }\n\t\t$a_01_2 = {43 6f 6e 74 65 6e 74 2d 54 79 70 65 3a 20 61 70 70 6c 69 63 61 74 69 6f 6e 2f 78 2d 77 77 77 2d 66 6f 72 6d 2d 75 72 6c 65 6e 63 6f 64 65 64 }\n\t\t$a_01_3 = {48 54 54 50 2f 31 2e 30 20 32 30 30 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 2 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

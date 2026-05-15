@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_image_missing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2021-12-09",
+                "title": "Execution Of Non-Existing File",
+                "id": "71158e3f-df67-472b-930e-7d287acaa3e1"
+            },
+            "rule_text": "title: Execution Of Non-Existing File\nid: 71158e3f-df67-472b-930e-7d287acaa3e1\nstatus: test\ndescription: Checks whether the image specified in a process creation event is not\n  a full, absolute path (caused by process ghosting or other unorthodox methods to\n  start a process)\nreferences:\n- https://pentestlaboratories.com/2021/12/08/process-ghosting/\nauthor: Max Altgelt (Nextron Systems)\ndate: 2021-12-09\nmodified: 2022-12-14\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  image_absolute_path:\n    Image|contains: \\\n  filter_null:\n    Image: null\n  filter_empty:\n    Image:\n    - '-'\n    - ''\n  filter_4688:\n  - Image:\n    - System\n    - Registry\n    - MemCompression\n    - vmmem\n  - CommandLine:\n    - Registry\n    - MemCompression\n    - vmmem\n  condition: not image_absolute_path and not 1 of filter*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

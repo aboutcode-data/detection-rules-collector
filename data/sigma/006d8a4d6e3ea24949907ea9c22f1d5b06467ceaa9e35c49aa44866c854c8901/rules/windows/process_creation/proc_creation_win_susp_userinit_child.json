@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_userinit_child.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Samir Bousseaden (idea)",
+                "date": "2019-06-17",
+                "title": "Suspicious Userinit Child Process",
+                "id": "b655a06a-31c0-477a-95c2-3726b83d649d"
+            },
+            "rule_text": "title: Suspicious Userinit Child Process\nid: b655a06a-31c0-477a-95c2-3726b83d649d\nstatus: test\ndescription: Detects a suspicious child process of userinit\nreferences:\n- https://twitter.com/SBousseaden/status/1139811587760562176\nauthor: Florian Roth (Nextron Systems), Samir Bousseaden (idea)\ndate: 2019-06-17\nmodified: 2025-10-17\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\userinit.exe\n  filter_main_netlogon:\n    CommandLine|contains: \\netlogon\\\n  filter_main_explorer:\n  - Image|endswith: \\explorer.exe\n  - OriginalFileName: explorer.exe\n  - CommandLine: C:\\Windows\\Explorer.EXE\n  filter_main_null:\n    Image: null\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Administrative scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

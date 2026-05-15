@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/BumbleBee/Trojan_Win64_Bumblebee_WEL_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Bumblebee_WEL_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Bumblebee.WEL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Bumblebee_WEL_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Bumblebee.WEL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c1 ea 08 01 83 ?? ?? ?? ?? 48 8b 83 ?? ?? ?? ?? 88 14 01 ff 43 ?? 48 63 4b 74 48 8b 83 ?? ?? ?? ?? 44 88 04 01 8b 83 ?? ?? ?? ?? 8b 93 ?? ?? ?? ?? 35 40 33 0e 00 0f af 43 ?? ff 43 ?? 01 93 ?? ?? ?? ?? 33 43 ?? 83 f0 01 89 43 ?? 49 81 f9 ?? ?? ?? ?? 0f 8c }\n\t\t$a_01_1 = {5a 41 52 53 59 36 32 }\n\t\t$a_01_2 = {52 4a 56 51 61 31 31 59 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

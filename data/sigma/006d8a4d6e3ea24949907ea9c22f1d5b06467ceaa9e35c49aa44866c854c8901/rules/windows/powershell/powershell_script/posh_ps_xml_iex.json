@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_xml_iex.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-19",
+                "title": "Powershell XML Execute Command",
+                "id": "6c6c6282-7671-4fe9-a0ce-a2dcebdc342b"
+            },
+            "rule_text": "title: Powershell XML Execute Command\nid: 6c6c6282-7671-4fe9-a0ce-a2dcebdc342b\nstatus: test\ndescription: 'Adversaries may abuse PowerShell commands and scripts for execution.\n\n  PowerShell is a powerful interactive command-line interface and scripting environment\n  included in the Windows operating system. (Citation: TechNet PowerShell)\n\n  Adversaries can use PowerShell to perform a number of actions, including discovery\n  of information and execution of code\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.001/T1059.001.md#atomic-test-8---powershell-xml-requests\nauthor: frack113\ndate: 2022-01-19\nmodified: 2023-01-19\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_xml:\n    ScriptBlockText|contains|all:\n    - New-Object\n    - System.Xml.XmlDocument\n    - .Load\n  selection_exec:\n    ScriptBlockText|contains:\n    - 'IEX '\n    - 'Invoke-Expression '\n    - 'Invoke-Command '\n    - ICM -\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

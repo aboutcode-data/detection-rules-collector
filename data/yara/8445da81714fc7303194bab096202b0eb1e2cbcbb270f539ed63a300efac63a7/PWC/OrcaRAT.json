@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/PWC/OrcaRAT.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "OrcaRAT",
+                "tags": [],
+                "author": "PwC Cyber Threat Operations   :: @tlansec",
+                "distribution": "TLP WHITE",
+                "sha1": "253a704acd7952677c70e0c2d787791b8359efe2c92a5e77acea028393a85613"
+            },
+            "rule_text": "rule OrcaRAT\n{\n\tmeta:\n\t\tauthor = \"PwC Cyber Threat Operations   :: @tlansec\"\n\t\tdistribution = \"TLP WHITE\"\n\t\tsha1 = \"253a704acd7952677c70e0c2d787791b8359efe2c92a5e77acea028393a85613\"\n\n\tstrings:\n\t\t$MZ = \"MZ\"\n\t\t$apptype1 = \"application/x-ms-application\"\n\t\t$apptype2 = \"application/x-ms-xbap\"\n\t\t$apptype3 = \"application/vnd.ms-xpsdocument\"\n\t\t$apptype4 = \"application/xaml+xml\"\n\t\t$apptype5 = \"application/x-shockwave-flash\"\n\t\t$apptype6 = \"image/pjpeg\"\n\t\t$err1 = \"Set return time error =   %d!\"\n\t\t$err2 = \"Set return time   success!\"\n\t\t$err3 = \"Quit success!\"\n\n\tcondition:\n\t\t$MZ at 0 and filesize < 500KB and ( all of ( $apptype* ) and 1 of ( $err* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

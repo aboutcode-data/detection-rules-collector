@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_werfault_reflect_debugger_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-06-30",
+                "title": "Potential ReflectDebugger Content Execution Via WerFault.EXE",
+                "id": "fabfb3a7-3ce1-4445-9c7c-3c27f1051cdd"
+            },
+            "rule_text": "title: Potential ReflectDebugger Content Execution Via WerFault.EXE\nid: fabfb3a7-3ce1-4445-9c7c-3c27f1051cdd\nrelated:\n- id: 0cf2e1c6-8d10-4273-8059-738778f981ad\n  type: derived\nstatus: test\ndescription: Detects execution of \"WerFault.exe\" with the \"-pr\" commandline flag that\n  is used to run files stored in the ReflectDebugger key which could be used to store\n  the path to the malware in order to masquerade the execution flow\nreferences:\n- https://cocomelonc.github.io/malware/2022/11/02/malware-pers-18.html\n- https://www.hexacorn.com/blog/2018/08/31/beyond-good-ol-run-key-part-85/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-06-30\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1036\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\WerFault.exe\n  - OriginalFileName: WerFault.exe\n  selection_cli:\n    CommandLine|contains: ' -pr '\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

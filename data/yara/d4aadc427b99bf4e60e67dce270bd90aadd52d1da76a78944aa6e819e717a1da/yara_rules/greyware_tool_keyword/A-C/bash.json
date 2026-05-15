@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/A-C/bash.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "bash",
+                "tags": [],
+                "description": "Detection patterns for the tool 'bash' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "bash",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule bash\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'bash' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"bash\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \" > /var/log/syslog\"\n\t\t$string2 = \" >/var/log/syslog\"\n\t\t$string3 = /\\.bash_history\\s\\>\\/dev\\/null\\s2\\>\\&1/ nocase ascii wide\n\t\t$string4 = \": > /var/log/messages\"\n\t\t$string5 = \": > /var/spool/mail/\"\n\t\t$string6 = /bash\\s\\-c\\s.{0,1000}curl\\s.{0,1000}\\.sh\\s\\|\\sbash/\n\t\t$string7 = /bash\\s\\-c\\s.{0,1000}wget\\s.{0,1000}\\.sh\\s\\|\\sbash/\n\t\t$string8 = \"bash -c 'bash -i >& /dev/tcp/\" nocase ascii wide\n\t\t$string9 = /bash\\s\\-i\\s\\>\\&\\s\\/dev\\/tcp\\/.{0,1000}\\/.{0,1000}\\s0\\>\\&1/\n\t\t$string10 = /bash\\s\\-i\\s\\>\\&\\s\\/dev\\/tcp\\/.{0,1000}\\/.{0,1000}\\s0\\>\\&1/\n\t\t$string11 = /cat\\s\\/dev\\/null\\s\\>\\s.{0,1000}bash_history/\n\t\t$string12 = /echo\\s.{0,1000}\\s\\.bash_history/\n\t\t$string13 = /echo\\s.{0,1000}\\s\\/home\\/.{0,1000}\\/\\.bash_history/\n\t\t$string14 = /echo\\s.{0,1000}\\s\\/root\\/\\.bash_history/\n\t\t$string15 = /echo\\s.{0,1000}\\:\\:0\\:0\\:\\:\\/root\\:\\/bin\\/bash.{0,1000}\\s\\>\\>\\/etc\\/passwd/\n\t\t$string16 = /echo\\s.{0,1000}APT\\:\\:Update\\:\\:Pre\\-Invoke\\s.{0,1000}nohup\\sncat\\s\\-lvp\\s.{0,1000}\\s\\-e\\s\\/bin\\/bash\\s.{0,1000}\\s\\>\\s\\/etc\\/apt\\/apt\\.conf\\.d\\//\n\t\t$string17 = /echo\\s.{0,1000}bash\\s\\-c\\s.{0,1000}bash\\s\\-i\\s\\>\\&\\s\\/dev\\/tcp\\/.{0,1000}\\/.{0,1000}\\s\\>\\>\\s\\/etc\\/update\\-motd\\.d\\/00\\-header/\n\t\t$string18 = /exec\\s\\/bin\\/sh\\s0\\<\\/dev\\/tcp\\/.{0,1000}\\/.{0,1000}1\\>\\&0\\s2\\>\\&0/\n\t\t$string19 = /exec\\s5\\<\\>\\/dev\\/tcp\\/.{0,1000}\\/.{0,1000}.{0,1000}cat\\s\\<\\&5\\s\\|\\swhile\\sread\\sline.{0,1000}\\sdo\\s\\$line\\s2\\>\\&5\\s\\>\\&5.{0,1000}\\sdone/\n\t\t$string20 = \"export HISTFILE=/dev/null\"\n\t\t$string21 = \"export HISTFILESIZE=0\"\n\t\t$string22 = \"export HISTFILESIZE=0\"\n\t\t$string23 = \"HISTCONTROL=ignoredups:ignorespace\"\n\t\t$string24 = \"history -c\"\n\t\t$string25 = \"HISTORY=/dev/null\"\n\t\t$string26 = /ln\\s\\-sf\\s\\/dev\\/null\\s.{0,1000}bash_history/\n\t\t$string27 = /PROMPT_COMMAND\\=.{0,1000}history\\s\\-a.{0,1000}\\stail\\s.{0,1000}\\.bash_history\\s\\>\\s\\/dev\\/tcp\\/127\\.0\\.0\\.1\\//\n\t\t$string28 = /rm\\s\\.bash_history/\n\t\t$string29 = /rm\\s\\/home\\/.{0,1000}\\/\\.bash_history/\n\t\t$string30 = /rm\\s\\/root\\/\\.bash_history/\n\t\t$string31 = /set\\shistory\\s\\+o/\n\t\t$string32 = /sh\\s\\>\\/dev\\/tcp\\/.{0,1000}\\s\\<\\&1\\s2\\>\\&1/\n\t\t$string33 = /sh\\s\\-i\\s\\>\\&\\s\\/dev\\/udp\\/.{0,1000}\\/.{0,1000}\\s0\\>\\&1/\n\t\t$string34 = /truncate\\s\\-s0\\s.{0,1000}bash_history\\'/\n\t\t$string35 = \"unset HISTFILE\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

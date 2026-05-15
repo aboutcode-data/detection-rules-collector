@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_susp_invocation_generic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-12",
+                "title": "Suspicious PowerShell Invocations - Generic - PowerShell Module",
+                "id": "bbb80e91-5746-4fbe-8898-122e2cafdbf4"
+            },
+            "rule_text": "title: Suspicious PowerShell Invocations - Generic - PowerShell Module\nid: bbb80e91-5746-4fbe-8898-122e2cafdbf4\nrelated:\n- id: 3d304fda-78aa-43ed-975c-d740798a49c1\n  type: derived\n- id: ed965133-513f-41d9-a441-e38076a0798f\n  type: similar\nstatus: test\ndescription: Detects suspicious PowerShell invocation command parameters\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-12\nmodified: 2023-01-03\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_encoded:\n    ContextInfo|contains:\n    - ' -enc '\n    - ' -EncodedCommand '\n    - ' -ec '\n  selection_hidden:\n    ContextInfo|contains:\n    - ' -w hidden '\n    - ' -window hidden '\n    - ' -windowstyle hidden '\n    - ' -w 1 '\n  selection_noninteractive:\n    ContextInfo|contains:\n    - ' -noni '\n    - ' -noninteractive '\n  condition: all of selection*\nfalsepositives:\n- Very special / sneaky PowerShell scripts\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

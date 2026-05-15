@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/file_event/file_event_macos_susp_startup_item_created.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alejandro Ortuno, oscd.community",
+                "date": "2020-10-14",
+                "title": "Startup Item File Created - MacOS",
+                "id": "dfe8b941-4e54-4242-b674-6b613d521962"
+            },
+            "rule_text": "title: Startup Item File Created - MacOS\nid: dfe8b941-4e54-4242-b674-6b613d521962\nstatus: test\ndescription: 'Detects the creation of a startup item plist file, that automatically\n  get executed at boot initialization to establish persistence.\n\n  Adversaries may use startup items automatically executed at boot initialization\n  to establish persistence.\n\n  Startup items execute during the final phase of the boot process and contain shell\n  scripts or other executable files along with configuration information used by the\n  system to determine the execution order for all startup items.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1037.005/T1037.005.md\n- https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/StartupItems.html\nauthor: Alejandro Ortuno, oscd.community\ndate: 2020-10-14\nmodified: 2024-08-11\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1037.005\nlogsource:\n  category: file_event\n  product: macos\ndetection:\n  selection:\n    TargetFilename|startswith:\n    - /Library/StartupItems/\n    - /System/Library/StartupItems\n    TargetFilename|endswith: .plist\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/I-K/invoke-piper.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "invoke_piper",
+                "tags": [],
+                "description": "Detection patterns for the tool 'invoke-piper' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "invoke-piper",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule invoke_piper\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'invoke-piper' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"invoke-piper\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\-bindPipe\\s.{0,1000}\\s\\-destHost\\s.{0,1000}\\s\\-destPort\\s/ nocase ascii wide\n\t\t$string2 = /\\s\\-remote\\s\\-bindPipe\\s.{0,1000}\\s\\-bindPort\\s.{0,1000}\\s\\-security/ nocase ascii wide\n\t\t$string3 = /\\-destPipe\\s.{0,1000}\\s\\-pipeHost\\s.{0,1000}\\s\\-bindPort\\s/ nocase ascii wide\n\t\t$string4 = \"Invoke-Piper\" nocase ascii wide\n\t\t$string5 = \"Invoke-PiperClient\" nocase ascii wide\n\t\t$string6 = \"Invoke-PiperServer\" nocase ascii wide\n\t\t$string7 = /\\-remote\\s\\-destPipe\\s.{0,1000}\\s\\-pipeHost\\s.{0,1000}\\s\\-destHost\\s/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

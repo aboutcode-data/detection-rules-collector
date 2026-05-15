@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/vuln_proxynotshell_cve_2022_41040.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LOG_ProxyNotShell_POC_CVE_2022_41040_Nov22",
+                "tags": [],
+                "description": "Detects logs generated after a successful exploitation using the PoC code against CVE-2022-41040 and CVE-2022-41082 (aka ProxyNotShell) in Microsoft Exchange servers",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/testanull/ProxyNotShell-PoC",
+                "date": "2022-11-17",
+                "score": 70,
+                "id": "1e47d124-3103-5bf5-946f-b1bb69ff2c8e"
+            },
+            "rule_text": "rule LOG_ProxyNotShell_POC_CVE_2022_41040_Nov22\n{\n\tmeta:\n\t\tdescription = \"Detects logs generated after a successful exploitation using the PoC code against CVE-2022-41040 and CVE-2022-41082 (aka ProxyNotShell) in Microsoft Exchange servers\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/testanull/ProxyNotShell-PoC\"\n\t\tdate = \"2022-11-17\"\n\t\tscore = 70\n\t\tid = \"1e47d124-3103-5bf5-946f-b1bb69ff2c8e\"\n\n\tstrings:\n\t\t$aa1 = \" POST \" ascii wide\n\t\t$aa2 = \" GET \" ascii wide\n\t\t$ab1 = \" 200 \" ascii wide\n\t\t$s01 = \"/autodiscover.json x=a\" ascii wide\n\t\t$s02 = \"/autodiscover/admin@localhost/\" ascii wide\n\n\tcondition:\n\t\t1 of ( $aa* ) and $ab1 and 1 of ( $s* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2022-41040",
+                "CVE-2022-41082"
+            ]
+        }
+    ]
+}

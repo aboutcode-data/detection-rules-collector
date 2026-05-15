@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_cobalt_strike_beacon_implant.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Cobalt Strike Beacon Implant Command Issued via Named Pipe (RedCanary Threat Detection Report)",
+                "id": "0da8f33f-2703-4a4e-92f8-a6090a31b1e1"
+            },
+            "rule_text": "title: Cobalt Strike Beacon Implant Command Issued via Named Pipe (RedCanary Threat\n  Detection Report)\nid: 0da8f33f-2703-4a4e-92f8-a6090a31b1e1\nstatus: experimental\ndescription: Detects named pipe creation indicating Cobalt Strike beacon implant issuing\n  commands via SMB named pipe. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/cobalt-strike/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.s0154\nlogsource:\n  category: pipe_created\n  product: windows\ndetection:\n  selection:\n    PipeName|startswith:\n    - \\msagent_\n    - \\interprocess_\n    - \\lsarpc_\n    - \\samr_\n    - \\netlogon_\n    - \\wkssvc_\n    - \\srvsvc_\n    - \\mojo_\n    - \\postex_\n    - \\status_\n    - \\msse-\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

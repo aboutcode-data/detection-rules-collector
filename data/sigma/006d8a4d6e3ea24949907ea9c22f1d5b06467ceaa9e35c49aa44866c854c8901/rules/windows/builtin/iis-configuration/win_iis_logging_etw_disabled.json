@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/iis-configuration/win_iis_logging_etw_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali",
+                "date": "2024-10-06",
+                "title": "ETW Logging/Processing Option Disabled On IIS Server",
+                "id": "a5b40a90-baf5-4bf7-a6f7-373494881d22"
+            },
+            "rule_text": "title: ETW Logging/Processing Option Disabled On IIS Server\nid: a5b40a90-baf5-4bf7-a6f7-373494881d22\nstatus: test\ndescription: Detects changes to of the IIS server configuration in order to disable/remove\n  the ETW logging/processing option.\nreferences:\n- https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis\n- https://www.microsoft.com/en-us/security/blog/2022/12/12/iis-modules-the-evolution-of-web-shells-and-how-to-detect-them/\n- https://learn.microsoft.com/en-us/iis/configuration/system.applicationhost/sites/sitedefaults/logfile/\nauthor: frack113, Nasreddine Bencherchali\ndate: 2024-10-06\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1685.001\n- attack.t1505.004\nlogsource:\n  product: windows\n  service: iis-configuration\ndetection:\n  selection:\n    EventID: 29\n    Configuration|endswith: '@logTargetW3C'\n    OldValue|contains: ETW\n  filter_main_etw_added:\n    NewValue|contains: ETW\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

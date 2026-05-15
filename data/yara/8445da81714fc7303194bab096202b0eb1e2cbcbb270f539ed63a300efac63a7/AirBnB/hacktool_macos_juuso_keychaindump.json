@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_macos_juuso_keychaindump.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_macos_juuso_keychaindump",
+                "tags": [],
+                "description": "For reading OS X keychain passwords as root.",
+                "reference": "https://github.com/juuso/keychaindump",
+                "author": "@mimeframe"
+            },
+            "rule_text": "rule hacktool_macos_juuso_keychaindump\n{\n\tmeta:\n\t\tdescription = \"For reading OS X keychain passwords as root.\"\n\t\treference = \"https://github.com/juuso/keychaindump\"\n\t\tauthor = \"@mimeframe\"\n\n\tstrings:\n\t\t$a1 = \"[-] Too many candidate keys to fit in memory\" wide ascii\n\t\t$a2 = \"[-] Could not allocate memory for key search\" wide ascii\n\t\t$a3 = \"[-] Too many credentials to fit in memory\" wide ascii\n\t\t$a4 = \"[-] The target file is not a keychain file\" wide ascii\n\t\t$a5 = \"[-] Could not find the securityd process\" wide ascii\n\t\t$a6 = \"[-] No root privileges, please run with sudo\" wide ascii\n\n\tcondition:\n\t\t4 of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

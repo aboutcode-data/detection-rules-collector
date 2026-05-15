@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_unregmp2.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-29",
+                "title": "Lolbin Unregmp2.exe Use As Proxy",
+                "id": "727454c0-d851-48b0-8b89-385611ab0704"
+            },
+            "rule_text": "title: Lolbin Unregmp2.exe Use As Proxy\nid: 727454c0-d851-48b0-8b89-385611ab0704\nstatus: test\ndescription: Detect usage of the \"unregmp2.exe\" binary as a proxy to launch a custom\n  version of \"wmpnscfg.exe\"\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Unregmp2/\nauthor: frack113\ndate: 2022-12-29\nmodified: 2024-06-04\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\unregmp2.exe\n  - OriginalFileName: unregmp2.exe\n  selection_cmd:\n    CommandLine|contains|windash: ' /HideWMP'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

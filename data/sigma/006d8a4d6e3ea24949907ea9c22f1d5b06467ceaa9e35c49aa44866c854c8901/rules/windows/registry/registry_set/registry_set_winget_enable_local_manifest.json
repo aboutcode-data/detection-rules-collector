@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_winget_enable_local_manifest.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-17",
+                "title": "Enable Local Manifest Installation With Winget",
+                "id": "fa277e82-9b78-42dd-b05c-05555c7b6015"
+            },
+            "rule_text": "title: Enable Local Manifest Installation With Winget\nid: fa277e82-9b78-42dd-b05c-05555c7b6015\nstatus: test\ndescription: Detects changes to the AppInstaller (winget) policy. Specifically the\n  activation of the local manifest installation, which allows a user to install new\n  packages via custom manifests.\nreferences:\n- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-17\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.stealth\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|endswith: \\AppInstaller\\EnableLocalManifestFiles\n    Details: DWORD (0x00000001)\n  condition: selection\nfalsepositives:\n- Administrators or developers might enable this for testing purposes or to install\n  custom private packages\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

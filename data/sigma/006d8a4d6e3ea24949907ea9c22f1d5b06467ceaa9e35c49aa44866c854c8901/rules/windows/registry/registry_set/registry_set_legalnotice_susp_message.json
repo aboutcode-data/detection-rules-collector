@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_legalnotice_susp_message.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-11",
+                "title": "Potential Ransomware Activity Using LegalNotice Message",
+                "id": "8b9606c9-28be-4a38-b146-0e313cc232c1"
+            },
+            "rule_text": "title: Potential Ransomware Activity Using LegalNotice Message\nid: 8b9606c9-28be-4a38-b146-0e313cc232c1\nstatus: test\ndescription: Detect changes to the \"LegalNoticeCaption\" or \"LegalNoticeText\" registry\n  values where the message set contains keywords often used in ransomware ransom messages\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/5c1e6f1b4fafd01c8d1ece85f510160fc1275fbf/atomics/T1491.001/T1491.001.md\nauthor: frack113\ndate: 2022-12-11\nmodified: 2023-08-17\ntags:\n- attack.impact\n- attack.t1491.001\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\LegalNoticeCaption\n    - \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\LegalNoticeText\n    Details|contains:\n    - encrypted\n    - Unlock-Password\n    - paying\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

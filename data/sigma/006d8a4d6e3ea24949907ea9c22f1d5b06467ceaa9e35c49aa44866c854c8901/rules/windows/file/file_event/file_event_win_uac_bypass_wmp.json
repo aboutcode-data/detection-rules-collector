@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_uac_bypass_wmp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-23",
+                "title": "UAC Bypass Using Windows Media Player - File",
+                "id": "68578b43-65df-4f81-9a9b-92f32711a951"
+            },
+            "rule_text": "title: UAC Bypass Using Windows Media Player - File\nid: 68578b43-65df-4f81-9a9b-92f32711a951\nstatus: test\ndescription: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll\n  (UACMe 32)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-23\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection1:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|endswith: \\AppData\\Local\\Temp\\OskSupport.dll\n  selection2:\n    Image: C:\\Windows\\system32\\DllHost.exe\n    TargetFilename: C:\\Program Files\\Windows Media Player\\osk.exe\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/alienvault/MANITSME_APT1.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MANITSME_APT1",
+                "tags": [],
+                "author": "AlienVault Labs",
+                "info": "CommentCrew-threat-apt1"
+            },
+            "rule_text": "rule MANITSME_APT1\n{\n\tmeta:\n\t\tauthor = \"AlienVault Labs\"\n\t\tinfo = \"CommentCrew-threat-apt1\"\n\n\tstrings:\n\t\t$s1 = \"Install an Service hosted by SVCHOST.\" wide ascii\n\t\t$s2 = \"The Dll file that to be released.\" wide ascii\n\t\t$s3 = \"SYSTEM\\\\CurrentControlSet\\\\Services\\\\\" wide ascii\n\t\t$s4 = \"svchost.exe\" wide ascii\n\t\t$e1 = \"Man,it's me\" wide ascii\n\t\t$e2 = \"Oh,shit\" wide ascii\n\t\t$e3 = \"Hallelujah\" wide ascii\n\t\t$e4 = \"nRet == SOCKET_ERROR\" wide ascii\n\t\t$pdb1 = \"rouji\\\\release\\\\Install.pdb\" wide ascii\n\t\t$pdb2 = \"rouji\\\\SvcMain.pdb\" wide ascii\n\n\tcondition:\n\t\t( all of ( $s* ) ) or ( all of ( $e* ) ) or $pdb1 or $pdb2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

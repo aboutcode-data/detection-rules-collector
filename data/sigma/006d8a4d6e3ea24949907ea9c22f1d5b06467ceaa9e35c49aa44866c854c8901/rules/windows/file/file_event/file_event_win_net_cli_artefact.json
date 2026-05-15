@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_net_cli_artefact.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, omkar72, oscd.community, Wojciech Lesicki",
+                "date": "2022-11-18",
+                "title": "Suspicious DotNET CLR Usage Log Artifact",
+                "id": "e0b06658-7d1d-4cd3-bf15-03467507ff7c"
+            },
+            "rule_text": "title: Suspicious DotNET CLR Usage Log Artifact\nid: e0b06658-7d1d-4cd3-bf15-03467507ff7c\nrelated:\n- id: 4508a70e-97ef-4300-b62b-ff27992990ea\n  type: derived\n- id: e4b63079-6198-405c-abd7-3fe8b0ce3263\n  type: obsolete\nstatus: test\ndescription: Detects the creation of Usage Log files by the CLR (clr.dll). These files\n  are named after the executing process once the assembly is finished executing for\n  the first time in the (user) session context.\nreferences:\n- https://bohops.com/2021/03/16/investigating-net-clr-usage-log-tampering-techniques-for-edr-evasion/\n- https://github.com/olafhartong/sysmon-modular/blob/fa1ae53132403d262be2bbd7f17ceea7e15e8c78/11_file_create/include_dotnet.xml\n- https://web.archive.org/web/20221026202428/https://gist.github.com/code-scrap/d7f152ffcdb3e0b02f7f394f5187f008\n- https://web.archive.org/web/20230329154538/https://blog.menasec.net/2019/07/interesting-difr-traces-of-net-clr.html\nauthor: frack113, omkar72, oscd.community, Wojciech Lesicki\ndate: 2022-11-18\nmodified: 2023-02-23\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: file_event\n  product: windows\n  definition: 'Requirements: UsageLogs folder must be monitored by the sysmon configuration'\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\UsageLogs\\cmstp.exe.log\n    - \\UsageLogs\\cscript.exe.log\n    - \\UsageLogs\\mshta.exe.log\n    - \\UsageLogs\\msxsl.exe.log\n    - \\UsageLogs\\regsvr32.exe.log\n    - \\UsageLogs\\rundll32.exe.log\n    - \\UsageLogs\\svchost.exe.log\n    - \\UsageLogs\\wscript.exe.log\n    - \\UsageLogs\\wmic.exe.log\n  filter_main_rundll32:\n    ParentImage|endswith: \\MsiExec.exe\n    ParentCommandLine|contains: ' -Embedding'\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains|all:\n    - Temp\n    - zzzzInvokeManagedCustomActionOutOfProc\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Rundll32.exe with zzzzInvokeManagedCustomActionOutOfProc in command line and msiexec.exe\n  as parent process - https://twitter.com/SBousseaden/status/1388064061087260675\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

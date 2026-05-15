@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/Gozi_JJ_struct.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Gozi_JJ_struct",
+                "tags": [
+                    "trojan"
+                ],
+                "module": "Gozi_JJ_struct",
+                "reference": "https://research.checkpoint.com/2020/gozi-the-malware-with-a-thousand-faces/"
+            },
+            "rule_text": "rule Gozi_JJ_struct : trojan\n{\n\tmeta:\n\t\tmodule = \"Gozi_JJ_struct\"\n\t\treference = \"https://research.checkpoint.com/2020/gozi-the-malware-with-a-thousand-faces/\"\n\n\tstrings:\n\t\t$jj = \"JJ\" ascii\n\t\t$pe_file = \"This program cannot be run in DOS mode\" ascii\n\t\t$bss = \".bss\" ascii\n\n\tcondition:\n\t\t#jj>= 2 and ( for all i in ( 1 , 2 ) : ( @jj [ i ] < 0x400 and @jj [ i ] > 0x200 ) ) and ( @jj [ 2 ] - @jj [ 1 ] == 0x14 ) and ( $pe_file in ( 0 .. 1000 ) ) and ( $bss in ( 0 .. 1000 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

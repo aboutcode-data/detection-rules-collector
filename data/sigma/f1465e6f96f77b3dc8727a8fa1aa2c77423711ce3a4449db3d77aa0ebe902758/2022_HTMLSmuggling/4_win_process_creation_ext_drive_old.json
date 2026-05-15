@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_HTMLSmuggling/4_win_process_creation_ext_drive_old.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/19",
+                "title": "Suspicious User-Initiated Process Execution on External Drive (Old)",
+                "id": "2a054382-98a1-4d96-b966-ded8e5aa3a65"
+            },
+            "rule_text": "title: Suspicious User-Initiated Process Execution on External Drive (Old)\nid: 2a054382-98a1-4d96-b966-ded8e5aa3a65\nstatus: experimental\ndescription: Detects command/scripting interpreter-created processes executing on\n  an external drive. This will detect common instances of malware using LNK files\n  to obscure malicious commands for user execution. Commonly associated with QakBot\n  and IcedID.\nreferences:\n- https://blog.talosintelligence.com/html-smugglers-turn-to-svg-images/#:~:text=HTML%20smuggling%20is%20a%20technique,directly%20on%20the%20victim's%20device.\n- Research and analysis performed off of QakBot intelligence gathered at https://github.com/pr0xylife/Qakbot\nauthor: Micah Babinski\ndate: 2022/12/19\ntags:\n- attack.s0650\n- attack.s0483\n- attack.execution\n- attack.t1059\n- attack.t1204\n- attack.t1204.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_explorer_parent:\n    ParentImage|endswith: \\explorer.exe\n  selection_cmd_scripting_interp:\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\wscript.exe\n  filter_cwd:\n    CurrentDirectory|startswith: 'C:'\n  filter_external_exe:\n    Image|startswith: 'C:'\n  condition: selection_explorer_parent and (not filter_external_exe or (selection_cmd_scripting_interp\n    and not filter_cwd))\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

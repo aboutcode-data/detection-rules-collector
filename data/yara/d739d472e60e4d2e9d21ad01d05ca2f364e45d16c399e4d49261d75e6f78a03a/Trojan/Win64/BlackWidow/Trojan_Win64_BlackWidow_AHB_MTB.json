@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/BlackWidow/Trojan_Win64_BlackWidow_AHB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_BlackWidow_AHB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/BlackWidow.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,3c 00 3c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_BlackWidow_AHB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/BlackWidow.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,3c 00 3c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {66 0f 6f c8 66 0f fd da 66 0f fd cb 66 0f 6f c3 66 0f 6f c1 66 0f fd cc 66 0f 38 1d c1 }\n\t\t$a_01_1 = {48 ff c1 66 0f 6f cd 66 0f 38 30 c1 66 0f 6f cb 66 0f 6f d1 66 0f fd cf }\n\t\t$a_01_2 = {34 52 53 56 66 33 61 79 37 28 6f 50 64 52 32 75 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 30 + ( #a_01_2 & 1 ) * 10 ) >= 60\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

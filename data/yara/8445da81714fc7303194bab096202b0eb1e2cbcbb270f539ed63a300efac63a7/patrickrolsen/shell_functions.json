@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/patrickrolsen/shell_functions.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "shell_functions",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "version": "0.1",
+                "data": "08/19/2014",
+                "reference": "N/A"
+            },
+            "rule_text": "rule shell_functions\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\tversion = \"0.1\"\n\t\tdata = \"08/19/2014\"\n\t\treference = \"N/A\"\n\n\tstrings:\n\t\t$s1 = \"function listDatabases()\"\n\t\t$s2 = \"function dropDatabase()\"\n\t\t$s3 = \"mysql_drop_db(\"\n\t\t$s4 = \"function listTables()\"\n\t\t$s5 = \"passthru($cmd)\"\n\t\t$s6 = \"function check_file()\"\n\t\t$s7 = \"$id==\\\"fake-mail\\\"\"\n\t\t$s8 = \"Shell_Exec($cmd)\"\n\t\t$s9 = \"move_uploaded_file(\"\n\n\tcondition:\n\t\tnot uint16( 0 ) == 0x5A4D and any of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

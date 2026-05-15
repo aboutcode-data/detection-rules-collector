@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_amsi_null_bits_bypass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-04",
+                "title": "Potential AMSI Bypass Using NULL Bits",
+                "id": "92a974db-ab84-457f-9ec0-55db83d7a825"
+            },
+            "rule_text": "title: Potential AMSI Bypass Using NULL Bits\nid: 92a974db-ab84-457f-9ec0-55db83d7a825\nrelated:\n- id: fa2559c8-1197-471d-9cdd-05a0273d4522\n  type: similar\nstatus: test\ndescription: Detects usage of special strings/null bits in order to potentially bypass\n  AMSI functionalities\nreferences:\n- https://github.com/r00t-3xp10it/hacking-material-books/blob/43cb1e1932c16ff1f58b755bc9ab6b096046853f/obfuscation/simple_obfuscation.md#amsi-bypass-using-null-bits-satoshi\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-04\nmodified: 2023-05-09\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains:\n    - if(0){{{0}}}' -f $(0 -as [char]) +\n    - '#<NULL>'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

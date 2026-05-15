@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Dapato/Trojan_Win32_Dapato_ADA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Dapato_ADA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Dapato.ADA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Dapato_ADA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Dapato.ADA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b d3 03 55 c8 03 c2 8b 55 e4 03 d6 8b cf e8 ?? ?? ?? ?? 01 7d c8 6a 00 e8 ?? ?? ?? ?? 03 c7 01 c6 8b 45 d0 01 c6 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Dapato_ADA_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Dapato.ADA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Dapato_ADA_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Dapato.ADA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {be f8 93 8a 00 b8 38 93 8a 00 0f 45 f0 33 ff 80 3e 00 74 49 8b d6 8d 59 28 52 8d 4d d8 }\n\t\t$a_01_1 = {8b ec 51 8d 45 fc 50 68 40 9f 7c 00 68 00 00 00 80 ff 15 74 70 7c 00 f7 d8 1a c0 fe c0 8b e5 5d }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

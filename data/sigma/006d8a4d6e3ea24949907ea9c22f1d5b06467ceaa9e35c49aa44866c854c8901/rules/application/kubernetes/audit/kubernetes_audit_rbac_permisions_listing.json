@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_rbac_permisions_listing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Leo Tsaousis (@laripping)",
+                "date": "2024-03-26",
+                "title": "RBAC Permission Enumeration Attempt",
+                "id": "84b777bd-c946-4d17-aa2e-c39f5a454325"
+            },
+            "rule_text": "title: RBAC Permission Enumeration Attempt\nid: 84b777bd-c946-4d17-aa2e-c39f5a454325\nstatus: test\ndescription: 'Detects identities attempting to enumerate their Kubernetes RBAC permissions.\n\n  In the early stages of a breach, attackers will aim to list the permissions they\n  have within the compromised environment.\n\n  In a Kubernetes cluster, this can be achieved by interacting with the API server,\n  and querying the SelfSubjectAccessReview API via e.g. a \"kubectl auth can-i --list\"\n  command.\n\n  This will enumerate the Role-Based Access Controls (RBAC) rules defining the compromised\n  user''s authorization.\n\n  '\nreferences:\n- https://www.elastic.co/guide/en/security/current/kubernetes-suspicious-self-subject-review.html\nauthor: Leo Tsaousis (@laripping)\ndate: 2024-03-26\ntags:\n- attack.t1069.003\n- attack.t1087.004\n- attack.discovery\nlogsource:\n  category: application\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    verb: create\n    apiGroup: authorization.k8s.io\n    objectRef.resource: selfsubjectrulesreviews\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

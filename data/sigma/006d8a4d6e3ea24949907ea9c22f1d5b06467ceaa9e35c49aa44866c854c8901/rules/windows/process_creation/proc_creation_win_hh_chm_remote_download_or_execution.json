@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hh_chm_remote_download_or_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-29",
+                "title": "Remote CHM File Download/Execution Via HH.EXE",
+                "id": "f57c58b3-ee69-4ef5-9041-455bf39aaa89"
+            },
+            "rule_text": "title: Remote CHM File Download/Execution Via HH.EXE\nid: f57c58b3-ee69-4ef5-9041-455bf39aaa89\nstatus: test\ndescription: Detects the usage of \"hh.exe\" to execute/download remotely hosted \".chm\"\n  files.\nreferences:\n- https://www.splunk.com/en_us/blog/security/follina-for-protocol-handlers.html\n- https://github.com/redcanaryco/atomic-red-team/blob/1cf4dd51f83dcb0ebe6ade902d6157ad2dbc6ac8/atomics/T1218.001/T1218.001.md\n- https://www.zscaler.com/blogs/security-research/unintentional-leak-glimpse-attack-vectors-apt37\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-29\nmodified: 2024-01-31\ntags:\n- attack.stealth\n- attack.t1218.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: HH.exe\n  - Image|endswith: \\hh.exe\n  selection_cli:\n    CommandLine|contains:\n    - http://\n    - https://\n    - \\\\\\\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

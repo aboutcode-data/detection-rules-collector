@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_push_protection_bypass_detected.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal (@faisalusuf)",
+                "date": "2024-03-07",
+                "title": "Github Push Protection Bypass Detected",
+                "id": "02cf536a-cf21-4876-8842-4159c8aee3cc"
+            },
+            "rule_text": "title: Github Push Protection Bypass Detected\nid: 02cf536a-cf21-4876-8842-4159c8aee3cc\nstatus: test\ndescription: Detects when a user bypasses the push protection on a secret detected\n  by secret scanning.\nreferences:\n- https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/push-protection-for-repositories-and-organizations\n- https://thehackernews.com/2024/03/github-rolls-out-default-secret.html\nauthor: Muhammad Faisal (@faisalusuf)\ndate: 2024-03-07\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action|contains: secret_scanning_push_protection.bypass\n  condition: selection\nfalsepositives:\n- Allowed administrative activities.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_flock_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Shell Execution via Flock - Linux",
+                "id": "4b09c71e-4269-4111-9cdd-107d8867f0cc"
+            },
+            "rule_text": "title: Shell Execution via Flock - Linux\nid: 4b09c71e-4269-4111-9cdd-107d8867f0cc\nstatus: test\ndescription: 'Detects the use of the \"flock\" command to execute a shell. Such behavior\n  may be associated with privilege escalation, unauthorized command execution, or\n  to break out from restricted environments.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/flock/#shell\n- https://www.elastic.co/guide/en/security/current/linux-restricted-shell-breakout-via-linux-binary-s.html\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /flock\n    CommandLine|contains: ' -u '\n  selection_cli:\n    CommandLine|contains:\n    - /bin/bash\n    - /bin/dash\n    - /bin/fish\n    - /bin/sh\n    - /bin/zsh\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

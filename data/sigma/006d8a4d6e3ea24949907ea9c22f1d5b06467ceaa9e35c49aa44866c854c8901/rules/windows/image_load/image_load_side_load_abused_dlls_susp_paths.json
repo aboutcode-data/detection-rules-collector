@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_abused_dlls_susp_paths.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-07-11",
+                "title": "Abusable DLL Potential Sideloading From Suspicious Location",
+                "id": "799a5f48-0ac1-4e0f-9152-71d137d48c2a"
+            },
+            "rule_text": "title: Abusable DLL Potential Sideloading From Suspicious Location\nid: 799a5f48-0ac1-4e0f-9152-71d137d48c2a\nstatus: test\ndescription: Detects potential DLL sideloading of DLLs that are known to be abused\n  from suspicious locations\nreferences:\n- https://www.trendmicro.com/en_us/research/23/f/behind-the-scenes-unveiling-the-hidden-workings-of-earth-preta.html\n- https://research.checkpoint.com/2023/beyond-the-horizon-traveling-the-world-on-camaro-dragons-usb-flash-drives/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-07-11\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection_dll:\n    ImageLoaded|endswith:\n    - \\coreclr.dll\n    - \\facesdk.dll\n    - \\HPCustPartUI.dll\n    - \\libcef.dll\n    - \\ZIPDLL.dll\n  selection_folders_1:\n    ImageLoaded|contains:\n    - :\\Perflogs\\\n    - :\\Users\\Public\\\n    - \\Temporary Internet\n    - \\Windows\\Temp\\\n  selection_folders_2:\n  - ImageLoaded|contains|all:\n    - :\\Users\\\n    - \\Favorites\\\n  - ImageLoaded|contains|all:\n    - :\\Users\\\n    - \\Favourites\\\n  - ImageLoaded|contains|all:\n    - :\\Users\\\n    - \\Contacts\\\n  - ImageLoaded|contains|all:\n    - :\\Users\\\n    - \\Pictures\\\n  condition: selection_dll and 1 of selection_folders_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

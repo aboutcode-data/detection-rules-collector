@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_python_base64_encoded_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Hugh Ryan (HueCodes), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-03-09",
+                "title": "Python One-Liners with Base64 Decoding",
+                "id": "50a0aa3d-ab16-4594-a8aa-5145a6e6792b"
+            },
+            "rule_text": "title: Python One-Liners with Base64 Decoding\nid: 50a0aa3d-ab16-4594-a8aa-5145a6e6792b\nrelated:\n- id: 55e862a8-dd9c-4651-807a-f21fcad56716\n  type: similar\nstatus: experimental\ndescription: 'Detects Python one-liners that use base64 decoding functions in command\n  line executions.\n\n  Malicious scripts or attackers often use python one-liners to decode and execute\n  base64-encoded payloads, which is a common technique for obfuscation and evasion.\n\n  '\nreferences:\n- https://docs.python.org/3/library/base64.html\n- https://www.virustotal.com/gui/file/bc43e925d7b4b74319f6e74e836a96f1997ba404e14ac566cf12a21e9da463db/behavior\n- https://cloud.google.com/blog/topics/threat-intelligence/cybercriminals-weaponize-fake-ai-websites\nauthor: Hugh Ryan (HueCodes), Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-03-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.006\n- attack.t1027.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|contains: \\python\n  - OriginalFileName|contains: python\n  selection_cli:\n    CommandLine|contains|all:\n    - import\n    - base64\n    - ' -c'\n    CommandLine|contains:\n    - .decode\n    - b16decode\n    - b32decode\n    - b32hexdecode\n    - b64decode\n    - b85decode\n    - z85decode\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of Python for decoding data, which is uncommon in typical enterprise\n  environments but possible in development or data analysis contexts.\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_python_base64_encoded_execution/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

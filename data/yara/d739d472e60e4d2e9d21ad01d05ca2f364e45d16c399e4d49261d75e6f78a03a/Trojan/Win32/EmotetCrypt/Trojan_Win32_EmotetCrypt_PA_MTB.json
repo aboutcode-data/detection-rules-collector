@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/EmotetCrypt/Trojan_Win32_EmotetCrypt_PA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_EmotetCrypt_PA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/EmotetCrypt.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_EmotetCrypt_PA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/EmotetCrypt.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {99 b9 61 03 00 00 f7 f9 8b 0d ?? ?? ?? ?? bf 61 03 00 00 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 0f b6 f2 0f b6 04 0e 03 c5 88 54 24 ?? 99 }\n\t\t$a_03_1 = {6a 00 50 e8 ?? ?? ?? ?? 8b 4c 24 ?? 8b 44 24 ?? 8b 3d ?? ?? ?? ?? 8b d1 2b 15 ?? ?? ?? ?? 83 c1 01 03 c2 0f b6 54 24 ?? 8a 14 3a 30 10 3b 4c 24 ?? 89 4c 24 ?? 0f 8c ?? ?? ?? ?? 8a 4c 24 ?? 8b 44 24 ?? 8a 54 24 ?? 5f 5e 5d 5b }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

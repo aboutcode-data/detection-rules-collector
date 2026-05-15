@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_csproduct.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2023-02-14",
+                "title": "Hardware Model Reconnaissance Via Wmic.EXE",
+                "id": "3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d"
+            },
+            "rule_text": "title: Hardware Model Reconnaissance Via Wmic.EXE\nid: 3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d\nstatus: test\ndescription: Detects the execution of WMIC with the \"csproduct\" which is used to obtain\n  information such as hardware models and vendor information\nreferences:\n- https://jonconwayuk.wordpress.com/2014/01/31/wmic-csproduct-using-wmi-to-identify-make-and-model-of-hardware/\n- https://www.uptycs.com/blog/kuraystealer-a-bandit-using-discord-webhooks\nauthor: Florian Roth (Nextron Systems)\ndate: 2023-02-14\ntags:\n- attack.execution\n- attack.t1047\n- car.2016-03-002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wmic.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains: csproduct\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

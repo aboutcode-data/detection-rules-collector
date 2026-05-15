@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Linux/MsfShellBin/Trojan_Linux_MsfShellBin_F.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Linux_MsfShellBin_F",
+                "tags": [],
+                "description": "Trojan:Linux/MsfShellBin.F,SIGNATURE_TYPE_ELFHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Linux_MsfShellBin_F\n{\n\tmeta:\n\t\tdescription = \"Trojan:Linux/MsfShellBin.F,SIGNATURE_TYPE_ELFHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {31 c9 31 db 53 53 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 53 66 68 ?? ?? 66 68 0a 00 89 e1 6a 1c 51 56 31 db 31 c0 b0 66 b3 03 89 e1 cd 80 31 db 39 d8 75 36 31 c9 f7 e1 89 f3 b0 3f cd 80 31 c0 41 89 f3 b0 3f cd 80 31 c0 41 89 f3 b0 3f cd 80 }\n\t\t$a_03_1 = {31 db 53 6a 0a f7 e3 89 e3 b0 a2 cd 80 e9 ?? ?? ?? ?? c3 }\n\t\t$a_01_2 = {31 db f7 e3 6a 06 6a 01 6a 0a 89 e1 b0 66 b3 01 cd 80 89 c6 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

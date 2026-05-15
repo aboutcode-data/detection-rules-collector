@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2017/TA/Turla/pipe_created_apt_turla_named_pipes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis",
+                "date": "2017-11-06",
+                "title": "Turla Group Named Pipes",
+                "id": "739915e4-1e70-4778-8b8a-17db02f66db1"
+            },
+            "rule_text": "title: Turla Group Named Pipes\nid: 739915e4-1e70-4778-8b8a-17db02f66db1\nstatus: test\ndescription: Detects a named pipe used by Turla group samples\nreferences:\n- Internal Research\nauthor: Markus Neis\ndate: 2017-11-06\nmodified: 2021-11-27\ntags:\n- attack.g0010\n- attack.execution\n- attack.t1106\n- detection.emerging-threats\nlogsource:\n  product: windows\n  category: pipe_created\n  definition: Note that you have to configure logging for Named Pipe Events in Sysmon\n    config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon\n    configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth\n    verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,\n    https://github.com/olafhartong/sysmon-modular. How to test detection? You can\n    check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575\ndetection:\n  selection:\n    PipeName:\n    - \\atctl\n    - \\comnap\n    - \\iehelper\n    - \\sdlrpc\n    - \\userpipe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

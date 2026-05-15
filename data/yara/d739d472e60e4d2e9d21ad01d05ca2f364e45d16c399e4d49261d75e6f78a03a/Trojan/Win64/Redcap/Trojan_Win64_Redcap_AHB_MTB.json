@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Redcap/Trojan_Win64_Redcap_AHB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Redcap_AHB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Redcap.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Redcap_AHB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Redcap.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 f7 48 d1 e7 48 89 bc 24 c0 07 00 00 48 c1 ff ?? 48 b8 ?? ?? ?? ?? ?? ?? ?? ?? 4c 8b bc 24 c0 07 00 00 49 f7 ef 48 8d 04 72 48 c1 f8 ?? 48 29 f8 48 89 c2 48 c1 e0 }\n\t\t$a_03_1 = {48 f7 ea 49 89 d8 48 c1 fb ?? 48 c1 fa ?? 48 29 da 48 69 c2 ?? ?? ?? ?? 4c 89 c2 49 29 c0 4d 89 01 48 c1 eb ?? 4c 8d 04 1a 4c 89 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 30 + ( #a_03_1 & 1 ) * 20 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

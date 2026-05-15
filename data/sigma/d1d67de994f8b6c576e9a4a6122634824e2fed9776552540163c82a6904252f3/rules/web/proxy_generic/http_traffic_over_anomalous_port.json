@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/http_traffic_over_anomalous_port.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2023-02-15",
+                "title": "HTTP traffic over anomalous ports",
+                "id": "273651ac-ad12-11ed-afa1-0242ac120002"
+            },
+            "rule_text": "title: HTTP traffic over anomalous ports\nid: 273651ac-ad12-11ed-afa1-0242ac120002\nstatus: stable\ndescription: Detect HTTP traffic over anomalous ports, TA416 has been observed to\n  tunnel SSH traffic through HTTPS over port 22.\nauthor: NTT Security - Axel Olsson\ndate: '2023-02-15'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    dest_port:\n    - 22\n    - 3389\n    - 1337\n    url|startswith: /\n  condition: selection\nfalsepositives:\n- Legitimate HTTP traffic over weird ports.\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

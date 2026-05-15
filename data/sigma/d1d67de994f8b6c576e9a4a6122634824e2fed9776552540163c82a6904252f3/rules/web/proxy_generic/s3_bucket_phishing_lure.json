@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/s3_bucket_phishing_lure.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2022-10-17",
+                "title": "Phishing Lure in S3 Bucket",
+                "id": "c67ed899-a5d8-4a13-97ce-7ee3ceb2d487"
+            },
+            "rule_text": "title: Phishing Lure in S3 Bucket\nid: c67ed899-a5d8-4a13-97ce-7ee3ceb2d487\ndescription: It is common for phishing lures to be served from S3 buckets of various\n  cloud providers\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: '2022-10-17'\nmodified: '2023-05-16'\nlogsource:\n  category: proxy\ndetection:\n  post_to_php:\n    cs-method: POST\n    c-uri|endswith: .php\n  objectstorage_referer_misc:\n    cs-referer|contains:\n    - .linodeobjects.com\n    - .digitaloceanspaces.com\n    - .dream.io\n    - .wasabisys.com\n    - .vultrobjects.com\n    - .backblazeb2.com\n    - storageapi.fleek.co\n    - .blob.core.windows.net\n    - .r2.dev\n  objectstorage_referer_aws:\n    cs-referer|endswith: .amazonaws.com\n    cs-referer|re: \\bs3\\b\n  condition: post_to_php and 1 of objectstorage_referer*\nfalsepositives:\n- Unlikely\nlevel: high\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

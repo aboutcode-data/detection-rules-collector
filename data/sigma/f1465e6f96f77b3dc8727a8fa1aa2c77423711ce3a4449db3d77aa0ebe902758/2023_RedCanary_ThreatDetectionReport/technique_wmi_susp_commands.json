@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_wmi_susp_commands.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "WMI Suspicious Commands (RedCanary Threat Detection Report)",
+                "id": "fd4852d8-3464-4639-acc5-f9cf9553a396"
+            },
+            "rule_text": "title: WMI Suspicious Commands (RedCanary Threat Detection Report)\nid: fd4852d8-3464-4639-acc5-f9cf9553a396\nstatus: experimental\ndescription: Detects the wmic process with suspicious options. Part of the RedCanary\n  2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains:\n    - create\n    - 'node:'\n    - process\n    - call\n  condition: selection\nfalsepositives:\n- Likely will require tuning based on organizational context.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

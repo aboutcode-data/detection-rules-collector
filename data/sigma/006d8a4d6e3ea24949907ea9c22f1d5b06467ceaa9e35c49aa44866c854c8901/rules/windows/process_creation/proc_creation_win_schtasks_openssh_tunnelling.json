@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_openssh_tunnelling.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Rory Duncan",
+                "date": "2025-07-14",
+                "title": "Potential SSH Tunnel Persistence Install Using A Scheduled Task",
+                "id": "2daa93a0-a5fb-41c5-8cd8-3c11294bfd1f"
+            },
+            "rule_text": "title: Potential SSH Tunnel Persistence Install Using A Scheduled Task\nid: 2daa93a0-a5fb-41c5-8cd8-3c11294bfd1f\nstatus: experimental\ndescription: Detects the creation of new scheduled tasks via commandline, using Schtasks.exe.\n  This rule detects tasks creating that call OpenSSH, which may indicate the creation\n  of reverse SSH tunnel to the attacker's server.\nreferences:\n- https://thedfirreport.com/2023/10/30/netsupport-intrusion-results-in-domain-compromise/\n- https://www.kroll.com/en/insights/publications/cyber/cactus-ransomware-prickly-new-variant-evades-detection\nauthor: Rory Duncan\ndate: 2025-07-14\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.t1053.005\n- attack.command-and-control\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\schtasks.exe\n  - OriginalFileName: schtasks.exe\n  selection_cli_sshd:\n    CommandLine|contains|all:\n    - ' /create '\n    - sshd.exe\n    - -f\n  selection_cli_ssh:\n    CommandLine|contains|all:\n    - ' /create '\n    - ssh.exe\n    - -i\n  condition: selection_img and 1 of selection_cli_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

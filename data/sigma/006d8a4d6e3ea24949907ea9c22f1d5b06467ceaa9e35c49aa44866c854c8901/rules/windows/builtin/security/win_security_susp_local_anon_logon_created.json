@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_local_anon_logon_created.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "James Pemberton / @4A616D6573",
+                "date": "2019-10-31",
+                "title": "Suspicious Windows ANONYMOUS LOGON Local Account Created",
+                "id": "1bbf25b9-8038-4154-a50b-118f2a32be27"
+            },
+            "rule_text": "title: Suspicious Windows ANONYMOUS LOGON Local Account Created\nid: 1bbf25b9-8038-4154-a50b-118f2a32be27\nstatus: test\ndescription: Detects the creation of suspicious accounts similar to ANONYMOUS LOGON,\n  such as using additional spaces. Created as an covering detection for exclusion\n  of Logon Type 3 from ANONYMOUS LOGON accounts.\nreferences:\n- https://twitter.com/SBousseaden/status/1189469425482829824\nauthor: James Pemberton / @4A616D6573\ndate: 2019-10-31\nmodified: 2022-10-09\ntags:\n- attack.persistence\n- attack.t1136.001\n- attack.t1136.002\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4720\n    SamAccountName|contains|all:\n    - ANONYMOUS\n    - LOGON\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

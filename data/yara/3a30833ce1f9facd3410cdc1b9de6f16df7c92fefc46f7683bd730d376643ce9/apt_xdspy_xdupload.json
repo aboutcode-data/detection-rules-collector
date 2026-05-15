@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/apt_xdspy_xdupload.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_XDSSpy_XDUpload",
+                "tags": [],
+                "author": "SBousseaden",
+                "date": "05/10/2020",
+                "reference": "https://www.welivesecurity.com/2020/10/02/xdspy-stealing-government-secrets-since-2011/"
+            },
+            "rule_text": "rule APT_XDSSpy_XDUpload\n{\n\tmeta:\n\t\tauthor = \"SBousseaden\"\n\t\tdate = \"05/10/2020\"\n\t\treference = \"https://www.welivesecurity.com/2020/10/02/xdspy-stealing-government-secrets-since-2011/\"\n\n\tstrings:\n\t\t$s1 = \"cmd.exe /u /c cd /d \\\"%s\\\" & dir /a /-c\" wide\n\t\t$s2 = \"commandC_dll.dll\"\n\t\t$s3 = \"cmd.exe /u /c del\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 2 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

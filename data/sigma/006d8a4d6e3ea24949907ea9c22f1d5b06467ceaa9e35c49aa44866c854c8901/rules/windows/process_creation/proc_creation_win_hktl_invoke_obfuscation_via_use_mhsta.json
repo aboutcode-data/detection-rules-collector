@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_invoke_obfuscation_via_use_mhsta.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-08",
+                "title": "Invoke-Obfuscation Via Use MSHTA",
+                "id": "ac20ae82-8758-4f38-958e-b44a3140ca88"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Use MSHTA\nid: ac20ae82-8758-4f38-958e-b44a3140ca88\nstatus: test\ndescription: Detects Obfuscated Powershell via use MSHTA in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-08\nmodified: 2022-03-08\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - set\n    - '&&'\n    - mshta\n    - vbscript:createobject\n    - .run\n    - (window.close)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

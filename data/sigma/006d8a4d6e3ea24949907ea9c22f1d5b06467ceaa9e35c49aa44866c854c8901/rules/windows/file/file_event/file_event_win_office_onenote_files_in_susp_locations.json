@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_onenote_files_in_susp_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-22",
+                "title": "OneNote Attachment File Dropped In Suspicious Location",
+                "id": "7fd164ba-126a-4d9c-9392-0d4f7c243df0"
+            },
+            "rule_text": "title: OneNote Attachment File Dropped In Suspicious Location\nid: 7fd164ba-126a-4d9c-9392-0d4f7c243df0\nstatus: test\ndescription: Detects creation of files with the \".one\"/\".onepkg\" extension in suspicious\n  or uncommon locations. This could be a sign of attackers abusing OneNote attachments\nreferences:\n- https://www.bleepingcomputer.com/news/security/hackers-now-use-microsoft-onenote-attachments-to-spread-malware/\n- https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-22\nmodified: 2023-09-19\ntags:\n- attack.stealth\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|contains:\n    - \\AppData\\Local\\Temp\\\n    - \\Users\\Public\\\n    - \\Windows\\Temp\\\n    - :\\Temp\\\n    TargetFilename|endswith:\n    - .one\n    - .onepkg\n  filter_main_onenote:\n    Image|contains: :\\Program Files\\Microsoft Office\\\n    Image|endswith: \\ONENOTE.EXE\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate usage of \".one\" or \".onepkg\" files from those locations\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

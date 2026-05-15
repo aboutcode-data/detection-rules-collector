@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_office_spawn_exe_from_users_directory.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jason Lynch",
+                "date": "2019-04-02",
+                "title": "Suspicious Binary In User Directory Spawned From Office Application",
+                "id": "aa3a6f94-890e-4e22-b634-ffdfd54792cc"
+            },
+            "rule_text": "title: Suspicious Binary In User Directory Spawned From Office Application\nid: aa3a6f94-890e-4e22-b634-ffdfd54792cc\nstatus: test\ndescription: Detects an executable in the users directory started from one of the\n  Microsoft Office suite applications (Word, Excel, PowerPoint, Publisher, Visio)\nreferences:\n- https://blog.morphisec.com/fin7-not-finished-morphisec-spots-new-campaign\n- https://www.virustotal.com/gui/file/23160972c6ae07f740800fa28e421a81d7c0ca5d5cab95bc082b4a986fbac57\nauthor: Jason Lynch\ndate: 2019-04-02\nmodified: 2023-02-04\ntags:\n- attack.execution\n- attack.t1204.002\n- attack.g0046\n- car.2013-05-002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\WINWORD.EXE\n    - \\EXCEL.EXE\n    - \\POWERPNT.exe\n    - \\MSPUB.exe\n    - \\VISIO.exe\n    - \\MSACCESS.exe\n    - \\EQNEDT32.exe\n    Image|startswith: C:\\users\\\n    Image|endswith: .exe\n  filter:\n    Image|endswith: \\Teams.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

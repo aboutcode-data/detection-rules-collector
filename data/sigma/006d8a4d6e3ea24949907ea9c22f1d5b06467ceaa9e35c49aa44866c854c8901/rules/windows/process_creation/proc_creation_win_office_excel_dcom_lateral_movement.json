@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_office_excel_dcom_lateral_movement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Aaron Stratton",
+                "date": "2023-11-13",
+                "title": "Potential Excel.EXE DCOM Lateral Movement Via ActivateMicrosoftApp",
+                "id": "551d9c1f-816c-445b-a7a6-7a3864720d60"
+            },
+            "rule_text": "title: Potential Excel.EXE DCOM Lateral Movement Via ActivateMicrosoftApp\nid: 551d9c1f-816c-445b-a7a6-7a3864720d60\nstatus: test\ndescription: 'Detects suspicious child processes of Excel which could be an indicator\n  of lateral movement leveraging the \"ActivateMicrosoftApp\" Excel DCOM object.\n\n  '\nreferences:\n- https://posts.specterops.io/lateral-movement-abuse-the-power-of-dcom-excel-application-3c016d0d9922\n- https://github.com/grayhatkiller/SharpExShell\n- https://learn.microsoft.com/en-us/office/vba/api/excel.xlmsapplication\nauthor: Aaron Stratton\ndate: 2023-11-13\ntags:\n- attack.t1021.003\n- attack.lateral-movement\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\excel.exe\n  selection_child:\n  - OriginalFileName:\n    - foxprow.exe\n    - schdplus.exe\n    - winproj.exe\n  - Image|endswith:\n    - \\foxprow.exe\n    - \\schdplus.exe\n    - \\winproj.exe\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

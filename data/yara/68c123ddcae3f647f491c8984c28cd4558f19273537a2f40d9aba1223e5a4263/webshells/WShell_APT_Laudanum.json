@@ -1,0 +1,293 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/webshells/WShell_APT_Laudanum.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "asp_file",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file file.asp",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "ff5b1a9598735440bdbaa768b524c639e22f53c5"
+            },
+            "rule_text": "rule asp_file : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file file.asp\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"ff5b1a9598735440bdbaa768b524c639e22f53c5\"\n\n\tstrings:\n\t\t$s1 = \"' *** Written by Tim Medin <tim@counterhack.com>\" fullword ascii\n\t\t$s2 = \"Response.BinaryWrite(stream.Read)\" fullword ascii\n\t\t$s3 = \"Response.Write(Response.Status & Request.ServerVariables(\\\"REMOTE_ADDR\\\"))\" fullword ascii\n\t\t$s4 = \"%><a href=\\\"<%=Request.ServerVariables(\\\"URL\\\")%>\\\">web root</a><br/><%\" fullword ascii\n\t\t$s5 = \"set folder = fso.GetFolder(path)\" fullword ascii\n\t\t$s6 = \"Set file = fso.GetFile(filepath)\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x253c and filesize < 30KB and 5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "php_killnc",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file killnc.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "c0dee56ee68719d5ec39e773621ffe40b144fda5"
+            },
+            "rule_text": "rule php_killnc : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file killnc.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"c0dee56ee68719d5ec39e773621ffe40b144fda5\"\n\n\tstrings:\n\t\t$s1 = \"if ($_SERVER[\\\"REMOTE_ADDR\\\"] == $IP)\" fullword ascii\n\t\t$s2 = \"header(\\\"HTTP/1.0 404 Not Found\\\");\" fullword ascii\n\t\t$s3 = \"<?php echo exec('killall nc');?>\" fullword ascii\n\t\t$s4 = \"<title>Laudanum Kill nc</title>\" fullword ascii\n\t\t$s5 = \"foreach ($allowedIPs as $IP) {\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 15KB and 4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "asp_shell",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file shell.asp",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "8bf1ff6f8edd45e3102be5f8a1fe030752f45613"
+            },
+            "rule_text": "rule asp_shell : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file shell.asp\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"8bf1ff6f8edd45e3102be5f8a1fe030752f45613\"\n\n\tstrings:\n\t\t$s1 = \"<form action=\\\"shell.asp\\\" method=\\\"POST\\\" name=\\\"shell\\\">\" fullword ascii\n\t\t$s2 = \"%ComSpec% /c dir\" fullword ascii\n\t\t$s3 = \"Set objCmd = wShell.Exec(cmd)\" fullword ascii\n\t\t$s4 = \"Server.ScriptTimeout = 180\" fullword ascii\n\t\t$s5 = \"cmd = Request.Form(\\\"cmd\\\")\" fullword ascii\n\t\t$s6 = \"' ***  http://laudanum.secureideas.net\" fullword ascii\n\t\t$s7 = \"Dim wshell, intReturn, strPResult\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 15KB and 4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "settings",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file settings.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "588739b9e4ef2dbb0b4cf630b73295d8134cc801"
+            },
+            "rule_text": "rule settings : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file settings.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"588739b9e4ef2dbb0b4cf630b73295d8134cc801\"\n\n\tstrings:\n\t\t$s1 = \"Port: <input name=\\\"port\\\" type=\\\"text\\\" value=\\\"8888\\\">\" fullword ascii\n\t\t$s2 = \"<li>Reverse Shell - \" fullword ascii\n\t\t$s3 = \"<li><a href=\\\"<?php echo plugins_url('file.php', __FILE__);?>\\\">File Browser</a>\" ascii\n\n\tcondition:\n\t\tfilesize < 13KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "asp_proxy",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file proxy.asp",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "51e97040d1737618b1775578a772fa6c5a31afd8"
+            },
+            "rule_text": "rule asp_proxy : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file proxy.asp\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"51e97040d1737618b1775578a772fa6c5a31afd8\"\n\n\tstrings:\n\t\t$s1 = \"'response.write \\\"<br/>  -value:\\\" & request.querystring(key)(j)\" fullword ascii\n\t\t$s2 = \"q = q & \\\"&\\\" & key & \\\"=\\\" & request.querystring(key)(j)\" fullword ascii\n\t\t$s3 = \"for each i in Split(http.getAllResponseHeaders, vbLf)\" fullword ascii\n\t\t$s4 = \"'urlquery = mid(urltemp, instr(urltemp, \\\"?\\\") + 1)\" fullword ascii\n\t\t$s5 = \"s = urlscheme & urlhost & urlport & urlpath\" fullword ascii\n\t\t$s6 = \"Set http = Server.CreateObject(\\\"Microsoft.XMLHTTP\\\")\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 50KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cfm_shell",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file shell.cfm",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "885e1783b07c73e7d47d3283be303c9719419b92"
+            },
+            "rule_text": "rule cfm_shell : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file shell.cfm\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"885e1783b07c73e7d47d3283be303c9719419b92\"\n\n\tstrings:\n\t\t$s1 = \"Executable: <Input type=\\\"text\\\" name=\\\"cmd\\\" value=\\\"cmd.exe\\\"><br>\" fullword ascii\n\t\t$s2 = \"<cfif ( #suppliedCode# neq secretCode )>\" fullword ascii\n\t\t$s3 = \"<cfif IsDefined(\\\"form.cmd\\\")>\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 20KB and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "aspx_shell",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file shell.aspx",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "076aa781a004ecb2bf545357fd36dcbafdd68b1a"
+            },
+            "rule_text": "rule aspx_shell : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file shell.aspx\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"076aa781a004ecb2bf545357fd36dcbafdd68b1a\"\n\n\tstrings:\n\t\t$s1 = \"remoteIp = HttpContext.Current.Request.Headers[\\\"X-Forwarded-For\\\"].Split(new\" ascii\n\t\t$s2 = \"remoteIp = Request.UserHostAddress;\" fullword ascii\n\t\t$s3 = \"<form method=\\\"post\\\" name=\\\"shell\\\">\" fullword ascii\n\t\t$s4 = \"<body onload=\\\"document.shell.c.focus()\\\">\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 20KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "php_shell",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file shell.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "dc5c03a21267d024ef0f5ab96a34e3f6423dfcd6"
+            },
+            "rule_text": "rule php_shell : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file shell.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"dc5c03a21267d024ef0f5ab96a34e3f6423dfcd6\"\n\n\tstrings:\n\t\t$s1 = \"command_hist[current_line] = document.shell.command.value;\" fullword ascii\n\t\t$s2 = \"if (e.keyCode == 38 && current_line < command_hist.length-1) {\" fullword ascii\n\t\t$s3 = \"array_unshift($_SESSION['history'], $command);\" fullword ascii\n\t\t$s4 = \"if (preg_match('/^[[:blank:]]*cd[[:blank:]]*$/', $command)) {\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 40KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "php_reverse_shell",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file php-reverse-shell.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "3ef03bbe3649535a03315dcfc1a1208a09cea49d"
+            },
+            "rule_text": "rule php_reverse_shell : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file php-reverse-shell.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"3ef03bbe3649535a03315dcfc1a1208a09cea49d\"\n\n\tstrings:\n\t\t$s1 = \"$process = proc_open($shell, $descriptorspec, $pipes);\" fullword ascii\n\t\t$s2 = \"printit(\\\"Successfully opened reverse shell to $ip:$port\\\");\" fullword ascii\n\t\t$s3 = \"$input = fread($pipes[1], $chunk_size);\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 15KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "php_dns",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file dns.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "01d5d16d876c55d77e094ce2b9c237de43b21a16"
+            },
+            "rule_text": "rule php_dns : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file dns.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"01d5d16d876c55d77e094ce2b9c237de43b21a16\"\n\n\tstrings:\n\t\t$s1 = \"$query = isset($_POST['query']) ? $_POST['query'] : '';\" fullword ascii\n\t\t$s2 = \"$result = dns_get_record($query, $types[$type], $authns, $addtl);\" fullword ascii\n\t\t$s3 = \"if ($_SERVER[\\\"REMOTE_ADDR\\\"] == $IP)\" fullword ascii\n\t\t$s4 = \"foreach (array_keys($types) as $t) {\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 15KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WEB_INF_web",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file web.xml",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "0251baed0a16c451f9d67dddce04a45dc26cb4a3"
+            },
+            "rule_text": "rule WEB_INF_web : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file web.xml\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"0251baed0a16c451f9d67dddce04a45dc26cb4a3\"\n\n\tstrings:\n\t\t$s1 = \"<servlet-name>Command</servlet-name>\" fullword ascii\n\t\t$s2 = \"<jsp-file>/cmd.jsp</jsp-file>\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 1KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "jsp_cmd",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file cmd.war",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "55e4c3dc00cfab7ac16e7cfb53c11b0c01c16d3d"
+            },
+            "rule_text": "rule jsp_cmd : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file cmd.war\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"55e4c3dc00cfab7ac16e7cfb53c11b0c01c16d3d\"\n\n\tstrings:\n\t\t$s0 = \"cmd.jsp}\" fullword ascii\n\t\t$s1 = \"cmd.jspPK\" fullword ascii\n\t\t$s2 = \"WEB-INF/web.xml\" fullword ascii\n\t\t$s3 = \"WEB-INF/web.xmlPK\" fullword ascii\n\t\t$s4 = \"META-INF/MANIFEST.MF\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x4b50 and filesize < 2KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "laudanum",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file laudanum.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "fd498c8b195967db01f68776ff5e36a06c9dfbfe"
+            },
+            "rule_text": "rule laudanum : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file laudanum.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"fd498c8b195967db01f68776ff5e36a06c9dfbfe\"\n\n\tstrings:\n\t\t$s1 = \"public function __activate()\" fullword ascii\n\t\t$s2 = \"register_activation_hook(__FILE__, array('WP_Laudanum', 'activate'));\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 5KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "php_file",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file file.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "7421d33e8007c92c8642a36cba7351c7f95a4335"
+            },
+            "rule_text": "rule php_file : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file file.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"7421d33e8007c92c8642a36cba7351c7f95a4335\"\n\n\tstrings:\n\t\t$s1 = \"$allowedIPs =\" fullword ascii\n\t\t$s2 = \"<a href=\\\"<?php echo $_SERVER['PHP_SELF']  ?>\\\">Home</a><br/>\" fullword ascii\n\t\t$s3 = \"$dir  = isset($_GET[\\\"dir\\\"])  ? $_GET[\\\"dir\\\"]  : \\\".\\\";\" fullword ascii\n\t\t$s4 = \"$curdir .= substr($curdir, -1) != \\\"/\\\" ? \\\"/\\\" : \\\"\\\";\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 10KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "warfiles_cmd",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file cmd.jsp",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "3ae3d837e7b362de738cf7fad78eded0dccf601f"
+            },
+            "rule_text": "rule warfiles_cmd : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file cmd.jsp\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"3ae3d837e7b362de738cf7fad78eded0dccf601f\"\n\n\tstrings:\n\t\t$s1 = \"Process p = Runtime.getRuntime().exec(request.getParameter(\\\"cmd\\\"));\" fullword ascii\n\t\t$s2 = \"out.println(\\\"Command: \\\" + request.getParameter(\\\"cmd\\\") + \\\"<BR>\\\");\" fullword ascii\n\t\t$s3 = \"<FORM METHOD=\\\"GET\\\" NAME=\\\"myform\\\" ACTION=\\\"\\\">\" fullword ascii\n\t\t$s4 = \"String disr = dis.readLine();\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 2KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "asp_dns",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file dns.asp",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "5532154dd67800d33dace01103e9b2c4f3d01d51"
+            },
+            "rule_text": "rule asp_dns : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file dns.asp\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"5532154dd67800d33dace01103e9b2c4f3d01d51\"\n\n\tstrings:\n\t\t$s1 = \"command = \\\"nslookup -type=\\\" & qtype & \\\" \\\" & query \" fullword ascii\n\t\t$s2 = \"Set objCmd = objWShell.Exec(command)\" fullword ascii\n\t\t$s3 = \"Response.Write command & \\\"<br>\\\"\" fullword ascii\n\t\t$s4 = \"<form name=\\\"dns\\\" method=\\\"POST\\\">\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 21KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "php_reverse_shell_2",
+                "tags": [
+                    "webshell"
+                ],
+                "description": "Laudanum Injector Tools - file php-reverse-shell.php",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "hash": "025db3c3473413064f0606d93d155c7eb5049c42"
+            },
+            "rule_text": "rule php_reverse_shell_2 : webshell\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools - file php-reverse-shell.php\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\thash = \"025db3c3473413064f0606d93d155c7eb5049c42\"\n\n\tstrings:\n\t\t$s1 = \"$process = proc_open($shell, $descriptorspec, $pipes);\" fullword ascii\n\t\t$s7 = \"$shell = 'uname -a; w; id; /bin/sh -i';\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 10KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Laudanum_Tools_Generic",
+                "tags": [
+                    "webshell",
+                    "Toolkit"
+                ],
+                "description": "Laudanum Injector Tools",
+                "author": "Florian Roth",
+                "reference": "http://laudanum.inguardians.com/",
+                "date": "2015-06-22",
+                "super_rule": 1,
+                "hash0": "076aa781a004ecb2bf545357fd36dcbafdd68b1a",
+                "hash1": "885e1783b07c73e7d47d3283be303c9719419b92",
+                "hash2": "01d5d16d876c55d77e094ce2b9c237de43b21a16",
+                "hash3": "7421d33e8007c92c8642a36cba7351c7f95a4335",
+                "hash4": "f49291aef9165ee4904d2d8c3cf5a6515ca0794f",
+                "hash5": "c0dee56ee68719d5ec39e773621ffe40b144fda5",
+                "hash6": "f32b9c2cc3a61fa326e9caebce28ef94a7a00c9a",
+                "hash7": "dc5c03a21267d024ef0f5ab96a34e3f6423dfcd6",
+                "hash8": "fd498c8b195967db01f68776ff5e36a06c9dfbfe",
+                "hash9": "b50ae35fcf767466f6ca25984cc008b7629676b8",
+                "hash10": "5570d10244d90ef53b74e2ac287fc657e38200f0",
+                "hash11": "42bcb491a11b4703c125daf1747cf2a40a1b36f3",
+                "hash12": "83e4eaaa2cf6898d7f83ab80158b64b1d48096f4",
+                "hash13": "dec7ea322898690a7f91db9377f035ad7072b8d7",
+                "hash14": "a2272b8a4221c6cc373915f0cc555fe55d65ac4d",
+                "hash15": "588739b9e4ef2dbb0b4cf630b73295d8134cc801",
+                "hash16": "43320dc23fb2ed26b882512e7c0bfdc64e2c1849"
+            },
+            "rule_text": "rule Laudanum_Tools_Generic : webshell Toolkit\n{\n\tmeta:\n\t\tdescription = \"Laudanum Injector Tools\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://laudanum.inguardians.com/\"\n\t\tdate = \"2015-06-22\"\n\t\tsuper_rule = 1\n\t\thash0 = \"076aa781a004ecb2bf545357fd36dcbafdd68b1a\"\n\t\thash1 = \"885e1783b07c73e7d47d3283be303c9719419b92\"\n\t\thash2 = \"01d5d16d876c55d77e094ce2b9c237de43b21a16\"\n\t\thash3 = \"7421d33e8007c92c8642a36cba7351c7f95a4335\"\n\t\thash4 = \"f49291aef9165ee4904d2d8c3cf5a6515ca0794f\"\n\t\thash5 = \"c0dee56ee68719d5ec39e773621ffe40b144fda5\"\n\t\thash6 = \"f32b9c2cc3a61fa326e9caebce28ef94a7a00c9a\"\n\t\thash7 = \"dc5c03a21267d024ef0f5ab96a34e3f6423dfcd6\"\n\t\thash8 = \"fd498c8b195967db01f68776ff5e36a06c9dfbfe\"\n\t\thash9 = \"b50ae35fcf767466f6ca25984cc008b7629676b8\"\n\t\thash10 = \"5570d10244d90ef53b74e2ac287fc657e38200f0\"\n\t\thash11 = \"42bcb491a11b4703c125daf1747cf2a40a1b36f3\"\n\t\thash12 = \"83e4eaaa2cf6898d7f83ab80158b64b1d48096f4\"\n\t\thash13 = \"dec7ea322898690a7f91db9377f035ad7072b8d7\"\n\t\thash14 = \"a2272b8a4221c6cc373915f0cc555fe55d65ac4d\"\n\t\thash15 = \"588739b9e4ef2dbb0b4cf630b73295d8134cc801\"\n\t\thash16 = \"43320dc23fb2ed26b882512e7c0bfdc64e2c1849\"\n\n\tstrings:\n\t\t$s1 = \"***  laudanum@secureideas.net\" fullword ascii\n\t\t$s2 = \"*** Laudanum Project\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 60KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

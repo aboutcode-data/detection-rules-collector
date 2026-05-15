@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_new_scr_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @securepeacock, SCYTHE @scythe_io",
+                "date": "2022-04-27",
+                "title": "SCR File Write Event",
+                "id": "c048f047-7e2a-4888-b302-55f509d4a91d"
+            },
+            "rule_text": "title: SCR File Write Event\nid: c048f047-7e2a-4888-b302-55f509d4a91d\nstatus: test\ndescription: Detects the creation of screensaver files (.scr) outside of system folders.\n  Attackers may execute an application as an \".SCR\" file using \"rundll32.exe desk.cpl,InstallScreenSaver\"\n  for example.\nreferences:\n- https://lolbas-project.github.io/lolbas/Libraries/Desk/\nauthor: Christopher Peacock @securepeacock, SCYTHE @scythe_io\ndate: 2022-04-27\nmodified: 2023-08-23\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith: .scr\n  filter:\n    TargetFilename|contains:\n    - :\\$WINDOWS.~BT\\NewOS\\\n    - :\\Windows\\System32\\\n    - :\\Windows\\SysWOW64\\\n    - :\\Windows\\WinSxS\\\n    - :\\WUDownloadCache\\\n  condition: selection and not filter\nfalsepositives:\n- The installation of new screen savers by third party software\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

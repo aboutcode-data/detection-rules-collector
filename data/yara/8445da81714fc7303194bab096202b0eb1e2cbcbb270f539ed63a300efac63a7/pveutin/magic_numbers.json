@@ -1,0 +1,117 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/pveutin/magic_numbers.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "office_magic_bytes",
+                "tags": []
+            },
+            "rule_text": "rule office_magic_bytes\n{\n\tstrings:\n\t\t$magic = { D0 CF 11 E0 A1 B1 1A E1 00 00 00 }\n\n\tcondition:\n\t\t$magic\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "chm_file",
+                "tags": []
+            },
+            "rule_text": "rule chm_file\n{\n\tstrings:\n\t\t$magic = { 49 54 53 46 03 00 00 00  60 00 00 00 01 00 00 00 }\n\n\tcondition:\n\t\t$magic\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "excel_document",
+                "tags": []
+            },
+            "rule_text": "rule excel_document\n{\n\tstrings:\n\t\t$rootentry = { 52 00 6f 00 6f 00 74 00 20 00 45 00 6e 00 74 00 72 00 79 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 }\n\t\t$workbook = \"Workbook\" wide nocase\n\t\t$msexcel = \"Microsoft Excel\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "word_document",
+                "tags": []
+            },
+            "rule_text": "rule word_document\n{\n\tstrings:\n\t\t$rootentry = { 52 00 6f 00 6f 00 74 00 20 00 45 00 6e 00 74 00 72 00 79 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 }\n\t\t$worddoc = \"WordDocument\" wide\n\t\t$msworddoc = \"MSWordDoc\" nocase\n\n\tcondition:\n\t\t$rootentry and ( $worddoc or $msworddoc )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "powerpoint_document",
+                "tags": []
+            },
+            "rule_text": "rule powerpoint_document\n{\n\tstrings:\n\t\t$pptdoc = \"PowerPoint Document\" wide nocase\n\t\t$rootentry = { 52 00 6f 00 6f 00 74 00 20 00 45 00 6e 00 74 00 72 00 79 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "pdf_document",
+                "tags": []
+            },
+            "rule_text": "rule pdf_document\n{\n\tstrings:\n\t\t$a = \"%PDF-\"\n\n\tcondition:\n\t\t$a at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mz_executable",
+                "tags": []
+            },
+            "rule_text": "rule mz_executable\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "zip_file",
+                "tags": []
+            },
+            "rule_text": "rule zip_file\n{\n\tstrings:\n\t\t$magic = { 50 4b 03 04 }\n\t\t$magic2 = { 50 4b 05 06 }\n\t\t$magic3 = { 50 4b 07 08 }\n\n\tcondition:\n\t\t($magic at 0 ) or ( $magic2 at 0 ) or ( $magic3 at 0 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "sevenzip_file",
+                "tags": []
+            },
+            "rule_text": "rule sevenzip_file\n{\n\tstrings:\n\t\t$magic = { 37 7A BC AF 27 1C }\n\n\tcondition:\n\t\t$magic at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "rar_file",
+                "tags": []
+            },
+            "rule_text": "rule rar_file\n{\n\tstrings:\n\t\t$rar = { 52 61 72 21 1A 07 00 }\n\t\t$rar5 = { 52 61 72 21 1A 07 01 00 }\n\n\tcondition:\n\t\t($rar at 0 ) or ( $rar5 at 0 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "gif_file",
+                "tags": []
+            },
+            "rule_text": "rule gif_file\n{\n\tstrings:\n\t\t$gif89a = { 47 49 46 38 39 61 }\n\t\t$gif87a = { 47 49 46 38 37 61 }\n\n\tcondition:\n\t\t($gif89a at 0 ) or ( $gif87a at 0 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "png_file",
+                "tags": []
+            },
+            "rule_text": "rule png_file\n{\n\tstrings:\n\t\t$magic = { 89 50 4E 47 0D 0A 1A 0A }\n\n\tcondition:\n\t\t$magic at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "bmp_file",
+                "tags": []
+            },
+            "rule_text": "rule bmp_file\n{\n\tstrings:\n\t\t$magic = \"BM\"\n\n\tcondition:\n\t\t$magic at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "jpeg_file",
+                "tags": []
+            },
+            "rule_text": "rule jpeg_file\n{\n\tstrings:\n\t\t$jpeg = { FF D8 FF E0 }\n\t\t$jpeg1 = { FF D8 FF E1 }\n\n\tcondition:\n\t\t($jpeg at 0 ) or ( $jpeg1 at 0 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

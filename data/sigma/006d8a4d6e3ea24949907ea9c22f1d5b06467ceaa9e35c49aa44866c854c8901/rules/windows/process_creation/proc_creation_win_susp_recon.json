@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-30",
+                "title": "Recon Information for Export with Command Prompt",
+                "id": "aa2efee7-34dd-446e-8a37-40790a66efd7"
+            },
+            "rule_text": "title: Recon Information for Export with Command Prompt\nid: aa2efee7-34dd-446e-8a37-40790a66efd7\nrelated:\n- id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892\n  type: similar\nstatus: test\ndescription: Once established within a system or network, an adversary may use automated\n  techniques for collecting internal data.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1119/T1119.md\nauthor: frack113\ndate: 2021-07-30\nmodified: 2022-09-13\ntags:\n- attack.collection\n- attack.t1119\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_image:\n  - Image|endswith:\n    - \\tree.com\n    - \\WMIC.exe\n    - \\doskey.exe\n    - \\sc.exe\n  - OriginalFileName:\n    - wmic.exe\n    - DOSKEY.EXE\n    - sc.exe\n  selection_redirect:\n    ParentCommandLine|contains:\n    - ' > %TEMP%\\'\n    - ' > %TMP%\\'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

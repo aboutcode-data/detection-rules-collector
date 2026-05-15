@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/gcp/audit/gcp_sql_database_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-10-15",
+                "title": "Google Cloud SQL Database Modified or Deleted",
+                "id": "f346bbd5-2c4e-4789-a221-72de7685090d"
+            },
+            "rule_text": "title: Google Cloud SQL Database Modified or Deleted\nid: f346bbd5-2c4e-4789-a221-72de7685090d\nstatus: test\ndescription: Detect when a Cloud SQL DB has been modified or deleted.\nreferences:\n- https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1beta4/users/update\nauthor: Austin Songer @austinsonger\ndate: 2021-10-15\nmodified: 2022-12-25\ntags:\n- attack.impact\nlogsource:\n  product: gcp\n  service: gcp.audit\ndetection:\n  selection:\n    gcp.audit.method_name:\n    - cloudsql.instances.create\n    - cloudsql.instances.delete\n    - cloudsql.users.update\n    - cloudsql.users.delete\n  condition: selection\nfalsepositives:\n- SQL Database being modified or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- SQL Database modified or deleted from unfamiliar users should be investigated. If\n  known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

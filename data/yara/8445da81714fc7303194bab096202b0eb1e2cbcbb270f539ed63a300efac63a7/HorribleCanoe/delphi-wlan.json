@@ -1,0 +1,13 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/HorribleCanoe/delphi-wlan.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "delphi_wlan",
+                "tags": []
+            },
+            "rule_text": "rule delphi_wlan\n{\n\tstrings:\n\t\t$dll = \"wlanapi.dll\"\n\t\t$api2 = \"WlanOpenHandle\"\n\t\t$api3 = \"WlanCloseHandle\"\n\t\t$api4 = \"WlanEnumInterfaces\"\n\t\t$api5 = \"WlanQueryInterface\"\n\t\t$api6 = \"WlanGetAvailableNetworkList\"\n\t\t$options1 = \"80211_OPEN\"\n\t\t$options2 = \"80211_SHARED_KEY\"\n\t\t$options3 = \"WPA_PSK\"\n\t\t$options4 = \"WPA_NONE\"\n\t\t$options5 = \"RSNA\"\n\t\t$options6 = \"RSNA_PSK\"\n\t\t$options7 = \"IHV_START\"\n\t\t$options8 = \"IHV_END\"\n\t\t$options9 = \"WEP104\"\n\t\t$options10 = \"WPA_USE_GROUP OR RSN_USE_GROUP\"\n\t\t$options11 = \"IHV_START\"\n\t\t$options12 = \"IHV_END\"\n\t\t$options13 = \"WEP40\"\n\n\tcondition:\n\t\t$dll and 3 of ( $api* ) and 6 of ( $options* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

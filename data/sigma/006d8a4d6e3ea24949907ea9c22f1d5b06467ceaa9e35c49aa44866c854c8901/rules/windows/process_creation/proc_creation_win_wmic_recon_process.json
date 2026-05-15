@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-01",
+                "title": "Process Reconnaissance Via Wmic.EXE",
+                "id": "221b251a-357a-49a9-920a-271802777cc0"
+            },
+            "rule_text": "title: Process Reconnaissance Via Wmic.EXE\nid: 221b251a-357a-49a9-920a-271802777cc0\nstatus: test\ndescription: Detects the execution of \"wmic\" with the \"process\" flag, which adversary\n  might use to list processes running on the compromised host or list installed software\n  hotfixes and patches.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1047/T1047.md\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wmic\nauthor: frack113\ndate: 2022-01-01\nmodified: 2023-02-14\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WMIC.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains: process\n  filter_main_creation:\n    CommandLine|contains|all:\n    - call\n    - create\n  condition: all of selection* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

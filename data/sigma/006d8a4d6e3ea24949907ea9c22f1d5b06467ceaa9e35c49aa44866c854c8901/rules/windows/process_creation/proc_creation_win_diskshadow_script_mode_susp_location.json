@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_diskshadow_script_mode_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-15",
+                "title": "Diskshadow Script Mode - Execution From Potential Suspicious Location",
+                "id": "fa1a7e52-3d02-435b-81b8-00da14dd66c1"
+            },
+            "rule_text": "title: Diskshadow Script Mode - Execution From Potential Suspicious Location\nid: fa1a7e52-3d02-435b-81b8-00da14dd66c1\nrelated:\n- id: 1dde5376-a648-492e-9e54-4241dd9b0c7f\n  type: similar\n- id: 9f546b25-5f12-4c8d-8532-5893dcb1e4b8\n  type: similar\n- id: 56b1dde8-b274-435f-a73a-fb75eb81262a\n  type: similar\n- id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2\n  type: similar\nstatus: test\ndescription: Detects execution of \"Diskshadow.exe\" in script mode using the \"/s\" flag\n  where the script is located in a potentially suspicious location.\nreferences:\n- https://bohops.com/2018/03/26/diskshadow-the-return-of-vss-evasion-persistence-and-active-directory-database-extraction/\n- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration\n- https://medium.com/@cyberjyot/lolbin-execution-via-diskshadow-f6ff681a27a4\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/diskshadow\n- https://www.lifars.com/wp-content/uploads/2022/01/GriefRansomware_Whitepaper-2.pdf\n- https://www.zscaler.com/blogs/security-research/technical-analysis-crytox-ransomware\n- https://research.checkpoint.com/2022/evilplayout-attack-against-irans-state-broadcaster/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-15\nmodified: 2024-03-05\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: diskshadow.exe\n  - Image|endswith: \\diskshadow.exe\n  selection_cli:\n    CommandLine|contains|windash: '-s '\n  selection_paths:\n    CommandLine|contains:\n    - :\\Temp\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\\n    - \\AppData\\Roaming\\\n    - \\ProgramData\\\n    - \\Users\\Public\\\n  condition: all of selection_*\nfalsepositives:\n- False positives may occur if you execute the script from one of the paths mentioned\n  in the rule. Apply additional filters that fits your org needs.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

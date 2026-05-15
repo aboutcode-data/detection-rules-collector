@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_privilege_escalation_cli_patterns.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-11-11",
+                "title": "Suspicious RunAs-Like Flag Combination",
+                "id": "50d66fb0-03f8-4da0-8add-84e77d12a020"
+            },
+            "rule_text": "title: Suspicious RunAs-Like Flag Combination\nid: 50d66fb0-03f8-4da0-8add-84e77d12a020\nstatus: test\ndescription: Detects suspicious command line flags that let the user set a target\n  user and command as e.g. seen in PsExec-like tools\nreferences:\n- https://www.trendmicro.com/en_us/research/22/k/hack-the-real-box-apt41-new-subgroup-earth-longzhi.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-11-11\ntags:\n- attack.privilege-escalation\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_user:\n    CommandLine|contains:\n    - ' -u system '\n    - ' --user system '\n    - ' -u NT'\n    - ' -u \"NT'\n    - ' -u ''NT'\n    - ' --system '\n    - ' -u administrator '\n  selection_command:\n    CommandLine|contains:\n    - ' -c cmd'\n    - ' -c \"cmd'\n    - ' -c powershell'\n    - ' -c \"powershell'\n    - ' --command cmd'\n    - ' --command powershell'\n    - ' -c whoami'\n    - ' -c wscript'\n    - ' -c cscript'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

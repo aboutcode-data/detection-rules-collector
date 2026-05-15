@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_setup16_custom_lst_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2024-12-01",
+                "title": "Setup16.EXE Execution With Custom .Lst File",
+                "id": "99c8be4f-3087-4f9f-9c24-8c7e257b442e"
+            },
+            "rule_text": "title: Setup16.EXE Execution With Custom .Lst File\nid: 99c8be4f-3087-4f9f-9c24-8c7e257b442e\nstatus: test\ndescription: 'Detects the execution of \"Setup16.EXE\" and old installation utility\n  with a custom \".lst\" file.\n\n  These \".lst\" file can contain references to external program that \"Setup16.EXE\"\n  will execute.\n\n  Attackers and adversaries might leverage this as a living of the land utility.\n\n  '\nreferences:\n- https://www.hexacorn.com/blog/2024/10/12/the-sweet16-the-oldbin-lolbin-called-setup16-exe/\nauthor: frack113\ndate: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage: C:\\Windows\\SysWOW64\\setup16.exe\n    ParentCommandLine|contains: ' -m '\n  filter_optional_valid_path:\n    Image|startswith: C:\\~MSSETUP.T\\\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- On modern Windows system, the \"Setup16\" utility is practically never used, hence\n  false positive should be very rare.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

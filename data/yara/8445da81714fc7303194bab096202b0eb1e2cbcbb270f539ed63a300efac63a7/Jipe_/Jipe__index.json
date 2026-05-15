@@ -1,0 +1,309 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Jipe_/Jipe__index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AutoIt",
+                "tags": [
+                    "packer"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "AutoIT packer",
+                "date": "2013-02-01",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule AutoIt : packer\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"AutoIT packer\"\n\t\tdate = \"2013-02-01\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$a = \"This is a compiled AutoIt script. AV researchers please email avsupport@autoitscript.com for support.\"\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BlackShades",
+                "tags": [
+                    "rat"
+                ],
+                "description": "BlackShades",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-01-12",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule BlackShades : rat\n{\n\tmeta:\n\t\tdescription = \"BlackShades\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-01-12\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$a = { 42 00 6C 00 61 00 63 00 6B 00 73 00 68 00 61 00 64 00 65 00 73 }\n\t\t$b = { 36 00 3C 00 32 00 20 00 32 00 32 00 26 00 31 00 39 00 3E 00 1D 00 17 00 17 00 1C 00 07 00 1B 00 03 00 07 00 28 00 23 00 0C 00 1D 00 10 00 1B 00 12 00 00 00 28 00 37 00 10 00 01 00 06 00 11 00 0B 00 07 00 22 00 11 00 17 00 00 00 1D 00 1B 00 0B 00 2F 00 26 00 01 00 0B }\n\t\t$c = { 62 73 73 5F 73 65 72 76 65 72 }\n\t\t$d = { 43 4C 49 43 4B 5F 44 45 4C 41 59 00 53 43 4B 5F 49 44 }\n\t\t$e = { 6D 6F 64 49 6E 6A 50 45 }\n\t\t$apikey = \"f45e373429c0def355ed9feff30eff9ca21eec0fafa1e960bea6068f34209439\"\n\n\tcondition:\n\t\tany of ( $a , $b , $c , $d , $e ) or $apikey\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Bolonyokte",
+                "tags": [
+                    "rat"
+                ],
+                "description": "UnknownDotNet RAT - Bolonyokte",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-02-01",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule Bolonyokte : rat\n{\n\tmeta:\n\t\tdescription = \"UnknownDotNet RAT - Bolonyokte\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-02-01\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$campaign1 = \"Bolonyokte\" ascii wide\n\t\t$campaign2 = \"donadoni\" ascii wide\n\t\t$decoy1 = \"nyse.com\" ascii wide\n\t\t$decoy2 = \"NYSEArca_Listing_Fees.pdf\" ascii wide\n\t\t$decoy3 = \"bf13-5d45cb40\" ascii wide\n\t\t$artifact1 = \"Backup.zip\" ascii wide\n\t\t$artifact2 = \"updates.txt\" ascii wide\n\t\t$artifact3 = \"vdirs.dat\" ascii wide\n\t\t$artifact4 = \"default.dat\"\n\t\t$artifact5 = \"index.html\"\n\t\t$artifact6 = \"mime.dat\"\n\t\t$func1 = \"FtpUrl\"\n\t\t$func2 = \"ScreenCapture\"\n\t\t$func3 = \"CaptureMouse\"\n\t\t$func4 = \"UploadFile\"\n\t\t$ebanking1 = \"Internet Banking\" wide\n\t\t$ebanking2 = \"(Online Banking)|(Online banking)\"\n\t\t$ebanking3 = \"(e-banking)|(e-Banking)\" nocase\n\t\t$ebanking4 = \"login\"\n\t\t$ebanking5 = \"en ligne\" wide\n\t\t$ebanking6 = \"bancaires\" wide\n\t\t$ebanking7 = \"(eBanking)|(Ebanking)\" wide\n\t\t$ebanking8 = \"Anmeldung\" wide\n\t\t$ebanking9 = \"internet banking\" nocase wide\n\t\t$ebanking10 = \"Banking Online\" nocase wide\n\t\t$ebanking11 = \"Web Banking\" wide\n\t\t$ebanking12 = \"Power\"\n\n\tcondition:\n\t\tany of ( $campaign* ) or 2 of ( $decoy* ) or 2 of ( $artifact* ) or all of ( $func* ) or 3 of ( $ebanking* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Cerberus",
+                "tags": [
+                    "rat"
+                ],
+                "description": "Cerberus",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-01-12",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule Cerberus : rat\n{\n\tmeta:\n\t\tdescription = \"Cerberus\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-01-12\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$checkin = \"Ypmw1Syv023QZD\"\n\t\t$clientpong = \"wZ2pla\"\n\t\t$serverping = \"wBmpf3Pb7RJe\"\n\t\t$generic = \"cerberus\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "citadel13xy",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Citadel 1.5.x.y trojan banker",
+                "date": "2013-01-12",
+                "version": "1.0",
+                "filetype": "memory"
+            },
+            "rule_text": "rule citadel13xy : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Citadel 1.5.x.y trojan banker\"\n\t\tdate = \"2013-01-12\"\n\t\tversion = \"1.0\"\n\t\tfiletype = \"memory\"\n\n\tstrings:\n\t\t$a = \"Coded by BRIAN KREBS for personnal use only. I love my job & wife.\"\n\t\t$b = \"http://%02x%02x%02x%02x%02x%02x%02x%02x.com/%02x%02x%02x%02x/%02x%02x%02x%02x%02x.php\"\n\t\t$c = \"%BOTID%\"\n\t\t$d = \"%BOTNET%\"\n\t\t$e = \"cit_video.module\"\n\t\t$f = \"bc_remove\"\n\t\t$g = \"bc_add\"\n\t\t$ggurl = \"http://www.google.com/webhp\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DarkComet",
+                "tags": [
+                    "rat"
+                ],
+                "description": "DarkComet",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-01-12",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule DarkComet : rat\n{\n\tmeta:\n\t\tdescription = \"DarkComet\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-01-12\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$a = \"#BEGIN DARKCOMET DATA --\"\n\t\t$b = \"#EOF DARKCOMET DATA --\"\n\t\t$c = \"DC_MUTEX-\"\n\t\t$k1 = \"#KCMDDC5#-890\"\n\t\t$k2 = \"#KCMDDC51#-890\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dotfuscator",
+                "tags": [
+                    "packer"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Dotfuscator",
+                "date": "2013-02-01",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule dotfuscator : packer\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Dotfuscator\"\n\t\tdate = \"2013-02-01\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$a = \"Obfuscated with Dotfuscator\"\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ice_ix_12xy",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "ICE-IX 1.2.x.y trojan banker",
+                "date": "2013-01-12",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule ice_ix_12xy : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"ICE-IX 1.2.x.y trojan banker\"\n\t\tdate = \"2013-01-12\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$regexp1 = /bn1=.{32}&sk1=[0-9a-zA-Z]{32}/\n\t\t$a = \"bn1=\"\n\t\t$b = \"&sk1=\"\n\t\t$c = \"mario\"\n\t\t$d = \"FIXME\"\n\t\t$e = \"RFB 003.003\"\n\t\t$ggurl = \"http://www.google.com/webhp\"\n\n\tcondition:\n\t\t$regexp1 or ( $a and $b ) or all of ( $c , $d , $e , $ggurl )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "jRAT_conf",
+                "tags": [
+                    "rat"
+                ],
+                "description": "jRAT configuration",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-10-11",
+                "filetype": "memory",
+                "version": "1.0",
+                "ref1": "https://github.com/MalwareLu/config_extractor/blob/master/config_jRAT.py",
+                "ref2": "http://www.ghettoforensics.com/2013/10/dumping-malware-configuration-data-from.html"
+            },
+            "rule_text": "rule jRAT_conf : rat\n{\n\tmeta:\n\t\tdescription = \"jRAT configuration\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-10-11\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\t\tref1 = \"https://github.com/MalwareLu/config_extractor/blob/master/config_jRAT.py\"\n\t\tref2 = \"http://www.ghettoforensics.com/2013/10/dumping-malware-configuration-data-from.html\"\n\n\tstrings:\n\t\t$a = \"/port=[0-9]{1,5}SPLIT/\"\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetWiredRC_B",
+                "tags": [
+                    "rat"
+                ],
+                "description": "NetWiredRC",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2014-12-23",
+                "filetype": "memory",
+                "version": "1.1"
+            },
+            "rule_text": "rule NetWiredRC_B : rat\n{\n\tmeta:\n\t\tdescription = \"NetWiredRC\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2014-12-23\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.1\"\n\n\tstrings:\n\t\t$mutex = \"LmddnIkX\"\n\t\t$str1 = \"%s.Identifier\"\n\t\t$str2 = \"%d:%I64u:%s%s;\"\n\t\t$str3 = \"%s%.2d-%.2d-%.4d\"\n\t\t$str4 = \"[%s] - [%.2d/%.2d/%d %.2d:%.2d:%.2d]\"\n\t\t$str5 = \"%.2d/%.2d/%d %.2d:%.2d:%.2d\"\n\t\t$klg1 = \"[Backspace]\"\n\t\t$klg2 = \"[Enter]\"\n\t\t$klg3 = \"[Tab]\"\n\t\t$klg4 = \"[Arrow Left]\"\n\t\t$klg5 = \"[Arrow Up]\"\n\t\t$klg6 = \"[Arrow Right]\"\n\t\t$klg7 = \"[Arrow Down]\"\n\t\t$klg8 = \"[Home]\"\n\t\t$klg9 = \"[Page Up]\"\n\t\t$klg10 = \"[Page Down]\"\n\t\t$klg11 = \"[End]\"\n\t\t$klg12 = \"[Break]\"\n\t\t$klg13 = \"[Delete]\"\n\t\t$klg14 = \"[Insert]\"\n\t\t$klg15 = \"[Print Screen]\"\n\t\t$klg16 = \"[Scroll Lock]\"\n\t\t$klg17 = \"[Caps Lock]\"\n\t\t$klg18 = \"[Alt]\"\n\t\t$klg19 = \"[Esc]\"\n\t\t$klg20 = \"[Ctrl+%c]\"\n\n\tcondition:\n\t\t$mutex or ( 1 of ( $str* ) and 1 of ( $klg* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "office_document_vba",
+                "tags": [],
+                "description": "Office document with embedded VBA",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-12-17",
+                "reference": "N/A"
+            },
+            "rule_text": "rule office_document_vba\n{\n\tmeta:\n\t\tdescription = \"Office document with embedded VBA\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-12-17\"\n\t\treference = \"N/A\"\n\n\tstrings:\n\t\t$officemagic = { D0 CF 11 E0 A1 B1 1A E1 }\n\t\t$zipmagic = \"PK\"\n\t\t$97str1 = \"_VBA_PROJECT_CUR\" wide\n\t\t$97str2 = \"VBAProject\"\n\t\t$97str3 = { 41 74 74 72 69 62 75 74 00 65 20 56 42 5F }\n\t\t$xmlstr1 = \"vbaProject.bin\"\n\t\t$xmlstr2 = \"vbaData.xml\"\n\n\tcondition:\n\t\t($officemagic at 0 and any of ( $97str* ) ) or ( $zipmagic at 0 and any of ( $xmlstr* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "plugX",
+                "tags": [
+                    "rat"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "PlugX RAT",
+                "date": "2014-05-13",
+                "filetype": "memory",
+                "version": "1.0",
+                "ref1": "https://github.com/mattulm/IR-things/blob/master/volplugs/plugx.py"
+            },
+            "rule_text": "rule plugX : rat\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"PlugX RAT\"\n\t\tdate = \"2014-05-13\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\t\tref1 = \"https://github.com/mattulm/IR-things/blob/master/volplugs/plugx.py\"\n\n\tstrings:\n\t\t$v1a = { 47 55 4C 50 00 00 00 00 }\n\t\t$v1b = \"/update?id=%8.8x\"\n\t\t$v1algoa = { BB 33 33 33 33 2B }\n\t\t$v1algob = { BB 44 44 44 44 2B }\n\t\t$v2a = \"Proxy-Auth:\"\n\t\t$v2b = { 68 A0 02 00 00 }\n\t\t$v2k = { C1 8F 3A 71 }\n\n\tcondition:\n\t\t$v1a at 0 or $v1b or ( ( $v2a or $v2b ) and ( ( $v1algoa and $v1algob ) or $v2k ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "poisonivy",
+                "tags": [
+                    "rat"
+                ],
+                "description": "Poison Ivy",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-02-01",
+                "filetype": "memory",
+                "version": "1.0",
+                "ref1": "https://code.google.com/p/volatility/source/browse/trunk/contrib/plugins/malware/poisonivy.py"
+            },
+            "rule_text": "rule poisonivy : rat\n{\n\tmeta:\n\t\tdescription = \"Poison Ivy\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-02-01\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\t\tref1 = \"https://code.google.com/p/volatility/source/browse/trunk/contrib/plugins/malware/poisonivy.py\"\n\n\tstrings:\n\t\t$a = { 53 74 75 62 50 61 74 68 ?? 53 4F 46 54 57 41 52 45 5C 43 6C 61 73 73 65 73 5C 68 74 74 70 5C 73 68 65 6C 6C 5C 6F 70 65 6E 5C 63 6F 6D 6D 61 6E 64 [22] 53 6F 66 74 77 61 72 65 5C 4D 69 63 72 6F 73 6F 66 74 5C 41 63 74 69 76 65 20 53 65 74 75 70 5C 49 6E 73 74 61 6C 6C 65 64 20 43 6F 6D 70 6F 6E 65 6E 74 73 5C }\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "qadars",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Qadars - Mobile part. Maybe Perkele.",
+                "version": "1.0",
+                "filetype": "memory",
+                "ref1": "http://www.lexsi-leblog.fr/cert/qadars-nouveau-malware-bancaire-composant-mobile.html"
+            },
+            "rule_text": "rule qadars : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Qadars - Mobile part. Maybe Perkele.\"\n\t\tversion = \"1.0\"\n\t\tfiletype = \"memory\"\n\t\tref1 = \"http://www.lexsi-leblog.fr/cert/qadars-nouveau-malware-bancaire-composant-mobile.html\"\n\n\tstrings:\n\t\t$cmd1 = \"m?D\"\n\t\t$cmd2 = \"m?S\"\n\t\t$cmd3 = \"ALL\"\n\t\t$cmd4 = \"FILTER\"\n\t\t$cmd5 = \"NONE\"\n\t\t$cmd6 = \"KILL\"\n\t\t$cmd7 = \"CANCEL\"\n\t\t$cmd8 = \"SMS\"\n\t\t$cmd9 = \"DIVERT\"\n\t\t$cmd10 = \"MESS\"\n\t\t$nofilter = \"nofilter1111111\"\n\t\t$botherderphonenumber1 = \"+380678409210\"\n\n\tcondition:\n\t\tall of ( $cmd* ) or $nofilter or any of ( $botherderphonenumber* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "shylock",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Shylock Banker",
+                "date": "2013-12-12",
+                "version": "1.0",
+                "ref1": "http://iocbucket.com/iocs/1b4660d57928df5ca843c21df0b2adb117026cba",
+                "ref2": "http://www.trusteer.com/blog/merchant-fraud-returns-%E2%80%93-shylock-polymorphic-financial-malware-infections-rise",
+                "ref3": "https://www.csis.dk/en/csis/blog/3811/"
+            },
+            "rule_text": "rule shylock : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Shylock Banker\"\n\t\tdate = \"2013-12-12\"\n\t\tversion = \"1.0\"\n\t\tref1 = \"http://iocbucket.com/iocs/1b4660d57928df5ca843c21df0b2adb117026cba\"\n\t\tref2 = \"http://www.trusteer.com/blog/merchant-fraud-returns-%E2%80%93-shylock-polymorphic-financial-malware-infections-rise\"\n\t\tref3 = \"https://www.csis.dk/en/csis/blog/3811/\"\n\n\tstrings:\n\t\t$process1 = \"MASTER\"\n\t\t$process2 = \"_SHUTDOWN\"\n\t\t$process3 = \"EVT_VNC\"\n\t\t$process4 = \"EVT_BACK\"\n\t\t$process5 = \"EVT_VNC\"\n\t\t$process6 = \"IE_Hook::GetRequestInfo\"\n\t\t$process7 = \"FF_Hook::getRequestInfo\"\n\t\t$process8 = \"EX_Hook::CreateProcess\"\n\t\t$process9 = \"hijackdll.dll\"\n\t\t$process10 = \"MTX_\"\n\t\t$process11 = \"FF::PR_WriteHook entry\"\n\t\t$process12 = \"FF::PR_WriteHook exit\"\n\t\t$process13 = \"HijackProcessAttach::*** MASTER *** MASTER *** MASTER *** %s PID=%u\"\n\t\t$process14 = \"HijackProcessAttach::entry\"\n\t\t$process15 = \"FF::BEFORE INJECT\"\n\t\t$process16 = \"FF::AFTER INJECT\"\n\t\t$process17 = \"IE::AFTER INJECT\"\n\t\t$process18 = \"IE::BEFORE INJECT\"\n\t\t$process19 = \"*** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** %s\"\n\t\t$process20 = \"*** LOG INJECTS *** %s\"\n\t\t$process21 = \"*** inject to process %s not allowed\"\n\t\t$process22 = \"*** BackSocks *** BackSocks *** BackSocks *** BackSocks *** BackSocks *** BackSocks *** BackSocks *** %s\"\n\t\t$process23 = \".?AVFF_Hook@@\"\n\t\t$process24 = \".?AVIE_Hook@@\"\n\t\t$process25 = \"Inject::InjectDllFromMemory\"\n\t\t$process26 = \"BadSocks.dll\"\n\t\t$domain1 = \"extensadv.cc\"\n\t\t$domain2 = \"topbeat.cc\"\n\t\t$domain3 = \"brainsphere.cc\"\n\t\t$domain4 = \"commonworldme.cc\"\n\t\t$domain5 = \"gigacat.cc\"\n\t\t$domain6 = \"nw-serv.cc\"\n\t\t$domain7 = \"paragua-analyst.cc\"\n\n\tcondition:\n\t\t3 of ( $process* ) or any of ( $domain* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "spyeye",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "SpyEye X.Y memory",
+                "date": "2012-05-23",
+                "version": "1.0",
+                "filetype": "memory"
+            },
+            "rule_text": "rule spyeye : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"SpyEye X.Y memory\"\n\t\tdate = \"2012-05-23\"\n\t\tversion = \"1.0\"\n\t\tfiletype = \"memory\"\n\n\tstrings:\n\t\t$spyeye = \"SpyEye\"\n\t\t$a = \"%BOTNAME%\"\n\t\t$b = \"globplugins\"\n\t\t$c = \"data_inject\"\n\t\t$d = \"data_before\"\n\t\t$e = \"data_after\"\n\t\t$f = \"data_end\"\n\t\t$g = \"bot_version\"\n\t\t$h = \"bot_guid\"\n\t\t$i = \"TakeBotGuid\"\n\t\t$j = \"TakeGateToCollector\"\n\t\t$k = \"[ERROR] : Omfg! Process is still active? Lets kill that mazafaka!\"\n\t\t$l = \"[ERROR] : Update is not successfull for some reason\"\n\t\t$m = \"[ERROR] : dwErr == %u\"\n\t\t$n = \"GRABBED DATA\"\n\n\tcondition:\n\t\t$spyeye or ( any of ( $a , $b , $c , $d , $e , $f , $g , $h , $i , $j , $k , $l , $m , $n ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "spyeye_plugins",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "SpyEye X.Y Plugins memory",
+                "date": "2012-05-23",
+                "version": "1.0",
+                "filetype": "memory"
+            },
+            "rule_text": "rule spyeye_plugins : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"SpyEye X.Y Plugins memory\"\n\t\tdate = \"2012-05-23\"\n\t\tversion = \"1.0\"\n\t\tfiletype = \"memory\"\n\n\tstrings:\n\t\t$a = \"webfakes.dll\"\n\t\t$b = \"config.dat\"\n\t\t$c = \"collectors.txt\"\n\t\t$d = \"webinjects.txt\"\n\t\t$e = \"screenshots.txt\"\n\t\t$f = \"billinghammer.dll\"\n\t\t$g = \"block.dll\"\n\t\t$h = \"bugreport.dll\"\n\t\t$i = \"ccgrabber.dll\"\n\t\t$j = \"connector2.dll\"\n\t\t$k = \"creditgrab.dll\"\n\t\t$l = \"customconnector.dll\"\n\t\t$m = \"ffcertgrabber.dll\"\n\t\t$n = \"ftpbc.dll\"\n\t\t$o = \"rdp.dll\"\n\t\t$p = \"rt_2_4.dll\"\n\t\t$q = \"socks5.dll\"\n\t\t$r = \"spySpread.dll\"\n\t\t$s = \"w2chek4_4.dll\"\n\t\t$t = \"w2chek4_6.dll\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "swrort",
+                "tags": [
+                    "rat"
+                ],
+                "description": "Trojan:Win32/Swrort / Downloader",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-06-22",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule swrort : rat\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Swrort / Downloader\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-06-22\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$path = \"c:\\\\code\\\\httppump\\\\inner\\\\objchk_wxp_x86\\\\i386\\\\i.pdb\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "TerminatorRat",
+                "tags": [
+                    "rat"
+                ],
+                "description": "Terminator RAT",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-10-24",
+                "filetype": "memory",
+                "version": "1.0",
+                "ref1": "http://www.fireeye.com/blog/technical/malware-research/2013/10/evasive-tactics-terminator-rat.html"
+            },
+            "rule_text": "rule TerminatorRat : rat\n{\n\tmeta:\n\t\tdescription = \"Terminator RAT\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-10-24\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\t\tref1 = \"http://www.fireeye.com/blog/technical/malware-research/2013/10/evasive-tactics-terminator-rat.html\"\n\n\tstrings:\n\t\t$a = \"Accelorator\"\n\t\t$b = \"<html><title>12356</title><body>\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "xtremrat",
+                "tags": [
+                    "rat"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Xtrem RAT v3.5",
+                "date": "2012-07-12",
+                "version": "1.0",
+                "filetype": "memory"
+            },
+            "rule_text": "rule xtremrat : rat\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Xtrem RAT v3.5\"\n\t\tdate = \"2012-07-12\"\n\t\tversion = \"1.0\"\n\t\tfiletype = \"memory\"\n\n\tstrings:\n\t\t$a = \"XTREME\" wide\n\t\t$b = \"XTREMEBINDER\" wide\n\t\t$c = \"STARTSERVERBUFFER\" wide\n\t\t$d = \"SOFTWARE\\\\XtremeRAT\" wide\n\t\t$e = \"XTREMEUPDATE\" wide\n\t\t$f = \"XtremeKeylogger\" wide\n\t\t$g = \"myversion|3.5\" wide\n\t\t$h = \"xtreme rat\" wide nocase\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

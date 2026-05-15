@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_iis_susp_module_registration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Microsoft (idea)",
+                "date": "2022-08-04",
+                "title": "Suspicious IIS Module Registration",
+                "id": "043c4b8b-3a54-4780-9682-081cb6b8185c"
+            },
+            "rule_text": "title: Suspicious IIS Module Registration\nid: 043c4b8b-3a54-4780-9682-081cb6b8185c\nstatus: test\ndescription: Detects a suspicious IIS module registration as described in Microsoft\n  threat report on IIS backdoors\nreferences:\n- https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/\nauthor: Florian Roth (Nextron Systems), Microsoft (idea)\ndate: 2022-08-04\nmodified: 2023-01-23\ntags:\n- attack.persistence\n- attack.t1505.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\w3wp.exe\n  selection_cli_1:\n    CommandLine|contains: appcmd.exe add module\n  selection_cli_2:\n    CommandLine|contains: ' system.enterpriseservices.internal.publish'\n    Image|endswith: \\powershell.exe\n  selection_cli_3:\n    CommandLine|contains|all:\n    - gacutil\n    - ' /I'\n  condition: selection_parent and 1 of selection_cli_*\nfalsepositives:\n- Administrative activity\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

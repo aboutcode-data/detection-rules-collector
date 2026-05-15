@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_delete/file_delete_win_zone_identifier_ads.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-09-04",
+                "title": "ADS Zone.Identifier Deleted",
+                "id": "7eac0a16-5832-4e81-865f-0268a6d19e4b"
+            },
+            "rule_text": "title: ADS Zone.Identifier Deleted\nid: 7eac0a16-5832-4e81-865f-0268a6d19e4b\nrelated:\n- id: 3109530e-ab47-4cc6-a953-cac5ebcc93ae\n  type: similar\nstatus: test\ndescription: Detects the deletion of the \"Zone.Identifier\" ADS. Attackers can leverage\n  this in order to bypass security restrictions that make use of the ADS such as Microsoft\n  Office apps.\nreferences:\n- https://securityliterate.com/how-malware-abuses-the-zone-identifier-to-circumvent-detection-and-analysis/\nauthor: frack113\ndate: 2023-09-04\ntags:\n- attack.stealth\n- attack.t1070.004\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: file_delete\ndetection:\n  selection:\n    TargetFilename|endswith: :Zone.Identifier\n  condition: selection\nfalsepositives:\n- Likely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

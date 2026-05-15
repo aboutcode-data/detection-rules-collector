@@ -1,0 +1,68 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_cobaltgang.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_CN_Group_BeaconDropper_Aug17",
+                "tags": [],
+                "description": "Detects Script Dropper of Cobalt Gang used in August 2017",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2017-08-09",
+                "hash1": "fc0fad39b461eb1cfc6be57932993fcea94fca650564271d1b74dd850c81602f",
+                "hash2": "1c845bb0f6b9a96404af97dcafdc77f1629246e840c01dd9f1580a341f554926",
+                "hash3": "6206e372870ea4f363be53557477f9748f1896831a0cdef3b8450a7fb65b86e1",
+                "id": "5631b0bc-9e25-524a-9003-73779fd492f7"
+            },
+            "rule_text": "rule CobaltStrike_CN_Group_BeaconDropper_Aug17\n{\n\tmeta:\n\t\tdescription = \"Detects Script Dropper of Cobalt Gang used in August 2017\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2017-08-09\"\n\t\thash1 = \"fc0fad39b461eb1cfc6be57932993fcea94fca650564271d1b74dd850c81602f\"\n\t\thash2 = \"1c845bb0f6b9a96404af97dcafdc77f1629246e840c01dd9f1580a341f554926\"\n\t\thash3 = \"6206e372870ea4f363be53557477f9748f1896831a0cdef3b8450a7fb65b86e1\"\n\t\tid = \"5631b0bc-9e25-524a-9003-73779fd492f7\"\n\n\tstrings:\n\t\t$x1 = \"WriteLine(\\\"(new ActiveXObject('WScript.Shell')).Run('cmd /c c:/\" ascii\n\t\t$x2 = \"WriteLine(\\\" (new ActiveXObject('WScript.Shell')).Run('regsvr32 /s\" ascii\n\t\t$x3 = \"sh.Run(env('cmd /c set > %temp%\" ascii\n\t\t$x4 = \"sh.Run('regsvr32 /s /u /i:\" ascii\n\t\t$x5 = \".Get('Win32_ScheduledJob').Create('regsvr32 /s /u /i:\" ascii\n\t\t$x6 = \"scrobj.dll','********\" ascii\n\t\t$x7 = \"www.thyssenkrupp-marinesystems.org\" fullword ascii\n\t\t$x8 = \"f.WriteLine(\\\" tLnk=env('%tmp%/'+lnkName+'.lnk');\\\");\" fullword ascii\n\t\t$x9 = \"lnkName='office 365'; \" fullword ascii\n\t\t$x10 = \";sh=x('WScript.Shell');\" ascii\n\n\tcondition:\n\t\t( filesize < 200KB and 1 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltGang_Malware_Aug17_1",
+                "tags": [],
+                "description": "Detects a Cobalt Gang malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://sslbl.abuse.ch/intel/6ece5ece4192683d2d84e25b0ba7e04f9cb7eb7c",
+                "date": "2017-08-09",
+                "hash1": "6d70673b723f338b3febc9f1d69463bdd4775539cb92b5a5d8fccc0d977fa2f0",
+                "id": "56c6f4f8-ccf5-5665-ac21-67f0a9b67cf1"
+            },
+            "rule_text": "rule CobaltGang_Malware_Aug17_1\n{\n\tmeta:\n\t\tdescription = \"Detects a Cobalt Gang malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://sslbl.abuse.ch/intel/6ece5ece4192683d2d84e25b0ba7e04f9cb7eb7c\"\n\t\tdate = \"2017-08-09\"\n\t\thash1 = \"6d70673b723f338b3febc9f1d69463bdd4775539cb92b5a5d8fccc0d977fa2f0\"\n\t\tid = \"56c6f4f8-ccf5-5665-ac21-67f0a9b67cf1\"\n\n\tstrings:\n\t\t$s1 = \"ServerSocket.EXE\" fullword wide\n\t\t$s2 = \"Incorrect version of WS2_32.dll found\" fullword ascii\n\t\t$s3 = \"Click 'Connect' to Connect to the Server.  'Disconnect' to disconnect from server.\" fullword wide\n\t\t$s4 = \"Click 'Start' to start the Server.  'Stop' to Stop it.\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 400KB and 3 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltGang_Malware_Aug17_2",
+                "tags": [],
+                "description": "Detects a Cobalt Gang malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://sslbl.abuse.ch/intel/6ece5ece4192683d2d84e25b0ba7e04f9cb7eb7c",
+                "date": "2017-08-09",
+                "hash1": "80791d5e76782cc3cd14f37f351e33b860818784192ab5b650f1cdf4f131cf72",
+                "id": "2839c119-0fa4-51f0-a406-5d381cc594a2"
+            },
+            "rule_text": "rule CobaltGang_Malware_Aug17_2\n{\n\tmeta:\n\t\tdescription = \"Detects a Cobalt Gang malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://sslbl.abuse.ch/intel/6ece5ece4192683d2d84e25b0ba7e04f9cb7eb7c\"\n\t\tdate = \"2017-08-09\"\n\t\thash1 = \"80791d5e76782cc3cd14f37f351e33b860818784192ab5b650f1cdf4f131cf72\"\n\t\tid = \"2839c119-0fa4-51f0-a406-5d381cc594a2\"\n\n\tstrings:\n\t\t$s1 = \"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; BOIE9;ENGB)\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 80KB and all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_CRIME_CobaltGang_Malware_Oct19_1",
+                "tags": [],
+                "description": "Detects CobaltGang malware",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/vxsh4d0w/status/1187353649015611392",
+                "date": "2019-10-24",
+                "hash1": "72125933265f884ceb8ab64ab303ea76aaeb7877faee8976d398acd0d0b7356b",
+                "hash2": "893339624602c7b3a6f481aed9509b53e4e995d6771c72d726ba5a6b319608a7",
+                "hash3": "3c34bbf641df25f9accd05b27b9058e25554fdfea0e879f5ca21ffa460ad2b01",
+                "id": "95c16016-b09b-56f3-b5a4-fca18ac70ad5"
+            },
+            "rule_text": "import \"pe\"\n\nrule MAL_CRIME_CobaltGang_Malware_Oct19_1\n{\n\tmeta:\n\t\tdescription = \"Detects CobaltGang malware\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/vxsh4d0w/status/1187353649015611392\"\n\t\tdate = \"2019-10-24\"\n\t\thash1 = \"72125933265f884ceb8ab64ab303ea76aaeb7877faee8976d398acd0d0b7356b\"\n\t\thash2 = \"893339624602c7b3a6f481aed9509b53e4e995d6771c72d726ba5a6b319608a7\"\n\t\thash3 = \"3c34bbf641df25f9accd05b27b9058e25554fdfea0e879f5ca21ffa460ad2b01\"\n\t\tid = \"95c16016-b09b-56f3-b5a4-fca18ac70ad5\"\n\n\tstrings:\n\t\t$op_a1 = { 0f 44 c2 eb 0a 31 c0 80 fa 20 0f 94 c0 01 c0 5d }\n\t\t$op_b1 = { 89 e5 53 8b 55 08 8b 4d 0c 8a 1c 01 88 1c 02 83 }\n\t\t$op_b2 = { 89 e5 53 8b 55 08 8b 45 0c 8a 1c 0a 88 1c 08 83 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize <= 2000KB and ( pe.imphash ( ) == \"d1e3f8d02cce09520379e5c1e72f862f\" or pe.imphash ( ) == \"8e26df99c70f79cb8b1ea2ef6f8e52ac\" or ( $op_a1 and 1 of ( $op_b* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

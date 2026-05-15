@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vshadow_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "David Faiss",
+                "date": "2025-05-26",
+                "title": "Proxy Execution via Vshadow",
+                "id": "d7c75059-2901-4578-b209-8837fd31c6a8"
+            },
+            "rule_text": "title: Proxy Execution via Vshadow\nid: d7c75059-2901-4578-b209-8837fd31c6a8\nstatus: experimental\ndescription: 'Detects the invocation of vshadow.exe with the -exec parameter that\n  executes a specified script or command after the shadow copies are created but before\n  the VShadow tool exits.\n\n  VShadow is a command-line tool that you can use to create and manage volume shadow\n  copies. While legitimate backup or administrative scripts may use this flag,\n\n  attackers can leverage this parameter to proxy the execution of malware.\n\n  '\nauthor: David Faiss\ndate: 2025-05-26\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Vshadow/\n- https://learn.microsoft.com/en-us/windows/win32/vss/vshadow-tool-and-sample\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\vshadow.exe\n  - OriginalFileName: vshadow.exe\n  selection_cli:\n    CommandLine|contains: -exec\n  condition: all of selection_*\nfalsepositives:\n- System backup or administrator tools\n- Legitimate administrative scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

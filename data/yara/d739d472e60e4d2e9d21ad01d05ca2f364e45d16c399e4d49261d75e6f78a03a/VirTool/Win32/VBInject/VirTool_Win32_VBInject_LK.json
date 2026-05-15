@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/VBInject/VirTool_Win32_VBInject_LK.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_VBInject_LK",
+                "tags": [],
+                "description": "VirTool:Win32/VBInject.LK,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_VBInject_LK\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/VBInject.LK,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {f5 07 00 01 00 71 ?? ?? ([0-03] f5 00 00 00 00 f5 ?? 00 00 00 04 ?? ?? fe 8e 1e |)}\n\t\t$a_03_1 = {f5 f8 00 00 00 aa f4 28 6b ?? ?? b1 }\n\t\t$a_03_2 = {80 0c 00 4a e4 f4 03 fe 6b ?? (fe|ff) ?? ?? 1e }\n\t\t$a_00_3 = {41 56 45 4e 47 49 4e 60 45 2e 45 58 45 21 03 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

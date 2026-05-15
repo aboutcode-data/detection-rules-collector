@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_autohotkey.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali",
+                "date": "2023-02-07",
+                "title": "Renamed AutoHotkey.EXE Execution",
+                "id": "0f16d9cf-0616-45c8-8fad-becc11b5a41c"
+            },
+            "rule_text": "title: Renamed AutoHotkey.EXE Execution\nid: 0f16d9cf-0616-45c8-8fad-becc11b5a41c\nstatus: test\ndescription: Detects execution of a renamed autohotkey.exe binary based on PE metadata\n  fields\nreferences:\n- https://www.autohotkey.com/download/\n- https://thedfirreport.com/2023/02/06/collect-exfiltrate-sleep-repeat/\nauthor: Nasreddine Bencherchali\ndate: 2023-02-07\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Product|contains: AutoHotkey\n  - Description|contains: AutoHotkey\n  - OriginalFileName:\n    - AutoHotkey.exe\n    - AutoHotkey.rc\n  filter:\n  - Image|endswith:\n    - \\AutoHotkey.exe\n    - \\AutoHotkey32.exe\n    - \\AutoHotkey32_UIA.exe\n    - \\AutoHotkey64.exe\n    - \\AutoHotkey64_UIA.exe\n    - \\AutoHotkeyA32.exe\n    - \\AutoHotkeyA32_UIA.exe\n    - \\AutoHotkeyU32.exe\n    - \\AutoHotkeyU32_UIA.exe\n    - \\AutoHotkeyU64.exe\n    - \\AutoHotkeyU64_UIA.exe\n  - Image|contains: \\AutoHotkey\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

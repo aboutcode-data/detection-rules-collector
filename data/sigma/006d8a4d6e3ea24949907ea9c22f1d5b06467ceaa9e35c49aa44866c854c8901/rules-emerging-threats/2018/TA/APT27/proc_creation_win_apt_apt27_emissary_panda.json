@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2018/TA/APT27/proc_creation_win_apt_apt27_emissary_panda.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2018-09-03",
+                "title": "APT27 - Emissary Panda Activity",
+                "id": "9aa01d62-7667-4d3b-acb8-8cb5103e2014"
+            },
+            "rule_text": "title: APT27 - Emissary Panda Activity\nid: 9aa01d62-7667-4d3b-acb8-8cb5103e2014\nstatus: test\ndescription: Detects the execution of DLL side-loading malware used by threat group\n  Emissary Panda aka APT27\nreferences:\n- https://app.any.run/tasks/579e7587-f09d-4aae-8b07-472833262965\n- https://twitter.com/cyb3rops/status/1168863899531132929\n- https://research.nccgroup.com/2018/05/18/emissary-panda-a-potential-new-malicious-tool/\nauthor: Florian Roth (Nextron Systems)\ndate: 2018-09-03\nmodified: 2023-03-09\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\n- attack.g0027\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sllauncher:\n    ParentImage|endswith: \\sllauncher.exe\n    Image|endswith: \\svchost.exe\n  selection_svchost:\n    ParentImage|contains: \\AppData\\Roaming\\\n    Image|endswith: \\svchost.exe\n    CommandLine|contains: -k\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

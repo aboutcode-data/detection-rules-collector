@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_uac_bypass_idiagnostic_profile.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-03",
+                "title": "UAC Bypass Using IDiagnostic Profile - File",
+                "id": "48ea844d-19b1-4642-944e-fe39c2cc1fec"
+            },
+            "rule_text": "title: UAC Bypass Using IDiagnostic Profile - File\nid: 48ea844d-19b1-4642-944e-fe39c2cc1fec\nstatus: test\ndescription: Detects the creation of a file by \"dllhost.exe\" in System32 directory\n  part of \"IDiagnosticProfileUAC\" UAC bypass technique\nreferences:\n- https://github.com/Wh04m1001/IDiagnosticProfileUAC\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-03\ntags:\n- attack.execution\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith: \\DllHost.exe\n    TargetFilename|startswith: C:\\Windows\\System32\\\n    TargetFilename|endswith: .dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

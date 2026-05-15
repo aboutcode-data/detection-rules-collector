@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_python_pty_shell.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HKTL_Reverse_Connect_TCP_PTY_Shell",
+                "tags": [],
+                "description": "Detects reverse connect TCP PTY shell",
+                "author": "Jeff Beley",
+                "date": "2019-10-19",
+                "hash1": "cae9833292d3013774bdc689d4471fd38e4a80d2d407adf9fa99bc8cde3319bf",
+                "reference": "https://github.com/infodox/python-pty-shells/blob/master/tcp_pty_backconnect.py",
+                "id": "a9a90d67-774b-5b32-97c0-d7e06763f2e9"
+            },
+            "rule_text": "rule HKTL_Reverse_Connect_TCP_PTY_Shell\n{\n\tmeta:\n\t\tdescription = \"Detects reverse connect TCP PTY shell\"\n\t\tauthor = \"Jeff Beley\"\n\t\tdate = \"2019-10-19\"\n\t\thash1 = \"cae9833292d3013774bdc689d4471fd38e4a80d2d407adf9fa99bc8cde3319bf\"\n\t\treference = \"https://github.com/infodox/python-pty-shells/blob/master/tcp_pty_backconnect.py\"\n\t\tid = \"a9a90d67-774b-5b32-97c0-d7e06763f2e9\"\n\n\tstrings:\n\t\t$s1 = \"os.dup2(s.fileno(),1)\" fullword ascii\n\t\t$s2 = \"pty.spawn(\\\"/bin/\\\")\" fullword ascii\n\t\t$s3 = \"os.putenv(\\\"HISTFILE\\\",'/dev/null')\" fullword ascii\n\t\t$s4 = \"socket.socket(socket.AF_INET, socket.SOCK_STREAM)\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 1KB and 2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

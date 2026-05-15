@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_wmiprvse_wbemcomn_dll_hijack.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-10-12",
+                "title": "Wmiprvse Wbemcomn DLL Hijack - File",
+                "id": "614a7e17-5643-4d89-b6fe-f9df1a79641c"
+            },
+            "rule_text": "title: Wmiprvse Wbemcomn DLL Hijack - File\nid: 614a7e17-5643-4d89-b6fe-f9df1a79641c\nstatus: test\ndescription: Detects a threat actor creating a file named `wbemcomn.dll` in the `C:\\Windows\\System32\\wbem\\`\n  directory over the network and loading it for a WMI DLL Hijack scenario.\nreferences:\n- https://threathunterplaybook.com/hunts/windows/201009-RemoteWMIWbemcomnDLLHijack/notebook.html\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-10-12\nmodified: 2022-12-02\ntags:\n- attack.execution\n- attack.t1047\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image: System\n    TargetFilename|endswith: \\wbem\\wbemcomn.dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

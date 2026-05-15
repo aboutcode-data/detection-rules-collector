@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/MacOS_Infostealer_MdQueryToken.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MacOS_Infostealer_MdQueryToken_1c52d574",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "1c52d574-4fb7-4f14-b100-291e3f296c94",
+                "fingerprint": "f603e5383d08050cd84949fb60ce5618c4dfff54bcb3f035290adc1c1cc0e0e1",
+                "creation_date": "2023-04-11",
+                "last_modified": "2024-08-19",
+                "threat_name": "MacOS.Infostealer.MdQueryToken",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "macos"
+            },
+            "rule_text": "rule MacOS_Infostealer_MdQueryToken_1c52d574\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"1c52d574-4fb7-4f14-b100-291e3f296c94\"\n\t\tfingerprint = \"f603e5383d08050cd84949fb60ce5618c4dfff54bcb3f035290adc1c1cc0e0e1\"\n\t\tcreation_date = \"2023-04-11\"\n\t\tlast_modified = \"2024-08-19\"\n\t\tthreat_name = \"MacOS.Infostealer.MdQueryToken\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"macos\"\n\n\tstrings:\n\t\t$string1 = /kMDItemTextContent\\s{1,50}==\\s{1,50}\\S{1,50}token/ ascii wide nocase\n\t\t$string2 = /kMDItemDisplayName\\s{1,50}==\\s{1,50}\\S{1,50}token\\S{1,50}/ ascii wide nocase\n\n\tcondition:\n\t\tany of ( $string1 , $string2 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disable_administrative_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-16",
+                "title": "Disable Administrative Share Creation at Startup",
+                "id": "c7dcacd0-cc59-4004-b0a4-1d6cdebe6f3e"
+            },
+            "rule_text": "title: Disable Administrative Share Creation at Startup\nid: c7dcacd0-cc59-4004-b0a4-1d6cdebe6f3e\nstatus: test\ndescription: Administrative shares are hidden network shares created by Microsoft\n  Windows NT operating systems that grant system administrators remote access to every\n  disk volume on a network-connected system\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.005/T1070.005.md#atomic-test-4---disable-administrative-share-creation-at-startup\nauthor: frack113\ndate: 2022-01-16\nmodified: 2024-03-25\ntags:\n- attack.stealth\n- attack.t1070.005\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Services\\LanmanServer\\Parameters\\\n    TargetObject|endswith:\n    - \\AutoShareWks\n    - \\AutoShareServer\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_disable_administrative_share/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Disable Administrative Share Creation at Startup\n  technique: T1070.005\n  atomic_guid: 99c657aa-ebeb-4179-a665-69288fdd12b8\n",
+            "vulnerabilities": []
+        }
+    ]
+}

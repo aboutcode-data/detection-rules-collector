@@ -1,0 +1,34 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/cab.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "archive_cab",
+                "tags": [
+                    "info",
+                    "archive",
+                    "cab",
+                    "windows"
+                ],
+                "description": "Detect CAB archive"
+            },
+            "rule_text": "rule archive_cab : info archive cab windows\n{\n\tmeta:\n\t\tdescription = \"Detect CAB archive\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x4d534346 and uint32be( 4 ) == 0x00000000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "embedded_archive_cab",
+                "tags": [
+                    "info",
+                    "embedded",
+                    "archive",
+                    "cab",
+                    "windows"
+                ],
+                "description": "Detect CAB archive"
+            },
+            "rule_text": "rule embedded_archive_cab : info embedded archive cab windows\n{\n\tmeta:\n\t\tdescription = \"Detect CAB archive\"\n\n\tstrings:\n\t\t$mscf_h3xstring = { 4D 53 43 46 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 }\n\n\tcondition:\n\t\t$mscf_h3xstring\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

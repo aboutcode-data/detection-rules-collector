@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_gup_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-10",
+                "title": "File Download Using Notepad++ GUP Utility",
+                "id": "44143844-0631-49ab-97a0-96387d6b2d7c"
+            },
+            "rule_text": "title: File Download Using Notepad++ GUP Utility\nid: 44143844-0631-49ab-97a0-96387d6b2d7c\nstatus: test\ndescription: Detects execution of the Notepad++ updater (gup) from a process other\n  than Notepad++ to download files.\nreferences:\n- https://twitter.com/nas_bench/status/1535322182863179776\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-10\nmodified: 2023-03-02\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\GUP.exe\n  - OriginalFileName: gup.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' -unzipTo '\n    - http\n  filter:\n    ParentImage|endswith: \\notepad++.exe\n  condition: all of selection* and not filter\nfalsepositives:\n- Other parent processes other than notepad++ using GUP that are not currently identified\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

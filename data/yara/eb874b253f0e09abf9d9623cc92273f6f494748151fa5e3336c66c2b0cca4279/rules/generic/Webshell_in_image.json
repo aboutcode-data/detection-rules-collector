@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/generic/Webshell_in_image.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Webshell_in_image",
+                "tags": [],
+                "id": "6IgdjyQO28avrjCjsw4VWh",
+                "fingerprint": "459e953dedb3a743094868b6ba551e72c3640e3f4d2d2837913e4288e88f6eca",
+                "version": "1.0",
+                "creation_date": "2020-01-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-02-14",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies a webshell or backdoor in image files.",
+                "category": "MALWARE",
+                "malware_type": "WEBSHELL"
+            },
+            "rule_text": "rule Webshell_in_image\n{\n\tmeta:\n\t\tid = \"6IgdjyQO28avrjCjsw4VWh\"\n\t\tfingerprint = \"459e953dedb3a743094868b6ba551e72c3640e3f4d2d2837913e4288e88f6eca\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-01-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-02-14\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies a webshell or backdoor in image files.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware_type = \"WEBSHELL\"\n\n\tstrings:\n\t\t$gif = {47 49 46 38 3? 61}\n\t\t$png = {89 50 4E 47 0D 0A 1A 0A}\n\t\t$jpeg = {FF D8 FF E0}\n\t\t$bmp = {42 4D}\n\t\t$s1 = \"<%@ Page Language=\" ascii wide\n\t\t$s2 = /<\\?php[ -~]{30,}/ ascii wide nocase\n\t\t$s3 = /eval\\([ -~]{30,}/ ascii wide nocase\n\t\t$s4 = /<eval[ -~]{30,}/ ascii wide nocase\n\t\t$s5 = /<%eval[ -~]{30,}/ ascii wide nocase\n\n\tcondition:\n\t\t($gif at 0 and any of ( $s* ) ) or ( $png at 0 and any of ( $s* ) ) or ( $jpeg at 0 and any of ( $s* ) ) or ( $bmp at 0 and any of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

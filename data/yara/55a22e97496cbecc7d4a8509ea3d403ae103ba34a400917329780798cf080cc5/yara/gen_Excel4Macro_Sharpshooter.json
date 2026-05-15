@@ -1,0 +1,37 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_Excel4Macro_Sharpshooter.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_Sharpshooter_Excel4",
+                "tags": [],
+                "description": "Detects Excel documents weaponized with Sharpshooter",
+                "author": "John Lambert, Florian Roth",
+                "reference": "https://github.com/mdsecactivebreach/SharpShooter",
+                "reference2": "https://outflank.nl/blog/2018/10/06/old-school-evil-excel-4-0-macros-xlm/",
+                "reference3": "https://gist.github.com/JohnLaTwC/efab89650d6fcbb37a4221e4c282614c",
+                "reference4": "https://docs.microsoft.com/en-us/openspecs/office_file_formats/ms-xls/00b5dd7d-51ca-4938-b7b7-483fe0e5933b",
+                "date": "2020-03-27",
+                "score": 70,
+                "hash": "ccef64586d25ffcb2b28affc1f64319b936175c4911e7841a0e28ee6d6d4a02d",
+                "id": "a79e3afe-e8f9-5e56-a131-bb1b346df471"
+            },
+            "rule_text": "rule MAL_Sharpshooter_Excel4\n{\n\tmeta:\n\t\tdescription = \"Detects Excel documents weaponized with Sharpshooter\"\n\t\tauthor = \"John Lambert, Florian Roth\"\n\t\treference = \"https://github.com/mdsecactivebreach/SharpShooter\"\n\t\treference2 = \"https://outflank.nl/blog/2018/10/06/old-school-evil-excel-4-0-macros-xlm/\"\n\t\treference3 = \"https://gist.github.com/JohnLaTwC/efab89650d6fcbb37a4221e4c282614c\"\n\t\treference4 = \"https://docs.microsoft.com/en-us/openspecs/office_file_formats/ms-xls/00b5dd7d-51ca-4938-b7b7-483fe0e5933b\"\n\t\tdate = \"2020-03-27\"\n\t\tscore = 70\n\t\thash = \"ccef64586d25ffcb2b28affc1f64319b936175c4911e7841a0e28ee6d6d4a02d\"\n\t\tid = \"a79e3afe-e8f9-5e56-a131-bb1b346df471\"\n\n\tstrings:\n\t\t$header_docf = { D0 CF 11 E0 }\n\t\t$s1 = \"Excel 4.0 Macros\"\n\t\t$f1 = \"CreateThread\" ascii fullword\n\t\t$f2 = \"WriteProcessMemory\" ascii fullword\n\t\t$f3 = \"Kernel32\" ascii fullword\n\t\t$concat = { 00 41 6f 00 08 1e ?? 00 41 6f 00 08 1e ?? 00 41 6f 00 08}\n\n\tcondition:\n\t\tfilesize < 1000KB and $header_docf at 0 and #concat > 10 and $s1 and 2 of ( $f* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_Excel4Macro_AutoOpen",
+                "tags": [],
+                "description": "Detects Excel4 macro use with auto open / close",
+                "author": "John Lambert @JohnLaTwC",
+                "date": "2020-03-26",
+                "score": 50,
+                "hash": "2fb198f6ad33d0f26fb94a1aa159fef7296e0421da68887b8f2548bbd227e58f",
+                "id": "cfed97fe-b330-5528-8402-08c6ba6af04a"
+            },
+            "rule_text": "rule SUSP_Excel4Macro_AutoOpen\n{\n\tmeta:\n\t\tdescription = \"Detects Excel4 macro use with auto open / close\"\n\t\tauthor = \"John Lambert @JohnLaTwC\"\n\t\tdate = \"2020-03-26\"\n\t\tscore = 50\n\t\thash = \"2fb198f6ad33d0f26fb94a1aa159fef7296e0421da68887b8f2548bbd227e58f\"\n\t\tid = \"cfed97fe-b330-5528-8402-08c6ba6af04a\"\n\n\tstrings:\n\t\t$header_docf = { D0 CF 11 E0 }\n\t\t$s1 = \"Excel\" fullword\n\t\t$Auto_Open = {18 00 17 00 20 00 00 01 07 00 00 00 00 00 00 00 00 00 00 01 3a }\n\t\t$Auto_Close = {18 00 17 00 20 00 00 01 07 00 00 00 00 00 00 00 00 00 00 02 3a }\n\t\t$Auto_Open1 = {18 00 17 00 aa 03 00 01 07 00 00 00 00 00 00 00 00 00 00 01 3a }\n\t\t$Auto_Close1 = {18 00 17 00 aa 03 00 01 07 00 00 00 00 00 00 00 00 00 00 02 3a }\n\n\tcondition:\n\t\tfilesize < 3000KB and $header_docf at 0 and $s1 and any of ( $Auto_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

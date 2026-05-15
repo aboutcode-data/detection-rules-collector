@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/U-W/wmiexec.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "wmiexec",
+                "tags": [],
+                "description": "Detection patterns for the tool 'wmiexec' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "wmiexec",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule wmiexec\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'wmiexec' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"wmiexec\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\>\\s\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\__16.{0,1000}\\s2\\>\\&1/ nocase ascii wide\n\t\t$string2 = /\\s\\>\\s\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\__17.{0,1000}\\s2\\>\\&1/ nocase ascii wide\n\t\t$string3 = \"/wmiexec/\" nocase ascii wide\n\t\t$string4 = /cmd\\.exe\\s\\/Q\\s\\/c\\s.{0,1000}\\.bat\\s.{0,1000}\\>\\s\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\.{0,1000}\\s2\\&/ nocase ascii wide\n\t\t$string5 = /cmd\\.exe\\s\\/Q\\s\\/c\\s\\/start\\s\\/min\\spowershell\\.exe\\s\\-nop\\s\\-c/ nocase ascii wide\n\t\t$string6 = /cmd\\.exe\\s\\/Q\\s\\/c\\shostname1\\>\\s.{0,1000}\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\.{0,1000}\\s2\\>/ nocase ascii wide\n\t\t$string7 = /cmd\\.exe\\s\\/Q\\s\\/c\\snslookup\\s1\\>\\s.{0,1000}\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\.{0,1000}\\s2\\>/ nocase ascii wide\n\t\t$string8 = /cmd\\.exe\\s\\/Q\\s\\/c\\spowershell\\.exe\\s\\-nop\\s\\-w\\s\\-hidden\\s\\-c.{0,1000}IEX/ nocase ascii wide\n\t\t$string9 = /cmd\\.exe\\s\\/Q\\s\\/c\\spowershelll\\.exe\\s1\\>\\s.{0,1000}\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\.{0,1000}\\s2\\>/ nocase ascii wide\n\t\t$string10 = /cmd\\.exe\\s\\/Q\\s\\/c\\squser\\s1\\s\\>\\s\\\\\\\\127\\.0\\.0\\.1\\\\ADMIN\\$\\\\/ nocase ascii wide\n\t\t$string11 = /wmiexec\\.exe\\s\\-hashes\\s/ nocase ascii wide\n\t\t$string12 = /wmiexec\\.exe\\\\\"\\s\\-hashes\\s/ nocase ascii wide\n\t\t$string13 = /WMIExec\\.git/ nocase ascii wide\n\t\t$string14 = /wmiexec_scheduledjob\\.py/ nocase ascii wide\n\t\t$string15 = /wmiexec_win32process\\.py/ nocase ascii wide\n\t\t$string16 = \"WMIExec-main\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

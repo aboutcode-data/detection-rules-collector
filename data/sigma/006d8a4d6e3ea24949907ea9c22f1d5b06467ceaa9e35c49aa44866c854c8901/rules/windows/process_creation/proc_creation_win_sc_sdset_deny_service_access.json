@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_sdset_deny_service_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jonhnathan Ribeiro, oscd.community",
+                "date": "2020-10-16",
+                "title": "Deny Service Access Using Security Descriptor Tampering Via Sc.EXE",
+                "id": "99cf1e02-00fb-4c0d-8375-563f978dfd37"
+            },
+            "rule_text": "title: Deny Service Access Using Security Descriptor Tampering Via Sc.EXE\nid: 99cf1e02-00fb-4c0d-8375-563f978dfd37\nrelated:\n- id: 98c5aeef-32d5-492f-b174-64a691896d25\n  type: similar\n- id: a537cfc3-4297-4789-92b5-345bfd845ad0\n  type: similar\nstatus: test\ndescription: Detects suspicious DACL modifications to deny access to a service that\n  affects critical trustees. This can be used to hide services or make them unstoppable.\nreferences:\n- https://www.sans.org/blog/red-team-tactics-hiding-windows-services/\n- https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/\n- https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings\nauthor: Jonhnathan Ribeiro, oscd.community\ndate: 2020-10-16\nmodified: 2023-02-28\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1543.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sc:\n  - Image|endswith: \\sc.exe\n  - OriginalFileName: sc.exe\n  selection_sdset:\n    CommandLine|contains|all:\n    - sdset\n    - D;\n  selection_trustee:\n    CommandLine|contains:\n    - ;IU\n    - ;SU\n    - ;BA\n    - ;SY\n    - ;WD\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

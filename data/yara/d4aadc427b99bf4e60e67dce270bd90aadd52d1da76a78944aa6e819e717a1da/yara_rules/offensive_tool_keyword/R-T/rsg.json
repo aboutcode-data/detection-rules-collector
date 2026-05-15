@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/R-T/rsg.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "rsg",
+                "tags": [],
+                "description": "Detection patterns for the tool 'rsg' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "rsg",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule rsg\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'rsg' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"rsg\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \" nc -n -v -l -s \"\n\t\t$string2 = /\\s\\-NoP\\s\\-NonI\\s\\-W\\sHidden\\s\\-Exec\\sBypass\\s\\-Command\\sNew\\-Object\\sSystem\\.Net\\.Sockets\\./ nocase ascii wide\n\t\t$string3 = /\\s\\-NoP\\s\\-NonI\\s\\-W\\sHidden\\s\\-Exec\\sBypass\\s\\-Command\\sNew\\-Object\\sSystem\\.Net\\.Sockets\\.TCPClient/ nocase ascii wide\n\t\t$string4 = \"/bin/sh -i <&3 >&3 2>&3\"\n\t\t$string5 = \"/usr/local/bin/rsg\"\n\t\t$string6 = \"64cd8640e2b53358f8fbafbcbded6db53e1acd49fe4ccc8196c8ed17c551bc70\" nocase ascii wide\n\t\t$string7 = \"b3804cac36175125199ddd8f6840749ead5c723d9641670d244d0a487fcf555c\" nocase ascii wide\n\t\t$string8 = \"ebdac49d15f37cc60cb5e755b10743512ececf134126e0ac4a024cb1149ae76f\" nocase ascii wide\n\t\t$string9 = /mthbernardes.{0,1000}rsg/ nocase ascii wide\n\t\t$string10 = \"mthbernardes/rsg\" nocase ascii wide\n\t\t$string11 = \"nc -c /bin/sh \"\n\t\t$string12 = /php\\s\\-r\\s.{0,1000}fsockopen.{0,1000}exec\\(.{0,1000}\\/bin\\/sh/\n\t\t$string13 = /powershell\\s\\-nop\\s\\-c\\s\\\\\"\\\\\"\\$client\\s\\=\\sNew\\-Object\\sSystem\\.Net\\.Sockets\\.TCPClient/ nocase ascii wide\n\t\t$string14 = /ruby\\s\\-rsocket\\s\\-e\\s\\'.{0,1000}\\=TCPSocket\\.new\\(/ nocase ascii wide\n\t\t$string15 = /socat\\.exe\\s\\-d\\s\\-d\\sTCP4\\:/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

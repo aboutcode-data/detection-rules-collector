@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_explorer_child_of_shell_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Furkan CALISKAN, @caliskanfurkan_, @oscd_initiative",
+                "date": "2020-10-05",
+                "title": "Potential Proxy Execution Via Explorer.EXE From Shell Process",
+                "id": "9eb271b9-24ae-4cd4-9465-19cfc1047f3e"
+            },
+            "rule_text": "title: Potential Proxy Execution Via Explorer.EXE From Shell Process\nid: 9eb271b9-24ae-4cd4-9465-19cfc1047f3e\nstatus: test\ndescription: 'Detects the creation of a child \"explorer.exe\" process from a shell\n  like process such as \"cmd.exe\" or \"powershell.exe\".\n\n  Attackers can use \"explorer.exe\" for evading defense mechanisms by proxying the\n  execution through the latter.\n\n  While this is often a legitimate action, this rule can be use to hunt for anomalies.\n\n  Muddy Waters threat actor was seeing using this technique.\n\n  '\nreferences:\n- https://twitter.com/CyberRaiju/status/1273597319322058752\n- https://app.any.run/tasks/9a8fd563-4c54-4d0a-9ad8-1fe08339cbc3/\nauthor: Furkan CALISKAN, @caliskanfurkan_, @oscd_initiative\ndate: 2020-10-05\nmodified: 2024-06-21\ntags:\n- attack.stealth\n- attack.t1218\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    Image|endswith: \\explorer.exe\n    CommandLine|contains: explorer.exe\n  condition: selection\nfalsepositives:\n- Legitimate explorer.exe run from a shell host like \"cmd.exe\" or \"powershell.exe\"\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

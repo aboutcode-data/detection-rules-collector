@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/identity/okta/okta_user_session_start_via_anonymised_proxy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "kelnage",
+                "date": "2023-09-07",
+                "title": "Okta User Session Start Via An Anonymising Proxy Service",
+                "id": "bde30855-5c53-4c18-ae90-1ff79ebc9578"
+            },
+            "rule_text": "title: Okta User Session Start Via An Anonymising Proxy Service\nid: bde30855-5c53-4c18-ae90-1ff79ebc9578\nstatus: test\ndescription: Detects when an Okta user session starts where the user is behind an\n  anonymising proxy service.\nreferences:\n- https://developer.okta.com/docs/reference/api/system-log/\n- https://sec.okta.com/articles/2023/08/cross-tenant-impersonation-prevention-and-detection\nauthor: kelnage\ndate: 2023-09-07\nmodified: 2026-04-27\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: okta\n  service: okta\ndetection:\n  selection:\n    eventType: user.session.start\n    securityContext.isProxy: 'true'\n  condition: selection\nfalsepositives:\n- If a user requires an anonymising proxy due to valid justifications.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/signin_logs/azure_app_device_code_authentication.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Bailey Bercik '@baileybercik'",
+                "date": "2022-06-01",
+                "title": "Application Using Device Code Authentication Flow",
+                "id": "248649b7-d64f-46f0-9fb2-a52774166fb5"
+            },
+            "rule_text": "title: Application Using Device Code Authentication Flow\nid: 248649b7-d64f-46f0-9fb2-a52774166fb5\nstatus: test\ndescription: 'Device code flow is an OAuth 2.0 protocol flow specifically for input\n  constrained devices and is not used in all environments.\n\n  If this type of flow is seen in the environment and not being used in an input constrained\n  device scenario, further investigation is warranted.\n\n  This can be a misconfigured application or potentially something malicious.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications#application-authentication-flows\nauthor: Mark Morowczynski '@markmorow', Bailey Bercik '@baileybercik'\ndate: 2022-06-01\ntags:\n- attack.stealth\n- attack.t1078\n- attack.persistence\n- attack.privilege-escalation\n- attack.initial-access\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    properties.message: Device Code\n  condition: selection\nfalsepositives:\n- Applications that are input constrained will need to use device code flow and are\n  valid authentications.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

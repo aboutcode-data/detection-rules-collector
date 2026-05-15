@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_tap_driver_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, Ian Davis, oscd.community",
+                "date": "2019-10-24",
+                "title": "Tap Driver Installation - Security",
+                "id": "9c8afa4d-0022-48f0-9456-3712466f9701"
+            },
+            "rule_text": "title: Tap Driver Installation - Security\nid: 9c8afa4d-0022-48f0-9456-3712466f9701\nrelated:\n- id: 8e4cf0e5-aa5d-4dc3-beff-dc26917744a9\n  type: derived\nstatus: test\ndescription: 'Detects the installation of a well-known TAP driver service. This could\n  be a sign of potential preparation for data exfiltration using tunnelling techniques.\n\n  '\nreferences:\n- https://community.openvpn.net/openvpn/wiki/ManagingWindowsTAPDrivers\nauthor: Daniil Yugoslavskiy, Ian Davis, oscd.community\ndate: 2019-10-24\nmodified: 2022-11-29\ntags:\n- attack.exfiltration\n- attack.t1048\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: The System Security Extension audit subcategory need\n    to be enabled to log the EID 4697'\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|contains: tap0901\n  condition: selection\nfalsepositives:\n- Legitimate OpenVPN TAP installation\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

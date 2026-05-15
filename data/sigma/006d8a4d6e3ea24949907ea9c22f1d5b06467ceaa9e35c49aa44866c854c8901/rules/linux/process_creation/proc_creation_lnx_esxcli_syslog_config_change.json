@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_esxcli_syslog_config_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Cedric Maurugeon",
+                "date": "2023-09-04",
+                "title": "ESXi Syslog Configuration Change Via ESXCLI",
+                "id": "38eb1dbb-011f-40b1-a126-cf03a0210563"
+            },
+            "rule_text": "title: ESXi Syslog Configuration Change Via ESXCLI\nid: 38eb1dbb-011f-40b1-a126-cf03a0210563\nstatus: test\ndescription: Detects changes to the ESXi syslog configuration via \"esxcli\"\nreferences:\n- https://support.solarwinds.com/SuccessCenter/s/article/Configure-ESXi-Syslog-to-LEM?language=en_US\n- https://developer.broadcom.com/xapis/esxcli-command-reference/7.0.0/namespace/esxcli_system.html\nauthor: Cedric Maurugeon\ndate: 2023-09-04\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1685\n- attack.t1690\n- attack.t1059.012\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /esxcli\n    CommandLine|contains|all:\n    - system\n    - syslog\n    - config\n    CommandLine|contains: ' set'\n  condition: selection\nfalsepositives:\n- Legitimate administrative activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

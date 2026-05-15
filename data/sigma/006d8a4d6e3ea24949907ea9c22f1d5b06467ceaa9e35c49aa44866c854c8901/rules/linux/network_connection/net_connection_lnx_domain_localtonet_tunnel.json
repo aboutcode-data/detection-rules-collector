@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/network_connection/net_connection_lnx_domain_localtonet_tunnel.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Braathen (mnemonic.io)",
+                "date": "2024-06-17",
+                "title": "Communication To LocaltoNet Tunneling Service Initiated - Linux",
+                "id": "c4568f5d-131f-4e78-83d4-45b2da0ec4f1"
+            },
+            "rule_text": "title: Communication To LocaltoNet Tunneling Service Initiated - Linux\nid: c4568f5d-131f-4e78-83d4-45b2da0ec4f1\nstatus: test\ndescription: 'Detects an executable initiating a network connection to \"LocaltoNet\"\n  tunneling sub-domains.\n\n  LocaltoNet is a reverse proxy that enables localhost services to be exposed to the\n  Internet.\n\n  Attackers have been seen to use this service for command-and-control activities\n  to bypass MFA and perimeter controls.\n\n  '\nreferences:\n- https://localtonet.com/documents/supported-tunnels\n- https://cloud.google.com/blog/topics/threat-intelligence/unc3944-targets-saas-applications\nauthor: Andreas Braathen (mnemonic.io)\ndate: 2024-06-17\ntags:\n- attack.command-and-control\n- attack.t1572\n- attack.t1090\n- attack.t1102\nlogsource:\n  category: network_connection\n  product: linux\ndetection:\n  selection:\n    DestinationHostname|endswith:\n    - .localto.net\n    - .localtonet.com\n    Initiated: 'true'\n  condition: selection\nfalsepositives:\n- Legitimate use of the LocaltoNet service.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_hide_scheduled_task_via_index_tamper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-26",
+                "title": "Hide Schedule Task Via Index Value Tamper",
+                "id": "5b16df71-8615-4f7f-ac9b-6c43c0509e61"
+            },
+            "rule_text": "title: Hide Schedule Task Via Index Value Tamper\nid: 5b16df71-8615-4f7f-ac9b-6c43c0509e61\nrelated:\n- id: acd74772-5f88-45c7-956b-6a7b36c294d2\n  type: similar\n- id: 526cc8bc-1cdc-48ad-8b26-f19bff969cec\n  type: similar\nstatus: test\ndescription: 'Detects when the \"index\" value of a scheduled task is modified from\n  the registry\n\n  Which effectively hides it from any tooling such as \"schtasks /query\" (Read the\n  referenced link for more information about the effects of this technique)\n\n  '\nreferences:\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/06/20/defending-against-scheduled-task-attacks-in-windows-environments\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-26\nmodified: 2023-08-17\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\TaskCache\\Tree\\\n    - Index\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/Injector/VirTool_Win32_Injector_EY.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_Injector_EY",
+                "tags": [],
+                "description": "VirTool:Win32/Injector.EY,SIGNATURE_TYPE_PEHSTR_EXT,64 00 02 00 06 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_Injector_EY\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/Injector.EY,SIGNATURE_TYPE_PEHSTR_EXT,64 00 02 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {75 d8 8b f1 83 c2 02 83 c2 14 8b c2 8b 16 85 d2 7c 10 }\n\t\t$a_01_1 = {75 dc 8b f1 03 07 83 c0 02 83 c0 14 8b 16 85 d2 7c 10 }\n\t\t$a_01_2 = {e8 00 00 00 00 58 89 45 f4 c6 45 87 42 c6 45 88 21 c6 45 89 33 }\n\t\t$a_03_3 = {8b 40 18 89 45 fc c6 45 ?? 47 c6 45 ?? 50 c6 45 ?? 41 33 c0 }\n\t\t$a_03_4 = {8a 0f 3a 4d ?? 75 ?? 8a 4f 03 3a 4d ?? 75 ?? 8a 4f 07 3a 4d ?? 75 }\n\t\t$a_03_5 = {c6 06 50 c6 46 01 24 c6 46 02 78 e8 ?? 00 00 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

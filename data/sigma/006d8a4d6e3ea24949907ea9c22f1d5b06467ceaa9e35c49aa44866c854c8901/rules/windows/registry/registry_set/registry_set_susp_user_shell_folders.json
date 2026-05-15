@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_susp_user_shell_folders.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2022-10-01",
+                "title": "Modify User Shell Folders Startup Value",
+                "id": "9c226817-8dc9-46c2-a58d-66655aafd7dc"
+            },
+            "rule_text": "title: Modify User Shell Folders Startup Value\nid: 9c226817-8dc9-46c2-a58d-66655aafd7dc\nrelated:\n- id: 8f3ab69a-aa22-4943-aa58-e0a52fdf6818\n  type: similar\nstatus: test\ndescription: 'Detect modification of the User Shell Folders registry values for Startup\n  or Common Startup which could indicate persistence attempts.\n\n  Attackers may modify User Shell Folders registry keys to point to malicious executables\n  or scripts that will be executed during startup.\n\n  This technique is often used to maintain persistence on a compromised system by\n  ensuring that the malicious payload is executed automatically.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/9e5b12c4912c07562aec7500447b11fa3e17e254/atomics/T1547.001/T1547.001.md\n- https://www.welivesecurity.com/en/eset-research/muddywater-snakes-riverbank/\nauthor: frack113, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2022-10-01\nmodified: 2026-01-05\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1547.001\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains:\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\n    TargetObject|endswith:\n    - \\Common Startup\n    - \\Startup\n  filter_main_details_null:\n    Details: null\n  filter_main_programdata_startup:\n    Details|contains:\n    - C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\n    - '%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'\n  filter_main_userprofile_startup_1:\n    Details|contains:\n    - '%USERPROFILE%\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'\n    - '%%USERPROFILE%%\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'\n  filter_main_userprofile_startup_2:\n    Details|contains|all:\n    - C:\\Users\\\n    - \\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_susp_user_shell_folders/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Change Startup Folder - HKLM Modify User Shell Folders Common Startup Value\n  technique: T1547.001\n  atomic_guid: acfef903-7662-447e-a391-9c91c2f00f7b\n",
+            "vulnerabilities": []
+        }
+    ]
+}

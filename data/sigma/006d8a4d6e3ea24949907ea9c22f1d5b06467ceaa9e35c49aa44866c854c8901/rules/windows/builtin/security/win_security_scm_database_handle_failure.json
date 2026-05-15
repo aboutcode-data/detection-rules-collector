@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_scm_database_handle_failure.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-08-12",
+                "title": "SCM Database Handle Failure",
+                "id": "13addce7-47b2-4ca0-a98f-1de964d1d669"
+            },
+            "rule_text": "title: SCM Database Handle Failure\nid: 13addce7-47b2-4ca0-a98f-1de964d1d669\nstatus: test\ndescription: Detects non-system users failing to get a handle of the SCM database.\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190826-RemoteSCMHandle/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-08-12\nmodified: 2022-07-11\ntags:\n- attack.discovery\n- attack.t1010\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4656\n    ObjectType: SC_MANAGER OBJECT\n    ObjectName: ServicesActive\n    AccessMask: '0xf003f'\n  filter:\n    SubjectLogonId: '0x3e4'\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

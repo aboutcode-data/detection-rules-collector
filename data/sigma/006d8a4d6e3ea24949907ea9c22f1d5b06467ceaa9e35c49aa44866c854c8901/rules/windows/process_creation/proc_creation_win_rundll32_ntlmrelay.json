@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_ntlmrelay.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Elastic (idea), Tobias Michalski (Nextron Systems)",
+                "date": "2022-05-04",
+                "title": "Suspicious NTLM Authentication on the Printer Spooler Service",
+                "id": "bb76d96b-821c-47cf-944b-7ce377864492"
+            },
+            "rule_text": "title: Suspicious NTLM Authentication on the Printer Spooler Service\nid: bb76d96b-821c-47cf-944b-7ce377864492\nstatus: test\ndescription: Detects a privilege elevation attempt by coercing NTLM authentication\n  on the Printer Spooler service\nreferences:\n- https://twitter.com/med0x2e/status/1520402518685200384\n- https://github.com/elastic/detection-rules/blob/dd224fb3f81d0b4bf8593c5f02a029d647ba2b2d/rules/windows/credential_access_relay_ntlm_auth_via_http_spoolss.toml\nauthor: Elastic (idea), Tobias Michalski (Nextron Systems)\ndate: 2022-05-04\nmodified: 2023-02-09\ntags:\n- attack.privilege-escalation\n- attack.credential-access\n- attack.t1212\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains|all:\n    - C:\\windows\\system32\\davclnt.dll,DavSetCookie\n    - http\n    CommandLine|contains:\n    - spoolss\n    - srvsvc\n    - /print/pipe/\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_netsupport_susp_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-19",
+                "title": "Remote Access Tool - NetSupport Execution From Unusual Location",
+                "id": "37e8d358-6408-4853-82f4-98333fca7014"
+            },
+            "rule_text": "title: Remote Access Tool - NetSupport Execution From Unusual Location\nid: 37e8d358-6408-4853-82f4-98333fca7014\nstatus: test\ndescription: Detects execution of client32.exe (NetSupport RAT) from an unusual location\n  (outside of 'C:\\Program Files')\nreferences:\n- https://redcanary.com/blog/misbehaving-rats/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-19\nmodified: 2024-11-23\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\client32.exe\n  - Product|contains: NetSupport Remote Control\n  - OriginalFileName|contains: client32.exe\n  - Hashes|contains: IMPHASH=a9d50692e95b79723f3e76fcf70d023e\n  filter:\n    Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

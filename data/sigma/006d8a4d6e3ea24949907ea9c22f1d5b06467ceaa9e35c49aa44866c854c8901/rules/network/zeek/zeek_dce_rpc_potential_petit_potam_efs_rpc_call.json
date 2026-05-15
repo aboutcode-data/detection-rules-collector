@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_dce_rpc_potential_petit_potam_efs_rpc_call.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron, @Antonlovesdnb, Mike Remen",
+                "date": "2021-08-17",
+                "title": "Potential PetitPotam Attack Via EFS RPC Calls",
+                "id": "4096842a-8f9f-4d36-92b4-d0b2a62f9b2a"
+            },
+            "rule_text": "title: Potential PetitPotam Attack Via EFS RPC Calls\nid: 4096842a-8f9f-4d36-92b4-d0b2a62f9b2a\nstatus: test\ndescription: \"Detects usage of the windows RPC library Encrypting File System Remote\\\n  \\ Protocol (MS-EFSRPC). Variations of this RPC are used within the attack refereed\\\n  \\ to as PetitPotam.\\nThe usage of this RPC function should be rare if ever used\\\n  \\ at all.\\nThus usage of this function is uncommon enough that any usage of this\\\n  \\ RPC function should warrant further investigation to determine if it is legitimate.\\n\\\n  \\ View surrounding logs (within a few minutes before and after) from the Source\\\n  \\ IP to. Logs from from the Source IP would include dce_rpc, smb_mapping, smb_files,\\\n  \\ rdp, ntlm, kerberos, etc..'\\n\"\nreferences:\n- https://github.com/topotam/PetitPotam/blob/d83ac8f2dd34654628c17490f99106eb128e7d1e/PetitPotam/PetitPotam.cpp\n- https://msrc.microsoft.com/update-guide/vulnerability/ADV210003\n- https://vx-underground.org/archive/Symantec/windows-vista-network-attack-07-en.pdf\n- https://threatpost.com/microsoft-petitpotam-poc/168163/\nauthor: '@neu5ron, @Antonlovesdnb, Mike Remen'\ndate: 2021-08-17\nmodified: 2022-11-28\ntags:\n- attack.collection\n- attack.credential-access\n- attack.t1557.001\n- attack.t1187\nlogsource:\n  product: zeek\n  service: dce_rpc\ndetection:\n  selection:\n    operation|startswith: efs\n  condition: selection\nfalsepositives:\n- Uncommon but legitimate windows administrator or software tasks that make use of\n  the Encrypting File System RPC Calls. Verify if this is common activity (see description).\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

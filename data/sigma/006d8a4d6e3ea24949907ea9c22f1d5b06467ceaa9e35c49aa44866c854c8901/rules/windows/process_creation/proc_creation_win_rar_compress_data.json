@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rar_compress_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, E.M. Anhaus, oscd.community",
+                "date": "2019-10-21",
+                "title": "Files Added To An Archive Using Rar.EXE",
+                "id": "6f3e2987-db24-4c78-a860-b4f4095a7095"
+            },
+            "rule_text": "title: Files Added To An Archive Using Rar.EXE\nid: 6f3e2987-db24-4c78-a860-b4f4095a7095\nstatus: test\ndescription: Detects usage of \"rar\" to add files to an archive for potential compression.\n  An adversary may compress data (e.g. sensitive documents) that is collected prior\n  to exfiltration in order to make it portable and minimize the amount of data sent\n  over the network.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1560.001/T1560.001.md\n- https://eqllib.readthedocs.io/en/latest/analytics/1ec33c93-3d0b-4a28-8014-dbdaae5c60ae.html\nauthor: Timur Zinniatullin, E.M. Anhaus, oscd.community\ndate: 2019-10-21\nmodified: 2023-02-05\ntags:\n- attack.collection\n- attack.t1560.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rar.exe\n    CommandLine|contains: ' a '\n  condition: selection\nfalsepositives:\n- Highly likely if rar is a default archiver in the monitored environment.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

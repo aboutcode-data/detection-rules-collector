@@ -1,0 +1,275 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/thor_inverse_matches.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WINDOWS_UPDATE_BDC",
+                "tags": []
+            },
+            "rule_text": "private rule WINDOWS_UPDATE_BDC\n{\n\tcondition:\n\t\t( uint32be( 0 ) == 0x44434d01 and uint32be( 4 ) == 0x50413330 ) or ( uint32be( 0 ) == 0x44434401 and uint32be( 12 ) == 0x50413330 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "iexplore_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal iexplore.exe - typical strings not found in file",
+                "date": "23/04/2014",
+                "score": 55
+            },
+            "rule_text": "rule iexplore_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal iexplore.exe - typical strings not found in file\"\n\t\tdate = \"23/04/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$win2003_win7_u1 = \"IEXPLORE.EXE\" wide nocase\n\t\t$win2003_win7_u2 = \"Internet Explorer\" wide fullword\n\t\t$win2003_win7_u3 = \"translation\" wide fullword nocase\n\t\t$win2003_win7_u4 = \"varfileinfo\" wide fullword nocase\n\n\tcondition:\n\t\tfilename== \"iexplore.exe\" and not filepath contains \"teamviewer\" and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "svchost_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal svchost.exe - typical strings not found in file",
+                "date": "23/04/2014",
+                "score": 55
+            },
+            "rule_text": "rule svchost_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal svchost.exe - typical strings not found in file\"\n\t\tdate = \"23/04/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$win2003_win7_u1 = \"svchost.exe\" wide nocase\n\t\t$win2003_win7_u3 = \"coinitializesecurityparam\" wide fullword nocase\n\t\t$win2003_win7_u4 = \"servicedllunloadonstop\" wide fullword nocase\n\t\t$win2000 = \"Generic Host Process for Win32 Services\" wide fullword\n\t\t$win2012 = \"Host Process for Windows Services\" wide fullword\n\n\tcondition:\n\t\tfilename== \"svchost.exe\" and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "explorer_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal explorer.exe - typical strings not found in file",
+                "date": "27/05/2014",
+                "score": 55
+            },
+            "rule_text": "rule explorer_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal explorer.exe - typical strings not found in file\"\n\t\tdate = \"27/05/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$s1 = \"EXPLORER.EXE\" wide fullword\n\t\t$s2 = \"Windows Explorer\" wide fullword\n\n\tcondition:\n\t\tfilename== \"explorer.exe\" and not filepath contains \"teamviewer\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "sethc_ANOMALY",
+                "tags": [],
+                "description": "Sethc.exe has been replaced - Indicates Remote Access Hack RDP",
+                "author": "F. Roth",
+                "reference": "http://www.emc.com/collateral/white-papers/h12756-wp-shell-crew.pdf",
+                "date": "2014/01/23",
+                "score": 70
+            },
+            "rule_text": "rule sethc_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Sethc.exe has been replaced - Indicates Remote Access Hack RDP\"\n\t\tauthor = \"F. Roth\"\n\t\treference = \"http://www.emc.com/collateral/white-papers/h12756-wp-shell-crew.pdf\"\n\t\tdate = \"2014/01/23\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$s1 = \"stickykeys\" fullword nocase\n\t\t$s2 = \"stickykeys\" wide nocase\n\t\t$s3 = \"Control_RunDLL access.cpl\" wide fullword\n\t\t$s4 = \"SETHC.EXE\" wide fullword\n\n\tcondition:\n\t\tfilename== \"sethc.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Utilman_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal utilman.exe - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 70
+            },
+            "rule_text": "rule Utilman_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal utilman.exe - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$win7 = \"utilman.exe\" wide fullword\n\t\t$win2000 = \"Start with Utility Manager\" fullword wide\n\t\t$win2012 = \"utilman2.exe\" fullword wide\n\n\tcondition:\n\t\t(filename == \"utilman.exe\" or filename == \"Utilman.exe\" ) and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "osk_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal osk.exe (On Screen Keyboard) - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55
+            },
+            "rule_text": "rule osk_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal osk.exe (On Screen Keyboard) - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$s1 = \"Accessibility On-Screen Keyboard\" wide fullword\n\t\t$s2 = \"\\\\oskmenu\" wide fullword\n\t\t$s3 = \"&About On-Screen Keyboard...\" wide fullword\n\t\t$s4 = \"Software\\\\Microsoft\\\\Osk\" wide\n\n\tcondition:\n\t\tfilename== \"osk.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "magnify_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal magnify.exe (Magnifier) - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55
+            },
+            "rule_text": "rule magnify_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal magnify.exe (Magnifier) - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$win7 = \"Microsoft Screen Magnifier\" wide fullword\n\t\t$win2000 = \"Microsoft Magnifier\" wide fullword\n\t\t$winxp = \"Software\\\\Microsoft\\\\Magnify\" wide\n\n\tcondition:\n\t\tfilename== \"magnify.exe\" and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "narrator_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal narrator.exe - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55
+            },
+            "rule_text": "rule narrator_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal narrator.exe - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$win7 = \"Microsoft-Windows-Narrator\" wide fullword\n\t\t$win2000 = \"&About Narrator...\" wide fullword\n\t\t$win2012 = \"Screen Reader\" wide fullword\n\t\t$winxp = \"Software\\\\Microsoft\\\\Narrator\"\n\t\t$winxp_en = \"SOFTWARE\\\\Microsoft\\\\Speech\\\\Voices\" wide\n\n\tcondition:\n\t\tfilename== \"narrator.exe\" and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "notepad_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth",
+                "description": "Abnormal notepad.exe - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55
+            },
+            "rule_text": "rule notepad_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdescription = \"Abnormal notepad.exe - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\n\tstrings:\n\t\t$win7 = \"HELP_ENTRY_ID_NOTEPAD_HELP\" wide fullword\n\t\t$win2000 = \"Do you want to create a new file?\" wide fullword\n\t\t$win2003 = \"Do you want to save the changes?\" wide\n\t\t$winxp = \"Software\\\\Microsoft\\\\Notepad\" wide\n\t\t$winxp_de = \"Software\\\\Microsoft\\\\Notepad\" wide\n\n\tcondition:\n\t\tfilename== \"notepad.exe\" and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "csrss_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file csrss.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "17542707a3d9fa13c569450fd978272ef7070a77"
+            },
+            "rule_text": "rule csrss_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file csrss.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"17542707a3d9fa13c569450fd978272ef7070a77\"\n\n\tstrings:\n\t\t$s1 = \"Client Server Runtime Process\" fullword wide\n\t\t$s4 = \"name=\\\"Microsoft.Windows.CSRSS\\\"\" fullword ascii\n\t\t$s5 = \"CSRSRV.dll\" fullword ascii\n\t\t$s6 = \"CsrServerInitialization\" fullword ascii\n\n\tcondition:\n\t\tfilename== \"csrss.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "conhost_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file conhost.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "1bd846aa22b1d63a1f900f6d08d8bfa8082ae4db"
+            },
+            "rule_text": "rule conhost_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file conhost.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"1bd846aa22b1d63a1f900f6d08d8bfa8082ae4db\"\n\n\tstrings:\n\t\t$s2 = \"Console Window Host\" fullword wide\n\n\tcondition:\n\t\tfilename== \"conhost.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "wininit_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file wininit.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "2de5c051c0d7d8bcc14b1ca46be8ab9756f29320"
+            },
+            "rule_text": "rule wininit_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file wininit.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"2de5c051c0d7d8bcc14b1ca46be8ab9756f29320\"\n\n\tstrings:\n\t\t$s1 = \"Windows Start-Up Application\" fullword wide\n\n\tcondition:\n\t\tfilename== \"wininit.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "winlogon_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file winlogon.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "af210c8748d77c2ff93966299d4cd49a8c722ef6"
+            },
+            "rule_text": "rule winlogon_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file winlogon.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"af210c8748d77c2ff93966299d4cd49a8c722ef6\"\n\n\tstrings:\n\t\t$s1 = \"AuthzAccessCheck failed\" fullword\n\t\t$s2 = \"Windows Logon Application\" fullword wide\n\n\tcondition:\n\t\tfilename== \"winlogon.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC and not filepath contains \"Malwarebytes\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SndVol_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file SndVol.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "e057c90b675a6da19596b0ac458c25d7440b7869"
+            },
+            "rule_text": "rule SndVol_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file SndVol.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"e057c90b675a6da19596b0ac458c25d7440b7869\"\n\n\tstrings:\n\t\t$s1 = \"Volume Control Applet\" fullword wide\n\n\tcondition:\n\t\tfilename== \"sndvol.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "doskey_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file doskey.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "f2d1995325df0f3ca6e7b11648aa368b7e8f1c7f"
+            },
+            "rule_text": "rule doskey_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file doskey.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"f2d1995325df0f3ca6e7b11648aa368b7e8f1c7f\"\n\n\tstrings:\n\t\t$s3 = \"Keyboard History Utility\" fullword wide\n\n\tcondition:\n\t\tfilename== \"doskey.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lsass_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file lsass.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "04abf92ac7571a25606edfd49dca1041c41bef21"
+            },
+            "rule_text": "rule lsass_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file lsass.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"04abf92ac7571a25606edfd49dca1041c41bef21\"\n\n\tstrings:\n\t\t$s1 = \"LSA Shell\" fullword wide\n\t\t$s2 = \"<description>Local Security Authority Process</description>\" fullword ascii\n\t\t$s3 = \"Local Security Authority Process\" fullword wide\n\t\t$s4 = \"LsapInitLsa\" fullword\n\n\tcondition:\n\t\tfilename== \"lsass.exe\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "taskmgr_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file taskmgr.exe",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "e8b4d84a28e5ea17272416ec45726964fdf25883"
+            },
+            "rule_text": "rule taskmgr_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file taskmgr.exe\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"e8b4d84a28e5ea17272416ec45726964fdf25883\"\n\n\tstrings:\n\t\t$s0 = \"Windows Task Manager\" fullword wide\n\t\t$s1 = \"taskmgr.chm\" fullword\n\t\t$s2 = \"TmEndTaskHandler::\" ascii\n\n\tcondition:\n\t\t(filename == \"taskmgr.exe\" or filename == \"Taskmgr.exe\" ) and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_PsExec",
+                "tags": [],
+                "description": "Looks like a cloaked PsExec. May be APT group activity.",
+                "date": "2014-07-18",
+                "author": "Florian Roth",
+                "score": 60
+            },
+            "rule_text": "rule APT_Cloaked_PsExec\n{\n\tmeta:\n\t\tdescription = \"Looks like a cloaked PsExec. May be APT group activity.\"\n\t\tdate = \"2014-07-18\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$s0 = \"psexesvc.exe\" wide fullword\n\t\t$s1 = \"Sysinternals PsExec\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $s0 and $s1 and not filename matches /^(psexec.exe|psexesvc.exe)$/is\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_SuperScan",
+                "tags": [],
+                "description": "Looks like a cloaked SuperScan Port Scanner. May be APT group activity.",
+                "date": "2014-07-18",
+                "author": "Florian Roth",
+                "score": 50
+            },
+            "rule_text": "rule APT_Cloaked_SuperScan\n{\n\tmeta:\n\t\tdescription = \"Looks like a cloaked SuperScan Port Scanner. May be APT group activity.\"\n\t\tdate = \"2014-07-18\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 50\n\n\tstrings:\n\t\t$magic = { 4d 5a }\n\t\t$s0 = \"SuperScan4.exe\" wide fullword\n\t\t$s1 = \"Foundstone Inc.\" wide fullword\n\n\tcondition:\n\t\t($magic at 0 ) and $s0 and $s1 and not filename contains \"superscan\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_ScanLine",
+                "tags": [],
+                "description": "Looks like a cloaked ScanLine Port Scanner. May be APT group activity.",
+                "date": "2014-07-18",
+                "author": "Florian Roth",
+                "score": 50
+            },
+            "rule_text": "rule APT_Cloaked_ScanLine\n{\n\tmeta:\n\t\tdescription = \"Looks like a cloaked ScanLine Port Scanner. May be APT group activity.\"\n\t\tdate = \"2014-07-18\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 50\n\n\tstrings:\n\t\t$magic = { 4d 5a }\n\t\t$s0 = \"ScanLine\" wide fullword\n\t\t$s1 = \"Command line port scanner\" wide fullword\n\t\t$s2 = \"sl.exe\" wide fullword\n\n\tcondition:\n\t\t($magic at 0 ) and $s0 and $s1 and $s2 and not filename == \"sl.exe\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SAM_Hive_Backup",
+                "tags": [],
+                "description": "Detects a SAM hive backup file",
+                "author": "Florian Roth",
+                "reference": "https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump",
+                "score": 60,
+                "date": "2015/03/31"
+            },
+            "rule_text": "rule SAM_Hive_Backup\n{\n\tmeta:\n\t\tdescription = \"Detects a SAM hive backup file\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump\"\n\t\tscore = 60\n\t\tdate = \"2015/03/31\"\n\n\tstrings:\n\t\t$s1 = \"\\\\SystemRoot\\\\System32\\\\Config\\\\SAM\" wide fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x66676572 and $s1 in ( 0 .. 100 ) and not filename contains \"sam.log\" and not filename contains \"SAM.LOG\" and not filename contains \"_sam\" and not filename == \"SAM\" and not filename == \"sam\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

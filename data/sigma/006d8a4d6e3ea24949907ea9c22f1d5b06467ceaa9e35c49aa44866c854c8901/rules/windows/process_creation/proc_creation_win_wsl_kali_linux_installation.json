@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wsl_kali_linux_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-10-10",
+                "title": "Installation of WSL Kali-Linux",
+                "id": "eca8ae39-5c3c-4321-b538-9e64fe25822e"
+            },
+            "rule_text": "title: Installation of WSL Kali-Linux\nid: eca8ae39-5c3c-4321-b538-9e64fe25822e\nstatus: experimental\ndescription: 'Detects installation of Kali Linux distribution through Windows Subsystem\n  for Linux (WSL).\n\n  Attackers may use Kali Linux WSL to leverage its penetration testing tools and capabilities\n  for malicious purposes.\n\n  '\nreferences:\n- https://medium.com/@redfanatic7/running-kali-linux-on-windows-51ad95166e6e\n- https://learn.microsoft.com/en-us/windows/wsl/install\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-10-10\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_wsl_img:\n  - Image|endswith: \\wsl.exe\n  - OriginalFileName: wsl\n  selection_wsl_install:\n    CommandLine|contains:\n    - ' --install '\n    - ' -i '\n  selection_wsl_kali:\n    CommandLine|contains: kali\n  condition: all of selection_wsl_*\nfalsepositives:\n- Legitimate installation or usage of Kali Linux WSL by administrators or security\n  teams\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

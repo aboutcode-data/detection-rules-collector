@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_dsrm_tampering.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nischal Khadgi",
+                "date": "2024-07-11",
+                "title": "Directory Service Restore Mode(DSRM) Registry Value Tampering",
+                "id": "b61e87c0-50db-4b2e-8986-6a2be94b33b0"
+            },
+            "rule_text": "title: Directory Service Restore Mode(DSRM) Registry Value Tampering\nid: b61e87c0-50db-4b2e-8986-6a2be94b33b0\nrelated:\n- id: 53ad8e36-f573-46bf-97e4-15ba5bf4bb51\n  type: similar\nstatus: test\ndescription: \"Detects changes to \\\"DsrmAdminLogonBehavior\\\" registry value.\\nDuring\\\n  \\ a Domain Controller (DC) promotion, administrators create a Directory Services\\\n  \\ Restore Mode (DSRM) local administrator account with a password that rarely changes.\\\n  \\ The DSRM account is an \\u201CAdministrator\\u201D account that logs in with the\\\n  \\ DSRM mode when the server is booting up to restore AD backups or recover the server\\\n  \\ from a failure.\\nAttackers could abuse DSRM account to maintain their persistence\\\n  \\ and access to the organization's Active Directory.\\nIf the \\\"DsrmAdminLogonBehavior\\\"\\\n  \\ value is set to \\\"0\\\", the administrator account can only be used if the DC starts\\\n  \\ in DSRM.\\nIf the \\\"DsrmAdminLogonBehavior\\\" value is set to \\\"1\\\", the administrator\\\n  \\ account can only be used if the local AD DS service is stopped.\\nIf the \\\"DsrmAdminLogonBehavior\\\"\\\n  \\ value is set to \\\"2\\\", the administrator account can always be used.\\n\"\nreferences:\n- https://adsecurity.org/?p=1785\n- https://www.sentinelone.com/blog/detecting-dsrm-account-misconfigurations/\n- https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/dsrm-credentials\nauthor: Nischal Khadgi\ndate: 2024-07-11\ntags:\n- attack.credential-access\n- attack.persistence\n- attack.defense-impairment\n- attack.t1556\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Control\\Lsa\\DsrmAdminLogonBehavior\n  filter_main_default_value:\n    Details: DWORD (0x00000000)\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_werfault_dll_hijacking.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-05-09",
+                "title": "Creation of WerFault.exe/Wer.dll in Unusual Folder",
+                "id": "28a452f3-786c-4fd8-b8f2-bddbe9d616d1"
+            },
+            "rule_text": "title: Creation of WerFault.exe/Wer.dll in Unusual Folder\nid: 28a452f3-786c-4fd8-b8f2-bddbe9d616d1\nstatus: test\ndescription: Detects the creation of a file named \"WerFault.exe\" or \"wer.dll\" in an\n  uncommon folder, which could be a sign of WerFault DLL hijacking.\nreferences:\n- https://www.bleepingcomputer.com/news/security/hackers-are-now-hiding-malware-in-windows-event-logs/\nauthor: frack113\ndate: 2022-05-09\nmodified: 2025-12-03\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\WerFault.exe\n    - \\wer.dll\n  filter_main_known_locations:\n    TargetFilename|startswith:\n    - C:\\Windows\\SoftwareDistribution\\\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n    - C:\\Windows\\UUS\\arm64\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_monsoon.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Monsoon_APT_Malware_1",
+                "tags": [],
+                "description": "Detects malware from Monsoon APT",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.fortinet.com/2017/04/05/in-depth-look-at-new-variant-of-monsoon-apt-backdoor-part-2",
+                "date": "2017-09-08",
+                "modified": "2023-01-06",
+                "hash1": "c9642f44d33e4c990066ce6fa0b0956ff5ace6534b64160004df31b9b690c9cd",
+                "id": "a543c46d-01fc-5276-a915-183263956455"
+            },
+            "rule_text": "import \"pe\"\n\nrule Monsoon_APT_Malware_1\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Monsoon APT\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.fortinet.com/2017/04/05/in-depth-look-at-new-variant-of-monsoon-apt-backdoor-part-2\"\n\t\tdate = \"2017-09-08\"\n\t\tmodified = \"2023-01-06\"\n\t\thash1 = \"c9642f44d33e4c990066ce6fa0b0956ff5ace6534b64160004df31b9b690c9cd\"\n\t\tid = \"a543c46d-01fc-5276-a915-183263956455\"\n\n\tstrings:\n\t\t$s1 = \"cmd.exe /c start \" fullword ascii\n\t\t$s2 = \"\\\\Microsoft\\\\Templates\\\\\" ascii\n\t\t$s3 = \"\\\\Microsoft\\\\Windows\\\\\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 300KB and ( pe.imphash ( ) == \"a0c824244f1d36ea1dd2759cf7599cd1\" or all of them ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Monsoon_APT_Malware_2",
+                "tags": [],
+                "description": "Detects malware from Monsoon APT",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://blog.fortinet.com/2017/04/05/in-depth-look-at-new-variant-of-monsoon-apt-backdoor-part-2",
+                "date": "2017-09-08",
+                "hash1": "17c3d0fe08e1184c9737144fa065f4530def30d6591e5414a36463609f9aa53a",
+                "hash2": "8e0574ebf3dc640ac82987ab6ee2a02fc3dd5eaf4f6b5275272ba887acd15ac0",
+                "hash3": "bf93ca5f497fc7f38533d37fd4c083523ececc34aa2d3660d81014c0d9091ae3",
+                "id": "dbbccf56-7e36-5c3a-b8d9-ee08d077f29f"
+            },
+            "rule_text": "rule Monsoon_APT_Malware_2\n{\n\tmeta:\n\t\tdescription = \"Detects malware from Monsoon APT\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://blog.fortinet.com/2017/04/05/in-depth-look-at-new-variant-of-monsoon-apt-backdoor-part-2\"\n\t\tdate = \"2017-09-08\"\n\t\thash1 = \"17c3d0fe08e1184c9737144fa065f4530def30d6591e5414a36463609f9aa53a\"\n\t\thash2 = \"8e0574ebf3dc640ac82987ab6ee2a02fc3dd5eaf4f6b5275272ba887acd15ac0\"\n\t\thash3 = \"bf93ca5f497fc7f38533d37fd4c083523ececc34aa2d3660d81014c0d9091ae3\"\n\t\tid = \"dbbccf56-7e36-5c3a-b8d9-ee08d077f29f\"\n\n\tstrings:\n\t\t$x1 = \"\\\\Microsoft\\\\Windows\\\\coco.exe\" ascii\n\t\t$x2 = \":\\\\System Volume Information\\\\config\" fullword ascii\n\t\t$x3 = \" cscript.[BACKSPA[PAGE DO[CAPS LO[PAGE UPTPX498.dTPX499.d\" fullword wide\n\t\t$s1 = \"\\\\Microsoft\\\\Templates\\\\msvcrt.dll\" ascii\n\t\t$s2 = \"%04d/%02d/%02d %02d:%02d:%02d - {%s}\" fullword wide\n\t\t$s3 = \"wininet.dll    \" fullword ascii\n\t\t$s4 = \"DMCZ0001.dat\" fullword ascii\n\t\t$s5 = \"TZ0000001.dat\" fullword ascii\n\t\t$s6 = \"\\\\MUT.dat\" ascii\n\t\t$s7 = \"ouemm/emm!!!!!!!!!!!!!\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 400KB and ( 1 of ( $x* ) or 3 of them ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

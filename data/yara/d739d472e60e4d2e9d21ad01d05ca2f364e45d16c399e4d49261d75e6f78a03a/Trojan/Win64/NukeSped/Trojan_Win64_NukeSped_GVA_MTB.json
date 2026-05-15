@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/NukeSped/Trojan_Win64_NukeSped_GVA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_NukeSped_GVA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/NukeSped.GVA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_NukeSped_GVA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/NukeSped.GVA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {49 3b df 77 28 48 8d 43 0f 48 3b c5 72 1f 48 8b c3 ba 10 00 00 00 0f 1f 44 00 00 0f b6 0c 07 30 08 48 8d 40 01 48 83 ea 01 }\n\t\t$a_02_1 = {5c 6d 69 63 72 6f 73 6f 66 74 20 73 68 61 72 65 64 5c 69 6e 6b [0-10] 2e 64 61 74 }\n\t\t$a_01_2 = {5c 64 69 6e 70 75 74 2e 64 6c 6c }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

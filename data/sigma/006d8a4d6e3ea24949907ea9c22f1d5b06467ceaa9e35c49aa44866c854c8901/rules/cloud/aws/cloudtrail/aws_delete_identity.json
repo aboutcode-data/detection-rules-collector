@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_delete_identity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Janantha Marasinghe",
+                "date": "2022-12-13",
+                "title": "SES Identity Has Been Deleted",
+                "id": "20f754db-d025-4a8f-9d74-e0037e999a9a"
+            },
+            "rule_text": "title: SES Identity Has Been Deleted\nid: 20f754db-d025-4a8f-9d74-e0037e999a9a\nstatus: test\ndescription: Detects an instance of an SES identity being deleted via the \"DeleteIdentity\"\n  event. This may be an indicator of an adversary removing the account that carried\n  out suspicious or malicious activities\nreferences:\n- https://unit42.paloaltonetworks.com/compromised-cloud-compute-credentials/\nauthor: Janantha Marasinghe\ndate: 2022-12-13\nmodified: 2022-12-28\ntags:\n- attack.stealth\n- attack.t1070\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: ses.amazonaws.com\n    eventName: DeleteIdentity\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

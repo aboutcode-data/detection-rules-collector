@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_access/file_access_win_susp_gpo_access_uncommon_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-12-21",
+                "title": "Access To Sysvol Policies Share By Uncommon Process",
+                "id": "8344c19f-a023-45ff-ad63-a01c5396aea0"
+            },
+            "rule_text": "title: Access To Sysvol Policies Share By Uncommon Process\nid: 8344c19f-a023-45ff-ad63-a01c5396aea0\nstatus: test\ndescription: Detects file access requests to the Windows Sysvol Policies Share by\n  uncommon processes\nreferences:\n- https://github.com/vletoux/pingcastle\nauthor: frack113\ndate: 2023-12-21\ntags:\n- attack.credential-access\n- attack.t1552.006\n- detection.threat-hunting\nlogsource:\n  category: file_access\n  product: windows\n  definition: 'Requirements: Microsoft-Windows-Kernel-File ETW provider'\ndetection:\n  selection:\n    FileName|startswith: \\\\\n    FileName|contains|all:\n    - \\sysvol\\\n    - \\Policies\\\n  filter_main_generic:\n    Image|contains:\n    - :\\Program Files (x86)\\\n    - :\\Program Files\\\n    - :\\Windows\\explorer.exe\n    - :\\Windows\\system32\\\n    - :\\Windows\\SysWOW64\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

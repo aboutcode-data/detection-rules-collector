@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/D-F/dsquery.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "dsquery",
+                "tags": [],
+                "description": "Detection patterns for the tool 'dsquery' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "dsquery",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule dsquery\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'dsquery' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"dsquery\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /dsquery\\s.{0,1000}\\s\\-filter\\s.{0,1000}\\(objectClass\\=trustedDomain\\).{0,1000}\\s\\-attr\\s/ nocase ascii wide\n\t\t$string2 = /\\-filter\\s.{0,1000}\\(\\&\\(objectCategory\\=person\\)\\(objectClass\\=user\\)\\(userAccountControl\\:1\\.2\\.840\\.113556\\.1\\.4\\.803\\:\\=32/ nocase ascii wide\n\t\t$string3 = /\\-filter\\s.{0,1000}\\(\\&\\(objectCategory\\=person\\)\\(objectClass\\=user\\)\\(userAccountControl\\:1\\.2\\.840\\.113556\\.1\\.4\\.803\\:\\=4194304/ nocase ascii wide\n\t\t$string4 = /\\-filter\\s.{0,1000}\\(\\&\\(objectClass\\=User\\)\\(msDS\\-AllowedToDelegateTo\\=/ nocase ascii wide\n\t\t$string5 = /\\-filter\\s.{0,1000}\\(\\&\\(objectClass\\=user\\)\\(servicePrincipalName\\=.{0,1000}\\)\\(\\!\\(cn\\=krbtgt\\)\\)\\(\\!\\(samaccounttype\\=805306369/ nocase ascii wide\n\t\t$string6 = /\\-filter\\s.{0,1000}\\(\\&\\(objectClass\\=User\\)\\(serviceprincipalname\\=.{0,1000}\\)\\(samaccountname\\=.{0,1000}\\s\\-limit\\s0\\s\\-attr\\ssamaccountname\\sserviceprincipalname/ nocase ascii wide\n\t\t$string7 = /\\-filter\\s.{0,1000}\\(userAccountControl\\:1\\.2\\.840\\.113556\\.1\\.4\\.803\\:\\=524288\\)/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

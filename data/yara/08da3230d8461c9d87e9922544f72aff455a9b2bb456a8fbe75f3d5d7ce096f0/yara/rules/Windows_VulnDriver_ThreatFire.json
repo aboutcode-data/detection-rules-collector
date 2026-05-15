@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_ThreatFire.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_ThreatFire_cbe7ac92",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "cbe7ac92-062e-4781-b46b-71eb5096ca6b",
+                "fingerprint": "db3932950c8db0b145b0995fa90753ddded4ce1c89f891dce9b0e51a95157dc8",
+                "creation_date": "2024-08-19",
+                "last_modified": "2024-09-30",
+                "threat_name": "Windows.VulnDriver.ThreatFire",
+                "reference_sample": "1c1a4ca2cbac9fe5954763a20aeb82da9b10d028824f42fff071503dcbe15856",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_ThreatFire_cbe7ac92\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"cbe7ac92-062e-4781-b46b-71eb5096ca6b\"\n\t\tfingerprint = \"db3932950c8db0b145b0995fa90753ddded4ce1c89f891dce9b0e51a95157dc8\"\n\t\tcreation_date = \"2024-08-19\"\n\t\tlast_modified = \"2024-09-30\"\n\t\tthreat_name = \"Windows.VulnDriver.ThreatFire\"\n\t\treference_sample = \"1c1a4ca2cbac9fe5954763a20aeb82da9b10d028824f42fff071503dcbe15856\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$original_file_name = { 4F 00 72 00 69 00 67 00 69 00 6E 00 61 00 6C 00 46 00 69 00 6C 00 65 00 6E 00 61 00 6D 00 65 00 00 00 54 00 66 00 53 00 79 00 73 00 4D 00 6F 00 6E 00 2E 00 73 00 79 00 73 00 00 00 }\n\t\t$str1 = \"ThreatFire\" wide fullword\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

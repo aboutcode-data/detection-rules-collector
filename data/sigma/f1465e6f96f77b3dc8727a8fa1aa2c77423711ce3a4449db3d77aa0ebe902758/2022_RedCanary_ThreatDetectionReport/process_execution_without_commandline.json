@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/process_execution_without_commandline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Process Execution sans Command Lines",
+                "id": "e0a2f82f-d11d-4ea7-af7e-a8f760b07c04"
+            },
+            "rule_text": "title: Process Execution sans Command Lines\nid: e0a2f82f-d11d-4ea7-af7e-a8f760b07c04\nstatus: experimental\ndescription: Looks for process execution with no command line arguments, which may\n  indicate process injection. Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/process-injection/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.privilege_escalation\n- attack.t1055\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\backgroundtaskhost.exe\n    - \\svchost.exe\n    - \\dllhost.exe\n    - \\werfault.exe\n    - \\searchprotocolhost.exe\n    - \\wuauclt.exe\n    - \\spoolsv.exe\n    - \\rundll32.exe\n    - \\regasm.exe\n    - \\regsvr32.exe\n    - \\regsvcs.exe\n    CommandLine|re: ^.*\\.exe(\\s|\")*$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

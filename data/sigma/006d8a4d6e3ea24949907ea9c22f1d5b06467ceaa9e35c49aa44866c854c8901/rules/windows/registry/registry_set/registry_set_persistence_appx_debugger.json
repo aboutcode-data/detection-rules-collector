@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_appx_debugger.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-07-27",
+                "title": "Potential Persistence Using DebugPath",
+                "id": "df4dc653-1029-47ba-8231-3c44238cc0ae"
+            },
+            "rule_text": "title: Potential Persistence Using DebugPath\nid: df4dc653-1029-47ba-8231-3c44238cc0ae\nstatus: test\ndescription: Detects potential persistence using Appx DebugPath\nreferences:\n- https://oddvar.moe/2018/09/06/persistence-using-universal-windows-platform-apps-appx/\n- https://github.com/rootm0s/WinPwnage\nauthor: frack113\ndate: 2022-07-27\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.015\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_debug:\n    TargetObject|contains: Classes\\ActivatableClasses\\Package\\Microsoft.\n    TargetObject|endswith: \\DebugPath\n  selection_default:\n    TargetObject|contains: \\Software\\Microsoft\\Windows\\CurrentVersion\\PackagedAppXDebug\\Microsoft.\n    TargetObject|endswith: \\(Default)\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

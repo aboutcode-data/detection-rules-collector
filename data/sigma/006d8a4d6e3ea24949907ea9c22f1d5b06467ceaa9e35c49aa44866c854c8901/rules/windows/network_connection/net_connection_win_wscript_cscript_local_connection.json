@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_wscript_cscript_local_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-08-28",
+                "title": "Local Network Connection Initiated By Script Interpreter",
+                "id": "08249dc0-a28d-4555-8ba5-9255a198e08c"
+            },
+            "rule_text": "title: Local Network Connection Initiated By Script Interpreter\nid: 08249dc0-a28d-4555-8ba5-9255a198e08c\nrelated:\n- id: 992a6cae-db6a-43c8-9cec-76d7195c96fc\n  type: derived\nstatus: test\ndescription: 'Detects a script interpreter (Wscript/Cscript) initiating a local network\n  connection to download or execute a script hosted on a shared folder.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/28d190330fe44de6ff4767fc400cc10fa7cd6540/atomics/T1105/T1105.md\nauthor: frack113\ndate: 2022-08-28\nmodified: 2024-05-31\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 169.254.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n  condition: selection\nfalsepositives:\n- Legitimate scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

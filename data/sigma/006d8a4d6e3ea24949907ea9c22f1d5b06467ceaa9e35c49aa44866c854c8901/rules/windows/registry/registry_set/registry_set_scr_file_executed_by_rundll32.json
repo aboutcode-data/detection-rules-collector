@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_scr_file_executed_by_rundll32.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jose Luis Sanchez Martinez (@Joseliyo_Jstnk)",
+                "date": "2022-05-04",
+                "title": "ScreenSaver Registry Key Set",
+                "id": "40b6e656-4e11-4c0c-8772-c1cc6dae34ce"
+            },
+            "rule_text": "title: ScreenSaver Registry Key Set\nid: 40b6e656-4e11-4c0c-8772-c1cc6dae34ce\nstatus: test\ndescription: Detects registry key established after masqueraded .scr file execution\n  using Rundll32 through desk.cpl\nreferences:\n- https://twitter.com/VakninHai/status/1517027824984547329\n- https://twitter.com/pabraeken/status/998627081360695297\n- https://jstnk9.github.io/jstnk9/research/InstallScreenSaver-SCR-files\nauthor: Jose Luis Sanchez Martinez (@Joseliyo_Jstnk)\ndate: 2022-05-04\nmodified: 2023-08-17\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n  registry:\n    TargetObject|contains: \\Control Panel\\Desktop\\SCRNSAVE.EXE\n    Details|endswith: .scr\n  filter:\n    Details|contains:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n  condition: selection and registry and not filter\nfalsepositives:\n- Legitimate use of screen saver\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

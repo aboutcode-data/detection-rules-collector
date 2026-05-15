@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Fareit/Trojan_Win32_Fareit_PA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Fareit_PA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Fareit.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Fareit_PA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Fareit.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {5d c2 08 00 90 0a 40 00 55 8b ec 90 90 90 05 0a 01 90 8b c1 90 90 90 05 0a 01 90 8a 90 90 ?? ?? ?? 00 32 55 0c 90 90 90 05 0a 01 (90 90 90 05 0a 01 90 8b c8 90 90 90 05 0a 01 90 8b c2 90 90 90 05 0a 01 90 88 01 90 90 90 05 0a 01 90 |)}\n\t\t$a_02_1 = {5d c2 08 00 90 0a 40 00 55 8b ec 90 90 90 05 0a 01 90 8a 91 ?? ?? ?? 00 32 55 0c 90 90 90 05 0a 01 (90 90 90 05 0a 01 90 8b c2 90 90 90 05 0a 01 90 88 01 90 90 90 05 0a 01 90 |)}\n\t\t$a_02_2 = {55 8b ec 83 c4 f8 89 55 f8 89 45 fc 90 90 90 05 0a 01 90 8b ?? fc ff 75 f8 01 ?? 24 c3 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 20 + ( #a_02_1 & 1 ) * 20 + ( #a_02_2 & 1 ) * 1 ) >= 21\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

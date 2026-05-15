@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/EyeStye/TrojanDownloader_Win32_EyeStye_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_EyeStye_C",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/EyeStye.C,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_EyeStye_C\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/EyeStye.C,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {8b c3 8d 50 01 8a 08 40 84 c9 75 f9 2b c2 56 8b f0 8d 46 01 57 50 e8 88 04 00 00 33 ff 59 c6 04 30 00 85 f6 7e 0f 8d 4c 1e ff 8a 11 88 14 07 47 49 3b fe 7c f5 }\n\t\t$a_03_1 = {68 f4 01 00 00 ff d7 ff ?? ?? 8b ?? ?? 3b 05 ?? ?? ?? ?? 76 ?? c7 45 f4 ?? ?? ?? ?? c7 45 f8 ?? ?? ?? ?? c7 45 fc ?? ?? ?? ?? 33 ff 56 56 56 56 ff ?? ?? ?? 56 6a 05 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 83 c4 24 84 c0 74 }\n\t\t$a_03_2 = {33 f6 59 56 56 56 56 85 c0 75 ?? 68 ?? ?? ?? ?? eb ?? 68 ?? ?? ?? ?? 56 6a 05 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

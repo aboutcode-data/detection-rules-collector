@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_event/file_event_win_vscode_tunnel_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-25",
+                "title": "VsCode Code Tunnel Execution File Indicator",
+                "id": "9661ec9d-4439-4a7a-abed-d9be4ca43b6d"
+            },
+            "rule_text": "title: VsCode Code Tunnel Execution File Indicator\nid: 9661ec9d-4439-4a7a-abed-d9be4ca43b6d\nstatus: test\ndescription: 'Detects the creation of a file with the name \"code_tunnel.json\" which\n  indicate execution and usage of VsCode tunneling utility. Attackers can abuse this\n  functionality to establish a C2 channel\n\n  '\nreferences:\n- https://ipfyx.fr/post/visual-studio-code-tunnel/\n- https://badoption.eu/blog/2023/01/31/code_c2.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-25\ntags:\n- attack.command-and-control\n- detection.threat-hunting\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith: \\code_tunnel.json\n  condition: selection\nfalsepositives:\n- Legitimate usage of VsCode tunneling functionality will also trigger this\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

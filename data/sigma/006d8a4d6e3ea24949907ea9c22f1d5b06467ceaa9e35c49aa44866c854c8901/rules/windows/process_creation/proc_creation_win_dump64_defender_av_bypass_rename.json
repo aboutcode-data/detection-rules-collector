@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dump64_defender_av_bypass_rename.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-11-26",
+                "title": "Potential Windows Defender AV Bypass Via Dump64.EXE Rename",
+                "id": "129966c9-de17-4334-a123-8b58172e664d"
+            },
+            "rule_text": "title: Potential Windows Defender AV Bypass Via Dump64.EXE Rename\nid: 129966c9-de17-4334-a123-8b58172e664d\nstatus: test\ndescription: 'Detects when a user is potentially trying to bypass the Windows Defender\n  AV by renaming a tool to dump64.exe and placing it in the Visual Studio folder.\n\n  Currently the rule is covering only usage of procdump but other utilities can be\n  added in order to increase coverage.\n\n  '\nreferences:\n- https://twitter.com/mrd0x/status/1460597833917251595\nauthor: Austin Songer @austinsonger, Florian Roth (Nextron Systems), Nasreddine Bencherchali\n  (Nextron Systems)\ndate: 2021-11-26\nmodified: 2024-06-21\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_dump:\n    Image|startswith: :\\Program Files\n    Image|contains: \\Microsoft Visual Studio\\\n    Image|endswith: \\dump64.exe\n  selection_tools_procdump:\n  - OriginalFileName: procdump\n  - CommandLine|contains:\n    - ' -ma '\n    - ' -mp '\n  condition: selection_dump and 1 of selection_tools_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

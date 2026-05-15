@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/infinityhook.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Infinityhook",
+                "tags": [],
+                "author": "SBousseaden",
+                "date": "09/07/2020",
+                "reference": "https://github.com/everdox/InfinityHook",
+                "description": "Infinityhook is a legit research PoC to hook NT Syscalls bypassing PatchGuard"
+            },
+            "rule_text": "rule Infinityhook\n{\n\tmeta:\n\t\tauthor = \"SBousseaden\"\n\t\tdate = \"09/07/2020\"\n\t\treference = \"https://github.com/everdox/InfinityHook\"\n\t\tdescription = \"Infinityhook is a legit research PoC to hook NT Syscalls bypassing PatchGuard\"\n\n\tstrings:\n\t\t$EtwpDebuggerPattern = {00 2C 08 04 38 0C 00}\n\t\t$SMV = {00 00 76 66 81 3A 02 18 50 00 75 0E 48 83 EA 08 B8 33 0F 00}\n\t\t$KVASCODE = {4B 56 41 53 43 4F 44 45}\n\t\t$CKL = \"Circular Kernel Context Logger\" wide nocase\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

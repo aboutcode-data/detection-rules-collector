@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_Cicada3301_Ransomware/correlation_proc_creation_win_taskkill_cicada3301.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)",
+                "date": "2024-09-08",
+                "title": "Correlation - Mass Taskkill Usage Associated with Cicada3301 Ransomware",
+                "id": "135e717e-2b3a-485f-9976-40e74a2e558c"
+            },
+            "rule_text": "title: Correlation - Mass Taskkill Usage Associated with Cicada3301 Ransomware\nid: 135e717e-2b3a-485f-9976-40e74a2e558c\nstatus: experimental\ndescription: Detects repeated use of the taskkill utility to terminate processes as\n  documented in the 2024 Morphisec Cicada3301 ransomware report.\nreferences:\n- https://blog.morphisec.com/cicada3301-ransomware-threat-analysis\nauthor: Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)\ndate: 2024-09-08\ntags:\n- attack.impact\n- attack.t1489\ncorrelation:\n  type: event_count\n  rules:\n  - task_terminated_with_taskkill\n  group-by:\n  - Computer\n  timespan: 10m\n  condition:\n    gte: 5\nlevel: medium\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)",
+                "date": "2024-09-08",
+                "title": "Single Taskkill Usage Associated with Cicada3301 Ransomware",
+                "id": "78689f2e-64e0-4363-942b-d676a7af7f12"
+            },
+            "rule_text": "title: Single Taskkill Usage Associated with Cicada3301 Ransomware\nname: task_terminated_with_taskkill\nid: 78689f2e-64e0-4363-942b-d676a7af7f12\nstatus: experimental\ndescription: Detects a single use of the taskkill utility to terminate processes as\n  documented in the 2024 Morphisec Cicada3301 ransomware report.\nauthor: Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)\ndate: 2024-09-08\ntags:\n- attack.impact\n- attack.t1489\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_proc:\n  - Image|endswith: \\taskkill.exe\n  - OriginalFileName: taskkill.exe\n  selection_cmd:\n    CommandLine|contains:\n    - agntsvc\n    - onenote\n    - bedbh\n    - tv_x64\n    - dbeng50\n    - oracle\n    - vxmon\n    - CVMountd\n    - dbsnmp\n    - outlook\n    - benetns\n    - cvd\n    - encsvc\n    - powerpnt\n    - bengien\n    - cvfwd\n    - excel\n    - sqbcoreservic\n    - pvlsvr\n    - CVODS\n    - firefox\n    - sql\n    - beserver\n    - saphostexe\n    - infopath\n    - steam\n    - raw_agent_svc\n    - saposcol\n    - isqlplussvc\n    - synctime\n    - vsnapvss\n    - sapstartsrv\n    - msaccess\n    - tbirdconfig\n    - CagService\n    - avagent\n    - mspub\n    - thebat\n    - QBIDPService\n    - avscc\n    - mydesktopq\n    - thunderbird\n    - QBDBMgrN\n    - DellSystem\n    - mydesktopservic\n    - visio\n    - QBCFMonitorSe\n    - EnterpriseClient\n    - notepad\n    - winword\n    - SAP\n    - VeeamNFSSvc\n    - ocautoupds\n    - wordpad\n    - TeamViewer_Service\n    - VeeamTransportSvc\n    - oco\n    - xfssvccon\n    - TeamViewer\n    - VeeamDeploymentSvc\n    - ocssd\n    - sql\n    - tv_w32\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/network/ngrok_tunnel.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-03-04",
+                "title": "Ngrok Tunnel Established",
+                "id": "840ae62f-2ce2-44a4-892c-b1c8b6fb5115"
+            },
+            "rule_text": "title: Ngrok Tunnel Established\nid: 840ae62f-2ce2-44a4-892c-b1c8b6fb5115\ndescription: Ngrok establishes a reverse tunnel that exposes one or multiple local\n  network services to the internet, bypassing ingress firewall rules. Has been abused\n  by threat actors as a C2 channel.\nstatus: experimental\nauthor: NTT Security - Patrik Olson\ndate: '2024-03-04'\nmodified: '2024-03-05'\nlogsource:\n  category: firewall\nreferences:\n- https://www.socinvestigation.com/ngrok-threat-hunting-detect-hackers-at-the-end-of-the-tunnel/\n- https://blog.bushidotoken.net/2023/09/tracking-adversaries-akira-another.html\n- https://s3.amazonaws.com/dns.ngrok.com/tunnel.json\ntags:\n- attack.defense_evasion\n- attack.t1599\ndetection:\n  selection:\n    dest_port: 443\n    dest_ip:\n    - 3.6.96.240\n    - 3.12.62.205\n    - 3.16.250.205\n    - 3.20.27.198\n    - 3.104.168.138\n    - 3.105.185.27\n    - 3.122.29.226\n    - 3.123.83.158\n    - 3.123.177.80\n    - 3.125.92.105\n    - 3.125.234.140\n    - 3.133.228.214\n    - 3.134.73.173\n    - 3.136.132.147\n    - 13.54.73.251\n    - 13.112.247.114\n    - 13.126.63.42\n    - 13.228.59.63\n    - 13.232.27.141\n    - 13.232.212.61\n    - 13.233.205.122\n    - 13.239.180.227\n    - 13.251.162.108\n    - 18.141.102.200\n    - 18.177.129.29\n    - 18.177.245.43\n    - 18.228.107.150\n    - 18.229.94.125\n    - 18.229.114.140\n    - 18.229.186.234\n    - 52.9.131.203\n    - 52.28.187.147\n    - 52.53.56.252\n    - 52.53.75.151\n    - 52.196.202.158\n    - 52.220.69.60\n    - 52.220.126.110\n    - 54.153.228.243\n    - 54.176.167.82\n    - 54.178.247.185\n    - 54.193.166.121\n    - 54.233.161.49\n    - 204.236.189.107\n  condition: selection\nfalsepositives:\n- Legitimate use of ngrok tunnels, e.g. for exposing a webhook to a cloud service\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

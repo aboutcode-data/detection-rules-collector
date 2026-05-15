@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Stegvob/TrojanDownloader_Win32_Stegvob_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Stegvob_C",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Stegvob.C,SIGNATURE_TYPE_PEHSTR_EXT,07 00 06 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Stegvob_C\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Stegvob.C,SIGNATURE_TYPE_PEHSTR_EXT,07 00 06 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ff ff 0f b7 9d ?? ?? ff ff 0f af cb 0f b7 85 ?? ?? ff ff 0f af c8 0f b7 95 ?? ?? ff ff 0f af ca 66 31 4d ba ff 4d ec }\n\t\t$a_03_1 = {83 7d bc 01 75 ?? c7 45 bc 02 00 00 00 83 6d c8 06 }\n\t\t$a_03_2 = {83 7d bc 03 75 ?? c7 45 bc 04 00 00 00 83 6d c8 06 }\n\t\t$a_03_3 = {83 7d bc 05 75 ?? c7 45 bc 06 00 00 00 83 6d c8 06 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

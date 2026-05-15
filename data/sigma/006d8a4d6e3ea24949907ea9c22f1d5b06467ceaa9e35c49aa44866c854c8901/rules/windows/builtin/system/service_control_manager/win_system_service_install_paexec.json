@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_paexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-26",
+                "title": "PAExec Service Installation",
+                "id": "de7ce410-b3fb-4e8a-b38c-3b999e2c3420"
+            },
+            "rule_text": "title: PAExec Service Installation\nid: de7ce410-b3fb-4e8a-b38c-3b999e2c3420\nstatus: test\ndescription: Detects PAExec service installation\nreferences:\n- https://www.poweradmin.com/paexec/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-26\ntags:\n- attack.execution\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_image:\n  - ServiceName|startswith: PAExec-\n  - ImagePath|startswith: C:\\WINDOWS\\PAExec-\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

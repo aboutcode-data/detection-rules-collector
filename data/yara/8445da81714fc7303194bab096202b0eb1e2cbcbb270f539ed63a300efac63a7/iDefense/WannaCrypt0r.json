@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/iDefense/WannaCrypt0r.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EQN_SMB1_PatientZero",
+                "tags": [],
+                "description": "Detection of network traffic towards the 1st sinkholes domain - kill switch",
+                "author": "Kiran Bandla - iDefense",
+                "reference": "https://s3.amazonaws.com/assets.accenture.com/PDF/Accenture-Security-Ransomware.pdf"
+            },
+            "rule_text": "rule EQN_SMB1_PatientZero\n{\n\tmeta:\n\t\tdescription = \"Detection of network traffic towards the 1st sinkholes domain - kill switch\"\n\t\tauthor = \"Kiran Bandla - iDefense\"\n\t\treference = \"https://s3.amazonaws.com/assets.accenture.com/PDF/Accenture-Security-Ransomware.pdf\"\n\n\tstrings:\n\t\t$smb1_free_hole = { 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff fe 00 00 40 00 0c ff 00 00 00 04 11 0a 00 }\n\t\t$ipc = \"\\\\\\\\%s\\\\IPC$\"\n\t\t$userid = \"__USERID__PLACEHOLDER__\"\n\t\t$treeid = \"__TREEID__PLACEHOLDER__\"\n\t\t$old_c2 = \"www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com\"\n\n\tcondition:\n\t\t$smb1_free_hole and $ipc and $userid and $treeid and $old_c2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WanaCrypt0r",
+                "tags": [],
+                "description": "Detects artifacts from WanaCrypt0r Ransomware",
+                "author": "Kiran Bandla - iDefense",
+                "reference": "https://s3.amazonaws.com/assets.accenture.com/PDF/Accenture-Security-Ransomware.pdf"
+            },
+            "rule_text": "rule WanaCrypt0r\n{\n\tmeta:\n\t\tdescription = \"Detects artifacts from WanaCrypt0r Ransomware\"\n\t\tauthor = \"Kiran Bandla - iDefense\"\n\t\treference = \"https://s3.amazonaws.com/assets.accenture.com/PDF/Accenture-Security-Ransomware.pdf\"\n\n\tstrings:\n\t\t$a = \"WanaDecryptor\"\n\t\t$b = \"Wana Decrypt0r\"\n\t\t$c = \"WanaCrypt0r\"\n\t\t$d = \".wnry\"\n\t\t$e = \".WNRY\"\n\t\t$f = \"bitcoin\"\n\t\t$g = \"vssadmin\"\n\t\t$h = \"torproject\"\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

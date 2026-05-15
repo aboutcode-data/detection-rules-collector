@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-05",
+                "title": "Suspicious PowerShell Download - Powershell Script",
+                "id": "403c2cc0-7f6b-4925-9423-bfa573bed7eb"
+            },
+            "rule_text": "title: Suspicious PowerShell Download - Powershell Script\nid: 403c2cc0-7f6b-4925-9423-bfa573bed7eb\nrelated:\n- id: 65531a81-a694-4e31-ae04-f8ba5bc33759\n  type: derived\nstatus: test\ndescription: Detects suspicious PowerShell download command\nreferences:\n- https://learn.microsoft.com/en-us/dotnet/api/system.net.webclient.downloadstring?view=net-8.0\n- https://learn.microsoft.com/en-us/dotnet/api/system.net.webclient.downloadfile?view=net-8.0\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-05\nmodified: 2022-12-02\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  webclient:\n    ScriptBlockText|contains: System.Net.WebClient\n  download:\n    ScriptBlockText|contains:\n    - .DownloadFile(\n    - .DownloadFileAsync(\n    - .DownloadString(\n    - .DownloadStringAsync(\n  condition: webclient and download\nfalsepositives:\n- PowerShell scripts that download content from the Internet\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

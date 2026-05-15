@@ -1,0 +1,132 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_mal_scripts.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PS_AMSI_Bypass",
+                "tags": [
+                    "FILE"
+                ],
+                "description": "Detects PowerShell AMSI Bypass",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://gist.github.com/mattifestation/46d6a2ebb4a1f4f0e7229503dc012ef1",
+                "date": "2017-07-19",
+                "score": 65,
+                "id": "31ab8932-4c74-5251-a044-3fcc0aa159f4"
+            },
+            "rule_text": "rule PS_AMSI_Bypass : FILE\n{\n\tmeta:\n\t\tdescription = \"Detects PowerShell AMSI Bypass\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://gist.github.com/mattifestation/46d6a2ebb4a1f4f0e7229503dc012ef1\"\n\t\tdate = \"2017-07-19\"\n\t\tscore = 65\n\t\tid = \"31ab8932-4c74-5251-a044-3fcc0aa159f4\"\n\n\tstrings:\n\t\t$s1 = \".GetField('amsiContext',[Reflection.BindingFlags]'NonPublic,Static').\" ascii nocase\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "JS_Suspicious_Obfuscation_Dropbox",
+                "tags": [],
+                "description": "Detects PowerShell AMSI Bypass",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/ItsReallyNick/status/887705105239343104",
+                "date": "2017-07-19",
+                "score": 70,
+                "id": "9b6b288d-3a15-5267-bbb1-885febf4df78"
+            },
+            "rule_text": "rule JS_Suspicious_Obfuscation_Dropbox\n{\n\tmeta:\n\t\tdescription = \"Detects PowerShell AMSI Bypass\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/ItsReallyNick/status/887705105239343104\"\n\t\tdate = \"2017-07-19\"\n\t\tscore = 70\n\t\tid = \"9b6b288d-3a15-5267-bbb1-885febf4df78\"\n\n\tstrings:\n\t\t$x1 = \"j\\\"+\\\"a\\\"+\\\"v\\\"+\\\"a\\\"+\\\"s\\\"+\\\"c\\\"+\\\"r\\\"+\\\"i\\\"+\\\"p\\\"+\\\"t\\\"\"\n\t\t$x2 = \"script:https://www.dropbox.com\" ascii\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "JS_Suspicious_MSHTA_Bypass",
+                "tags": [],
+                "description": "Detects MSHTA Bypass",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/ItsReallyNick/status/887705105239343104",
+                "date": "2017-07-19",
+                "score": 70,
+                "id": "b2ddca78-c19a-5bb6-a1c9-4413e637ab1d"
+            },
+            "rule_text": "rule JS_Suspicious_MSHTA_Bypass\n{\n\tmeta:\n\t\tdescription = \"Detects MSHTA Bypass\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/ItsReallyNick/status/887705105239343104\"\n\t\tdate = \"2017-07-19\"\n\t\tscore = 70\n\t\tid = \"b2ddca78-c19a-5bb6-a1c9-4413e637ab1d\"\n\n\tstrings:\n\t\t$s1 = \"mshtml,RunHTMLApplication\" ascii\n\t\t$s2 = \"new ActiveXObject(\\\"WScript.Shell\\\").Run(\" ascii\n\t\t$s3 = \"/c start mshta j\" ascii nocase\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "JavaScript_Run_Suspicious",
+                "tags": [],
+                "description": "Detects a suspicious Javascript Run command",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/craiu/status/900314063560998912",
+                "score": 60,
+                "date": "2017-08-23",
+                "id": "87f98ead-3052-5777-8877-574619173aaa"
+            },
+            "rule_text": "rule JavaScript_Run_Suspicious\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious Javascript Run command\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/craiu/status/900314063560998912\"\n\t\tscore = 60\n\t\tdate = \"2017-08-23\"\n\t\tid = \"87f98ead-3052-5777-8877-574619173aaa\"\n\n\tstrings:\n\t\t$s1 = \"w = new ActiveXObject(\" ascii\n\t\t$s2 = \" w.Run(r);\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Certutil_Decode_OR_Download",
+                "tags": [],
+                "description": "Certutil Decode",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "score": 40,
+                "date": "2017-08-29",
+                "modified": "2026-04-01",
+                "id": "63bdefd2-225a-56d5-b615-5e236c97f050"
+            },
+            "rule_text": "rule Certutil_Decode_OR_Download\n{\n\tmeta:\n\t\tdescription = \"Certutil Decode\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tscore = 40\n\t\tdate = \"2017-08-29\"\n\t\tmodified = \"2026-04-01\"\n\t\tid = \"63bdefd2-225a-56d5-b615-5e236c97f050\"\n\n\tstrings:\n\t\t$a1 = \"certutil -decode \" ascii wide\n\t\t$a2 = \"certutil  -decode \" ascii wide\n\t\t$a3 = \"certutil.exe -decode \" ascii wide\n\t\t$a4 = \"certutil.exe  -decode \" ascii wide\n\t\t$a5 = \"certutil -urlcache -split -f http\" ascii wide\n\t\t$a6 = \"certutil.exe -urlcache -split -f http\" ascii wide\n\t\t$fp_msi = { 52 00 6F 00 6F 00 74 00 20 00 45 00 6E 00 74 00 72 00 79 }\n\t\t$fp_doc = \"https://docs.aws.amazon.com\" ascii\n\n\tcondition:\n\t\tfilesize < 700KB and 1 of ( $a* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Suspicious_JS_script_content",
+                "tags": [],
+                "description": "Detects suspicious statements in JavaScript files",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Research on Leviathan https://goo.gl/MZ7dRg",
+                "date": "2017-12-02",
+                "score": 70,
+                "hash1": "fc0fad39b461eb1cfc6be57932993fcea94fca650564271d1b74dd850c81602f",
+                "id": "6a547aa5-c58c-5559-9d3f-3f0d541eafd4"
+            },
+            "rule_text": "rule Suspicious_JS_script_content\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious statements in JavaScript files\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Research on Leviathan https://goo.gl/MZ7dRg\"\n\t\tdate = \"2017-12-02\"\n\t\tscore = 70\n\t\thash1 = \"fc0fad39b461eb1cfc6be57932993fcea94fca650564271d1b74dd850c81602f\"\n\t\tid = \"6a547aa5-c58c-5559-9d3f-3f0d541eafd4\"\n\n\tstrings:\n\t\t$x1 = \"new ActiveXObject('WScript.Shell')).Run('cmd /c \" ascii\n\t\t$x2 = \".Run('regsvr32 /s /u /i:\" ascii\n\t\t$x3 = \"new ActiveXObject('WScript.Shell')).Run('regsvr32 /s\" fullword ascii\n\t\t$x4 = \"args='/s /u /i:\" ascii\n\n\tcondition:\n\t\t( filesize < 10KB and 1 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Universal_Exploit_Strings",
+                "tags": [],
+                "description": "Detects a group of strings often used in exploit codes",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2017-12-02",
+                "score": 50,
+                "hash1": "9b07dacf8a45218ede6d64327c38478640ff17d0f1e525bd392c002e49fe3629",
+                "id": "4b3a9eec-5f7c-579c-9719-fe23cc291aee"
+            },
+            "rule_text": "rule Universal_Exploit_Strings\n{\n\tmeta:\n\t\tdescription = \"Detects a group of strings often used in exploit codes\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2017-12-02\"\n\t\tscore = 50\n\t\thash1 = \"9b07dacf8a45218ede6d64327c38478640ff17d0f1e525bd392c002e49fe3629\"\n\t\tid = \"4b3a9eec-5f7c-579c-9719-fe23cc291aee\"\n\n\tstrings:\n\t\t$s1 = \"Exploit\" fullword ascii\n\t\t$s2 = \"Payload\" fullword ascii\n\t\t$s3 = \"CVE-201\" ascii\n\t\t$s4 = \"bindshell\"\n\n\tcondition:\n\t\t( filesize < 2KB and 3 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "VBS_Obfuscated_Mal_Feb18_1",
+                "tags": [],
+                "description": "Detects malicious obfuscated VBS observed in February 2018",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/zPsn83",
+                "date": "2018-02-12",
+                "hash1": "06960cb721609fe5a857fe9ca3696a84baba88d06c20920370ddba1b0952a8ab",
+                "hash2": "c5c0e28093e133d03c3806da0061a35776eed47d351e817709d2235b95d3a036",
+                "hash3": "e1765a2b10e2ff10235762b9c65e9f5a4b3b47d292933f1a710e241fe0417a74",
+                "id": "39ea10e5-9dea-5cc8-8388-15378fcbab60"
+            },
+            "rule_text": "rule VBS_Obfuscated_Mal_Feb18_1\n{\n\tmeta:\n\t\tdescription = \"Detects malicious obfuscated VBS observed in February 2018\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/zPsn83\"\n\t\tdate = \"2018-02-12\"\n\t\thash1 = \"06960cb721609fe5a857fe9ca3696a84baba88d06c20920370ddba1b0952a8ab\"\n\t\thash2 = \"c5c0e28093e133d03c3806da0061a35776eed47d351e817709d2235b95d3a036\"\n\t\thash3 = \"e1765a2b10e2ff10235762b9c65e9f5a4b3b47d292933f1a710e241fe0417a74\"\n\t\tid = \"39ea10e5-9dea-5cc8-8388-15378fcbab60\"\n\n\tstrings:\n\t\t$x1 = \"A( Array( (1* 2^1 )+\" ascii\n\t\t$x2 = \".addcode(A( Array(\" ascii\n\t\t$x3 = \"false:AA.send:Execute(AA.responsetext):end\" ascii\n\t\t$x4 = \"& A( Array(  (1* 2^1 )+\" ascii\n\t\t$s1 = \".SYSTEMTYPE:NEXT:IF (UCASE(\" ascii\n\t\t$s2 = \"A = STR:next:end function\" ascii\n\t\t$s3 = \"&WSCRIPT.SCRIPTFULLNAME&CHR\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 600KB and ( 1 of ( $x* ) or 3 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

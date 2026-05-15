@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_hktl_nofilter.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Stamatis Chatzimangou (st0pp3r)",
+                "date": "2024-01-05",
+                "title": "HackTool - NoFilter Execution",
+                "id": "7b14c76a-c602-4ae6-9717-eff868153fc0"
+            },
+            "rule_text": "title: HackTool - NoFilter Execution\nid: 7b14c76a-c602-4ae6-9717-eff868153fc0\nstatus: test\ndescription: 'Detects execution of NoFilter, a tool for abusing the Windows Filtering\n  Platform for privilege escalation via hardcoded policy name indicators\n\n  '\nreferences:\n- https://github.com/deepinstinct/NoFilter/blob/121d215ab130c5e8e3ad45a7e7fcd56f4de97b4d/NoFilter/Consts.cpp\n- https://github.com/deepinstinct/NoFilter\n- https://www.deepinstinct.com/blog/nofilter-abusing-windows-filtering-platform-for-privilege-escalation\n- https://x.com/_st0pp3r_/status/1742203752361128162?s=20\nauthor: Stamatis Chatzimangou (st0pp3r)\ndate: 2024-01-05\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134\n- attack.t1134.001\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Filtering Platform Policy Change needs to be enabled'\ndetection:\n  selection_5447:\n    EventID: 5447\n    FilterName|contains: RonPolicy\n  selection_5449:\n    EventID: 5449\n    ProviderContextName|contains: RonPolicy\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

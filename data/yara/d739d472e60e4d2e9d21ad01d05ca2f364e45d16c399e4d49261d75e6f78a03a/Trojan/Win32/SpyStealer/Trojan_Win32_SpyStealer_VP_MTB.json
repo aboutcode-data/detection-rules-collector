@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/SpyStealer/Trojan_Win32_SpyStealer_VP_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_SpyStealer_VP_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/SpyStealer.VP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_SpyStealer_VP_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/SpyStealer.VP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {7c ff ff ff 0f af 95 ?? ?? ?? ?? 89 95 ?? ?? ?? ?? 8b 95 ?? ?? ?? ?? 39 95 6c ff ff ff }\n\t\t$a_02_1 = {0f af 75 88 89 b5 ?? ?? ?? ?? 8d b3 ?? ?? ?? ?? 0f af 75 d0 89 b5 ?? ?? ?? ?? 8d b3 ?? ?? ?? ?? 03 75 e4 39 7d c8 89 b5 ?? ?? ?? ?? 8d b3 ?? ?? ?? ?? 89 b5 48 fe }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_rundll32_net_connections.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-11-04",
+                "title": "Rundll32 Internet Connection",
+                "id": "cdc8da7d-c303-42f8-b08c-b4ab47230263"
+            },
+            "rule_text": "title: Rundll32 Internet Connection\nid: cdc8da7d-c303-42f8-b08c-b4ab47230263\nstatus: test\ndescription: Detects a rundll32 that communicates with public IP addresses\nreferences:\n- https://www.hybrid-analysis.com/sample/759fb4c0091a78c5ee035715afe3084686a8493f39014aea72dae36869de9ff6?environmentId=100\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-11-04\nmodified: 2024-03-13\ntags:\n- attack.stealth\n- attack.t1218.011\n- attack.execution\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    Initiated: 'true'\n  filter_main_local_ranges:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 169.254.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n  filter_main_ms_ranges:\n    DestinationIp|cidr:\n    - 20.0.0.0/8\n    - 51.103.0.0/16\n    - 51.104.0.0/16\n    - 51.105.0.0/16\n  filter_main_app_sdb:\n    CommandLine|endswith: \\system32\\PcaSvc.dll,PcaPatchSdbTask\n  filter_main_azure_managed:\n    SourceHostname|endswith: .internal.cloudapp.net\n  filter_main_svchost_update_processes:\n    ParentImage: C:\\Windows\\System32\\svchost.exe\n    DestinationPort: 443\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Communication to other corporate systems that use IP addresses from public address\n  spaces\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

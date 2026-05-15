@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_Tachi.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "tachi",
+                "tags": [
+                    "android"
+                ],
+                "author": "https://twitter.com/plutec_net",
+                "source": "https://analyst.koodous.com/rulesets/1332",
+                "description": "This rule detects tachi apps (not all malware)",
+                "sample": "10acdf7db989c3acf36be814df4a95f00d370fe5b5fda142f9fd94acf46149ec"
+            },
+            "rule_text": "rule tachi : android\n{\n\tmeta:\n\t\tauthor = \"https://twitter.com/plutec_net\"\n\t\tsource = \"https://analyst.koodous.com/rulesets/1332\"\n\t\tdescription = \"This rule detects tachi apps (not all malware)\"\n\t\tsample = \"10acdf7db989c3acf36be814df4a95f00d370fe5b5fda142f9fd94acf46149ec\"\n\n\tstrings:\n\t\t$a = \"svcdownload\"\n\t\t$xml_1 = \"<config>\"\n\t\t$xml_2 = \"<apptitle>\"\n\t\t$xml_3 = \"<txinicio>\"\n\t\t$xml_4 = \"<txiniciotitulo>\"\n\t\t$xml_5 = \"<txnored>\"\n\t\t$xml_6 = \"<txnoredtitulo>\"\n\t\t$xml_7 = \"<txnoredretry>\"\n\t\t$xml_8 = \"<txnoredsalir>\"\n\t\t$xml_9 = \"<laurl>\"\n\t\t$xml_10 = \"<txquieresalir>\"\n\t\t$xml_11 = \"<txquieresalirtitulo>\"\n\t\t$xml_12 = \"<txquieresalirsi>\"\n\t\t$xml_13 = \"<txquieresalirno>\"\n\t\t$xml_14 = \"<txfiltro>\"\n\t\t$xml_15 = \"<txfiltrourl>\"\n\t\t$xml_16 = \"<posicion>\"\n\n\tcondition:\n\t\t$a and 4 of ( $xml_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_removedby_bad_actor.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Corissa Koopmans, '@corissalea'",
+                "date": "2022-07-19",
+                "title": "CA Policy Removed by Non Approved Actor",
+                "id": "26e7c5e2-6545-481e-b7e6-050143459635"
+            },
+            "rule_text": "title: CA Policy Removed by Non Approved Actor\nid: 26e7c5e2-6545-481e-b7e6-050143459635\nstatus: test\ndescription: Monitor and alert on conditional access changes where non approved actor\n  removed CA Policy.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-infrastructure#conditional-access\nauthor: Corissa Koopmans, '@corissalea'\ndate: 2022-07-19\ntags:\n- attack.privilege-escalation\n- attack.credential-access\n- attack.persistence\n- attack.defense-impairment\n- attack.t1548\n- attack.t1556\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message: Delete conditional access policy\n  condition: selection\nfalsepositives:\n- Misconfigured role permissions\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

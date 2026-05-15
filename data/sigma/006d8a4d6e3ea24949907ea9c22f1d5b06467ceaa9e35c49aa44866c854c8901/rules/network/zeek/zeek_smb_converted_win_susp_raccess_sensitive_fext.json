@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_smb_converted_win_susp_raccess_sensitive_fext.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden, @neu5ron",
+                "date": "2020-04-02",
+                "title": "Suspicious Access to Sensitive File Extensions - Zeek",
+                "id": "286b47ed-f6fe-40b3-b3a8-35129acd43bc"
+            },
+            "rule_text": "title: Suspicious Access to Sensitive File Extensions - Zeek\nid: 286b47ed-f6fe-40b3-b3a8-35129acd43bc\nrelated:\n- id: 91c945bc-2ad1-4799-a591-4d00198a1215\n  type: derived\nstatus: test\ndescription: Detects known sensitive file extensions via Zeek\nreferences:\n- Internal Research\nauthor: Samir Bousseaden, @neu5ron\ndate: 2020-04-02\nmodified: 2025-10-17\ntags:\n- attack.collection\nlogsource:\n  product: zeek\n  service: smb_files\ndetection:\n  selection:\n    name|endswith:\n    - .pst\n    - .ost\n    - .msg\n    - .nst\n    - .oab\n    - .edb\n    - .nsf\n    - .bak\n    - .dmp\n    - .kirbi\n    - .rdp\n  condition: selection\nfalsepositives:\n- Help Desk operator doing backup or re-imaging end user machine or backup software\n- Users working with these data types or exchanging message files\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

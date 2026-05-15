@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_gcc_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Shell Execution GCC  - Linux",
+                "id": "9b5de532-a757-4d70-946c-1f3e44f48b4d"
+            },
+            "rule_text": "title: Shell Execution GCC  - Linux\nid: 9b5de532-a757-4d70-946c-1f3e44f48b4d\nstatus: test\ndescription: 'Detects the use of the \"gcc\" utility to execute a shell. Such behavior\n  may be associated with privilege escalation, unauthorized command execution, or\n  to break out from restricted environments.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/gcc/#shell\n- https://gtfobins.github.io/gtfobins/c89/#shell\n- https://gtfobins.github.io/gtfobins/c99/#shell\n- https://www.elastic.co/guide/en/security/current/linux-restricted-shell-breakout-via-linux-binary-s.html\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith:\n    - /c89\n    - /c99\n    - /gcc\n    CommandLine|contains: -wrapper\n  selection_cli:\n    CommandLine|contains:\n    - /bin/bash,-s\n    - /bin/dash,-s\n    - /bin/fish,-s\n    - /bin/sh,-s\n    - /bin/zsh,-s\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/iis-configuration/win_iis_logging_http_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2024-10-06",
+                "title": "HTTP Logging Disabled On IIS Server",
+                "id": "e8ebd53a-30c2-45bd-81bb-74befba07bdb"
+            },
+            "rule_text": "title: HTTP Logging Disabled On IIS Server\nid: e8ebd53a-30c2-45bd-81bb-74befba07bdb\nstatus: test\ndescription: Detects changes to of the IIS server configuration in order to disable\n  HTTP logging for successful requests.\nreferences:\n- https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/configure-logging-in-iis\n- https://www.microsoft.com/en-us/security/blog/2022/12/12/iis-modules-the-evolution-of-web-shells-and-how-to-detect-them/\n- https://learn.microsoft.com/en-us/iis/configuration/system.webserver/httplogging\nauthor: frack113\ndate: 2024-10-06\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1685.001\n- attack.t1505.004\nlogsource:\n  product: windows\n  service: iis-configuration\ndetection:\n  selection:\n    EventID: 29\n    Configuration: /system.webServer/httpLogging/@dontLog\n    NewValue: 'true'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

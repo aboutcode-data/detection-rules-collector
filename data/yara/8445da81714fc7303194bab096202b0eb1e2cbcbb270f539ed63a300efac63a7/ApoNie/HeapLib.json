@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/ApoNie/HeapLib.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HeapLib",
+                "tags": [],
+                "author": "adnan.shukor@gmail.com",
+                "description": "Detection of HeapLib which commonly used in heap spray related exploit",
+                "ref": "http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html",
+                "cve": "NA",
+                "version": "1",
+                "impact": 3,
+                "hide": false
+            },
+            "rule_text": "rule HeapLib\n{\n\tmeta:\n\t\tauthor = \"adnan.shukor@gmail.com\"\n\t\tdescription = \"Detection of HeapLib which commonly used in heap spray related exploit\"\n\t\tref = \"http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html\"\n\t\tcve = \"NA\"\n\t\tversion = \"1\"\n\t\timpact = 3\n\t\thide = false\n\n\tstrings:\n\t\t$heaplib_1 = /\\.ie\\s?=\\s?function\\s?\\(maxAlloc,/\n\t\t$heaplib_2 = /\\.ie\\.prototype\\.round\\s?=\\s?function\\s?\\(num,\\s?round\\)/\n\t\t$heaplib_3 = /\\.ie\\.prototype\\.hex\\s?=\\s?function\\s?\\(num,\\s?width\\)/\n\t\t$heaplib_4 = /\\.ie\\.prototype\\.addr\\s?=\\s?function\\s?\\(addr\\)/\n\t\t$heaplib_5 = /\\.ie\\.prototype\\.allocOleaut32\\s?=\\s?function\\s?\\(arg,\\s?tag\\)/\n\t\t$heaplib_6 = /\\.ie\\.prototype\\.freeOleaut32/\n\t\t$heaplib_7 = /\\.maxAlloc\\s?=\\s?\\(maxAlloc\\s?\\?\\s?maxAlloc\\s?:\\s?65535\\s?\\)/\n\t\t$heaplib_8 = \"return unescape(\\\"%u\\\" + this.hex(addr & 0xFFFF, 4) + \\\"%u\\\" + this.hex((addr >> 16) & 0xFFFF, 4))\"\n\t\t$heaplib_9 = /\\.(free|flush)Oleaut32\\(/\n\t\t$heaplib_10 = \"return this.heapBase + 0x688 + ((size+8)/8)*48\"\n\t\t$heaplib_11 = /vtable\\s?\\+=\\s?unescape\\(\"%u0028%u0028\"\\)/\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

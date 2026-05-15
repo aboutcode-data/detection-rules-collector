@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CatRat/Trojan_Win32_CatRat_B_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CatRat_B_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CatRat.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CatRat_B_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CatRat.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 4d fc 8b 14 8d ?? ?? 00 10 81 ea ?? 00 00 00 8b 45 08 03 45 fc 88 10 e9 ?? ff ff ff }\n\t\t$a_03_1 = {ff ff ff 65 c6 45 ?? 6c c6 85 ?? ff ff ff 6e c6 45 ?? 32 c6 45 ?? 6f c6 45 ?? 75 c6 45 ?? 69 8d 85 ?? ff ff ff 50 ff 55 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

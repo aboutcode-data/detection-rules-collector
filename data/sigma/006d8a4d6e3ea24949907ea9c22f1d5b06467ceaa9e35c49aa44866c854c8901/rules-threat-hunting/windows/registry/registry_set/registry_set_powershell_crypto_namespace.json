@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/registry/registry_set/registry_set_powershell_crypto_namespace.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Braathen (mnemonic.io)",
+                "date": "2023-12-01",
+                "title": "Registry Set With Crypto-Classes From The \"Cryptography\" PowerShell Namespace",
+                "id": "1c2a3268-3881-414a-80af-a5b313b14c0e"
+            },
+            "rule_text": "title: Registry Set With Crypto-Classes From The \"Cryptography\" PowerShell Namespace\nid: 1c2a3268-3881-414a-80af-a5b313b14c0e\nstatus: test\ndescription: 'Detects the setting of a registry inside the \"\\Shell\\Open\\Command\" value\n  with PowerShell classes from the \"System.Security.Cryptography\" namespace.\n\n  The PowerShell namespace \"System.Security.Cryptography\" provides classes for on-the-fly\n  encryption and decryption.\n\n  These can be used for example in decrypting malicious payload for defense evasion.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography?view=net-8.0\n- https://squiblydoo.blog/2023/11/07/october-2023-solarmarker/\nauthor: Andreas Braathen (mnemonic.io)\ndate: 2023-12-01\ntags:\n- attack.execution\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1059.001\n- attack.t1027.010\n- attack.t1547.001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection_key:\n    TargetObject|contains: \\Shell\\Open\\Command\n  selection_value_img:\n    Details|contains:\n    - powershell\n    - pwsh\n  selection_value_namespace:\n    Details|contains: System.Security.Cryptography.\n  selection_value_classes:\n    Details|contains:\n    - .AesCryptoServiceProvider\n    - .DESCryptoServiceProvider\n    - .DSACryptoServiceProvider\n    - .RC2CryptoServiceProvider\n    - .Rijndael\n    - .RSACryptoServiceProvider\n    - .TripleDESCryptoServiceProvider\n  condition: all of selection_*\nfalsepositives:\n- Classes are legitimately used, but less so when e.g. parents with low prevalence\n  or decryption of content in temporary folders.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_access/file_access_win_susp_reg_and_hive.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-09-15",
+                "title": "Access To .Reg/.Hive Files By Uncommon Applications",
+                "id": "337a31c6-46c4-46be-886a-260d7aa78cac"
+            },
+            "rule_text": "title: Access To .Reg/.Hive Files By Uncommon Applications\nid: 337a31c6-46c4-46be-886a-260d7aa78cac\nstatus: test\ndescription: Detects file access requests to files ending with either the \".hive\"/\".reg\"\n  extension, usually associated with Windows Registry backups.\nreferences:\n- https://github.com/tccontre/Reg-Restore-Persistence-Mole\nauthor: frack113\ndate: 2023-09-15\nmodified: 2024-07-29\ntags:\n- attack.defense-impairment\n- attack.t1112\n- attack.persistence\n- detection.threat-hunting\nlogsource:\n  category: file_access\n  product: windows\n  definition: 'Requirements: Microsoft-Windows-Kernel-File ETW provider'\ndetection:\n  selection:\n    FileName|endswith:\n    - .hive\n    - .reg\n  filter_main_generic:\n    Image|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Third party software installed in the user context might generate a lot of FPs.\n  Heavy baselining and tuning might be required.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

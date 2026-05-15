@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_remove_item_path.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-15",
+                "title": "Use Of Remove-Item to Delete File - ScriptBlock",
+                "id": "b8af5f36-1361-4ebe-9e76-e36128d947bf"
+            },
+            "rule_text": "title: Use Of Remove-Item to Delete File - ScriptBlock\nid: b8af5f36-1361-4ebe-9e76-e36128d947bf\nstatus: test\ndescription: PowerShell Remove-Item  with -Path to delete a file or a folder with\n  \"-Recurse\"\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md\n- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/Remove-Item?view=powershell-5.1&viewFallbackFrom=powershell-7\nauthor: frack113\ndate: 2022-01-15\nmodified: 2022-03-17\ntags:\n- attack.stealth\n- attack.t1070.004\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - 'Remove-Item -Path '\n    - 'del -Path '\n    - 'erase -Path '\n    - 'rd -Path '\n    - 'ri -Path '\n    - 'rm -Path '\n    - 'rmdir -Path '\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_tacticalrmm.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-28",
+                "title": "TacticalRMM Service Installation",
+                "id": "4bb79b62-ef12-4861-981d-2aab43fab642"
+            },
+            "rule_text": "title: TacticalRMM Service Installation\nid: 4bb79b62-ef12-4861-981d-2aab43fab642\nstatus: test\ndescription: Detects a TacticalRMM service installation. Tactical RMM is a remote\n  monitoring & management tool.\nreferences:\n- https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-28\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_root:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ImagePath|contains: tacticalrmm.exe\n  - ServiceName|contains: TacticalRMM Agent Service\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the tool\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

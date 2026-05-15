@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_container_registry_created_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-07",
+                "title": "Azure Container Registry Created or Deleted",
+                "id": "93e0ef48-37c8-49ed-a02c-038aab23628e"
+            },
+            "rule_text": "title: Azure Container Registry Created or Deleted\nid: 93e0ef48-37c8-49ed-a02c-038aab23628e\nstatus: test\ndescription: Detects when a Container Registry is created or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\n- https://www.microsoft.com/security/blog/2021/03/23/secure-containerized-environments-with-updated-threat-matrix-for-kubernetes/\n- https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/\n- https://medium.com/mitre-engenuity/att-ck-for-containers-now-available-4c2359654bf1\nauthor: Austin Songer @austinsonger\ndate: 2021-08-07\nmodified: 2022-08-23\ntags:\n- attack.impact\n- attack.t1485\n- attack.t1496\n- attack.t1489\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.CONTAINERREGISTRY/REGISTRIES/WRITE\n    - MICROSOFT.CONTAINERREGISTRY/REGISTRIES/DELETE\n  condition: selection\nfalsepositives:\n- Container Registry being created or deleted may be performed by a system administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Container Registry created or deleted from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

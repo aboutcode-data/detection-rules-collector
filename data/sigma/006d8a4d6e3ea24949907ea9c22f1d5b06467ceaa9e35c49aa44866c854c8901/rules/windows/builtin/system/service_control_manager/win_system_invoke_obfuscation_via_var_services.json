@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_invoke_obfuscation_via_var_services.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2020-10-13",
+                "title": "Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION - System",
+                "id": "14bcba49-a428-42d9-b943-e2ce0f0f7ae6"
+            },
+            "rule_text": "title: Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION - System\nid: 14bcba49-a428-42d9-b943-e2ce0f0f7ae6\nstatus: test\ndescription: Detects Obfuscated Powershell via VAR++ LAUNCHER\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Timur Zinniatullin, oscd.community\ndate: 2020-10-13\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ImagePath|contains|all:\n    - '&&set'\n    - cmd\n    - /c\n    - -f\n    ImagePath|contains:\n    - '{0}'\n    - '{1}'\n    - '{2}'\n    - '{3}'\n    - '{4}'\n    - '{5}'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

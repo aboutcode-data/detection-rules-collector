@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_remote_system_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alejandro Ortuno, oscd.community",
+                "date": "2020-10-22",
+                "title": "Linux Remote System Discovery",
+                "id": "11063ec2-de63-4153-935e-b1a8b9e616f1"
+            },
+            "rule_text": "title: Linux Remote System Discovery\nid: 11063ec2-de63-4153-935e-b1a8b9e616f1\nstatus: test\ndescription: Detects the enumeration of other remote systems.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md\nauthor: Alejandro Ortuno, oscd.community\ndate: 2020-10-22\nmodified: 2021-11-27\ntags:\n- attack.discovery\n- attack.t1018\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_1:\n    Image|endswith: /arp\n    CommandLine|contains: -a\n  selection_2:\n    Image|endswith: /ping\n    CommandLine|contains:\n    - ' 10.'\n    - ' 192.168.'\n    - ' 172.16.'\n    - ' 172.17.'\n    - ' 172.18.'\n    - ' 172.19.'\n    - ' 172.20.'\n    - ' 172.21.'\n    - ' 172.22.'\n    - ' 172.23.'\n    - ' 172.24.'\n    - ' 172.25.'\n    - ' 172.26.'\n    - ' 172.27.'\n    - ' 172.28.'\n    - ' 172.29.'\n    - ' 172.30.'\n    - ' 172.31.'\n    - ' 127.'\n    - ' 169.254.'\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

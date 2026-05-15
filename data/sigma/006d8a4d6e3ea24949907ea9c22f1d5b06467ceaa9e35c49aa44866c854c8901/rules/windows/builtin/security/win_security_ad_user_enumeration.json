@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_ad_user_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Maxime Thiebaut (@0xThiebaut)",
+                "date": "2020-03-30",
+                "title": "Potential AD User Enumeration From Non-Machine Account",
+                "id": "ab6bffca-beff-4baa-af11-6733f296d57a"
+            },
+            "rule_text": "title: Potential AD User Enumeration From Non-Machine Account\nid: ab6bffca-beff-4baa-af11-6733f296d57a\nstatus: test\ndescription: Detects read access to a domain user from a non-machine account\nreferences:\n- https://www.specterops.io/assets/resources/an_ace_up_the_sleeve.pdf\n- http://www.stuffithoughtiknew.com/2019/02/detecting-bloodhound.html\n- https://learn.microsoft.com/en-us/windows/win32/adschema/attributes-all\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4662\nauthor: Maxime Thiebaut (@0xThiebaut)\ndate: 2020-03-30\nmodified: 2022-11-08\ntags:\n- attack.discovery\n- attack.t1087.002\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: The \"Read all properties\" permission on the user object\n    needs to be audited for the \"Everyone\" principal'\ndetection:\n  selection:\n    EventID: 4662\n    ObjectType|contains: bf967aba-0de6-11d0-a285-00aa003049e2\n    AccessMask|endswith:\n    - 1?\n    - 3?\n    - 4?\n    - 7?\n    - 9?\n    - B?\n    - D?\n    - F?\n  filter_main_machine_accounts:\n    SubjectUserName|endswith: $\n  filter_main_msql:\n    SubjectUserName|startswith: MSOL_\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Administrators configuring new users.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

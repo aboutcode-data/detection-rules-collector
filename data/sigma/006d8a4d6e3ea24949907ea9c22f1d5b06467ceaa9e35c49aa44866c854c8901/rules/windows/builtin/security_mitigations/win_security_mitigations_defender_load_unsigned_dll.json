@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security_mitigations/win_security_mitigations_defender_load_unsigned_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2022-08-02",
+                "title": "Microsoft Defender Blocked from Loading Unsigned DLL",
+                "id": "0b0ea3cc-99c8-4730-9c53-45deee2a4c86"
+            },
+            "rule_text": "title: Microsoft Defender Blocked from Loading Unsigned DLL\nid: 0b0ea3cc-99c8-4730-9c53-45deee2a4c86\nstatus: test\ndescription: Detects Code Integrity (CI) engine blocking Microsoft Defender's processes\n  (MpCmdRun and NisSrv) from loading unsigned DLLs which may be an attempt to sideload\n  arbitrary DLL\nreferences:\n- https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool\nauthor: Bhabesh Raj\ndate: 2022-08-02\nmodified: 2022-09-28\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  product: windows\n  service: security-mitigations\ndetection:\n  selection:\n    EventID:\n    - 11\n    - 12\n    ProcessPath|endswith:\n    - \\MpCmdRun.exe\n    - \\NisSrv.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

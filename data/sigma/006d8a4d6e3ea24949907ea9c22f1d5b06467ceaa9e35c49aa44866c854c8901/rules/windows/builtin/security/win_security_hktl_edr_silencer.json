@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_hktl_edr_silencer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thodoris Polyzos (@SmoothDeploy)",
+                "date": "2024-01-29",
+                "title": "HackTool - EDRSilencer Execution - Filter Added",
+                "id": "98054878-5eab-434c-85d4-72d4e5a3361b"
+            },
+            "rule_text": "title: HackTool - EDRSilencer Execution - Filter Added\nid: 98054878-5eab-434c-85d4-72d4e5a3361b\nstatus: test\ndescription: 'Detects execution of EDRSilencer, a tool that abuses the Windows Filtering\n  Platform (WFP) to block the outbound traffic of running EDR agents based on specific\n  hardcoded filter names.\n\n  '\nreferences:\n- https://github.com/netero1010/EDRSilencer\nauthor: Thodoris Polyzos (@SmoothDeploy)\ndate: 2024-01-29\nmodified: 2024-01-30\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Filtering Platform Policy Change needs to be enabled'\ndetection:\n  selection:\n    EventID:\n    - 5441\n    - 5447\n    FilterName|contains: Custom Outbound Filter\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

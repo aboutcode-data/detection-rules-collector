@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Injector/Trojan_Win64_Injector_SXB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Injector_SXB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Injector.SXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Injector_SXB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Injector.SXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 8b 44 24 38 0f b7 40 14 48 8b 4c 24 38 48 8d 44 01 18 48 63 4c 24 30 48 6b c9 ?? 48 03 c1 48 89 44 24 48 }\n\t\t$a_01_1 = {49 6e 6a 65 63 74 65 64 20 73 75 63 65 73 73 66 75 6c 6c 79 }\n\t\t$a_01_2 = {41 67 65 6e 74 53 65 72 76 69 63 65 2e 65 78 65 }\n\t\t$a_01_3 = {48 6f 6f 6b 20 64 65 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

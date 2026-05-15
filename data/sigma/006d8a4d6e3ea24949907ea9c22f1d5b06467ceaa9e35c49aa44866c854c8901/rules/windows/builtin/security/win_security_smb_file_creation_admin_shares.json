@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_smb_file_creation_admin_shares.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jose Rodriguez (@Cyb3rPandaH), OTR (Open Threat Research)",
+                "date": "2020-08-06",
+                "title": "SMB Create Remote File Admin Share",
+                "id": "b210394c-ba12-4f89-9117-44a2464b9511"
+            },
+            "rule_text": "title: SMB Create Remote File Admin Share\nid: b210394c-ba12-4f89-9117-44a2464b9511\nstatus: test\ndescription: Look for non-system accounts SMB accessing a file with write (0x2) access\n  mask via administrative share (i.e C$).\nreferences:\n- https://github.com/OTRF/ThreatHunter-Playbook/blob/f7a58156dbfc9b019f17f638b8c62d22e557d350/playbooks/WIN-201012004336.yaml\n- https://securitydatasets.com/notebooks/atomic/windows/lateral_movement/SDWIN-200806015757.html?highlight=create%20file\nauthor: Jose Rodriguez (@Cyb3rPandaH), OTR (Open Threat Research)\ndate: 2020-08-06\nmodified: 2025-10-17\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5145\n    ShareName|endswith: C$\n    AccessMask: '0x2'\n  filter_main_subjectusername:\n    SubjectUserName|endswith: $\n  filter_optional_local_ip:\n    IpAddress: ::1\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

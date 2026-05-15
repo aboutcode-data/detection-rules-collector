@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_touch_susp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-01-11",
+                "title": "Touch Suspicious Service File",
+                "id": "31545105-3444-4584-bebf-c466353230d2"
+            },
+            "rule_text": "title: Touch Suspicious Service File\nid: 31545105-3444-4584-bebf-c466353230d2\nstatus: test\ndescription: Detects usage of the \"touch\" process in service file.\nreferences:\n- https://blogs.blackberry.com/\n- https://twitter.com/Joseliyo_Jstnk/status/1620131033474822144\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-01-11\ntags:\n- attack.stealth\n- attack.t1070.006\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /touch\n    CommandLine|contains: ' -t '\n    CommandLine|endswith: .service\n  condition: selection\nfalsepositives:\n- Admin changing date of files.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

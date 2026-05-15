@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_socgholish_nltest_domain_trust_enum.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Enumerating Domain Trust Relationships with Nltest.exe",
+                "id": "3ddc7df5-780a-442a-8d41-269f476ed24a"
+            },
+            "rule_text": "title: Enumerating Domain Trust Relationships with Nltest.exe\nid: 3ddc7df5-780a-442a-8d41-269f476ed24a\nstatus: experimental\ndescription: \"Left unchecked, SocGholish may lead to domain discovery. This type of\\\n  \\ behavior is \\noften a precursor to ransomware activity, and should be quickly\\\n  \\ quelled to prevent \\nfurther progression of the threat. Part of the RedCanary\\\n  \\ 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/socgholish/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.discovery\n- attack.t1482\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\nltest.exe\n    CommandLine|contains:\n    - /domain_trusts\n    - /all_trusts\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

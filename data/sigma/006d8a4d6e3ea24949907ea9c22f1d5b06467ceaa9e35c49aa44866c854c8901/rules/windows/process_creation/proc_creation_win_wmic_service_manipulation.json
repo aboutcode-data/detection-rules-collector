@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_service_manipulation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-20",
+                "title": "Service Started/Stopped Via Wmic.EXE",
+                "id": "0b7163dc-7eee-4960-af17-c0cd517f92da"
+            },
+            "rule_text": "title: Service Started/Stopped Via Wmic.EXE\nid: 0b7163dc-7eee-4960-af17-c0cd517f92da\nstatus: test\ndescription: Detects usage of wmic to start or stop a service\nreferences:\n- https://sushant747.gitbooks.io/total-oscp-guide/content/privilege_escalation_windows.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-20\nmodified: 2023-02-14\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: wmic.exe\n  - Image|endswith: \\WMIC.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' service '\n    - ' call '\n    CommandLine|contains:\n    - stopservice\n    - startservice\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Ursnif/Trojan_Win32_Ursnif_BN_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Ursnif_BN_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Ursnif.BN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Ursnif_BN_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Ursnif.BN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {0f b7 f3 8d 14 76 03 d0 2b ca 1b ff 8b d5 2b 15 ?? ?? ?? ?? 83 ea 09 66 89 15 ?? ?? ?? ?? 8b 54 24 10 8b 12 89 15 ?? ?? ?? ?? 8b d1 2b d3 83 ea 09 66 89 15 ?? ?? ?? ?? 3d ?? ?? ?? ?? 75 }\n\t\t$a_02_1 = {8d 0c 06 03 e9 a1 ?? ?? ?? ?? 8b 54 24 10 05 ?? ?? ?? ?? 89 02 81 3d ?? ?? ?? ?? ?? ?? ?? ?? 89 2d ?? ?? ?? ?? a3 }\n\t\t$a_02_2 = {83 44 24 10 04 2b c6 2d ?? ?? ?? ?? ff 4c 24 14 99 a3 ?? ?? ?? ?? 89 15 ?? ?? ?? ?? 0f 85 ?? ?? ff ff }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

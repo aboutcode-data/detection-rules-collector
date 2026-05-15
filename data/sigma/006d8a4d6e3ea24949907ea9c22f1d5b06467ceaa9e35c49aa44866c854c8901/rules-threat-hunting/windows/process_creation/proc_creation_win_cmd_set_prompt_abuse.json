@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_cmd_set_prompt_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), MahirAli Khan (in/mahiralikhan)",
+                "date": "2024-08-22",
+                "title": "Potential File Override/Append Via SET Command",
+                "id": "65e4c134-ee52-4099-9e35-5e17a4b45c62"
+            },
+            "rule_text": "title: Potential File Override/Append Via SET Command\nid: 65e4c134-ee52-4099-9e35-5e17a4b45c62\nstatus: test\ndescription: 'Detects the use of the \"SET\" internal command of Cmd.EXE with the /p\n  flag followed directly by an \"=\" sign.\n\n  Attackers used this technique along with an append redirection operator \">>\" in\n  order to update the content of a file indirectly.\n\n  Ex: cmd /c >> example.txt set /p=\"test data\". This will append \"test data\" to contents\n  of \"example.txt\".\n\n  The typical use case of the \"set /p=\" command is to prompt the user for input.\n\n  '\nreferences:\n- https://news.sophos.com/en-us/2024/08/07/sophos-mdr-hunt-tracks-mimic-ransomware-campaign-against-organizations-in-india/\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/set_1\n- https://ss64.com/nt/set.html\nauthor: Nasreddine Bencherchali (Nextron Systems), MahirAli Khan (in/mahiralikhan)\ndate: 2024-08-22\ntags:\n- attack.execution\n- detection.threat-hunting\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cli:\n    CommandLine|contains:\n    - /c set /p=\n    - '\"set /p='\n    - '>>*set /p='\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the SET with the \"/p\" flag for user prompting. command in administrative\n  scripts or user-generated scripts.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

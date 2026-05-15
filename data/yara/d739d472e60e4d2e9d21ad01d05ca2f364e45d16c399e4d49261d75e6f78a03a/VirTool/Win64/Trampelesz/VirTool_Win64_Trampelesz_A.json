@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/Trampelesz/VirTool_Win64_Trampelesz_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_Trampelesz_A",
+                "tags": [],
+                "description": "VirTool:Win64/Trampelesz.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_Trampelesz_A\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/Trampelesz.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 44 24 28 ?? ?? ?? ?? ?? ?? ?? 33 ff ?? ?? ?? ?? ?? ?? 48 85 c0 [0-19] 48 8b c8 [0-13] 4c 8b c0 48 85 c0 ?? ?? 33 c9 80 38 c3 }\n\t\t$a_01_1 = {48 8b c1 48 c1 e8 28 88 47 07 48 8b c1 48 c1 e9 38 48 c1 e8 30 88 47 08 88 4f 09 33 c9 66 c7 47 0a 41 ff c6 47 0c e2 c7 44 24 20 00 00 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

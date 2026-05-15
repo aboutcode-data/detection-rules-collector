@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/apt_win_bluelight.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_win_bluelight",
+                "tags": [
+                    "InkySquid"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-04-23",
+                "description": "The BLUELIGHT malware family. Leverages Microsoft OneDrive for network communications.",
+                "reference": "https://www.volexity.com/blog/2021/08/17/north-korean-apt-inkysquid-infects-victims-using-browser-exploits/",
+                "hash1": "7c40019c1d4cef2ffdd1dd8f388aaba537440b1bffee41789c900122d075a86d",
+                "hash2": "94b71ee0861cc7cfbbae53ad2e411a76f296fd5684edf6b25ebe79bf6a2a600a",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule apt_win_bluelight : InkySquid\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-04-23\"\n\t\tdescription = \"The BLUELIGHT malware family. Leverages Microsoft OneDrive for network communications.\"\n\t\treference = \"https://www.volexity.com/blog/2021/08/17/north-korean-apt-inkysquid-infects-victims-using-browser-exploits/\"\n\t\thash1 = \"7c40019c1d4cef2ffdd1dd8f388aaba537440b1bffee41789c900122d075a86d\"\n\t\thash2 = \"94b71ee0861cc7cfbbae53ad2e411a76f296fd5684edf6b25ebe79bf6a2a600a\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$pdb1 = \"\\\\Development\\\\BACKDOOR\\\\ncov\\\\\"\n\t\t$pdb2 = \"Release\\\\bluelight.pdb\"\n\t\t$msg0 = \"https://ipinfo.io\" fullword\n\t\t$msg1 = \"country\" fullword\n\t\t$msg5 = \"\\\"UserName\\\":\\\"\" fullword\n\t\t$msg7 = \"\\\"ComName\\\":\\\"\" fullword\n\t\t$msg8 = \"\\\"OS\\\":\\\"\" fullword\n\t\t$msg9 = \"\\\"OnlineIP\\\":\\\"\" fullword\n\t\t$msg10 = \"\\\"LocalIP\\\":\\\"\" fullword\n\t\t$msg11 = \"\\\"Time\\\":\\\"\" fullword\n\t\t$msg12 = \"\\\"Compiled\\\":\\\"\" fullword\n\t\t$msg13 = \"\\\"Process Level\\\":\\\"\" fullword\n\t\t$msg14 = \"\\\"AntiVirus\\\":\\\"\" fullword\n\t\t$msg15 = \"\\\"VM\\\":\\\"\" fullword\n\n\tcondition:\n\t\tany of ( $pdb* ) or all of ( $msg* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

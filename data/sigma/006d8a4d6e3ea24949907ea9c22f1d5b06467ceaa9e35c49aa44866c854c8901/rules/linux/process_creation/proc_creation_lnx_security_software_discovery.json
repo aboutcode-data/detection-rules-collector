@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_security_software_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, oscd.community",
+                "date": "2020-10-19",
+                "title": "Security Software Discovery - Linux",
+                "id": "c9d8b7fd-78e4-44fe-88f6-599135d46d60"
+            },
+            "rule_text": "title: Security Software Discovery - Linux\nid: c9d8b7fd-78e4-44fe-88f6-599135d46d60\nstatus: test\ndescription: Detects usage of system utilities (only grep and egrep for now) to discover\n  security software discovery\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md\nauthor: Daniil Yugoslavskiy, oscd.community\ndate: 2020-10-19\nmodified: 2022-11-27\ntags:\n- attack.discovery\n- attack.t1518.001\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith:\n    - /grep\n    - /egrep\n    CommandLine|contains:\n    - nessusd\n    - td-agent\n    - packetbeat\n    - filebeat\n    - auditbeat\n    - osqueryd\n    - cbagentd\n    - falcond\n  condition: selection\nfalsepositives:\n- Legitimate activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

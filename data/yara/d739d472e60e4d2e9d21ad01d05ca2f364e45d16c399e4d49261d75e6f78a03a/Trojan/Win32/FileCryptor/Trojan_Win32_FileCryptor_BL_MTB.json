@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/FileCryptor/Trojan_Win32_FileCryptor_BL_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_FileCryptor_BL_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/FileCryptor.BL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_FileCryptor_BL_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/FileCryptor.BL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {5c 63 72 79 70 74 5c 74 6d 70 5f [0-10] 5c [0-10] 2e 70 64 62 }\n\t\t$a_00_1 = {57 72 69 74 65 54 61 70 65 6d 61 72 6b }\n\t\t$a_03_2 = {6a 65 66 a3 ?? ?? ?? ?? 58 6a 72 66 a3 ?? ?? ?? ?? 58 6a 6e 66 a3 ?? ?? ?? ?? 58 6a 65 66 a3 ?? ?? ?? ?? 58 6a 6c 66 a3 ?? ?? ?? ?? 58 6a 33 66 a3 ?? ?? ?? ?? 58 6a 32 66 a3 ?? ?? ?? ?? 58 6a 2e 66 a3 ?? ?? ?? ?? 58 6a 64 66 a3 ?? ?? ?? ?? 58 6a 6c }\n\t\t$a_00_3 = {30 04 3e 89 75 80 b8 01 00 00 00 83 f0 04 83 6d 80 01 8b 75 80 3b f3 7d e2 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 10 + ( #a_00_3 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

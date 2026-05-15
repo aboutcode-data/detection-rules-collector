@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_directoryservices_accountmanagement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-28",
+                "title": "Manipulation of User Computer or Group Security Principals Across AD",
+                "id": "b29a93fb-087c-4b5b-a84d-ee3309e69d08"
+            },
+            "rule_text": "title: Manipulation of User Computer or Group Security Principals Across AD\nid: b29a93fb-087c-4b5b-a84d-ee3309e69d08\nstatus: test\ndescription: 'Adversaries may create a domain account to maintain access to victim\n  systems.\n\n  Domain accounts are those managed by Active Directory Domain Services where access\n  and permissions are configured across systems and services that are part of that\n  domain..\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.002/T1136.002.md#atomic-test-3---create-a-new-domain-account-using-powershell\n- https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices.accountmanagement?view=net-8.0\nauthor: frack113\ndate: 2021-12-28\ntags:\n- attack.persistence\n- attack.t1136.002\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains: System.DirectoryServices.AccountManagement\n  condition: selection\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

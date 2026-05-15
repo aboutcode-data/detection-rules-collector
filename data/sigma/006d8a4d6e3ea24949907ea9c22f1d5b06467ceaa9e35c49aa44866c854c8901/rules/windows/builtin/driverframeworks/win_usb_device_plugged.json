@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/driverframeworks/win_usb_device_plugged.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-11-09",
+                "title": "USB Device Plugged",
+                "id": "1a4bd6e3-4c6e-405d-a9a3-53a116e341d4"
+            },
+            "rule_text": "title: USB Device Plugged\nid: 1a4bd6e3-4c6e-405d-a9a3-53a116e341d4\nstatus: test\ndescription: Detects plugged/unplugged USB devices\nreferences:\n- https://df-stream.com/2014/01/the-windows-7-event-log-and-usb-device/\n- https://www.techrepublic.com/article/how-to-track-down-usb-flash-drive-usage-in-windows-10s-event-viewer/\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-11-09\nmodified: 2021-11-30\ntags:\n- attack.initial-access\n- attack.t1200\nlogsource:\n  product: windows\n  service: driver-framework\n  definition: Requires enabling and collection of the Microsoft-Windows-DriverFrameworks-UserMode/Operational\n    eventlog\ndetection:\n  selection:\n    EventID:\n    - 2003\n    - 2100\n    - 2102\n  condition: selection\nfalsepositives:\n- Legitimate administrative activity\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

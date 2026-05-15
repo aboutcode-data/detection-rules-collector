@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/signin_logs/azure_app_ropc_authentication.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Bailey Bercik '@baileybercik'",
+                "date": "2022-06-01",
+                "title": "Applications That Are Using ROPC Authentication Flow",
+                "id": "55695bc0-c8cf-461f-a379-2535f563c854"
+            },
+            "rule_text": "title: Applications That Are Using ROPC Authentication Flow\nid: 55695bc0-c8cf-461f-a379-2535f563c854\nstatus: test\ndescription: 'Resource owner password credentials (ROPC) should be avoided if at all\n  possible as this requires the user to expose their current password credentials\n  to the application directly.\n\n  The application then uses those credentials to authenticate the user against the\n  identity provider.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications#application-authentication-flows\nauthor: Mark Morowczynski '@markmorow', Bailey Bercik '@baileybercik'\ndate: 2022-06-01\ntags:\n- attack.stealth\n- attack.t1078\n- attack.persistence\n- attack.privilege-escalation\n- attack.initial-access\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    properties.message: ROPC\n  condition: selection\nfalsepositives:\n- Applications that are being used as part of automated testing or a legacy application\n  that cannot use any other modern authentication flow\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

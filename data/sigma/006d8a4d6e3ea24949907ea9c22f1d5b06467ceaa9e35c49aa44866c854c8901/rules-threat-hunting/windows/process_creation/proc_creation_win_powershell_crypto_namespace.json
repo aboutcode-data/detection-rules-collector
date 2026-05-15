@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_crypto_namespace.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Braathen (mnemonic.io)",
+                "date": "2023-12-01",
+                "title": "Invocation Of Crypto-Classes From The \"Cryptography\" PowerShell Namespace",
+                "id": "ad856965-f44d-42a8-945e-bbf7bd03d05a"
+            },
+            "rule_text": "title: Invocation Of Crypto-Classes From The \"Cryptography\" PowerShell Namespace\nid: ad856965-f44d-42a8-945e-bbf7bd03d05a\nstatus: test\ndescription: 'Detects the invocation of PowerShell commands with references to classes\n  from the \"System.Security.Cryptography\" namespace.\n\n  The PowerShell namespace \"System.Security.Cryptography\" provides classes for on-the-fly\n  encryption and decryption.\n\n  These can be used for example in decrypting malicious payload for defense evasion.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography?view=net-8.0\n- https://blogs.vmware.com/security/2023/11/jupyter-rising-an-update-on-jupyter-infostealer.html\n- https://www.virustotal.com/gui/file/39102fb7bb6a74a9c8cb6d46419f9015b381199ea8524c1376672b30fffd69d2\nauthor: Andreas Braathen (mnemonic.io)\ndate: 2023-12-01\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.001\n- attack.t1027.010\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cmdlet_namespace:\n    CommandLine|contains: System.Security.Cryptography.\n  selection_cmdlet_classes:\n    CommandLine|contains:\n    - .AesCryptoServiceProvider\n    - .DESCryptoServiceProvider\n    - .DSACryptoServiceProvider\n    - .RC2CryptoServiceProvider\n    - .Rijndael\n    - .RSACryptoServiceProvider\n    - .TripleDESCryptoServiceProvider\n  condition: all of selection_*\nfalsepositives:\n- Classes are legitimately used, but less so when e.g. parents with low prevalence\n  or decryption of content in temporary folders.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

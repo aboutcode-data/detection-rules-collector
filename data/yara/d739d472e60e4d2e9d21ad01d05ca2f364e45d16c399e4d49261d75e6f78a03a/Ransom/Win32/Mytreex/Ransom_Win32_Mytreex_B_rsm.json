@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Mytreex/Ransom_Win32_Mytreex_B_rsm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Mytreex_B_rsm",
+                "tags": [],
+                "description": "Ransom:Win32/Mytreex.B!rsm,SIGNATURE_TYPE_PEHSTR_EXT,ffffffd2 00 ffffffd2 00 04 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Mytreex_B_rsm\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Mytreex.B!rsm,SIGNATURE_TYPE_PEHSTR_EXT,ffffffd2 00 ffffffd2 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {68 a0 04 04 00 6a 00 ff 15 }\n\t\t$a_03_1 = {6a 40 68 a0 04 04 00 [0-08] ff 15 }\n\t\t$a_01_2 = {b9 79 37 9e }\n\t\t$a_01_3 = {47 86 c8 61 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 100 + ( #a_03_1 & 1 ) * 100 + ( #a_01_2 & 1 ) * 10 + ( #a_01_3 & 1 ) * 10 ) >= 210\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

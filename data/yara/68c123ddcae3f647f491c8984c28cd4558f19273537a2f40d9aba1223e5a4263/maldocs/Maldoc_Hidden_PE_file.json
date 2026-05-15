@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/maldocs/Maldoc_Hidden_PE_file.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Contains_hidden_PE_File_inside_a_sequence_of_numbers",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect a hidden PE file inside a sequence of numbers (comma separated)",
+                "reference": "http://www.welivesecurity.com/2016/01/04/blackenergy-trojan-strikes-again-attacks-ukrainian-electric-power-industry/",
+                "date": "2016-01-09",
+                "filetype": "decompressed VBA macro code"
+            },
+            "rule_text": "rule Contains_hidden_PE_File_inside_a_sequence_of_numbers : maldoc\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect a hidden PE file inside a sequence of numbers (comma separated)\"\n\t\treference = \"http://blog.didierstevens.com/2016/01/07/blackenergy-xls-dropper/\"\n\t\treference = \"http://www.welivesecurity.com/2016/01/04/blackenergy-trojan-strikes-again-attacks-ukrainian-electric-power-industry/\"\n\t\tdate = \"2016-01-09\"\n\t\tfiletype = \"decompressed VBA macro code\"\n\n\tstrings:\n\t\t$a = \"= Array(\"\n\t\t$b = \"77, 90,\"\n\t\t$c = \"33, 84, 104, 105, 115, 32, 112, 114, 111, 103, 114, 97, 109, 32, 99, 97, 110, 110, 111, 116, 32, 98, 101, 32, 114, 117, 110, 32, 105, 110, 32, 68, 79, 83, 32, 109, 111, 100, 101, 46,\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

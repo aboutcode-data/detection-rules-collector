@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Midie/Trojan_Win64_Midie_SXB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Midie_SXB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Midie.SXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Midie_SXB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Midie.SXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {f7 f9 8b 55 bc 2b d0 89 55 bc 8b 4d bc 83 c1 ?? 8b 45 d8 99 f7 f9 }\n\t\t$a_03_1 = {8b 55 d8 2b d1 0f af 55 d8 89 55 d8 8d 45 d8 89 45 d4 8b 4d d8 83 c1 ?? 8b 45 e4 }\n\t\t$a_03_2 = {8b 45 e4 2b 45 08 8b 4d f8 2b c8 89 4d f8 8b 4d f4 83 c1 ?? 8b 45 08 99 f7 f9 03 45 f4 89 45 f4 }\n\t\t$a_03_3 = {8b 4d f8 83 c1 ?? 8b 45 f8 99 f7 f9 89 45 0c eb bc }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 5 + ( #a_03_2 & 1 ) * 10 + ( #a_03_3 & 1 ) * 5 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

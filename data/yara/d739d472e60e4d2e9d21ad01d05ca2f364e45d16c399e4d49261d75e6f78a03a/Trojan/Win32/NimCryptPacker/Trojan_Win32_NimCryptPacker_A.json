@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/NimCryptPacker/Trojan_Win32_NimCryptPacker_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_NimCryptPacker_A",
+                "tags": [],
+                "description": "Trojan:Win32/NimCryptPacker.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_NimCryptPacker_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/NimCryptPacker.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {40 5b 2a 5d 20 46 6f 75 6e 64 20 53 79 73 63 61 6c 6c 20 53 74 75 62 3a 20 }\n\t\t$a_80_1 = {66 61 74 61 6c 2e 6e 69 6d }\n\t\t$a_80_2 = {68 61 73 68 63 6f 6d 6d 6f 6e 2e 6e 69 6d }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 1 + ( #a_80_1 & 1 ) * 1 + ( #a_80_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

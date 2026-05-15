@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/file_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson, Axel Olsson",
+                "date": "2024-08-13",
+                "title": "Sensitive File Upload",
+                "id": "44a88643-7ccc-4893-be1e-ed19a26e4888"
+            },
+            "rule_text": "title: Sensitive File Upload\nid: 44a88643-7ccc-4893-be1e-ed19a26e4888\ndescription: Detects upload of potentially sensitive files known to be targets for\n  exfiltration\nstatus: stable\nauthor: NTT Security - Patrik Olson, Axel Olsson\ndate: 2024-08-13\nmodified: 2024-09-08\nlogsource:\n  product: zscaler\n  service: zia\ndetection:\n  selection:\n  - file_name:\n    - SYSTEM\n    - SYSTEM.dat\n    - SECURITY\n    - SECURITY.dat\n    - SAM\n    - SAM.dat\n    - NTUSER\n    - NTUSER.dat\n    - lock.json\n    - shock.json\n    - barrel.json\n    - barrel.zip\n  - file_name|contains:\n    - ntds.dit\n    - lsass.dmp\n    - lsass.exe.dmp\n    - .kirbi\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\ntags:\n- mitre.exfiltration\n",
+            "vulnerabilities": []
+        }
+    ]
+}

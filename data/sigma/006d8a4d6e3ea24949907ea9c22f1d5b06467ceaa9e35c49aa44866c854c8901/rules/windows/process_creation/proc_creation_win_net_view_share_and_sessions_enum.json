@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_net_view_share_and_sessions_enum.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Endgame, JHasenbusch (ported for oscd.community)",
+                "date": "2018-10-30",
+                "title": "Share And Session Enumeration Using Net.EXE",
+                "id": "62510e69-616b-4078-b371-847da438cc03"
+            },
+            "rule_text": "title: Share And Session Enumeration Using Net.EXE\nid: 62510e69-616b-4078-b371-847da438cc03\nstatus: stable\ndescription: Detects attempts to enumerate file shares, printer shares and sessions\n  using \"net.exe\" with the \"view\" flag.\nreferences:\n- https://eqllib.readthedocs.io/en/latest/analytics/b8a94d2f-dc75-4630-9d73-1edc6bd26fff.html\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md\nauthor: Endgame, JHasenbusch (ported for oscd.community)\ndate: 2018-10-30\nmodified: 2023-02-21\ntags:\n- attack.discovery\n- attack.t1018\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  selection_cli:\n    CommandLine|contains: view\n  filter:\n    CommandLine|contains: \\\\\\\\\n  condition: all of selection_* and not filter\nfalsepositives:\n- Legitimate use of net.exe utility by legitimate user\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

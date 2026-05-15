@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1078/win_user_added_to_local_administrators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth",
+                "date": null,
+                "title": "User Added to Local Administrators",
+                "id": null
+            },
+            "rule_text": "title: User Added to Local Administrators\ndescription: This rule triggers on user accounts that are added to the local Administrators\n  group, which could be legitimate activity or a sign of privilege escalation activity\nstatus: stable\nauthor: Florian Roth\ntags:\n- attack.privilege_escalation\n- attack.t1078\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4732\n    GroupName: Administrators\n  filter:\n    SubjectUserName: '*$'\n  condition: selection and not filter\nfalsepositives:\n- Legitimate administrative activity\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

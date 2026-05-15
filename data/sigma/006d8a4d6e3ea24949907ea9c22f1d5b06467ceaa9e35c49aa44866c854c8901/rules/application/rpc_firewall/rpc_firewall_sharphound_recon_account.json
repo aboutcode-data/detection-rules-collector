@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_sharphound_recon_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "SharpHound Recon Account Discovery",
+                "id": "65f77b1e-8e79-45bf-bb67-5988a8ce45a5"
+            },
+            "rule_text": "title: SharpHound Recon Account Discovery\nid: 65f77b1e-8e79-45bf-bb67-5988a8ce45a5\nstatus: test\ndescription: Detects remote RPC calls useb by SharpHound to map remote connections\n  and local group membership.\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wkst/55118c55-2122-4ef9-8664-0c1ff9e168f3\n- https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/ddd4608fe8684fcf2fcf9b48c5f0b3c28097f8a3/documents/MS-WKST.md\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.t1087\n- attack.discovery\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes with\n    \"audit:true action:block uuid:6bffd098-a112-3610-9833-46c3f87e345a opnum:2'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid: 6bffd098-a112-3610-9833-46c3f87e345a\n    OpNum: 2\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

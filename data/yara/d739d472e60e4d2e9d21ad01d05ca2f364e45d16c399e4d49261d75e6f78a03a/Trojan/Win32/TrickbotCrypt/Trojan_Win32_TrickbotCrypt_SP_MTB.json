@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/TrickbotCrypt/Trojan_Win32_TrickbotCrypt_SP_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_TrickbotCrypt_SP_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/TrickbotCrypt.SP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_TrickbotCrypt_SP_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/TrickbotCrypt.SP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {50 51 ff d7 8b 95 ?? ?? ?? ?? 50 8b 85 ?? ?? ?? ?? 52 50 e8 ?? ?? ?? ?? 8d 8d ?? ?? ?? ?? 8d 95 ?? ?? ?? ?? 51 52 6a 02 8b f0 ff 15 }\n\t\t$a_03_1 = {50 51 6a 11 ff 15 ?? ?? ?? ?? 8b 95 ?? ?? ?? ?? 8b 45 ?? 8b 8d ?? ?? ?? ?? 83 c4 ?? 52 50 51 e8 ?? ?? ?? ?? 8b 85 ?? ?? ?? ?? c7 85 ?? ?? ?? ?? 01 00 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/IndiaDelta.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IndiaDelta",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "d7b50b1546653bff68220996190446bdc7fc4e38373715b8848d1fb44fe3f53c"
+            },
+            "rule_text": "import \"pe\"\n\nrule IndiaDelta\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"d7b50b1546653bff68220996190446bdc7fc4e38373715b8848d1fb44fe3f53c\"\n\n\tstrings:\n\t\t$a = {\n\t\t\tFF 15 [4-12] \n\t\t\t3? 78 56 34 12 \n\t\t\t[0-2] \n\t\t\t8? ?? 78 56 34 12 \n\t\t\t[0-10]\n\t\t\tFF 15\n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

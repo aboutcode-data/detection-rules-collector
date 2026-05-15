@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_x509enrollment.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-23",
+                "title": "Suspicious X509Enrollment - Ps Script",
+                "id": "504d63cb-0dba-4d02-8531-e72981aace2c"
+            },
+            "rule_text": "title: Suspicious X509Enrollment - Ps Script\nid: 504d63cb-0dba-4d02-8531-e72981aace2c\nrelated:\n- id: 114de787-4eb2-48cc-abdb-c0b449f93ea4\n  type: similar\nstatus: test\ndescription: Detect use of X509Enrollment\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=42\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=41\n- https://learn.microsoft.com/en-us/dotnet/api/microsoft.hpc.scheduler.store.cx509enrollmentwebclassfactoryclass?view=hpc-sdk-5.1.6115\nauthor: frack113\ndate: 2022-12-23\ntags:\n- attack.defense-impairment\n- attack.t1553.004\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - X509Enrollment.CBinaryConverter\n    - 884e2002-217d-11da-b2a4-000e7bbb2b09\n  condition: selection\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

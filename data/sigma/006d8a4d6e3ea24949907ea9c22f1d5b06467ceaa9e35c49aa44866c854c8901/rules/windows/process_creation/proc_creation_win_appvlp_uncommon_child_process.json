@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_appvlp_uncommon_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman",
+                "date": "2020-03-13",
+                "title": "Uncommon Child Process Of Appvlp.EXE",
+                "id": "9c7e131a-0f2c-4ae0-9d43-b04f4e266d43"
+            },
+            "rule_text": "title: Uncommon Child Process Of Appvlp.EXE\nid: 9c7e131a-0f2c-4ae0-9d43-b04f4e266d43\nstatus: test\ndescription: 'Detects uncommon child processes of Appvlp.EXE\n\n  Appvlp or the Application Virtualization Utility is included with Microsoft Office.\n  Attackers are able to abuse \"AppVLP\" to execute shell commands.\n\n  Normally, this binary is used for Application Virtualization, but it can also be\n  abused to circumvent the ASR file path rule folder\n\n  or to mark a file as a system file.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Appvlp/\nauthor: Sreeman\ndate: 2020-03-13\nmodified: 2023-11-09\ntags:\n- attack.stealth\n- attack.t1218\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\appvlp.exe\n  filter_main_generic:\n    Image|endswith:\n    - :\\Windows\\SysWOW64\\rundll32.exe\n    - :\\Windows\\System32\\rundll32.exe\n  filter_optional_office_msoasb:\n    Image|contains: :\\Program Files\\Microsoft Office\n    Image|endswith: \\msoasb.exe\n  filter_optional_office_skype:\n    Image|contains|all:\n    - :\\Program Files\\Microsoft Office\n    - \\SkypeSrv\\\n    Image|endswith: \\SKYPESERVER.EXE\n  filter_optional_office_msouc:\n    Image|contains: :\\Program Files\\Microsoft Office\n    Image|endswith: \\MSOUC.EXE\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_brooxml_dec24.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Brooxml_Hunting",
+                "tags": [],
+                "description": "Detects Microsoft OOXML files with prepended data/manipulated header",
+                "author": "Proofpoint",
+                "category": "hunting",
+                "date": "2024-11-27",
+                "modified": "2025-06-02",
+                "score": 70,
+                "reference": "https://x.com/threatinsight/status/1861817946508763480",
+                "id": "1ffea1c7-9f97-5bb1-93d7-ce914765416f"
+            },
+            "rule_text": "rule Brooxml_Hunting\n{\n\tmeta:\n\t\tdescription = \"Detects Microsoft OOXML files with prepended data/manipulated header\"\n\t\tauthor = \"Proofpoint\"\n\t\tcategory = \"hunting\"\n\t\tdate = \"2024-11-27\"\n\t\tmodified = \"2025-06-02\"\n\t\tscore = 70\n\t\treference = \"https://x.com/threatinsight/status/1861817946508763480\"\n\t\tid = \"1ffea1c7-9f97-5bb1-93d7-ce914765416f\"\n\n\tstrings:\n\t\t$pk_ooxml_magic = {50 4b 03 04 [22] 13 00 [2] 5b 43 6f 6e 74 65 6e 74 5f 54 79 70 65 73 5d 2e 78 6d 6c}\n\t\t$pk_0102 = {50 4b 01 02}\n\t\t$pk_0304 = {50 4b 03 04}\n\t\t$pk_0506 = {50 4b 05 06}\n\t\t$pk_0708 = {50 4b 07 08}\n\t\t$word = \"word/\"\n\t\t$ole = {d0 cf 11 e0}\n\t\t$tef = {78 9f 3e 22}\n\n\tcondition:\n\t\t$pk_ooxml_magic in ( 4 .. 16384 ) and $pk_0506 in ( 16384 .. filesize ) and #pk_0506 == 1 and #pk_0102 > 2 and #pk_0304 > 2 and $word and not ( $pk_0102 at 0 ) and not ( $pk_0304 at 0 ) and not ( $pk_0506 at 0 ) and not ( $pk_0708 at 0 ) and not ( $ole at 0 ) and not ( uint16( 0 ) == 0x5a4d ) and not ( $tef at 0 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Brooxml_Phishing",
+                "tags": [],
+                "description": "Detects PDF and OOXML files leading to AiTM phishing",
+                "author": "Proofpoint",
+                "category": "phishing",
+                "date": "2024-11-27",
+                "score": 65,
+                "reference": "https://x.com/threatinsight/status/1861817946508763480",
+                "id": "ccd8ab30-90a4-5d4b-8a77-dbc4669bdb95"
+            },
+            "rule_text": "rule Brooxml_Phishing\n{\n\tmeta:\n\t\tdescription = \"Detects PDF and OOXML files leading to AiTM phishing\"\n\t\tauthor = \"Proofpoint\"\n\t\tcategory = \"phishing\"\n\t\tdate = \"2024-11-27\"\n\t\tscore = 65\n\t\treference = \"https://x.com/threatinsight/status/1861817946508763480\"\n\t\tid = \"ccd8ab30-90a4-5d4b-8a77-dbc4669bdb95\"\n\n\tstrings:\n\t\t$hex1 = { 21 20 03 20 c3 be c3 bf 09 20 [0-1] 06 20 20 20 20 20 20 20 20 20 20 20 01 20 20 20 06 20 20 20 20 20 20 20 20 10 20 20 05 20 20 20 01 20 20 20 c3 be c3 bf c3 bf c3 bf }\n\n\tcondition:\n\t\tall of ( $hex* ) and ( ( uint16be( 0 ) == 0x504b ) or ( uint32be( 0 ) == 0x25504446 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Bancos/TrojanSpy_Win32_Bancos_ABT.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Bancos_ABT",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Bancos.ABT,SIGNATURE_TYPE_PEHSTR_EXT,03 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Bancos_ABT\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Bancos.ABT,SIGNATURE_TYPE_PEHSTR_EXT,03 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b d8 83 fb 01 0f 8c 74 09 00 00 8d 45 f8 50 8d 55 f0 8b 45 fc }\n\t\t$a_01_1 = {05 55 6e 69 74 78 00 }\n\t\t$a_01_2 = {06 54 46 6f 72 6d 31 8b }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

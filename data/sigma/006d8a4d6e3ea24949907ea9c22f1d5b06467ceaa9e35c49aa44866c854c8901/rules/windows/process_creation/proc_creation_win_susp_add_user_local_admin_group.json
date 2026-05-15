@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_add_user_local_admin_group.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-12",
+                "title": "User Added to Local Administrators Group",
+                "id": "ad720b90-25ad-43ff-9b5e-5c841facc8e5"
+            },
+            "rule_text": "title: User Added to Local Administrators Group\nid: ad720b90-25ad-43ff-9b5e-5c841facc8e5\nrelated:\n- id: ffa28e60-bdb1-46e0-9f82-05f7a61cc06e\n  type: similar\n- id: 10fb649c-3600-4d37-b1e6-56ea90bb7e09\n  type: similar\nstatus: test\ndescription: Detects addition of users to the local administrator group via \"Net\"\n  or \"Add-LocalGroupMember\".\nreferences:\n- https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-12\nmodified: 2023-03-02\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1098\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_main:\n  - CommandLine|contains|all:\n    - 'localgroup '\n    - ' /add'\n  - CommandLine|contains|all:\n    - 'Add-LocalGroupMember '\n    - ' -Group '\n  selection_group:\n    CommandLine|contains:\n    - ' administrators '\n    - ' administrateur'\n  condition: all of selection_*\nfalsepositives:\n- Administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

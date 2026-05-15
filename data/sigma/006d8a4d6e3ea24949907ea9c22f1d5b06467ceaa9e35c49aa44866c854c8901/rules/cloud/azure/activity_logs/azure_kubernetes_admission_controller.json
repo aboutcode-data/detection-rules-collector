@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_kubernetes_admission_controller.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-11-25",
+                "title": "Azure Kubernetes Admission Controller",
+                "id": "a61a3c56-4ce2-4351-a079-88ae4cbd2b58"
+            },
+            "rule_text": "title: Azure Kubernetes Admission Controller\nid: a61a3c56-4ce2-4351-a079-88ae4cbd2b58\nstatus: test\ndescription: 'Identifies when an admission controller is executed in Azure Kubernetes.\n\n  A Kubernetes Admission controller intercepts, and possibly modifies, requests to\n  the Kubernetes API server.\n\n  The behavior of this admission controller is determined by an admission webhook\n  (MutatingAdmissionWebhook or ValidatingAdmissionWebhook) that the user deploys in\n  the cluster.\n\n  An adversary can use such webhooks as the MutatingAdmissionWebhook for obtaining\n  persistence in the cluster.\n\n  For example, attackers can intercept and modify the pod creation operations in the\n  cluster and add their malicious container to every created pod.\n\n  An adversary can use the webhook ValidatingAdmissionWebhook, which could be used\n  to obtain access credentials.\n\n  An adversary could use the webhook to intercept the requests to the API server,\n  record secrets, and other sensitive information.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\nauthor: Austin Songer @austinsonger\ndate: 2021-11-25\nmodified: 2022-12-18\ntags:\n- attack.privilege-escalation\n- attack.initial-access\n- attack.persistence\n- attack.stealth\n- attack.t1078\n- attack.credential-access\n- attack.t1552\n- attack.t1552.007\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName|startswith:\n    - MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/ADMISSIONREGISTRATION.K8S.IO\n    - MICROSOFT.CONTAINERSERVICE/MANAGEDCLUSTERS/ADMISSIONREGISTRATION.K8S.IO\n    operationName|endswith:\n    - /MUTATINGWEBHOOKCONFIGURATIONS/WRITE\n    - /VALIDATINGWEBHOOKCONFIGURATIONS/WRITE\n  condition: selection\nfalsepositives:\n- Azure Kubernetes Admissions Controller may be done by a system administrator.\n- If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_findstr_recon_everyone.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-12",
+                "title": "Permission Misconfiguration Reconnaissance Via Findstr.EXE",
+                "id": "47e4bab7-c626-47dc-967b-255608c9a920"
+            },
+            "rule_text": "title: Permission Misconfiguration Reconnaissance Via Findstr.EXE\nid: 47e4bab7-c626-47dc-967b-255608c9a920\nstatus: test\ndescription: 'Detects usage of findstr with the \"EVERYONE\" or \"BUILTIN\" keywords.\n\n  This was seen being used in combination with \"icacls\" and other utilities to spot\n  misconfigured files or folders permissions.\n\n  '\nreferences:\n- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-12\nmodified: 2023-11-11\ntags:\n- attack.credential-access\n- attack.t1552.006\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_findstr_img:\n  - Image|endswith:\n    - \\find.exe\n    - \\findstr.exe\n  - OriginalFileName:\n    - FIND.EXE\n    - FINDSTR.EXE\n  selection_findstr_cli:\n    CommandLine|contains:\n    - '\"Everyone\"'\n    - '''Everyone'''\n    - '\"BUILTIN\\\\\"'\n    - '''BUILTIN\\'''\n  selection_special:\n    CommandLine|contains|all:\n    - 'icacls '\n    - 'findstr '\n    - Everyone\n  condition: all of selection_findstr_* or selection_special\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_findstr_recon_everyone/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

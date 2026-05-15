@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/xworm_anti_analysis.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Leandro Ferreira",
+                "date": "2025-12-12",
+                "title": "Xworm Anti-Analysis Module",
+                "id": "cb42109e-9c68-4ae6-bac2-1b8224b60f3d"
+            },
+            "rule_text": "title: Xworm Anti-Analysis Module\nid: cb42109e-9c68-4ae6-bac2-1b8224b60f3d\ndescription: Detects XWorm anti-analysis module. More specifically when Xworm makes\n  a call towards a IP Intellegence service and check wether the external ip address\n  is demeed as hosting.\nstatus: stable\nauthor: Leandro Ferreira\nreferences:\n- https://vx-underground.org/Builders/XWorm/XWorm%20V6.0\n- https://thehackernews.com/2025/10/xworm-60-returns-with-35-plugins-and.html\ndate: 2025-12-12\nmodified: 2025-12-12\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    http_method: GET\n    url_host: ip-api.com\n    uri_path: /line/\n    uri_scheme: http\n    uri_query: fields=hosting\n    http_user_agent: null\n  condition: selection\nfalsepositives:\n- Legitimate binaries that legitimately use the service\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

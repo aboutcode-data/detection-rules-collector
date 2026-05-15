@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/NCCGroup/heartbleed.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HeartBleedWin32",
+                "tags": [],
+                "author": "NCCGROUP",
+                "reference": "https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2014/june/writing-robust-yara-detection-rules-for-heartbleed/",
+                "description": "rule to detect heartbleed"
+            },
+            "rule_text": "rule HeartBleedWin32\n{\n\tmeta:\n\t\tauthor = \"NCCGROUP\"\n\t\treference = \"https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2014/june/writing-robust-yara-detection-rules-for-heartbleed/\"\n\t\tdescription = \"rule to detect heartbleed\"\n\n\tstrings:\n\t\t$opensslmini = {E8 ?? ?? ?? ?? 8B 4C 24 24 8B E8 8D 7D 01 8B C3 C6 45 00 02 C1 E8 08 53 88 07 88 5F 01 51 83 C7 02 57 E8 ?? ?? ?? ??}\n\t\t$heartbleedpatch = {83 F9 13 73 ?? 5F 33 C0 5E 59 C3 0F ?? ?? ?? 0F ?? ??}\n\n\tcondition:\n\t\t$opensslmini and not $heartbleedpatch\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

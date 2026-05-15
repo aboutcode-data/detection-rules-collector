@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_rundll32_remote_share_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-18",
+                "title": "Remote DLL Load Via Rundll32.EXE",
+                "id": "f40017b3-cb2e-4335-ab5d-3babf679c1de"
+            },
+            "rule_text": "title: Remote DLL Load Via Rundll32.EXE\nid: f40017b3-cb2e-4335-ab5d-3babf679c1de\nstatus: test\ndescription: Detects a remote DLL load event via \"rundll32.exe\".\nreferences:\n- https://github.com/gabe-k/themebleed\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-18\ntags:\n- attack.execution\n- attack.t1204.002\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    ImageLoaded|startswith: \\\\\\\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

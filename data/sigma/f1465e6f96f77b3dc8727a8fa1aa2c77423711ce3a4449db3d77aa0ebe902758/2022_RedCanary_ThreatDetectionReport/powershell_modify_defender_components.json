@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/powershell_modify_defender_components.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Abusing PowerShell to Modify Defender Components",
+                "id": "bb193057-4917-427f-887c-1d2615394935"
+            },
+            "rule_text": "title: Abusing PowerShell to Modify Defender Components\nid: bb193057-4917-427f-887c-1d2615394935\nstatus: experimental\ndescription: Looks for instances of powershell being used to modify or degrade Windows\n  Defender functionality. Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/disable-or-modify-tools/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.defense_evasion\n- attack.t1562\n- attack.t1562.001\n- attack.t1562.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\powershell.exe\n    CommandLine|contains: Add-MpPreference\n  selection2:\n    CommandLine|contains:\n    - dll\n    - vbs\n    - zip\n    - .bat\n    - iso\n  condition: selection and selection2\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

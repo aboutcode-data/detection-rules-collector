@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_ec2_disable_encryption.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Sittikorn S",
+                "date": "2021-06-29",
+                "title": "AWS EC2 Disable EBS Encryption",
+                "id": "16124c2d-e40b-4fcc-8f2c-5ab7870a2223"
+            },
+            "rule_text": "title: AWS EC2 Disable EBS Encryption\nid: 16124c2d-e40b-4fcc-8f2c-5ab7870a2223\nstatus: stable\ndescription: 'Identifies disabling of default Amazon Elastic Block Store (EBS) encryption\n  in the current region.\n\n  Disabling default encryption does not change the encryption status of your existing\n  volumes.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DisableEbsEncryptionByDefault.html\nauthor: Sittikorn S\ndate: 2021-06-29\nmodified: 2021-08-20\ntags:\n- attack.impact\n- attack.t1486\n- attack.t1565\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: ec2.amazonaws.com\n    eventName: DisableEbsEncryptionByDefault\n  condition: selection\nfalsepositives:\n- System Administrator Activities\n- DEV, UAT, SAT environment. You should apply this rule with PROD account only.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

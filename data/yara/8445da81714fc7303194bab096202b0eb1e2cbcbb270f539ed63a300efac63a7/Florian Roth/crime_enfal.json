@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/crime_enfal.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Enfal_Malware",
+                "tags": [],
+                "description": "Detects a certain type of Enfal Malware",
+                "author": "Florian Roth",
+                "reference": "not set",
+                "date": "2015/02/10",
+                "hash": "9639ec9aca4011b2724d8e7ddd13db19913e3e16",
+                "score": 60
+            },
+            "rule_text": "rule Enfal_Malware\n{\n\tmeta:\n\t\tdescription = \"Detects a certain type of Enfal Malware\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/02/10\"\n\t\thash = \"9639ec9aca4011b2724d8e7ddd13db19913e3e16\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$s0 = \"POWERPNT.exe\" fullword ascii\n\t\t$s1 = \"%APPDATA%\\\\Microsoft\\\\Windows\\\\\" fullword ascii\n\t\t$s2 = \"%HOMEPATH%\" fullword ascii\n\t\t$s3 = \"Server2008\" fullword ascii\n\t\t$s4 = \"Server2003\" fullword ascii\n\t\t$s5 = \"Server2003R2\" fullword ascii\n\t\t$s6 = \"Server2008R2\" fullword ascii\n\t\t$s9 = \"%HOMEDRIVE%\" fullword ascii\n\t\t$s13 = \"%ComSpec%\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Enfal_Malware_Backdoor",
+                "tags": [],
+                "description": "Generic Rule to detect the Enfal Malware",
+                "author": "Florian Roth",
+                "date": "2015/02/10",
+                "super_rule": 1,
+                "hash0": "6d484daba3927fc0744b1bbd7981a56ebef95790",
+                "hash1": "d4071272cc1bf944e3867db299b3f5dce126f82b",
+                "hash2": "6c7c8b804cc76e2c208c6e3b6453cb134d01fa41",
+                "score": 60
+            },
+            "rule_text": "rule Enfal_Malware_Backdoor\n{\n\tmeta:\n\t\tdescription = \"Generic Rule to detect the Enfal Malware\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/10\"\n\t\tsuper_rule = 1\n\t\thash0 = \"6d484daba3927fc0744b1bbd7981a56ebef95790\"\n\t\thash1 = \"d4071272cc1bf944e3867db299b3f5dce126f82b\"\n\t\thash2 = \"6c7c8b804cc76e2c208c6e3b6453cb134d01fa41\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$x1 = \"Micorsoft Corportation\" fullword wide\n\t\t$x2 = \"IM Monnitor Service\" fullword wide\n\t\t$s1 = \"imemonsvc.dll\" fullword wide\n\t\t$s2 = \"iphlpsvc.tmp\" fullword\n\t\t$z1 = \"urlmon\" fullword\n\t\t$z2 = \"Registered trademarks and service marks are the property of their respec\" wide\n\t\t$z3 = \"XpsUnregisterServer\" fullword\n\t\t$z4 = \"XpsRegisterServer\" fullword\n\t\t$z5 = \"{53A4988C-F91F-4054-9076-220AC5EC03F3}\" fullword\n\n\tcondition:\n\t\t($mz at 0 ) and ( 1 of ( $x* ) or ( all of ( $s* ) and all of ( $z* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_tmutil_exclude_file_from_backup.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pratinav Chandra",
+                "date": "2024-05-29",
+                "title": "New File Exclusion Added To Time Machine Via Tmutil - MacOS",
+                "id": "9acf45ed-3a26-4062-bf08-56857613eb52"
+            },
+            "rule_text": "title: New File Exclusion Added To Time Machine Via Tmutil - MacOS\nid: 9acf45ed-3a26-4062-bf08-56857613eb52\nstatus: test\ndescription: 'Detects the addition of a new file or path exclusion to MacOS Time Machine\n  via the \"tmutil\" utility.\n\n  An adversary could exclude a path from Time Machine backups to prevent certain files\n  from being backed up.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md#atomic-test-12---disable-time-machine\n- https://www.loobins.io/binaries/tmutil/\nauthor: Pratinav Chandra\ndate: 2024-05-29\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection_img:\n  - Image|endswith: /tmutil\n  - CommandLine|contains: tmutil\n  selection_cmd:\n    CommandLine|contains: addexclusion\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

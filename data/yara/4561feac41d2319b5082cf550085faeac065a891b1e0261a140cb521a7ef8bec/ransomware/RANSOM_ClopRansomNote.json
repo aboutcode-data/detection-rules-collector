@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/advanced-threat-research/Yara-Rules/blob/master/ransomware/RANSOM_ClopRansomNote.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "clop_ransom_note",
+                "tags": [],
+                "description": "Rule to detect Clop Ransomware Note",
+                "author": "Marc Rivero | McAfee ATR Team",
+                "date": "2019-08-01",
+                "rule_version": "v1",
+                "malware_type": "ransomware",
+                "malware_family": "Ransom:W32/Clop",
+                "actor_type": "Cybercrime",
+                "actor_group": "Unknown",
+                "reference": "https://www.mcafee.com/blogs/other-blogs/mcafee-labs/clop-ransomware/"
+            },
+            "rule_text": "rule clop_ransom_note\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Clop Ransomware Note\"\n\t\tauthor = \"Marc Rivero | McAfee ATR Team\"\n\t\tdate = \"2019-08-01\"\n\t\trule_version = \"v1\"\n\t\tmalware_type = \"ransomware\"\n\t\tmalware_family = \"Ransom:W32/Clop\"\n\t\tactor_type = \"Cybercrime\"\n\t\tactor_group = \"Unknown\"\n\t\treference = \"https://www.mcafee.com/blogs/other-blogs/mcafee-labs/clop-ransomware/\"\n\n\tstrings:\n\t\t$s1 = \"If you want to restore your files write to emails\" fullword ascii\n\t\t$s2 = \"All files on each host in the network have been encrypted with a strong algorithm.\" fullword ascii\n\t\t$s3 = \"Shadow copies also removed, so F8 or any other methods may damage encrypted data but not recover.\" fullword ascii\n\t\t$s4 = \"You will receive decrypted samples and our conditions how to get the decoder.\" fullword ascii\n\t\t$s5 = \"DO NOT RENAME OR MOVE the encrypted and readme files.\" fullword ascii\n\t\t$s6 = \"(Less than 6 Mb each, non-archived and your files should not contain valuable information\" fullword ascii\n\t\t$s7 = \"We exclusively have decryption software for your situation\" fullword ascii\n\t\t$s8 = \"Do not rename encrypted files.\" fullword ascii\n\t\t$s9 = \"DO NOT DELETE readme files.\" fullword ascii\n\t\t$s10 = \"Nothing personal just business\" fullword ascii\n\t\t$s11 = \"eqaltech.su\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x6f59 ) and filesize < 10KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

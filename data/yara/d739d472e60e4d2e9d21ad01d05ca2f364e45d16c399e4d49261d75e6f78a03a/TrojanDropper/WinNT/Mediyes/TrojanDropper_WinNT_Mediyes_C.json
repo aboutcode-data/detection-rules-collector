@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/WinNT/Mediyes/TrojanDropper_WinNT_Mediyes_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_WinNT_Mediyes_C",
+                "tags": [],
+                "description": "TrojanDropper:WinNT/Mediyes.C,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_WinNT_Mediyes_C\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:WinNT/Mediyes.C,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {81 fe 38 04 00 00 76 0a bf 03 00 00 00 8b c7 5f 5e c3 83 f8 0a 75 40 81 fe ce 07 00 00 75 0a }\n\t\t$a_03_1 = {83 f8 68 74 [0-02] e8 [0-02] 00 00 83 f8 ?? 74 ?? e8 [0-02] 00 00 83 f8 6b 74 ?? 8b 85 ?? ?? ff ff 83 08 48 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

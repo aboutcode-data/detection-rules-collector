@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_ccleaner_du.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-07-13",
+                "title": "Potential CCleanerDU.DLL Sideloading",
+                "id": "1fbc0671-5596-4e17-8682-f020a0b995dc"
+            },
+            "rule_text": "title: Potential CCleanerDU.DLL Sideloading\nid: 1fbc0671-5596-4e17-8682-f020a0b995dc\nstatus: test\ndescription: Detects potential DLL sideloading of \"CCleanerDU.dll\"\nreferences:\n- https://lab52.io/blog/2344-2/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-07-13\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\CCleanerDU.dll\n  filter_main_path:\n    Image|startswith:\n    - C:\\Program Files\\CCleaner\\\n    - C:\\Program Files (x86)\\CCleaner\\\n    Image|endswith:\n    - \\CCleaner.exe\n    - \\CCleaner64.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- False positives could occur from other custom installation paths. Apply additional\n  filters accordingly.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_sysscan.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "xDedic_SysScan_unpacked",
+                "tags": [],
+                "author": " Kaspersky Lab",
+                "maltype": "crimeware",
+                "type": "crimeware",
+                "description": "Detects SysScan APT tool",
+                "reference": "https://securelist.com/blog/research/75027/xdedic-the-shady-world-of-hacked-servers-for-sale/",
+                "filetype": "Win32 EXE",
+                "date": "2016-03-14",
+                "version": "1.0",
+                "hash1": "fac495be1c71012682ebb27092060b43",
+                "hash2": "e8cc69231e209db7968397e8a244d104",
+                "hash3": "a53847a51561a7e76fd034043b9aa36d",
+                "hash4": "e8691fa5872c528cd8e72b82e7880e98",
+                "hash5": "F661b50d45400e7052a2427919e2f777",
+                "id": "4f5d37b3-e3aa-51ec-b36e-b494c8abe227"
+            },
+            "rule_text": "rule xDedic_SysScan_unpacked\n{\n\tmeta:\n\t\tauthor = \" Kaspersky Lab\"\n\t\tmaltype = \"crimeware\"\n\t\ttype = \"crimeware\"\n\t\tdescription = \"Detects SysScan APT tool\"\n\t\treference = \"https://securelist.com/blog/research/75027/xdedic-the-shady-world-of-hacked-servers-for-sale/\"\n\t\tfiletype = \"Win32 EXE\"\n\t\tdate = \"2016-03-14\"\n\t\tversion = \"1.0\"\n\t\thash1 = \"fac495be1c71012682ebb27092060b43\"\n\t\thash2 = \"e8cc69231e209db7968397e8a244d104\"\n\t\thash3 = \"a53847a51561a7e76fd034043b9aa36d\"\n\t\thash4 = \"e8691fa5872c528cd8e72b82e7880e98\"\n\t\thash5 = \"F661b50d45400e7052a2427919e2f777\"\n\t\tid = \"4f5d37b3-e3aa-51ec-b36e-b494c8abe227\"\n\n\tstrings:\n\t\t$a1 = \"/c ping -n 2 127.0.0.1 & del \\\"SysScan.exe\\\"\" ascii wide\n\t\t$a2 = \"SysScan DEBUG Mode!!!\" ascii wide\n\t\t$a3 = \"This rechecking? (set 0/1 or press enter key)\" ascii wide\n\t\t$a4 = \"http://37.49.224.144:8189/manual_result\" ascii wide\n\t\t$b1 = \"Checker end work!\" ascii wide\n\t\t$b2 = \"Trying send result...\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and filesize < 5000000 and ( any of ( $a* ) or all of ( $b* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "xdedic_packed_syscan",
+                "tags": [],
+                "author": "Kaspersky Lab - modified by Florian Roth",
+                "company": "Kaspersky Lab",
+                "id": "da8e59f3-53f9-504b-afff-9caab798db6c"
+            },
+            "rule_text": "rule xdedic_packed_syscan\n{\n\tmeta:\n\t\tauthor = \"Kaspersky Lab - modified by Florian Roth\"\n\t\tcompany = \"Kaspersky Lab\"\n\t\tid = \"da8e59f3-53f9-504b-afff-9caab798db6c\"\n\n\tstrings:\n\t\t$a1 = \"SysScan.exe\" nocase ascii wide\n\t\t$a2 = \"1.3.4.\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and filesize > 500KB and filesize < 1500KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

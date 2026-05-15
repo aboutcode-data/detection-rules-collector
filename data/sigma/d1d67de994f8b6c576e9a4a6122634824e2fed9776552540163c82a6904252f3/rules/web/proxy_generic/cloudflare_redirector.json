@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/cloudflare_redirector.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Patrik Olson, Axel Olsson",
+                "date": "2023-12-18",
+                "title": "Cloudflare Redirector Traffic",
+                "id": "8a631bd3-876c-4c51-9652-ceda607a2cb1"
+            },
+            "rule_text": "title: Cloudflare Redirector Traffic\nid: 8a631bd3-876c-4c51-9652-ceda607a2cb1\ndescription: Cloudflare redirectors have historically been utilized as C2 channels.\nstatus: experimental\nauthor: NTT Security - Patrik Olson, Axel Olsson\ndate: '2023-12-18'\nreferences:\n- https://www.rapid7.com/blog/post/2023/09/29/etr-critical-vulnerabilities-in-ws_ftp-server/\n- https://securityaffairs.com/99640/malware/covid-19-attack-cloudflare-c2.html\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-host|endswith: .workers.dev\n    cs-method:\n    - POST\n    - PUT\n    cs-referer: ''\n    bytes_out|gt: 0\n  filter:\n  - cs-host|startswith:\n    - proxy.cf\n    - proxy.moviewebdotapp\n    - proxy.billowing-moon-\n  condition: selection and not filter\nfalsepositives:\n- Legitimate redirector domains\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

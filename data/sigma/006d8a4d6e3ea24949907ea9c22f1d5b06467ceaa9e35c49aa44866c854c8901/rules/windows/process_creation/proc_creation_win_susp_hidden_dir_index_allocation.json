@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_hidden_dir_index_allocation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Scoubi (@ScoubiMtl)",
+                "date": "2023-10-09",
+                "title": "Potential Hidden Directory Creation Via NTFS INDEX_ALLOCATION Stream - CLI",
+                "id": "0900463c-b33b-49a8-be1d-552a3b553dae"
+            },
+            "rule_text": "title: Potential Hidden Directory Creation Via NTFS INDEX_ALLOCATION Stream - CLI\nid: 0900463c-b33b-49a8-be1d-552a3b553dae\nrelated:\n- id: a8f866e1-bdd4-425e-a27a-37619238d9c7\n  type: similar\nstatus: test\ndescription: 'Detects command line containing reference to the \"::$index_allocation\"\n  stream, which can be used as a technique to prevent access to folders or files from\n  tooling such as \"explorer.exe\" or \"powershell.exe\"\n\n  '\nreferences:\n- https://twitter.com/pfiatde/status/1681977680688738305\n- https://soroush.me/blog/2010/12/a-dotty-salty-directory-a-secret-place-in-ntfs-for-secret-files/\n- https://sec-consult.com/blog/detail/pentesters-windows-ntfs-tricks-collection/\n- https://github.com/redcanaryco/atomic-red-team/blob/5c3b23002d2bbede3c07e7307165fc2a235a427d/atomics/T1564.004/T1564.004.md#atomic-test-5---create-hidden-directory-via-index_allocation\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/c54dec26-1551-4d3a-a0ea-4fa40f848eb3\nauthor: Nasreddine Bencherchali (Nextron Systems), Scoubi (@ScoubiMtl)\ndate: 2023-10-09\ntags:\n- attack.stealth\n- attack.t1564.004\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains: ::$index_allocation\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

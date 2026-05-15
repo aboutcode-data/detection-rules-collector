@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/AsyncRAT/Trojan_Win64_AsyncRat_BSA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_AsyncRat_BSA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/AsyncRat.BSA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_AsyncRat_BSA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/AsyncRat.BSA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {55 48 83 ec 20 48 8d 6c 24 20 48 8b 09 0f b6 d2 e8 af 68 06 00 83 f8 ff 74 08 31 c0 48 83 c4 20 5d }\n\t\t$a_01_1 = {31 d2 e8 bf 5c 06 00 48 8b 36 e8 8b 51 06 00 48 89 f1 89 c2 49 89 f8 e8 6e 4d 06 00 83 f8 ff 0f 84 98 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

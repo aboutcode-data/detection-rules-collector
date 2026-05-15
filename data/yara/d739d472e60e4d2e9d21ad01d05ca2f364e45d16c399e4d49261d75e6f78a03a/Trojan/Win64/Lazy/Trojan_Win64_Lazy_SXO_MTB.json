@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Lazy/Trojan_Win64_Lazy_SXO_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Lazy_SXO_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Lazy.SXO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Lazy_SXO_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Lazy.SXO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {99 b9 61 00 00 00 f7 f9 8b c2 89 44 24 ?? eb ?? 6b 44 24 ?? 0a 03 44 24 ?? 99 b9 61 00 00 00 f7 f9 8b c2 89 44 }\n\t\t$a_03_1 = {b8 04 00 00 00 48 6b c0 00 8b 44 04 ?? 89 04 24 8b 04 24 c1 e8 08 83 e0 0f 89 44 24 ?? 8b 04 24 c1 e8 10 83 e0 0f }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 30 + ( #a_03_1 & 1 ) * 10 ) >= 40\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

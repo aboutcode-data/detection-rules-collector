@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_office_winword_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Victor Sergeev, oscd.community",
+                "date": "2020-10-09",
+                "title": "Potential Arbitrary DLL Load Using Winword",
+                "id": "f7375e28-5c14-432f-b8d1-1db26c832df3"
+            },
+            "rule_text": "title: Potential Arbitrary DLL Load Using Winword\nid: f7375e28-5c14-432f-b8d1-1db26c832df3\nrelated:\n- id: 2621b3a6-3840-4810-ac14-a02426086171\n  type: obsolete\nstatus: test\ndescription: Detects potential DLL sideloading using the Microsoft Office winword\n  process via the '/l' flag.\nreferences:\n- https://github.com/D4Vinci/One-Lin3r/blob/9fdfa5f0b9c698dfbd4cdfe7d2473192777ae1c6/one_lin3r/core/liners/windows/cmd/dll_loader_word.py\nauthor: Victor Sergeev, oscd.community\ndate: 2020-10-09\nmodified: 2023-03-29\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WINWORD.exe\n  - OriginalFileName: WinWord.exe\n  selection_dll:\n    CommandLine|contains|all:\n    - '/l '\n    - .dll\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

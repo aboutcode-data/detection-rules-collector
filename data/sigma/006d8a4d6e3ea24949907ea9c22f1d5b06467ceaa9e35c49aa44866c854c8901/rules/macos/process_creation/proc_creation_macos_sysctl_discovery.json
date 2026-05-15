@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_sysctl_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pratinav Chandra",
+                "date": "2024-05-27",
+                "title": "System Information Discovery Via Sysctl - MacOS",
+                "id": "6ff08e55-ea53-4f27-94a1-eff92e6d9d5c"
+            },
+            "rule_text": "title: System Information Discovery Via Sysctl - MacOS\nid: 6ff08e55-ea53-4f27-94a1-eff92e6d9d5c\nstatus: test\ndescription: 'Detects the execution of \"sysctl\" with specific arguments that have\n  been used by threat actors and malware. It provides system hardware information.\n\n  This process is primarily used to detect and avoid virtualization and analysis environments.\n\n  '\nreferences:\n- https://www.loobins.io/binaries/sysctl/#\n- https://evasions.checkpoint.com/techniques/macos.html\n- https://www.welivesecurity.com/2019/04/09/oceanlotus-macos-malware-update/\n- https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/\n- https://objective-see.org/blog/blog_0x1E.html\n- https://www.virustotal.com/gui/file/1c547a064494a35d6b5e6b459de183ab2720a22725e082bed6f6629211f7abc1/behavior\n- https://www.virustotal.com/gui/file/b4b1fc65f87b3dcfa35e2dbe8e0a34ad9d8a400bec332025c0a2e200671038aa/behavior\nauthor: Pratinav Chandra\ndate: 2024-05-27\ntags:\n- attack.stealth\n- attack.t1497.001\n- attack.discovery\n- attack.t1082\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: /sysctl\n  - CommandLine|contains: sysctl\n  selection_cmd:\n    CommandLine|contains:\n    - hw.\n    - kern.\n    - machdep.\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

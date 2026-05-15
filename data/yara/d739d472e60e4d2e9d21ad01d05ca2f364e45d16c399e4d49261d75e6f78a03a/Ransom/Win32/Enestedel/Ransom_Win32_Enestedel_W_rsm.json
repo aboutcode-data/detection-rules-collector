@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Enestedel/Ransom_Win32_Enestedel_W_rsm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Enestedel_W_rsm",
+                "tags": [],
+                "description": "Ransom:Win32/Enestedel.W!rsm,SIGNATURE_TYPE_PEHSTR_EXT,54 01 54 01 0a 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Enestedel_W_rsm\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Enestedel.W!rsm,SIGNATURE_TYPE_PEHSTR_EXT,54 01 54 01 0a 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {96 02 00 00 c7 45 }\n\t\t$a_01_1 = {96 02 00 00 c7 85 }\n\t\t$a_03_2 = {ff ff 00 00 80 00 90 09 04 00 c7 }\n\t\t$a_03_3 = {ff ff 50 00 00 00 90 0a 24 00 01 00 00 00 c7 [0-08] 03 00 00 00 c7 [0-08] 00 00 00 00 c7 }\n\t\t$a_03_4 = {00 10 0f be 0d 90 09 05 00 0f be 05 }\n\t\t$a_03_5 = {00 10 0f be 0d 90 09 05 00 0f bf 05 }\n\t\t$a_03_6 = {00 10 0f bf 0d 90 09 05 00 0f bf 05 }\n\t\t$a_03_7 = {00 10 0f bf 05 90 09 05 00 0f be 15 }\n\t\t$a_03_8 = {00 10 52 0f be 05 ?? ?? 00 10 50 e8 90 09 05 00 0f be 15 }\n\t\t$a_03_9 = {00 10 52 0f be 05 ?? ?? 00 10 50 e8 90 09 05 00 0f bf 15 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 100 + ( #a_01_1 & 1 ) * 100 + ( #a_03_2 & 1 ) * 100 + ( #a_03_3 & 1 ) * 100 + ( #a_03_4 & 1 ) * 10 + ( #a_03_5 & 1 ) * 10 + ( #a_03_6 & 1 ) * 10 + ( #a_03_7 & 1 ) * 10 + ( #a_03_8 & 1 ) * 10 + ( #a_03_9 & 1 ) * 10 ) >= 340\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

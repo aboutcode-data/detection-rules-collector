@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/BumbleBee/Trojan_Win64_Bumblebee_AB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Bumblebee_AB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Bumblebee.AB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Bumblebee_AB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Bumblebee.AB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {49 8b 80 88 00 00 00 49 8b f8 49 8b 88 18 02 00 00 48 0f af c0 48 69 c0 ?? ?? 00 00 49 89 80 88 00 00 00 49 8b 80 b0 01 00 00 48 05 ?? ?? 00 00 48 09 81 98 01 00 00 49 8b c8 49 8b }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Bumblebee_AB_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win64/Bumblebee.AB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Bumblebee_AB_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Bumblebee.AB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {42 8a 0c 30 2a 8c 24 a8 00 00 00 32 8c 24 a0 00 00 00 49 8b 40 20 41 88 0c 06 83 fd 08 0f 84 ?? ?? 00 00 49 8b 50 20 8b cd b8 01 00 00 00 }\n\t\t$a_03_1 = {49 8b 00 48 8b ce 48 81 c9 ?? ?? 00 00 48 0f af c1 49 89 00 49 8b 48 20 41 8a 04 0f 02 c0 [0-03] 41 88 04 0f e9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

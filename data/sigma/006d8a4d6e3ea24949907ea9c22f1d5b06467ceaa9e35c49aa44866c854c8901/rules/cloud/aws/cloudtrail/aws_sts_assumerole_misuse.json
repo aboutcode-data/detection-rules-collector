@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_sts_assumerole_misuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-07-24",
+                "title": "AWS STS AssumeRole Misuse",
+                "id": "905d389b-b853-46d0-9d3d-dea0d3a3cd49"
+            },
+            "rule_text": "title: AWS STS AssumeRole Misuse\nid: 905d389b-b853-46d0-9d3d-dea0d3a3cd49\nstatus: test\ndescription: Identifies the suspicious use of AssumeRole. Attackers could move laterally\n  and escalate privileges.\nreferences:\n- https://github.com/elastic/detection-rules/pull/1214\n- https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html\nauthor: Austin Songer @austinsonger\ndate: 2021-07-24\nmodified: 2022-10-09\ntags:\n- attack.lateral-movement\n- attack.privilege-escalation\n- attack.t1548\n- attack.t1550\n- attack.t1550.001\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    userIdentity.type: AssumedRole\n    userIdentity.sessionContext.sessionIssuer.type: Role\n  condition: selection\nfalsepositives:\n- AssumeRole may be done by a system or network administrator. Verify whether the\n  user identity, user agent, and/or hostname should be making changes in your environment.\n- AssumeRole from unfamiliar users or hosts should be investigated. If known behavior\n  is causing false positives, it can be exempted from the rule.\n- Automated processes that uses Terraform may lead to false positives.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

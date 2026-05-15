@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_cmd_obfuscated_commands.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Command Shell Obfuscated Commands (RedCanary Threat Detection Report)",
+                "id": "b6aed14c-95a2-4e03-9949-70bc73c08b64"
+            },
+            "rule_text": "title: Command Shell Obfuscated Commands (RedCanary Threat Detection Report)\nid: b6aed14c-95a2-4e03-9949-70bc73c08b64\nstatus: experimental\ndescription: Detects command line strings with high numbers of suspicious characters,\n  potentially for obfuscation. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.execution\n- attack.t1059.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    CommandLine|re: ^([^^=%![(; ]*[\\^=%![(; ]){8,}[^^=%![(; ]*$\n  condition: selection\nfalsepositives:\n- Legitimate processes with long or convoluted command lines.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/SvcLoader/Trojan_Win64_SvcLoader_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_SvcLoader_A_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/SvcLoader.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_SvcLoader_A_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/SvcLoader.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {45 33 f6 33 d2 8d 4a 0a ff 15 ?? ?? 00 00 48 8b d8 48 85 c0 4c 8b 6d e8 }\n\t\t$a_01_1 = {c7 45 f0 30 01 00 00 33 d2 41 b8 2c 01 00 00 48 8d 4d f4 e8 }\n\t\t$a_01_2 = {48 8d 55 f0 48 8b cb ff 15 }\n\t\t$a_03_3 = {48 8d 4d 1c ff 15 ?? ?? 00 00 85 c0 }\n\t\t$a_03_4 = {48 8d 55 f0 48 8b cb ff 15 ?? ?? 00 00 85 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 + ( #a_03_3 & 1 ) * 2 + ( #a_03_4 & 1 ) * 2 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

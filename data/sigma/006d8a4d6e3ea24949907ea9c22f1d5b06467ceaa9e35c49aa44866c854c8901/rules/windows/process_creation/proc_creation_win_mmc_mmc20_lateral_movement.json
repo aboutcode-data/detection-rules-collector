@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mmc_mmc20_lateral_movement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@2xxeformyshirt (Security Risk Advisors) - rule; Teymur Kheirkhabarov (idea)",
+                "date": "2020-03-04",
+                "title": "MMC20 Lateral Movement",
+                "id": "f1f3bf22-deb2-418d-8cce-e1a45e46a5bd"
+            },
+            "rule_text": "title: MMC20 Lateral Movement\nid: f1f3bf22-deb2-418d-8cce-e1a45e46a5bd\nstatus: test\ndescription: Detects MMC20.Application Lateral Movement; specifically looks for the\n  spawning of the parent MMC.exe with a command line of \"-Embedding\" as a child of\n  svchost.exe\nreferences:\n- https://enigma0x3.net/2017/01/05/lateral-movement-using-the-mmc20-application-com-object/\n- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view?usp=sharing\nauthor: '@2xxeformyshirt (Security Risk Advisors) - rule; Teymur Kheirkhabarov (idea)'\ndate: 2020-03-04\nmodified: 2021-11-27\ntags:\n- attack.execution\n- attack.lateral-movement\n- attack.t1021.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\svchost.exe\n    Image|endswith: \\mmc.exe\n    CommandLine|contains: -Embedding\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

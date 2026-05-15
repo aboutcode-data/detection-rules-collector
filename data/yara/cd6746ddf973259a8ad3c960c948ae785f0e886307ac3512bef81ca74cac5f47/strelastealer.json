@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/strelastealer.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "detect_StrelaStealer",
+                "tags": [
+                    "StrelaStealer"
+                ],
+                "description": "detect_StrelaStealer",
+                "author": "@malgamy12",
+                "date": "2022/11/12",
+                "license": "DRL 1.1",
+                "hash": "6e8a3ffffd2f7a91f3f845b78dd90011feb80d30b4fe48cb174b629afa273403"
+            },
+            "rule_text": "rule detect_StrelaStealer : StrelaStealer\n{\n\tmeta:\n\t\tdescription = \"detect_StrelaStealer\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"2022/11/12\"\n\t\tlicense = \"DRL 1.1\"\n\t\thash = \"6e8a3ffffd2f7a91f3f845b78dd90011feb80d30b4fe48cb174b629afa273403\"\n\n\tstrings:\n\t\t$pdb = \"StrelaDLLCompile.pdb\" ascii\n\t\t$s1 = \"4f3855aa-af7e-4fd2-b04e-55e63653d2f7\" ascii\n\t\t$s2 = \"StrelaDLLCompile.dll\" ascii\n\t\t$chunk_1 = {33 D2 8B C7 F7 F3 8D 04 2E 83 C7 ?? 83 C6 ?? 8A 92 [4] 30 56 ?? 33 D2 F7 F3 8A 82 [4] 30 46 ?? 83 FF ??}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( $pdb or ( 1 of ( $s* ) and $chunk_1 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

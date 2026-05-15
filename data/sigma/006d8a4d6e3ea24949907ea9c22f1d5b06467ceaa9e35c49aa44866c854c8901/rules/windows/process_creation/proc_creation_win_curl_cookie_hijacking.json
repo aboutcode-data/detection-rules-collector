@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_cookie_hijacking.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-27",
+                "title": "Potential Cookies Session Hijacking",
+                "id": "5a6e1e16-07de-48d8-8aae-faa766c05e88"
+            },
+            "rule_text": "title: Potential Cookies Session Hijacking\nid: 5a6e1e16-07de-48d8-8aae-faa766c05e88\nstatus: test\ndescription: Detects execution of \"curl.exe\" with the \"-c\" flag in order to save cookie\n  data.\nreferences:\n- https://curl.se/docs/manpage.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-27\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_cli:\n  - CommandLine|re: \\s-c\\s\n  - CommandLine|contains: --cookie-jar\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_cookie_hijacking/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

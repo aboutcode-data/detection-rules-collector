@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_system_network_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "remotephone, oscd.community",
+                "date": "2020-10-06",
+                "title": "System Network Discovery - macOS",
+                "id": "58800443-f9fc-4d55-ae0c-98a3966dfb97"
+            },
+            "rule_text": "title: System Network Discovery - macOS\nid: 58800443-f9fc-4d55-ae0c-98a3966dfb97\nstatus: test\ndescription: Detects enumeration of local network configuration\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1016/T1016.md\nauthor: remotephone, oscd.community\ndate: 2020-10-06\nmodified: 2024-08-29\ntags:\n- attack.discovery\n- attack.t1016\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection_1:\n    Image|endswith:\n    - /arp\n    - /ifconfig\n    - /netstat\n    - /networksetup\n    - /socketfilterfw\n  selection_2:\n    Image: /usr/bin/defaults\n    CommandLine|contains|all:\n    - /Library/Preferences/com.apple.alf\n    - read\n  filter_main_wifivelocityd:\n    ParentImage|endswith: /wifivelocityd\n  condition: 1 of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Legitimate administration activities\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_sam_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-07-29",
+                "title": "PowerShell SAM Copy",
+                "id": "1af57a4b-460a-4738-9034-db68b880c665"
+            },
+            "rule_text": "title: PowerShell SAM Copy\nid: 1af57a4b-460a-4738-9034-db68b880c665\nstatus: test\ndescription: Detects suspicious PowerShell scripts accessing SAM hives\nreferences:\n- https://twitter.com/splinter_code/status/1420546784250769408\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-07-29\nmodified: 2023-01-06\ntags:\n- attack.credential-access\n- attack.t1003.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains|all:\n    - \\HarddiskVolumeShadowCopy\n    - System32\\config\\sam\n  selection_2:\n    CommandLine|contains:\n    - Copy-Item\n    - cp $_.\n    - cpi $_.\n    - copy $_.\n    - .File]::Copy(\n  condition: all of selection*\nfalsepositives:\n- Some rare backup scenarios\n- PowerShell scripts fixing HiveNightmare / SeriousSAM ACLs\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

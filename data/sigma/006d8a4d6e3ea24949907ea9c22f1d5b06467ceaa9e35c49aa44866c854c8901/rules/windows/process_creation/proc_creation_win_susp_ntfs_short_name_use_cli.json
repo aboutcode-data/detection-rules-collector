@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_ntfs_short_name_use_cli.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-05",
+                "title": "Use NTFS Short Name in Command Line",
+                "id": "dd6b39d9-d9be-4a3b-8fe0-fe3c6a5c1795"
+            },
+            "rule_text": "title: Use NTFS Short Name in Command Line\nid: dd6b39d9-d9be-4a3b-8fe0-fe3c6a5c1795\nrelated:\n- id: 3ef5605c-9eb9-47b0-9a71-b727e6aa5c3b\n  type: similar\nstatus: test\ndescription: Detect use of the Windows 8.3 short name. Which could be used as a method\n  to avoid command-line detection\nreferences:\n- https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)\n- https://twitter.com/jonasLyk/status/1555914501802921984\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-05\nmodified: 2022-09-21\ntags:\n- attack.stealth\n- attack.t1564.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - ~1.exe\n    - ~1.bat\n    - ~1.msi\n    - ~1.vbe\n    - ~1.vbs\n    - ~1.dll\n    - ~1.ps1\n    - ~1.js\n    - ~1.hta\n    - ~2.exe\n    - ~2.bat\n    - ~2.msi\n    - ~2.vbe\n    - ~2.vbs\n    - ~2.dll\n    - ~2.ps1\n    - ~2.js\n    - ~2.hta\n  filter:\n  - ParentImage|endswith:\n    - \\WebEx\\WebexHost.exe\n    - \\thor\\thor64.exe\n  - CommandLine|contains: C:\\xampp\\vcredist\\VCREDI~1.EXE\n  condition: selection and not filter\nfalsepositives:\n- Applications could use this notation occasionally which might generate some false\n  positives. In that case Investigate the parent and child process.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

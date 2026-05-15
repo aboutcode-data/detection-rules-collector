@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/G-H/grep.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "grep",
+                "tags": [],
+                "description": "Detection patterns for the tool 'grep' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "grep",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule grep\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'grep' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"grep\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /grep\\s\\-.{0,1000}\\s.{0,1000}DBPassword/\n\t\t$string2 = /grep\\s.{0,1000}password\\s\\/var\\/www/\n\t\t$string3 = /grep\\s.{0,1000}password\\..{0,1000}\\s\\/etc\\/.{0,1000}\\.conf/\n\t\t$string4 = \"grep :0: /etc/passwd\"\n\t\t$string5 = \"grep -i pass \"\n\t\t$string6 = \"grep -i user \"\n\t\t$string7 = \"grep -R db_passwd\"\n\t\t$string8 = /grep\\s\\-roiE\\s.{0,1000}password/\n\t\t$string9 = /grep.{0,1000}\\|pwd\\=\\|passwd\\=\\|password\\=/\n\t\t$string10 = /grep.{0,1000}password\\|pwd\\|pass/\n\t\t$string11 = /strings\\s\\-n\\s.{0,1000}\\s\\/dev\\/mem\\s\\|\\sgrep\\s\\-i\\spass/\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

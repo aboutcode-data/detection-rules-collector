@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/quarian.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "QuarianCode",
+                "tags": [
+                    "Quarian",
+                    "Family"
+                ],
+                "description": "Quarian code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "private rule QuarianCode : Quarian Family\n{\n\tmeta:\n\t\tdescription = \"Quarian code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tstrings:\n\t\t$ = { C1 E? 04 8B ?? F? C1 E? 05 33 C? }\n\t\t$ = { C1 EF 05 C1 E3 04 33 FB }\n\t\t$ = { 33 D8 81 EE 47 86 C8 61 }\n\t\t$ = { FF 45 E8 81 45 EC CC 00 00 00 E9 95 FE FF FF }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "QuarianStrings",
+                "tags": [
+                    "Quarian",
+                    "Family"
+                ],
+                "description": "Quarian Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "private rule QuarianStrings : Quarian Family\n{\n\tmeta:\n\t\tdescription = \"Quarian Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tstrings:\n\t\t$ = \"s061779s061750\"\n\t\t$ = \"[OnUpLoadFile]\"\n\t\t$ = \"[OnDownLoadFile]\"\n\t\t$ = \"[FileTransfer]\"\n\t\t$ = \"---- Not connect the Manager, so start UnInstall ----\"\n\t\t$ = \"------- Enter CompressDownLoadDir ---------\"\n\t\t$ = \"------- Enter DownLoadDirectory ---------\"\n\t\t$ = \"[HandleAdditionalData]\"\n\t\t$ = \"[mswsocket.dll]\"\n\t\t$ = \"msupdate.dll........Enter ThreadCmd!\"\n\t\t$ = \"ok1-1\"\n\t\t$ = \"msupdate_tmp.dll\"\n\t\t$ = \"replace Rpcss.dll successfully!\"\n\t\t$ = \"f:\\\\loadhiddendriver-mdl\\\\objfre_win7_x86\\\\i386\\\\intelnat.pdb\"\n\t\t$ = \"\\\\drivercashe\\\\\" wide ascii\n\t\t$ = \"\\\\microsoft\\\\windwos\\\\\" wide ascii\n\t\t$ = \"\\\\DosDevices\\\\LOADHIDDENDRIVER\" wide ascii\n\t\t$ = \"\\\\Device\\\\LOADHIDDENDRIVER\" wide ascii\n\t\t$ = \"Global\\\\state_maping\" wide ascii\n\t\t$ = \"E:\\\\Code\\\\2.0\\\\2.0_multi-port\\\\2.0\\\\ServerInstall_New-2010-0913_sp3\\\\msupdataDll\\\\Release\\\\msupdate_tmp.pdb\"\n\t\t$ = \"Global\\\\unInstall_event_1554_Ower\" wide ascii\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Quarian",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Quarian",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "rule Quarian : Family\n{\n\tmeta:\n\t\tdescription = \"Quarian\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tcondition:\n\t\tQuarianCode or QuarianStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

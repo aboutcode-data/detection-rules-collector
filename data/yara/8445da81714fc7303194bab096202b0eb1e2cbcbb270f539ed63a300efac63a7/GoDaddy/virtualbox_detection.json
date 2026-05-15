@@ -1,0 +1,13 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/GoDaddy/virtualbox_detection.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "virtualbox_detection",
+                "tags": []
+            },
+            "rule_text": "rule virtualbox_detection\n{\n\tstrings:\n\t\t$s1 = \"HARDWARE\\\\ACPI\\\\DSDT\\\\VBOX__\" nocase wide ascii\n\t\t$s2 = \"\\\\\\\\.\\\\VBoxMiniRdrDN\" nocase wide ascii\n\t\t$s3 = \"VBoxHook.dll\" nocase wide ascii\n\t\t$s4 = \"SOFTWARE\\\\Oracle\\\\VirtualBox Guest Additions\" nocase wide ascii\n\t\t$s5 = \"SYSTEM\\\\CurrentControlSet\\\\Enum\\\\IDE\" nocase wide ascii\n\t\t$s6 = \"HARDWARE\\\\DESCRIPTION\\\\System\" nocase wide ascii\n\t\t$s7 = \"SystemBiosVersion\" nocase wide ascii\n\t\t$s8 = \"VideoBiosVersion\" nocase wide ascii\n\n\tcondition:\n\t\tIsPeFile and 5 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

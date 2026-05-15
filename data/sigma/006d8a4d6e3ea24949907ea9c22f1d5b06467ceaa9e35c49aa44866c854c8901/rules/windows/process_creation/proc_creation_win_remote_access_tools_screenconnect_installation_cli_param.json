@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_screenconnect_installation_cli_param.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-02-11",
+                "title": "Remote Access Tool - ScreenConnect Installation Execution",
+                "id": "75bfe6e6-cd8e-429e-91d3-03921e1d7962"
+            },
+            "rule_text": "title: Remote Access Tool - ScreenConnect Installation Execution\nid: 75bfe6e6-cd8e-429e-91d3-03921e1d7962\nstatus: test\ndescription: Detects ScreenConnect program starts that establish a remote access to\n  a system.\nreferences:\n- https://www.anomali.com/blog/probable-iranian-cyber-actors-static-kitten-conducting-cyberespionage-campaign-targeting-uae-and-kuwait-government-agencies\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-02-11\nmodified: 2024-02-26\ntags:\n- attack.persistence\n- attack.initial-access\n- attack.t1133\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - e=Access&\n    - y=Guest&\n    - '&p='\n    - '&c='\n    - '&k='\n  condition: selection\nfalsepositives:\n- Legitimate use by administrative staff\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

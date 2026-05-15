@@ -1,0 +1,98 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/sqroot.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_code",
+                "tags": [],
+                "description": "sqroot malware using unknown actors",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "556018653737386c9d291cb2ca90cde360394897b2e7800c7eb119730d3bda3c"
+            },
+            "rule_text": "rule malware_sqroot_code\n{\n\tmeta:\n\t\tdescription = \"sqroot malware using unknown actors\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"556018653737386c9d291cb2ca90cde360394897b2e7800c7eb119730d3bda3c\"\n\n\tstrings:\n\t\t$str1 = \"sqroot\" ascii wide\n\t\t$str2 = \"1234QWER11\" ascii wide\n\t\t$str3 = \"edge_service_packet.tmp\" ascii wide\n\t\t$str4 = \"/ol\" ascii wide\n\t\t$str5 = \"/task\" ascii wide\n\t\t$str6 = \"%s %s \\\"%s-%s|%s-%s %s,%s,%s|%s-%s -%s|%s-%s -%s %d\" ascii wide\n\t\t$str7 = \"jss/font-awesome.min.css\" ascii wide\n\t\t$str8 = \"css/jquery-ui.min.css\" ascii wide\n\t\t$str9 = \"{\\\"%s\\\":\\\"%s(%s)\\\",\\\"%s\\\":\\\"%s\\\",\\\"%s\\\":\\\"%s\\\"}\" ascii wide\n\t\t$str10 = \"/dl\" ascii wide\n\t\t$str11 = \"21.30.ec.9d.c4.20\" ascii wide\n\t\t$str12 = \"/papers/ja-jp\" ascii wide\n\t\t$filename1 = \"8015ba282c\" ascii wide\n\t\t$filename2 = \"abb8fcc3b5\" ascii wide\n\t\t$filename3 = \"8714c42184\" ascii wide\n\t\t$filename4 = \"6eadde753d\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( 7 of ( $str* ) or all of ( $filename* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_lnk",
+                "tags": [],
+                "description": "sqroot drop lnk file using unknown actors",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "16ac092af64bbab7dbaef60cd796e47c5d2a6fec6164906c1fbd0c9c51861936"
+            },
+            "rule_text": "rule malware_sqroot_lnk\n{\n\tmeta:\n\t\tdescription = \"sqroot drop lnk file using unknown actors\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"16ac092af64bbab7dbaef60cd796e47c5d2a6fec6164906c1fbd0c9c51861936\"\n\n\tstrings:\n\t\t$command1 = \"bwBuACAAZQByAHIAbwByACAAcgBlAHMA\" wide\n\t\t$command2 = \"%temp%\\\\ex.lnk\" wide nocase\n\t\t$command3 = \"%temp%\\\\f.vbs\" wide nocase\n\t\t$command4 = \"%temp%\\\\b64.txt\" wide nocase\n\t\t$command5 = \"%temp%\\\\i.log\" wide nocase\n\t\t$command6 = \"%temp%\\\\result.vbs\" wide nocase\n\t\t$command7 = \".position = .size-12\" wide\n\t\t$command8 = \"AscW(.read(2))=^&\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x004c and filesize > 1MB and 4 of ( $command* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_webphp",
+                "tags": [],
+                "description": "sqroot drop web page using unknown actors",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "8b9f229012512b9e4fb924434caa054275410574c5b0c364b850bb2ef70a0f3d"
+            },
+            "rule_text": "rule malware_sqroot_webphp\n{\n\tmeta:\n\t\tdescription = \"sqroot drop web page using unknown actors\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"8b9f229012512b9e4fb924434caa054275410574c5b0c364b850bb2ef70a0f3d\"\n\n\tstrings:\n\t\t$func1 = \"send_download_file_as_exe($filename)\" ascii\n\t\t$func2 = \"check_remote_client()\" ascii\n\t\t$func3 = \"mylog('[e]');\" ascii\n\t\t$func4 = \"mylog('[z]');\" ascii\n\t\t$func5 = \"mylog('[4]');\" ascii\n\t\t$func6 = \"mylog('[*]');\" ascii\n\t\t$func7 = \"mylog('[p]');\" ascii\n\t\t$func8 = \"mylog($flag)\" ascii\n\t\t$func9 = \"get_remote_ip()\" ascii\n\n\tcondition:\n\t\tuint32( 0 ) == 0x68703f3c and 4 of ( $func* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_cat",
+                "tags": [],
+                "description": "cat plugin downloaded by sqroot",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule malware_sqroot_cat\n{\n\tmeta:\n\t\tdescription = \"cat plugin downloaded by sqroot\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$s1 = \"Catcher start\" wide\n\t\t$s2 = \"Catcher exit\" wide\n\t\t$s3 = \"[%04d/%02d/%02d %02d:%02d:%02d] %s\\n\" wide\n\t\t$s4 = {2A 00 6C 00 6F 00 67 00  00 00 00 00 23 00 21 00}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_snapshot",
+                "tags": [],
+                "description": "snapshot plugin downloaded by sqroot",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule malware_sqroot_snapshot\n{\n\tmeta:\n\t\tdescription = \"snapshot plugin downloaded by sqroot\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$s1 = \"e:\\\\vsprojects\\\\crataegus\\\\snaptik\\\\maz\\\\miniz.c\" wide\n\t\t$s2 = \"%s-%02d%02d_%02d%02d%02d.maz\" wide\n\t\t$s3 = \"%s%s_%02d%02d%02d(%d).png\" wide\n\t\t$s4 = \"gdi_cache\" wide\n\t\t$s5 = \"capture_flag.ini\" wide\n\t\t$s6 = \"cf_mptmb\" wide\n\t\t$s7 = \"cf_pakdir\" wide\n\t\t$s8 = \"DoGdiCapture\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_keylogger",
+                "tags": [],
+                "description": "keylog plugin downloaded by sqroot",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule malware_sqroot_keylogger\n{\n\tmeta:\n\t\tdescription = \"keylog plugin downloaded by sqroot\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$s1 = \"record-%04d%02d%02d-%02d%02d%02d.ini\" ascii\n\t\t$s2 = \"g_hKeyLogMsgLoopThread exit\" ascii\n\t\t$s3 = \"OCR_INI_DEBUG.abc\" ascii\n\t\t$s4 = {59 6F 75 27 72 65 20 61  63 74 69 76 61 74 65 64 00 00 00 00 52 33 32 41 63 74 69 76 65}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_pluginloader",
+                "tags": [],
+                "description": "plugin loader downloaded by sqroot",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule malware_sqroot_pluginloader\n{\n\tmeta:\n\t\tdescription = \"plugin loader downloaded by sqroot\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$a1 = \"Active() found\" ascii\n\t\t$a2 = \"Active:Thread created!\" ascii\n\t\t$b1 = {6A 74 70 61 00}\n\t\t$b2 = {6A 74 70 63 00}\n\t\t$b3 = {6A 74 70 74 00}\n\t\t$b4 = \"%s*.tmp\" ascii\n\t\t$c1 = \"SignalS1\" ascii\n\t\t$c2 = \"SignalS2\" ascii\n\t\t$c3 = \"SignalS3\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_coreloader",
+                "tags": [],
+                "description": "loader downloaded by sqroot",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule malware_sqroot_coreloader\n{\n\tmeta:\n\t\tdescription = \"loader downloaded by sqroot\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$query = \"%s?hid=%s&uid=%s&cid=%x\" ascii\n\t\t$decode_routine = {8A 8A ?? ?? ?? ?? 02 C1 32 C1 2A C1 0F B6 8E ?? ?? ?? ?? 88 86 ?? ?? ?? ?? 8D 46 ?? 99 F7 FF 8A 82 ?? ?? ?? ?? 02 C8 32 C8 2A C8 88 8E ?? ?? ?? ?? 83 C6 02 81 FE 0A 04 00 00}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_sqroot_corerat",
+                "tags": [],
+                "description": "RAT downloaded by sqroot",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule malware_sqroot_corerat\n{\n\tmeta:\n\t\tdescription = \"RAT downloaded by sqroot\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$a1 = \"openfile %s error!\" ascii\n\t\t$a2 = \"remote file error!\" ascii\n\t\t$a3 = \"upload well!\" ascii\n\t\t$a4 = \"%s?hid=%s&uid=%s&cid=%x\" ascii\n\t\t$a5 = \"%s|%s|%s|%s|%s|%s|%d|%s|\" ascii\n\t\t$b1 = {68 24 11 00 00 E8}\n\t\t$b2 = {C7 03 37 11 00 00}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( all of ( $a* ) or all of ( $b* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

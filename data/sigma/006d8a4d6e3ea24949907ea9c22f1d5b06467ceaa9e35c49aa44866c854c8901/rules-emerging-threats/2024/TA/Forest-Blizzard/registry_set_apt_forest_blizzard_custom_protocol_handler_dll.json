@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2024/TA/Forest-Blizzard/registry_set_apt_forest_blizzard_custom_protocol_handler_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-04-23",
+                "title": "Forest Blizzard APT - Custom Protocol Handler DLL Registry Set",
+                "id": "d807056b-0e00-4cec-b7f8-b8b7518e382b"
+            },
+            "rule_text": "title: Forest Blizzard APT - Custom Protocol Handler DLL Registry Set\nid: d807056b-0e00-4cec-b7f8-b8b7518e382b\nstatus: test\ndescription: 'Detects the setting of the DLL that handles the custom protocol handler.\n\n  Seen being created by Forest Blizzard APT as reported by MSFT.\n\n  '\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2024/04/22/analyzing-forest-blizzards-custom-post-compromise-tool-for-exploiting-cve-2022-38028-to-obtain-credentials/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-04-23\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.001\n- detection.emerging-threats\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\CLSID\\{026CC6D7-34B2-33D5-B551-CA31EB6CE345}\\Server\n    Details|endswith: .dll\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2022-38028"
+            ]
+        }
+    ]
+}

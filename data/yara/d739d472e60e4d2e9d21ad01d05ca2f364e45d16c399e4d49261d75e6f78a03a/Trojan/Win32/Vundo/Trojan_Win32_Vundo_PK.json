@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Vundo/Trojan_Win32_Vundo_PK.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Vundo_PK",
+                "tags": [],
+                "description": "Trojan:Win32/Vundo.PK,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Vundo_PK\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Vundo.PK,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 00 2d ?? 00 00 00 85 c0 74 }\n\t\t$a_01_1 = {8a 23 93 32 df 93 88 03 }\n\t\t$a_03_2 = {0f b6 00 83 e8 ?? 85 c0 74 90 09 0b 00 a1 ?? ?? ?? ?? 2b 05 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 10 + ( #a_03_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Secuinfra/APT_Bitter_Almond_Rat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_Bitter_Almond_RAT",
+                "tags": [],
+                "description": "Detects Bitter (T-APT-17) Almond RAT (.NET)",
+                "author": "SECUINFRA Falcon Team (@SI_FalconTeam)",
+                "tlp": "WHITE",
+                "reference": " https://www.secuinfra.com/en/techtalk/whatever-floats-your-boat-bitter-apt-continues-to-target-bangladesh",
+                "date": "2022-06-01",
+                "hash": "55901c2d5489d6ac5a0671971d29a31f4cdfa2e03d56e18c1585d78547a26396"
+            },
+            "rule_text": "import \"dotnet\"\n\nrule APT_Bitter_Almond_RAT\n{\n\tmeta:\n\t\tdescription = \"Detects Bitter (T-APT-17) Almond RAT (.NET)\"\n\t\tauthor = \"SECUINFRA Falcon Team (@SI_FalconTeam)\"\n\t\ttlp = \"WHITE\"\n\t\treference = \" https://www.secuinfra.com/en/techtalk/whatever-floats-your-boat-bitter-apt-continues-to-target-bangladesh\"\n\t\tdate = \"2022-06-01\"\n\t\thash = \"55901c2d5489d6ac5a0671971d29a31f4cdfa2e03d56e18c1585d78547a26396\"\n\n\tstrings:\n\t\t$function0 = \"GetMacid\" ascii\n\t\t$function1 = \"StartCommWithServer\" ascii\n\t\t$function2 = \"sendingSysInfo\" ascii\n\t\t$dbg0 = \"*|END|*\" wide\n\t\t$dbg1 = \"FILE>\" wide\n\t\t$dbg2 = \"[Command Executed Successfully]\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and dotnet.version == \"v4.0.30319\" and filesize > 12KB and filesize < 68KB and any of ( $function* ) and any of ( $dbg* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

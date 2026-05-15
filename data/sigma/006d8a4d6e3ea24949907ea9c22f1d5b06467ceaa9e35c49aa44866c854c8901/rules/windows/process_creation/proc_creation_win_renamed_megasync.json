@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_megasync.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sittikorn S",
+                "date": "2021-06-22",
+                "title": "Renamed MegaSync Execution",
+                "id": "643bdcac-8b82-49f4-9fd9-25a90b929f3b"
+            },
+            "rule_text": "title: Renamed MegaSync Execution\nid: 643bdcac-8b82-49f4-9fd9-25a90b929f3b\nstatus: test\ndescription: Detects the execution of a renamed MegaSync.exe as seen used by ransomware\n  families like Nefilim, Sodinokibi, Pysa, and Conti.\nreferences:\n- https://redcanary.com/blog/rclone-mega-extortion/\nauthor: Sittikorn S\ndate: 2021-06-22\nmodified: 2023-02-03\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    OriginalFileName: megasync.exe\n  filter:\n    Image|endswith: \\megasync.exe\n  condition: selection and not filter\nfalsepositives:\n- Software that illegally integrates MegaSync in a renamed form\n- Administrators that have renamed MegaSync\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

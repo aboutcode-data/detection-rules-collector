@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/syscall/lnx_auditd_load_module_insmod.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-11-02",
+                "title": "Loading of Kernel Module via Insmod",
+                "id": "106d7cbd-80ff-4985-b682-a7043e5acb72"
+            },
+            "rule_text": "title: Loading of Kernel Module via Insmod\nid: 106d7cbd-80ff-4985-b682-a7043e5acb72\nstatus: test\ndescription: 'Detects loading of kernel modules with insmod command.\n\n  Loadable Kernel Modules (LKMs) are pieces of code that can be loaded and unloaded\n  into the kernel upon demand.\n\n  Adversaries may use LKMs to obtain persistence within the system or elevate the\n  privileges.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.006/T1547.006.md\n- https://linux.die.net/man/8/insmod\n- https://man7.org/linux/man-pages/man8/kmod.8.html\nauthor: Pawel Mazur\ndate: 2021-11-02\nmodified: 2022-12-25\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1547.006\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: SYSCALL\n    comm: insmod\n    exe: /usr/bin/kmod\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

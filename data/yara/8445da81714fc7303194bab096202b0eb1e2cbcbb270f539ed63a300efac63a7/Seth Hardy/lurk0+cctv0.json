@@ -1,0 +1,87 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/lurk0+cctv0.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LURK0Header",
+                "tags": [
+                    "Family",
+                    "LURK0"
+                ],
+                "description": "5 char code for LURK0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule LURK0Header : Family LURK0\n{\n\tmeta:\n\t\tdescription = \"5 char code for LURK0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = { C6 [5] 4C C6 [5] 55 C6 [5] 52 C6 [5] 4B C6 [5] 30 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CCTV0Header",
+                "tags": [
+                    "Family",
+                    "CCTV0"
+                ],
+                "description": "5 char code for LURK0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule CCTV0Header : Family CCTV0\n{\n\tmeta:\n\t\tdescription = \"5 char code for LURK0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = { C6 [5] 43 C6 [5] 43 C6 [5] 54 C6 [5] 56 C6 [5] 30 }\n\t\t$ = { B0 43 88 [3] 88 [3] C6 [3] 54 C6 [3] 56 [0-12] (B0 30 | C6 [3] 30) }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SharedStrings",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Internal names found in LURK0/CCTV0 samples",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "private rule SharedStrings : Family\n{\n\tmeta:\n\t\tdescription = \"Internal names found in LURK0/CCTV0 samples\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tstrings:\n\t\t$i1 = \"Butterfly.dll\"\n\t\t$i2 = /\\\\BT[0-9.]+\\\\ButterFlyDLL\\\\/\n\t\t$i3 = \"ETClientDLL\"\n\t\t$d1 = \"\\\\DbxUpdateET\\\\\" wide\n\t\t$d2 = \"\\\\DbxUpdateBT\\\\\" wide\n\t\t$d3 = \"\\\\DbxUpdate\\\\\" wide\n\t\t$mc1 = \"\\\\Micet\\\\\"\n\t\t$n1 = \"IconCacheEt.dat\" wide\n\t\t$n2 = \"IconConfigEt.dat\" wide\n\t\t$m1 = \"\\x00\\x00ERXXXXXXX\\x00\\x00\" wide\n\t\t$m2 = \"\\x00\\x00111\\x00\\x00\" wide\n\t\t$m3 = \"\\x00\\x00ETUN\\x00\\x00\" wide\n\t\t$m4 = \"\\x00\\x00ER\\x00\\x00\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LURK0",
+                "tags": [
+                    "Family",
+                    "LURK0"
+                ],
+                "description": "rule for lurk0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "rule LURK0 : Family LURK0\n{\n\tmeta:\n\t\tdescription = \"rule for lurk0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tcondition:\n\t\tLURK0Header and SharedStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SharedStrings",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Internal names found in LURK0/CCTV0 samples",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "private rule SharedStrings : Family\n{\n\tmeta:\n\t\tdescription = \"Internal names found in LURK0/CCTV0 samples\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tstrings:\n\t\t$i1 = \"Butterfly.dll\"\n\t\t$i2 = /\\\\BT[0-9.]+\\\\ButterFlyDLL\\\\/\n\t\t$i3 = \"ETClientDLL\"\n\t\t$d1 = \"\\\\DbxUpdateET\\\\\" wide\n\t\t$d2 = \"\\\\DbxUpdateBT\\\\\" wide\n\t\t$d3 = \"\\\\DbxUpdate\\\\\" wide\n\t\t$mc1 = \"\\\\Micet\\\\\"\n\t\t$n1 = \"IconCacheEt.dat\" wide\n\t\t$n2 = \"IconConfigEt.dat\" wide\n\t\t$m1 = \"\\x00\\x00ERXXXXXXX\\x00\\x00\" wide\n\t\t$m2 = \"\\x00\\x00111\\x00\\x00\" wide\n\t\t$m3 = \"\\x00\\x00ETUN\\x00\\x00\" wide\n\t\t$m4 = \"\\x00\\x00ER\\x00\\x00\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CCTV0",
+                "tags": [
+                    "Family",
+                    "CCTV0"
+                ],
+                "description": "rule for cctv0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "rule CCTV0 : Family CCTV0\n{\n\tmeta:\n\t\tdescription = \"rule for cctv0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tcondition:\n\t\tCCTV0Header and SharedStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

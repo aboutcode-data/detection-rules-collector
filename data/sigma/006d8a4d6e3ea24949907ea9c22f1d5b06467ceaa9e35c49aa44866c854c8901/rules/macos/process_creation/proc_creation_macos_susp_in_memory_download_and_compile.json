@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_in_memory_download_and_compile.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r), Red Canary (idea)",
+                "date": "2023-08-22",
+                "title": "Potential In-Memory Download And Compile Of Payloads",
+                "id": "13db8d2e-7723-4c2c-93c1-a4d36994f7ef"
+            },
+            "rule_text": "title: Potential In-Memory Download And Compile Of Payloads\nid: 13db8d2e-7723-4c2c-93c1-a4d36994f7ef\nstatus: test\ndescription: Detects potential in-memory downloading and compiling of applets using\n  curl and osacompile as seen used by XCSSET malware\nreferences:\n- https://redcanary.com/blog/mac-application-bundles/\nauthor: Sohan G (D4rkCiph3r), Red Canary (idea)\ndate: 2023-08-22\ntags:\n- attack.command-and-control\n- attack.execution\n- attack.t1059.007\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - osacompile\n    - curl\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

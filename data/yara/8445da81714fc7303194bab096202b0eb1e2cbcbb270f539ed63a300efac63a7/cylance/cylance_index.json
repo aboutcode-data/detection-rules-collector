@@ -1,0 +1,223 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/cylance/cylance_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "antivirusdetector",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule antivirusdetector\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"getShadyProcess\"\n\t\t$s2 = \"getSystemAntiviruses\"\n\t\t$s3 = \"AntiVirusDetector\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BackDoorLogger",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule BackDoorLogger\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"BackDoorLogger\"\n\t\t$s2 = \"zhuAddress\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "csext",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule csext\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"COM+ System Extentions\"\n\t\t$s2 = \"csext.exe\"\n\t\t$s3 = \"COM_Extentions_bin\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Misdat_Backdoor_Packed",
+                "tags": [],
+                "author": "Cylance SPEAR Team",
+                "note": "Probably Prone to False Positive"
+            },
+            "rule_text": "rule Misdat_Backdoor_Packed\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\t\tnote = \"Probably Prone to False Positive\"\n\n\tstrings:\n\t\t$upx = {33 2E 30 33 00 55 50 58 21}\n\t\t$send = {00 00 00 73 65 6E 64 00 00 00}\n\t\t$delphi_sec_pe = {50 45 00 00 4C 01 03 00 19 5E 42 2A}\n\t\t$shellexec = {00 00 00 53 68 65 6C 6C 45 78 65 63 75 74 65 57 00 00 00}\n\n\tcondition:\n\t\tfilesize < 100KB and $upx and $send and $delphi_sec_pe and $shellexec\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MiSType_Backdoor_Packed",
+                "tags": [],
+                "author": "Cylance SPEAR Team",
+                "note": "Probably Prone to False Positive"
+            },
+            "rule_text": "rule MiSType_Backdoor_Packed\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\t\tnote = \"Probably Prone to False Positive\"\n\n\tstrings:\n\t\t$upx = {33 2E 30 33 00 55 50 58 21}\n\t\t$send_httpquery = {00 00 00 48 74 74 70 51 75 65 72 79 49 6E 66 6F 41 00 00 73 65 6E 64 00 00}\n\t\t$delphi_sec_pe = {50 45 00 00 4C 01 03 00 19 5E 42 2A}\n\n\tcondition:\n\t\tfilesize < 100KB and $upx and $send_httpquery and $delphi_sec_pe\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Misdat_Backdoor",
+                "tags": [],
+                "author": "Cylance SPEAR Team"
+            },
+            "rule_text": "rule Misdat_Backdoor\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\n\tstrings:\n\t\t$imul = {03 45 F8 69 C0 D9 DB 00 00 05 3B DA 00 00}\n\t\t$delphi = {50 45 00 00 4C 01 08 00 19 5E 42 2A}\n\n\tcondition:\n\t\t$imul and $delphi\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SType_Backdoor",
+                "tags": [],
+                "author": "Cylance SPEAR Team"
+            },
+            "rule_text": "rule SType_Backdoor\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\n\tstrings:\n\t\t$stype = \"stype=info&data=\"\n\t\t$mmid = \"?mmid=\"\n\t\t$status = \"&status=run succeed\"\n\t\t$mutex = \"_KB10B2D1_CIlFD2C\"\n\t\t$decode = {8B 1A 8A 1B 80 EB 02 8B 74 24 08 32 1E 8B 31 88 1E 8B 1A 43}\n\n\tcondition:\n\t\t$stype or ( $mmid and $status ) or $mutex or $decode\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Zlib_Backdoor",
+                "tags": [],
+                "author": "Cylance SPEAR Team"
+            },
+            "rule_text": "rule Zlib_Backdoor\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\n\tstrings:\n\t\t$auth = {C6 45 D8 50 C6 45 D9 72 C6 45 DA 6F C6 45 DB 78 C6 45 DC 79 C6 45 DD 2D}\n\t\t$auth2 = {C7 45 FC 00 04 00 00 C6 45 ?? 50 C6 45 ?? 72 C6 45 ?? 6F}\n\t\t$ntlm = \"NTLM\" wide\n\n\tcondition:\n\t\t($auth or $auth2 ) and $ntlm\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Jasus",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule Jasus\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"pcap_dump_open\"\n\t\t$s2 = \"Resolving IPs to poison...\"\n\t\t$s3 = \"WARNNING: Gateway IP can not be found\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "kagent",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule kagent\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"kill command is in last machine, going back\"\n\t\t$s2 = \"message data length in B64: %d Bytes\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LoggerModule",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule LoggerModule\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"%s-%02d%02d%02d%02d%02d.r\"\n\t\t$s2 = \"C:\\\\Users\\\\%s\\\\AppData\\\\Cookies\\\\\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mimikatzWrapper",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule mimikatzWrapper\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"mimikatzWrapper\"\n\t\t$s2 = \"get_mimikatz\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetC",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule NetC\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"NetC.exe\" wide\n\t\t$s2 = \"Net Service\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "pvz_in",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule pvz_in\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"LAST_TIME=00/00/0000:00:00PM$\"\n\t\t$s2 = \"if %%ERRORLEVEL%% == 1 GOTO line\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "pvz_out",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule pvz_out\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"Network Connectivity Module\" wide\n\t\t$s2 = \"OSPPSVC\" wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ShellCreator2",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule ShellCreator2\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"ShellCreator2.Properties\"\n\t\t$s2 = \"set_IV\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SmartCopy2",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule SmartCopy2\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"SmartCopy2.Properties\"\n\t\t$s2 = \"ZhuFrameWork\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SynFlooder",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule SynFlooder\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"Unable to resolve [ %s ]. ErrorCode %d\"\n\t\t$s2 = \"your target's IP is : %s\"\n\t\t$s3 = \"Raw TCP Socket Created successfully.\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "TinyZBot",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule TinyZBot\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"NetScp\" wide\n\t\t$s2 = \"TinyZBot.Properties.Resources.resources\"\n\t\t$s3 = \"Aoao WaterMark\"\n\t\t$s4 = \"Run_a_exe\"\n\t\t$s5 = \"netscp.exe\"\n\t\t$s6 = \"get_MainModule_WebReference_DefaultWS\"\n\t\t$s7 = \"remove_CheckFileMD5Completed\"\n\t\t$s8 = \"http://tempuri.org/\"\n\t\t$s9 = \"Zhoupin_Cleaver\"\n\n\tcondition:\n\t\t($s1 and $s2 ) or ( $s3 and $s4 and $s5 ) or ( $s6 and $s7 and $s8 ) or $s9\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "wndTest",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule wndTest\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"[Alt]\" wide\n\t\t$s2 = \"<< %s >>:\" wide\n\t\t$s3 = \"Content-Disposition: inline; comp=%s; account=%s; product=%d;\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "zhCat",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule zhCat\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"zhCat -l -h -tp 1234\"\n\t\t$s2 = \"ABC ( A Big Company )\" wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "zhLookUp",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule zhLookUp\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"zhLookUp.Properties\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "zhmimikatz",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule zhmimikatz\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"MimikatzRunner\"\n\t\t$s2 = \"zhmimikatz\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ZhoupinExploitCrew",
+                "tags": [],
+                "reference": "https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf"
+            },
+            "rule_text": "rule ZhoupinExploitCrew\n{\n\tmeta:\n\t\treference = \"https://cdn2.hubspot.net/hubfs/270968/assets/Cleaver/Cylance_Operation_Cleaver_Report.pdf\"\n\n\tstrings:\n\t\t$s1 = \"zhoupin exploit crew\" nocase\n\t\t$s2 = \"zhopin exploit crew\" nocase\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

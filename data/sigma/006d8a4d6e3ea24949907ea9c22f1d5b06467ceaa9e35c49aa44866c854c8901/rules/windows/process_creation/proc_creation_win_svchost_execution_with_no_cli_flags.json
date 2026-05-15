@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_svchost_execution_with_no_cli_flags.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "David Burkett, @signalblur",
+                "date": "2019-12-28",
+                "title": "Suspect Svchost Activity",
+                "id": "16c37b52-b141-42a5-a3ea-bbe098444397"
+            },
+            "rule_text": "title: Suspect Svchost Activity\nid: 16c37b52-b141-42a5-a3ea-bbe098444397\nstatus: test\ndescription: It is extremely abnormal for svchost.exe to spawn without any CLI arguments\n  and is normally observed when a malicious process spawns the process and injects\n  code into the process memory space.\nreferences:\n- https://web.archive.org/web/20180718061628/https://securitybytes.io/blue-team-fundamentals-part-two-windows-processes-759fe15965e2\nauthor: David Burkett, @signalblur\ndate: 2019-12-28\nmodified: 2022-06-27\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|endswith: svchost.exe\n    Image|endswith: \\svchost.exe\n  filter:\n  - ParentImage|endswith:\n    - \\rpcnet.exe\n    - \\rpcnetp.exe\n  - CommandLine: null\n  condition: selection and not filter\nfalsepositives:\n- Rpcnet.exe / rpcnetp.exe which is a lojack style software. https://www.blackhat.com/docs/us-14/materials/us-14-Kamlyuk-Kamluk-Computrace-Backdoor-Revisited.pdf\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

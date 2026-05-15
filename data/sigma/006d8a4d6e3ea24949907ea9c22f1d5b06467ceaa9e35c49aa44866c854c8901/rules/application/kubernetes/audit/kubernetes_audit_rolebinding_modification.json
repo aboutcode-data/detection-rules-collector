@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_rolebinding_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "kelnage",
+                "date": "2024-07-11",
+                "title": "Kubernetes Rolebinding Modification",
+                "id": "10b97915-ec8d-455f-a815-9a78926585f6"
+            },
+            "rule_text": "title: Kubernetes Rolebinding Modification\nid: 10b97915-ec8d-455f-a815-9a78926585f6\nrelated:\n- id: 0322d9f2-289a-47c2-b5e1-b63c90901a3e\n  type: similar\nstatus: test\ndescription: 'Detects when a Kubernetes Rolebinding is created or modified.\n\n  '\nreferences:\n- https://kubernetes.io/docs/reference/config-api/apiserver-audit.v1/\n- https://medium.com/@seifeddinerajhi/kubernetes-rbac-privilege-escalation-exploits-and-mitigations-26c07629eeab\nauthor: kelnage\ndate: 2024-07-11\ntags:\n- attack.privilege-escalation\nlogsource:\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    objectRef.apiGroup: rbac.authorization.k8s.io\n    objectRef.resource:\n    - clusterrolebindings\n    - rolebindings\n    verb:\n    - create\n    - delete\n    - patch\n    - replace\n    - update\n  condition: selection\nfalsepositives:\n- Modifying a Kubernetes Rolebinding may need to be done by a system administrator.\n- Automated processes may need to take these actions and may need to be filtered.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_netsh_port_forwarding.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), omkar72, oscd.community, Swachchhanda Shrawan Poudel",
+                "date": "2019-01-29",
+                "title": "New Port Forwarding Rule Added Via Netsh.EXE",
+                "id": "322ed9ec-fcab-4f67-9a34-e7c6aef43614"
+            },
+            "rule_text": "title: New Port Forwarding Rule Added Via Netsh.EXE\nid: 322ed9ec-fcab-4f67-9a34-e7c6aef43614\nstatus: test\ndescription: Detects the execution of netsh commands that configure a new port forwarding\n  (PortProxy) rule\nreferences:\n- https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html\n- https://adepts.of0x.cc/netsh-portproxy-code/\n- https://www.dfirnotes.net/portproxy_detection/\nauthor: Florian Roth (Nextron Systems), omkar72, oscd.community, Swachchhanda Shrawan\n  Poudel\ndate: 2019-01-29\nmodified: 2023-09-01\ntags:\n- attack.lateral-movement\n- attack.command-and-control\n- attack.t1090\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\netsh.exe\n  - OriginalFileName: netsh.exe\n  selection_cli_1:\n    CommandLine|contains|all:\n    - interface\n    - portproxy\n    - add\n    - v4tov4\n  selection_cli_2:\n    CommandLine|contains|all:\n    - 'i '\n    - 'p '\n    - 'a '\n    - 'v '\n  selection_cli_3:\n    CommandLine|contains|all:\n    - connectp\n    - listena\n    - c=\n  condition: selection_img and 1 of selection_cli_*\nfalsepositives:\n- Legitimate administration activity\n- WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/xDedic_SysScan_unpacked.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "xDedic_SysScan_unpacked",
+                "tags": [],
+                "author": " Kaspersky Lab",
+                "maltype": "crimeware",
+                "type": "crimeware",
+                "filetype": "Win32 EXE",
+                "date": "2016-03-14",
+                "reference": "https://securelist.com/files/2016/06/xDedic_marketplace_ENG.pdf",
+                "version": "1.0",
+                "hash": "F661b50d45400e7052a2427919e2f777"
+            },
+            "rule_text": "rule xDedic_SysScan_unpacked\n{\n\tmeta:\n\t\tauthor = \" Kaspersky Lab\"\n\t\tmaltype = \"crimeware\"\n\t\ttype = \"crimeware\"\n\t\tfiletype = \"Win32 EXE\"\n\t\tdate = \"2016-03-14\"\n\t\treference = \"https://securelist.com/files/2016/06/xDedic_marketplace_ENG.pdf\"\n\t\tversion = \"1.0\"\n\t\thash = \"fac495be1c71012682ebb27092060b43\"\n\t\thash = \"e8cc69231e209db7968397e8a244d104\"\n\t\thash = \"a53847a51561a7e76fd034043b9aa36d\"\n\t\thash = \"e8691fa5872c528cd8e72b82e7880e98\"\n\t\thash = \"F661b50d45400e7052a2427919e2f777\"\n\n\tstrings:\n\t\t$a1 = \"/c ping -n 2 127.0.0.1 & del \\\"SysScan.exe\\\"\" ascii wide\n\t\t$a2 = \"SysScan DEBUG Mode!!!\" ascii wide\n\t\t$a3 = \"This rechecking? (set 0/1 or press enter key)\" ascii wide\n\t\t$a4 = \"http://37.49.224.144:8189/manual_result\" ascii wide\n\t\t$b1 = \"Checker end work!\" ascii wide\n\t\t$b2 = \"Trying send result...\" ascii wide\n\n\tcondition:\n\t\t(( uint16( 0 ) == 0x5A4D ) ) and ( filesize < 5000000 ) and ( ( any of ( $a* ) ) or ( all of ( $b* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

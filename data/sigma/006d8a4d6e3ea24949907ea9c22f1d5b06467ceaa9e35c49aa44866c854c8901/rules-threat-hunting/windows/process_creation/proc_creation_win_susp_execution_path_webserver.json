@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_execution_path_webserver.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-01-16",
+                "title": "Execution From Webserver Root Folder",
+                "id": "35efb964-e6a5-47ad-bbcd-19661854018d"
+            },
+            "rule_text": "title: Execution From Webserver Root Folder\nid: 35efb964-e6a5-47ad-bbcd-19661854018d\nstatus: test\ndescription: 'Detects a program executing from a web server root folder. Use this\n  rule to hunt for potential interesting activity such as webshell or backdoors\n\n  '\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-01-16\nmodified: 2024-01-18\ntags:\n- attack.persistence\n- attack.t1505.003\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|contains:\n    - \\wwwroot\\\n    - \\wmpub\\\n    - \\htdocs\\\n  filter_main_generic:\n    Image|contains:\n    - bin\\\n    - \\Tools\\\n    - \\SMSComponent\\\n    ParentImage|endswith: \\services.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Various applications\n- Tools that include ping or nslookup command invocations\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/object_access/win_security_wfp_endpoint_agent_blocked.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@gott_cyber",
+                "date": "2024-01-08",
+                "title": "Windows Filtering Platform Blocked Connection From EDR Agent Binary",
+                "id": "bacf58c6-e199-4040-a94f-95dea0f1e45a"
+            },
+            "rule_text": "title: Windows Filtering Platform Blocked Connection From EDR Agent Binary\nid: bacf58c6-e199-4040-a94f-95dea0f1e45a\nstatus: test\ndescription: 'Detects a Windows Filtering Platform (WFP) blocked connection event\n  involving common Endpoint Detection and Response (EDR) agents.\n\n  Adversaries may use WFP filters to prevent Endpoint Detection and Response (EDR)\n  agents from reporting security events.\n\n  '\nreferences:\n- https://github.com/netero1010/EDRSilencer\n- https://github.com/amjcyber/EDRNoiseMaker\n- https://ghoulsec.medium.com/misc-series-4-forensics-on-edrsilencer-events-428b20b3f983\nauthor: '@gott_cyber'\ndate: 2024-01-08\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Filtering Platform Connection needs to be enabled'\ndetection:\n  selection:\n    EventID: 5157\n    Application|endswith:\n    - \\AmSvc.exe\n    - \\cb.exe\n    - \\CETASvc.exe\n    - \\CNTAoSMgr.exe\n    - \\CrAmTray.exe\n    - \\CrsSvc.exe\n    - \\CSFalconContainer.exe\n    - \\CSFalconService.exe\n    - \\CybereasonAV.exe\n    - \\CylanceSvc.exe\n    - \\cyserver.exe\n    - \\CyveraService.exe\n    - \\CyvrFsFlt.exe\n    - \\EIConnector.exe\n    - \\elastic-agent.exe\n    - \\elastic-endpoint.exe\n    - \\EndpointBasecamp.exe\n    - \\ExecutionPreventionSvc.exe\n    - \\filebeat.exe\n    - \\fortiedr.exe\n    - \\hmpalert.exe\n    - \\hurukai.exe\n    - \\LogProcessorService.exe\n    - \\mcsagent.exe\n    - \\mcsclient.exe\n    - \\MsMpEng.exe\n    - \\MsSense.exe\n    - \\Ntrtscan.exe\n    - \\PccNTMon.exe\n    - \\QualysAgent.exe\n    - \\RepMgr.exe\n    - \\RepUtils.exe\n    - \\RepUx.exe\n    - \\RepWAV.exe\n    - \\RepWSC.exe\n    - \\sedservice.exe\n    - \\SenseCncProxy.exe\n    - \\SenseIR.exe\n    - \\SenseNdr.exe\n    - \\SenseSampleUploader.exe\n    - \\SentinelAgent.exe\n    - \\SentinelAgentWorker.exe\n    - \\SentinelBrowserNativeHost.exe\n    - \\SentinelHelperService.exe\n    - \\SentinelServiceHost.exe\n    - \\SentinelStaticEngine.exe\n    - \\SentinelStaticEngineScanner.exe\n    - \\sfc.exe\n    - \\sophos ui.exe\n    - \\sophosfilescanner.exe\n    - \\sophosfs.exe\n    - \\sophoshealth.exe\n    - \\sophosips.exe\n    - \\sophosLivequeryservice.exe\n    - \\sophosnetfilter.exe\n    - \\sophosntpservice.exe\n    - \\sophososquery.exe\n    - \\sspservice.exe\n    - \\TaniumClient.exe\n    - \\TaniumCX.exe\n    - \\TaniumDetectEngine.exe\n    - \\TMBMSRV.exe\n    - \\TmCCSF.exe\n    - \\TmListen.exe\n    - \\TmWSCSvc.exe\n    - \\Traps.exe\n    - \\winlogbeat.exe\n    - \\WSCommunicator.exe\n    - \\xagt.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

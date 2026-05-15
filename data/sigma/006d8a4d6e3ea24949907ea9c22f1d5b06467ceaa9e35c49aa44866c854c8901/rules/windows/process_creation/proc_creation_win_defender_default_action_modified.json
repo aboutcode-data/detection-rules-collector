@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_defender_default_action_modified.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Matt Anderson (Huntress)",
+                "date": "2025-07-11",
+                "title": "PowerShell Defender Threat Severity Default Action Set to 'Allow' or 'NoAction'",
+                "id": "1e8a9b4d-3c2a-4f9b-8d1e-7c6a5b4f3d2e"
+            },
+            "rule_text": "title: PowerShell Defender Threat Severity Default Action Set to 'Allow' or 'NoAction'\nid: 1e8a9b4d-3c2a-4f9b-8d1e-7c6a5b4f3d2e\nrelated:\n- id: 5a9e1b2c-8f7d-4a1e-9b3c-0f6d7e5a4b1f\n  type: similar\nstatus: experimental\ndescription: 'Detects the use of PowerShell to execute the ''Set-MpPreference'' cmdlet\n  to configure Windows Defender''s threat severity default action to ''Allow'' (value\n  ''6'') or ''NoAction'' (value ''9'').\n\n  This is a highly suspicious configuration change that effectively disables Defender''s\n  ability to automatically mitigate threats of a certain severity level.\n\n  An attacker might use this technique via the command line to bypass defenses before\n  executing payloads.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference\n- https://learn.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/security-malware-windows-defender-threatseveritydefaultaction\n- https://research.splunk.com/endpoint/7215831c-8252-4ae3-8d43-db588e82f952\n- https://gist.github.com/Dump-GUY/8daef859f382b895ac6fd0cf094555d2\n- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/\nauthor: Matt Anderson (Huntress)\ndate: 2025-07-11\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmdlet:\n    CommandLine|contains: Set-MpPreference\n  selection_action:\n    CommandLine|contains:\n    - -LowThreatDefaultAction\n    - -ModerateThreatDefaultAction\n    - -HighThreatDefaultAction\n    - -SevereThreatDefaultAction\n    - '-ltdefac '\n    - '-mtdefac '\n    - '-htdefac '\n    - '-stdefac '\n  selection_value:\n    CommandLine|contains:\n    - Allow\n    - '6'\n    - NoAction\n    - '9'\n  condition: all of selection_*\nfalsepositives:\n- Highly unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

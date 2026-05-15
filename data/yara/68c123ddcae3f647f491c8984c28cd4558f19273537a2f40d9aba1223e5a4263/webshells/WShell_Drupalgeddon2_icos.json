@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/webshells/WShell_Drupalgeddon2_icos.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Dotico_PHP_webshell",
+                "tags": [
+                    "webshell"
+                ],
+                "description": ".ico PHP webshell - file <eight-num-letter-chars>.ico",
+                "author": "Luis Fueris",
+                "reference": "https://rankinstudio.com/Drupal_ico_index_hack",
+                "date": "2019/12/04"
+            },
+            "rule_text": "rule Dotico_PHP_webshell : webshell\n{\n\tmeta:\n\t\tdescription = \".ico PHP webshell - file <eight-num-letter-chars>.ico\"\n\t\tauthor = \"Luis Fueris\"\n\t\treference = \"https://rankinstudio.com/Drupal_ico_index_hack\"\n\t\tdate = \"2019/12/04\"\n\n\tstrings:\n\t\t$php = \"<?php\" ascii\n\t\t$regexp = /basename\\/\\*[a-z0-9]{,6}\\*\\/\\(\\/\\*[a-z0-9]{,5}\\*\\/trim\\/\\*[a-z0-9]{,5}\\*\\/\\(\\/\\*[a-z0-9]{,5}\\*\\//\n\n\tcondition:\n\t\t$php at 0 and $regexp and filesize > 70KB and filesize < 110KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

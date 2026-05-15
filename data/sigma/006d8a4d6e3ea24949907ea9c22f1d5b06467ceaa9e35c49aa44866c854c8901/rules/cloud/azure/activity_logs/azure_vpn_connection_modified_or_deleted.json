@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_vpn_connection_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-08",
+                "title": "Azure VPN Connection Modified or Deleted",
+                "id": "61171ffc-d79c-4ae5-8e10-9323dba19cd3"
+            },
+            "rule_text": "title: Azure VPN Connection Modified or Deleted\nid: 61171ffc-d79c-4ae5-8e10-9323dba19cd3\nstatus: test\ndescription: Identifies when a VPN connection is modified or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer @austinsonger\ndate: 2021-08-08\nmodified: 2022-08-23\ntags:\n- attack.impact\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.NETWORK/VPNGATEWAYS/VPNCONNECTIONS/WRITE\n    - MICROSOFT.NETWORK/VPNGATEWAYS/VPNCONNECTIONS/DELETE\n  condition: selection\nfalsepositives:\n- VPN Connection being modified or deleted may be performed by a system administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- VPN Connection modified or deleted from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

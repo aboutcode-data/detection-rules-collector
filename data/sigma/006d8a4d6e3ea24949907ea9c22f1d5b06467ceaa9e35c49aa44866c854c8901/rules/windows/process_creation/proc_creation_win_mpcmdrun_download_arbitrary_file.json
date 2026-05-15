@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mpcmdrun_download_arbitrary_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Matthew Matchen",
+                "date": "2020-09-04",
+                "title": "File Download Via Windows Defender MpCmpRun.EXE",
+                "id": "46123129-1024-423e-9fae-43af4a0fa9a5"
+            },
+            "rule_text": "title: File Download Via Windows Defender MpCmpRun.EXE\nid: 46123129-1024-423e-9fae-43af4a0fa9a5\nstatus: test\ndescription: Detects the use of Windows Defender MpCmdRun.EXE to download files\nreferences:\n- https://web.archive.org/web/20200903194959/https://twitter.com/djmtshepana/status/1301608169496612866\n- https://lolbas-project.github.io/lolbas/Binaries/MpCmdRun/\nauthor: Matthew Matchen\ndate: 2020-09-04\nmodified: 2023-11-09\ntags:\n- attack.stealth\n- attack.t1218\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: MpCmdRun.exe\n  - Image|endswith: \\MpCmdRun.exe\n  - CommandLine|contains: MpCmdRun.exe\n  - Description: Microsoft Malware Protection Command Line Utility\n  selection_cli:\n    CommandLine|contains|all:\n    - DownloadFile\n    - url\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

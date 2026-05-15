@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_get_gpo.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-06-04",
+                "title": "Suspicious GPO Discovery With Get-GPO",
+                "id": "eb2fd349-ec67-4caa-9143-d79c7fb34441"
+            },
+            "rule_text": "title: Suspicious GPO Discovery With Get-GPO\nid: eb2fd349-ec67-4caa-9143-d79c7fb34441\nstatus: test\ndescription: Detect use of Get-GPO to get one GPO or all the GPOs in a domain.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1615/T1615.md\n- https://learn.microsoft.com/en-us/powershell/module/grouppolicy/get-gpo?view=windowsserver2022-ps\nauthor: frack113\ndate: 2022-06-04\ntags:\n- attack.discovery\n- attack.t1615\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains: Get-GPO\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

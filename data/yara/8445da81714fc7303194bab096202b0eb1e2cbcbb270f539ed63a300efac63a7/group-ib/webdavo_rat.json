@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/group-ib/webdavo_rat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webdavo_rat",
+                "tags": [],
+                "author": "Dmitry Kupin",
+                "company": "Group-IB",
+                "family": "webdavo.rat",
+                "description": "Suspected Webdav-O RAT (YaDisk)",
+                "reference": "https://blog.group-ib.com/task",
+                "sample": "849e6ed87188de6dc9f2ef37e7c446806057677c6e05a367abbd649784abdf77",
+                "severity": 9,
+                "date": "2021-06-10"
+            },
+            "rule_text": "import \"pe\"\n\nrule webdavo_rat\n{\n\tmeta:\n\t\tauthor = \"Dmitry Kupin\"\n\t\tcompany = \"Group-IB\"\n\t\tfamily = \"webdavo.rat\"\n\t\tdescription = \"Suspected Webdav-O RAT (YaDisk)\"\n\t\treference = \"https://blog.group-ib.com/task\"\n\t\tsample = \"7874c9ab2828bc3bf920e8cdee027e745ff059237c61b7276bbba5311147ebb6\"\n\t\tsample = \"849e6ed87188de6dc9f2ef37e7c446806057677c6e05a367abbd649784abdf77\"\n\t\tseverity = 9\n\t\tdate = \"2021-06-10\"\n\n\tstrings:\n\t\t$rc4_key_0 = { 8A 4F 01 47 34 C9 75 F8 2B C8 C1 E9 D2 F3 A5 8B }\n\t\t$rc4_key_1 = { C3 02 03 04 05 DD EE 08 09 10 11 12 1F D2 15 16 }\n\t\t$s0 = \"y_dll.dll\" fullword ascii\n\t\t$s1 = \"test3.txt\" fullword ascii\n\t\t$s2 = \"DELETE\" fullword wide\n\t\t$s3 = \"PROPFIND\" fullword wide\n\n\tcondition:\n\t\t( any of ( $rc4_key* ) or 3 of ( $s* ) ) or ( pe.imphash ( ) == \"43021febc8494d66a8bc60d0fa953473\" or pe.imphash ( ) == \"68320a454321f215a3b6fcd7d585626b\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Swisyn/TrojanDropper_Win32_Swisyn_G.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Swisyn_G",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Swisyn.G,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0b 00 07 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Swisyn_G\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Swisyn.G,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0b 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {68 b8 0b 00 00 51 ?? ?? ?? 85 c0 74 5a 33 c0 8a 54 04 ?? 80 f2 ?? 80 ea ?? 80 f2 ?? 88 54 04 ?? 40 3d b8 0b 00 00 7c e7 }\n\t\t$a_03_1 = {4d 5a 00 00 77 62 00 [0-10] 2e 48 00 00 6f 63 78 00 }\n\t\t$a_01_2 = {00 50 72 6f 67 72 61 6d 20 46 69 6c 65 73 5c 43 6f 6d 6d 6f 6e 20 46 69 6c 65 73 5c }\n\t\t$a_01_3 = {00 78 69 61 6f 68 75 2e 6a 73 00 }\n\t\t$a_01_4 = {5f 62 69 6e 64 2e 61 75 00 }\n\t\t$a_01_5 = {5f 6d 75 74 69 2e 61 75 00 }\n\t\t$a_01_6 = {00 63 73 62 6f 79 62 69 6e 64 2e 61 75 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 + ( #a_01_6 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

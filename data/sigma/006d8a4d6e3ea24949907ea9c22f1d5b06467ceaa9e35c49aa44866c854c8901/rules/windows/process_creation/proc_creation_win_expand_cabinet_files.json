@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_expand_cabinet_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj, X__Junior (Nextron Systems)",
+                "date": "2021-07-30",
+                "title": "Potentially Suspicious Cabinet File Expansion",
+                "id": "9f107a84-532c-41af-b005-8d12a607639f"
+            },
+            "rule_text": "title: Potentially Suspicious Cabinet File Expansion\nid: 9f107a84-532c-41af-b005-8d12a607639f\nstatus: test\ndescription: Detects the expansion or decompression of cabinet files from potentially\n  suspicious or uncommon locations, e.g. seen in Iranian MeteorExpress related attacks\nreferences:\n- https://labs.sentinelone.com/meteorexpress-mysterious-wiper-paralyzes-iranian-trains-with-epic-troll\n- https://blog.malwarebytes.com/threat-intelligence/2021/08/new-variant-of-konni-malware-used-in-campaign-targetting-russia/\nauthor: Bhabesh Raj, X__Junior (Nextron Systems)\ndate: 2021-07-30\nmodified: 2024-11-13\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd:\n    Image|endswith: \\expand.exe\n    CommandLine|contains|windash: '-F:'\n  selection_folders_1:\n    CommandLine|contains:\n    - :\\Perflogs\\\n    - :\\ProgramData\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\Admin$\\\n    - \\AppData\\Local\\Temp\\\n    - \\AppData\\Roaming\\\n    - \\C$\\\n    - \\Temporary Internet\n  selection_folders_2:\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Favorites\\\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Favourites\\\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Contacts\\\n  filter_optional_dell:\n    ParentImage: C:\\Program Files (x86)\\Dell\\UpdateService\\ServiceShell.exe\n    CommandLine|contains: C:\\ProgramData\\Dell\\UpdateService\\Temp\\\n  condition: selection_cmd and 1 of selection_folders_* and not 1 of filter_optional_*\nfalsepositives:\n- System administrator Usage\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

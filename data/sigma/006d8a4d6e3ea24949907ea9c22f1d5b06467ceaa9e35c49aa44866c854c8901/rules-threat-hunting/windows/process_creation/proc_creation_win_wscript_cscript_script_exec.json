@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_wscript_cscript_script_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael Haag",
+                "date": "2019-01-16",
+                "title": "WSF/JSE/JS/VBA/VBE File Execution Via Cscript/Wscript",
+                "id": "1e33157c-53b1-41ad-bbcc-780b80b58288"
+            },
+            "rule_text": "title: WSF/JSE/JS/VBA/VBE File Execution Via Cscript/Wscript\nid: 1e33157c-53b1-41ad-bbcc-780b80b58288\nrelated:\n- id: 23250293-eed5-4c39-b57a-841c8933a57d\n  type: obsolete\n- id: cea72823-df4d-4567-950c-0b579eaf0846\n  type: derived\nstatus: test\ndescription: Detects script file execution (.js, .jse, .vba, .vbe, .vbs, .wsf, .wsh)\n  by Wscript/Cscript.\nreferences:\n- https://thedfirreport.com/2023/10/30/netsupport-intrusion-results-in-domain-compromise/\n- https://redcanary.com/blog/gootloader/\nauthor: Michael Haag\ndate: 2019-01-16\nmodified: 2026-02-17\ntags:\n- attack.execution\n- attack.t1059.005\n- attack.t1059.007\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName:\n    - wscript.exe\n    - cscript.exe\n  - Image|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n  selection_cli:\n    CommandLine|contains:\n    - .js\n    - .jse\n    - .vba\n    - .vbe\n    - .vbs\n    - .wsf\n    - .wsh\n  condition: all of selection_*\nfalsepositives:\n- Some additional tuning is required. It is recommended to add the user profile path\n  in CommandLine if it is getting too noisy.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

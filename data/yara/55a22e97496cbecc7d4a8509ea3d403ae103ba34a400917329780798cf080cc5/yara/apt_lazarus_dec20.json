@@ -1,0 +1,95 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_lazarus_dec20.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HvS_APT37_smb_scanner",
+                "tags": [],
+                "description": "Unknown smb login scanner used by APT37",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Marc Stroebel",
+                "date": "2020-12-15",
+                "reference1": "https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf",
+                "reference2": "https://www.hybrid-analysis.com/sample/d16163526242508d6961f061aaffe3ae5321bd64d8ceb6b2788f1570757595fc?environmentId=2",
+                "id": "89a5cc32-f151-583d-823d-692de2c2b084"
+            },
+            "rule_text": "rule HvS_APT37_smb_scanner\n{\n\tmeta:\n\t\tdescription = \"Unknown smb login scanner used by APT37\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Marc Stroebel\"\n\t\tdate = \"2020-12-15\"\n\t\treference1 = \"https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf\"\n\t\treference2 = \"https://www.hybrid-analysis.com/sample/d16163526242508d6961f061aaffe3ae5321bd64d8ceb6b2788f1570757595fc?environmentId=2\"\n\t\tid = \"89a5cc32-f151-583d-823d-692de2c2b084\"\n\n\tstrings:\n\t\t$s1 = \"Scan.exe StartIP EndIP ThreadCount logfilePath [Username Password Deep]\" fullword ascii\n\t\t$s2 = \"%s - %s:(Username - %s / Password - %s\" fullword ascii\n\t\t$s3 = \"Load mpr.dll Error \" fullword ascii\n\t\t$s4 = \"Load Netapi32.dll Error \" fullword ascii\n\t\t$s5 = \"%s U/P not Correct! - %d\" fullword ascii\n\t\t$s6 = \"GetNetWorkInfo Version 1.0\" fullword wide\n\t\t$s7 = \"Hello World!\" fullword wide\n\t\t$s8 = \"%s Error: %ld\" fullword ascii\n\t\t$s9 = \"%s U/P Correct!\" fullword ascii\n\t\t$s10 = \"%s --------\" fullword ascii\n\t\t$s11 = \"%s%-30s%I64d\" fullword ascii\n\t\t$s12 = \"%s%-30s(DIR)\" fullword ascii\n\t\t$s13 = \"%04d-%02d-%02d %02d:%02d\" fullword ascii\n\t\t$s14 = \"Share:              Local Path:                   Uses:   Descriptor:\" fullword ascii\n\t\t$s15 = \"Share:              Type:                   Remark:\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and ( 10 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HvS_APT37_cred_tool",
+                "tags": [],
+                "description": "Unknown cred tool used by APT37",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Markus Poelloth",
+                "date": "2020-12-15",
+                "reference": "https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf",
+                "id": "e830025a-f2ac-55b1-aca3-ded9dba83a67"
+            },
+            "rule_text": "rule HvS_APT37_cred_tool\n{\n\tmeta:\n\t\tdescription = \"Unknown cred tool used by APT37\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Markus Poelloth\"\n\t\tdate = \"2020-12-15\"\n\t\treference = \"https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf\"\n\t\tid = \"e830025a-f2ac-55b1-aca3-ded9dba83a67\"\n\n\tstrings:\n\t\t$s1 = \"        <requestedExecutionLevel level=\\\"asInvoker\\\" uiAccess=\\\"false\\\"></requestedExecutionLevel>\" fullword ascii\n\t\t$s2 = \"Domain Login\" fullword ascii\n\t\t$s3 = \"IEShims_GetOriginatingThreadContext\" fullword ascii\n\t\t$s4 = \" Type Descriptor'\" fullword ascii\n\t\t$s5 = \"User: %s\" fullword ascii\n\t\t$s6 = \"Pass: %s\" fullword ascii\n\t\t$s7 = \"  <trustInfo xmlns=\\\"urn:schemas-microsoft-com:asm.v3\\\">\" fullword ascii\n\t\t$s8 = \"E@c:\\\\u\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 500KB and 7 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HvS_APT37_RAT_loader",
+                "tags": [],
+                "description": "BLINDINGCAN RAT loader named iconcash.db used by APT37",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Marc Stroebel",
+                "date": "2020-12-15",
+                "hash": "b70e66d387e42f5f04b69b9eb15306036702ab8a50b16f5403289b5388292db9",
+                "reference1": "https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf",
+                "reference2": "https://us-cert.cisa.gov/ncas/analysis-reports/ar20-232a",
+                "id": "6c3e8465-d607-59bf-85fc-5abbef71fb1c"
+            },
+            "rule_text": "import \"pe\"\n\nrule HvS_APT37_RAT_loader\n{\n\tmeta:\n\t\tdescription = \"BLINDINGCAN RAT loader named iconcash.db used by APT37\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Marc Stroebel\"\n\t\tdate = \"2020-12-15\"\n\t\thash = \"b70e66d387e42f5f04b69b9eb15306036702ab8a50b16f5403289b5388292db9\"\n\t\treference1 = \"https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf\"\n\t\treference2 = \"https://us-cert.cisa.gov/ncas/analysis-reports/ar20-232a\"\n\t\tid = \"6c3e8465-d607-59bf-85fc-5abbef71fb1c\"\n\n\tcondition:\n\t\t(pe.version_info [ \"OriginalFilename\" ] contains \"MFC_DLL.dll\" ) and ( pe.exports ( \"SMain\" ) and pe.exports ( \"SMainW\" ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HvS_APT37_webshell_img_thumbs_asp",
+                "tags": [],
+                "description": "Webshell named img.asp, thumbs.asp or thumb.asp used by APT37",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Moritz Oettle",
+                "date": "2020-12-15",
+                "reference": "https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf",
+                "hash": "94d2448d3794ae3f29678a7337473d259b5cfd1c7f703fe53ee6c84dd10a48ef",
+                "id": "e45d4507-81de-5f72-9ce2-4f0e3e5c62b1"
+            },
+            "rule_text": "rule HvS_APT37_webshell_img_thumbs_asp\n{\n\tmeta:\n\t\tdescription = \"Webshell named img.asp, thumbs.asp or thumb.asp used by APT37\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Moritz Oettle\"\n\t\tdate = \"2020-12-15\"\n\t\treference = \"https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf\"\n\t\thash = \"94d2448d3794ae3f29678a7337473d259b5cfd1c7f703fe53ee6c84dd10a48ef\"\n\t\tid = \"e45d4507-81de-5f72-9ce2-4f0e3e5c62b1\"\n\n\tstrings:\n\t\t$s1 = \"strMsg = \\\"E : F\\\"\" fullword ascii\n\t\t$s2 = \"strMsg = \\\"S : \\\" & Len(fileData)\" fullword ascii\n\t\t$s3 = \"Left(workDir, InStrRev(workDir, \\\"/\\\")) & \\\"video\\\"\"\n\t\t$a1 = \"Server.CreateObject(\\\"Scripting.FileSystemObject\\\")\" fullword ascii\n\t\t$a2 = \"Dim tmpPath, workDir\" fullword ascii\n\t\t$a3 = \"Dim objFSO, objTextStream\" fullword ascii\n\t\t$a4 = \"workDir = Request.ServerVariables(\\\"URL\\\")\" fullword ascii\n\t\t$a5 = \"InStrRev(workDir, \\\"/\\\")\" ascii\n\t\t$g1 = \"WriteFile = 0\" fullword ascii\n\t\t$g2 = \"fileData = Request.Form(\\\"fp\\\")\" fullword ascii\n\t\t$g3 = \"fileName = Request.Form(\\\"fr\\\")\" fullword ascii\n\t\t$g4 = \"Err.Clear()\" fullword ascii\n\t\t$g5 = \"Option Explicit\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 2KB and ( ( 1 of ( $s* ) ) or ( 3 of ( $a* ) ) or ( 5 of ( $g* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HvS_APT37_webshell_template_query_asp",
+                "tags": [],
+                "description": "Webshell named template-query.aspimg.asp used by APT37",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Moritz Oettle",
+                "date": "2020-12-15",
+                "reference": "https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf",
+                "hash": "961a66d01c86fa5982e0538215b17fb9fae2991331dfea812b8c031e2ceb0d90",
+                "id": "dc006b46-4c51-59cd-8b7d-adbfec86cd2e"
+            },
+            "rule_text": "rule HvS_APT37_webshell_template_query_asp\n{\n\tmeta:\n\t\tdescription = \"Webshell named template-query.aspimg.asp used by APT37\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Moritz Oettle\"\n\t\tdate = \"2020-12-15\"\n\t\treference = \"https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf\"\n\t\thash = \"961a66d01c86fa5982e0538215b17fb9fae2991331dfea812b8c031e2ceb0d90\"\n\t\tid = \"dc006b46-4c51-59cd-8b7d-adbfec86cd2e\"\n\n\tstrings:\n\t\t$g1 = \"server.scripttimeout=600\" fullword ascii\n\t\t$g2 = \"response.buffer=true\" fullword ascii\n\t\t$g3 = \"response.expires=-1\" fullword ascii\n\t\t$g4 = \"session.timeout=600\" fullword ascii\n\t\t$a1 = \"redhat hacker\" ascii\n\t\t$a2 = \"want_pre.asp\" ascii\n\t\t$a3 = \"vgo=\\\"admin\\\"\" ascii\n\t\t$a4 = \"ywc=false\" ascii\n\t\t$s1 = \"public  br,ygv,gbc,ydo,yka,wzd,sod,vmd\" fullword ascii\n\n\tcondition:\n\t\tfilesize > 70KB and filesize < 200KB and ( ( 1 of ( $s* ) ) or ( 2 of ( $a* ) ) or ( 3 of ( $g* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HvS_APT37_webshell_controllers_asp",
+                "tags": [],
+                "description": "Webshell named controllers.asp or inc-basket-offer.asp used by APT37",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Moritz Oettle",
+                "date": "2020-12-15",
+                "reference": "https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf",
+                "hash": "829462fc6d84aae04a962dfc919d0a392265fbf255eab399980d2b021e385517",
+                "id": "82370415-30f4-514d-8806-e2daced96f07"
+            },
+            "rule_text": "rule HvS_APT37_webshell_controllers_asp\n{\n\tmeta:\n\t\tdescription = \"Webshell named controllers.asp or inc-basket-offer.asp used by APT37\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Moritz Oettle\"\n\t\tdate = \"2020-12-15\"\n\t\treference = \"https://www.hvs-consulting.de/media/downloads/ThreatReport-Lazarus.pdf\"\n\t\thash = \"829462fc6d84aae04a962dfc919d0a392265fbf255eab399980d2b021e385517\"\n\t\tid = \"82370415-30f4-514d-8806-e2daced96f07\"\n\n\tstrings:\n\t\t$s0 = \"<%@Language=VBScript.Encode\" ascii\n\t\t$x1 = { 64 7F 44 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x2 = { 64 7F 49 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x3 = { 64 7F 49 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x4 = { 64 7F 49 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x5 = { 64 7F 49 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x6 = { 64 7F 49 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x7 = { 64 7F 49 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x8 = { 64 41 44 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x9 = { 64 41 44 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x10 = { 64 41 44 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x11 = { 64 41 44 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x12 = { 64 7F 44 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x13 = { 64 41 44 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x14 = { 64 41 44 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x15 = { 64 41 44 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x16 = { 64 41 44 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x17 = { 64 41 49 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x18 = { 64 41 49 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x19 = { 64 41 49 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x20 = { 64 41 49 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x21 = { 64 41 49 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x22 = { 64 41 49 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x23 = { 64 7F 44 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x24 = { 64 41 49 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x25 = { 64 41 49 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x26 = { 6A 7F 44 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x27 = { 6A 7F 44 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x28 = { 6A 7F 44 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x29 = { 6A 7F 44 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x30 = { 6A 7F 44 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x31 = { 6A 7F 44 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x32 = { 6A 7F 44 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x33 = { 6A 7F 44 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x34 = { 64 7F 44 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x35 = { 6A 7F 49 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x36 = { 6A 7F 49 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x37 = { 6A 7F 49 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x38 = { 6A 7F 49 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x39 = { 6A 7F 49 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x40 = { 6A 7F 49 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x41 = { 6A 7F 49 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x42 = { 6A 7F 49 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x43 = { 6A 41 44 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x44 = { 6A 41 44 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x45 = { 64 7F 44 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x46 = { 6A 41 44 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x47 = { 6A 41 44 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x48 = { 6A 41 44 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x49 = { 6A 41 44 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x50 = { 6A 41 44 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x51 = { 6A 41 44 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x52 = { 6A 41 49 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x53 = { 6A 41 49 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x54 = { 6A 41 49 2D 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x55 = { 6A 41 49 2D 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x56 = { 64 7F 44 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x57 = { 6A 41 49 23 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x58 = { 6A 41 49 23 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x59 = { 6A 41 49 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x60 = { 6A 41 49 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x61 = { 64 7F 44 23 41 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x62 = { 64 7F 44 23 41 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x63 = { 64 7F 49 2D 7F 44 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\t\t$x64 = { 64 7F 49 2D 7F 49 63 2F 6D 4D 6B 61 4F 59 62 3A 6E 72 21 59 }\n\n\tcondition:\n\t\tfilesize > 50KB and filesize < 200KB and ( $s0 and 1 of ( $x* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

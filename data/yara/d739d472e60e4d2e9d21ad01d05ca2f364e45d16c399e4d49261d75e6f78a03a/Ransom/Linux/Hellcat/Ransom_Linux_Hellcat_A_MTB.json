@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Linux/Hellcat/Ransom_Linux_Hellcat_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Linux_Hellcat_A_MTB",
+                "tags": [],
+                "description": "Ransom:Linux/Hellcat.A!MTB,SIGNATURE_TYPE_ELFHSTR_EXT,08 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Linux_Hellcat_A_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Linux/Hellcat.A!MTB,SIGNATURE_TYPE_ELFHSTR_EXT,08 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {6b 69 6c 6c 5f 61 6c 6c 5f 76 6d 73 }\n\t\t$a_01_1 = {6b 69 6c 6c 5f 76 6d 73 }\n\t\t$a_01_2 = {65 73 78 63 6c 69 20 76 6d 20 70 72 6f 63 65 73 73 20 6b 69 6c 6c 20 2d 2d 74 79 70 65 3d }\n\t\t$a_01_3 = {52 65 61 64 6d 65 2e 25 73 2e 74 78 74 }\n\t\t$a_01_4 = {62 5f 73 6b 69 70 5f 73 6f 6d 65 5f 66 69 6c 65 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

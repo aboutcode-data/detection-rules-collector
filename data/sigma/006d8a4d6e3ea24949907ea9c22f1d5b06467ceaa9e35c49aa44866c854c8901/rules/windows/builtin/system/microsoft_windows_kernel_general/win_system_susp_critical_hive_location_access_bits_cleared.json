@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/microsoft_windows_kernel_general/win_system_susp_critical_hive_location_access_bits_cleared.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-05-15",
+                "title": "Critical Hive In Suspicious Location Access Bits Cleared",
+                "id": "39f919f3-980b-4e6f-a975-8af7e507ef2b"
+            },
+            "rule_text": "title: Critical Hive In Suspicious Location Access Bits Cleared\nid: 39f919f3-980b-4e6f-a975-8af7e507ef2b\nrelated:\n- id: 839dd1e8-eda8-4834-8145-01beeee33acd\n  type: obsolete\nstatus: test\ndescription: 'Detects events from the Kernel-General ETW indicating that the access\n  bits of a hive with a system like hive name located in the temp directory have been\n  reset.\n\n  This occurs when an application tries to access a hive and the hive has not be recognized\n  since the last 7 days (by default).\n\n  Registry hive dumping utilities such as QuarksPwDump were seen emitting this behavior.\n\n  '\nreferences:\n- https://github.com/nasbench/Misc-Research/blob/b20da2336de0f342d31ef4794959d28c8d3ba5ba/ETW/Microsoft-Windows-Kernel-General.md\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-05-15\nmodified: 2024-01-18\ntags:\n- attack.credential-access\n- attack.t1003.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    EventID: 16\n    Provider_Name: Microsoft-Windows-Kernel-General\n    HiveName|contains:\n    - \\Temp\\SAM\n    - \\Temp\\SECURITY\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

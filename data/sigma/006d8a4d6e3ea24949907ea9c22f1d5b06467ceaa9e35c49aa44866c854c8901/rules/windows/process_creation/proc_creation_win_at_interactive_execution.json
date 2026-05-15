@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_at_interactive_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community",
+                "date": "2019-10-24",
+                "title": "Interactive AT Job",
+                "id": "60fc936d-2eb0-4543-8a13-911c750a1dfc"
+            },
+            "rule_text": "title: Interactive AT Job\nid: 60fc936d-2eb0-4543-8a13-911c750a1dfc\nstatus: test\ndescription: Detects an interactive AT job, which may be used as a form of privilege\n  escalation.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1053.002/T1053.002.md\n- https://eqllib.readthedocs.io/en/latest/analytics/d8db43cf-ed52-4f5c-9fb3-c9a4b95a0b56.html\nauthor: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community\ndate: 2019-10-24\nmodified: 2021-11-27\ntags:\n- attack.persistence\n- attack.execution\n- attack.privilege-escalation\n- attack.t1053.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\at.exe\n    CommandLine|contains: interactive\n  condition: selection\nfalsepositives:\n- Unlikely (at.exe deprecated as of Windows 8)\nlevel: high\nsimulation:\n- type: atomic-red-team\n  name: At.exe Scheduled task\n  technique: T1053.002\n  atomic_guid: 4a6c0dc4-0f2a-4203-9298-a5a9bdc21ed8\n",
+            "vulnerabilities": []
+        }
+    ]
+}

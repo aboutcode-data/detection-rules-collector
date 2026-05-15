@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/LockBit/Ransom_Win32_LockBit_AA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_LockBit_AA",
+                "tags": [],
+                "description": "Ransom:Win32/LockBit.AA,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_LockBit_AA\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/LockBit.AA,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f1 d5 00 fa 4c 62 cc f4 0f 0b }\n\t\t$a_01_1 = {33 c0 8b 55 0c 8b 75 08 ac 33 c9 b9 30 00 00 00 8d 0c 4d 01 00 00 00 02 f1 2a f1 33 c9 b9 06 00 00 00 8d 0c 4d 01 00 00 00 d3 ca 03 d0 90 85 c0 75 d6 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 10 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

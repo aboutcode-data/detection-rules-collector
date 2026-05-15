@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/cloud/azure/suspicous_account_name_for_created_acc_az_ad.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2022-08-12",
+                "title": "Suspicious account creation",
+                "id": "271caa0f-29fc-4123-888d-bf241700d623"
+            },
+            "rule_text": "title: Suspicious account creation\nid: 271caa0f-29fc-4123-888d-bf241700d623\ndescription: Suspicious accountname used for created account\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: '2022-08-12'\nlogsource:\n  product: azure\n  service: activitylogs\ntags:\n- attack.persistence\ndetection:\n  selection:\n    Operation: Add user.\n    ObjectId|startswith:\n    - admin\n    - Admin\n    - backup\n    - User\n    - Test\n    - ftpuser@\n    - Support@\n    - root@\n    - Office@\n    - remote@\n    - office@\n    - manager@\n    - username@\n    - login@\n    - super@\n    - domain@\n  condition: selection\nfalsepositives:\n- Legitimate accounts\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

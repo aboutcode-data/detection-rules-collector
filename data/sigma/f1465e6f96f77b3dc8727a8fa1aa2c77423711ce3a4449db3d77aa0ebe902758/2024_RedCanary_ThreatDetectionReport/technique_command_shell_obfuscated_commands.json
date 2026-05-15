@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_command_shell_obfuscated_commands.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Obfuscated Commands - Command Shell",
+                "id": "b58b6c4b-0f79-407e-b2ab-76de16a6cd79"
+            },
+            "rule_text": "title: Obfuscated Commands - Command Shell\nid: b58b6c4b-0f79-407e-b2ab-76de16a6cd79\nstatus: experimental\ndescription: \"Detecting obfuscation in the command shell is relatively straightforward,\\\n  \\ but \\nthere are a lot of variations to consider when you\\u2019re developing detection\\\n  \\ \\ncoverage. Of course, the process you\\u2019re looking for will always be cmd.exe,\\\n  \\ \\nbut the corresponding command line can contain a variety of suspicious characters.\\\n  \\ \\nThe trick is finding the thresholds where the inclusion of obfuscation characters\\\n  \\ \\ngo from normal to anomalous (but benign) to suspicious enough to warrant alerting.\\\n  \\ \\nThe following pseudo-detection logic offers a good starting point for developing\\\n  \\ \\ndetection coverage for obfuscation in the command line. Part of the RedCanary\\\n  \\ 2024 \\nThreat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1059\n- attack.t1059.003\n- attack.defense_evasion\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    CommandLine|re: ^([^^=%![(; ]*[\\^=%![(; ]){8,}[^^=%![(; ]*$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

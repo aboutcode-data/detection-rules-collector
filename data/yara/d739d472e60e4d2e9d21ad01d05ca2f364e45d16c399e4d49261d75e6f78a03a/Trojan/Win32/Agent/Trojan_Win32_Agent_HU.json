@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Agent/Trojan_Win32_Agent_HU.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Agent_HU",
+                "tags": [],
+                "description": "Trojan:Win32/Agent.HU,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Agent_HU\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Agent.HU,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {4f 8a 06 4e 8a 26 4e 32 c4 88 07 4f e2 f6 5f 5e }\n\t\t$a_03_1 = {74 19 68 00 00 04 00 ff 35 ?? ?? ?? ?? ff 35 ?? ?? ?? ?? 6a 00 ff 15 ?? ?? ?? ?? 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 6a 00 6a 00 6a 04 6a 00 6a 00 6a 00 }\n\t\t$a_03_2 = {c3 6a 00 53 ff 75 f8 ff 35 ?? ?? ?? ?? ff 35 ?? ?? ?? ?? ff 15 ?? ?? ?? ?? ff 75 f8 6a 08 ff 75 fc ff 15 ?? ?? ?? ?? 0f b7 46 08 8d 04 45 0a 00 00 00 }\n\t\t$a_01_3 = {68 10 10 05 00 ff 35 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

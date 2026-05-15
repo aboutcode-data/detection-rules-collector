@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/fboldewin/YARA-rules/blob/master/UNC2891_Winghook.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "UNC2891_Winghook",
+                "tags": [],
+                "description": "Detects UNC2891 Winghook Keylogger",
+                "author": "Frank Boldewin (@r3c0nst)",
+                "date": "2022-30-03",
+                "hash1": "d071ee723982cf53e4bce89f3de5a8ef1853457b21bffdae387c4c2bd160a38e"
+            },
+            "rule_text": "rule UNC2891_Winghook\n{\n\tmeta:\n\t\tdescription = \"Detects UNC2891 Winghook Keylogger\"\n\t\tauthor = \"Frank Boldewin (@r3c0nst)\"\n\t\tdate = \"2022-30-03\"\n\t\thash1 = \"d071ee723982cf53e4bce89f3de5a8ef1853457b21bffdae387c4c2bd160a38e\"\n\n\tstrings:\n\t\t$code1 = {01 F9 81 E1 FF 00 00 00 41 89 CA [15] 44 01 CF 81 E7 FF 00 00 00}\n\t\t$code2 = {83 E2 0F 0F B6 14 1? 32 14 01 88 14 0? 48 83 ?? ?? 48 83 ?? ?? 75}\n\t\t$str1 = \"fgets\" ascii\n\t\t$str2 = \"read\" ascii\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and filesize < 100KB and 1 of ( $code* ) and all of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

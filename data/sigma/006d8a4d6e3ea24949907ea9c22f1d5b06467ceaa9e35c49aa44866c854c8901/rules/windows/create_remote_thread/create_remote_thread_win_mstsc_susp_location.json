@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/create_remote_thread/create_remote_thread_win_mstsc_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-28",
+                "title": "Remote Thread Creation In Mstsc.Exe From Suspicious Location",
+                "id": "c0aac16a-b1e7-4330-bab0-3c27bb4987c7"
+            },
+            "rule_text": "title: Remote Thread Creation In Mstsc.Exe From Suspicious Location\nid: c0aac16a-b1e7-4330-bab0-3c27bb4987c7\nstatus: test\ndescription: 'Detects remote thread creation in the \"mstsc.exe\" process by a process\n  located in a potentially suspicious location.\n\n  This technique is often used by attackers in order to hook some APIs used by DLLs\n  loaded by \"mstsc.exe\" during RDP authentications in order to steal credentials.\n\n  '\nreferences:\n- https://github.com/S12cybersecurity/RDPCredentialStealer/blob/1b8947cdd065a06c1b62e80967d3c7af895fcfed/APIHookInjectorBin/APIHookInjectorBin/Inject.h#L25\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-28\nmodified: 2024-01-22\ntags:\n- attack.credential-access\nlogsource:\n  product: windows\n  category: create_remote_thread\ndetection:\n  selection:\n    TargetImage|endswith: \\mstsc.exe\n    SourceImage|contains:\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\PerfLogs\\\n    - :\\Windows\\Tasks\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

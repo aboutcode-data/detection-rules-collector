@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/Techniques/susp_obf_py_marshal_module.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "susp_obf_py_marshal_module",
+                "tags": [],
+                "description": "Detects Obfuscated Code Using Python Marshal Module",
+                "author": "RussianPanda",
+                "date": "2024-01-16",
+                "reference": "https://www.trendmicro.com/fr_fr/research/23/j/infection-techniques-across-supply-chains-and-codebases.html",
+                "hash": "d740129ff6bdb65a324eadf4ac8de3893a54306cf2a11712a305ef6247204092"
+            },
+            "rule_text": "rule susp_obf_py_marshal_module\n{\n\tmeta:\n\t\tdescription = \"Detects Obfuscated Code Using Python Marshal Module\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2024-01-16\"\n\t\treference = \"https://www.trendmicro.com/fr_fr/research/23/j/infection-techniques-across-supply-chains-and-codebases.html\"\n\t\thash = \"d740129ff6bdb65a324eadf4ac8de3893a54306cf2a11712a305ef6247204092\"\n\n\tstrings:\n\t\t$s1 = \"exec(marshal.loads(zlib.decompress(b'x\\\\x9c\"\n\t\t$t2 = \"gzip\"\n\t\t$t3 = \"lzma\"\n\t\t$t4 = \"bz2\"\n\t\t$t5 = \"binascii\"\n\n\tcondition:\n\t\t$s1 and any of ( $t* ) and filesize < 2MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

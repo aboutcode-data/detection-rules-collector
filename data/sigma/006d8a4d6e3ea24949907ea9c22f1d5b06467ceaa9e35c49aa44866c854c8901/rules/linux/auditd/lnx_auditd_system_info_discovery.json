@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/lnx_auditd_system_info_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-09-03",
+                "title": "System Information Discovery - Auditd",
+                "id": "f34047d9-20d3-4e8b-8672-0a35cc50dc71"
+            },
+            "rule_text": "title: System Information Discovery - Auditd\nid: f34047d9-20d3-4e8b-8672-0a35cc50dc71\nstatus: test\ndescription: Detects System Information Discovery commands\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f296668303c29d3f4c07e42bdd2b28d8dd6625f9/atomics/T1082/T1082.md\nauthor: Pawel Mazur\ndate: 2021-09-03\nmodified: 2023-03-06\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection_1:\n    type: PATH\n    name:\n    - /etc/lsb-release\n    - /etc/redhat-release\n    - /etc/issue\n  selection_2:\n    type: EXECVE\n    a0:\n    - uname\n    - uptime\n    - lsmod\n    - hostname\n    - env\n  selection_3:\n    type: EXECVE\n    a0: grep\n    a1|contains:\n    - vbox\n    - vm\n    - xen\n    - virtio\n    - hv\n  selection_4:\n    type: EXECVE\n    a0: kmod\n    a1: list\n  condition: 1 of selection_*\nfalsepositives:\n- Likely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_potential_enumeration_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "uniqu3-us3r",
+                "date": "2026-04-28",
+                "title": "Kubernetes Potential Enumeration Activity",
+                "id": "597a7e84-187d-458b-9e4f-2f5a0e676711"
+            },
+            "rule_text": "title: Kubernetes Potential Enumeration Activity\nid: 597a7e84-187d-458b-9e4f-2f5a0e676711\nstatus: experimental\ndescription: 'Detects potential Kubernetes enumeration or attack activity via the\n  audit log.\n\n  This includes the execution of common shells, utilities, or specialized tools like\n  ''Rakkess'' (access_matrix) and ''TruffleHog'' via Kubernetes API requests.\n\n  Attackers use these methods to perform reconnaissance (enumeration), secret harvesting,\n  or execute code (exec) within a cluster.\n\n  '\nreferences:\n- https://www.nccgroup.com/research/detection-engineering-for-kubernetes-clusters/\n- https://github.com/trufflesecurity/trufflehog\n- https://github.com/corneliusweig/rakkess\nauthor: uniqu3-us3r\ndate: 2026-04-28\ntags:\n- attack.execution\n- attack.discovery\n- attack.t1609\n- attack.t1613\nlogsource:\n  product: kubernetes\n  service: audit\ndetection:\n  selection_status:\n    responseStatus.code: ALLOW\n  selection_request_uri:\n    requestURI|contains:\n    - '%2fbin%2fash'\n    - '%2fbin%2fbash'\n    - '%2fbin%2fbusybox'\n    - '%2fbin%2fdash'\n    - '%2fbin%2fsh'\n    - '%2fbin%2fzsh'\n    - /bin/ash\n    - /bin/bash\n    - /bin/busybox\n    - /bin/dash\n    - /bin/sh\n    - /bin/zsh\n    - '%2fusr%2fbin%2fcurl'\n    - '%2fusr%2fbin%2fkubectl'\n    - '%2fusr%2fbin%2fperl'\n    - '%2fusr%2fbin%2fpython'\n    - '%2fusr%2fbin%2fwget'\n    - /usr/bin/curl\n    - /usr/bin/kubectl\n    - /usr/bin/perl\n    - /usr/bin/python\n    - /usr/bin/wget\n  selection_request_user_agent:\n    userAgent|contains:\n    - access_matrix\n    - trufflehog\n    - azurehound\n    - micro-scanner\n  condition: selection_status and 1 of selection_request_*\nfalsepositives:\n- Authorized administrative maintenance via kubectl\n- Automated internal infrastructure monitoring and certificate rotation\n- Security-approved vulnerability or secret scanning in DevSecOps pipelines\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Nimbus/Trojan_Win64_Nimbus_GVC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Nimbus_GVC_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Nimbus.GVC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Nimbus_GVC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Nimbus.GVC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2a 00 d7 c6 2a 00 0b de 2a 00 d7 }\n\t\t$a_01_1 = {14 08 00 14 64 0a 00 14 34 09 00 14 32 10 f0 0e e0 0c }\n\t\t$a_01_2 = {00 0f 32 0b 70 b4 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

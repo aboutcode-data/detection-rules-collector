@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/remcos.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "remcos_rat",
+                "tags": [],
+                "author": "jeFF0Falltrades"
+            },
+            "rule_text": "import \"pe\"\n\nrule remcos_rat\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\n\tstrings:\n\t\t$str_upload = \"Uploading file to C&C\" wide ascii\n\t\t$str_keylog_1 = \"Offline Keylogger Started\" wide ascii\n\t\t$str_keylog_2 = \"Online Keylogger Started\" wide ascii\n\t\t$str_mutex_1 = \"Mutex_RemWatchdog\" wide ascii\n\t\t$str_mutex_2 = \"Remcos_Mutex_Inj\" wide ascii\n\t\t$str_cleared = \"Cleared all cookies & stored logins!\" wide ascii\n\t\t$str_bs_vendor = \"Breaking-Security.Net\" wide ascii\n\t\t$str_controller = \"Connecting to Controller...\" wide ascii\n\t\t$str_rc4 = { 40 8b cb 99 f7 f9 8b 84 95 f8 fb ff ff 8b f3 03 45 fc 89 55 f8 8d 8c 95 f8 fb ff ff 99 f7 fe 8a 01 8b f2 8b 94 b5 f8 fb ff ff }\n\n\tcondition:\n\t\t3 of ( $str* ) or ( pe.sections [ 0 ] . name == \"VVR\" and pe.sections [ 1 ] . name == \"ZKZR\" and pe.sections [ 2 ] . name == \".test\" and pe.sections [ 3 ] . name == \"rca\" and pe.sections [ 4 ] . name == \"vga\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

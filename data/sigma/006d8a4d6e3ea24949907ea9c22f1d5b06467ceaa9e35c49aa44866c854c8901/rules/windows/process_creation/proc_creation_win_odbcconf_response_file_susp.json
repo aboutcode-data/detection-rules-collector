@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_odbcconf_response_file_susp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-22",
+                "title": "Suspicious Response File Execution Via Odbcconf.EXE",
+                "id": "2d32dd6f-3196-4093-b9eb-1ad8ab088ca5"
+            },
+            "rule_text": "title: Suspicious Response File Execution Via Odbcconf.EXE\nid: 2d32dd6f-3196-4093-b9eb-1ad8ab088ca5\nrelated:\n- id: 5f03babb-12db-4eec-8c82-7b4cb5580868\n  type: derived\n- id: 65d2be45-8600-4042-b4c0-577a1ff8a60e\n  type: obsolete\nstatus: test\ndescription: Detects execution of \"odbcconf\" with the \"-f\" flag in order to load a\n  response file with a non-\".rsp\" extension.\nreferences:\n- https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16\n- https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/\n- https://www.trendmicro.com/en_us/research/17/h/backdoor-carrying-emails-set-sights-on-russian-speaking-businesses.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-22\nmodified: 2024-03-13\ntags:\n- attack.stealth\n- attack.t1218.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\odbcconf.exe\n  - OriginalFileName: odbcconf.exe\n  selection_cli:\n    CommandLine|contains|windash: ' -f '\n  filter_main_rsp_ext:\n    CommandLine|contains: .rsp\n  filter_main_runonce_odbc:\n    ParentImage: C:\\Windows\\System32\\runonce.exe\n    Image: C:\\Windows\\System32\\odbcconf.exe\n    CommandLine|contains: .exe /E /F \"C:\\WINDOWS\\system32\\odbcconf.tmp\"\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/pmelson/yara_rules/blob/master/meterpreter_pe_stager_strings.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Meterpreter_PE_stager_strings",
+                "tags": [],
+                "description": "Detect default Meterpeter stager strings",
+                "author": "Paul Melson @pmelson",
+                "hash": "c626985292bc2017ea7d363af9ce032482194895b3575ec4ec96746832f483d5"
+            },
+            "rule_text": "rule Meterpreter_PE_stager_strings\n{\n\tmeta:\n\t\tdescription = \"Detect default Meterpeter stager strings\"\n\t\tauthor = \"Paul Melson @pmelson\"\n\t\thash = \"c626985292bc2017ea7d363af9ce032482194895b3575ec4ec96746832f483d5\"\n\n\tstrings:\n\t\t$apache_bench = \"ApacheBench\"\n\t\t$defaultpdb = \"\\\\local0\\\\asf\\\\release\\\\build-2.2.14\\\\support\\\\Release\\\\ab.pdb\"\n\t\t$payload = \"PAYLOAD\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and ( $apache_bench or $payload or $defaultpdb )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

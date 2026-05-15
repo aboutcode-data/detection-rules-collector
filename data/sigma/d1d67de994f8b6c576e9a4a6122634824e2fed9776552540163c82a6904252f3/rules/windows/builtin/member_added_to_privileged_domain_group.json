@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/builtin/member_added_to_privileged_domain_group.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Nils Hult",
+                "date": "2024-02-14",
+                "title": "Member Added to Privileged Domain Group",
+                "id": "6e350350-f040-4f3f-bbe5-35a3a8c00f6b"
+            },
+            "rule_text": "title: Member Added to Privileged Domain Group\nid: 6e350350-f040-4f3f-bbe5-35a3a8c00f6b\ndescription: Could indicate privilege escalation or persistence. Look for suspicious\n  surrounding activity or odd account name.\nstatus: stable\nauthor: NTT Security - Nils Hult\ndate: '2024-02-14'\nmodified: '2024-02-14'\nlogsource:\n  category: windows\ndetection:\n  selection:\n    EventID: 4728\n    GroupName:\n    - Account Operators\n    - Administrator\n    - Administrators\n    - Backup Operators\n    - Domain Admins\n    - Domain Controllers\n    - Enterprise Admins\n    - Krbtgt\n    - Print Operators\n    - Read-only Domain Controllers\n    - Replicator\n    - Schema Admins\n    - Server Operators\n  condition: selection\nfalsepositives:\n- Legitimate administrative activity\nlevel: medium\nfields:\n- AccountName\n- GroupName\n- TargetDomainName\n- SubjectUserName\ntags:\n- attack.persistence\n- attack.privilege_escalation\n",
+            "vulnerabilities": []
+        }
+    ]
+}

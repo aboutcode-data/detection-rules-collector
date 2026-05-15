@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_service_startup_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-04-27",
+                "title": "Service Startup Type Change Via Wmic.EXE",
+                "id": "c0514f28-fdae-42df-b886-06e2b2bc5b37"
+            },
+            "rule_text": "title: Service Startup Type Change Via Wmic.EXE\nid: c0514f28-fdae-42df-b886-06e2b2bc5b37\nstatus: experimental\ndescription: 'Detects changes to service startup type to ''disabled'' or ''manual''\n  using the WMIC command-line utility.\n\n  '\nreferences:\n- https://blog.talosintelligence.com/uncovering-qilin-attack-methods-exposed-through-multiple-cases/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-04-27\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1047\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WMIC.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' service '\n    - ChangeStartMode\n    CommandLine|contains:\n    - Manual\n    - Disabled\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative changes to service startup types using WMIC, investigate\n  accordingly.\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_wmic_service_startup_change/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

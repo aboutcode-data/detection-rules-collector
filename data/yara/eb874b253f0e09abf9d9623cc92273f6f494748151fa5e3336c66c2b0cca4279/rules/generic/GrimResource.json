@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/generic/GrimResource.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "GrimResource",
+                "tags": [],
+                "id": "6AllkuLIfG9lO9ZRaxm6Ni",
+                "fingerprint": "v1_sha256_9d266207dd5688a68a837d9d764aa7390183a8b551b0524e6d21f80a34afeb29",
+                "version": "1.0",
+                "date": "2025-12-15",
+                "modified": "2025-12-15",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies GrimResource and potential derivatives or variants.",
+                "category": "INFO",
+                "reference": "https://www.elastic.co/security-labs/grimresource"
+            },
+            "rule_text": "rule GrimResource\n{\n\tmeta:\n\t\tid = \"6AllkuLIfG9lO9ZRaxm6Ni\"\n\t\tfingerprint = \"v1_sha256_9d266207dd5688a68a837d9d764aa7390183a8b551b0524e6d21f80a34afeb29\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2025-12-15\"\n\t\tmodified = \"2025-12-15\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies GrimResource and potential derivatives or variants.\"\n\t\tcategory = \"INFO\"\n\t\treference = \"https://www.elastic.co/security-labs/grimresource\"\n\n\tstrings:\n\t\t$xml = \"<?xml\"\n\t\t$grim_a = \"MMC_ConsoleFile\"\n\t\t$grim_b = \".loadXML(\"\n\t\t$other_a = \"ActiveXObject\"\n\t\t$other_b = \"ms:script\"\n\t\t$other_c = \"CDATA\"\n\n\tcondition:\n\t\t$xml at 0 and ( all of ( $grim_* ) or all of ( $other_* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

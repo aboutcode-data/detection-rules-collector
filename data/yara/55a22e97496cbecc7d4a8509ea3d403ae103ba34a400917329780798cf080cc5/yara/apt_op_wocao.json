@@ -1,0 +1,233 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_op_wocao.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_Agent_Csharp",
+                "tags": [],
+                "description": "Strings from CSharp version of Agent",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "e5212226-a82d-558d-abb4-43ad7848764e"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_Agent_Csharp\n{\n\tmeta:\n\t\tdescription = \"Strings from CSharp version of Agent\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"e5212226-a82d-558d-abb4-43ad7848764e\"\n\n\tstrings:\n\t\t$a = \"mysend(client_sock, new byte[] { 0x16, 0x00 }, 2);\" ascii wide\n\t\t$b = \"Dns.GetHostAddresses(sip.Remove(sip.Length - 1));\" ascii wide\n\t\t$c = \"Port = 256 * buf[4] + buf[5];\" ascii wide\n\t\t$d = \"Port = 256 * buf[AddrLen] + buf[AddrLen + 1];\" ascii wide\n\t\t$e = \"StartTransData(CliSock\" ascii wide\n\t\t$f = \"static void ForwardTransmit(object ft_data)\" ascii wide\n\t\t$key = \"0x4c, 0x1b, 0x68, 0x0b, 0x6a, 0x18, 0x09, 0x41, 0x5a, 0x36, 0x1f, 0x56, 0x26, 0x2a, 0x03, 0x44, 0x7d, 0x5f, 0x03, 0x7b, 0x07, 0x6e, 0x03, 0x77, 0x30, 0x70, 0x52, 0x42, 0x53, 0x67, 0x0a, 0x2a\" ascii wide\n\t\t$key_raw = { 4c1b680b6a1809415a361f56262a03447d5f037b076e03773070524253670a2a }\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_agent_powershell_dropper",
+                "tags": [],
+                "description": "Strings from PowerShell dropper of CSharp version of Agent",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "833ce607-56a9-5580-bbd1-e72392945fec"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_agent_powershell_dropper\n{\n\tmeta:\n\t\tdescription = \"Strings from PowerShell dropper of CSharp version of Agent\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"833ce607-56a9-5580-bbd1-e72392945fec\"\n\n\tstrings:\n\t\t$a = \"function format([string]$source)\"\n\t\t$b = \"foreach($c in $bb){$tt = $tt + [char]($c -bxor\"\n\t\t$c = \"[agent]::Main($args);\"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_agent_powershell_b64encoded",
+                "tags": [],
+                "description": "Piece of Base64 encoded data from Agent CSharp version",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "14e1702d-6229-5989-8bb7-cc9c0c321676"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_agent_powershell_b64encoded\n{\n\tmeta:\n\t\tdescription = \"Piece of Base64 encoded data from Agent CSharp version\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"14e1702d-6229-5989-8bb7-cc9c0c321676\"\n\n\tstrings:\n\t\t$header = \"LFNVT0hBBnVfVVJDSx0sU1VPSEEGdV9VUkNLCG9pHSxTVU9IQQZ1X1VSQ0sIZUlK\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_agent_py",
+                "tags": [],
+                "description": "Strings from Python version of Agent",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "ca30dd6a-b596-54ab-b4f0-50e6b1382f73"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_agent_py\n{\n\tmeta:\n\t\tdescription = \"Strings from Python version of Agent\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"ca30dd6a-b596-54ab-b4f0-50e6b1382f73\"\n\n\tstrings:\n\t\t$a = \"vpshex.decode\"\n\t\t$b = \"self._newsock.recv\"\n\t\t$c = \"Rsock.connect\"\n\t\t$d = /MAX_DATALEN\\s?=\\s?10240/\n\t\t$e = /LISTEN_MAXCOUNT\\s?=\\s?80/\n\t\t$f = \"ListenSock.listen(LISTEN_MAXCOUNT)\"\n\t\t$g = \"nextsock.send(head)\"\n\t\t$h = \"elif transnode\"\n\t\t$i = \"infobuf[4:6]\"\n\t\t$key = \"L\\\\x1bh\\\\x0bj\\\\x18\\\\tAZ6\\\\x1fV&*\\\\x03D}_\\\\x03{\\\\x07n\\\\x03w0pRBSg\\\\n*\"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_agent_py_b64encoded",
+                "tags": [],
+                "description": "Piece of Base64 encoded data from Agent Python version",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "eb2701e9-4358-5d24-bfcd-b4dde24f13bf"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_agent_py_b64encoded\n{\n\tmeta:\n\t\tdescription = \"Piece of Base64 encoded data from Agent Python version\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"eb2701e9-4358-5d24-bfcd-b4dde24f13bf\"\n\n\tstrings:\n\t\t$header = \"QlpoOTFBWSZTWWDdHjgABDTfgHwQe////z/v/9+////6YA4cGPsAl2e8M9LSU128\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_keylogger_py",
+                "tags": [],
+                "description": "Strings from Python keylogger",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "f7b5ec1b-669e-5e7d-a9d3-011d212eb363"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_keylogger_py\n{\n\tmeta:\n\t\tdescription = \"Strings from Python keylogger\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"f7b5ec1b-669e-5e7d-a9d3-011d212eb363\"\n\n\tstrings:\n\t\t$a = \"c:\\\\windows\\\\temp\\\\tap.tmp\"\n\t\t$b = \"c:\\\\windows\\\\temp\\\\mrteeh.tmp\"\n\t\t$c = \"GenFileName\"\n\t\t$d = \"outfile\"\n\t\t$e = \"[PASTE:%d]\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_keylogger_file",
+                "tags": [],
+                "description": "Rule for finding keylogger output files",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "22e866b3-4b02-593a-b9a6-aa86870b6509"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_keylogger_file\n{\n\tmeta:\n\t\tdescription = \"Rule for finding keylogger output files\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"22e866b3-4b02-593a-b9a6-aa86870b6509\"\n\n\tstrings:\n\t\t$a = { 0d 0a 20 [3-10] 53 74 61 72 74 75 70 3a 20 [3] 20 [3] 20 [2] 20 [2] 3a [2] 3a [2] 20 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_xserver_csharp",
+                "tags": [],
+                "description": "Strings from the CSharp version of XServer",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "48f4c88d-fb56-54ca-84e2-38f88804a50f"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_xserver_csharp\n{\n\tmeta:\n\t\tdescription = \"Strings from the CSharp version of XServer\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"48f4c88d-fb56-54ca-84e2-38f88804a50f\"\n\n\tstrings:\n\t\t$a = \"static void ServerX(int ListenPort)\" ascii wide\n\t\t$b = \"public class xserver\" ascii wide\n\t\t$c = \"[xserver]::Main($args);\" ascii wide\n\t\t$d = \"add rule name=powershell dir=in localport=47000 action=allow\" ascii wide\n\t\t$e = \"string TempFile = file_path + \\\".CT\\\";\" ascii wide\n\t\t$f = \"Port = 256 * RecvBuf[AddrLen + 5] + RecvBuf[AddrLen + 6];\"\n\t\t$g = \"CliSock.Send(new byte[] { 0x05, 0x00 });\"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_xserver_powershell_b64encoded",
+                "tags": [],
+                "description": "Piece of Base64 encoded data from the XServer PowerShell dropper",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "01e38cfb-b245-5398-b037-6d1d2fb726ee"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_xserver_powershell_b64encoded\n{\n\tmeta:\n\t\tdescription = \"Piece of Base64 encoded data from the XServer PowerShell dropper\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"01e38cfb-b245-5398-b037-6d1d2fb726ee\"\n\n\tstrings:\n\t\t$header_47000 = \"5T39c9u2kr/nr2A0Ny2VKIzkfLRJntuJHafPN/nwWG777rUZDy3BNq8UqSEpx26b\"\n\t\t$header_25667 = \"5T1rc9u2st/zKxjNmZZKFEZyErdJ6nZsx+nxnTjxWGp77mkzHlqCbd5SpIak/Gjr\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_xserver_powershell_dropper",
+                "tags": [],
+                "description": "Strings from the PowerShell dropper of XServer",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "97169ab4-d68d-5137-83de-d9cac975747e"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_xserver_powershell_dropper\n{\n\tmeta:\n\t\tdescription = \"Strings from the PowerShell dropper of XServer\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"97169ab4-d68d-5137-83de-d9cac975747e\"\n\n\tstrings:\n\t\t$encfile = \"New-Object IO.Compression.DeflateStream([IO.MemoryStream][Convert]::FromBase64String($encfile)\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_injector_bin",
+                "tags": [],
+                "description": "Process injector/launcher",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "389279f1-6531-594f-97b6-5adbc8fa4d3d"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_injector_bin\n{\n\tmeta:\n\t\tdescription = \"Process injector/launcher\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"389279f1-6531-594f-97b6-5adbc8fa4d3d\"\n\n\tstrings:\n\t\t$a = \"%s{%04d-%02d%02d-%02d%02d-%d%ld}.tmp\"\n\t\t$b = \"s% > s% c/ exe.d\"\n\t\t$c = {\n            48 89 5C 24 08 48 89 74  24 10 57 48 83 EC 50 48\n            8B 71 08 48 8D 59 10 48  8B F9 48 8B CB FF 17 33\n            C9 48 8D 47 78 48 89 44  24 48 4C 8D 87 9C 03 00\n            00 48 89 5C 24 40 48 8D  97 90 00 00 00 4C 89 44\n            24 38 45 33 C9 48 89 4C  24 30 45 33 C0 89 4C 24\n            28 C7 44 24 20 01 00 00  00 66 89 4B 40 FF D6 48\n            8B 5C 24 60 33 C0 48 8B  74 24 68 48 83 C4 50 5F\n            C3\n        }\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_timeliner_bin",
+                "tags": [],
+                "description": "Timeliner utility",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "3d81a4ae-0ce0-5867-ac93-a706556481b6"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_timeliner_bin\n{\n\tmeta:\n\t\tdescription = \"Timeliner utility\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"3d81a4ae-0ce0-5867-ac93-a706556481b6\"\n\n\tstrings:\n\t\t$a = \"[+] Work completed.\" ascii wide\n\t\t$b = \"[-] Create a new file failed.\" ascii wide\n\t\t$c = \"[-] This is not a correct path.\" ascii wide\n\t\t$d = \"%s [TargetPath] <Num> <SavePath>\" ascii wide\n\t\t$e = \"D\\t%ld\\t%ld\\t%ld\\t%d\\t%d\\t%s\\t\" ascii wide\n\t\t$f = \"D\\t%ld\\t%ld\\t%ld\\t-1\\t%d\\t%s\\t\" ascii wide\n\t\t$g = \"%s\\t%ld\\t%ld\\t%ld\\t%I64d\\t%d\\t%s\\t%s\" ascii wide\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_checkadmin_bin",
+                "tags": [],
+                "description": "Checkadmin utility",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "2f819213-ade1-525b-af18-d77b7fc96093"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_checkadmin_bin\n{\n\tmeta:\n\t\tdescription = \"Checkadmin utility\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"2f819213-ade1-525b-af18-d77b7fc96093\"\n\n\tstrings:\n\t\t$a = \"[-] %s * A system error has occurred: %d\" ascii wide\n\t\t$b = {\n            0D 00 0A 00 25 00 6C 00 64 00 20 00 72 00 65 00\n            73 00 75 00 6C 00 74 00 73 00 2E 00 0D 00 0A 00\n        }\n\t\t$c = \"%s\\t<Access denied>\" ascii wide\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_getos_py",
+                "tags": [],
+                "description": "Python getos utility",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "4a731dde-87e4-566a-b559-d23e0bef5841"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_getos_py\n{\n\tmeta:\n\t\tdescription = \"Python getos utility\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"4a731dde-87e4-566a-b559-d23e0bef5841\"\n\n\tstrings:\n\t\t$smb_1 = {\n            00 00 00 85 ff 53 4d 42 72 00 00 00 00 18 53 c8\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff fe\n            00 00 ff b4 00 62 00 02 50 43 20 4e 45 54 57 4f\n            52 4b 20 50 52 4f 47 52 41 4d 20 31 2e 30 00 02\n            4c 41 4e 4d 41 4e 31 2e 30 00 02 57 69 6e 64 6f\n            77 73 20 66 6f 72 20 57 6f 72 6b 67 72 6f 75 70\n            73 20 33 2e 31 61 00 02 4c 4d 31 2e 32 58 30 30\n            32 00 02 4c 41 4e 4d 41 4e 32 2e 31 00 02 4e 54\n            20 4c 4d 20 30 2e 31 32 00\n        }\n\t\t$smb_2 = {\n            00 00 00 c8 ff 53 4d 42 73 00 00 00 00 18 03 c8\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff fe\n            00 00 3f b5 0c ff 00 c8 00 04 11 32 00 00 00 00\n            00 00 00 28 00 00 00 00 00 d4 00 00 a0 8d 00 4e\n            54 4c 4d 53 53 50 00 01 00 00 00 07 82 88 a2 00\n            00 00 00 28 00 00 00 00 00 00 00 28 00 00 00 05\n            01 28 0a 00 00 00 0f 00 00 00 00 00 00 00 00 00\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n            00 00 00 00 00 00 00 00 00 00 00 00\n        }\n\t\t$smbstr_1 = \"\\\\x00\\\\x00\\\\x00\\\\x85\\\\xffSMBr\\\\x00\\\\x00\\\\x00\\\\x00\\\\x18S\\\\xc8\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\xff\\\\xfe\\\\x00\\\\x00\\\\xff\\\\xb4\\\\x00b\\\\x00\\\\x02PC NETWORK PROGRAM 1.0\\\\x00\\\\x02LANMAN1.0\\\\x00\\\\x02Windows for Workgroups 3.1a\\\\x00\\\\x02LM1.2X002\\\\x00\\\\x02LANMAN2.1\\\\x00\\\\x02NT LM 0.12\\\\x00\"\n\t\t$smbstr_2 = \"\\\\x00\\\\x00\\\\x00\\\\xc8\\\\xffSMBs\\\\x00\\\\x00\\\\x00\\\\x00\\\\x18\\\\x03\\\\xc8\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\xff\\\\xfe\\\\x00\\\\x00?\\\\xb5\\\\x0c\\\\xff\\\\x00\\\\xc8\\\\x00\\\\x04\\\\x112\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00(\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\xd4\\\\x00\\\\x00\\\\xa0\\\\x8d\\\\x00NTLMSSP\\\\x00\\\\x01\\\\x00\\\\x00\\\\x00\\\\x07\\\\x82\\\\x88\\\\xa2\\\\x00\\\\x00\\\\x00\\\\x00(\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00(\\\\x00\\\\x00\\\\x00\\\\x05\\\\x01(\\\\n\\\\x00\\\\x00\\\\x00\\\\x0f\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\\\\x00\"\n\t\t$code_1 = \"return 'Other error.'\" ascii wide\n\t\t$code_2 = \"sblob = buf[47:47 + sbl]\" ascii wide\n\t\t$code_3 = \"re.split('[\\\\x00-,]+', y[-4])\" ascii wide\n\t\t$code_4 = \"('').join(sblob[off:off + hlen].split('\\\\x00'))\" ascii wide\n\t\t$code_5 = \"banner = '%s    %s' % (hostname, native)\" ascii wide\n\t\t$code_6 = \"banner = '%s\\\\\\\\%s    %s' % (dm, hostname, native)\" ascii wide\n\t\t$tsk_1 = \"PushTask\" ascii wide\n\t\t$tsk_2 = \"parse_task\" ascii wide\n\t\t$tsk_3 = \"commit_task\" ascii wide\n\t\t$str_1 = \"Usage: getos.py <ip-range|ip-file>\" ascii wide\n\t\t$str_2 = \"The path '%s' write fails.\" ascii wide\n\t\t$str_3 = \"Receive a signal %d,\" ascii wide\n\t\t$str_4 = \"Scan Complete!\" ascii wide\n\t\t$str_5 = \"line: %d, %s: %s\" ascii wide\n\t\t$str_6 = \"Other error.\" ascii wide\n\n\tcondition:\n\t\t( all of ( $smb_* ) ) or ( all of ( $smbstr_* ) ) or ( 3 of ( $code_* ) ) or ( all of ( $tsk_* ) ) or ( 3 of ( $str_* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_info_vbs",
+                "tags": [],
+                "description": "Strings from the information grabber VBS",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "b719fb31-2836-5faf-a7c8-c361a14df2be"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_info_vbs\n{\n\tmeta:\n\t\tdescription = \"Strings from the information grabber VBS\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"b719fb31-2836-5faf-a7c8-c361a14df2be\"\n\n\tstrings:\n\t\t$ = \"Logger PingConnect\"\n\t\t$ = \"Logger GetAdmins\"\n\t\t$ = \"Logger InstallPro\"\n\t\t$ = \"Logger Exec\"\n\t\t$ = \"retstr = adminsName & \\\" Members\\\" & vbCrLf & _\"\n\t\t$ = \"Logger VolumeName & \\\" (\\\" & objDrive.DriveLetter & \\\":)\\\" _\"\n\t\t$ = \"txtRes = txtRes & machine & \\\" can\"\n\t\t$ = \"retstr = \\\"PID   SID Image Name\\\" & vbCrLf & \\\"====\"\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_webshell_console_jsp",
+                "tags": [],
+                "description": "Strings from the console.jsp webshell",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "1afdfc34-d2e3-58c7-80ea-ee5632e42469"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_webshell_console_jsp\n{\n\tmeta:\n\t\tdescription = \"Strings from the console.jsp webshell\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"1afdfc34-d2e3-58c7-80ea-ee5632e42469\"\n\n\tstrings:\n\t\t$a = \"String strLogo = request.getParameter(\\\"image\\\")\"\n\t\t$b = \"!strLogo.equals(\\\"web.gif\\\")\"\n\t\t$c = \"<font color=red>Save Failed!</font>\"\n\t\t$d = \"<font color=red>Save Success!</font>\"\n\t\t$e = \"Save path:<br><input type=text\"\n\t\t$f = \"if (newfile.exists() && newfile.length()>0) { out.println\"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_webshell_index_jsp",
+                "tags": [],
+                "description": "Strings from the index.jsp socket tunnel",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "9c226ccd-6c69-523c-bca4-371e55274667"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_webshell_index_jsp\n{\n\tmeta:\n\t\tdescription = \"Strings from the index.jsp socket tunnel\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"9c226ccd-6c69-523c-bca4-371e55274667\"\n\n\tstrings:\n\t\t$x1 = \"X-CMD\"\n\t\t$x2 = \"X-STATUS\"\n\t\t$x3 = \"X-TARGET\"\n\t\t$x4 = \"X-ERROR\"\n\t\t$a = \"out.print(\\\"All seems fine.\\\");\"\n\n\tcondition:\n\t\tall of ( $x* ) and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_webshell_ver_jsp",
+                "tags": [],
+                "description": "Strings from the ver.jsp webshell",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "b2828b84-8934-5111-9345-683a07025070"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_webshell_ver_jsp\n{\n\tmeta:\n\t\tdescription = \"Strings from the ver.jsp webshell\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"b2828b84-8934-5111-9345-683a07025070\"\n\n\tstrings:\n\t\t$a = \"String strLogo = request.getParameter(\\\"id\\\")\"\n\t\t$b = \"!strLogo.equals(\\\"256\\\")\"\n\t\t$c = \"boolean chkos = msg.startsWith\"\n\t\t$d = \"while((c = er.read()) != -1)\"\n\t\t$e = \"out.print((char)c);}in.close()\"\n\t\t$f = \"out.print((char)c);}er.close()\"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_MAL_CN_Wocao_webshell_webinfo",
+                "tags": [],
+                "description": "Generic strings from webinfo.war webshells",
+                "author": "Fox-IT SRT",
+                "reference": "https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/",
+                "id": "b8477f62-f3f6-5526-b0e3-9b794fefaa1f"
+            },
+            "rule_text": "rule APT_MAL_CN_Wocao_webshell_webinfo\n{\n\tmeta:\n\t\tdescription = \"Generic strings from webinfo.war webshells\"\n\t\tauthor = \"Fox-IT SRT\"\n\t\treference = \"https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\"\n\t\tid = \"b8477f62-f3f6-5526-b0e3-9b794fefaa1f\"\n\n\tstrings:\n\t\t$var1 = \"String strLogo = request.getParameter\"\n\t\t$var2 = \"String content = request.getParameter(\\\"content\\\");\"\n\t\t$var3 = \"String basePath=request.getScheme()\"\n\t\t$var4 = \"!strLogo.equals(\"\n\t\t$var5 = \"if(path!=null && !path.equals(\\\"\\\") && content!=null\"\n\t\t$var6 = \"File newfile=new File(path);\"\n\t\t$str1 = \"Save Success!\"\n\t\t$str2 = \"Save Failed!\"\n\n\tcondition:\n\t\t2 of ( $var* ) or ( all of ( $str* ) and 1 of ( $var* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

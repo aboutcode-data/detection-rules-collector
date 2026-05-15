@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_progname.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-11",
+                "title": "Suspicious Program Names",
+                "id": "efdd8dd5-cee8-4e59-9390-7d4d5e4dd6f6"
+            },
+            "rule_text": "title: Suspicious Program Names\nid: efdd8dd5-cee8-4e59-9390-7d4d5e4dd6f6\nstatus: test\ndescription: Detects suspicious patterns in program names or folders that are often\n  found in malicious samples or hacktools\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1560.001/T1560.001.md\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-11\nmodified: 2023-03-22\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_image:\n  - Image|contains:\n    - \\CVE-202\n    - \\CVE202\n  - Image|endswith:\n    - \\poc.exe\n    - \\artifact.exe\n    - \\artifact64.exe\n    - \\artifact_protected.exe\n    - \\artifact32.exe\n    - \\artifact32big.exe\n    - obfuscated.exe\n    - obfusc.exe\n    - \\meterpreter\n  selection_commandline:\n    CommandLine|contains:\n    - inject.ps1\n    - Invoke-CVE\n    - pupy.ps1\n    - payload.ps1\n    - beacon.ps1\n    - PowerView.ps1\n    - bypass.ps1\n    - obfuscated.ps1\n    - obfusc.ps1\n    - obfus.ps1\n    - obfs.ps1\n    - evil.ps1\n    - MiniDogz.ps1\n    - _enc.ps1\n    - \\shell.ps1\n    - \\rshell.ps1\n    - revshell.ps1\n    - \\av.ps1\n    - \\av_test.ps1\n    - adrecon.ps1\n    - mimikatz.ps1\n    - \\PowerUp_\n    - powerup.ps1\n    - \\Temp\\a.ps1\n    - \\Temp\\p.ps1\n    - \\Temp\\1.ps1\n    - Hound.ps1\n    - encode.ps1\n    - powercat.ps1\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate tools that accidentally match on the searched patterns\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

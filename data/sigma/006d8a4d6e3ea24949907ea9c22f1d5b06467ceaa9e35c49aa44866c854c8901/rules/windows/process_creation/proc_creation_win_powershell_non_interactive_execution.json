@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g (rule), oscd.community (improvements)",
+                "date": "2019-09-12",
+                "title": "Non Interactive PowerShell Process Spawned",
+                "id": "f4bbd493-b796-416e-bbf2-121235348529"
+            },
+            "rule_text": "title: Non Interactive PowerShell Process Spawned\nid: f4bbd493-b796-416e-bbf2-121235348529\nstatus: test\ndescription: Detects non-interactive PowerShell activity by looking at the \"powershell\"\n  process with a non-user GUI process such as \"explorer.exe\" as a parent.\nreferences:\n- https://web.archive.org/web/20200925032237/https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190410151110.html\nauthor: Roberto Rodriguez @Cyb3rWard0g (rule), oscd.community (improvements)\ndate: 2019-09-12\nmodified: 2025-02-28\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  filter_main_generic:\n    ParentImage|endswith:\n    - :\\Windows\\explorer.exe\n    - :\\Windows\\System32\\CompatTelRunner.exe\n    - :\\Windows\\SysWOW64\\explorer.exe\n  filter_main_windows_update:\n    ParentImage: :\\$WINDOWS.~BT\\Sources\\SetupHost.exe\n  filter_optional_vscode:\n    ParentImage|endswith: \\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\n    ParentCommandLine|contains: ' --ms-enable-electron-run-as-node '\n  filter_optional_terminal:\n    ParentImage|contains: :\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal_\n    ParentImage|endswith: \\WindowsTerminal.exe\n  filter_optional_defender:\n    ParentImage|endswith: :\\Program Files\\Windows Defender Advanced Threat Protection\\SenseIR.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Likely. Many admin scripts and tools leverage PowerShell in their BAT or VB scripts\n  which may trigger this rule often. It is best to add additional filters or use this\n  to hunt for anomalies\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

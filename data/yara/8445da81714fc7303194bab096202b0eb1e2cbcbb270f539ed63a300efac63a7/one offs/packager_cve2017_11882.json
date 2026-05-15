@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/one offs/packager_cve2017_11882.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "packager_cve2017_11882",
+                "tags": [],
+                "author": "Rich Warren",
+                "description": "Attempts to exploit CVE-2017-11882 using Packager",
+                "reference": "https://github.com/rxwx/CVE-2017-11882/blob/master/packager_exec_CVE-2017-11882.py",
+                "score": 60
+            },
+            "rule_text": "rule packager_cve2017_11882\n{\n\tmeta:\n\t\tauthor = \"Rich Warren\"\n\t\tdescription = \"Attempts to exploit CVE-2017-11882 using Packager\"\n\t\treference = \"https://github.com/rxwx/CVE-2017-11882/blob/master/packager_exec_CVE-2017-11882.py\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$header_rtf = \"{\\\\rt\" nocase\n\t\t$font = { 30 61 30 31 30 38 35 61  35 61 }\n\t\t$equation = { 45 71 75 61 74 69 6F 6E 2E 33 }\n\t\t$package = { 50 61 63 6b 61 67 65 }\n\t\t$header_and_shellcode = /03010[0,1][0-9a-fA-F]{108}00/ ascii nocase\n\n\tcondition:\n\t\tall of them and $header_rtf at 0\n}\n",
+            "vulnerabilities": [
+                "CVE-2017-11882"
+            ]
+        }
+    ]
+}

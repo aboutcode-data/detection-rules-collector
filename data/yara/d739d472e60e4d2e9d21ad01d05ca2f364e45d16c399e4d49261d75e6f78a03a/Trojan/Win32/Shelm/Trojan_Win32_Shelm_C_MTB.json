@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Shelm/Trojan_Win32_Shelm_C_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Shelm_C_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Shelm.C!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Shelm_C_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Shelm.C!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 4d fc 3b 4d 0c 73 ?? 0f b6 55 10 8b 45 08 03 45 fc 0f b6 08 33 ca 8b 55 08 03 55 fc 88 0a eb }\n\t\t$a_01_1 = {50 51 52 4f 58 56 4f 50 52 50 4f 53 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

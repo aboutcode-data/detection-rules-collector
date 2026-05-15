@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Lexer/Trojan_Win32_Lexer_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Lexer_A",
+                "tags": [],
+                "description": "Trojan:Win32/Lexer.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Lexer_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Lexer.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {42 33 ff b8 ?? ?? ?? ?? 8b 0d 70 76 40 00 8a 0c 39 80 e9 4d 88 08 8a 08 88 0d ?? ?? ?? ?? 8a 0d ?? ?? ?? ?? 80 f1 0b 88 08 47 40 4a 75 }\n\t\t$a_03_1 = {68 03 01 00 00 e8 ?? ?? ?? ?? 8d 45 ec ba ?? ?? ?? ?? b9 04 01 00 00 e8 ?? ?? ?? ?? 8d 45 ec ba ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 55 ec }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

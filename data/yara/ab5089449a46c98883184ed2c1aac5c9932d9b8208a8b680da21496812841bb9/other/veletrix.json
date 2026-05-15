@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/veletrix.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_VeletrixLoader",
+                "tags": [],
+                "description": "Veletrix Loader",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "253ff072d71caeb02ed596fd6aa266e625f51a09d49d82726a11b66218bdd6c3",
+                "created_date": "2025-10-16",
+                "updated_date": "2025-10-16"
+            },
+            "rule_text": "rule malware_VeletrixLoader\n{\n\tmeta:\n\t\tdescription = \"Veletrix Loader\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"253ff072d71caeb02ed596fd6aa266e625f51a09d49d82726a11b66218bdd6c3\"\n\t\tcreated_date = \"2025-10-16\"\n\t\tupdated_date = \"2025-10-16\"\n\n\tstrings:\n\t\t$logfile = {\n            C7 45 ?? 6C 6F 67 5F\n            48 8D 4D ??\n            C7 45 ?? 64 65 2E 00\n            C7 85 ?? ?? ?? ?? 6C 6F 67 00\n        }\n\t\t$xor_decode = {\n            41 8D 0C 30\n            45 03 C6\n            80 34 39 99\n            44 3B C0\n        }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_VeletrixLoader_python",
+                "tags": [],
+                "description": "Veletrix Loader",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "96fe34f367423a1ca75e0e0b293ef4918ca30f5efcb36c9b67dec746493f3b37",
+                "created_date": "2025-10-16",
+                "updated_date": "2025-10-16"
+            },
+            "rule_text": "rule malware_VeletrixLoader_python\n{\n\tmeta:\n\t\tdescription = \"Veletrix Loader\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"96fe34f367423a1ca75e0e0b293ef4918ca30f5efcb36c9b67dec746493f3b37\"\n\t\tcreated_date = \"2025-10-16\"\n\t\tupdated_date = \"2025-10-16\"\n\n\tstrings:\n\t\t$msg = \"执行Shellcode（生产环境需极度谨慎！）\" ascii\n\t\t$func = \"def run_shellcode(shellcode)\" ascii\n\t\t$shell = \"\\\\x64\\\\x65\\\\x2e\\\\x00\\\\xc7\" ascii\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

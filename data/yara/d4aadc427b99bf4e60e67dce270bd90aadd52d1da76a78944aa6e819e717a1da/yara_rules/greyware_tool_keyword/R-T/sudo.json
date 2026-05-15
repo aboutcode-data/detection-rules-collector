@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/R-T/sudo.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "sudo",
+                "tags": [],
+                "description": "Detection patterns for the tool 'sudo' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "sudo",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule sudo\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'sudo' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"sudo\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\.server_DoElevationRequest\\(\\(Get\\-NtProcess\\s\\-ProcessId\\s\\$pid\\).{0,1000}\\\\\"cmd\\.exe\\\\\".{0,1000}C\\:\\\\\\\\\"/\n\t\t$string2 = /Connect\\-RpcClient\\s.{0,1000}\\s\\-EndpointPath\\ssudo_elevate_4652/\n\t\t$string3 = /echo\\s.{0,1000}\\%sudo\\s\\sALL\\=\\(ALL\\)\\sNOPASSWD\\:\\sALL.{0,1000}\\s\\>\\>\\s\\/etc\\/sudoers/\n\t\t$string4 = \"sudo apache2 -f /etc/shadow\"\n\t\t$string5 = /sudo\\sLD_LIBRARY_PATH\\=\\.\\sapache2/\n\t\t$string6 = /sudo\\sLD_PRELOAD\\=\\/tmp\\/preload\\.so\\sfind/\n\t\t$string7 = \"sudo log erase --all\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_shell_script_exec_from_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-06-02",
+                "title": "Execution Of Script Located In Potentially Suspicious Directory",
+                "id": "30bcce26-51c5-49f2-99c8-7b59e3af36c7"
+            },
+            "rule_text": "title: Execution Of Script Located In Potentially Suspicious Directory\nid: 30bcce26-51c5-49f2-99c8-7b59e3af36c7\nstatus: test\ndescription: Detects executions of scripts located in potentially suspicious locations\n  such as \"/tmp\" via a shell such as \"bash\", \"sh\", etc.\nreferences:\n- https://blogs.jpcert.or.jp/en/2023/05/gobrat.html\n- https://jstnk9.github.io/jstnk9/research/GobRAT-Malware/\n- https://www.virustotal.com/gui/file/60bcd645450e4c846238cf0e7226dc40c84c96eba99f6b2cffcd0ab4a391c8b3/detection\n- https://www.virustotal.com/gui/file/3e44c807a25a56f4068b5b8186eee5002eed6f26d665a8b791c472ad154585d1/detection\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-06-02\ntags:\n- attack.execution\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_img:\n    Image|endswith:\n    - /bash\n    - /csh\n    - /dash\n    - /fish\n    - /ksh\n    - /sh\n    - /zsh\n  selection_flag:\n    CommandLine|contains: ' -c '\n  selection_paths:\n    CommandLine|contains: /tmp/\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

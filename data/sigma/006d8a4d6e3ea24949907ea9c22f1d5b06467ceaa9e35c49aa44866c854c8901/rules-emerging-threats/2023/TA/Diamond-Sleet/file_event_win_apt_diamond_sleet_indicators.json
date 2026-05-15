@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Diamond-Sleet/file_event_win_apt_diamond_sleet_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-24",
+                "title": "Diamond Sleet APT File Creation Indicators",
+                "id": "e1212b32-55ff-4dfb-a595-62b572248056"
+            },
+            "rule_text": "title: Diamond Sleet APT File Creation Indicators\nid: e1212b32-55ff-4dfb-a595-62b572248056\nstatus: test\ndescription: Detects file creation activity that is related to Diamond Sleet APT activity\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2023/10/18/multiple-north-korean-threat-actors-exploiting-the-teamcity-cve-2023-42793-vulnerability/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-24\ntags:\n- attack.execution\n- detection.emerging-threats\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - :\\ProgramData\\4800-84DC-063A6A41C5C\n    - :\\ProgramData\\clip.exe\n    - :\\ProgramData\\DSROLE.dll\n    - :\\ProgramData\\Forest64.exe\n    - :\\ProgramData\\readme.md\n    - :\\ProgramData\\Version.dll\n    - :\\ProgramData\\wsmprovhost.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2023-42793"
+            ]
+        }
+    ]
+}

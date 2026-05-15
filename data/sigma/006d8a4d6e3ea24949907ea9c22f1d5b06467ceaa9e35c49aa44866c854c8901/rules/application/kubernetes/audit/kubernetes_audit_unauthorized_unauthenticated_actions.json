@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_unauthorized_unauthenticated_actions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "kelnage",
+                "date": "2024-04-12",
+                "title": "Kubernetes Unauthorized or Unauthenticated Access",
+                "id": "0d933542-1f1f-420d-97d4-21b2c3c492d9"
+            },
+            "rule_text": "title: Kubernetes Unauthorized or Unauthenticated Access\nid: 0d933542-1f1f-420d-97d4-21b2c3c492d9\nstatus: test\ndescription: 'Detects when a request to the Kubernetes API is rejected due to lack\n  of authorization or due to an expired authentication token being used.\n\n  This may indicate an attacker attempting to leverage credentials they have obtained.\n\n  '\nreferences:\n- https://kubernetes.io/docs/reference/config-api/apiserver-audit.v1/\n- https://www.datadoghq.com/blog/monitor-kubernetes-audit-logs/#monitor-api-authentication-issues\nauthor: kelnage\ndate: 2024-04-12\ntags:\n- attack.privilege-escalation\nlogsource:\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    responseStatus.code:\n    - 401\n    - 403\n  condition: selection\nfalsepositives:\n- A misconfigured RBAC policy, a mistake by a valid user, or a wider issue with authentication\n  tokens can also generate these errors.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

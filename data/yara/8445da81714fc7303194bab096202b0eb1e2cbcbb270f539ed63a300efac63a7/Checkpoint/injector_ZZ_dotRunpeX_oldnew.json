@@ -1,0 +1,30 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Checkpoint/injector_ZZ_dotRunpeX_oldnew.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "injector_ZZ_dotRunpeX_oldnew",
+                "tags": [],
+                "description": "Detects new and old version of dotRunpeX - configurable .NET injector",
+                "author": "Jiri Vinopal (jiriv)",
+                "date": "2022-10-30",
+                "hash1_New": "373a86e36f7e808a1db263b4b49d2428df4a13686da7d77edba7a6dd63790232",
+                "hash2_New": "41ea8f9a9f2a7aeb086dedf8e5855b0409f31e7793cbba615ca0498e47a72636",
+                "hash3_New": "5e3588e8ddebd61c2bd6dab4b87f601bd6a4857b33eb281cb5059c29cfe62b80",
+                "hash4_New": "8c451b84d9579b625a7821ad7ddcb87bdd665a9e6619eaecf6ab93cd190cf504",
+                "hash5_New": "8fa81f6341b342afa40b7dc76dd6e0a1874583d12ea04acf839251cb5ca61591",
+                "hash6_New": "cd4c821e329ec1f7bfe7ecd39a6020867348b722e8c84a05c7eb32f8d5a2f4db",
+                "hash7_New": "fa8a67642514b69731c2ce6d9e980e2a9c9e409b3947f2c9909d81f6eac81452",
+                "hash8_New": "eb2e2ac0f5f51d90fe90b63c3c385af155b2fee30bc3dc6309776b90c21320f5",
+                "hash1_Old": "1e7614f757d40a2f5e2f4bd5597d04878768a9c01aa5f9f23d6c87660f7f0fbc",
+                "hash2_Old": "317e6817bba0f54e1547dd9acf24ee17a4cda1b97328cc69dc1ec16e11c258fc",
+                "hash3_Old": "65cac67ed2a084beff373d6aba6f914b8cba0caceda254a857def1df12f5154b",
+                "hash4_Old": "68ae2ee5ed7e793c1a49cbf1b0dd7f5a3de9cb783b51b0953880994a79037326",
+                "hash5_Old": "81763d8e3b42d07d76b0a74eda4e759981971635d62072c8da91251fc849b91e",
+                "report": "https://research.checkpoint.com/2023/dotrunpex-demystifying-new-virtualized-net-injector-used-in-the-wild/"
+            },
+            "rule_text": "rule injector_ZZ_dotRunpeX_oldnew\n{\n\tmeta:\n\t\tdescription = \"Detects new and old version of dotRunpeX - configurable .NET injector\"\n\t\tauthor = \"Jiri Vinopal (jiriv)\"\n\t\tdate = \"2022-10-30\"\n\t\thash1_New = \"373a86e36f7e808a1db263b4b49d2428df4a13686da7d77edba7a6dd63790232\"\n\t\thash2_New = \"41ea8f9a9f2a7aeb086dedf8e5855b0409f31e7793cbba615ca0498e47a72636\"\n\t\thash3_New = \"5e3588e8ddebd61c2bd6dab4b87f601bd6a4857b33eb281cb5059c29cfe62b80\"\n\t\thash4_New = \"8c451b84d9579b625a7821ad7ddcb87bdd665a9e6619eaecf6ab93cd190cf504\"\n\t\thash5_New = \"8fa81f6341b342afa40b7dc76dd6e0a1874583d12ea04acf839251cb5ca61591\"\n\t\thash6_New = \"cd4c821e329ec1f7bfe7ecd39a6020867348b722e8c84a05c7eb32f8d5a2f4db\"\n\t\thash7_New = \"fa8a67642514b69731c2ce6d9e980e2a9c9e409b3947f2c9909d81f6eac81452\"\n\t\thash8_New = \"eb2e2ac0f5f51d90fe90b63c3c385af155b2fee30bc3dc6309776b90c21320f5\"\n\t\thash1_Old = \"1e7614f757d40a2f5e2f4bd5597d04878768a9c01aa5f9f23d6c87660f7f0fbc\"\n\t\thash2_Old = \"317e6817bba0f54e1547dd9acf24ee17a4cda1b97328cc69dc1ec16e11c258fc\"\n\t\thash3_Old = \"65cac67ed2a084beff373d6aba6f914b8cba0caceda254a857def1df12f5154b\"\n\t\thash4_Old = \"68ae2ee5ed7e793c1a49cbf1b0dd7f5a3de9cb783b51b0953880994a79037326\"\n\t\thash5_Old = \"81763d8e3b42d07d76b0a74eda4e759981971635d62072c8da91251fc849b91e\"\n\t\treport = \"https://research.checkpoint.com/2023/dotrunpex-demystifying-new-virtualized-net-injector-used-in-the-wild/\"\n\n\tstrings:\n\t\t$implmap1 = \"VirtualAllocEx\"\n\t\t$implmap2 = \"CreateProcess\"\n\t\t$implmap3 = \"CreateRemoteThread\"\n\t\t$implmap4 = \"Wow64SetThreadContext\"\n\t\t$implmap5 = \"Wow64GetThreadContext\"\n\t\t$implmap6 = \"RtlInitUnicodeString\"\n\t\t$implmap7 = \"NtLoadDriver\"\n\t\t$implmap8 = \"LoadLibrary\"\n\t\t$implmap9 = \"VirtualProtect\"\n\t\t$implmap10 = \"AdjustTokenPrivileges\"\n\t\t$implmap11 = \"GetProcAddress\"\n\t\t$modulerefKernel1 = \"Kernel32\"\n\t\t$modulerefKernel2 = \"kernel32\"\n\t\t$modulerefNtdll1 = \"Ntdll\"\n\t\t$modulerefNtdll2 = \"ntdll\"\n\t\t$regPath = \"\\\\Registry\\\\Machine\\\\System\\\\CurrentControlSet\\\\Services\\\\TaskKill\" wide\n\t\t$rsrcName = \"BIDEN_HARRIS_PERFECT_ASSHOLE\" wide\n\t\t$koiVM1 = \"KoiVM\"\n\t\t$koiVM2 = \"#Koi\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and uint16( uint32( 0x3c ) ) == 0x4550 and ( $regPath or $rsrcName or 1 of ( $koiVM* ) ) and 9 of ( $implmap* ) and 1 of ( $modulerefKernel* ) and 1 of ( $modulerefNtdll* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

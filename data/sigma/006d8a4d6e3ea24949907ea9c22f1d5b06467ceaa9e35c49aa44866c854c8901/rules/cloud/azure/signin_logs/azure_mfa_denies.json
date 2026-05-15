@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/signin_logs/azure_mfa_denies.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "AlertIQ",
+                "date": "2022-03-24",
+                "title": "Multifactor Authentication Denied",
+                "id": "e40f4962-b02b-4192-9bfe-245f7ece1f99"
+            },
+            "rule_text": "title: Multifactor Authentication Denied\nid: e40f4962-b02b-4192-9bfe-245f7ece1f99\nstatus: test\ndescription: User has indicated they haven't instigated the MFA prompt and could indicate\n  an attacker has the password for the account.\nreferences:\n- https://www.microsoft.com/security/blog/2022/03/22/dev-0537-criminal-actor-targeting-organizations-for-data-exfiltration-and-destruction/\nauthor: AlertIQ\ndate: 2022-03-24\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.credential-access\n- attack.stealth\n- attack.t1078.004\n- attack.t1110\n- attack.t1621\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    AuthenticationRequirement: multiFactorAuthentication\n    Status|contains: MFA Denied\n  condition: selection\nfalsepositives:\n- Users actually login but miss-click into the Deny button when MFA prompt.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

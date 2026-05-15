@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/rmm_splashtop.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Axel Olsson, Amata Anantaprayoon, Patrik Olson",
+                "date": "2023-11-27",
+                "title": "Potential Splashtop Interactive Session",
+                "id": "1773d6b8-2854-417a-a0be-06037ef47a43"
+            },
+            "rule_text": "title: Potential Splashtop Interactive Session\nid: 1773d6b8-2854-417a-a0be-06037ef47a43\ndescription: Potential Splashtop Interactive Session based on high byte count\nstatus: experimental\nauthor: NTT Security - Axel Olsson, Amata Anantaprayoon, Patrik Olson\nreferences:\n- https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-075a\ndate: '2023-11-27'\nmodified: '2023-11-27'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-host|endswith: relay.splashtop.com\n    bytes_out|gte: 10000\n  condition: selection\nfalsepositives:\n- Non-interactive Splashtop related traffic, it is only an educated guess that interactive\n  traffic has a high bytes count due to to it happening so rarely.\n- Benign Splashtop usage if the tool is normally used by the organisation\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

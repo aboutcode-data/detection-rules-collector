@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CobaltCrypt/Trojan_Win32_CobaltCrypt_VC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CobaltCrypt_VC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CobaltCrypt.VC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CobaltCrypt_VC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CobaltCrypt.VC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {eb 00 31 0d ?? ?? ?? ?? c7 05 [0-40] a1 ?? ?? ?? ?? 01 05 ?? ?? ?? ?? 8b ff a1 ?? ?? ?? ?? 8b 0d ?? ?? ?? ?? 89 08 }\n\t\t$a_03_1 = {89 08 5f 5d 90 09 28 00 31 0d ?? ?? ?? ?? c7 05 [0-40] a1 ?? ?? ?? ?? 01 05 ?? ?? ?? ?? 8b ff a1 ?? ?? ?? ?? 8b 0d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_Supper.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_Supper_664c9ab3",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "664c9ab3-7413-4390-a122-f01762f967c2",
+                "fingerprint": "1c59c03565b539d309e7fdd31bc154d61c966d6690e91be7b15c9cb3aa87c680",
+                "creation_date": "2025-09-22",
+                "last_modified": "2026-01-06",
+                "threat_name": "Windows.Trojan.Supper",
+                "reference_sample": "3a7b8c4762f3490794790a2e98377af7ed1438150e2d94b1809a7571bb05067d",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_Supper_664c9ab3\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"664c9ab3-7413-4390-a122-f01762f967c2\"\n\t\tfingerprint = \"1c59c03565b539d309e7fdd31bc154d61c966d6690e91be7b15c9cb3aa87c680\"\n\t\tcreation_date = \"2025-09-22\"\n\t\tlast_modified = \"2026-01-06\"\n\t\tthreat_name = \"Windows.Trojan.Supper\"\n\t\treference_sample = \"3a7b8c4762f3490794790a2e98377af7ed1438150e2d94b1809a7571bb05067d\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"schtasks.exe /Create /SC MINUTE /TN GoogleUpdateTask /TR \\\"cmd.exe /C del \\\\\\\"%s\\\\\\\" && schtasks.exe /Delete /TN GoogleUpdateTask /F\\\" /F\" fullword\n\t\t$a2 = \"cmd.exe /C ping 1.1.1.1 -n 1 -w 3000 > Nul & Del /f /q \\\"%s\\\"\" fullword\n\t\t$a3 = \"%d.%d.%d.%d\" fullword\n\t\t$a4 = \"(%d)\\trecv type-%d len %d (0x%x)\\n\" fullword\n\t\t$a5 = \"fail run cmd\\n\" fullword\n\t\t$b1 = { F3 0F 7E 0D 38 D4 00 00 81 71 08 4D 4D 4D 4D F3 0F 7E 01 66 0F EF C1 66 0F D6 01 C3 }\n\n\tcondition:\n\t\t3 of ( $a* ) or $b1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

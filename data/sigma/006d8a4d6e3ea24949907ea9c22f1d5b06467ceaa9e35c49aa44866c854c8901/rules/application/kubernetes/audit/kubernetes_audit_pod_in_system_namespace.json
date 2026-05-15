@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_pod_in_system_namespace.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Leo Tsaousis (@laripping)",
+                "date": "2024-03-26",
+                "title": "Creation Of Pod In System Namespace",
+                "id": "a80d927d-ac6e-443f-a867-e8d6e3897318"
+            },
+            "rule_text": "title: Creation Of Pod In System Namespace\nid: a80d927d-ac6e-443f-a867-e8d6e3897318\nstatus: test\ndescription: 'Detects deployments of pods within the kube-system namespace, which\n  could be intended to imitate system pods.\n\n  System pods, created by controllers such as Deployments or DaemonSets have random\n  suffixes in their names.\n\n  Attackers can use this fact and name their backdoor pods as if they were created\n  by these controllers to avoid detection.\n\n  Deployment of such a backdoor container e.g. named kube-proxy-bv61v, could be attempted\n  in the kube-system namespace alongside the other administrative containers.\n\n  '\nreferences:\n- https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Pod%20or%20container%20name%20similarily/\nauthor: Leo Tsaousis (@laripping)\ndate: 2024-03-26\ntags:\n- attack.stealth\n- attack.t1036.005\nlogsource:\n  category: application\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    verb: create\n    objectRef.resource: pods\n    objectRef.namespace: kube-system\n  condition: selection\nfalsepositives:\n- System components such as daemon-set-controller and kube-scheduler also create pods\n  in the kube-system namespace\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

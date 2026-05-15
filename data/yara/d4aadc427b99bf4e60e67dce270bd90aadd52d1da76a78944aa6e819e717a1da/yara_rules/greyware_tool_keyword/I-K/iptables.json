@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/I-K/iptables.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "iptables",
+                "tags": [],
+                "description": "Detection patterns for the tool 'iptables' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "iptables",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule iptables\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'iptables' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"iptables\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \"chkconfig off ip6tables\" nocase ascii wide\n\t\t$string2 = \"chkconfig off iptables\" nocase ascii wide\n\t\t$string3 = \"iptables -A OUTPUT -p tcp --dport 514 -j DROP\"\n\t\t$string4 = \"iptables -A OUTPUT -p tcp --dport 6514 -j DROP\"\n\t\t$string5 = \"iptables -A OUTPUT -p udp --dport 514 -j DROP\"\n\t\t$string6 = \"iptables -A OUTPUT -p udp --dport 6514 -j DROP\"\n\t\t$string7 = \"service ip6tables stop\" nocase ascii wide\n\t\t$string8 = \"service iptables stop\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_user_couldnt_call_priv_service_lsaregisterlogonprocess.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community",
+                "date": "2019-10-24",
+                "title": "User Couldn't Call a Privileged Service 'LsaRegisterLogonProcess'",
+                "id": "6daac7fc-77d1-449a-a71a-e6b4d59a0e54"
+            },
+            "rule_text": "title: User Couldn't Call a Privileged Service 'LsaRegisterLogonProcess'\nid: 6daac7fc-77d1-449a-a71a-e6b4d59a0e54\nstatus: test\ndescription: The 'LsaRegisterLogonProcess' function verifies that the application\n  making the function call is a logon process by checking that it has the SeTcbPrivilege\n  privilege set. Possible Rubeus tries to get a handle to LSA.\nreferences:\n- https://posts.specterops.io/hunting-in-active-directory-unconstrained-delegation-forests-trusts-71f2b33688e1\nauthor: Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community\ndate: 2019-10-24\nmodified: 2022-12-25\ntags:\n- attack.credential-access\n- attack.lateral-movement\n- attack.privilege-escalation\n- attack.t1558.003\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4673\n    Service: LsaRegisterLogonProcess()\n    Keywords: '0x8010000000000000'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

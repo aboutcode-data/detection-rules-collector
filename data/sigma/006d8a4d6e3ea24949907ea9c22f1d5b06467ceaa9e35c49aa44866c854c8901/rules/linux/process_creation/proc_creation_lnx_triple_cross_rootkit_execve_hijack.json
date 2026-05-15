@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_triple_cross_rootkit_execve_hijack.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-05",
+                "title": "Triple Cross eBPF Rootkit Execve Hijack",
+                "id": "0326c3c8-7803-4a0f-8c5c-368f747f7c3e"
+            },
+            "rule_text": "title: Triple Cross eBPF Rootkit Execve Hijack\nid: 0326c3c8-7803-4a0f-8c5c-368f747f7c3e\nstatus: test\ndescription: Detects execution of a the file \"execve_hijack\" which is used by the\n  Triple Cross rootkit as a way to elevate privileges\nreferences:\n- https://github.com/h3xduck/TripleCross/blob/1f1c3e0958af8ad9f6ebe10ab442e75de33e91de/src/helpers/execve_hijack.c#L275\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-05\ntags:\n- attack.privilege-escalation\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /sudo\n    CommandLine|contains: execve_hijack\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

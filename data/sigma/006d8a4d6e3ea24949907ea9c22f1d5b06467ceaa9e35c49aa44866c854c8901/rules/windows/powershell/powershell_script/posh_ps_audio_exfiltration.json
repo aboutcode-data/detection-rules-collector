@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_audio_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-16",
+                "title": "Potential Data Exfiltration Via Audio File",
+                "id": "e4f93c99-396f-47c8-bb0f-201b1fa69034"
+            },
+            "rule_text": "title: Potential Data Exfiltration Via Audio File\nid: e4f93c99-396f-47c8-bb0f-201b1fa69034\nstatus: test\ndescription: Detects potential exfiltration attempt via audio file using PowerShell\nreferences:\n- https://github.com/gtworek/PSBits/blob/e97cbbb173b31cbc4d37244d3412de0a114dacfb/NoDLP/bin2wav.ps1\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-16\ntags:\n- attack.exfiltration\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_main:\n    ScriptBlockText|contains|all:\n    - '[System.Math]::'\n    - '[IO.FileMode]::'\n    - BinaryWriter\n  selection_header_wav:\n    ScriptBlockText|contains|all:\n    - '0x52'\n    - '0x49'\n    - '0x46'\n    - '0x57'\n    - '0x41'\n    - '0x56'\n    - '0x45'\n    - '0xAC'\n  condition: selection_main and 1 of selection_header_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

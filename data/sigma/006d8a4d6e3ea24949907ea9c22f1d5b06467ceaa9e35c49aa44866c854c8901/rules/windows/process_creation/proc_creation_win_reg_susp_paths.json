@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_susp_paths.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-19",
+                "title": "Reg Add Suspicious Paths",
+                "id": "b7e2a8d4-74bb-4b78-adc9-3f92af2d4829"
+            },
+            "rule_text": "title: Reg Add Suspicious Paths\nid: b7e2a8d4-74bb-4b78-adc9-3f92af2d4829\nstatus: test\ndescription: Detects when an adversary uses the reg.exe utility to add or modify new\n  keys or subkeys\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1112/T1112.md\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1562.001/T1562.001.md\n- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-19\nmodified: 2022-10-10\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_reg:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_path:\n    CommandLine|contains:\n    - \\AppDataLow\\Software\\Microsoft\\\n    - \\Policies\\Microsoft\\Windows\\OOBE\n    - \\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\n    - \\SOFTWARE\\Microsoft\\Windows NT\\Currentversion\\Winlogon\n    - \\CurrentControlSet\\Control\\SecurityProviders\\WDigest\n    - \\Microsoft\\Windows Defender\\\n  condition: all of selection_*\nfalsepositives:\n- Rare legitimate add to registry via cli (to these locations)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

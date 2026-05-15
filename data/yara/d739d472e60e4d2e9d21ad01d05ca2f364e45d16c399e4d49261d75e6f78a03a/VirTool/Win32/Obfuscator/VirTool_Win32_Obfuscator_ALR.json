@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/Obfuscator/VirTool_Win32_Obfuscator_ALR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_Obfuscator_ALR",
+                "tags": [],
+                "description": "VirTool:Win32/Obfuscator.ALR,SIGNATURE_TYPE_PEHSTR_EXT,03 00 01 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_Obfuscator_ALR\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/Obfuscator.ALR,SIGNATURE_TYPE_PEHSTR_EXT,03 00 01 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {20 01 00 00 81 fa 00 40 02 00 0f 84 ?? 00 00 00 81 fa 00 a0 06 00 0f 84 ?? 00 00 00 }\n\t\t$a_01_1 = {83 ec 04 c7 04 24 90 01 00 00 83 ec 04 89 34 24 }\n\t\t$a_03_2 = {33 c9 8a 04 ?? 41 84 c0 75 f8 49 8b c1 }\n\t\t$a_01_3 = {83 ec 04 48 3d 0a 02 00 00 40 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

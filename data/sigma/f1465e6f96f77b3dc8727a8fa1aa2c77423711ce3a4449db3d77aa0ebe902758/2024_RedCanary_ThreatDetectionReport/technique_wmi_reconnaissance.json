@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_wmi_reconnaissance.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "WMI Reconnaissance",
+                "id": "8a450075-e74f-4b19-9efa-b62a53f85bf8"
+            },
+            "rule_text": "title: WMI Reconnaissance\nid: 8a450075-e74f-4b19-9efa-b62a53f85bf8\nstatus: experimental\ndescription: \"Reconnaissance is harder to detect because it looks very similar to\\\n  \\ normal admin behavior. \\nEven so, we detect a relatively high volume of adversaries\\\n  \\ leveraging WMI to quickly gather \\ndomain information such as users, groups, or\\\n  \\ computers in the domain. The following may help \\nyou detect related activity.\\\n  \\ Part of the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1047\n- attack.discovery\n- attack.t1087\n- attack.t1087.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains:\n    - \\ldap\n    - ntdomain\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

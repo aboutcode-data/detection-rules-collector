@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Blackberry/Mal_Infostealer_Win32_Jupyter_InfoStealer_Module.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Mal_Infostealer_Win32_Jupyter_InfoStealer_Module",
+                "tags": [],
+                "description": "Detects Jupter infostealer module",
+                "reference": "https://blogs.blackberry.com/en/2022/01/threat-thursday-jupyter-infostealer-is-a-master-of-disguise",
+                "author": "BlackBerry Threat Research Team",
+                "date": "2021-11-08",
+                "license": "This Yara rule is provided under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0) and open to any user or organization, as long as you use it under this license and ensure originator credit in any derivative to The BlackBerry Research & Intelligence Team"
+            },
+            "rule_text": "import \"pe\"\n\nrule Mal_Infostealer_Win32_Jupyter_InfoStealer_Module\n{\n\tmeta:\n\t\tdescription = \"Detects Jupter infostealer module\"\n\t\treference = \"https://blogs.blackberry.com/en/2022/01/threat-thursday-jupyter-infostealer-is-a-master-of-disguise\"\n\t\tauthor = \"BlackBerry Threat Research Team\"\n\t\tdate = \"2021-11-08\"\n\t\tlicense = \"This Yara rule is provided under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0) and open to any user or organization, as long as you use it under this license and ensure originator credit in any derivative to The BlackBerry Research & Intelligence Team\"\n\n\tstrings:\n\t\t$d1 = \"WebRequest\" nocase\n\t\t$d2 = \"HttpWebRequest\" nocase\n\t\t$d3 = \"WebResponse\" nocase\n\t\t$d4 = \"GetResponseStream\" nocase\n\t\t$d5 = \"GetResponse\" nocase\n\t\t$d6 = \"IsInRole\" nocase\n\t\t$d7 = \"get_UTF8\" nocase\n\t\t$d8 = \"FromBase64String\" nocase\n\t\t$d9 = \"get_OSVersion\" nocase\n\t\t$d10 = \"GetFiles\" nocase\n\t\t$d11 = \"GetExtension\" nocase\n\t\t$d12 = \"get_Current\" nocase\n\t\t$d13 = \"GetEnumerator\" nocase\n\t\t$j1 = { 6C 6F 67 69 6E 73 }\n\t\t$j2 = { 43 00 6F 00 6F 00 6B 00 69 00 65 00 73 }\n\t\t$j3 = { 00 6C 00 6F 00 67 00 69 00 6E 00 73 00 2E 00 6A 00 73 00 6F 00 6E 00 }\n\t\t$j4 = { 00 63 00 6F 00 6F 00 6B 00 69 00 65 00 73 00 2E 00 73 00 71 00 6C 00 69 00 74 00 65 00 }\n\n\tcondition:\n\t\tpe.imports( \"mscoree.dll\" , \"_CorDllMain\" ) and 12 of ( $d* ) and 2 of ( $j* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

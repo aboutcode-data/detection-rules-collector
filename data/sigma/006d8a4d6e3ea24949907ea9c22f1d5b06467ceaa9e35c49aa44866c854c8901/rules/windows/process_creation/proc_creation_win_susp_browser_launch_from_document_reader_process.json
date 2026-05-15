@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_browser_launch_from_document_reader_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseph Kamau",
+                "date": "2024-05-27",
+                "title": "Potential Suspicious Browser Launch From Document Reader Process",
+                "id": "1193d960-2369-499f-a158-7b50a31df682"
+            },
+            "rule_text": "title: Potential Suspicious Browser Launch From Document Reader Process\nid: 1193d960-2369-499f-a158-7b50a31df682\nstatus: test\ndescription: 'Detects when a browser process or browser tab is launched from an application\n  that handles document files such as Adobe, Microsoft Office, etc. And connects to\n  a web application over http(s), this could indicate a possible phishing attempt.\n\n  '\nreferences:\n- https://app.any.run/tasks/69c5abaa-92ad-45ba-8c53-c11e23e05d04/\n- https://app.any.run/tasks/64043a79-165f-4052-bcba-e6e49f847ec1/\nauthor: Joseph Kamau\ndate: 2024-05-27\nmodified: 2025-10-07\ntags:\n- attack.execution\n- attack.t1204.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|contains:\n    - Acrobat Reader\n    - Microsoft Office\n    - PDF Reader\n    Image|endswith:\n    - \\brave.exe\n    - \\chrome.exe\n    - \\firefox.exe\n    - \\msedge.exe\n    - \\opera.exe\n    - \\maxthon.exe\n    - \\seamonkey.exe\n    - \\vivaldi.exe\n    CommandLine|contains: http\n  filter_main_microsoft_help:\n    CommandLine|contains: https://go.microsoft.com/fwlink/\n  filter_optional_foxit:\n    CommandLine|contains:\n    - http://ad.foxitsoftware.com/adlog.php?\n    - https://globe-map.foxitservice.com/go.php?do=redirect\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unlikely in most cases, further investigation should be done in the commandline\n  of the browser process to determine the context of the URL accessed.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/syscall/lnx_auditd_susp_special_file_creation_via_mknod_syscall.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Milad Cheraghi",
+                "date": "2025-05-31",
+                "title": "Special File Creation via Mknod Syscall",
+                "id": "710bdbce-495d-491d-9a8f-7d0d88d2b41e"
+            },
+            "rule_text": "title: Special File Creation via Mknod Syscall\nid: 710bdbce-495d-491d-9a8f-7d0d88d2b41e\nstatus: experimental\ndescription: 'Detects usage of the `mknod` syscall to create special files (e.g.,\n  character or block devices).\n\n  Attackers or malware might use `mknod` to create fake devices, interact with kernel\n  interfaces,\n\n  or establish covert channels in Linux systems.\n\n  Monitoring the use of `mknod` is important because this syscall is rarely used by\n  legitimate applications,\n\n  and it can be abused to bypass file system restrictions or create backdoors.\n\n  '\nreferences:\n- https://man7.org/linux/man-pages/man2/mknod.2.html\n- https://hopeness.medium.com/master-the-linux-mknod-command-a-comprehensive-guide-1c150a546aa8\nauthor: Milad Cheraghi\ndate: 2025-05-31\nmodified: 2025-12-05\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1543.003\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: SYSCALL\n    SYSCALL: mknod\n  condition: selection\nfalsepositives:\n- Device creation by legitimate scripts or init systems (udevadm, MAKEDEV)\n- Container runtimes or security tools during initialization\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

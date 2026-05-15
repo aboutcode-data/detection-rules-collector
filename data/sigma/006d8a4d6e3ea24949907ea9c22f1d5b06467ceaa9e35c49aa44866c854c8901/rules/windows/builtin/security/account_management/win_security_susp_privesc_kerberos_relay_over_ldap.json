@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/account_management/win_security_susp_privesc_kerberos_relay_over_ldap.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Elastic, @SBousseaden",
+                "date": "2022-04-27",
+                "title": "Potential Privilege Escalation via Local Kerberos Relay over LDAP",
+                "id": "749c9f5e-b353-4b90-a9c1-05243357ca4b"
+            },
+            "rule_text": "title: Potential Privilege Escalation via Local Kerberos Relay over LDAP\nid: 749c9f5e-b353-4b90-a9c1-05243357ca4b\nstatus: test\ndescription: 'Detects a suspicious local successful logon event where the Logon Package\n  is Kerberos, the remote address is set to localhost, and the target user SID is\n  the built-in local Administrator account.\n\n  This may indicate an attempt to leverage a Kerberos relay attack variant that can\n  be used to elevate privilege locally from a domain joined limited user to local\n  System privileges.\n\n  '\nreferences:\n- https://twitter.com/sbousseaden/status/1518976397364056071?s=12&t=qKO5eKHvWhAP19a50FTZ7g\n- https://github.com/elastic/detection-rules/blob/5fe7833312031a4787e07893e27e4ea7a7665745/rules/_deprecated/privilege_escalation_krbrelayup_suspicious_logon.toml#L38\nauthor: Elastic, @SBousseaden\ndate: 2022-04-27\nmodified: 2024-08-13\ntags:\n- attack.privilege-escalation\n- attack.credential-access\n- attack.t1548\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    LogonType: 3\n    AuthenticationPackageName: Kerberos\n    IpAddress: 127.0.0.1\n    TargetUserSid|startswith: S-1-5-21-\n    TargetUserSid|endswith: '-500'\n  filter_main_ip_null:\n    IpPort: '0'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

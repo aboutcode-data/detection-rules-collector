@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_imds_malicious_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "jamesc-grafana",
+                "date": "2024-07-11",
+                "title": "Malicious Usage Of IMDS Credentials Outside Of AWS Infrastructure",
+                "id": "352a918a-34d8-4882-8470-44830c507aa3"
+            },
+            "rule_text": "title: Malicious Usage Of IMDS Credentials Outside Of AWS Infrastructure\nid: 352a918a-34d8-4882-8470-44830c507aa3\nstatus: test\ndescription: 'Detects when an instance identity has taken an action that isn''t inside\n  SSM.\n\n  This can indicate that a compromised EC2 instance is being used as a pivot point.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-identity-roles.html\n- https://ermetic.com/blog/aws/aws-ec2-imds-what-you-need-to-know/\n- https://www.packetmischief.ca/2023/07/31/amazon-ec2-credential-exfiltration-how-it-happens-and-how-to-mitigate-it/#lifting-credentials-from-imds-this-is-why-we-cant-have-nice-things\nauthor: jamesc-grafana\ndate: 2024-07-11\ntags:\n- attack.privilege-escalation\n- attack.initial-access\n- attack.persistence\n- attack.stealth\n- attack.t1078\n- attack.t1078.002\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    userIdentity.arn|re: .+:assumed-role/aws:.+\n  filter_main_generic:\n  - eventSource: ssm.amazonaws.com\n  - eventName: RegisterManagedInstance\n  - sourceIPAddress: AWS Internal\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- A team has configured an EC2 instance to use instance profiles that grant the option\n  for the EC2 instance to talk to other AWS Services\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

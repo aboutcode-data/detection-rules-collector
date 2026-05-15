@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_enabling_cor_profiler_env_variables.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jose Rodriguez (@Cyb3rPandaH), OTR (Open Threat Research), Jimmy Bayne (@bohops)",
+                "date": "2020-09-10",
+                "title": "Enabling COR Profiler Environment Variables",
+                "id": "ad89044a-8f49-4673-9a55-cbd88a1b374f"
+            },
+            "rule_text": "title: Enabling COR Profiler Environment Variables\nid: ad89044a-8f49-4673-9a55-cbd88a1b374f\nstatus: test\ndescription: Detects .NET Framework CLR and .NET Core CLR \"cor_enable_profiling\" and\n  \"cor_profiler\" variables being set and configured.\nreferences:\n- https://twitter.com/jamieantisocial/status/1304520651248668673\n- https://www.slideshare.net/JamieWilliams130/started-from-the-bottom-exploiting-data-sources-to-uncover-attck-behaviors\n- https://www.sans.org/cyber-security-summit/archives\n- https://learn.microsoft.com/en-us/dotnet/core/runtime-config/debugging-profiling\nauthor: Jose Rodriguez (@Cyb3rPandaH), OTR (Open Threat Research), Jimmy Bayne (@bohops)\ndate: 2020-09-10\nmodified: 2023-11-24\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.012\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_1:\n    TargetObject|endswith:\n    - \\COR_ENABLE_PROFILING\n    - \\COR_PROFILER\n    - \\CORECLR_ENABLE_PROFILING\n  selection_2:\n    TargetObject|contains: \\CORECLR_PROFILER_PATH\n  condition: 1 of selection_*\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

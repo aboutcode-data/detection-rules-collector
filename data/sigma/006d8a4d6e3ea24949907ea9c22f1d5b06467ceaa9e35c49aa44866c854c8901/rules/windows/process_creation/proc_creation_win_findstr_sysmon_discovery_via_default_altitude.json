@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_findstr_sysmon_discovery_via_default_altitude.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-16",
+                "title": "Sysmon Discovery Via Default Driver Altitude Using Findstr.EXE",
+                "id": "37db85d1-b089-490a-a59a-c7b6f984f480"
+            },
+            "rule_text": "title: Sysmon Discovery Via Default Driver Altitude Using Findstr.EXE\nid: 37db85d1-b089-490a-a59a-c7b6f984f480\nstatus: test\ndescription: Detects usage of \"findstr\" with the argument \"385201\". Which could indicate\n  potential discovery of an installed Sysinternals Sysmon service using the default\n  driver altitude (even if the name is changed).\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md#atomic-test-5---security-software-discovery---sysmon-service\nauthor: frack113\ndate: 2021-12-16\nmodified: 2023-11-14\ntags:\n- attack.discovery\n- attack.t1518.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\find.exe\n    - \\findstr.exe\n  - OriginalFileName:\n    - FIND.EXE\n    - FINDSTR.EXE\n  selection_cli:\n    CommandLine|contains: ' 385201'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

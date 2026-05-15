@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_shim_database.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-30",
+                "title": "Potential Persistence Via Shim Database Modification",
+                "id": "dfb5b4e8-91d0-4291-b40a-e3b0d3942c45"
+            },
+            "rule_text": "title: Potential Persistence Via Shim Database Modification\nid: dfb5b4e8-91d0-4291-b40a-e3b0d3942c45\nstatus: test\ndescription: 'Adversaries may establish persistence and/or elevate privileges by executing\n  malicious content triggered by application shims.\n\n  The Microsoft Windows Application Compatibility Infrastructure/Framework (Application\n  Shim) was created to allow for backward compatibility of software as the operating\n  system codebase changes over time\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.011/T1546.011.md#atomic-test-3---registry-key-creation-andor-modification-events-for-sdb\n- https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html\n- https://andreafortuna.org/2018/11/12/process-injection-and-persistence-using-application-shimming/\nauthor: frack113\ndate: 2021-12-30\nmodified: 2025-10-22\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.011\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\InstalledSDB\\\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Custom\\\n  filter_main_empty_string:\n    Details: ''\n  filter_main_empty_value:\n    Details: (Empty)\n  filter_main_null:\n    Details: null\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate custom SHIM installations will also trigger this rule\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

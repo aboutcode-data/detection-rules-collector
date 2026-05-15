@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_active_directory_module_dll_import.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), frack113",
+                "date": "2023-01-22",
+                "title": "Potential Active Directory Enumeration Using AD Module - PsModule",
+                "id": "74176142-4684-4d8a-8b0a-713257e7df8e"
+            },
+            "rule_text": "title: Potential Active Directory Enumeration Using AD Module - PsModule\nid: 74176142-4684-4d8a-8b0a-713257e7df8e\nrelated:\n- id: 70bc5215-526f-4477-963c-a47a5c9ebd12\n  type: similar\n- id: 9e620995-f2d8-4630-8430-4afd89f77604\n  type: similar\nstatus: test\ndescription: Detects usage of the \"Import-Module\" cmdlet to load the \"Microsoft.ActiveDirectory.Management.dl\"\n  DLL. Which is often used by attackers to perform AD enumeration.\nreferences:\n- https://github.com/samratashok/ADModule\n- https://twitter.com/cyb3rops/status/1617108657166061568?s=20\n- https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/active-directory-enumeration-with-ad-module-without-rsat-or-admin-privileges\nauthor: Nasreddine Bencherchali (Nextron Systems), frack113\ndate: 2023-01-22\ntags:\n- attack.reconnaissance\n- attack.discovery\n- attack.impact\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_cmdlet:\n    Payload|contains:\n    - 'Import-Module '\n    - 'ipmo '\n  selection_dll:\n    Payload|contains: Microsoft.ActiveDirectory.Management.dll\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the library for administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

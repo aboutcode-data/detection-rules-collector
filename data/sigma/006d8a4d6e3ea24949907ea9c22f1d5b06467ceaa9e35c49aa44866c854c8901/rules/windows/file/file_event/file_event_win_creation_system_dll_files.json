@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_creation_system_dll_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-06-24",
+                "title": "Files With System DLL Name In Unsuspected Locations",
+                "id": "13c02350-4177-4e45-ac17-cf7ca628ff5e"
+            },
+            "rule_text": "title: Files With System DLL Name In Unsuspected Locations\nid: 13c02350-4177-4e45-ac17-cf7ca628ff5e\nstatus: test\ndescription: 'Detects the creation of a file with the \".dll\" extension that has the\n  name of a System DLL in uncommon or unsuspected locations. (Outisde of \"System32\",\n  \"SysWOW64\", etc.).\n\n  It is highly recommended to perform an initial baseline before using this rule in\n  production.\n\n  '\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-06-24\ntags:\n- attack.stealth\n- attack.t1036.005\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\secur32.dll\n    - \\tdh.dll\n  filter_main_generic:\n    TargetFilename|contains:\n    - C:\\$WINDOWS.~BT\\\n    - C:\\$WinREAgent\\\n    - C:\\Windows\\SoftwareDistribution\\\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n    - C:\\Windows\\uus\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Third party software might bundle specific versions of system DLLs.\nlevel: medium\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_creation_system_dll_files/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

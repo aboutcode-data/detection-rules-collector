@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_susp_shimcache_flush.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-02-01",
+                "title": "ShimCache Flush",
+                "id": "b0524451-19af-4efa-a46f-562a977f792e"
+            },
+            "rule_text": "title: ShimCache Flush\nid: b0524451-19af-4efa-a46f-562a977f792e\nstatus: stable\ndescription: Detects actions that clear the local ShimCache and remove forensic evidence\nreferences:\n- https://medium.com/@blueteamops/shimcache-flush-89daff28d15e\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-02-01\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1a:\n    CommandLine|contains|all:\n    - rundll32\n    - apphelp.dll\n  selection1b:\n    CommandLine|contains:\n    - ShimFlushCache\n    - '#250'\n  selection2a:\n    CommandLine|contains|all:\n    - rundll32\n    - kernel32.dll\n  selection2b:\n    CommandLine|contains:\n    - BaseFlushAppcompatCache\n    - '#46'\n  condition: ( selection1a and selection1b ) or ( selection2a and selection2b )\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

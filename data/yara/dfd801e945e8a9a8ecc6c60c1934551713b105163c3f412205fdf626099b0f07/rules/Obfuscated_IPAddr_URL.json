@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/elceef/yara-rulz/blob/master/rules/Obfuscated_IPAddr_URL.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Obfuscated_IP_Address_in_URL",
+                "tags": [],
+                "description": "Detects hexadecimal and octal IP address representations in URL",
+                "author": "marcin@ulikowski.pl",
+                "date": "2020-09-17",
+                "reference": "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/evasive-urls-in-spam/"
+            },
+            "rule_text": "rule Obfuscated_IP_Address_in_URL\n{\n\tmeta:\n\t\tdescription = \"Detects hexadecimal and octal IP address representations in URL\"\n\t\tauthor = \"marcin@ulikowski.pl\"\n\t\tdate = \"2020-09-17\"\n\t\treference = \"https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/evasive-urls-in-spam/\"\n\n\tstrings:\n\t\t$ = /=\"?http:\\/\\/0[0-7]{1,3}\\.0[0-7]{1,3}\\.0[0-7]{1,3}\\.0[0-7]{1,3}\\.?\\// nocase ascii wide\n\t\t$ = /=\"?http:\\/\\/0x[0-9a-f]{8}\\.?\\// nocase ascii wide\n\t\t$ = /=\"?http:\\/\\/0x[0-9a-f]{2}\\.0x[0-9a-f]{2}\\.0x[0-9a-f]{2}\\.0x[0-9a-f]{2}\\.?\\// nocase ascii wide\n\t\t$ = /=\"?http:\\/\\/[0-9]{8,10}\\.?\\// nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

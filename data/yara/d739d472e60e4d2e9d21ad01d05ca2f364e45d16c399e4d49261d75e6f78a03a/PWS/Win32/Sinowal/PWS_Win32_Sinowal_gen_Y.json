@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Sinowal/PWS_Win32_Sinowal_gen_Y.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Sinowal_gen_Y",
+                "tags": [],
+                "description": "PWS:Win32/Sinowal.gen!Y,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 07 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Sinowal_gen_Y\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Sinowal.gen!Y,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {0f b7 04 4a 0f b6 4d 10 03 c1 }\n\t\t$a_03_1 = {81 e1 00 f0 00 00 81 f9 00 40 00 00 (0f 85|75) }\n\t\t$a_03_2 = {0f b7 51 12 81 e2 00 20 00 00 (75|0f 85) }\n\t\t$a_03_3 = {8b 45 0c 03 (85 ?? ?? ff ff 45|?? 50 ff 55) }\n\t\t$a_03_4 = {3e 3e ff 75 0c 58 03 (85 ?? ?? ff ff 45|?? 50 ff 55) }\n\t\t$a_03_5 = {03 34 91 33 c6 90 0a 40 00 c1 e0 04 [0-04] c1 e9 05 33 c1 [0-08] 83 e2 03 }\n\t\t$a_03_6 = {8b 4d 0c 03 (8d ?? ?? ff ff 4d|?? 51 ff 55) }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 2 + ( #a_03_5 & 1 ) * 1 + ( #a_03_6 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

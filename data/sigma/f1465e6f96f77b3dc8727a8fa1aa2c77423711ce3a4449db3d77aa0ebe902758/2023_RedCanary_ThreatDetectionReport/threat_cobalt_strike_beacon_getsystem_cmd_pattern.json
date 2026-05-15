@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_cobalt_strike_beacon_getsystem_cmd_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Cobalt Strike Beacon Getsystem Pattern (RedCanary Threat Detection Report)",
+                "id": "187c05df-debd-40ed-a59e-1163703bb1de"
+            },
+            "rule_text": "title: Cobalt Strike Beacon Getsystem Pattern (RedCanary Threat Detection Report)\nid: 187c05df-debd-40ed-a59e-1163703bb1de\nstatus: experimental\ndescription: Detects command line pattern indicating the use of Cobalt Strike GetSystem\n  feature. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/cobalt-strike/\n- https://www.cobaltstrike.com/blog/what-happens-when-i-type-getsystem/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.s0154\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    CommandLine|re: ^.*echo\\s+[0-9a-f]{11}\\s+\\>\\;?\\s+\\\\\\\\\\.\\\\pipe\\\\[0-9a-f]{6}.*$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

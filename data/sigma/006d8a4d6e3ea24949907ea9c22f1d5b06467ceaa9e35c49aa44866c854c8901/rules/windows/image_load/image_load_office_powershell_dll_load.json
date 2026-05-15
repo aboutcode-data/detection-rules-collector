@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_office_powershell_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-01",
+                "title": "PowerShell Core DLL Loaded Via Office Application",
+                "id": "bb2ba6fb-95d4-4a25-89fc-30bb736c021a"
+            },
+            "rule_text": "title: PowerShell Core DLL Loaded Via Office Application\nid: bb2ba6fb-95d4-4a25-89fc-30bb736c021a\nstatus: test\ndescription: Detects PowerShell core DLL being loaded by an Office Product\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-01\ntags:\n- attack.stealth\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\excel.exe\n    - \\mspub.exe\n    - \\outlook.exe\n    - \\onenote.exe\n    - \\onenoteim.exe\n    - \\powerpnt.exe\n    - \\winword.exe\n    ImageLoaded|contains:\n    - \\System.Management.Automation.Dll\n    - \\System.Management.Automation.ni.Dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

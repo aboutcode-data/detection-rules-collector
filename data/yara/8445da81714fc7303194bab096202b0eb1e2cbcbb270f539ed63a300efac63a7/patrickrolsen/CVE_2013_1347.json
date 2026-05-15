@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/patrickrolsen/CVE_2013_1347.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "html_CVE_2013_1347",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "reference": "http://blogs.cisco.com/security/watering-hole-attacks-target-energy-sector",
+                "hashes": "00ca490898740f9b6246e300ef0ee86f and dc681f380698b2e6dca7c49f699799ad",
+                "date": "02/01/2014"
+            },
+            "rule_text": "rule html_CVE_2013_1347\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\treference = \"http://blogs.cisco.com/security/watering-hole-attacks-target-energy-sector\"\n\t\thashes = \"00ca490898740f9b6246e300ef0ee86f and dc681f380698b2e6dca7c49f699799ad\"\n\t\tdate = \"02/01/2014\"\n\n\tstrings:\n\t\t$html = \"html\" wide ascii\n\t\t$s1 = \"DOropRAM\" wide ascii\n\t\t$s2 = \"\\\\u9090\\\\u9090\\\\u9090\\\\u9090\" wide ascii\n\t\t$s3 = \"shellcode\" wide ascii\n\t\t$s4 = \"unicorn\" wide ascii\n\t\t$s5 = \"helloWorld()\" wide ascii\n\t\t$s6 = \"ANIMATECOLOR\" wide ascii\n\t\t$s7 = \"UPXIgLvY\" wide ascii\n\n\tcondition:\n\t\t$html and 3 of ( $s* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2013-1347"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/powershell/ps_new_itemproperty_enable_administrative_shares.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Axel Olsson",
+                "date": "2026-02-12",
+                "title": "Powershell New-ItemProperty Enable Administrative Shares",
+                "id": "d777149e-dd75-4498-9901-a6019ab647cd"
+            },
+            "rule_text": "title: Powershell New-ItemProperty Enable Administrative Shares\nid: d777149e-dd75-4498-9901-a6019ab647cd\ndescription: Usage of New-ItemProperty to enable administrative shares. This behavior\n  was observed in the Russian APT attack on Polish OT-Infrastructure.\nreferences:\n- https://cert.pl/uploads/docs/CERT_Polska_Energy_Sector_Incident_Report_2025.pdf\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-itemproperty\nstatus: stable\nauthor: Axel Olsson\ndate: 2026-02-12\nmodified: 2026-02-12\nlogsource:\n  product: windows\n  category: ps_script\ndetection:\n  selection:\n    script_block|contains|all:\n    - New-ItemProperty\n    - HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters\n    - -Value 1\n    script_block|contains:\n    - AutoShareWks\n    - AutoShareServer\n  condition: selection\nfalsepositives:\n- Legitimate administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

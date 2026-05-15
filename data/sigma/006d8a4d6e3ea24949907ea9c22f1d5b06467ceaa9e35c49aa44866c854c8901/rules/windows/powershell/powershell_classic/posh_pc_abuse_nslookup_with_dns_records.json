@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_classic/posh_pc_abuse_nslookup_with_dns_records.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sai Prashanth Pulisetti @pulisettis, Aishwarya Singam",
+                "date": "2022-12-10",
+                "title": "Nslookup PowerShell Download Cradle",
+                "id": "999bff6d-dc15-44c9-9f5c-e1051bfc86e1"
+            },
+            "rule_text": "title: Nslookup PowerShell Download Cradle\nid: 999bff6d-dc15-44c9-9f5c-e1051bfc86e1\nrelated:\n- id: 1b3b01c7-84e9-4072-86e5-fc285a41ff23\n  type: similar\nstatus: test\ndescription: Detects a powershell download cradle using nslookup. This cradle uses\n  nslookup to extract payloads from DNS records.\nreferences:\n- https://twitter.com/Alh4zr3d/status/1566489367232651264\nauthor: Sai Prashanth Pulisetti @pulisettis, Aishwarya Singam\ndate: 2022-12-10\nmodified: 2025-02-25\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_classic_start\ndetection:\n  selection:\n    Data|contains|all:\n    - powershell\n    - nslookup\n    - '[1]'\n    Data|contains:\n    - -q=txt http\n    - -querytype=txt http\n    - -type=txt http\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

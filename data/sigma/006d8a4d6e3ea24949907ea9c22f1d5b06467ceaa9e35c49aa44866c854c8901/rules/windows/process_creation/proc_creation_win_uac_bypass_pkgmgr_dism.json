@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_pkgmgr_dism.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-23",
+                "title": "UAC Bypass Using PkgMgr and DISM",
+                "id": "a743ceba-c771-4d75-97eb-8a90f7f4844c"
+            },
+            "rule_text": "title: UAC Bypass Using PkgMgr and DISM\nid: a743ceba-c771-4d75-97eb-8a90f7f4844c\nstatus: test\ndescription: Detects the pattern of UAC Bypass using pkgmgr.exe and dism.exe (UACMe\n  23)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-23\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\pkgmgr.exe\n    Image|endswith: \\dism.exe\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/formbook.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Amata Anantaprayoon",
+                "date": "2023-06-19",
+                "title": "Formbook C2 Traffic",
+                "id": "3d9cc43f-1897-4955-b959-9d184021ca19"
+            },
+            "rule_text": "title: Formbook C2 Traffic\nid: 3d9cc43f-1897-4955-b959-9d184021ca19\ndescription: Detects URI combos used by Formbook/Xloader\nstatus: stable\nauthor: NTT Security - Amata Anantaprayoon\ndate: '2023-06-19'\nreferences:\n- https://malpedia.caad.fkie.fraunhofer.de/details/win.formbook\n- https://www.malware-traffic-analysis.net/2023/06/13/index.html\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-method: GET\n    c-uri|re: ^/[a-zA-Z0-9]{4}/$\n    cs-referer: ''\n    c-useragent: ''\n    url|startswith: http://www.\n  filter:\n    c-uri-query: ''\n    c-uri:\n    - /link/\n    - /user/\n  condition: selection and not filter\nfalsepositives:\n- Legit urls matching the same pattern\ntruepositives:\n- Same pattern towards multiple domains, as shown in the malware-traffic blog\n- c-uri-query contains long random char including _ / = +\nlevel: high\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

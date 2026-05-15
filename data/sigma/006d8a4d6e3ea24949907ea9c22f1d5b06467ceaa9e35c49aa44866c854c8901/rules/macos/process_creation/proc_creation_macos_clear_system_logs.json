@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_clear_system_logs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "remotephone, oscd.community",
+                "date": "2020-10-11",
+                "title": "Indicator Removal on Host - Clear Mac System Logs",
+                "id": "acf61bd8-d814-4272-81f0-a7a269aa69aa"
+            },
+            "rule_text": "title: Indicator Removal on Host - Clear Mac System Logs\nid: acf61bd8-d814-4272-81f0-a7a269aa69aa\nstatus: test\ndescription: Detects deletion of local audit logs\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.002/T1070.002.md\nauthor: remotephone, oscd.community\ndate: 2020-10-11\nmodified: 2022-09-16\ntags:\n- attack.defense-impairment\n- attack.t1685.006\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection1:\n    Image|endswith:\n    - /rm\n    - /unlink\n    - /shred\n  selection_cli_1:\n    CommandLine|contains: /var/log\n  selection_cli_2:\n    CommandLine|contains|all:\n    - /Users/\n    - /Library/Logs/\n  condition: selection1 and 1 of selection_cli*\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

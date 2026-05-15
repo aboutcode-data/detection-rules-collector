@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_auditpol_nt_resource_kit_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-12-18",
+                "title": "Audit Policy Tampering Via NT Resource Kit Auditpol",
+                "id": "c6c56ada-612b-42d1-9a29-adad3c5c2c1e"
+            },
+            "rule_text": "title: Audit Policy Tampering Via NT Resource Kit Auditpol\nid: c6c56ada-612b-42d1-9a29-adad3c5c2c1e\nrelated:\n- id: 0a13e132-651d-11eb-ae93-0242ac130002\n  type: similar\nstatus: test\ndescription: 'Threat actors can use an older version of the auditpol binary available\n  inside the NT resource kit to change audit policy configuration to impair detection\n  capability.\n\n  This can be carried out by selectively disabling/removing certain audit policies\n  as well as restoring a custom policy owned by the threat actor.\n\n  '\nreferences:\n- https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Windows%202000%20Resource%20Kit%20Tools/AuditPol\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-12-18\nmodified: 2023-02-21\ntags:\n- attack.defense-impairment\n- attack.t1685.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - /logon:none\n    - /system:none\n    - /sam:none\n    - /privilege:none\n    - /object:none\n    - /process:none\n    - /policy:none\n  condition: selection\nfalsepositives:\n- The old auditpol utility isn't available by default on recent versions of Windows\n  as it was replaced by a newer version. The FP rate should be very low except for\n  tools that use a similar flag structure\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_registry_set_unsecure_powershell_policy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "Potential PowerShell Execution Policy Tampering - ProcCreation",
+                "id": "cf2e938e-9a3e-4fe8-a347-411642b28a9f"
+            },
+            "rule_text": "title: Potential PowerShell Execution Policy Tampering - ProcCreation\nid: cf2e938e-9a3e-4fe8-a347-411642b28a9f\nrelated:\n- id: fad91067-08c5-4d1a-8d8c-d96a21b37814\n  type: similar\n- id: 87e3c4e8-a6a8-4ad9-bb4f-46e7ff99a180\n  type: similar\n- id: 61d0475c-173f-4844-86f7-f3eebae1c66b\n  type: similar\nstatus: test\ndescription: Detects changes to the PowerShell execution policy registry key in order\n  to bypass signing requirements for script execution from the CommandLine\nreferences:\n- https://learn.microsoft.com/de-de/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.3\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\ntags:\n- attack.defense-impairment\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_path:\n    CommandLine|contains:\n    - \\ShellIds\\Microsoft.PowerShell\\ExecutionPolicy\n    - \\Policies\\Microsoft\\Windows\\PowerShell\\ExecutionPolicy\n  selection_values:\n    CommandLine|contains:\n    - Bypass\n    - RemoteSigned\n    - Unrestricted\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

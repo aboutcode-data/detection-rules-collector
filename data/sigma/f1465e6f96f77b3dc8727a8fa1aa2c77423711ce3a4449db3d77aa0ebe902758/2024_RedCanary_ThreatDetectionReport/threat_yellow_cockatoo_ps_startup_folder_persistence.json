@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_yellow_cockatoo_ps_startup_folder_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "PowerShell Startup Folder Persistence",
+                "id": "07fce851-4cab-4ea5-880c-daf9d18bb180"
+            },
+            "rule_text": "title: PowerShell Startup Folder Persistence\nid: 07fce851-4cab-4ea5-880c-daf9d18bb180\nstatus: experimental\ndescription: \"Yellow Cockatoo Windows Startup folder for persistence. Not unique to\\\n  \\ Yellow Cockatoo, \\nthis detection opportunity is likely to identify persistence\\\n  \\ mechanisms in multiple \\nthreats. In the context of Yellow Cockatoo, this persistence\\\n  \\ mechanism eventually \\nlaunches the command-line script that leads to the installation\\\n  \\ of a malicious DLL. Part \\nof the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/yellow-cockatoo/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.persistence\n- attack.privilege_escalation\n- attack.t1547\n- attack.t1547.001\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection1:\n    Image|endswith: \\powershell.exe\n    TargetFilename|endswith: .lnk\n  selection2:\n    TargetFilename|contains: start menu\\programs\\startup\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

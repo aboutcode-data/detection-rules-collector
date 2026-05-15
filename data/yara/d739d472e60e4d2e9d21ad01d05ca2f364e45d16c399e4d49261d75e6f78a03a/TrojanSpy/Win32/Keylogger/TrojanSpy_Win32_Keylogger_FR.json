@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Keylogger/TrojanSpy_Win32_Keylogger_FR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Keylogger_FR",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Keylogger.FR,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Keylogger_FR\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Keylogger.FR,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ff ff 57 c6 85 ?? (fe|ff) ff ff 54 c6 85 ?? (fe|ff) ff ff 53 c6 85 ?? (fe|ff) ff ff 47 }\n\t\t$a_03_1 = {4a 79 05 ba 18 00 00 00 8a 44 ?? ?? 8a 1c 31 32 d8 88 1c 31 41 3b cf 7c e7 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Keylogger_FR_2",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Keylogger.FR,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Keylogger_FR_2\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Keylogger.FR,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {81 fe e8 03 00 00 7d 17 e8 ?? ?? ?? ?? 99 b9 e8 03 00 00 f7 f9 46 89 14 b5 ?? ?? ?? ?? eb e1 }\n\t\t$a_03_1 = {89 06 83 c6 04 81 fe ?? ?? ?? ?? 7c ee be }\n\t\t$a_03_2 = {4a 79 05 ba 18 00 00 00 8a 44 ?? ?? 8a 1c 31 32 d8 88 1c 31 41 3b cf 7c e7 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

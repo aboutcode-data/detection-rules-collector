@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Vobfus/Worm_Win32_Vobfus_BI.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Vobfus_BI",
+                "tags": [],
+                "description": "Worm:Win32/Vobfus.BI,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Vobfus_BI\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Vobfus.BI,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c7 45 fc 02 00 00 00 6a ff e8 ?? ?? ?? ?? c7 45 fc 03 00 00 00 ff 75 b8 e8 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? 89 45 d8 }\n\t\t$a_03_1 = {ff 75 b4 8d 45 ac 50 e8 ?? ?? ?? ?? 50 ff 75 d8 e8 ?? ?? ?? ?? 89 45 88 ff 75 ac 8d 45 b4 50 e8 ?? ?? ?? ?? 8b 45 88 89 45 d4 8d 4d ac e8 ?? ?? ?? ?? c7 45 fc ?? 00 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

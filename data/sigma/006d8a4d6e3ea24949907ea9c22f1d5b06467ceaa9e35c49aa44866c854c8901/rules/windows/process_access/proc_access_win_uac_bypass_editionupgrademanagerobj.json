@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_uac_bypass_editionupgrademanagerobj.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Dmitry Uchakin",
+                "date": "2020-10-07",
+                "title": "Function Call From Undocumented COM Interface EditionUpgradeManager",
+                "id": "fb3722e4-1a06-46b6-b772-253e2e7db933"
+            },
+            "rule_text": "title: Function Call From Undocumented COM Interface EditionUpgradeManager\nid: fb3722e4-1a06-46b6-b772-253e2e7db933\nstatus: test\ndescription: Detects function calls from the EditionUpgradeManager COM interface.\n  Which is an interface that is not used by standard executables.\nreferences:\n- https://www.snip2code.com/Snippet/4397378/UAC-bypass-using-EditionUpgradeManager-C/\n- https://gist.github.com/hfiref0x/de9c83966623236f5ebf8d9ae2407611\nauthor: oscd.community, Dmitry Uchakin\ndate: 2020-10-07\nmodified: 2023-11-30\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    CallTrace|contains: editionupgrademanagerobj.dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

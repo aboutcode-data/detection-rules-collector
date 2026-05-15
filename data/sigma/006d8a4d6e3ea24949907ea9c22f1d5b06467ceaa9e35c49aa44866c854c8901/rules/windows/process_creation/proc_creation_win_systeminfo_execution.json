@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_systeminfo_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-01",
+                "title": "Suspicious Execution of Systeminfo",
+                "id": "0ef56343-059e-4cb6-adc1-4c3c967c5e46"
+            },
+            "rule_text": "title: Suspicious Execution of Systeminfo\nid: 0ef56343-059e-4cb6-adc1-4c3c967c5e46\nstatus: test\ndescription: Detects usage of the \"systeminfo\" command to retrieve information\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-1---system-information-discovery\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/systeminfo\nauthor: frack113\ndate: 2022-01-01\nmodified: 2022-07-14\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\systeminfo.exe\n  - OriginalFileName: sysinfo.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

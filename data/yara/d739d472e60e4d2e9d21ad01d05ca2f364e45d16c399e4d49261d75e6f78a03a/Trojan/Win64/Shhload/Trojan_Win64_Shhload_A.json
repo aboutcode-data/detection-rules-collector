@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Shhload/Trojan_Win64_Shhload_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Shhload_A",
+                "tags": [],
+                "description": "Trojan:Win64/Shhload.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 07 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Shhload_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Shhload.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 8b 85 18 ?? ?? ?? 48 8d 55 e0 48 8d 4a 2c 48 89 c2 }\n\t\t$a_03_1 = {48 8b 85 28 ?? ?? ?? 48 89 c1 e8 ?? ?? ?? ?? 83 f8 01 0f 94 c0 84 c0 }\n\t\t$a_03_2 = {48 8b 85 28 ?? ?? ?? 48 89 c1 e8 ?? ?? ?? ?? 83 f8 01 0f 94 c0 84 c0 0f 84 3d 01 00 00 e9 17 01 00 00 48 8b 85 ?? ?? ?? ?? 48 8d 55 f0 48 8d 4a 2c 48 89 c2 e8 54 d5 01 }\n\t\t$a_03_3 = {48 8b 85 28 ?? ?? ?? 48 89 c1 e8 16 de 01 00 83 f8 01 0f 94 c0 84 c0 0f 84 3d 01 00 00 e9 17 01 00 00 48 8b }\n\t\t$a_03_4 = {48 8b 85 68 2f 00 00 48 89 c1 e8 ?? ?? ?? ?? 83 f8 01 0f 94 c0 84 c0 }\n\t\t$a_03_5 = {4c 8b 05 32 c8 0e 00 ?? ?? ?? ?? 48 89 c2 b9 00 00 00 00 41 ff d0 48 8b 05 ec db 0e 00 ff d0 }\n\t\t$a_03_6 = {41 54 55 57 56 53 48 81 ec ?? ?? ?? ?? b9 0d 00 00 00 31 c0 ?? ?? ?? ?? ?? 24 20 48 89 d7 f3 48 ab 48 8b 3d ?? ?? 0c 00 44 8b 0f 45 85 c9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 1 + ( #a_03_6 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/G-H/Get-WmiObject.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Get_WmiObject",
+                "tags": [],
+                "description": "Detection patterns for the tool 'Get-WmiObject' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "Get-WmiObject",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule Get_WmiObject\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'Get-WmiObject' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"Get-WmiObject\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /Get\\-WmiObject\\s\\-class\\sSMS_Authority\\s\\-namespace\\sroot\\\\CCM/ nocase ascii wide\n\t\t$string2 = /Get\\-WmiObject\\s\\-Namespace\\s\\\\\"root\\\\directory\\\\ldap\\\\\"\\s\\-Class\\sds_user\\s/ nocase ascii wide\n\t\t$string3 = \"Get-WmiObject win32_loggedonuser -ComputerName \" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

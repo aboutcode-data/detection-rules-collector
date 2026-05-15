@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Vimditator/Trojan_Win32_Vimditator_LM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Vimditator_LM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Vimditator.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Vimditator_LM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Vimditator.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b cf 2b d7 0f 1f ?? ?? ?? ?? ?? 8a 04 0a 8d 49 01 32 c3 2a 85 f8 fb ff ff 88 41 ff 83 ee 01 }\n\t\t$a_03_1 = {0f b7 84 0d 5c e4 ff ff 8d 49 02 66 89 84 0d fa f3 ff ff 66 85 c0 75 ?? 8d 95 fc f3 ff ff 8b f7 8b c2 2b f0 66 0f 1f ?? ?? ?? ?? ?? ?? 0f b7 0a 8d 52 02 66 89 4c 16 fe 66 85 c9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

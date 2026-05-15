@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Zegost/Backdoor_Win32_Zegost_DA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Zegost_DA",
+                "tags": [],
+                "description": "Backdoor:Win32/Zegost.DA,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Zegost_DA\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Zegost.DA,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c6 07 4d c6 47 01 5a ff ?? 6a 00 ff ?? 66 81 3f 4d 5a 74 }\n\t\t$a_01_1 = {c6 45 00 4d c6 45 01 5a 66 81 7d 00 4d 5a 74 }\n\t\t$a_03_2 = {73 c6 44 24 ?? 25 c6 44 24 ?? 64 c6 44 24 ?? 2e c6 44 24 ?? 76 c6 44 24 ?? 62 c6 44 24 ?? 73 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

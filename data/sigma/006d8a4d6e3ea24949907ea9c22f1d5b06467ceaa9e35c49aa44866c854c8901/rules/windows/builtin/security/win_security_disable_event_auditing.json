@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_disable_event_auditing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2017-11-19",
+                "title": "Windows Event Auditing Disabled",
+                "id": "69aeb277-f15f-4d2d-b32a-55e883609563"
+            },
+            "rule_text": "title: Windows Event Auditing Disabled\nid: 69aeb277-f15f-4d2d-b32a-55e883609563\nrelated:\n- id: ab4561b1-6c7e-48a7-ad08-087cfb9ce8f1\n  type: derived\nstatus: test\ndescription: 'Detects scenarios where system auditing (i.e.: Windows event log auditing)\n  is disabled.\n\n  This may be used in a scenario where an entity would want to bypass local logging\n  to evade detection when Windows event logging is enabled and reviewed.\n\n  Also, it is recommended to turn off \"Local Group Policy Object Processing\" via GPO,\n  which will make sure that Active Directory GPOs take precedence over local/edited\n  computer policies via something such as \"gpedit.msc\".\n\n  Please note, that disabling \"Local Group Policy Object Processing\" may cause an\n  issue in scenarios of one off specific GPO modifications - however, it is recommended\n  to perform these modifications in Active Directory anyways.\n\n  '\nreferences:\n- https://docs.google.com/presentation/d/1dkrldTTlN3La-OjWtkWJBb4hVk6vfsSMBFBERs6R8zA/edit\nauthor: '@neu5ron, Nasreddine Bencherchali (Nextron Systems)'\ndate: 2017-11-19\nmodified: 2023-11-15\ntags:\n- attack.defense-impairment\n- attack.t1685.001\nlogsource:\n  product: windows\n  service: security\n  definition: dfd8c0f4-e6ad-4e07-b91b-f2fca0ddef64\ndetection:\n  selection:\n    EventID: 4719\n    AuditPolicyChanges|contains:\n    - '%%8448'\n    - '%%8450'\n  filter_main_guid:\n    SubcategoryGuid:\n    - '{0CCE9210-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9211-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9212-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9215-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9217-69AE-11D9-BED3-505054503030}'\n    - '{0CCE921B-69AE-11D9-BED3-505054503030}'\n    - '{0CCE922B-69AE-11D9-BED3-505054503030}'\n    - '{0CCE922F-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9230-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9235-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9236-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9237-69AE-11D9-BED3-505054503030}'\n    - '{0CCE923F-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9240-69AE-11D9-BED3-505054503030}'\n    - '{0CCE9242-69AE-11D9-BED3-505054503030}'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_relay_attacks_tools.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-07-24",
+                "title": "Potential SMB Relay Attack Tool Execution",
+                "id": "5589ab4f-a767-433c-961d-c91f3f704db1"
+            },
+            "rule_text": "title: Potential SMB Relay Attack Tool Execution\nid: 5589ab4f-a767-433c-961d-c91f3f704db1\nstatus: test\ndescription: Detects different hacktools used for relay attacks on Windows for privilege\n  escalation\nreferences:\n- https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/\n- https://pentestlab.blog/2017/04/13/hot-potato/\n- https://github.com/ohpe/juicy-potato\n- https://hunter2.gitbook.io/darthsidious/other/war-stories/domain-admin-in-30-minutes\n- https://hunter2.gitbook.io/darthsidious/execution/responder-with-ntlm-relay-and-empire\n- https://www.localpotato.com/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-07-24\nmodified: 2023-02-14\ntags:\n- attack.collection\n- attack.execution\n- attack.credential-access\n- attack.t1557.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_pe:\n    Image|contains:\n    - PetitPotam\n    - RottenPotato\n    - HotPotato\n    - JuicyPotato\n    - \\just_dce_\n    - Juicy Potato\n    - \\temp\\rot.exe\n    - \\Potato.exe\n    - \\SpoolSample.exe\n    - \\Responder.exe\n    - \\smbrelayx\n    - \\ntlmrelayx\n    - \\LocalPotato\n  selection_script:\n    CommandLine|contains:\n    - Invoke-Tater\n    - ' smbrelay'\n    - ' ntlmrelay'\n    - 'cme smb '\n    - ' /ntlm:NTLMhash '\n    - Invoke-PetitPotam\n    - '.exe -t * -p '\n  selection_juicypotato_enum:\n    CommandLine|contains: .exe -c \"{\n    CommandLine|endswith: '}\" -z'\n  filter_hotpotatoes:\n    Image|contains:\n    - HotPotatoes6\n    - HotPotatoes7\n    - 'HotPotatoes '\n  condition: 1 of selection_* and not 1 of filter_*\nfalsepositives:\n- Legitimate files with these rare hacktool names\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Checkpoint/injector_ZZ_dotRunpeX.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "injector_ZZ_dotRunpeX",
+                "tags": [],
+                "description": "Detects new version of dotRunpeX - configurable .NET injector",
+                "author": "Jiri Vinopal (jiriv)",
+                "date": "2022-10-30",
+                "hash1": "373a86e36f7e808a1db263b4b49d2428df4a13686da7d77edba7a6dd63790232",
+                "hash2": "41ea8f9a9f2a7aeb086dedf8e5855b0409f31e7793cbba615ca0498e47a72636",
+                "hash3": "5e3588e8ddebd61c2bd6dab4b87f601bd6a4857b33eb281cb5059c29cfe62b80",
+                "hash4": "8c451b84d9579b625a7821ad7ddcb87bdd665a9e6619eaecf6ab93cd190cf504",
+                "hash5": "8fa81f6341b342afa40b7dc76dd6e0a1874583d12ea04acf839251cb5ca61591",
+                "hash6": "cd4c821e329ec1f7bfe7ecd39a6020867348b722e8c84a05c7eb32f8d5a2f4db",
+                "hash7": "fa8a67642514b69731c2ce6d9e980e2a9c9e409b3947f2c9909d81f6eac81452",
+                "hash8": "eb2e2ac0f5f51d90fe90b63c3c385af155b2fee30bc3dc6309776b90c21320f5",
+                "report": "https://research.checkpoint.com/2023/dotrunpex-demystifying-new-virtualized-net-injector-used-in-the-wild/"
+            },
+            "rule_text": "rule injector_ZZ_dotRunpeX\n{\n\tmeta:\n\t\tdescription = \"Detects new version of dotRunpeX - configurable .NET injector\"\n\t\tauthor = \"Jiri Vinopal (jiriv)\"\n\t\tdate = \"2022-10-30\"\n\t\thash1 = \"373a86e36f7e808a1db263b4b49d2428df4a13686da7d77edba7a6dd63790232\"\n\t\thash2 = \"41ea8f9a9f2a7aeb086dedf8e5855b0409f31e7793cbba615ca0498e47a72636\"\n\t\thash3 = \"5e3588e8ddebd61c2bd6dab4b87f601bd6a4857b33eb281cb5059c29cfe62b80\"\n\t\thash4 = \"8c451b84d9579b625a7821ad7ddcb87bdd665a9e6619eaecf6ab93cd190cf504\"\n\t\thash5 = \"8fa81f6341b342afa40b7dc76dd6e0a1874583d12ea04acf839251cb5ca61591\"\n\t\thash6 = \"cd4c821e329ec1f7bfe7ecd39a6020867348b722e8c84a05c7eb32f8d5a2f4db\"\n\t\thash7 = \"fa8a67642514b69731c2ce6d9e980e2a9c9e409b3947f2c9909d81f6eac81452\"\n\t\thash8 = \"eb2e2ac0f5f51d90fe90b63c3c385af155b2fee30bc3dc6309776b90c21320f5\"\n\t\treport = \"https://research.checkpoint.com/2023/dotrunpex-demystifying-new-virtualized-net-injector-used-in-the-wild/\"\n\n\tstrings:\n\t\t$implmap1 = \"VirtualAllocEx\"\n\t\t$implmap2 = \"CreateProcess\"\n\t\t$implmap3 = \"CreateRemoteThread\"\n\t\t$implmap4 = \"Wow64SetThreadContext\"\n\t\t$implmap5 = \"Wow64GetThreadContext\"\n\t\t$implmap6 = \"NtResumeThread\"\n\t\t$implmap7 = \"ZwUnmapViewOfSection\"\n\t\t$implmap8 = \"NtWriteVirtualMemory\"\n\t\t$implmap9 = \"MessageBox\"\n\t\t$implmap10 = \"Wow64DisableWow64FsRedirection\"\n\t\t$implmap11 = \"Wow64RevertWow64FsRedirection\"\n\t\t$implmap12 = \"CreateFile\"\n\t\t$implmap13 = \"RtlInitUnicodeString\"\n\t\t$implmap14 = \"NtLoadDriver\"\n\t\t$implmap15 = \"NtUnloadDriver\"\n\t\t$implmap16 = \"OpenProcessToken\"\n\t\t$implmap17 = \"LookupPrivilegeValue\"\n\t\t$implmap18 = \"AdjustTokenPrivileges\"\n\t\t$implmap19 = \"CloseHandle\"\n\t\t$implmap20 = \"NtQuerySystemInformation\"\n\t\t$implmap21 = \"DeviceIoControl\"\n\t\t$implmap22 = \"GetProcessHeap\"\n\t\t$implmap23 = \"HeapFree\"\n\t\t$implmap24 = \"HeapAlloc\"\n\t\t$implmap25 = \"GetProcAddress\"\n\t\t$implmap26 = \"CopyMemory\"\n\t\t$modulerefKernel1 = \"Kernel32\"\n\t\t$modulerefKernel2 = \"kernel32\"\n\t\t$modulerefNtdll1 = \"Ntdll\"\n\t\t$modulerefNtdll2 = \"ntdll\"\n\t\t$modulerefAdvapi1 = \"Advapi32\"\n\t\t$modulerefAdvapi2 = \"advapi32\"\n\t\t$regPath = \"\\\\Registry\\\\Machine\\\\System\\\\CurrentControlSet\\\\Services\\\\TaskKill\" wide\n\t\t$rsrcName = \"BIDEN_HARRIS_PERFECT_ASSHOLE\" wide\n\t\t$koiVM1 = \"KoiVM\"\n\t\t$koiVM2 = \"#Koi\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and uint16( uint32( 0x3c ) ) == 0x4550 and ( $regPath or $rsrcName or 1 of ( $koiVM* ) ) and 24 of ( $implmap* ) and 1 of ( $modulerefKernel* ) and 1 of ( $modulerefNtdll* ) and 1 of ( $modulerefAdvapi* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

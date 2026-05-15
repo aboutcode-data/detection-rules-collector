@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/powershell/ps_invoke_restmethod_upload.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Axel Olsson",
+                "date": "2026-02-12",
+                "title": "Powershell Invoke-RestMethod File Upload",
+                "id": "f11784ca-5e01-461d-9ec7-2bb0d1f4988f"
+            },
+            "rule_text": "title: Powershell Invoke-RestMethod File Upload\nid: f11784ca-5e01-461d-9ec7-2bb0d1f4988f\ndescription: Usage of Invoke-RestMethod to upload a file. This behavior was observed\n  in the Russian APT attack on Polish OT-Infrastructure.\nreferences:\n- https://cert.pl/uploads/docs/CERT_Polska_Energy_Sector_Incident_Report_2025.pdf\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod\nstatus: stable\nauthor: Axel Olsson\ndate: 2026-02-12\nmodified: 2026-02-12\nlogsource:\n  product: windows\n  category: ps_script\ndetection:\n  selection:\n    script_block|contains|all:\n    - Invoke-RestMethod\n    - -Uri\n    - -Method Post\n    - -InFile\n  condition: selection\nfalsepositives:\n- Legitimate use of Invoke-RestMethod\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

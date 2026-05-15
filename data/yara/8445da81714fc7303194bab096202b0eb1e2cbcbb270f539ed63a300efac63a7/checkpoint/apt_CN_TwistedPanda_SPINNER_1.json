@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/apt_CN_TwistedPanda_SPINNER_1.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_CN_TwistedPanda_SPINNER_1",
+                "tags": [],
+                "author": "Check Point Research",
+                "description": "Detect the obfuscated variant of SPINNER payload used by TwistedPanda",
+                "reference": "https://research.checkpoint.com/2022/twisted-panda-chinese-apt-espionage-operation-against-russians-state-owned-defense-institutes/",
+                "date": "2022-04-14",
+                "hash": "a9fb7bb40de8508606a318866e0e5ff79b98f314e782f26c7044622939dfde81"
+            },
+            "rule_text": "rule apt_CN_TwistedPanda_SPINNER_1\n{\n\tmeta:\n\t\tauthor = \"Check Point Research\"\n\t\tdescription = \"Detect the obfuscated variant of SPINNER payload used by TwistedPanda\"\n\t\treference = \"https://research.checkpoint.com/2022/twisted-panda-chinese-apt-espionage-operation-against-russians-state-owned-defense-institutes/\"\n\t\tdate = \"2022-04-14\"\n\t\thash = \"a9fb7bb40de8508606a318866e0e5ff79b98f314e782f26c7044622939dfde81\"\n\n\tstrings:\n\t\t$config_init = { C7 ?? ?? ?? 00 00 00 C7 ?? ?? ?? 00 00 00 C6 }\n\t\t$c2_cmd_1 = { 01 00 03 10}\n\t\t$c2_cmd_2 = { 02 00 01 10}\n\t\t$c2_cmd_3 = { 01 00 01 10}\n\t\t$decryption = { 8D 83 [4] 80 B3 [5] 89 F1 6A 01 50 E8 [4] 80 B3 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and filesize < 3000KB and #config_init > 10 and 2 of ( $c2_cmd_* ) and $decryption\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

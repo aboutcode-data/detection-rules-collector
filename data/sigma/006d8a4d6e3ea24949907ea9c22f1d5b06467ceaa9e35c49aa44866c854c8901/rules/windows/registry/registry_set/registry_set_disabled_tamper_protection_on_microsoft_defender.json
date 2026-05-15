@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disabled_tamper_protection_on_microsoft_defender.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-04",
+                "title": "Disable Tamper Protection on Windows Defender",
+                "id": "93d298a1-d28f-47f1-a468-d971e7796679"
+            },
+            "rule_text": "title: Disable Tamper Protection on Windows Defender\nid: 93d298a1-d28f-47f1-a468-d971e7796679\nstatus: test\ndescription: Detects disabling Windows Defender Tamper Protection\nreferences:\n- https://www.tenforums.com/tutorials/123792-turn-off-tamper-protection-microsoft-defender-antivirus.html\nauthor: Austin Songer @austinsonger\ndate: 2021-08-04\nmodified: 2023-08-17\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Microsoft\\Windows Defender\\Features\\TamperProtection\n    Details: DWORD (0x00000000)\n  filter_msmpeng_client:\n    Image|startswith: C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\\n    Image|endswith: \\MsMpEng.exe\n  filter_msmpeng_domain_controller:\n    Image: C:\\Program Files\\Windows Defender\\MsMpEng.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_adrecon_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2021-07-16",
+                "title": "PowerShell ADRecon Execution",
+                "id": "bf72941a-cba0-41ea-b18c-9aca3925690d"
+            },
+            "rule_text": "title: PowerShell ADRecon Execution\nid: bf72941a-cba0-41ea-b18c-9aca3925690d\nstatus: test\ndescription: Detects execution of ADRecon.ps1 for AD reconnaissance which has been\n  reported to be actively used by FIN7\nreferences:\n- https://github.com/sense-of-security/ADRecon/blob/11881a24e9c8b207f31b56846809ce1fb189bcc9/ADRecon.ps1\n- https://bi-zone.medium.com/from-pentest-to-apt-attack-cybercriminal-group-fin7-disguises-its-malware-as-an-ethical-hackers-c23c9a75e319\nauthor: Bhabesh Raj\ndate: 2021-07-16\nmodified: 2022-09-06\ntags:\n- attack.discovery\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Function Get-ADRExcelComOb\n    - Get-ADRGPO\n    - Get-ADRDomainController\n    - ADRecon-Report.xlsx\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

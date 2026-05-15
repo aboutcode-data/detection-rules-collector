@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Leechole/TrojanDownloader_Win32_Leechole_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Leechole_A",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Leechole.A,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Leechole_A\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Leechole.A,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {63 6e 74 2e 70 68 70 (00|3f) }\n\t\t$a_03_1 = {67 65 74 2e 70 68 70 3f 65 3d [0-04] 26 74 63 3d [0-18] 26 75 69 64 3d }\n\t\t$a_01_2 = {2e 65 78 65 00 2e 63 6e 74 00 75 69 64 00 73 7a 00 75 00 74 63 00 }\n\t\t$a_03_3 = {26 72 64 3d 90 0a 20 00 2e 65 78 65 (22|00) 90 03 05 01 63 6f 70 79 00 00 }\n\t\t$a_01_4 = {63 6f 70 79 00 26 72 64 3d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 10 + ( #a_03_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 21\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

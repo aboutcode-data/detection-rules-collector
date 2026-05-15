@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winrm_execution_via_scripting_api_winrm_vbs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Julia Fomina, oscd.community",
+                "date": "2020-10-07",
+                "title": "Remote Code Execute via Winrm.vbs",
+                "id": "9df0dd3a-1a5c-47e3-a2bc-30ed177646a0"
+            },
+            "rule_text": "title: Remote Code Execute via Winrm.vbs\nid: 9df0dd3a-1a5c-47e3-a2bc-30ed177646a0\nstatus: test\ndescription: Detects an attempt to execute code or create service on remote host via\n  winrm.vbs.\nreferences:\n- https://twitter.com/bohops/status/994405551751815170\n- https://redcanary.com/blog/lateral-movement-winrm-wmi/\n- https://lolbas-project.github.io/lolbas/Scripts/Winrm/\nauthor: Julia Fomina, oscd.community\ndate: 2020-10-07\nmodified: 2023-03-03\ntags:\n- attack.stealth\n- attack.t1216\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cscript.exe\n  - OriginalFileName: cscript.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - winrm\n    - invoke Create wmicimv2/Win32_\n    - -r:http\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

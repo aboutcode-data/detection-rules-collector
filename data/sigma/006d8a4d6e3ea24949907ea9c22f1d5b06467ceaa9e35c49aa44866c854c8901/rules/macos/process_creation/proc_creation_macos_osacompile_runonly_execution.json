@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_osacompile_runonly_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-01-31",
+                "title": "OSACompile Run-Only Execution",
+                "id": "b9d9b652-d8ed-4697-89a2-a1186ee680ac"
+            },
+            "rule_text": "title: OSACompile Run-Only Execution\nid: b9d9b652-d8ed-4697-89a2-a1186ee680ac\nstatus: test\ndescription: Detects potential suspicious run-only executions compiled using OSACompile\nreferences:\n- https://redcanary.com/blog/applescript/\n- https://ss64.com/osx/osacompile.html\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-01-31\ntags:\n- attack.t1059.002\n- attack.execution\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - osacompile\n    - ' -x '\n    - ' -e '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

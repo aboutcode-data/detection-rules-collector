@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_gmer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-05",
+                "title": "HackTool - GMER Rootkit Detector and Remover Execution",
+                "id": "9082ff1f-88ab-4678-a3cc-5bcff99fc74d"
+            },
+            "rule_text": "title: HackTool - GMER Rootkit Detector and Remover Execution\nid: 9082ff1f-88ab-4678-a3cc-5bcff99fc74d\nstatus: test\ndescription: Detects the execution GMER tool based on image and hash fields.\nreferences:\n- http://www.gmer.net/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-05\nmodified: 2024-11-23\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\gmer.exe\n  selection_sysmon_hash:\n    Hashes|contains:\n    - MD5=E9DC058440D321AA17D0600B3CA0AB04\n    - SHA1=539C228B6B332F5AA523E5CE358C16647D8BBE57\n    - SHA256=E8A3E804A96C716A3E9B69195DB6FFB0D33E2433AF871E4D4E1EAB3097237173\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

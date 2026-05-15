@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_equation_doublefantasy_genericresource.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_equation_doublefantasy_genericresource",
+                "tags": [],
+                "copyright": "Kaspersky Lab",
+                "description": "Rule to detect DoubleFantasy encoded config http://goo.gl/ivt8EW",
+                "version": "1.0",
+                "last_modified": "2015-02-16",
+                "reference": "http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/"
+            },
+            "rule_text": "rule apt_equation_doublefantasy_genericresource\n{\n\tmeta:\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdescription = \"Rule to detect DoubleFantasy encoded config http://goo.gl/ivt8EW\"\n\t\tversion = \"1.0\"\n\t\tlast_modified = \"2015-02-16\"\n\t\treference = \"http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = {06 00 42 00 49 00 4E 00 52 00 45 00 53 00}\n\t\t$a2 = \"yyyyyyyyyyyyyyyy\"\n\t\t$a3 = \"002\"\n\n\tcondition:\n\t\t(( $mz at 0 ) and all of ( $a* ) ) and filesize < 500000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Opanki/Worm_Win32_Opanki_CW.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Opanki_CW",
+                "tags": [],
+                "description": "Worm:Win32/Opanki.CW,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 07 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Opanki_CW\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Opanki.CW,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {41 49 4d 5f 49 4d 65 73 73 61 67 65 }\n\t\t$a_00_1 = {5f 4f 73 63 61 72 5f 54 72 65 65 }\n\t\t$a_00_2 = {5f 4f 73 63 61 72 5f 53 74 61 74 75 73 4e 6f 74 69 66 79 }\n\t\t$a_00_3 = {5f 41 69 6d 41 64 }\n\t\t$a_00_4 = {57 6e 64 41 74 65 33 32 43 6c 61 73 73 }\n\t\t$a_02_5 = {57 6a 00 68 ?? ?? ?? ?? ff 15 ?? ?? ?? ?? 8b 3d ?? ?? ?? ?? 8b f0 56 ff d7 85 c0 74 ?? 6a 00 68 23 4e 00 00 68 11 01 00 00 56 ff 15 ?? ?? ?? ?? 8b 1d ?? ?? ?? ?? 33 f6 }\n\t\t$a_02_6 = {52 ff d7 8b f0 56 ff d3 85 c0 74 ?? 56 ff 15 ?? ?? ?? ?? 3d 99 01 00 00 75 ?? 6a 00 6a 00 68 01 02 00 00 56 ff d5 6a 00 6a 00 68 02 02 00 00 56 ff d5 33 f6 56 ff d3 85 c0 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 + ( #a_02_5 & 1 ) * 1 + ( #a_02_6 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

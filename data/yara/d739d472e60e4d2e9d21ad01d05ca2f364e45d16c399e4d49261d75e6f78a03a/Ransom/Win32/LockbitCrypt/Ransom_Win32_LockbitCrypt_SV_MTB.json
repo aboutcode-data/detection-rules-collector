@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/LockbitCrypt/Ransom_Win32_LockbitCrypt_SV_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_LockbitCrypt_SV_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/LockbitCrypt.SV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_LockbitCrypt_SV_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/LockbitCrypt.SV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6a 04 68 00 10 00 00 8b 85 ?? ?? ?? ?? ff 70 ?? 6a 00 ff 55 ?? 89 45 }\n\t\t$a_03_1 = {eb 03 c2 0c 00 55 8b ec 81 ec ?? ?? ?? ?? c7 45 ?? ?? ?? ?? ?? c7 45 ?? ?? ?? ?? ?? 8d 85 ?? ?? ?? ?? 50 8d 45 ?? 50 8d 45 ?? 50 e8 ?? ?? ?? ?? 83 c4 ?? e8 ?? ?? 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

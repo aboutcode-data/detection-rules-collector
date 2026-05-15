@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/dns_query/dns_query_win_onelaunch_update_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Josh Nickels",
+                "date": "2024-02-26",
+                "title": "DNS Query Request To OneLaunch Update Service",
+                "id": "df68f791-ad95-447f-a271-640a0dab9cf8"
+            },
+            "rule_text": "title: DNS Query Request To OneLaunch Update Service\nid: df68f791-ad95-447f-a271-640a0dab9cf8\nstatus: test\ndescription: 'Detects DNS query requests to \"update.onelaunch.com\". This domain is\n  associated with the OneLaunch adware application.\n\n  When the OneLaunch application is installed it will attempt to get updates from\n  this domain.\n\n  '\nreferences:\n- https://www.malwarebytes.com/blog/detections/pup-optional-onelaunch-silentcf\n- https://www.myantispyware.com/2020/12/14/how-to-uninstall-onelaunch-browser-removal-guide/\n- https://malware.guide/browser-hijacker/remove-onelaunch-virus/\nauthor: Josh Nickels\ndate: 2024-02-26\ntags:\n- attack.credential-access\n- attack.collection\n- attack.t1056\nlogsource:\n  category: dns_query\n  product: windows\ndetection:\n  selection:\n    QueryName: update.onelaunch.com\n    Image|endswith: \\OneLaunch.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

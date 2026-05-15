@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Mikey/Trojan_Win64_Mikey_AHI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Mikey_AHI_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Mikey.AHI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,3c 00 3c 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Mikey_AHI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Mikey.AHI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,3c 00 3c 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {78 48 8b 47 ?? 48 89 45 ?? 48 8b 5f ?? 48 89 5d 88 4c 89 27 4c 89 67 08 4c 89 67 10 eb }\n\t\t$a_03_1 = {80 48 8b 47 ?? 48 89 45 ?? 48 8b 5f ?? 48 89 5d 90 90 4c 89 3f 4c 89 7f 08 4c 89 7f 10 eb }\n\t\t$a_01_2 = {64 69 73 63 72 69 6d 69 6e 61 74 6f 72 22 5c 73 2a 3a 5c 73 2a 22 28 5b }\n\t\t$a_01_3 = {5b 5c 77 2d 5d 7b 32 34 2c 32 36 7d 5c 2e 5b 5c 77 2d 5d 7b 36 7d 5c 2e 5b 5c 77 2d 5d 7b 32 37 2c 31 31 30 7d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 30 + ( #a_03_1 & 1 ) * 30 + ( #a_01_2 & 1 ) * 20 + ( #a_01_3 & 1 ) * 10 ) >= 60\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

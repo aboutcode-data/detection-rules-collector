@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_scriptrunner.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-01",
+                "title": "Use of Scriptrunner.exe",
+                "id": "64760eef-87f7-4ed3-93fd-655668ea9420"
+            },
+            "rule_text": "title: Use of Scriptrunner.exe\nid: 64760eef-87f7-4ed3-93fd-655668ea9420\nstatus: test\ndescription: The \"ScriptRunner.exe\" binary can be abused to proxy execution through\n  it and bypass possible whitelisting\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Scriptrunner/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-01\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\ScriptRunner.exe\n  - OriginalFileName: ScriptRunner.exe\n  selection_cli:\n    CommandLine|contains: ' -appvscript '\n  condition: all of selection*\nfalsepositives:\n- Legitimate use when App-v is deployed\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

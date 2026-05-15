@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/dns_query/dns_query_win_quickassist.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Muhammad Faisal (@faisalusuf)",
+                "date": "2024-12-19",
+                "title": "DNS Query Request By QuickAssist.EXE",
+                "id": "882e858a-3233-4ba8-855e-2f3d3575803d"
+            },
+            "rule_text": "title: DNS Query Request By QuickAssist.EXE\nid: 882e858a-3233-4ba8-855e-2f3d3575803d\nstatus: experimental\ndescription: 'Detects DNS queries initiated by \"QuickAssist.exe\" to Microsoft Quick\n  Assist primary endpoint that is used to establish a session.\n\n  '\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2024/05/15/threat-actors-misusing-quick-assist-in-social-engineering-attacks-leading-to-ransomware/\n- https://www.linkedin.com/posts/kevin-beaumont-security_ive-been-assisting-a-few-orgs-hit-with-successful-activity-7268055739116445701-xxjZ/\n- https://x.com/cyb3rops/status/1862406110365245506\n- https://learn.microsoft.com/en-us/windows/client-management/client-tools/quick-assist\nauthor: Muhammad Faisal (@faisalusuf)\ndate: 2024-12-19\ntags:\n- attack.command-and-control\n- attack.initial-access\n- attack.lateral-movement\n- attack.t1071.001\n- attack.t1210\nlogsource:\n  category: dns_query\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\QuickAssist.exe\n    QueryName|endswith: remoteassistance.support.services.microsoft.com\n  condition: selection\nfalsepositives:\n- Legitimate use of Quick Assist in the environment.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

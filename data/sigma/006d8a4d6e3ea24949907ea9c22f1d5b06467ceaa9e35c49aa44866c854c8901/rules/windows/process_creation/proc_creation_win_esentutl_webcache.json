@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_esentutl_webcache.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-13",
+                "title": "Esentutl Steals Browser Information",
+                "id": "6a69f62d-ce75-4b57-8dce-6351eb55b362"
+            },
+            "rule_text": "title: Esentutl Steals Browser Information\nid: 6a69f62d-ce75-4b57-8dce-6351eb55b362\nstatus: test\ndescription: One way Qbot steals sensitive information is by extracting browser data\n  from Internet Explorer and Microsoft Edge by using the built-in utility esentutl.exe\nreferences:\n- https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/\n- https://redcanary.com/threat-detection-report/threats/qbot/\n- https://thedfirreport.com/2022/10/31/follina-exploit-leads-to-domain-compromise/\nauthor: frack113\ndate: 2022-02-13\nmodified: 2024-03-05\ntags:\n- attack.collection\n- attack.t1005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\esentutl.exe\n  - OriginalFileName: esentutl.exe\n  selection_flag:\n    CommandLine|contains|windash: -r\n  selection_webcache:\n    CommandLine|contains: \\Windows\\WebCache\n  condition: all of selection*\nfalsepositives:\n- Legitimate use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

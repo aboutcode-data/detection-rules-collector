@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_susp_wfp_filter_added.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Frack113",
+                "date": "2025-10-23",
+                "title": "WFP Filter Added via Registry",
+                "id": "1f1d8209-636e-4c6c-a137-781cca8b82f9"
+            },
+            "rule_text": "title: WFP Filter Added via Registry\nid: 1f1d8209-636e-4c6c-a137-781cca8b82f9\nstatus: experimental\ndescription: 'Detects registry modifications that add Windows Filtering Platform (WFP)\n  filters, which may be used to block security tools and EDR agents from reporting\n  events.\n\n  '\nreferences:\n- https://github.com/netero1010/EDRSilencer/blob/0e73a7037ec65c52894d8208e6f605a7da0a34a6/EDRSilencer.c\n- https://www.huntress.com/blog/silencing-the-edr-silencers\n- https://www.trendmicro.com/en_us/research/24/j/edrsilencer-disrupting-endpoint-security-solutions.html\nauthor: Frack113\ndate: 2025-10-23\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1685\n- attack.t1569.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\BFE\\Parameters\\Policy\\Persistent\\Filter\\\n  filter_main_svchost:\n    Image:\n    - C:\\Windows\\System32\\svchost.exe\n    - C:\\Windows\\SysWOW64\\svchost.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

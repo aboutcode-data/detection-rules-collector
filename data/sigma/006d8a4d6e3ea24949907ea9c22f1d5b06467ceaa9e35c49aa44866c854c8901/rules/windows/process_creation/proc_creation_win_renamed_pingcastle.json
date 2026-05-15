@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_pingcastle.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), X__Junior (Nextron Systems)",
+                "date": "2024-01-11",
+                "title": "Renamed PingCastle Binary Execution",
+                "id": "2433a154-bb3d-42e4-86c3-a26bdac91c45"
+            },
+            "rule_text": "title: Renamed PingCastle Binary Execution\nid: 2433a154-bb3d-42e4-86c3-a26bdac91c45\nstatus: test\ndescription: Detects the execution of a renamed \"PingCastle\" binary based on the PE\n  metadata fields.\nreferences:\n- https://thedfirreport.com/2023/10/30/netsupport-intrusion-results-in-domain-compromise/\n- https://www.pingcastle.com/documentation/scanner/\nauthor: Nasreddine Bencherchali (Nextron Systems), X__Junior (Nextron Systems)\ndate: 2024-01-11\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - OriginalFileName:\n    - PingCastleReporting.exe\n    - PingCastleCloud.exe\n    - PingCastle.exe\n  - CommandLine|contains:\n    - --scanner aclcheck\n    - --scanner antivirus\n    - --scanner computerversion\n    - --scanner foreignusers\n    - --scanner laps_bitlocker\n    - --scanner localadmin\n    - --scanner nullsession\n    - --scanner nullsession-trust\n    - --scanner oxidbindings\n    - --scanner remote\n    - --scanner share\n    - --scanner smb\n    - --scanner smb3querynetwork\n    - --scanner spooler\n    - --scanner startup\n    - --scanner zerologon\n  - CommandLine|contains: --no-enum-limit\n  - CommandLine|contains|all:\n    - --healthcheck\n    - --level Full\n  - CommandLine|contains|all:\n    - --healthcheck\n    - '--server '\n  filter_main_img:\n    Image|endswith:\n    - \\PingCastleReporting.exe\n    - \\PingCastleCloud.exe\n    - \\PingCastle.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

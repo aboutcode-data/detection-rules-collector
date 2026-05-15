@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_kd_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-15",
+                "title": "Windows Kernel Debugger Execution",
+                "id": "27ee9438-90dc-4bef-904b-d3ef927f5e7e"
+            },
+            "rule_text": "title: Windows Kernel Debugger Execution\nid: 27ee9438-90dc-4bef-904b-d3ef927f5e7e\nstatus: test\ndescription: Detects execution of the Windows Kernel Debugger \"kd.exe\".\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-15\nmodified: 2024-04-24\ntags:\n- attack.privilege-escalation\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\kd.exe\n  - OriginalFileName: kd.exe\n  condition: selection\nfalsepositives:\n- Rare occasions of legitimate cases where kernel debugging is necessary in production.\n  Investigation is required\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

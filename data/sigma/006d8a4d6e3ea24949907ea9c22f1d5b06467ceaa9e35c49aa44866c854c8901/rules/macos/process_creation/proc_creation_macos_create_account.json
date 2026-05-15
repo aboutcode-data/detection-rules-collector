@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_create_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alejandro Ortuno, oscd.community",
+                "date": "2020-10-06",
+                "title": "Creation Of A Local User Account",
+                "id": "51719bf5-e4fd-4e44-8ba8-b830e7ac0731"
+            },
+            "rule_text": "title: Creation Of A Local User Account\nid: 51719bf5-e4fd-4e44-8ba8-b830e7ac0731\nstatus: test\ndescription: Detects the creation of a new user account. Such accounts may be used\n  for persistence that do not require persistent remote access tools to be deployed\n  on the system.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.001/T1136.001.md\n- https://ss64.com/osx/sysadminctl.html\nauthor: Alejandro Ortuno, oscd.community\ndate: 2020-10-06\nmodified: 2023-02-18\ntags:\n- attack.t1136.001\n- attack.persistence\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection_dscl:\n    Image|endswith: /dscl\n    CommandLine|contains: create\n  selection_sysadminctl:\n    Image|endswith: /sysadminctl\n    CommandLine|contains: addUser\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

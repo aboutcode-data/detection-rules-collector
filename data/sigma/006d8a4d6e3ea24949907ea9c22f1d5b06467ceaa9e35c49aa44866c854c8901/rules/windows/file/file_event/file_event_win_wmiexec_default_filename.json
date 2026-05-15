@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_wmiexec_default_filename.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-02",
+                "title": "Wmiexec Default Output File",
+                "id": "8d5aca11-22b3-4f22-b7ba-90e60533e1fb"
+            },
+            "rule_text": "title: Wmiexec Default Output File\nid: 8d5aca11-22b3-4f22-b7ba-90e60533e1fb\nstatus: test\ndescription: Detects the creation of the default output filename used by the wmiexec\n  tool\nreferences:\n- https://www.crowdstrike.com/blog/how-to-detect-and-prevent-impackets-wmiexec/\n- https://github.com/fortra/impacket/blob/f4b848fa27654ca95bc0f4c73dbba8b9c2c9f30a/examples/wmiexec.py\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-02\nmodified: 2023-03-08\ntags:\n- attack.lateral-movement\n- attack.execution\n- attack.t1047\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n  - TargetFilename|re: \\\\Windows\\\\__1\\d{9}\\.\\d{1,7}$\n  - TargetFilename|re: C:\\\\__1\\d{9}\\.\\d{1,7}$\n  - TargetFilename|re: D:\\\\__1\\d{9}\\.\\d{1,7}$\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/US CERT/fallchill.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "rc4_stack_key_fallchill",
+                "tags": [],
+                "author": "US CERT",
+                "reference": "https://www.us-cert.gov/ncas/alerts/TA17-318A",
+                "description": "rc4_stack_key"
+            },
+            "rule_text": "rule rc4_stack_key_fallchill\n{\n\tmeta:\n\t\tauthor = \"US CERT\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA17-318A\"\n\t\tdescription = \"rc4_stack_key\"\n\n\tstrings:\n\t\t$stack_key = { 0d 06 09 2a ?? ?? ?? ?? 86 48 86 f7 ?? ?? ?? ?? 0d 01 01 01 ?? ?? ?? ?? 05 00 03 82 41 8b c9 41 8b d1 49 8b 40 08 48 ff c2 88 4c 02 ff ff c1 81 f9 00 01 00 00 7c eb }\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and $stack_key\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "success_fail_codes_fallchill",
+                "tags": [],
+                "author": "US CERT",
+                "reference": "https://www.us-cert.gov/ncas/alerts/TA17-318A",
+                "description": "success_fail_codes"
+            },
+            "rule_text": "rule success_fail_codes_fallchill\n{\n\tmeta:\n\t\tauthor = \"US CERT\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA17-318A\"\n\t\tdescription = \"success_fail_codes\"\n\n\tstrings:\n\t\t$s0 = { 68 7a 34 12 00 }\n\t\t$s1 = { ba 7a 34 12 00 }\n\t\t$f0 = { 68 5c 34 12 00 }\n\t\t$f1 = { ba 5c 34 12 00 }\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and ( ( $s0 and $f0 ) or ( $s1 and $f1 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

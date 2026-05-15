@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_dll_comsvcs_load_renamed_version_by_rundll32.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-14",
+                "title": "Suspicious Renamed Comsvcs DLL Loaded By Rundll32",
+                "id": "8cde342c-ba48-4b74-b615-172c330f2e93"
+            },
+            "rule_text": "title: Suspicious Renamed Comsvcs DLL Loaded By Rundll32\nid: 8cde342c-ba48-4b74-b615-172c330f2e93\nstatus: test\ndescription: Detects rundll32 loading a renamed comsvcs.dll to dump process memory\nreferences:\n- https://twitter.com/sbousseaden/status/1555200155351228419\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-14\nmodified: 2023-02-17\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: image_load\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    Hashes|contains:\n    - IMPHASH=eed93054cb555f3de70eaa9787f32ebb\n    - IMPHASH=5e0dbdec1fce52daae251a110b4f309d\n    - IMPHASH=eadbccbb324829acb5f2bbe87e5549a8\n    - IMPHASH=407ca0f7b523319d758a40d7c0193699\n    - IMPHASH=281d618f4e6271e527e6386ea6f748de\n  filter:\n    ImageLoaded|endswith: \\comsvcs.dll\n  condition: selection and not filter\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

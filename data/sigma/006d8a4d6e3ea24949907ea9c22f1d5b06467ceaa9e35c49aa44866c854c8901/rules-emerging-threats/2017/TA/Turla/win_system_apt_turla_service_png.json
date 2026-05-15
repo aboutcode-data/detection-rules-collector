@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2017/TA/Turla/win_system_apt_turla_service_png.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2018-11-23",
+                "title": "Turla PNG Dropper Service",
+                "id": "1228f8e2-7e79-4dea-b0ad-c91f1d5016c1"
+            },
+            "rule_text": "title: Turla PNG Dropper Service\nid: 1228f8e2-7e79-4dea-b0ad-c91f1d5016c1\nstatus: test\ndescription: This method detects malicious services mentioned in Turla PNG dropper\n  report by NCC Group in November 2018\nreferences:\n- https://research.nccgroup.com/2018/11/22/turla-png-dropper-is-back/\nauthor: Florian Roth (Nextron Systems)\ndate: 2018-11-23\nmodified: 2021-11-30\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.g0010\n- attack.t1543.003\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ServiceName: WerFaultSvc\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

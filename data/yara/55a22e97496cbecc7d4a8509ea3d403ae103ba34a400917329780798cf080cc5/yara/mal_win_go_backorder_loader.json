@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_win_go_backorder_loader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_BACKORDER_LOADER_WIN_Go_Jan23",
+                "tags": "loader, golang, BACKORDER, malware, windows",
+                "description": "Detects the BACKORDER loader compiled in GO which download and executes a second stage payload from a remote server.",
+                "author": "Arda Buyukkaya (modified by Florian Roth)",
+                "date": "2025-01-23",
+                "reference": "EclecticIQ",
+                "score": 80,
+                "hash": "70c91ffdc866920a634b31bf4a070fb3c3f947fc9de22b783d6f47a097fec2d8",
+                "id": "90a82f2c-be92-5d0b-b47e-f47db2b15867"
+            },
+            "rule_text": "rule MAL_BACKORDER_LOADER_WIN_Go_Jan23\n{\n\tmeta:\n\t\tdescription = \"Detects the BACKORDER loader compiled in GO which download and executes a second stage payload from a remote server.\"\n\t\tauthor = \"Arda Buyukkaya (modified by Florian Roth)\"\n\t\tdate = \"2025-01-23\"\n\t\treference = \"EclecticIQ\"\n\t\tscore = 80\n\t\ttags = \"loader, golang, BACKORDER, malware, windows\"\n\t\thash = \"70c91ffdc866920a634b31bf4a070fb3c3f947fc9de22b783d6f47a097fec2d8\"\n\t\tid = \"90a82f2c-be92-5d0b-b47e-f47db2b15867\"\n\n\tstrings:\n\t\t$GoBuildId = \"Go build\" ascii\n\t\t$x_DebugSymbol_1 = \"C:/updatescheck/main.go\"\n\t\t$x_DebugSymbol_2 = \"C:/Users/IEUser/Desktop/Majestic/\"\n\t\t$s_FunctionName_1 = \"main.getUpdates.func\"\n\t\t$s_FunctionName_2 = \"main.obt_zip\"\n\t\t$s_FunctionName_3 = \"main.obtener_zip\"\n\t\t$s_FunctionName_4 = \"main.get_zip\"\n\t\t$s_FunctionName_5 = \"main.show_pr0gressbar\"\n\t\t$s_FunctionName_6 = \"main.pr0cess\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 10MB and $GoBuildId and ( 1 of ( $x* ) or 3 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/WinNT/Alureon/Trojan_WinNT_Alureon_DB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_WinNT_Alureon_DB",
+                "tags": [],
+                "description": "Trojan:WinNT/Alureon.DB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_WinNT_Alureon_DB\n{\n\tmeta:\n\t\tdescription = \"Trojan:WinNT/Alureon.DB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 70 3c 03 f0 8b 46 50 89 45 ?? 6a 40 68 00 30 00 00 8d 45 ?? 50 53 8d 45 ?? 50 ff 75 08 ff 15 }\n\t\t$a_03_1 = {8b 0a 03 ce 33 ff eb 0e 0f bf 19 69 ff ?? ?? ?? ?? 03 fb 41 33 db 38 19 75 ee 39 7d 0c 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

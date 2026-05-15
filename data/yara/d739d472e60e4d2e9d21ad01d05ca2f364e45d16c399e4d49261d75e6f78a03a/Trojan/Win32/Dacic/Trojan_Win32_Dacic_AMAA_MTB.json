@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Dacic/Trojan_Win32_Dacic_AMAA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Dacic_AMAA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Dacic.AMAA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Dacic_AMAA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Dacic.AMAA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8d 41 0d f7 6d fc 03 45 10 51 b9 11 00 00 00 33 d2 f7 f1 59 33 d2 f7 75 f0 8a 04 16 88 03 41 43 3b f9 7f }\n\t\t$a_03_1 = {6a 01 6a 00 e8 ?? ?? ?? 00 e8 ?? ?? ?? 00 3d b7 00 00 00 74 ?? e8 ?? ?? ?? ff 54 6a 00 6a 00 68 ?? ?? ?? 00 6a 00 6a 00 e8 ?? ?? ?? 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

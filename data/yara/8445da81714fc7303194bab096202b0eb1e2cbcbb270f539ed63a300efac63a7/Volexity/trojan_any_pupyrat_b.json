@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/trojan_any_pupyrat_b.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_any_pupyrat_b",
+                "tags": [
+                    "Commodity"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Detects the PUPYRAT malware family, a cross-platform RAT written in Python.",
+                "date": "2022-04-07",
+                "hash1": "7474a6008b99e45686678f216af7d6357bb70a054c6d9b05e1817c8d80d536b4",
+                "reference": "https://github.com/n1nj4sec/pupy",
+                "reference2": "https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "memory_suitable": 1
+            },
+            "rule_text": "rule trojan_any_pupyrat_b : Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Detects the PUPYRAT malware family, a cross-platform RAT written in Python.\"\n\t\tdate = \"2022-04-07\"\n\t\thash1 = \"7474a6008b99e45686678f216af7d6357bb70a054c6d9b05e1817c8d80d536b4\"\n\t\treference = \"https://github.com/n1nj4sec/pupy\"\n\t\treference2 = \"https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\tmemory_suitable = 1\n\n\tstrings:\n\t\t$elf1 = \"LD_PRELOAD=%s HOOK_EXIT=%d CLEANUP=%d exec %s 1>/dev/null 2>/dev/null\" ascii\n\t\t$elf2 = \"reflective_inject_dll\" fullword ascii\n\t\t$elf3 = \"ld_preload_inject_dll\" fullword ascii\n\t\t$pupy1 = \"_pupy.error\" ascii\n\t\t$pupy2 = \"_pupy\" ascii\n\t\t$pupy3 = \"pupy://\" ascii\n\t\t$s1 = \"Args not passed\" ascii\n\t\t$s2 = \"Too many args\" ascii\n\t\t$s3 = \"Can't execute\" ascii\n\t\t$s4 = \"mexec:stdin\" ascii\n\t\t$s5 = \"mexec:stdout\" ascii\n\t\t$s6 = \"mexec:stderr\" ascii\n\t\t$s7 = \"LZMA error\" ascii\n\n\tcondition:\n\t\tany of ( $elf* ) or all of ( $pupy* ) or all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

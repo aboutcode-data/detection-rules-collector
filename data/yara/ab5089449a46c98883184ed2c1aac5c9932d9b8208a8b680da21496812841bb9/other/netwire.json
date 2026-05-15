@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/netwire.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_netwire_strings",
+                "tags": [],
+                "description": "detect netwire in memory",
+                "author": "JPCERT/CC Incident Response Group",
+                "rule_usage": "memory scan",
+                "reference": "internal research"
+            },
+            "rule_text": "rule malware_netwire_strings\n{\n\tmeta:\n\t\tdescription = \"detect netwire in memory\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\trule_usage = \"memory scan\"\n\t\treference = \"internal research\"\n\n\tstrings:\n\t\t$v1 = \"HostId-%Rand%\"\n\t\t$v2 = \"mozsqlite3\"\n\t\t$v3 = \"[Scroll Lock]\"\n\t\t$v4 = \"GetRawInputData\"\n\t\t$ping = \"ping 192.0.2.2\"\n\t\t$log = \"[Log Started] - [%.2d/%.2d/%d %.2d:%.2d:%.2d]\"\n\n\tcondition:\n\t\t($v1 ) or ( $v2 and $v3 and $v4 ) or ( $ping and $log )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

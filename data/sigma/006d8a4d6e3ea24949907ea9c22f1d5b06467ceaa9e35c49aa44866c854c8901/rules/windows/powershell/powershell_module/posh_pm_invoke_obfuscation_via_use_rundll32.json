@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_invoke_obfuscation_via_use_rundll32.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2019-10-08",
+                "title": "Invoke-Obfuscation Via Use Rundll32 - PowerShell Module",
+                "id": "88a22f69-62f9-4b8a-aa00-6b0212f2f05a"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Use Rundll32 - PowerShell Module\nid: 88a22f69-62f9-4b8a-aa00-6b0212f2f05a\nrelated:\n- id: a5a30a6e-75ca-4233-8b8c-42e0f2037d3b\n  type: derived\nstatus: test\ndescription: Detects Obfuscated Powershell via use Rundll32 in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2019-10-08\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_4103:\n    Payload|contains|all:\n    - '&&'\n    - rundll32\n    - shell32.dll\n    - shellexec_rundll\n    Payload|contains:\n    - value\n    - invoke\n    - comspec\n    - iex\n  condition: selection_4103\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

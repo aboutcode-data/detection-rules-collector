@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Linux/Flashback/Backdoor_Linux_Flashback_G.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Linux_Flashback_G",
+                "tags": [],
+                "description": "Backdoor:Linux/Flashback.G,SIGNATURE_TYPE_MACHOHSTR_EXT,14 00 13 00 08 00 00 "
+            },
+            "rule_text": "rule Backdoor_Linux_Flashback_G\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Linux/Flashback.G,SIGNATURE_TYPE_MACHOHSTR_EXT,14 00 13 00 08 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {49 4f 50 6c 61 74 66 6f 72 6d 55 55 49 44 }\n\t\t$a_03_1 = {25 73 7c 25 73 7c 25 73 7c ?? 7c 25 73 7c 25 73 7c 25 64 }\n\t\t$a_01_2 = {25 73 20 22 25 73 25 73 25 73 22 20 25 73 20 22 25 73 }\n\t\t$a_01_3 = {73 79 73 63 74 6c 2e 70 72 6f 63 5f 63 70 75 74 79 70 65 }\n\t\t$a_01_4 = {73 79 73 74 65 6d 2e 70 72 69 76 69 6c 65 67 65 2e 61 64 6d 69 6e }\n\t\t$a_03_5 = {84 c0 0f 84 ?? 02 00 00 [0-04] 00 [0-03] e8 ?? ?? 00 00 31 db }\n\t\t$a_03_6 = {85 c0 0f 85 ?? 02 00 00 [0-02] 83 fb ?? 75 [0-05] f8 a4 69 34 }\n\t\t$a_03_7 = {f7 d0 21 c2 81 ?? 80 80 80 80 74 ?? 89 ?? c1 e8 10 f7 c2 80 80 00 00 0f 44 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 5 + ( #a_03_6 & 1 ) * 5 + ( #a_03_7 & 1 ) * 5 ) >= 19\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

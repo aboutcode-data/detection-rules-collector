@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_provlaunch_potential_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel",
+                "date": "2023-08-08",
+                "title": "Potential Provlaunch.EXE Binary Proxy Execution Abuse",
+                "id": "7f5d1c9a-3e83-48df-95a7-2b98aae6c13c"
+            },
+            "rule_text": "title: Potential Provlaunch.EXE Binary Proxy Execution Abuse\nid: 7f5d1c9a-3e83-48df-95a7-2b98aae6c13c\nrelated:\n- id: f9999590-1f94-4a34-a91e-951e47bedefd\n  type: similar\n- id: 2a4b3e61-9d22-4e4a-b60f-6e8f0cde6f25\n  type: similar\n- id: 7021255e-5db3-4946-a8b9-0ba7a4644a69\n  type: similar\nstatus: test\ndescription: Detects child processes of \"provlaunch.exe\" which might indicate potential\n  abuse to proxy execution.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Provlaunch/\n- https://twitter.com/0gtweet/status/1674399582162153472\nauthor: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel\ndate: 2023-08-08\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\provlaunch.exe\n  filter_main_covered_children:\n  - Image|endswith:\n    - \\calc.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\notepad.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\wscript.exe\n  - Image|contains:\n    - :\\PerfLogs\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - \\AppData\\Temp\\\n    - \\Windows\\System32\\Tasks\\\n    - \\Windows\\Tasks\\\n    - \\Windows\\Temp\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

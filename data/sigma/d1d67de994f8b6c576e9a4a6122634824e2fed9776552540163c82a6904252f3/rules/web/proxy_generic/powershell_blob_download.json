@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/powershell_blob_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson, Patrik Olson",
+                "date": "2022-11-23",
+                "title": "PowerShell/BITS Downloading File from Blob Storage",
+                "id": "fb04e413-1f0d-4c39-a25a-812050f39f44"
+            },
+            "rule_text": "title: PowerShell/BITS Downloading File from Blob Storage\nid: fb04e413-1f0d-4c39-a25a-812050f39f44\ndescription: Observed during pentest engagement, malicious PowerShell modules downloaded\n  from blob storage provider\nstatus: stable\nauthor: NTT Security - Axel Olsson, Patrik Olson\ndate: '2022-11-23'\nmodified: '2023-06-18'\nlogsource:\n  category: proxy\ndetection:\n  objectstorage_misc:\n    cs-host|endswith:\n    - .linodeobjects.com\n    - .digitaloceanspaces.com\n    - .dream.io\n    - .wasabisys.com\n    - .vultrobjects.com\n    - .backblazeb2.com\n    - storageapi.fleek.co\n    - .blob.core.windows.net\n    - api.onedrive.com\n  objectstorage_aws:\n    cs-host|endswith: .amazonaws.com\n    cs-host|re: \\bs3\\b\n  useragent:\n    c-useragent|contains:\n    - BITS\n    - Powershell\n  filter:\n    cs-host:\n    - pscoretestdata.blob.core.windows.net\n  condition: 1 of objectstorage* and useragent and not filter\nfalsepositives:\n- true\nlevel: medium\ntags:\n- attack.execution\n",
+            "vulnerabilities": []
+        }
+    ]
+}

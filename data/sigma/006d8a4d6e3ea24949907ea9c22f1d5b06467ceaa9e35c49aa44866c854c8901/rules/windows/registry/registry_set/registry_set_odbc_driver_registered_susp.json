@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_odbc_driver_registered_susp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-23",
+                "title": "Potentially Suspicious ODBC Driver Registered",
+                "id": "e4d22291-f3d5-4b78-9a0c-a1fbaf32a6a4"
+            },
+            "rule_text": "title: Potentially Suspicious ODBC Driver Registered\nid: e4d22291-f3d5-4b78-9a0c-a1fbaf32a6a4\nstatus: test\ndescription: Detects the registration of a new ODBC driver where the driver is located\n  in a potentially suspicious location\nreferences:\n- https://www.hexacorn.com/blog/2020/08/23/odbcconf-lolbin-trifecta/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-23\nmodified: 2023-08-17\ntags:\n- attack.credential-access\n- attack.persistence\n- attack.t1003\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\ODBC\\ODBCINST.INI\\\n    TargetObject|endswith:\n    - \\Driver\n    - \\Setup\n    Details|contains:\n    - :\\PerfLogs\\\n    - :\\ProgramData\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Registration\\CRMLog\n    - :\\Windows\\System32\\com\\dmp\\\n    - :\\Windows\\System32\\FxsTmp\\\n    - :\\Windows\\System32\\Microsoft\\Crypto\\RSA\\MachineKeys\\\n    - :\\Windows\\System32\\spool\\drivers\\color\\\n    - :\\Windows\\System32\\spool\\PRINTERS\\\n    - :\\Windows\\System32\\spool\\SERVERS\\\n    - :\\Windows\\System32\\Tasks_Migrated\\\n    - :\\Windows\\System32\\Tasks\\Microsoft\\Windows\\SyncCenter\\\n    - :\\Windows\\SysWOW64\\com\\dmp\\\n    - :\\Windows\\SysWOW64\\FxsTmp\\\n    - :\\Windows\\SysWOW64\\Tasks\\Microsoft\\Windows\\PLA\\System\\\n    - :\\Windows\\SysWOW64\\Tasks\\Microsoft\\Windows\\SyncCenter\\\n    - :\\Windows\\Tasks\\\n    - :\\Windows\\Temp\\\n    - :\\Windows\\Tracing\\\n    - \\AppData\\Local\\Temp\\\n    - \\AppData\\Roaming\\\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

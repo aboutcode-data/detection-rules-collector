@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/network_connection/net_connection_win_susp_rdp_from_domain_controller.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Josh Nickels",
+                "date": "2024-05-10",
+                "title": "New RDP Connection Initiated From Domain Controller",
+                "id": "fda34293-718e-4b36-b018-38caab0d1209"
+            },
+            "rule_text": "title: New RDP Connection Initiated From Domain Controller\nid: fda34293-718e-4b36-b018-38caab0d1209\nstatus: test\ndescription: Detects an RDP connection originating from a domain controller.\nreferences:\n- Internal Research\nauthor: Josh Nickels\ndate: 2024-05-10\ntags:\n- attack.lateral-movement\n- attack.t1021\nlogsource:\n  product: windows\n  category: network_connection\ndetection:\n  selection_connection:\n    Initiated: 'True'\n    DestinationPort: 3389\n  selection_hosts:\n    Computer|expand: '%domain_controller_hostnames%'\n  filter_optional_defender_identity:\n    Image|endswith: \\Microsoft.Tri.Sensor.exe\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Legitimate administration activity\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

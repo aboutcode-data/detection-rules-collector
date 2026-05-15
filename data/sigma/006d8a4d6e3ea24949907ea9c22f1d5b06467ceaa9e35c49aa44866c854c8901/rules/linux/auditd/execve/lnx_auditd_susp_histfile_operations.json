@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_susp_histfile_operations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mikhail Larin, oscd.community",
+                "date": "2020-10-17",
+                "title": "Suspicious History File Operations - Linux",
+                "id": "eae8ce9f-bde9-47a6-8e79-f20d18419910"
+            },
+            "rule_text": "title: Suspicious History File Operations - Linux\nid: eae8ce9f-bde9-47a6-8e79-f20d18419910\nstatus: test\ndescription: Detects commandline operations on shell history files\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.003/T1552.003.md\nauthor: Mikhail Larin, oscd.community\ndate: 2020-10-17\nmodified: 2022-11-28\ntags:\n- attack.credential-access\n- attack.t1552.003\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  execve:\n    type: EXECVE\n  history:\n  - .bash_history\n  - .zsh_history\n  - .zhistory\n  - .history\n  - .sh_history\n  - fish_history\n  condition: execve and history\nfalsepositives:\n- Legitimate administrative activity\n- Legitimate software, cleaning hist file\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

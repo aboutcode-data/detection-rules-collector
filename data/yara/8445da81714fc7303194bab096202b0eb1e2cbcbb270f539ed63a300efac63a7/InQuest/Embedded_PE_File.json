@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/Embedded_PE_File.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Embedded_PE",
+                "tags": [],
+                "Author": "InQuest Labs",
+                "URL": "https://github.com/InQuest/yara-rules",
+                "Description": "Discover embedded PE files, without relying on easily stripped/modified header strings."
+            },
+            "rule_text": "rule Embedded_PE\n{\n\tmeta:\n\t\tAuthor = \"InQuest Labs\"\n\t\tURL = \"https://github.com/InQuest/yara-rules\"\n\t\tDescription = \"Discover embedded PE files, without relying on easily stripped/modified header strings.\"\n\n\tstrings:\n\t\t$mz = { 4D 5A }\n\n\tcondition:\n\t\tfor any i in ( 1 .. #mz ) : ( uint32( @mz [ i ] + uint32( @mz [ i ] + 0x3C ) ) == 0x00004550 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_addinutil_initiated.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)",
+                "date": "2023-09-18",
+                "title": "Network Connection Initiated By AddinUtil.EXE",
+                "id": "5205613d-2a63-4412-a895-3a2458b587b3"
+            },
+            "rule_text": "title: Network Connection Initiated By AddinUtil.EXE\nid: 5205613d-2a63-4412-a895-3a2458b587b3\nstatus: test\ndescription: 'Detects a network connection initiated by the Add-In deployment cache\n  updating utility \"AddInutil.exe\".\n\n  This could indicate a potential command and control communication as this tool doesn''t\n  usually initiate network activity.\n\n  '\nreferences:\n- https://www.blue-prints.blog/content/blog/posts/lolbin/addinutil-lolbas.html\nauthor: Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)\ndate: 2023-09-18\nmodified: 2024-07-16\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith: \\addinutil.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

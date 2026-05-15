@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_kdu_driver_tool.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Matt Anderson, Dray Agha, Anna Pham (Huntress)",
+                "date": "2026-01-02",
+                "title": "PUA - Kernel Driver Utility (KDU) Execution",
+                "id": "e76ca062-4de0-4d79-8d90-160a0d335eca"
+            },
+            "rule_text": "title: PUA - Kernel Driver Utility (KDU) Execution\nid: e76ca062-4de0-4d79-8d90-160a0d335eca\nstatus: experimental\ndescription: 'Detects execution of the Kernel Driver Utility (KDU) tool.\n\n  KDU can be used to bypass driver signature enforcement and load unsigned or malicious\n  drivers into the Windows kernel.\n\n  Potentially allowing for privilege escalation, persistence, or evasion of security\n  controls.\n\n  '\nreferences:\n- https://github.com/h4rmy/KDU\n- https://huntress.com/blog/esxi-vm-escape-exploit\nauthor: Matt Anderson, Dray Agha, Anna Pham (Huntress)\ndate: 2026-01-02\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1543.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\kdu.exe\n    - \\hamakaze.exe\n  - OriginalFileName: hamakaze.exe\n  selection_cli_suspicious:\n    CommandLine|contains:\n    - '-map '\n    - '-prv '\n    - '-dse '\n    - '-ps '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate driver development, testing, or administrative troubleshooting (e.g.,\n  enabling/disabling hardware)\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_pua_kdu_driver_tool/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

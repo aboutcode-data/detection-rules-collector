@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_office_trust_record_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-21",
+                "title": "Macro Enabled In A Potentially Suspicious Document",
+                "id": "a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd"
+            },
+            "rule_text": "title: Macro Enabled In A Potentially Suspicious Document\nid: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd\nrelated:\n- id: 295a59c1-7b79-4b47-a930-df12c15fc9c2\n  type: derived\nstatus: test\ndescription: Detects registry changes to Office trust records where the path is located\n  in a potentially suspicious location\nreferences:\n- https://twitter.com/inversecos/status/1494174785621819397\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-21\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_value:\n    TargetObject|contains: \\Security\\Trusted Documents\\TrustRecords\n  selection_paths:\n    TargetObject|contains:\n    - /AppData/Local/Microsoft/Windows/INetCache/\n    - /AppData/Local/Temp/\n    - /PerfLogs/\n    - C:/Users/Public/\n    - file:///D:/\n    - file:///E:/\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

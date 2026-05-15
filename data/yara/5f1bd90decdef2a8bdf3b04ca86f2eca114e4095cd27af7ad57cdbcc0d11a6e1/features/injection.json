@@ -1,0 +1,52 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/injection.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "self_inject",
+                "tags": [
+                    "suspicious",
+                    "feature",
+                    "dll",
+                    "injection",
+                    "windows"
+                ],
+                "description": "Self Injecting code - like code packers",
+                "link": ""
+            },
+            "rule_text": "rule self_inject : suspicious feature dll injection windows\n{\n\tmeta:\n\t\tdescription = \"Self Injecting code - like code packers\"\n\t\tlink = \"\"\n\n\tstrings:\n\t\t$self01 = \"VirtualAlloc\"\n\t\t$self02 = \"VirtualProtect\"\n\t\t$self03 = \"CreateProcessInternal\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dll_injection_thread",
+                "tags": [
+                    "suspicious",
+                    "feature",
+                    "dll",
+                    "injection",
+                    "windows"
+                ],
+                "description": "Injection using kernel32.dll:VirtualAllocEx",
+                "link": "http://blog.opensecurityresearch.com/2013/01/windows-dll-injection-basics.html"
+            },
+            "rule_text": "import \"pe\"\n\nrule dll_injection_thread : suspicious feature dll injection windows\n{\n\tmeta:\n\t\tdescription = \"Injection using kernel32.dll:VirtualAllocEx\"\n\t\tlink = \"http://blog.opensecurityresearch.com/2013/01/windows-dll-injection-basics.html\"\n\n\tstrings:\n\t\t$load_01 = \"LoadLibraryA\"\n\t\t$remote_01 = \"NtCreateThreadEx\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and ( pe.imports ( \"kernel32.dll\" , \"VirtualAllocEx\" ) ) and ( pe.imports ( \"kernel32.dll\" , \"WriteProcessMemory\" ) or pe.imports ( \"kernel32.dll\" , \"LoadLibraryExA\" ) or pe.imports ( \"kernel32.dll\" , \"LoadLibraryExW\" ) or ( pe.imports ( \"kernel32.dll\" , \"GetProcAddress\" ) and ( pe.imports ( \"kernel32.dll\" , \"GetModuleHandleA\" ) or pe.imports ( \"kernel32.dll\" , \"GetModuleHandleA\" ) ) and $load_01 ) ) and ( pe.imports ( \"kernel32.dll\" , \"CreateRemoteThread\" ) or pe.imports ( \"ntdll.dll\" , \"NtCreateThreadEx\" ) or ( pe.imports ( \"kernel32.dll\" , \"GetProcAddress\" ) and ( pe.imports ( \"kernel32.dll\" , \"GetModuleHandleA\" ) or pe.imports ( \"kernel32.dll\" , \"GetModuleHandleA\" ) ) and $remote_01 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dll_injection_hook",
+                "tags": [
+                    "suspicious",
+                    "feature",
+                    "dll",
+                    "injection",
+                    "windows"
+                ],
+                "description": "Injection using User32.dll:VirtualAllocEx"
+            },
+            "rule_text": "import \"pe\"\n\nrule dll_injection_hook : suspicious feature dll injection windows\n{\n\tmeta:\n\t\tdescription = \"Injection using User32.dll:VirtualAllocEx\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and ( pe.imports ( \"user32.dll\" , \"SetWindowsHookExA\" ) or pe.imports ( \"user32.dll\" , \"SetWindowsHookExW\" ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

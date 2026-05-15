@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_runxcmd.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-24",
+                "title": "PUA - RunXCmd Execution",
+                "id": "93199800-b52a-4dec-b762-75212c196542"
+            },
+            "rule_text": "title: PUA - RunXCmd Execution\nid: 93199800-b52a-4dec-b762-75212c196542\nstatus: test\ndescription: Detects the use of the RunXCmd tool to execute commands with System or\n  TrustedInstaller accounts\nreferences:\n- https://www.d7xtech.com/free-software/runx/\n- https://www.winhelponline.com/blog/run-program-as-system-localsystem-account-windows/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-24\nmodified: 2023-02-14\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.s0029\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_account:\n    CommandLine|contains:\n    - ' /account=system '\n    - ' /account=ti '\n  selection_exec:\n    CommandLine|contains: /exec=\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use by administrators\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

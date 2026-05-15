@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Binal/TrojanSpy_Win32_Binal_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Binal_A",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Binal.A,SIGNATURE_TYPE_PEHSTR_EXT,14 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Binal_A\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Binal.A,SIGNATURE_TYPE_PEHSTR_EXT,14 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 45 fc 8a 5c 30 ff 8b c3 04 d8 3c 57 77 0a 83 e0 7f 0f }\n\t\t$a_03_1 = {8a 12 80 ea 41 8d 14 92 8d 14 92 8b 4d ?? 8a 49 01 80 e9 41 02 d1 8b ce 2a d1 8b cf 2a d1 }\n\t\t$a_03_2 = {66 81 3b 4d 5a 0f 85 ?? ?? 00 00 [0-40] 81 3f 50 45 00 00 0f 85 ?? ?? 00 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_03_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

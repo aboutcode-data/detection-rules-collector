@@ -1,0 +1,29 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/1aN0rmus/web_log_review.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "web_log_review",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "version": "0.1",
+                "reference": "Key words in weblogs - Very likely FPs in here.",
+                "date": "2013-12-14"
+            },
+            "rule_text": "rule web_log_review\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\tversion = \"0.1\"\n\t\treference = \"Key words in weblogs - Very likely FPs in here.\"\n\t\tdate = \"2013-12-14\"\n\n\tstrings:\n\t\t$s = \"GET /.htaccess\" nocase\n\t\t$s0 = \"GET /db/main.php\" nocase\n\t\t$s3 = \"GET /dbadmin/main.php\" nocase\n\t\t$s4 = \"GET /phpinfo.php\" nocase\n\t\t$s5 = \"GET /password\" nocase\n\t\t$s6 = \"GET /passwd\" nocase\n\t\t$s7 = \"GET /phpmyadmin2\" nocase\n\t\t$s8 = \"GET /c99shell.php\" nocase\n\t\t$s9 = \"GET /c99.php\" nocase\n\t\t$s10 = \"GET /response.write\" nocase\n\t\t$s11 = \"GET /&dir\" nocase\n\t\t$s12 = \"backdoor.php\" nocase\n\t\t$s13 = \"GET /.htpasswd\" nocase\n\t\t$s14 = \"GET /htaccess.bak\" nocase\n\t\t$s15 = \"GET /htaccess.txt\" nocase\n\t\t$s16 = \"GET /.bash_history\" nocase\n\t\t$s17 = \"GET /_sqladm\" nocase\n\t\t$s18 = \"'$IFS/etc/privpasswd;'\" nocase\n\t\t$s19 = \";cat /tmp/config/usr.ini\" nocase\n\t\t$s20 = \"v0pCr3w\" nocase\n\t\t$s21 = \"eval(base64_decode\" nocase\n\t\t$s22 = \"nob0dyCr3w\" nocase\n\t\t$s23 = \"eval(gzinflate\" nocase\n\t\t$s24 = \"Hacked by\" fullword\n\t\t$s25 = \"%5Bcmd%5D\" nocase\n\t\t$s26 = \"[cmd]\" nocase\n\t\t$s27 = \"union+select\" nocase\n\t\t$s28 = \"UNION%20SELECT\" nocase\n\t\t$s29 = \"(str_rot13\" nocase\n\n\tcondition:\n\t\tany of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "acunetix_web_scanner",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "version": "0.1",
+                "reference": "Acunetix Web Scanner",
+                "date": "2013-12-14"
+            },
+            "rule_text": "rule acunetix_web_scanner\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\tversion = \"0.1\"\n\t\treference = \"Acunetix Web Scanner\"\n\t\tdate = \"2013-12-14\"\n\n\tstrings:\n\t\t$s = \"acunetix_wvs_security_test\"\n\t\t$s0 = \"testasp.vulnweb.com\"\n\t\t$s1 = \"GET /www.acunetix.tst\"\n\n\tcondition:\n\t\tany of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

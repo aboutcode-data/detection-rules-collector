@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_certutil_ntlm_coercion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-01",
+                "title": "Potential NTLM Coercion Via Certutil.EXE",
+                "id": "6c6d9280-e6d0-4b9d-80ac-254701b64916"
+            },
+            "rule_text": "title: Potential NTLM Coercion Via Certutil.EXE\nid: 6c6d9280-e6d0-4b9d-80ac-254701b64916\nstatus: test\ndescription: Detects possible NTLM coercion via certutil using the 'syncwithWU' flag\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/issues/243\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-01\nmodified: 2023-02-14\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\certutil.exe\n  - OriginalFileName: CertUtil.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' -syncwithWU '\n    - ' \\\\\\\\'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_certutil_ntlm_coercion/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

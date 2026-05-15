@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Lolyda/PWS_Win32_Lolyda_AS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Lolyda_AS",
+                "tags": [],
+                "description": "PWS:Win32/Lolyda.AS,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Lolyda_AS\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Lolyda.AS,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {2b de 8d 83 ?? ?? ?? ?? 8b c8 c6 06 e9 88 46 01 8b d0 c1 e9 08 88 4e 02 }\n\t\t$a_01_1 = {26 6d 62 6d 3d 00 }\n\t\t$a_01_2 = {26 7a 74 3d 77 61 69 74 6d 62 68 00 }\n\t\t$a_01_3 = {61 63 74 69 6f 6e 3d 75 70 26 7a 74 3d 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

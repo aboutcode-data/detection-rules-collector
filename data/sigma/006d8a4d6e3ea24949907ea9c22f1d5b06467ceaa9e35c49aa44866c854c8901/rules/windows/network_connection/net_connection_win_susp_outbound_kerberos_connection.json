@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_susp_outbound_kerberos_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ilyas Ochkov, oscd.community",
+                "date": "2019-10-24",
+                "title": "Uncommon Outbound Kerberos Connection",
+                "id": "e54979bd-c5f9-4d6c-967b-a04b19ac4c74"
+            },
+            "rule_text": "title: Uncommon Outbound Kerberos Connection\nid: e54979bd-c5f9-4d6c-967b-a04b19ac4c74\nrelated:\n- id: eca91c7c-9214-47b9-b4c5-cb1d7e4f2350\n  type: similar\nstatus: test\ndescription: 'Detects uncommon outbound network activity via Kerberos default port\n  indicating possible lateral movement or first stage PrivEsc via delegation.\n\n  '\nreferences:\n- https://github.com/GhostPack/Rubeus\nauthor: Ilyas Ochkov, oscd.community\ndate: 2019-10-24\nmodified: 2024-03-15\ntags:\n- attack.credential-access\n- attack.t1558\n- attack.lateral-movement\n- attack.t1550.003\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    DestinationPort: 88\n    Initiated: 'true'\n  filter_main_lsass:\n    Image: C:\\Windows\\System32\\lsass.exe\n  filter_optional_chrome:\n    Image:\n    - C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\n    - C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\n  filter_optional_firefox:\n    Image:\n    - C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe\n    - C:\\Program Files\\Mozilla Firefox\\firefox.exe\n  filter_optional_tomcat:\n    Image|endswith: \\tomcat\\bin\\tomcat8.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Web Browsers and third party application might generate similar activity. An initial\n  baseline is required.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

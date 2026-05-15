@@ -1,0 +1,56 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/nex/nex_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "embedded_macho",
+                "tags": [],
+                "author": "nex",
+                "description": "Contains an embedded Mach-O file"
+            },
+            "rule_text": "rule embedded_macho\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Contains an embedded Mach-O file\"\n\n\tstrings:\n\t\t$magic1 = { ca fe ba be }\n\t\t$magic2 = { ce fa ed fe }\n\t\t$magic3 = { fe ed fa ce }\n\n\tcondition:\n\t\tany of ( $magic* ) and not ( $magic1 at 0 ) and not ( $magic2 at 0 ) and not ( $magic3 at 0 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "embedded_pe",
+                "tags": [],
+                "author": "nex",
+                "description": "Contains an embedded PE32 file"
+            },
+            "rule_text": "rule embedded_pe\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Contains an embedded PE32 file\"\n\n\tstrings:\n\t\t$a = \"PE32\"\n\t\t$b = \"This program\"\n\t\t$mz = { 4d 5a }\n\n\tcondition:\n\t\t($a and $b ) and not ( $mz at 0 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "embedded_win_api",
+                "tags": [],
+                "author": "nex",
+                "description": "A non-Windows executable contains win32 API functions names"
+            },
+            "rule_text": "rule embedded_win_api\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"A non-Windows executable contains win32 API functions names\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$api1 = \"CreateFileA\"\n\t\t$api2 = \"GetProcAddress\"\n\t\t$api3 = \"LoadLibraryA\"\n\t\t$api4 = \"WinExec\"\n\t\t$api5 = \"GetSystemDirectoryA\"\n\t\t$api6 = \"WriteFile\"\n\t\t$api7 = \"ShellExecute\"\n\t\t$api8 = \"GetWindowsDirectory\"\n\t\t$api9 = \"URLDownloadToFile\"\n\t\t$api10 = \"IsBadReadPtr\"\n\t\t$api11 = \"IsBadWritePtr\"\n\t\t$api12 = \"SetFilePointer\"\n\t\t$api13 = \"GetTempPath\"\n\t\t$api14 = \"GetWindowsDirectory\"\n\n\tcondition:\n\t\tnot ( $mz at 0 ) and any of ( $api* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "vmdetect",
+                "tags": [],
+                "author": "nex",
+                "description": "Possibly employs anti-virtualization techniques"
+            },
+            "rule_text": "rule vmdetect\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Possibly employs anti-virtualization techniques\"\n\n\tstrings:\n\t\t$vmware = {56 4D 58 68}\n\t\t$virtualpc = {0F 3F 07 0B}\n\t\t$ssexy = {66 0F 70 ?? ?? 66 0F DB ?? ?? ?? ?? ?? 66 0F DB ?? ?? ?? ?? ?? 66 0F EF}\n\t\t$vmcheckdll = {45 C7 00 01}\n\t\t$redpill = {0F 01 0D 00 00 00 00 C3}\n\t\t$vmware1 = \"VMXh\"\n\t\t$vmware2 = \"Ven_VMware_\" nocase\n\t\t$vmware3 = \"Prod_VMware_Virtual_\" nocase\n\t\t$vmware4 = \"hgfs.sys\" nocase\n\t\t$vmware5 = \"mhgfs.sys\" nocase\n\t\t$vmware6 = \"prleth.sys\" nocase\n\t\t$vmware7 = \"prlfs.sys\" nocase\n\t\t$vmware8 = \"prlmouse.sys\" nocase\n\t\t$vmware9 = \"prlvideo.sys\" nocase\n\t\t$vmware10 = \"prl_pv32.sys\" nocase\n\t\t$vmware11 = \"vpc-s3.sys\" nocase\n\t\t$vmware12 = \"vmsrvc.sys\" nocase\n\t\t$vmware13 = \"vmx86.sys\" nocase\n\t\t$vmware14 = \"vmnet.sys\" nocase\n\t\t$vmware15 = \"vmicheartbeat\" nocase\n\t\t$vmware16 = \"vmicvss\" nocase\n\t\t$vmware17 = \"vmicshutdown\" nocase\n\t\t$vmware18 = \"vmicexchange\" nocase\n\t\t$vmware19 = \"vmdebug\" nocase\n\t\t$vmware20 = \"vmmouse\" nocase\n\t\t$vmware21 = \"vmtools\" nocase\n\t\t$vmware22 = \"VMMEMCTL\" nocase\n\t\t$vmware23 = \"vmx86\" nocase\n\t\t$vmware24 = \"vmware\" nocase\n\t\t$virtualpc1 = \"vpcbus\" nocase\n\t\t$virtualpc2 = \"vpc-s3\" nocase\n\t\t$virtualpc3 = \"vpcuhub\" nocase\n\t\t$virtualpc4 = \"msvmmouf\" nocase\n\t\t$xen1 = \"xenevtchn\" nocase\n\t\t$xen2 = \"xennet\" nocase\n\t\t$xen3 = \"xennet6\" nocase\n\t\t$xen4 = \"xensvc\" nocase\n\t\t$xen5 = \"xenvdb\" nocase\n\t\t$xen6 = \"XenVMM\" nocase\n\t\t$virtualbox1 = \"VBoxHook.dll\" nocase\n\t\t$virtualbox2 = \"VBoxService\" nocase\n\t\t$virtualbox3 = \"VBoxTray\" nocase\n\t\t$virtualbox4 = \"VBoxMouse\" nocase\n\t\t$virtualbox5 = \"VBoxGuest\" nocase\n\t\t$virtualbox6 = \"VBoxSF\" nocase\n\t\t$virtualbox7 = \"VBoxGuestAdditions\" nocase\n\t\t$virtualbox8 = \"VBOX HARDDISK\" nocase\n\t\t$vmware_mac_1a = \"00-05-69\"\n\t\t$vmware_mac_1b = \"00:05:69\"\n\t\t$vmware_mac_1c = \"000569\"\n\t\t$vmware_mac_2a = \"00-50-56\"\n\t\t$vmware_mac_2b = \"00:50:56\"\n\t\t$vmware_mac_2c = \"005056\"\n\t\t$vmware_mac_3a = \"00-0C-29\" nocase\n\t\t$vmware_mac_3b = \"00:0C:29\" nocase\n\t\t$vmware_mac_3c = \"000C29\" nocase\n\t\t$vmware_mac_4a = \"00-1C-14\" nocase\n\t\t$vmware_mac_4b = \"00:1C:14\" nocase\n\t\t$vmware_mac_4c = \"001C14\" nocase\n\t\t$virtualbox_mac_1a = \"08-00-27\"\n\t\t$virtualbox_mac_1b = \"08:00:27\"\n\t\t$virtualbox_mac_1c = \"080027\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "shellcode",
+                "tags": [],
+                "author": "nex",
+                "description": "Matched shellcode byte patterns",
+                "modified": "Glenn Edwards (@hiddenillusion)"
+            },
+            "rule_text": "import \"pe\"\n\nrule shellcode\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Matched shellcode byte patterns\"\n\t\tmodified = \"Glenn Edwards (@hiddenillusion)\"\n\n\tstrings:\n\t\t$s0 = { 64 8b 64 }\n\t\t$s1 = { 64 a1 30 }\n\t\t$s2 = { 64 8b 15 30 }\n\t\t$s3 = { 64 8b 35 30 }\n\t\t$s4 = { 55 8b ec 83 c4 }\n\t\t$s5 = { 55 8b ec 81 ec }\n\t\t$s6 = { 55 8b ec e8 }\n\t\t$s7 = { 55 8b ec e9 }\n\n\tcondition:\n\t\tfor any of ( $s* ) : ( $ at pe.entry_point )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

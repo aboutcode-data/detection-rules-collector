@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_sidecar_injection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Leo Tsaousis (@laripping)",
+                "date": "2024-03-26",
+                "title": "Potential Sidecar Injection Into Running Deployment",
+                "id": "ad9012a6-e518-4432-9890-f3b82b8fc71f"
+            },
+            "rule_text": "title: Potential Sidecar Injection Into Running Deployment\nid: ad9012a6-e518-4432-9890-f3b82b8fc71f\nstatus: test\ndescription: 'Detects attempts to inject a sidecar container into a running deployment.\n\n  A sidecar container is an additional container within a pod, that resides alongside\n  the main container.\n\n  One way to add containers to running resources like Deployments/DeamonSets/StatefulSets,\n  is via a \"kubectl patch\" operation.\n\n  By injecting a new container within a legitimate pod, an attacker can run their\n  code and hide their activity, instead of running their own separated pod in the\n  cluster.\n\n  '\nreferences:\n- https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch\n- https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Sidecar%20Injection/\nauthor: Leo Tsaousis (@laripping)\ndate: 2024-03-26\ntags:\n- attack.t1609\n- attack.execution\nlogsource:\n  category: application\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    verb: patch\n    apiGroup: apps\n    objectRef.resource: deployments\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_impacket_atexec_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Atexec.py Execution",
+                "id": "317bdc3b-f4a6-4664-b810-6dffb18fc7f5"
+            },
+            "rule_text": "title: Atexec.py Execution\nid: 317bdc3b-f4a6-4664-b810-6dffb18fc7f5\nstatus: experimental\ndescription: \"This detection analytic identifies Impacket\\u2019s atexec.py script\\\n  \\ on a target host. atexec.py is remotely run \\non an adversary\\u2019s machine to\\\n  \\ execute commands on the victim via scheduled task. The command is commonly \\n\\\n  executed by a non-interactive cmd.exe with the output redirected to an eight-character\\\n  \\ TMP file. Part of \\nthe RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/impacket/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.s0357\n- attack.execution\n- attack.t1053\n- attack.t1053.002\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\svchost.exe\n    - \\taskeng.exe\n    CommandLine|contains|all:\n    - cmd.exe\n    - /c\n    - windows\\temp\n    - ' > '\n    - 2>&1\n    TargetFilename|contains|all:\n    - windows\\temp\n    - .tmp\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

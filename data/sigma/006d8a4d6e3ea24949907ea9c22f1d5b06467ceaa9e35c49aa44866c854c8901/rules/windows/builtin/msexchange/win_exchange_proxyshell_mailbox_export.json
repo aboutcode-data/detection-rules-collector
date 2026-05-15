@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/msexchange/win_exchange_proxyshell_mailbox_export.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Rich Warren, Christian Burkard (Nextron Systems)",
+                "date": "2021-08-09",
+                "title": "Mailbox Export to Exchange Webserver",
+                "id": "516376b4-05cd-4122-bae0-ad7641c38d48"
+            },
+            "rule_text": "title: Mailbox Export to Exchange Webserver\nid: 516376b4-05cd-4122-bae0-ad7641c38d48\nstatus: test\ndescription: Detects a successful export of an Exchange mailbox to untypical directory\n  or with aspx name suffix which can be used to place a webshell or the needed role\n  assignment for it\nreferences:\n- https://blog.orange.tw/2021/08/proxylogon-a-new-attack-surface-on-ms-exchange-part-1.html\nauthor: Florian Roth (Nextron Systems), Rich Warren, Christian Burkard (Nextron Systems)\ndate: 2021-08-09\nmodified: 2023-04-30\ntags:\n- attack.persistence\n- attack.t1505.003\nlogsource:\n  service: msexchange-management\n  product: windows\ndetection:\n  export_command:\n    '|all':\n    - New-MailboxExportRequest\n    - ' -Mailbox '\n  export_params:\n  - -FilePath \"\\\\\\\\\n  - .aspx\n  role_assignment:\n    '|all':\n    - New-ManagementRoleAssignment\n    - ' -Role \"Mailbox Import Export\"'\n    - ' -User '\n  condition: (export_command and export_params) or role_assignment\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

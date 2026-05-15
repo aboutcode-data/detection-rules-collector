@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_net_user_add_never_expire.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-12",
+                "title": "New User Created Via Net.EXE With Never Expire Option",
+                "id": "b9f0e6f5-09b4-4358-bae4-08408705bd5c"
+            },
+            "rule_text": "title: New User Created Via Net.EXE With Never Expire Option\nid: b9f0e6f5-09b4-4358-bae4-08408705bd5c\nrelated:\n- id: cd219ff3-fa99-45d4-8380-a7d15116c6dc\n  type: derived\nstatus: test\ndescription: Detects creation of local users via the net.exe command with the option\n  \"never expire\"\nreferences:\n- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-12\nmodified: 2023-02-21\ntags:\n- attack.persistence\n- attack.t1136.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - user\n    - add\n    - expires:never\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

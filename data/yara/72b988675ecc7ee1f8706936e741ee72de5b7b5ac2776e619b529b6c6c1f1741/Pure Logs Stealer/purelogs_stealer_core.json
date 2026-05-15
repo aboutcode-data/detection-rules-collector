@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/Pure Logs Stealer/purelogs_stealer_core.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PureLogs_Stealer_core",
+                "tags": [],
+                "author": "RussianPanda",
+                "description": "Detects Pure Logs Stealer Core Payload",
+                "date": "12/26/2023"
+            },
+            "rule_text": "import \"pe\"\n\nrule PureLogs_Stealer_core\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdescription = \"Detects Pure Logs Stealer Core Payload\"\n\t\tdate = \"12/26/2023\"\n\n\tstrings:\n\t\t$s1 = {7E 58 00 00 0A [15] 28 20 00 00 0A 18 6F 0A 02 00 0A 0B}\n\t\t$s2 = {50 6C 67 43 6F 72 65}\n\t\t$s3 = {7E 64 01 00 0A 28 65 01 00 0A}\n\n\tcondition:\n\t\tall of ( $s* ) and filesize < 5MB and pe.imports ( \"mscoree.dll\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

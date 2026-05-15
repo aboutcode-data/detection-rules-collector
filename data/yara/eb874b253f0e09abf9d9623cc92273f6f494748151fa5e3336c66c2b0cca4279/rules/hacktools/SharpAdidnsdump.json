@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/hacktools/SharpAdidnsdump.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SharpAdidnsdump",
+                "tags": [],
+                "id": "6rWYf0SwQzWanysjEs2F3h",
+                "fingerprint": "v1_sha256_81a0841b64b31da7c8e6f601913eaabbcf2d03868c46b6d5acf2da532964c200",
+                "version": "1.0",
+                "date": "2025-07-24",
+                "modified": "2025-07-24",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies SharpAdidnsdump, which allows for AD integrated DNS dumping and also abused by attackers such as Storm-2603.",
+                "category": "TOOL",
+                "tool": "SHARPAPIDNSDUMP",
+                "reference": "https://www.microsoft.com/en-us/security/blog/2025/07/22/disrupting-active-exploitation-of-on-premises-sharepoint-vulnerabilities",
+                "hash": "f01675f9ca00da067bdb1812bf829f09ccf5658b87d3326d6fddd773df352574"
+            },
+            "rule_text": "import \"dotnet\"\n\nrule SharpAdidnsdump\n{\n\tmeta:\n\t\tid = \"6rWYf0SwQzWanysjEs2F3h\"\n\t\tfingerprint = \"v1_sha256_81a0841b64b31da7c8e6f601913eaabbcf2d03868c46b6d5acf2da532964c200\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2025-07-24\"\n\t\tmodified = \"2025-07-24\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies SharpAdidnsdump, which allows for AD integrated DNS dumping and also abused by attackers such as Storm-2603.\"\n\t\tcategory = \"TOOL\"\n\t\ttool = \"SHARPAPIDNSDUMP\"\n\t\treference = \"https://github.com/b4rtik/SharpAdidnsdump\"\n\t\treference = \"https://www.microsoft.com/en-us/security/blog/2025/07/22/disrupting-active-exploitation-of-on-premises-sharepoint-vulnerabilities\"\n\t\thash = \"f01675f9ca00da067bdb1812bf829f09ccf5658b87d3326d6fddd773df352574\"\n\n\tstrings:\n\t\t$str_a = \"IPAddress\"\n\t\t$str_b = \"DirectorySearcher\"\n\t\t$str_c = \"SearchResult\"\n\t\t$str_d = \"IPHostEntry\"\n\t\t$str_e = \"GetHostEntry\"\n\t\t$str_f = \"DirectoryEntry\"\n\t\t$clear_a = \"Error retriving data\"\n\t\t$clear_b = \"dNSTombstoned\"\n\t\t$clear_c = \"Running enumeration against\"\n\t\t$SharpAdidnsdump = \"SharpAdidnsdump\" fullword\n\n\tcondition:\n\t\t(3 of ( $str_* ) and any of ( $clear_* ) ) or $SharpAdidnsdump or dotnet.guids [ 0 ] == \"8f985494-906c-485c-b3b3-0e90aa7d3ca7\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

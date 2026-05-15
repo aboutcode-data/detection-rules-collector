@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/rapidpulse.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Webshell_PL_RAPIDPULSE_1",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-05-17"
+            },
+            "rule_text": "rule FE_APT_Webshell_PL_RAPIDPULSE_1\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-05-17\"\n\n\tstrings:\n\t\t$r1 = /my[\\x09\\x20]{1,32}@\\w{1,64}[\\x09\\x20]{0,32}=[\\x09\\x20]{0,32}split[\\x09\\x20]{0,32}\\([\\x09\\x20]{0,32}\\x2f\\x2f/\n\t\t$r2 = /my[\\x09\\x20]{1,32}\\$\\w{1,64}[\\x09\\x20]{0,32}=[\\x09\\x20]{0,32}MIME::Base64::decode_base64[\\x09\\x20]{0,32}\\([\\x09\\x20]{0,32}\\$\\w{1,64}[\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32};[\\S\\s]{0,128}my[\\x09\\x20]{1,32}\\$\\w{1,64}[\\x09\\x20]{0,32}=[\\x09\\x20]{0,32}substr[\\x09\\x20]{0,32}\\([\\x09\\x20]{0,32}\\$\\w{1,64}[\\x09\\x20]{0,32},[\\x09\\x20]{0,32}\\d[\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32};[\\s\\S]{0,64}return[\\x09\\x20]{1,32}\\$/\n\t\t$s1 = \"use MIME::Base64\"\n\t\t$s2 = \"CGI::param(\"\n\t\t$s3 = \"popen\"\n\t\t$s4 = \"print CGI::header()\"\n\t\t$s5 = \"(0..255)\"\n\n\tcondition:\n\t\t( all of ( $s* ) ) and ( @r1 [ 1 ] < @r2 [ 1 ] )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

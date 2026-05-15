@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_hktl_rubeus.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems), Florian Roth (Nextron Systems)",
+                "date": "2023-04-27",
+                "title": "HackTool - Rubeus Execution - ScriptBlock",
+                "id": "3245cd30-e015-40ff-a31d-5cadd5f377ec"
+            },
+            "rule_text": "title: HackTool - Rubeus Execution - ScriptBlock\nid: 3245cd30-e015-40ff-a31d-5cadd5f377ec\nrelated:\n- id: 7ec2c172-dceb-4c10-92c9-87c1881b7e18\n  type: similar\nstatus: test\ndescription: Detects the execution of the hacktool Rubeus using specific command line\n  flags\nreferences:\n- https://blog.harmj0y.net/redteaming/from-kekeo-to-rubeus\n- https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html\n- https://github.com/GhostPack/Rubeus\nauthor: Christian Burkard (Nextron Systems), Florian Roth (Nextron Systems)\ndate: 2023-04-27\ntags:\n- attack.credential-access\n- attack.t1003\n- attack.t1558.003\n- attack.lateral-movement\n- attack.t1550.003\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - 'asreproast '\n    - 'dump /service:krbtgt '\n    - dump /luid:0x\n    - 'kerberoast '\n    - 'createnetonly /program:'\n    - 'ptt /ticket:'\n    - '/impersonateuser:'\n    - 'renew /ticket:'\n    - 'asktgt /user:'\n    - 'harvest /interval:'\n    - 's4u /user:'\n    - 's4u /ticket:'\n    - 'hash /password:'\n    - 'golden /aes256:'\n    - 'silver /user:'\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

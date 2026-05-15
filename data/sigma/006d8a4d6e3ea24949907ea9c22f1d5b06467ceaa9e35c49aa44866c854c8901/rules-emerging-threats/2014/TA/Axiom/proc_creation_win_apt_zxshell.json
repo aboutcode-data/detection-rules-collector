@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2014/TA/Axiom/proc_creation_win_apt_zxshell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), oscd.community, Jonhnathan Ribeiro",
+                "date": "2017-07-20",
+                "title": "ZxShell Malware",
+                "id": "f0b70adb-0075-43b0-9745-e82a1c608fcc"
+            },
+            "rule_text": "title: ZxShell Malware\nid: f0b70adb-0075-43b0-9745-e82a1c608fcc\nstatus: test\ndescription: Detects a ZxShell start by the called and well-known function name\nreferences:\n- https://www.hybrid-analysis.com/sample/5d2a4cde9fa7c2fdbf39b2e2ffd23378d0c50701a3095d1e91e3cf922d7b0b16?environmentId=100\n- https://pub-7cb8ac806c1b4c4383e585c474a24719.r2.dev/116309e7121bc8b0e66e4166c06f7b818e1d3629.pdf\nauthor: Florian Roth (Nextron Systems), oscd.community, Jonhnathan Ribeiro\ndate: 2017-07-20\nmodified: 2021-11-27\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.003\n- attack.t1218.011\n- attack.s0412\n- attack.g0001\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains:\n    - zxFunction\n    - RemoteDiskXXXXX\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

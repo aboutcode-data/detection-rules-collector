@@ -1,0 +1,94 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/expl_cve_2021_40444.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EXPL_CVE_2021_40444_Document_Rels_XML",
+                "tags": [],
+                "description": "Detects indicators found in weaponized documents that exploit CVE-2021-40444",
+                "author": "Jeremy Brown / @alteredbytes",
+                "reference": "https://twitter.com/AlteredBytes/status/1435811407249952772",
+                "date": "2021-09-10",
+                "id": "812bb68e-71ea-5a9a-8d39-ab99fdaa6c58"
+            },
+            "rule_text": "rule EXPL_CVE_2021_40444_Document_Rels_XML\n{\n\tmeta:\n\t\tdescription = \"Detects indicators found in weaponized documents that exploit CVE-2021-40444\"\n\t\tauthor = \"Jeremy Brown / @alteredbytes\"\n\t\treference = \"https://twitter.com/AlteredBytes/status/1435811407249952772\"\n\t\tdate = \"2021-09-10\"\n\t\tid = \"812bb68e-71ea-5a9a-8d39-ab99fdaa6c58\"\n\n\tstrings:\n\t\t$b1 = \"/relationships/oleObject\" ascii\n\t\t$b2 = \"/relationships/attachedTemplate\" ascii\n\t\t$c1 = \"Target=\\\"mhtml:http\" nocase\n\t\t$c2 = \"!x-usc:http\" nocase\n\t\t$c3 = \"TargetMode=\\\"External\\\"\" nocase\n\n\tcondition:\n\t\tuint32( 0 ) == 0x6D783F3C and filesize < 10KB and 1 of ( $b* ) and all of ( $c* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-40444"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_MAL_MalDoc_OBFUSCT_MHTML_Sep21_1",
+                "tags": [],
+                "description": "Detects suspicious office reference files including an obfuscated MHTML reference exploiting CVE-2021-40444",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/decalage2/status/1438946225190014984?s=20",
+                "date": "2021-09-18",
+                "score": 90,
+                "hash": "84674acffba5101c8ac518019a9afe2a78a675ef3525a44dceddeed8a0092c69",
+                "id": "781cfd61-d5ac-58e5-868f-dbd2a2df3500"
+            },
+            "rule_text": "rule EXPL_MAL_MalDoc_OBFUSCT_MHTML_Sep21_1\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious office reference files including an obfuscated MHTML reference exploiting CVE-2021-40444\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/decalage2/status/1438946225190014984?s=20\"\n\t\tdate = \"2021-09-18\"\n\t\tscore = 90\n\t\thash = \"84674acffba5101c8ac518019a9afe2a78a675ef3525a44dceddeed8a0092c69\"\n\t\tid = \"781cfd61-d5ac-58e5-868f-dbd2a2df3500\"\n\n\tstrings:\n\t\t$h1 = \"<?xml \" ascii wide\n\t\t$s1 = \"109;&#104;&#116;&#109;&#108;&#58;&#104;&#116;&#109;&#108\" ascii wide\n\n\tcondition:\n\t\tfilesize < 25KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-40444"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_XML_Encoded_CVE_2021_40444",
+                "tags": [],
+                "author": "James E.C, Proofpoint",
+                "description": "Detects possible CVE-2021-40444 with no encoding, HTML/XML entity (and hex notation) encoding, or all 3",
+                "reference": "https://twitter.com/sudosev/status/1439205606129377282",
+                "date": "2021-09-18",
+                "modified": "2021-09-19",
+                "score": 70,
+                "hash": "84674ACFFBA5101C8AC518019A9AFE2A78A675EF3525A44DCEDDEED8A0092C69",
+                "id": "4bf9ec64-c662-5c8f-9e58-12a7412ef07d"
+            },
+            "rule_text": "rule EXPL_XML_Encoded_CVE_2021_40444\n{\n\tmeta:\n\t\tauthor = \"James E.C, Proofpoint\"\n\t\tdescription = \"Detects possible CVE-2021-40444 with no encoding, HTML/XML entity (and hex notation) encoding, or all 3\"\n\t\treference = \"https://twitter.com/sudosev/status/1439205606129377282\"\n\t\tdate = \"2021-09-18\"\n\t\tmodified = \"2021-09-19\"\n\t\tscore = 70\n\t\thash = \"13DE9F39B1AD232E704B5E0B5051800FCD844E9F661185ACE8287A23E9B3868E\"\n\t\thash = \"84674ACFFBA5101C8AC518019A9AFE2A78A675EF3525A44DCEDDEED8A0092C69\"\n\t\tid = \"4bf9ec64-c662-5c8f-9e58-12a7412ef07d\"\n\n\tstrings:\n\t\t$h1 = \"<?xml \" ascii wide\n\t\t$t_xml_r = /Target[\\s]{0,20}=[\\s]{0,20}\\[\"']([Mm]|&#(109|77|x6d|x4d);)([Hh]|&#(104|72|x68|x48);)([Tt]|&#(116|84|x74|x54);)([Mm]|&#(109|77|x6d|x4d);)([Ll]|&#(108|76|x6c|x4c);)(:|&#58;|&#x3a)/\n\t\t$t_mode_r = /TargetMode[\\s]{0,20}=[\\s]{0,20}\\[\"']([Ee]|&#(x45|x65|69|101);)([Xx]|&#(x58|x78|88|120);)([Tt]|&#(x74|x54|84|116);)/\n\n\tcondition:\n\t\tfilesize < 500KB and $h1 and all of ( $t_* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-40444"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_OBFUSC_Indiators_XML_OfficeDoc_Sep21_1",
+                "tags": [
+                    "Windows",
+                    "CVE"
+                ],
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Detects suspicious encodings in fields used in reference files found in weaponized MS Office documents",
+                "reference": "https://twitter.com/sudosev/status/1439205606129377282",
+                "date": "2021-09-18",
+                "score": 65,
+                "hash": "84674ACFFBA5101C8AC518019A9AFE2A78A675EF3525A44DCEDDEED8A0092C69",
+                "id": "ffcaf270-f574-5692-90e5-6776c34eb71b"
+            },
+            "rule_text": "rule SUSP_OBFUSC_Indiators_XML_OfficeDoc_Sep21_1 : Windows CVE\n{\n\tmeta:\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Detects suspicious encodings in fields used in reference files found in weaponized MS Office documents\"\n\t\treference = \"https://twitter.com/sudosev/status/1439205606129377282\"\n\t\tdate = \"2021-09-18\"\n\t\tscore = 65\n\t\thash = \"13DE9F39B1AD232E704B5E0B5051800FCD844E9F661185ACE8287A23E9B3868E\"\n\t\thash = \"84674ACFFBA5101C8AC518019A9AFE2A78A675EF3525A44DCEDDEED8A0092C69\"\n\t\tid = \"ffcaf270-f574-5692-90e5-6776c34eb71b\"\n\n\tstrings:\n\t\t$h1 = \"<?xml \" ascii wide\n\t\t$xml_e = \"Target=\\\"&#\" ascii wide\n\t\t$xml_mode_1 = \"TargetMode=\\\"&#\" ascii wide\n\n\tcondition:\n\t\tfilesize < 500KB and $h1 and 1 of ( $xml* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-40444"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_OBFUSC_Indiators_XML_OfficeDoc_Sep21_2",
+                "tags": [
+                    "Windows",
+                    "CVE"
+                ],
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Detects suspicious encodings in fields used in reference files found in weaponized MS Office documents",
+                "reference": "https://twitter.com/sudosev/status/1439205606129377282",
+                "date": "2021-09-18",
+                "score": 65,
+                "id": "c3c5ec4f-5d2a-523c-bd4b-b75c04bac87d"
+            },
+            "rule_text": "rule SUSP_OBFUSC_Indiators_XML_OfficeDoc_Sep21_2 : Windows CVE\n{\n\tmeta:\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Detects suspicious encodings in fields used in reference files found in weaponized MS Office documents\"\n\t\treference = \"https://twitter.com/sudosev/status/1439205606129377282\"\n\t\tdate = \"2021-09-18\"\n\t\tscore = 65\n\t\tid = \"c3c5ec4f-5d2a-523c-bd4b-b75c04bac87d\"\n\n\tstrings:\n\t\t$h1 = \"<?xml \" ascii wide\n\t\t$a1 = \"Target\" ascii wide\n\t\t$a2 = \"TargetMode\" ascii wide\n\t\t$xml_e = \"&#x0000\" ascii wide\n\n\tcondition:\n\t\tfilesize < 500KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-40444"
+            ]
+        }
+    ]
+}

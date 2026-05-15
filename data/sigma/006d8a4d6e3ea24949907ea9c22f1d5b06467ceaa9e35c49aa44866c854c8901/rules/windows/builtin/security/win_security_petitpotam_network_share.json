@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_petitpotam_network_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mauricio Velazco, Michael Haag",
+                "date": "2021-09-02",
+                "title": "Possible PetitPotam Coerce Authentication Attempt",
+                "id": "1ce8c8a3-2723-48ed-8246-906ac91061a6"
+            },
+            "rule_text": "title: Possible PetitPotam Coerce Authentication Attempt\nid: 1ce8c8a3-2723-48ed-8246-906ac91061a6\nstatus: test\ndescription: Detect PetitPotam coerced authentication activity.\nreferences:\n- https://github.com/topotam/PetitPotam\n- https://github.com/splunk/security_content/blob/0dd6de32de2118b2818550df9e65255f4109a56d/detections/endpoint/petitpotam_network_share_access_request.yml\nauthor: Mauricio Velazco, Michael Haag\ndate: 2021-09-02\nmodified: 2022-08-11\ntags:\n- attack.credential-access\n- attack.t1187\nlogsource:\n  product: windows\n  service: security\n  definition: The advanced audit policy setting \"Object Access > Detailed File Share\"\n    must be configured for Success/Failure\ndetection:\n  selection:\n    EventID: 5145\n    ShareName|startswith: \\\\\\\\\n    ShareName|endswith: \\IPC$\n    RelativeTargetName: lsarpc\n    SubjectUserName: ANONYMOUS LOGON\n  condition: selection\nfalsepositives:\n- Unknown. Feedback welcomed.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

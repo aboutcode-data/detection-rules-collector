@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_bitlocker.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-11-15",
+                "title": "Suspicious Reg Add BitLocker",
+                "id": "0e0255bf-2548-47b8-9582-c0955c9283f5"
+            },
+            "rule_text": "title: Suspicious Reg Add BitLocker\nid: 0e0255bf-2548-47b8-9582-c0955c9283f5\nstatus: test\ndescription: Detects suspicious addition to BitLocker related registry keys via the\n  reg.exe utility\nreferences:\n- https://thedfirreport.com/2021/11/15/exchange-exploit-leads-to-domain-wide-ransomware/\nauthor: frack113\ndate: 2021-11-15\nmodified: 2022-09-09\ntags:\n- attack.impact\n- attack.t1486\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - REG\n    - ADD\n    - \\SOFTWARE\\Policies\\Microsoft\\FVE\n    - /v\n    - /f\n    CommandLine|contains:\n    - EnableBDEWithNoTPM\n    - UseAdvancedStartup\n    - UseTPM\n    - UseTPMKey\n    - UseTPMKeyPIN\n    - RecoveryKeyMessageSource\n    - UseTPMPIN\n    - RecoveryKeyMessage\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

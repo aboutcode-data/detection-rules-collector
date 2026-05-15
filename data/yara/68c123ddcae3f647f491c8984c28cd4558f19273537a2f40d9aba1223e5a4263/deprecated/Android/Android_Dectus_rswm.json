@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_Dectus_rswm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Android_Dogspectus_rswm",
+                "tags": [],
+                "author": "https://twitter.com/5h1vang",
+                "description": "Yara rule for Dogspectus intial ransomware apk",
+                "sample": "197588be3e8ba5c779696d864121aff188901720dcda796759906c17473d46fe",
+                "source": "https://www.bluecoat.com/security-blog/2016-04-25/android-exploit-delivers-dogspectus-ransomware"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_Dogspectus_rswm\n{\n\tmeta:\n\t\tauthor = \"https://twitter.com/5h1vang\"\n\t\tdescription = \"Yara rule for Dogspectus intial ransomware apk\"\n\t\tsample = \"197588be3e8ba5c779696d864121aff188901720dcda796759906c17473d46fe\"\n\t\tsource = \"https://www.bluecoat.com/security-blog/2016-04-25/android-exploit-delivers-dogspectus-ransomware\"\n\n\tstrings:\n\t\t$str_1 = \"android.app.action.ADD_DEVICE_ADMIN\"\n\t\t$str_2 = \"Tap ACTIVATE to continue with software update\"\n\n\tcondition:\n\t\t(androguard.package_name ( \"net.prospectus\" ) and androguard.app_name ( \"System update\" ) ) or androguard.certificate.sha1 ( \"180ADFC5DE49C0D7F643BD896E9AAC4B8941E44E\" ) or ( androguard.activity ( /Loganberry/i ) or androguard.activity ( \"net.prospectus.pu\" ) or androguard.activity ( \"PanickedActivity\" ) ) or ( androguard.permission ( /android.permission.INTERNET/ ) and androguard.permission ( /android.permission.WAKE_LOCK/ ) and androguard.permission ( /android.permission.RECEIVE_BOOT_COMPLETED/ ) and all of ( $str_* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

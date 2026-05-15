@@ -1,0 +1,29 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/APT29.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "detect_apt_APT29",
+                "tags": [
+                    "APT29"
+                ],
+                "description": "detect_APT32_malware",
+                "author": "@malgamy12",
+                "date": "2022-11-6",
+                "license": "DRL 1.1",
+                "hash_sample1": "93054d3abc36019ccfe88f87363363e6ca9b77f4",
+                "hash_sample2": "0eadbd6ef9f5930257530ac5a3b8abb49c9755d1",
+                "hash_sample3": "69c2d292179dc615bfe4d7f880b5f9928604558e",
+                "hash_sample4": "616306489de4029da7271eadbdf090cee22ae1af",
+                "hash_sample5": "ecb8edfddd812a125b515dc42a2e93569c1caed9",
+                "hash_sample6": "a86f3faf1eedb7325023616adf37a62c9129c24e",
+                "hash_sample7": "4d22b2d85b75ccf651f0ba85808482660a440bff",
+                "hash_sample8": "3463df6b33b26c1249207f6e004c0bbc31b31152",
+                "hash_sample9": "ca4c53eb86d5b920b321de573e212e31405707d5",
+                "hash_sample10": "a48e4dd017618ae2d46a753345594a5f57fbe869"
+            },
+            "rule_text": "rule detect_apt_APT29 : APT29\n{\n\tmeta:\n\t\tdescription = \"detect_APT32_malware\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"2022-11-6\"\n\t\tlicense = \"DRL 1.1\"\n\t\thash_sample1 = \"93054d3abc36019ccfe88f87363363e6ca9b77f4\"\n\t\thash_sample2 = \"0eadbd6ef9f5930257530ac5a3b8abb49c9755d1\"\n\t\thash_sample3 = \"69c2d292179dc615bfe4d7f880b5f9928604558e\"\n\t\thash_sample4 = \"616306489de4029da7271eadbdf090cee22ae1af\"\n\t\thash_sample5 = \"ecb8edfddd812a125b515dc42a2e93569c1caed9\"\n\t\thash_sample6 = \"a86f3faf1eedb7325023616adf37a62c9129c24e\"\n\t\thash_sample7 = \"4d22b2d85b75ccf651f0ba85808482660a440bff\"\n\t\thash_sample8 = \"3463df6b33b26c1249207f6e004c0bbc31b31152\"\n\t\thash_sample9 = \"ca4c53eb86d5b920b321de573e212e31405707d5\"\n\t\thash_sample10 = \"a48e4dd017618ae2d46a753345594a5f57fbe869\"\n\n\tstrings:\n\t\t$pdb = \"5\\\\bin\\\\bot.pdb\" ascii\n\t\t$s1 = \"pipe\\\\40DC244D-F62E-093E-8A91-736FF2FA2AA2\" wide\n\t\t$s2 = \"LoginName\" ascii\n\t\t$s3 = \"select id, hostname, usernamefield, passwordfield, encryptedusern\" wide\n\t\t$s4 = \"*temporary;*Cookies;*games;*system32;*program files;*\\\\windows\\\\;*\\\\System Volume Information\" wide\n\t\t$s5 = \"msicheck.cmd\" ascii\n\t\t$s6 = \"AppData\\\\Roaming\\\\Miranda\" wide\n\t\t$s7 = \"Local Settings\\\\Application Data\" wide\n\t\t$chunk_1 = {0F AF DE 69 F6 ?? ?? ?? ?? 8B C2 83 E0 ?? 8D 44 85 ?? 31 18 42 FF 4D ??}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and filesize > 70KB and ( $pdb or ( 4 of ( $s* ) and $chunk_1 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

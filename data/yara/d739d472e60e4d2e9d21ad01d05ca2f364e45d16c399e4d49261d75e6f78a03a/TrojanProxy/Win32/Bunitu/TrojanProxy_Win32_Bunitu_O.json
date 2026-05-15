@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanProxy/Win32/Bunitu/TrojanProxy_Win32_Bunitu_O.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanProxy_Win32_Bunitu_O",
+                "tags": [],
+                "description": "TrojanProxy:Win32/Bunitu.O,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanProxy_Win32_Bunitu_O\n{\n\tmeta:\n\t\tdescription = \"TrojanProxy:Win32/Bunitu.O,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {c6 41 07 32 fe 09 fe 41 01 fe 09 fe 49 05 c6 41 06 }\n\t\t$a_03_1 = {83 c2 01 c1 e2 03 c1 e2 03 8d 04 02 ba ?? ?? ?? ?? 52 8f 00 83 28 08 }\n\t\t$a_01_2 = {89 10 b2 6e 86 d6 88 70 04 b2 65 86 d6 88 70 08 }\n\t\t$a_01_3 = {00 61 61 63 6c 66 64 3a 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

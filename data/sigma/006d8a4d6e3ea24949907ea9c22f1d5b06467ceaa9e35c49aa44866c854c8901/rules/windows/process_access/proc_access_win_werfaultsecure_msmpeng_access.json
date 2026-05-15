@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_werfaultsecure_msmpeng_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-27",
+                "title": "Suspicious Process Access of MsMpEng by WerFaultSecure - EDR-Freeze",
+                "id": "387df17d-3b04-448f-8669-9e7fd5e5fd8c"
+            },
+            "rule_text": "title: Suspicious Process Access of MsMpEng by WerFaultSecure - EDR-Freeze\nid: 387df17d-3b04-448f-8669-9e7fd5e5fd8c\nrelated:\n- id: 8a2f4b1c-3d5e-4f7a-9b2c-1e4f6d8a9c2b\n  type: similar\n- id: 1f0b4cac-9c81-41f4-95d0-8475ff46b3e2\n  type: similar\nstatus: experimental\ndescription: 'Detects process access events where WerFaultSecure accesses MsMpEng.exe\n  with dbgcore.dll or dbghelp.dll in the call trace, indicating potential EDR freeze\n  techniques.\n\n  This technique leverages WerFaultSecure.exe running as a Protected Process Light\n  (PPL) with WinTCB protection level to call MiniDumpWriteDump and suspend EDR/AV\n  processes, allowing malicious activity to execute undetected during the suspension\n  period.\n\n  '\nreferences:\n- https://blog.axelarator.net/hunting-for-edr-freeze/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-27\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_access\n  product: windows\n  definition: \"Requires Sysmon Event ID 10 (ProcessAccess) with CallTrace enabled.\\n\\\n    Example sysmon config snippet with grouping, as logging individual ProcessAccess\\\n    \\ events can generate excessive logs:\\n<ProcessAccess onmatch=\\\"include\\\">\\n \\\n    \\   <Rule groupRelation=\\\"and\\\">\\n    <TargetImage condition=\\\"end with\\\">\\\\MsMpEng.exe</TargetImage>\\n\\\n    \\    <SourceImage condition=\\\"end with\\\">\\\\WerFaultSecure.exe</SourceImage>\\n\\\n    \\    </Rule>\\n</ProcessAccess>\\n\"\ndetection:\n  selection:\n    SourceImage|endswith: \\WerFaultSecure.exe\n    TargetImage|endswith: \\MsMpEng.exe\n    CallTrace|contains:\n    - \\dbgcore.dll\n    - \\dbghelp.dll\n  condition: selection\nfalsepositives:\n- Legitimate Windows Error Reporting operations\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_access/proc_access_win_werfaultsecure_msmpeng_access/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

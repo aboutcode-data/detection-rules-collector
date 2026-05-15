@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_fsi_fsharp_code_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2022-06-02",
+                "title": "Use of FSharp Interpreters",
+                "id": "b96b2031-7c17-4473-afe7-a30ce714db29"
+            },
+            "rule_text": "title: Use of FSharp Interpreters\nid: b96b2031-7c17-4473-afe7-a30ce714db29\nstatus: test\ndescription: 'Detects the execution of FSharp Interpreters \"FsiAnyCpu.exe\" and \"FSi.exe\"\n\n  Both can be used for AWL bypass and to execute F# code via scripts or inline.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/applications-that-can-bypass-wdac\n- https://bohops.com/2020/11/02/exploring-the-wdac-microsoft-recommended-block-rules-part-ii-wfc-fsi/\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/FsiAnyCpu/\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Fsi/\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2022-06-02\nmodified: 2024-04-23\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith:\n    - \\fsi.exe\n    - \\fsianycpu.exe\n  - OriginalFileName:\n    - fsi.exe\n    - fsianycpu.exe\n  condition: selection\nfalsepositives:\n- Legitimate use by a software developer.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

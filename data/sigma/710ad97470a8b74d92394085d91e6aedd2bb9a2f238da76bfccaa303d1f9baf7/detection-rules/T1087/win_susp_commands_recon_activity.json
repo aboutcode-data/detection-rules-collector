@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1087/win_susp_commands_recon_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Florian Roth, Markus Neis",
+                "date": "2018/08/22",
+                "title": "Reconnaissance Activity with Net Command",
+                "id": "2887e914-ce96-435f-8105-593937e90757"
+            },
+            "rule_text": "title: Reconnaissance Activity with Net Command\nid: 2887e914-ce96-435f-8105-593937e90757\nstatus: experimental\ndescription: Detects a set of commands often used in recon stages by different attack\n  groups\nreferences:\n- https://twitter.com/haroonmeer/status/939099379834658817\n- https://twitter.com/c_APT_ure/status/939475433711722497\n- https://www.fireeye.com/blog/threat-research/2016/05/targeted_attacksaga.html\nauthor: Florian Roth, Markus Neis\ndate: 2018/08/22\nmodified: 2018/12/11\ntags:\n- attack.discovery\n- attack.t1087\n- attack.t1082\n- car.2016-03-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine:\n    - '*tasklist'\n    - '*net time'\n    - '*systeminfo'\n    - '*whoami'\n    - '*nbtstat'\n    - '*net start'\n    - '*\\net1 start'\n    - qprocess\n    - '*nslookup'\n    - hostname.exe\n    - '*\\net1 user /domain'\n    - '*\\net1 group /domain'\n    - '*\\net1 group \"domain admins\" /domain'\n    - '*\\net1 group \"Exchange Trusted Subsystem\" /domain'\n    - '*\\net1 accounts /domain'\n    - '*\\net1 user net localgroup administrators'\n    - '*netstat -an'\n  timeframe: 15s\n  condition: selection | count() by CommandLine > 4\nfalsepositives:\n- False positives depend on scripts and administrative tools used in the monitored\n  environment\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

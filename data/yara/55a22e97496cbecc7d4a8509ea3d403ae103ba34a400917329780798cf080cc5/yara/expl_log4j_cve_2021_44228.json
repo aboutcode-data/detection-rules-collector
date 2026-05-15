@@ -1,0 +1,186 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/expl_log4j_cve_2021_44228.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EXPL_Log4j_CallBackDomain_IOCs_Dec21_1",
+                "tags": [],
+                "description": "Detects IOCs found in Log4Shell incidents that indicate exploitation attempts of CVE-2021-44228",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://gist.github.com/superducktoes/9b742f7b44c71b4a0d19790228ce85d8",
+                "date": "2021-12-12",
+                "score": 60,
+                "id": "474afa96-1758-587e-8cab-41c5205e245e"
+            },
+            "rule_text": "rule EXPL_Log4j_CallBackDomain_IOCs_Dec21_1\n{\n\tmeta:\n\t\tdescription = \"Detects IOCs found in Log4Shell incidents that indicate exploitation attempts of CVE-2021-44228\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://gist.github.com/superducktoes/9b742f7b44c71b4a0d19790228ce85d8\"\n\t\tdate = \"2021-12-12\"\n\t\tscore = 60\n\t\tid = \"474afa96-1758-587e-8cab-41c5205e245e\"\n\n\tstrings:\n\t\t$xr1 = /\\b(ldap|rmi):\\/\\/([a-z0-9\\.]{1,16}\\.bingsearchlib\\.com|[a-z0-9\\.]{1,40}\\.interact\\.sh|[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}):[0-9]{2,5}\\/([aZ]|ua|Exploit|callback|[0-9]{10}|http443useragent|http80useragent)\\b/\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_JNDI_Exploit_Patterns_Dec21_1",
+                "tags": [],
+                "description": "Detects JNDI Exploit Kit patterns in files",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/pimps/JNDI-Exploit-Kit",
+                "date": "2021-12-12",
+                "score": 60,
+                "id": "a9127dd2-b818-5ca8-877a-3c47b1e92606"
+            },
+            "rule_text": "rule EXPL_JNDI_Exploit_Patterns_Dec21_1\n{\n\tmeta:\n\t\tdescription = \"Detects JNDI Exploit Kit patterns in files\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/pimps/JNDI-Exploit-Kit\"\n\t\tdate = \"2021-12-12\"\n\t\tscore = 60\n\t\tid = \"a9127dd2-b818-5ca8-877a-3c47b1e92606\"\n\n\tstrings:\n\t\t$x01 = \"/Basic/Command/Base64/\"\n\t\t$x02 = \"/Basic/ReverseShell/\"\n\t\t$x03 = \"/Basic/TomcatMemshell\"\n\t\t$x04 = \"/Basic/JettyMemshell\"\n\t\t$x05 = \"/Basic/WeblogicMemshell\"\n\t\t$x06 = \"/Basic/JBossMemshell\"\n\t\t$x07 = \"/Basic/WebsphereMemshell\"\n\t\t$x08 = \"/Basic/SpringMemshell\"\n\t\t$x09 = \"/Deserialization/URLDNS/\"\n\t\t$x10 = \"/Deserialization/CommonsCollections1/Dnslog/\"\n\t\t$x11 = \"/Deserialization/CommonsCollections2/Command/Base64/\"\n\t\t$x12 = \"/Deserialization/CommonsBeanutils1/ReverseShell/\"\n\t\t$x13 = \"/Deserialization/Jre8u20/TomcatMemshell\"\n\t\t$x14 = \"/TomcatBypass/Dnslog/\"\n\t\t$x15 = \"/TomcatBypass/Command/\"\n\t\t$x16 = \"/TomcatBypass/ReverseShell/\"\n\t\t$x17 = \"/TomcatBypass/TomcatMemshell\"\n\t\t$x18 = \"/TomcatBypass/SpringMemshell\"\n\t\t$x19 = \"/GroovyBypass/Command/\"\n\t\t$x20 = \"/WebsphereBypass/Upload/\"\n\t\t$fp1 = \"<html\"\n\n\tcondition:\n\t\t1 of ( $x* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_Log4j_CVE_2021_44228_JAVA_Exception_Dec21_1",
+                "tags": [],
+                "description": "Detects exceptions found in server logs that indicate an exploitation attempt of CVE-2021-44228",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://gist.github.com/Neo23x0/e4c8b03ff8cdf1fa63b7d15db6e3860b",
+                "date": "2021-12-12",
+                "score": 60,
+                "id": "82cf337e-4ea1-559b-a7b8-512a07adf06f"
+            },
+            "rule_text": "rule EXPL_Log4j_CVE_2021_44228_JAVA_Exception_Dec21_1\n{\n\tmeta:\n\t\tdescription = \"Detects exceptions found in server logs that indicate an exploitation attempt of CVE-2021-44228\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://gist.github.com/Neo23x0/e4c8b03ff8cdf1fa63b7d15db6e3860b\"\n\t\tdate = \"2021-12-12\"\n\t\tscore = 60\n\t\tid = \"82cf337e-4ea1-559b-a7b8-512a07adf06f\"\n\n\tstrings:\n\t\t$xa1 = \"header with value of BadAttributeValueException: \"\n\t\t$sa1 = \".log4j.core.net.JndiManager.lookup(JndiManager\"\n\t\t$sa2 = \"Error looking up JNDI resource\"\n\n\tcondition:\n\t\t$xa1 or all of ( $sa* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_Log4j_CVE_2021_44228_Dec21_Soft",
+                "tags": [
+                    "FILE"
+                ],
+                "description": "Detects indicators in server logs that indicate an exploitation attempt of CVE-2021-44228",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/h113sdx/status/1469010902183661568?s=20",
+                "date": "2021-12-10",
+                "modified": "2025-03-24",
+                "score": 50,
+                "id": "87e536a5-cc11-528a-b100-4fa3b2b7bc0c"
+            },
+            "rule_text": "rule EXPL_Log4j_CVE_2021_44228_Dec21_Soft : FILE\n{\n\tmeta:\n\t\tdescription = \"Detects indicators in server logs that indicate an exploitation attempt of CVE-2021-44228\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/h113sdx/status/1469010902183661568?s=20\"\n\t\tdate = \"2021-12-10\"\n\t\tmodified = \"2025-03-24\"\n\t\tscore = 50\n\t\tid = \"87e536a5-cc11-528a-b100-4fa3b2b7bc0c\"\n\n\tstrings:\n\t\t$x01 = \"${jndi:ldap:/\"\n\t\t$x02 = \"${jndi:rmi:/\"\n\t\t$x03 = \"${jndi:ldaps:/\"\n\t\t$x04 = \"${jndi:dns:/\"\n\t\t$x05 = \"${jndi:iiop:/\"\n\t\t$x06 = \"${jndi:http:/\"\n\t\t$x07 = \"${jndi:nis:/\"\n\t\t$x08 = \"${jndi:nds:/\"\n\t\t$x09 = \"${jndi:corba:/\"\n\t\t$fp1 = \"<html\"\n\t\t$fp2 = \"/nessus}\"\n\n\tcondition:\n\t\t1 of ( $x* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_Log4j_CVE_2021_44228_Dec21_OBFUSC",
+                "tags": [],
+                "description": "Detects obfuscated indicators in server logs that indicate an exploitation attempt of CVE-2021-44228",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/h113sdx/status/1469010902183661568?s=20",
+                "date": "2021-12-12",
+                "modified": "2021-12-13",
+                "score": 60,
+                "id": "d7c4092a-6ffc-5a89-b73a-f7f0ac984cbd"
+            },
+            "rule_text": "rule EXPL_Log4j_CVE_2021_44228_Dec21_OBFUSC\n{\n\tmeta:\n\t\tdescription = \"Detects obfuscated indicators in server logs that indicate an exploitation attempt of CVE-2021-44228\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/h113sdx/status/1469010902183661568?s=20\"\n\t\tdate = \"2021-12-12\"\n\t\tmodified = \"2021-12-13\"\n\t\tscore = 60\n\t\tid = \"d7c4092a-6ffc-5a89-b73a-f7f0ac984cbd\"\n\n\tstrings:\n\t\t$x1 = \"$%7Bjndi:\"\n\t\t$x2 = \"%2524%257Bjndi\"\n\t\t$x3 = \"%2F%252524%25257Bjndi%3A\"\n\t\t$x4 = \"${jndi:${lower:\"\n\t\t$x5 = \"${::-j}${\"\n\t\t$x6 = \"${${env:BARFOO:-j}\"\n\t\t$x7 = \"${::-l}${::-d}${::-a}${::-p}\"\n\t\t$x8 = \"${base64:JHtqbmRp\"\n\t\t$fp1 = \"<html\"\n\n\tcondition:\n\t\t1 of ( $x* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "EXPL_Log4j_CVE_2021_44228_Dec21_Hard",
+                "tags": [
+                    "FILE"
+                ],
+                "description": "Detects indicators in server logs that indicate the exploitation of CVE-2021-44228",
+                "author": "Florian Roth",
+                "reference": "https://twitter.com/h113sdx/status/1469010902183661568?s=20",
+                "date": "2021-12-10",
+                "modified": "2025-03-20",
+                "score": 65,
+                "id": "5297c42d-7138-507d-a3eb-153afe522816"
+            },
+            "rule_text": "rule EXPL_Log4j_CVE_2021_44228_Dec21_Hard : FILE\n{\n\tmeta:\n\t\tdescription = \"Detects indicators in server logs that indicate the exploitation of CVE-2021-44228\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://twitter.com/h113sdx/status/1469010902183661568?s=20\"\n\t\tdate = \"2021-12-10\"\n\t\tmodified = \"2025-03-20\"\n\t\tscore = 65\n\t\tid = \"5297c42d-7138-507d-a3eb-153afe522816\"\n\n\tstrings:\n\t\t$x1 = /\\$\\{jndi:(ldap|ldaps|rmi|dns|iiop|http|nis|nds|corba):\\/[\\/]?[a-z-\\.0-9]{3,120}:[0-9]{2,5}\\/[a-zA-Z\\.]{1,32}\\}/\n\t\t$x2 = \"Reference Class Name: foo\"\n\t\t$fp1r = /(ldap|rmi|ldaps|dns):\\/[\\/]?(127\\.0\\.0\\.1|192\\.168\\.|172\\.[1-3][0-9]\\.|10\\.)/\n\t\t$fpg2 = \"<html\"\n\t\t$fpg3 = \"<HTML\"\n\t\t$fp1 = \"/QUALYSTEST\" ascii\n\t\t$fp2 = \"w.nessus.org/nessus\"\n\t\t$fp3 = \"/nessus}\"\n\n\tcondition:\n\t\t1 of ( $x* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_Base64_Encoded_Exploit_Indicators_Dec21",
+                "tags": [],
+                "description": "Detects base64 encoded strings found in payloads of exploits against log4j CVE-2021-44228",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/Reelix/status/1469327487243071493",
+                "date": "2021-12-10",
+                "modified": "2021-12-13",
+                "score": 70,
+                "id": "09abc4f0-ace7-5f53-b1d3-5f5c6bf3bdba"
+            },
+            "rule_text": "rule SUSP_Base64_Encoded_Exploit_Indicators_Dec21\n{\n\tmeta:\n\t\tdescription = \"Detects base64 encoded strings found in payloads of exploits against log4j CVE-2021-44228\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/Reelix/status/1469327487243071493\"\n\t\tdate = \"2021-12-10\"\n\t\tmodified = \"2021-12-13\"\n\t\tscore = 70\n\t\tid = \"09abc4f0-ace7-5f53-b1d3-5f5c6bf3bdba\"\n\n\tstrings:\n\t\t$sa1 = \"Y3VybCAtcy\"\n\t\t$sa2 = \"N1cmwgLXMg\"\n\t\t$sa3 = \"jdXJsIC1zI\"\n\t\t$sb1 = \"fHdnZXQgLXEgLU8tI\"\n\t\t$sb2 = \"x3Z2V0IC1xIC1PLS\"\n\t\t$sb3 = \"8d2dldCAtcSAtTy0g\"\n\t\t$fp1 = \"<html\"\n\n\tcondition:\n\t\t1 of ( $sa* ) and 1 of ( $sb* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_JDNIExploit_Indicators_Dec21",
+                "tags": [],
+                "description": "Detects indicators of JDNI usage in log files and other payloads",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/flypig5211/JNDIExploit",
+                "date": "2021-12-10",
+                "modified": "2021-12-12",
+                "score": 70,
+                "id": "2df8b8f3-8d8d-5982-8c85-692b7d91ebb2"
+            },
+            "rule_text": "rule SUSP_JDNIExploit_Indicators_Dec21\n{\n\tmeta:\n\t\tdescription = \"Detects indicators of JDNI usage in log files and other payloads\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/flypig5211/JNDIExploit\"\n\t\tdate = \"2021-12-10\"\n\t\tmodified = \"2021-12-12\"\n\t\tscore = 70\n\t\tid = \"2df8b8f3-8d8d-5982-8c85-692b7d91ebb2\"\n\n\tstrings:\n\t\t$xr1 = /(ldap|ldaps|rmi|dns|iiop|http|nis|nds|corba):\\/\\/[a-zA-Z0-9\\.]{7,80}:[0-9]{2,5}\\/(Basic\\/Command\\/Base64|Basic\\/ReverseShell|Basic\\/TomcatMemshell|Basic\\/JBossMemshell|Basic\\/WebsphereMemshell|Basic\\/SpringMemshell|Basic\\/Command|Deserialization\\/CommonsCollectionsK|Deserialization\\/CommonsBeanutils|Deserialization\\/Jre8u20\\/TomcatMemshell|Deserialization\\/CVE_2020_2555\\/WeblogicMemshell|TomcatBypass|GroovyBypass|WebsphereBypass)\\//\n\n\tcondition:\n\t\tfilesize < 100MB and $xr1\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_EXPL_OBFUSC_Dec21_1",
+                "tags": [],
+                "description": "Detects obfuscation methods used to evade detection in log4j exploitation attempt of CVE-2021-44228",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/testanull/status/1469549425521348609",
+                "date": "2021-12-11",
+                "modified": "2022-11-08",
+                "score": 60,
+                "id": "b8f56711-7922-54b9-9ce2-6ba05d64c80d"
+            },
+            "rule_text": "rule SUSP_EXPL_OBFUSC_Dec21_1\n{\n\tmeta:\n\t\tdescription = \"Detects obfuscation methods used to evade detection in log4j exploitation attempt of CVE-2021-44228\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/testanull/status/1469549425521348609\"\n\t\tdate = \"2021-12-11\"\n\t\tmodified = \"2022-11-08\"\n\t\tscore = 60\n\t\tid = \"b8f56711-7922-54b9-9ce2-6ba05d64c80d\"\n\n\tstrings:\n\t\t$f1 = { 24 7B 6C 6F 77 65 72 3A ?? 7D }\n\t\t$f2 = { 24 7B 75 70 70 65 72 3A ?? 7D }\n\t\t$x3 = \"$%7blower:\"\n\t\t$x4 = \"$%7bupper:\"\n\t\t$x5 = \"%24%7bjndi:\"\n\t\t$x6 = \"$%7Blower:\"\n\t\t$x7 = \"$%7Bupper:\"\n\t\t$x8 = \"%24%7Bjndi:\"\n\t\t$fp1 = \"<html\"\n\n\tcondition:\n\t\t(1 of ( $x* ) or filesize < 200KB and 1 of ( $f* ) ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_JDNIExploit_Error_Indicators_Dec21_1",
+                "tags": [],
+                "description": "Detects error messages related to JDNI usage in log files that can indicate a Log4Shell / Log4j exploitation",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/marcioalm/status/1470361495405875200?s=20",
+                "date": "2021-12-10",
+                "modified": "2023-06-23",
+                "score": 70,
+                "id": "68bcf043-58b4-54a9-b024-64871b5d535f"
+            },
+            "rule_text": "rule SUSP_JDNIExploit_Error_Indicators_Dec21_1\n{\n\tmeta:\n\t\tdescription = \"Detects error messages related to JDNI usage in log files that can indicate a Log4Shell / Log4j exploitation\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/marcioalm/status/1470361495405875200?s=20\"\n\t\tdate = \"2021-12-10\"\n\t\tmodified = \"2023-06-23\"\n\t\tscore = 70\n\t\tid = \"68bcf043-58b4-54a9-b024-64871b5d535f\"\n\n\tstrings:\n\t\t$x1 = \"FATAL log4j - Message: BadAttributeValueException: \"\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-44228",
+                "CVE-2020-2555"
+            ]
+        }
+    ]
+}

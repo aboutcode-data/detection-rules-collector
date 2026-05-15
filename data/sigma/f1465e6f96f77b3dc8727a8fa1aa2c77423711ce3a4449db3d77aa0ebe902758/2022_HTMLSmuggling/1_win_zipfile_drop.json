@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_HTMLSmuggling/1_win_zipfile_drop.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/15",
+                "title": "Web Browser Creates Zip Archive File (Sysmon)",
+                "id": "2e88fc48-1d6c-425d-beb8-fa58047d41dd"
+            },
+            "rule_text": "title: Web Browser Creates Zip Archive File (Sysmon)\nid: 2e88fc48-1d6c-425d-beb8-fa58047d41dd\nstatus: experimental\ndescription: Detects browser applications creating archive/container files such as\n  zip, rar, or 7z, as occurs during an HTML smuggling attack where a browser decodes\n  and executes malicious code within an HTML file. Commonly associated with QakBot\n  and IcedID.\nreferences:\n- https://blog.talosintelligence.com/html-smugglers-turn-to-svg-images/#:~:text=HTML%20smuggling%20is%20a%20technique,directly%20on%20the%20victim's%20device.\n- https://www.malwarebytes.com/blog/news/2021/11/evasive-maneuvers-html-smuggling-explained\nauthor: Micah Babinski\ndate: 2022/12/15\ntags:\n- attack.s0650\n- attack.s0483\n- attack.defense_evasion\n- attack.t1027\n- attack.t1027.006\nlogsource:\n  category: create_stream_hash\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\chrome.exe\n    - \\brave.exe\n    - \\firefox.exe\n    - \\iexplore.exe\n    - \\msedge.exe\n    - \\MicrosoftEdgeCP.exe\n    Contents|contains: '[ZoneTransfer]  ZoneId=3'\n    TargetFilename|contains:\n    - .zip\n    - .rar\n    - .7z\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

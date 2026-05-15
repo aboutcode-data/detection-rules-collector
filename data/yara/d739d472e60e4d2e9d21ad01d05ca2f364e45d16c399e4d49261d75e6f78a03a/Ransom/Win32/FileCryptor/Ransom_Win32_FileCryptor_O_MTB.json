@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/FileCryptor/Ransom_Win32_FileCryptor_O_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_FileCryptor_O_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/FileCryptor.O!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 08 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_FileCryptor_O_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/FileCryptor.O!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 08 00 00 \"\n\n\tstrings:\n\t\t$a_81_0 = {48 4f 57 5f 54 4f 5f 44 45 43 52 59 50 54 }\n\t\t$a_81_1 = {40 70 72 6f 74 6f 6e 6d 61 69 6c 2e 63 6f 6d }\n\t\t$a_02_2 = {54 00 68 00 65 00 20 00 [0-10] 20 00 69 00 73 00 20 00 4c 00 4f 00 43 00 4b 00 45 00 44 00 }\n\t\t$a_02_3 = {54 68 65 20 [0-10] 20 69 73 20 4c 4f 43 4b 45 44 }\n\t\t$a_02_4 = {44 00 6f 00 20 00 6e 00 6f 00 74 00 [0-20] 75 00 73 00 65 00 20 00 4f 00 54 00 48 00 45 00 52 00 20 00 73 00 6f 00 66 00 74 00 77 00 61 00 72 00 65 00 }\n\t\t$a_02_5 = {44 6f 20 6e 6f 74 [0-20] 75 73 65 20 4f 54 48 45 52 20 73 6f 66 74 77 61 72 65 }\n\t\t$a_02_6 = {46 00 6f 00 72 00 20 00 44 00 45 00 43 00 52 00 59 00 50 00 54 00 [0-20] 20 00 77 00 72 00 69 00 74 00 65 00 }\n\t\t$a_02_7 = {46 6f 72 20 44 45 43 52 59 50 54 [0-20] 20 77 72 69 74 65 }\n\n\tcondition:\n\t\t(( #a_81_0 & 1 ) * 1 + ( #a_81_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_02_4 & 1 ) * 1 + ( #a_02_5 & 1 ) * 1 + ( #a_02_6 & 1 ) * 1 + ( #a_02_7 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

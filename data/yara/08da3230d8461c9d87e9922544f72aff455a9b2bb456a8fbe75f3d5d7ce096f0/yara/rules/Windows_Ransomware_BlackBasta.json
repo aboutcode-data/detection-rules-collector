@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Ransomware_BlackBasta.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Ransomware_BlackBasta_494d3c54",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "494d3c54-4690-4334-b64d-ebeeb305de0e",
+                "fingerprint": "27602cb05c054a1aa9e27b91675d57707f4a63fa91badc83ad86229839778f4e",
+                "creation_date": "2022-08-06",
+                "last_modified": "2022-08-16",
+                "threat_name": "Windows.Ransomware.BlackBasta",
+                "reference_sample": "357fe8c56e246ffacd54d12f4deb9f1adb25cb772b5cd2436246da3f2d01c222",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Ransomware_BlackBasta_494d3c54\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"494d3c54-4690-4334-b64d-ebeeb305de0e\"\n\t\tfingerprint = \"27602cb05c054a1aa9e27b91675d57707f4a63fa91badc83ad86229839778f4e\"\n\t\tcreation_date = \"2022-08-06\"\n\t\tlast_modified = \"2022-08-16\"\n\t\tthreat_name = \"Windows.Ransomware.BlackBasta\"\n\t\treference_sample = \"357fe8c56e246ffacd54d12f4deb9f1adb25cb772b5cd2436246da3f2d01c222\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"Done time: %.4f seconds, encrypted: %.4f gb\" ascii fullword\n\t\t$a2 = \"Creating readme at %s\" wide fullword\n\t\t$a3 = \"All of your files are currently encrypted by no_name_software.\" ascii fullword\n\t\t$a4 = \"DON'T move or rename your files. These parameters can be used for encryption/decryption process.\" ascii fullword\n\t\t$b1 = \"Your data are stolen and encrypted\" ascii fullword\n\t\t$b2 = \"bcdedit /deletevalue safeboot\" ascii fullword\n\t\t$b3 = \"Your company id for log in:\"\n\t\t$byte_seq = { 0F AF 45 DC 8B CB 0F AF 4D DC 0F AF 5D D8 0F AF 55 D8 8B F9 }\n\t\t$byte_seq2 = { 18 FF 24 1E 18 FF 64 61 5D FF CF CF CF FF D0 D0 D0 FF D0 D0 D0 FF }\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

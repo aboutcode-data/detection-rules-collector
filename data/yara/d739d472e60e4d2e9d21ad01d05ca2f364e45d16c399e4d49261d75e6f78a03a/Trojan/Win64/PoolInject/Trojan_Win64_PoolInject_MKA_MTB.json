@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/PoolInject/Trojan_Win64_PoolInject_MKA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_PoolInject_MKA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/PoolInject.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_PoolInject_MKA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/PoolInject.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {48 8b 8c 24 68 03 00 00 88 c2 8b 84 24 64 03 00 00 0f be d2 01 d0 89 84 24 70 03 00 00 48 8b 05 }\n\t\t$a_03_1 = {0f be c9 0f af c1 89 c1 44 89 c0 8d 04 88 8a 0d ?? ?? ?? ?? 0f be c9 f7 f1 8a 0d ?? ?? ?? ?? 0f be c9 29 c8 83 f8 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 15 + ( #a_03_1 & 1 ) * 10 ) >= 25\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

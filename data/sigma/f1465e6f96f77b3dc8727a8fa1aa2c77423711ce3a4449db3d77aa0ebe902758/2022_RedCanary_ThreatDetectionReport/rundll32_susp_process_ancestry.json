@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/rundll32_susp_process_ancestry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Rundll32 with Suspicious Process Lineage",
+                "id": "a01588a5-b68d-4d55-ab49-76d25c557ed4"
+            },
+            "rule_text": "title: Rundll32 with Suspicious Process Lineage\nid: a01588a5-b68d-4d55-ab49-76d25c557ed4\nstatus: experimental\ndescription: Detects executions of rundll32.exe from unusual or suspicious parent\n  processes. Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.defense_evasion\n- attack.t1218\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    ParentImage|endswith:\n    - \\winword.exe\n    - \\excel.exe\n    - \\msaccess.exe\n    - \\lsass.exe\n    - \\taskeng.exe\n    - \\winlogon.exe\n    - \\schtasks.exe\n    - \\regsvr32.exe\n    - \\wmiprvse.exe\n    - \\wsmprovhost.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

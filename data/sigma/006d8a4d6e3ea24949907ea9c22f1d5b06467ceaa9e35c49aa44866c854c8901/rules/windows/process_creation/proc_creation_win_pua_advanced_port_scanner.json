@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_advanced_port_scanner.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-12-18",
+                "title": "PUA - Advanced Port Scanner Execution",
+                "id": "54773c5f-f1cc-4703-9126-2f797d96a69d"
+            },
+            "rule_text": "title: PUA - Advanced Port Scanner Execution\nid: 54773c5f-f1cc-4703-9126-2f797d96a69d\nstatus: test\ndescription: Detects the use of Advanced Port Scanner.\nreferences:\n- https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Other/Advanced%20Port%20Scanner\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-12-18\nmodified: 2023-02-07\ntags:\n- attack.discovery\n- attack.t1046\n- attack.t1135\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|contains: \\advanced_port_scanner\n  - OriginalFileName|contains: advanced_port_scanner\n  - Description|contains: Advanced Port Scanner\n  selection_cli:\n    CommandLine|contains|all:\n    - /portable\n    - /lng\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate administrative use\n- Tools with similar commandline (very rare)\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_pua_advanced_port_scanner/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

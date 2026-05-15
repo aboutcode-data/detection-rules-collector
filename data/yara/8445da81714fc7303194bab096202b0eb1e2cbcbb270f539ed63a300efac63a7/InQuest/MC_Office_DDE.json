@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/MC_Office_DDE.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MC_Office_DDE_Command_Execution",
+                "tags": [],
+                "author": "InQuest",
+                "reference": "http://blog.inquest.net/blog/2017/10/13/microsoft-office-dde-macro-less-command-execution-vulnerability/"
+            },
+            "rule_text": "rule MC_Office_DDE_Command_Execution\n{\n\tmeta:\n\t\tauthor = \"InQuest\"\n\t\treference = \"http://blog.inquest.net/blog/2017/10/13/microsoft-office-dde-macro-less-command-execution-vulnerability/\"\n\n\tstrings:\n\t\t$dde_auto = /<\\s*w:fldChar\\s+w:fldCharType\\s*=\\s*['\"]begin['\"]\\s*\\/>.+[^A-Za-z0-9-]DDEAUTO[^A-Za-z0-9-].+<w:fldChar\\s+w:fldCharType\\s*=\\s*['\"]end['\"]\\s*\\/>/ nocase wide ascii\n\t\t$dde_other = /<\\s*w:fldChar\\s+w:fldCharType\\s*=\\s*['\"]begin['\"]\\s*\\/>.+[^A-Za-z0-9-]DDE[B-Zb-z]+[^A-Za-z0-9-].+<w:fldChar\\s+w:fldCharType\\s*=\\s*['\"]end['\"]\\s*\\/>/ nocase wide ascii\n\t\t$magic = /^\\xd0\\xcf\\x11\\xe0\\xa1\\xb1\\x1a\\xe1\\x00\\x00\\x00/\n\t\t$wide_dde_auto = /.+[^A-Za-z0-9-]DDEAUTO[^a-z0-9-].+/ nocase wide ascii\n\t\t$early_exit = \"fldChar\" nocase wide ascii\n\t\t$xml_obfuscated_2 = />\\s*[\"']?DD\\s*</ nocase ascii wide\n\t\t$xml_obfuscated_3 = />\\s*[\"']?DDE\\s*</ nocase ascii wide\n\t\t$pure_xml_dde = /<\\s*ddeLink[^>]+ddeService\\s*=\\s*[\"'](cmd|reg|mshta|regsvr32|[wc]script|powershell|bitsadmin|schtasks|rundll32)[\"'][^>]+ddeTopic/ nocase wide ascii\n\t\t$exec_action = /(cmd\\.exe|reg\\.exe|mshta\\.exe|regsvr32|[wc]script|powershell|bitsadmin|schtasks|rundll32)/ nocase wide ascii\n\n\tcondition:\n\t\t(( any of ( $dde* ) or ( $magic at 0 and $wide_dde_auto ) ) and $exec_action ) or ( $early_exit and any of ( $xml_obfuscated* ) ) or ( $pure_xml_dde )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

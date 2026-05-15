@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_follina_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-21",
+                "title": "Troubleshooting Pack Cmdlet Execution",
+                "id": "03409c93-a7c7-49ba-9a4c-a00badf2a153"
+            },
+            "rule_text": "title: Troubleshooting Pack Cmdlet Execution\nid: 03409c93-a7c7-49ba-9a4c-a00badf2a153\nstatus: test\ndescription: Detects execution of \"TroubleshootingPack\" cmdlets to leverage CVE-2022-30190\n  or action similar to \"msdt\" lolbin (as described in LOLBAS)\nreferences:\n- https://twitter.com/nas_bench/status/1537919885031772161\n- https://lolbas-project.github.io/lolbas/Binaries/Msdt/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-21\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Invoke-TroubleshootingPack\n    - C:\\Windows\\Diagnostics\\System\\PCW\n    - -AnswerFile\n    - -Unattended\n  condition: selection\nfalsepositives:\n- Legitimate usage of \"TroubleshootingPack\" cmdlet for troubleshooting purposes\nlevel: medium\n",
+            "vulnerabilities": [
+                "CVE-2022-30190"
+            ]
+        }
+    ]
+}

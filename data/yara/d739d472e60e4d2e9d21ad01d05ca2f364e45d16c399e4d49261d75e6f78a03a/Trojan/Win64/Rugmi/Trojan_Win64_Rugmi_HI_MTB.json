@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Rugmi/Trojan_Win64_Rugmi_HI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Rugmi_HI_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Rugmi.HI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Rugmi_HI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Rugmi.HI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_23_0 = {d0 48 89 c7 90 01 01 8b 05 90 00 14 }\n\t\t$a_ff_1 = {48 89 df 90 01 01 8b 1d 90 00 14 00 0c 23 ff d1 48 89 cf 90 01 01 8b 0d 90 00 01 00 11 03 48 63 40 3c 8b }\n\t\t$a_00_2 = {00 00 90 01 01 8b 90 00 01 00 11 03 48 63 5b 3c 8b 9c 1e 88 00 00 00 90 01 01 8b 90 00 01 00 11 03 48 63 49 3c 8b 8c 0e 88 00 00 00 90 01 01 8b 90 00 00 00 5d 04 00 00 23 10 07 80 5c 27 00 00 24 10 07 80 00 00 01 00 08 00 11 00 ac 21 41 6d 64 65 79 52 75 6e 6e 65 72 21 72 66 6e 00 00 02 40 05 82 70 00 04 00 67 16 00 00 ef 9a eb 5a a6 ed b6 b1 0a b5 c9 47 00 00 0e 00 01 20 cf 61 fb 2e 67 16 00 00 39 ce f0 }\n\t\t$a_d9_3 = {97 e8 f6 11 ba 4a 33 00 01 20 f5 c8 12 54 5d 04 00 00 24 10 07 80 }\n\t\t$a_80_5 = {00 01 00 04 00 13 00 }\n\n\tcondition:\n\t\t(( #a_23_0 & 1 ) * 20 + ( #a_ff_1 & 1 ) * 3072 + ( #a_00_2 & 1 ) * 1668 + ( #a_d9_3 & 1 ) * 1237 + ( #a_80_5 & 1 ) * 4133 ) >= 21\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

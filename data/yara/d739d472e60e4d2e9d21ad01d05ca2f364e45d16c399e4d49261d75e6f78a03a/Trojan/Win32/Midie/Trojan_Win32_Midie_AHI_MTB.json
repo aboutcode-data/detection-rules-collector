@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Midie/Trojan_Win32_Midie_AHI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Midie_AHI_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Midie.AHI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Midie_AHI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Midie.AHI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 8c 89 45 d4 8b 45 d8 89 45 c4 c7 45 bc ?? ?? ?? ?? 8b 45 d4 6b c0 }\n\t\t$a_03_1 = {89 85 78 ff ff ff 8b 45 d4 03 45 a0 66 0f b6 08 8b 45 ?? 66 2b 08 0f }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 30 + ( #a_03_1 & 1 ) * 20 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

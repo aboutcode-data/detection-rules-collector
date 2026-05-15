@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/slightpulse.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Webshell_PL_SLIGHTPULSE_1",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "sha256": "133631957d41eed9496ac2774793283ce26f8772de226e7f520d26667b51481a",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Webshell_PL_SLIGHTPULSE_1\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tsha256 = \"133631957d41eed9496ac2774793283ce26f8772de226e7f520d26667b51481a\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$r1 = /if[\\x09\\x20]{0,32}\\(CGI::param\\([\\x22\\x27]\\w{1,64}[\\x22\\x27]\\)[\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32}\\{[\\x09\\x20]{0,32}[\\x09\\x20]{0,32}\\w{1,64}\\([\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32}\\x3b[\\x09\\x20]{0,32}\\}[\\x09\\x20]{0,32}elsif/\n\t\t$r2 = /system[\\x09\\x20]{0,32}\\([\\x09\\x20]{0,32}[\\x22\\x27]\\$\\w{1,64}[\\x09\\x20]{0,32}>[\\x09\\x20]{0,32}\\/tmp\\/\\d{1,10}[\\x09\\x20]{1,32}2[\\x09\\x20]{0,32}>[\\x09\\x20]{0,32}&1[\\x22\\x27][\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32}\\x3b\\s{0,128}open[\\x09\\x20]{0,32}\\([\\x09\\x20]{0,32}\\*\\w{1,64}[\\x09\\x20]{0,32},[\\x09\\x20]{0,32}[\\x22\\x27][\\x09\\x20]{0,32}<[\\x09\\x20]{0,32}\\$\\w{1,64}[\\x22\\x27][\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32}\\x3b\\s{0,128}while[\\x09\\x20]{0,32}\\([\\x09\\x20]{0,32}<[\\x09\\x20]{0,32}\\w{1,64}[\\x09\\x20]{0,32}\\>[\\x09\\x20]{0,32}\\)[\\x09\\x20]{0,32}\\{/\n\t\t$s1 = \"CGI::param(\"\n\t\t$s2 = \"system(\"\n\t\t$s3 = \"Content-type: image/gif\\\\n\\\\n\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

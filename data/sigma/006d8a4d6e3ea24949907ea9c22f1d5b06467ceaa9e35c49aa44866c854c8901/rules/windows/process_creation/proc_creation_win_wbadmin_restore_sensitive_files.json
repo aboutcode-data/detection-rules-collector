@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wbadmin_restore_sensitive_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), frack113",
+                "date": "2024-05-10",
+                "title": "Sensitive File Recovery From Backup Via Wbadmin.EXE",
+                "id": "84972c80-251c-4c3a-9079-4f00aad93938"
+            },
+            "rule_text": "title: Sensitive File Recovery From Backup Via Wbadmin.EXE\nid: 84972c80-251c-4c3a-9079-4f00aad93938\nrelated:\n- id: 6fe4aa1e-0531-4510-8be2-782154b73b48\n  type: derived\nstatus: test\ndescription: 'Detects the dump of highly sensitive files such as \"NTDS.DIT\" and \"SECURITY\"\n  hive.\n\n  Attackers can leverage the \"wbadmin\" utility in order to dump sensitive files that\n  might contain credential or sensitive information.\n\n  '\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/blob/2cc01b01132b5c304027a658c698ae09dd6a92bf/yml/OSBinaries/Wbadmin.yml\n- https://lolbas-project.github.io/lolbas/Binaries/Wbadmin/\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wbadmin-start-recovery\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wbadmin-start-backup\nauthor: Nasreddine Bencherchali (Nextron Systems), frack113\ndate: 2024-05-10\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wbadmin.exe\n  - OriginalFileName: WBADMIN.EXE\n  selection_backup:\n    CommandLine|contains|all:\n    - ' recovery'\n    - recoveryTarget\n    - itemtype:File\n    CommandLine|contains:\n    - \\config\\SAM\n    - \\config\\SECURITY\n    - \\config\\SYSTEM\n    - \\Windows\\NTDS\\NTDS.dit\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

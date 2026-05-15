@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/HackTool/Win32/Mimikatz/HackTool_Win32_Mimikatz_PTHA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HackTool_Win32_Mimikatz_PTHA",
+                "tags": [],
+                "description": "HackTool:Win32/Mimikatz.PTHA,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule HackTool_Win32_Mimikatz_PTHA\n{\n\tmeta:\n\t\tdescription = \"HackTool:Win32/Mimikatz.PTHA,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {73 65 6b 75 72 6c 73 61 3a 3a 70 74 68 }\n\t\t$a_80_1 = {2f 75 73 65 72 3a }\n\t\t$a_80_2 = {2f 64 6f 6d 61 69 6e 3a }\n\t\t$a_80_3 = {2f 6e 74 6c 6d 3a }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 10 + ( #a_80_1 & 1 ) * 1 + ( #a_80_2 & 1 ) * 1 + ( #a_80_3 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

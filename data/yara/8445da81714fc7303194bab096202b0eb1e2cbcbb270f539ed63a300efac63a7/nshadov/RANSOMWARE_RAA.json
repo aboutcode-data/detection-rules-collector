@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/nshadov/RANSOMWARE_RAA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RANSOMWARE_RAA",
+                "tags": [],
+                "description": "Identifes samples containing JS dropper similar to RAA ransomware.",
+                "author": "nshadov",
+                "reference": "https://malwr.com/analysis/YmE4MDNlMzk2MjY3NDdlYWE1NzFiOTNlYzVhZTlkM2Y/",
+                "date": "2016-06-15",
+                "hash": "535494aa6ce3ccef7346b548da5061a9",
+                "far": "unknown",
+                "frr": "unknown"
+            },
+            "rule_text": "rule RANSOMWARE_RAA\n{\n\tmeta:\n\t\tdescription = \"Identifes samples containing JS dropper similar to RAA ransomware.\"\n\t\tauthor = \"nshadov\"\n\t\treference = \"https://malwr.com/analysis/YmE4MDNlMzk2MjY3NDdlYWE1NzFiOTNlYzVhZTlkM2Y/\"\n\t\tdate = \"2016-06-15\"\n\t\thash = \"535494aa6ce3ccef7346b548da5061a9\"\n\t\tfar = \"unknown\"\n\t\tfrr = \"unknown\"\n\n\tstrings:\n\t\t$sp0 = \"CryptoJS.AES.decrypt\" fullword ascii\n\t\t$sp1 = \"RAA-SEP\" fullword ascii\n\t\t$sb0 = \"ActiveXObject(\\\"Scriptlet.TypeLib\\\")\" fullword ascii\n\t\t$sb1 = \"ActiveXObject(\\\"Scripting.FileSystemObject\\\")\" fullword ascii\n\t\t$sb2 = \"WScript.CreateObject(\\\"WScript.Shell\\\");\" fullword ascii\n\n\tcondition:\n\t\tfilesize > 10KB and filesize < 800KB and ( ( all of ( $sp* ) ) or ( ( all of ( $sb* ) ) and 1 of ( $sp* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

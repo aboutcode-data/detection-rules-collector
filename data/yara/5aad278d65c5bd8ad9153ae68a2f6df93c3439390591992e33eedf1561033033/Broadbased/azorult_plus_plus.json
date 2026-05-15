@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/azorult_plus_plus.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "azorult_plus_plus",
+                "tags": [],
+                "author": "jeFF0Falltrades",
+                "hash": "9d6611c2779316f1ef4b4a6edcfdfb5e770fe32b31ec2200df268c3bd236ed75"
+            },
+            "rule_text": "import \"pe\"\n\nrule azorult_plus_plus\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\t\thash = \"9d6611c2779316f1ef4b4a6edcfdfb5e770fe32b31ec2200df268c3bd236ed75\"\n\n\tstrings:\n\t\t$rdp = \"netsh firewall add portopening TCP 3389 \\\"Remote Desktop\\\"\" wide ascii nocase\n\t\t$list_1 = \"PasswordsList.txt\" wide ascii nocase\n\t\t$list_2 = \"CookieList.txt\" wide ascii nocase\n\t\t$coin_1 = \"Ethereum\\\\keystore\" wide ascii nocase\n\t\t$c2_1 = \".ac.ug\" wide ascii nocase\n\t\t$hide_user = \"Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\SpecialAccounts\\\\Userlist\" wide ascii nocase\n\t\t$pdb = \"azorult_new.pdb\" wide ascii nocase\n\t\t$lang_check = { FF 15 44 00 41 00 0F B7 C0 B9 19 04 00 00 66 3B C1 }\n\n\tcondition:\n\t\t$pdb or 5 of them or pe.imphash ( ) == \"e60de0acc6c7bbe3988e8dc00556d7b9\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

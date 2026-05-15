@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_invoke_obfuscation_via_use_rundll32_services.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-09",
+                "title": "Invoke-Obfuscation Via Use Rundll32 - System",
+                "id": "641a4bfb-c017-44f7-800c-2aee0184ce9b"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Use Rundll32 - System\nid: 641a4bfb-c017-44f7-800c-2aee0184ce9b\nstatus: test\ndescription: Detects Obfuscated Powershell via use Rundll32 in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-09\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ImagePath|contains|all:\n    - '&&'\n    - rundll32\n    - shell32.dll\n    - shellexec_rundll\n    ImagePath|contains:\n    - value\n    - invoke\n    - comspec\n    - iex\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

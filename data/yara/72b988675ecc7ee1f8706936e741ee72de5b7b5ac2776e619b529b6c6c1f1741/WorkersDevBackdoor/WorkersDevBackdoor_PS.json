@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/WorkersDevBackdoor/WorkersDevBackdoor_PS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WorkersDevBackdoor_PS",
+                "tags": [],
+                "author": "RussianPanda",
+                "decription": "Detects WorkersDevBackdoor PowerShell script",
+                "date": "12/15/2023"
+            },
+            "rule_text": "rule WorkersDevBackdoor_PS\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdecription = \"Detects WorkersDevBackdoor PowerShell script\"\n\t\tdate = \"12/15/2023\"\n\n\tstrings:\n\t\t$s1 = \"sleep\" wide\n\t\t$s2 = \"convertto-securestring\" wide\n\t\t$s3 = \"System.Drawing.dll\" wide\n\t\t$s4 = \"System.Web.Extensions.dll\" wide\n\t\t$s5 = \"System.Windows.Forms.dll\" wide\n\t\t$s6 = \"CSharp\" wide\n\n\tcondition:\n\t\tall of ( $s* ) and filesize < 200KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

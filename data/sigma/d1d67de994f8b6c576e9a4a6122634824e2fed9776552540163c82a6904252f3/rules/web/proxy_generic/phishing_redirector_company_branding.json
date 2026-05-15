@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/phishing_redirector_company_branding.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Ramine Etow",
+                "date": "2024-08-14",
+                "title": "Phishing Redirector Retrieving Company Branding",
+                "id": "632695d7-a837-40b4-92d7-b40ec5b3fee4"
+            },
+            "rule_text": "title: Phishing Redirector Retrieving Company Branding\nid: 632695d7-a837-40b4-92d7-b40ec5b3fee4\ndescription: Detects a potential phishing redirector site that retrieves branding\n  material for the target company to masquerade as a company website. In this case,\n  retrieving the company's favicon from Google.\nstatus: test\nauthor: NTT Security - Ramine Etow\ndate: '2024-08-14'\nmodified: '2024-08-16'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-host|endswith: s2.googleusercontent.com\n    c-uri: /s2/favicons\n    c-uri-query|startswith: domain=\n  condition: selection\nfalsepositives:\n- Legitimate use of Google services for favicon retrieval\nlevel: medium\ntags:\n- attack.defense-evasion\n- attack.spearphishing\n- attack.t1071.001\n",
+            "vulnerabilities": []
+        }
+    ]
+}

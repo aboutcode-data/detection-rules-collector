@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_workfolders.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Maxime Thiebaut (@0xThiebaut)",
+                "date": "2021-10-21",
+                "title": "Execution via WorkFolders.exe",
+                "id": "0bbc6369-43e3-453d-9944-cae58821c173"
+            },
+            "rule_text": "title: Execution via WorkFolders.exe\nid: 0bbc6369-43e3-453d-9944-cae58821c173\nstatus: test\ndescription: Detects using WorkFolders.exe to execute an arbitrary control.exe\nreferences:\n- https://twitter.com/elliotkillick/status/1449812843772227588\nauthor: Maxime Thiebaut (@0xThiebaut)\ndate: 2021-10-21\nmodified: 2022-12-25\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\control.exe\n    ParentImage|endswith: \\WorkFolders.exe\n  filter:\n    Image: C:\\Windows\\System32\\control.exe\n  condition: selection and not filter\nfalsepositives:\n- Legitimate usage of the uncommon Windows Work Folders feature.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

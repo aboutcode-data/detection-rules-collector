@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/cxpid.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "cxpidCode",
+                "tags": [
+                    "cxpid",
+                    "Family"
+                ],
+                "description": "cxpid code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule cxpidCode : cxpid Family\n{\n\tmeta:\n\t\tdescription = \"cxpid code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$entryjunk = { 55 8B EC B9 38 04 00 00 6A 00 6A 00 49 75 F9 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cxpidStrings",
+                "tags": [
+                    "cxpid",
+                    "Family"
+                ],
+                "description": "cxpid Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule cxpidStrings : cxpid Family\n{\n\tmeta:\n\t\tdescription = \"cxpid Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$ = \"/cxpid/submit.php?SessionID=\"\n\t\t$ = \"/cxgid/\"\n\t\t$ = \"E21BC52BEA2FEF26D005CF\"\n\t\t$ = \"E21BC52BEA39E435C40CD8\"\n\t\t$ = \"                   -,L-,O+,Q-,R-,Y-,S-\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cxpid",
+                "tags": [
+                    "Family"
+                ],
+                "description": "cxpid",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "rule cxpid : Family\n{\n\tmeta:\n\t\tdescription = \"cxpid\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tcondition:\n\t\tcxpidCode or cxpidStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

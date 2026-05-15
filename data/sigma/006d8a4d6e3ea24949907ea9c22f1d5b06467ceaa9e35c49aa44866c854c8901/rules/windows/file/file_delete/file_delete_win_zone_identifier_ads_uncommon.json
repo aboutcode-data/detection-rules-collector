@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_delete/file_delete_win_zone_identifier_ads_uncommon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-04",
+                "title": "ADS Zone.Identifier Deleted By Uncommon Application",
+                "id": "3109530e-ab47-4cc6-a953-cac5ebcc93ae"
+            },
+            "rule_text": "title: ADS Zone.Identifier Deleted By Uncommon Application\nid: 3109530e-ab47-4cc6-a953-cac5ebcc93ae\nrelated:\n- id: 7eac0a16-5832-4e81-865f-0268a6d19e4b\n  type: similar\nstatus: test\ndescription: Detects the deletion of the \"Zone.Identifier\" ADS by an uncommon process.\n  Attackers can leverage this in order to bypass security restrictions that make use\n  of the ADS such as Microsoft Office apps.\nreferences:\n- https://securityliterate.com/how-malware-abuses-the-zone-identifier-to-circumvent-detection-and-analysis/\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-04\nmodified: 2025-07-04\ntags:\n- attack.stealth\n- attack.t1070.004\nlogsource:\n  product: windows\n  category: file_delete\ndetection:\n  selection:\n    TargetFilename|endswith: :Zone.Identifier\n  filter_main_generic:\n    Image:\n    - C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\n    - C:\\Program Files\\PowerShell\\7\\pwsh.exe\n    - C:\\Windows\\explorer.exe\n    - C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\n    - C:\\Windows\\SysWOW64\\explorer.exe\n    - C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe\n  filter_optional_browsers_chrome:\n    Image:\n    - C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\n    - C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\n  filter_optional_browsers_firefox:\n    Image:\n    - C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe\n    - C:\\Program Files\\Mozilla Firefox\\firefox.exe\n  filter_optional_browsers_msedge:\n    Image:\n    - C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\n    - C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Other third party applications not listed.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

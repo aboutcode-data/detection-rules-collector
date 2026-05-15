@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sdbinst_shim_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis",
+                "date": "2019-01-16",
+                "title": "Potential Shim Database Persistence via Sdbinst.EXE",
+                "id": "517490a7-115a-48c6-8862-1a481504d5a8"
+            },
+            "rule_text": "title: Potential Shim Database Persistence via Sdbinst.EXE\nid: 517490a7-115a-48c6-8862-1a481504d5a8\nrelated:\n- id: 18ee686c-38a3-4f65-9f44-48a077141f42\n  type: similar\nstatus: test\ndescription: 'Detects installation of a new shim using sdbinst.exe.\n\n  Adversaries may establish persistence and/or elevate privileges by executing malicious\n  content triggered by application shims\n\n  '\nreferences:\n- https://www.mandiant.com/resources/blog/fin7-shim-databases-persistence\nauthor: Markus Neis\ndate: 2019-01-16\nmodified: 2023-12-06\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1546.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\sdbinst.exe\n  - OriginalFileName: sdbinst.exe\n  selection_cli:\n    CommandLine|contains: .sdb\n  filter_optional_iis:\n    ParentImage|endswith: \\msiexec.exe\n    CommandLine|contains:\n    - :\\Program Files (x86)\\IIS Express\\iisexpressshim.sdb\n    - :\\Program Files\\IIS Express\\iisexpressshim.sdb\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_terminate_application.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-11",
+                "title": "Application Terminated Via Wmic.EXE",
+                "id": "49d9671b-0a0a-4c09-8280-d215bfd30662"
+            },
+            "rule_text": "title: Application Terminated Via Wmic.EXE\nid: 49d9671b-0a0a-4c09-8280-d215bfd30662\nrelated:\n- id: 847d5ff3-8a31-4737-a970-aeae8fe21765\n  type: derived\nstatus: test\ndescription: Detects calls to the \"terminate\" function via wmic in order to kill an\n  application\nreferences:\n- https://cyble.com/blog/lockfile-ransomware-using-proxyshell-attack-to-deploy-ransomware/\n- https://www.bitdefender.com/files/News/CaseStudies/study/377/Bitdefender-Whitepaper-WMI-creat4871-en-EN-GenericUse.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-11\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WMIC.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - call\n    - terminate\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

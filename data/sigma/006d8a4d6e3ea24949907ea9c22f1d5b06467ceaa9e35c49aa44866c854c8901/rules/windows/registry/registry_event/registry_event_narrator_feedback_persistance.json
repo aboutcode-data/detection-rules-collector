@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_narrator_feedback_persistance.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Dmitriy Lifanov, oscd.community",
+                "date": "2019-10-25",
+                "title": "Narrator's Feedback-Hub Persistence",
+                "id": "f663a6d9-9d1b-49b8-b2b1-0637914d199a"
+            },
+            "rule_text": "title: Narrator's Feedback-Hub Persistence\nid: f663a6d9-9d1b-49b8-b2b1-0637914d199a\nstatus: test\ndescription: Detects abusing Windows 10 Narrator's Feedback-Hub\nreferences:\n- https://giuliocomi.blogspot.com/2019/10/abusing-windows-10-narrators-feedback.html\nauthor: Dmitriy Lifanov, oscd.community\ndate: 2019-10-25\nmodified: 2022-03-26\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.001\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection1:\n    EventType: DeleteValue\n    TargetObject|endswith: \\AppXypsaf9f1qserqevf0sws76dx4k9a5206\\Shell\\open\\command\\DelegateExecute\n  selection2:\n    TargetObject|endswith: \\AppXypsaf9f1qserqevf0sws76dx4k9a5206\\Shell\\open\\command\\(Default)\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

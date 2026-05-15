@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/cmd_bypassing_security_controls.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Command Shell Bypassing Security Controls",
+                "id": "188b256a-4344-47fb-88ed-6343b37c4999"
+            },
+            "rule_text": "title: Command Shell Bypassing Security Controls\nid: 188b256a-4344-47fb-88ed-6343b37c4999\nstatus: experimental\ndescription: Detects common ways to bypass controls using Windows Command Shell. Inspired\n  by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.execution\n- attack.t1059.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\cmd.exe\n    CommandLine|contains|windash:\n    - bypass\n    - -exec\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

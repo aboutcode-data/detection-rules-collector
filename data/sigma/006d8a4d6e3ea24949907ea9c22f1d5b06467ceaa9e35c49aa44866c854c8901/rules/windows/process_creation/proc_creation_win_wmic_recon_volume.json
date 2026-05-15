@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_volume.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Stephen Lincoln '@slincoln-aiq' (AttackIQ)",
+                "date": "2024-02-02",
+                "title": "System Disk And Volume Reconnaissance Via Wmic.EXE",
+                "id": "c79da740-5030-45ec-a2e0-479e824a562c"
+            },
+            "rule_text": "title: System Disk And Volume Reconnaissance Via Wmic.EXE\nid: c79da740-5030-45ec-a2e0-479e824a562c\nrelated:\n- id: d85ecdd7-b855-4e6e-af59-d9c78b5b861e\n  type: similar\nstatus: test\ndescription: 'An adversary might use WMI to discover information about the system,\n  such as the volume name, size,\n\n  free space, and other disk information. This can be done using the ''wmic'' command-line\n  utility and has been\n\n  observed being used by threat actors such as Volt Typhoon.\n\n  '\nreferences:\n- https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-144a\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wmic\nauthor: Stephen Lincoln '@slincoln-aiq' (AttackIQ)\ndate: 2024-02-02\nmodified: 2025-10-20\ntags:\n- attack.execution\n- attack.discovery\n- attack.t1047\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WMIC.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n  - CommandLine|contains:\n    - ' volumename'\n    - ' logicaldisk'\n  - CommandLine|contains|all:\n    - path\n    - win32_logicaldisk\n  - CommandLine|contains|all:\n    - ' volume'\n    - ' list '\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

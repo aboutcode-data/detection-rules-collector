@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/open_redirect.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2023-08-02",
+                "title": "Suspicious Open Redirect",
+                "id": "f81c69cc-58ba-4ded-8d05-35fb47011b3d"
+            },
+            "rule_text": "title: Suspicious Open Redirect\nid: f81c69cc-58ba-4ded-8d05-35fb47011b3d\ndescription: Open redirect endpoints that are abused to redirect to phishing sites\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: '2023-08-02'\nlogsource:\n  category: proxy\ndetection:\n  selection_linkedin:\n    cs-host: linkedin.com\n    c-uri|startswith: /slink\\?code\n  filter:\n    cs-referer|contains:\n    - linkedin.com\n  condition: 1 of selection* and not filter\nfalsepositives:\n- Investigate where the link redirects to and validate whether it's malicious\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

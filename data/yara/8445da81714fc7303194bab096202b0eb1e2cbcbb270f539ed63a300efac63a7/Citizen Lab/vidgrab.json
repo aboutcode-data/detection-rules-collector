@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/vidgrab.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VidgrabCode",
+                "tags": [
+                    "Vidgrab",
+                    "Family"
+                ],
+                "description": "Vidgrab code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule VidgrabCode : Vidgrab Family\n{\n\tmeta:\n\t\tdescription = \"Vidgrab code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$divbyzero = { B8 02 00 00 00 48 48 BA 02 00 00 00 83 F2 02 F7 F0 }\n\t\t$xorloop = { 03 C1 80 30 (66 | 58) 41 }\n\t\t$junk = { 8B 4? ?? 8B 4? ?? 03 45 08 52 5A }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "VidgrabStrings",
+                "tags": [
+                    "Vidgrab",
+                    "Family"
+                ],
+                "description": "Vidgrab Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule VidgrabStrings : Vidgrab Family\n{\n\tmeta:\n\t\tdescription = \"Vidgrab Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$ = \"IDI_ICON5\" wide ascii\n\t\t$ = \"starter.exe\"\n\t\t$ = \"wmifw.exe\"\n\t\t$ = \"Software\\\\rar\"\n\t\t$ = \"tmp092.tmp\"\n\t\t$ = \"temp1.exe\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Vidgrab",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Vidgrab",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "rule Vidgrab : Family\n{\n\tmeta:\n\t\tdescription = \"Vidgrab\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tcondition:\n\t\tVidgrabCode or VidgrabStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

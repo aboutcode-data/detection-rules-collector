@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2014/TA/Turla/proc_creation_win_apt_turla_comrat_may20.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-05-26",
+                "title": "Turla Group Commands May 2020",
+                "id": "9e2e51c5-c699-4794-ba5a-29f5da40ac0c"
+            },
+            "rule_text": "title: Turla Group Commands May 2020\nid: 9e2e51c5-c699-4794-ba5a-29f5da40ac0c\nstatus: test\ndescription: Detects commands used by Turla group as reported by ESET in May 2020\nreferences:\n- https://www.welivesecurity.com/wp-content/uploads/2020/05/ESET_Turla_ComRAT.pdf\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-05-26\nmodified: 2025-10-19\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.stealth\n- attack.g0010\n- attack.execution\n- attack.t1059.001\n- attack.t1053.005\n- attack.t1027\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cli_1:\n    CommandLine|contains:\n    - tracert -h 10 yahoo.com\n    - .WSqmCons))|iex;\n    - Fr`omBa`se6`4Str`ing\n  selection_cli_2:\n    CommandLine|re: net\\s+use\\s+https://docs.live.net\n    CommandLine|contains: '@aol.co.uk'\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

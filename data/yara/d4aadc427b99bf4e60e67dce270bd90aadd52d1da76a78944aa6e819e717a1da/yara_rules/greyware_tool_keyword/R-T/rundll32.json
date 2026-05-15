@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/R-T/rundll32.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "rundll32",
+                "tags": [],
+                "description": "Detection patterns for the tool 'rundll32' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "rundll32",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule rundll32\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'rundll32' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"rundll32\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /comsvcs\\.dll\\,\\sMiniDump\\s/ nocase ascii wide\n\t\t$string2 = /comsvcs\\.dll\\,\\#24\\s/ nocase ascii wide\n\t\t$string3 = /lsass.{0,1000}rundll32\\.exe\\s.{0,1000}comsvcs\\.dll\\,\\sMiniDump\\s.{0,1000}\\.dmp\\sfull/ nocase ascii wide\n\t\t$string4 = /rundll32.{0,1000}\\.dll.{0,1000}a.{0,1000}\\/p\\:/ nocase ascii wide\n\t\t$string5 = /rundll32.{0,1000}\\.dll.{0,1000}StartW/ nocase ascii wide\n\t\t$string6 = /rundll32.{0,1000}comsvcs\\.dll\\sMiniDump\\s/ nocase ascii wide\n\t\t$string7 = /rundll32\\.exe\\s.{0,1000}comsvcs\\.dll\\,\\sMiniDump\\s.{0,1000}lsass.{0,1000}full/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

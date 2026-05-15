@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_electron_app_children.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-21",
+                "title": "Suspicious Electron Application Child Processes",
+                "id": "f26eb764-fd89-464b-85e2-dc4a8e6e77b8"
+            },
+            "rule_text": "title: Suspicious Electron Application Child Processes\nid: f26eb764-fd89-464b-85e2-dc4a8e6e77b8\nrelated:\n- id: 378a05d8-963c-46c9-bcce-13c7657eac99\n  type: similar\nstatus: test\ndescription: 'Detects suspicious child processes of electron apps (teams, discord,\n  slack, etc.). This could be a potential sign of \".asar\" file tampering (See reference\n  section for more information) or binary execution proxy through specific CLI arguments\n  (see related rule)\n\n  '\nreferences:\n- https://taggart-tech.com/quasar-electron/\n- https://github.com/mttaggart/quasar\n- https://positive.security/blog/ms-officecmd-rce\n- https://lolbas-project.github.io/lolbas/Binaries/Msedge/\n- https://lolbas-project.github.io/lolbas/Binaries/Teams/\n- https://lolbas-project.github.io/lolbas/Binaries/msedgewebview2/\n- https://medium.com/@MalFuzzer/one-electron-to-rule-them-all-dc2e9b263daf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-21\nmodified: 2024-07-12\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\chrome.exe\n    - \\discord.exe\n    - \\GitHubDesktop.exe\n    - \\keybase.exe\n    - \\msedge.exe\n    - \\msedgewebview2.exe\n    - \\msteams.exe\n    - \\slack.exe\n    - \\teams.exe\n  selection_child_image:\n    Image|endswith:\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\whoami.exe\n    - \\wscript.exe\n  selection_child_paths:\n    Image|contains:\n    - :\\ProgramData\\\n    - :\\Temp\\\n    - \\AppData\\Local\\Temp\\\n    - \\Users\\Public\\\n    - \\Windows\\Temp\\\n  filter_optional_discord:\n    ParentImage|endswith: \\Discord.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains: \\NVSMI\\nvidia-smi.exe\n  condition: selection_parent and 1 of selection_child_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

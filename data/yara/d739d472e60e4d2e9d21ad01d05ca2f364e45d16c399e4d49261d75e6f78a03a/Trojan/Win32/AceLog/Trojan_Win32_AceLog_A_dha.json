@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/AceLog/Trojan_Win32_AceLog_A_dha.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_AceLog_A_dha",
+                "tags": [],
+                "description": "Trojan:Win32/AceLog.A!dha,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_AceLog_A_dha\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/AceLog.A!dha,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {68 06 02 00 00 66 89 85 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? e8 ?? ?? ?? ?? 68 04 01 00 00 8d 85 ?? ?? ?? ?? ?? ?? e8 ?? ?? ?? ?? ?? ?? ?? ?? ff 15 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 68 08 02 00 00 50 e8 ?? ?? ?? ?? 6a 44 }\n\t\t$a_03_1 = {52 00 55 00 4e 00 44 00 4c 00 4c 00 33 00 32 00 2e 00 ?? 00 58 00 45 00 20 00 22 00 25 00 73 00 22 00 2c 00 20 00 23 00 31 00 00 00 2a 00 00 00 2e 00 00 00 2e 00 2e 00 00 00 }\n\t\t$a_03_2 = {52 00 55 00 4e 00 44 00 4c 00 ?? 00 33 00 32 00 2e 00 45 00 58 00 45 00 20 00 22 00 25 00 73 00 22 00 2c 00 20 00 23 00 31 00 00 00 63 6d 64 20 2f ?? 20 44 45 4c 20 00 20 22 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * - 10 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

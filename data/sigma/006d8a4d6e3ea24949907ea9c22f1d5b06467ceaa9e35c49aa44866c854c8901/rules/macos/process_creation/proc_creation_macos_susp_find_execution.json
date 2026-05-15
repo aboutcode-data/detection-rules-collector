@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_find_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-28",
+                "title": "Potential Discovery Activity Using Find - MacOS",
+                "id": "85de3a19-b675-4a51-bfc6-b11a5186c971"
+            },
+            "rule_text": "title: Potential Discovery Activity Using Find - MacOS\nid: 85de3a19-b675-4a51-bfc6-b11a5186c971\nrelated:\n- id: 8344c0e5-5783-47cc-9cf9-a0f7fd03e6cf\n  type: similar\nstatus: test\ndescription: Detects usage of \"find\" binary in a suspicious manner to perform discovery\nreferences:\n- https://github.com/SaiSathvik1/Linux-Privilege-Escalation-Notes\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-28\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /find\n    CommandLine|contains:\n    - -perm -4000\n    - -perm -2000\n    - -perm 0777\n    - -perm -222\n    - -perm -o w\n    - -perm -o x\n    - -perm -u=s\n    - -perm -g=s\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

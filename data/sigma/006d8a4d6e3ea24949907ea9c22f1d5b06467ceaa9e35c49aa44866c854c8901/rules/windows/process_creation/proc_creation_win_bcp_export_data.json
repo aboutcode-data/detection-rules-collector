@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bcp_export_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Omar Khaled (@beacon_exe), MahirAli Khan (in/mahiralikhan), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-08-20",
+                "title": "Data Export From MSSQL Table Via BCP.EXE",
+                "id": "c615d676-f655-46b9-b913-78729021e5d7"
+            },
+            "rule_text": "title: Data Export From MSSQL Table Via BCP.EXE\nid: c615d676-f655-46b9-b913-78729021e5d7\nstatus: test\ndescription: 'Detects the execution of the BCP utility in order to export data from\n  the database.\n\n  Attackers were seen saving their malware to a database column or table and then\n  later extracting it via \"bcp.exe\" into a file.\n\n  '\nreferences:\n- https://docs.microsoft.com/en-us/sql/tools/bcp-utility\n- https://asec.ahnlab.com/en/61000/\n- https://asec.ahnlab.com/en/78944/\n- https://www.huntress.com/blog/attacking-mssql-servers\n- https://www.huntress.com/blog/attacking-mssql-servers-pt-ii\n- https://news.sophos.com/en-us/2024/08/07/sophos-mdr-hunt-tracks-mimic-ransomware-campaign-against-organizations-in-india/\n- https://research.nccgroup.com/2018/03/10/apt15-is-alive-and-strong-an-analysis-of-royalcli-and-royaldns/\nauthor: Omar Khaled (@beacon_exe), MahirAli Khan (in/mahiralikhan), Nasreddine Bencherchali\n  (Nextron Systems)\ndate: 2024-08-20\ntags:\n- attack.execution\n- attack.exfiltration\n- attack.t1048\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bcp.exe\n  - OriginalFileName: BCP.exe\n  selection_cli:\n    CommandLine|contains:\n    - ' out '\n    - ' queryout '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate data export operations.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

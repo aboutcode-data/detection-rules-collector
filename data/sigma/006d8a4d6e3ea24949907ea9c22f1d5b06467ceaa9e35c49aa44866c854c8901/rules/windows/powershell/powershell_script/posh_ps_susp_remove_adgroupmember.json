@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_remove_adgroupmember.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-26",
+                "title": "Remove Account From Domain Admin Group",
+                "id": "48a45d45-8112-416b-8a67-46e03a4b2107"
+            },
+            "rule_text": "title: Remove Account From Domain Admin Group\nid: 48a45d45-8112-416b-8a67-46e03a4b2107\nstatus: test\ndescription: 'Adversaries may interrupt availability of system and network resources\n  by inhibiting access to accounts utilized by legitimate users.\n\n  Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove\n  access to accounts.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1531/T1531.md#atomic-test-3---remove-account-from-domain-admin-group\nauthor: frack113\ndate: 2021-12-26\ntags:\n- attack.impact\n- attack.t1531\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Remove-ADGroupMember\n    - '-Identity '\n    - '-Members '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

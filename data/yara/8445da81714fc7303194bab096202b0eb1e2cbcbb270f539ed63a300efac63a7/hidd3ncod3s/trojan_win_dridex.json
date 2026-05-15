@@ -1,0 +1,38 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/hidd3ncod3s/trojan_win_dridex.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_win_possible_dridex",
+                "tags": [],
+                "description": "Possibly Dridex sample",
+                "author": "hidd3ncod3s@gmail.com",
+                "date": "2015-12-26"
+            },
+            "rule_text": "rule trojan_win_possible_dridex\n{\n\tmeta:\n\t\tdescription = \"Possibly Dridex sample\"\n\t\tauthor = \"hidd3ncod3s@gmail.com\"\n\t\tdate = \"2015-12-26\"\n\n\tstrings:\n\t\t$s1 = \"str\" fullword ascii\n\t\t$s2 = \"SVWATAUAWUH\" fullword ascii\n\t\t$s3 = {56 57 53 55 81 EC 80 00}\n\n\tcondition:\n\t\t($s2 or $s3 ) and $s1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "trojan_win_dridex",
+                "tags": [],
+                "description": "Rule to identify Dridex(Dec 2015)",
+                "author": "hidd3ncod3s@gmail.com",
+                "date": "2015-12-26"
+            },
+            "rule_text": "import \"pe\"\n\nrule trojan_win_dridex\n{\n\tmeta:\n\t\tdescription = \"Rule to identify Dridex(Dec 2015)\"\n\t\tauthor = \"hidd3ncod3s@gmail.com\"\n\t\tdate = \"2015-12-26\"\n\n\tstrings:\n\t\t$s1 = \"str\" fullword ascii\n\t\t$s2 = \"mod4\" fullword ascii\n\t\t$s3 = \"list\" fullword ascii\n\t\t$s4 = \"bot\" fullword ascii\n\t\t$s5 = \"mod5\" fullword ascii\n\t\t$s6 = \"SVWATAUAWUH\" fullword ascii\n\n\tcondition:\n\t\tpe.sections[ 5 ] . name == \".sdata\" and all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "trojan_win_dridex_TM",
+                "tags": [],
+                "description": "Rule to identify Dridex.TM",
+                "author": "hidd3ncod3s@gmail.com",
+                "date": "2016-01-09"
+            },
+            "rule_text": "rule trojan_win_dridex_TM\n{\n\tmeta:\n\t\tdescription = \"Rule to identify Dridex.TM\"\n\t\tauthor = \"hidd3ncod3s@gmail.com\"\n\t\tdate = \"2016-01-09\"\n\n\tstrings:\n\t\t$s1 = \"str\" fullword ascii\n\t\t$s2 = \"SVWATAUAWUH\" fullword ascii\n\t\t$mv1 = {0F B6 [6] 0F B6 [6] 0F B6 [6] 0F B6 [6] 0F B7}\n\t\t$mv2 = {0F B6 [3] 0F B6 [3] 0F B6 [3] 0F B6 [3] 0F B7}\n\n\tcondition:\n\t\tall of ( $s* ) and ( $mv1 or $mv2 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

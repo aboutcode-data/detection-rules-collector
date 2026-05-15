@@ -1,0 +1,171 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/crowdstrike/Crowdstrike_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_01",
+                "tags": [
+                    "fourh_stack_strings",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - 4H RAT",
+                "author": "CrowdStrike",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA",
+                "yara_version": ">=1.6"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_01 : fourh_stack_strings putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - 4H RAT\"\n\t\tauthor = \"CrowdStrike\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\t\tyara_version = \">=1.6\"\n\n\tstrings:\n\t\t$key_combined_1 = { C6 44 24 ?? 34 C6 44 24 ?? 36 C6 44 24 ?? 21 C6 44 24 ?? 79 C6 44 24 ?? 6F C6 44 24 ?? 00 }\n\t\t$keyfrag_ebp_1 = { C6 45 ?? 6C }\n\t\t$keyfrag_ebp_2 = { C6 45 ?? 64 }\n\t\t$keyfrag_ebp_3 = { C6 45 ?? 34 }\n\t\t$keyfrag_ebp_4 = { C6 45 ?? 36 }\n\t\t$keyfrag_ebp_5 = { C6 45 ?? 21 }\n\t\t$keyfrag_ebp_6 = { C6 45 ?? 79 }\n\t\t$keyfrag_ebp_7 = { C6 45 ?? 6F }\n\t\t$keyfrag_esp_1 = { c6 44 ?? 6C }\n\t\t$keyfrag_esp_2 = { c6 44 ?? 64 }\n\t\t$keyfrag_esp_3 = { c6 44 ?? 34 }\n\t\t$keyfrag_esp_4 = { c6 44 ?? 36 }\n\t\t$keyfrag_esp_5 = { c6 44 ?? 21 }\n\t\t$keyfrag_esp_6 = { c6 44 ?? 79 }\n\t\t$keyfrag_esp_7 = { c6 44 ?? 6F }\n\t\t$check_zeroes = \"0000000\"\n\t\t$check_param = \"Invalid parameter\"\n\t\t$check_ercv = \"ercv= %d\"\n\t\t$check_unk = \"unknown\"\n\n\tcondition:\n\t\tany of ( $key_combined* ) or ( 1 of ( $check_* ) and ( ( all of ( $keyfrag_ebp_* ) and for any i in ( 1 .. #keyfrag_ebp_5 ) : ( for all of ( $keyfrag_ebp_* ) : ( $ in ( @keyfrag_ebp_5 [ i ] - 100 .. @keyfrag_ebp_5 [ i ] + 100 ) ) ) ) or ( for any i in ( 1 .. #keyfrag_esp_5 ) : ( for all of ( $keyfrag_esp_* ) : ( $ in ( @keyfrag_esp_5 [ i ] - 100 .. @keyfrag_esp_5 [ i ] + 100 ) ) ) ) ) )\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_02",
+                "tags": [
+                    "rc4_dropper",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - RC4 dropper",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_02 : rc4_dropper putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - RC4 dropper\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\n\tstrings:\n\t\t$res_lock = \"LockResource\"\n\t\t$res_size = \"SizeofResource\"\n\t\t$res_load = \"LoadResource\"\n\t\t$com = \"COMSPEC\"\n\t\t$cryptaq = \"CryptAcquireContextA\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( all of ( $res_* ) ) and $cryptaq and $com\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_03",
+                "tags": [
+                    "threepara_para_implant",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - 3PARA RAT",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_03 : threepara_para_implant putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - 3PARA RAT\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\n\tstrings:\n\t\t$parafmt = \"%s%dpara1=%dpara2=%dpara3=%d\"\n\t\t$class_attribe = \"CCommandAttribe\"\n\t\t$class_cd = \"CCommandCD\"\n\t\t$class_cmd = \"CCommandCMD\"\n\t\t$class_nop = \"CCommandNop\"\n\n\tcondition:\n\t\t$parafmt or all of ( $class_* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_04",
+                "tags": [
+                    "pngdowner",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - PNGDOWNER",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_04 : pngdowner putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - PNGDOWNER\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\n\tstrings:\n\t\t$myagent = \"myAgent\"\n\t\t$readfile = \"read file error:\"\n\t\t$downfile = \"down file success\"\n\t\t$avail = \"Avaliable data:%u bytes\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_05",
+                "tags": [
+                    "httpclient",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - HTTPCLIENT",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_05 : httpclient putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - HTTPCLIENT\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\n\tstrings:\n\t\t$recv_wrong = \"Error:recv worng\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_06",
+                "tags": [
+                    "xor_dropper",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - XOR based dropper",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_06 : xor_dropper putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - XOR based dropper\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\n\tstrings:\n\t\t$xorloop = { 8b d0 83 e2 0f 8a 54 14 04 30 14 01 83 c0 01 3b c6 7c ed  }\n\n\tcondition:\n\t\t$xorloop\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_CSIT_14003_03",
+                "tags": [
+                    "installer"
+                ],
+                "copyright": "CrowdStrike, Inc",
+                "description": "Flying Kitten Installer",
+                "version": "1.0",
+                "actor": "FLYING KITTEN",
+                "in_the_wild": true,
+                "reference": "http://www.crowdstrike.com/blog/cat-scratch-fever-crowdstrike-tracks-newly-reported-iranian-actor-flying-kitten/"
+            },
+            "rule_text": "rule CrowdStrike_CSIT_14003_03 : installer\n{\n\tmeta:\n\t\tcopyright = \"CrowdStrike, Inc\"\n\t\tdescription = \"Flying Kitten Installer\"\n\t\tversion = \"1.0\"\n\t\tactor = \"FLYING KITTEN\"\n\t\tin_the_wild = true\n\t\treference = \"http://www.crowdstrike.com/blog/cat-scratch-fever-crowdstrike-tracks-newly-reported-iranian-actor-flying-kitten/\"\n\n\tstrings:\n\t\t$exename = \"IntelRapidStart.exe\"\n\t\t$confname = \"IntelRapidStart.exe.config\"\n\t\t$cabhdr = { 4d 53 43 46 00 00 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_FlyingKitten",
+                "tags": [
+                    "rat"
+                ],
+                "copyright": "CrowdStrike, Inc",
+                "description": "Flying Kitten RAT",
+                "version": "1.0",
+                "actor": "FLYING KITTEN",
+                "in_the_wild": true
+            },
+            "rule_text": "rule CrowdStrike_FlyingKitten : rat\n{\n\tmeta:\n\t\tcopyright = \"CrowdStrike, Inc\"\n\t\tdescription = \"Flying Kitten RAT\"\n\t\tversion = \"1.0\"\n\t\tactor = \"FLYING KITTEN\"\n\t\tin_the_wild = true\n\n\tstrings:\n\t\t$classpath = \"Stealer.Properties.Resources.resources\"\n\n\tcondition:\n\t\tall of them and uint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x4550 and uint16( uint32( 0x3C ) + 0x16 ) & 0x2000 == 0 and ( ( uint16( uint32( 0x3c ) + 24 ) == 0x010b and uint32( uint32( 0x3c ) + 232 ) > 0 ) or ( uint16( uint32( 0x3c ) + 24 ) == 0x020b and uint32( uint32( 0x3c ) + 248 ) > 0 ) )\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_CVE_2014_4113",
+                "tags": [],
+                "copyright": "CrowdStrike, Inc",
+                "description": "CVE-2014-4113 Microsoft Windows x64 Local Privilege Escalation Exploit",
+                "version": "1.0",
+                "last_modified": "2014-10-14",
+                "in_the_wild": true
+            },
+            "rule_text": "rule CrowdStrike_CVE_2014_4113\n{\n\tmeta:\n\t\tcopyright = \"CrowdStrike, Inc\"\n\t\tdescription = \"CVE-2014-4113 Microsoft Windows x64 Local Privilege Escalation Exploit\"\n\t\tversion = \"1.0\"\n\t\tlast_modified = \"2014-10-14\"\n\t\tin_the_wild = true\n\n\tstrings:\n\t\t$const1 = { fb ff ff ff }\n\t\t$const2 = { 0b 00 00 00 01 00 00 00 }\n\t\t$const3 = { 25 00 00 00 01 00 00 00 }\n\t\t$const4 = { 8b 00 00 00 01 00 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2014-4113"
+            ]
+        }
+    ]
+}

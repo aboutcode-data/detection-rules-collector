@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_powershell_module_susp_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-09",
+                "title": "Potential Suspicious PowerShell Module File Created",
+                "id": "e8a52bbd-bced-459f-bd93-64db45ce7657"
+            },
+            "rule_text": "title: Potential Suspicious PowerShell Module File Created\nid: e8a52bbd-bced-459f-bd93-64db45ce7657\nstatus: test\ndescription: Detects the creation of a new PowerShell module in the first folder of\n  the module directory structure \"\\WindowsPowerShell\\Modules\\malware\\malware.psm1\".\n  This is somewhat an uncommon practice as legitimate modules often includes a version\n  folder.\nreferences:\n- Internal Research\n- https://learn.microsoft.com/en-us/powershell/scripting/developer/module/understanding-a-windows-powershell-module?view=powershell-7.3\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-09\ntags:\n- attack.persistence\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\\\WindowsPowerShell\\\\Modules\\\\*\\.ps\n    - \\\\WindowsPowerShell\\\\Modules\\\\*\\.dll\n  condition: selection\nfalsepositives:\n- False positive rate will vary depending on the environments. Additional filters\n  might be required to make this logic usable in production.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

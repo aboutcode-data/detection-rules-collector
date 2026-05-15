@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/susp_office_template_injection.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EXPL_Office_TemplateInjection_Aug19",
+                "tags": [],
+                "old_rule_name": "EXPL_Office_TemplateInjection",
+                "description": "Detects possible template injections in Office documents, particularly those that load content from external sources",
+                "author": "Florian Roth",
+                "reference": "https://attack.mitre.org/techniques/T1221/",
+                "date": "2019-08-22",
+                "modified": "2025-03-20",
+                "score": 75,
+                "hash": "f2bdf3716b39d29a9c6c3b7b3355e935594b8d8e9149a784a59dc2381fa1628a"
+            },
+            "rule_text": "rule EXPL_Office_TemplateInjection_Aug19\n{\n\tmeta:\n\t\told_rule_name = \"EXPL_Office_TemplateInjection\"\n\t\tdescription = \"Detects possible template injections in Office documents, particularly those that load content from external sources\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://attack.mitre.org/techniques/T1221/\"\n\t\tdate = \"2019-08-22\"\n\t\tmodified = \"2025-03-20\"\n\t\tscore = 75\n\t\thash = \"f2bdf3716b39d29a9c6c3b7b3355e935594b8d8e9149a784a59dc2381fa1628a\"\n\n\tstrings:\n\t\t$x1 = /attachedTemplate\" Target=\"http[s]?:\\/\\/[^\"]{4,60}/ ascii\n\t\t$fp1 = \".sharepoint.com\"\n\t\t$fp2 = \".office.com\"\n\n\tcondition:\n\t\tfilesize < 20MB and $x1 and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/nex/embedded_macho.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "embedded_macho",
+                "tags": [],
+                "author": "nex",
+                "description": "Contains an embedded Mach-O file"
+            },
+            "rule_text": "rule embedded_macho\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Contains an embedded Mach-O file\"\n\n\tstrings:\n\t\t$magic1 = { ca fe ba be }\n\t\t$magic2 = { ce fa ed fe }\n\t\t$magic3 = { fe ed fa ce }\n\n\tcondition:\n\t\tany of ( $magic* ) and not ( $magic1 at 0 ) and not ( $magic2 at 0 ) and not ( $magic3 at 0 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

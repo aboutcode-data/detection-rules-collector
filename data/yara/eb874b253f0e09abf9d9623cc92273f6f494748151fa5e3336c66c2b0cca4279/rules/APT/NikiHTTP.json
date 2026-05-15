@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/APT/NikiHTTP.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NikiHTTP",
+                "tags": [],
+                "id": "7Hna0G06TFoi4ogjbgXnvV",
+                "fingerprint": "v1_sha256_0315e58657b36871b5937d06b338363de94e6bb81c19d03b92a53e2b525f56b4",
+                "version": "1.0",
+                "date": "2024-06",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze, @nsquar3",
+                "description": "Identifies NikiHTTP aka HTTPSpy, a versatile backdoor by (likely) Kimsuky.",
+                "category": "MALWARE",
+                "malware": "NIKIHTTP",
+                "malware_type": "BACKDOOR",
+                "reference": "https://cyberarmor.tech/new-north-korean-based-backdoor-packs-a-punch/",
+                "hash": "c94a5817fcd6a4ea93d47d70b9f2b175923a8b325234a77f127c945ae8649874"
+            },
+            "rule_text": "rule NikiHTTP\n{\n\tmeta:\n\t\tid = \"7Hna0G06TFoi4ogjbgXnvV\"\n\t\tfingerprint = \"v1_sha256_0315e58657b36871b5937d06b338363de94e6bb81c19d03b92a53e2b525f56b4\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2024-06\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze, @nsquar3\"\n\t\tdescription = \"Identifies NikiHTTP aka HTTPSpy, a versatile backdoor by (likely) Kimsuky.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"NIKIHTTP\"\n\t\tmalware_type = \"BACKDOOR\"\n\t\treference = \"https://cyberarmor.tech/new-north-korean-based-backdoor-packs-a-punch/\"\n\t\thash = \"3314b6ea393e180c20db52448ab6980343bc3ed623f7af91df60189fec637744\"\n\t\thash = \"c94a5817fcd6a4ea93d47d70b9f2b175923a8b325234a77f127c945ae8649874\"\n\n\tstrings:\n\t\t$cmd = {4? 8d 0d be 2f 03 00 4? 85 c0 4? 8d 15 8c 2f 03 00}\n\t\t$str_1 = \"%s%sc %s >%s 2>&1\" ascii wide\n\t\t$str_2 = \"%s%sc %s 2>%s\" ascii wide\n\t\t$str_3 = \"%s:info\" ascii wide\n\t\t$pdb_full = \"\\\\02.data\\\\03.atk-tools\\\\\"\n\t\t$pdb_httpspy = \"\\\\bin\\\\httpSpy.pdb\"\n\t\t$code = {0f 57 c0 4? 89 7? ?? 33 c0 c7 4? ?? 68 00 00 00 0f 11 4? ?? c7 4? ?? 01 00 00 00 66 4? 89 7? 00 0f 11 4? ?? 4? 89 4? ?? 0f 11 4? ?? c7 44 ?? ?? 53 71 80 60 0f 11 4? ?? c7 44 ?? ?? 71 79 7c 5c 0f 11 4? ?? c7 44 ?? ?? 6d 80 74 63 0f 11 4? ?? 88 44 ?? ?? 0f 11 4? ?? 0f 1f 44 00 00}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( $cmd or ( 2 of ( $str_* ) ) or any of ( $pdb_* ) or $code )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

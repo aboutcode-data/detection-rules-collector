@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_console_login_failed_authentication.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Ivan Saakov, Nasreddine Bencherchali",
+                "date": "2025-10-19",
+                "title": "AWS ConsoleLogin Failed Authentication",
+                "id": "6393e346-1977-46ef-8987-ad414a145fad"
+            },
+            "rule_text": "title: AWS ConsoleLogin Failed Authentication\nid: 6393e346-1977-46ef-8987-ad414a145fad\nstatus: experimental\ndescription: 'Detects failed AWS console login attempts due to authentication failures.\n  Monitoring these events is crucial for identifying potential brute-force attacks\n  or unauthorized access attempts to AWS accounts.\n\n  '\nreferences:\n- https://naikordian.github.io/blog/posts/brute-force-aws-console/\n- https://help.fortinet.com/fsiem/Public_Resource_Access/7_2_1/rules/PH_RULE_AWS_Management_Console_Brute_Force_of_Root_User_Identity.htm\n- https://media.githubusercontent.com/media/splunk/attack_data/master/datasets/attack_techniques/T1110.001/aws_login_failure/aws_cloudtrail_events.json\nauthor: Ivan Saakov, Nasreddine Bencherchali\ndate: 2025-10-19\ntags:\n- attack.credential-access\n- attack.t1110\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventName: ConsoleLogin\n    errorMessage: Failed authentication\n  condition: selection\nfalsepositives:\n- Legitimate failed login attempts by authorized users. Investigate the source of\n  repeated failed login attempts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/Dacls_Linux.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Dacls_Trojan_Linux",
+                "tags": [],
+                "Author": "Adam M. Swanda",
+                "Repo": "https://github.com/deadbits/yara-rules"
+            },
+            "rule_text": "rule Dacls_Trojan_Linux\n{\n\tmeta:\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\n\tstrings:\n\t\t$cls00 = \"c_2910.cls\" ascii fullword\n\t\t$cls01 = \"k_3872.cls\" ascii fullword\n\t\t$str00 = \"{\\\"result\\\":\\\"ok\\\"}\" ascii fullword\n\t\t$str01 = \"SCAN  %s  %d.%d.%d.%d %d\" ascii fullword\n\t\t$str02 = \"/var/run/init.pid\" ascii fullword\n\t\t$str03 = \"/flash/bin/mountd\" ascii fullword\n\t\t$str04 = \"Name:\" ascii fullword\n\t\t$str05 = \"Uid:\" ascii fullword\n\t\t$str06 = \"Gid:\" ascii fullword\n\t\t$str08 = \"PPid:\" ascii fullword\n\t\t$str09 = \"session_id\" ascii fullword\n\n\tcondition:\n\t\tuint32be( 0x0 ) == 0x7f454c46 and ( ( all of ( $cls* ) ) or ( all of ( $str* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

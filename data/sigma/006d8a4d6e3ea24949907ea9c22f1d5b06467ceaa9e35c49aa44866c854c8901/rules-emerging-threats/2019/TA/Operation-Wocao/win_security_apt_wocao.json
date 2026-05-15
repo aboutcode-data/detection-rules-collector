@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2019/TA/Operation-Wocao/win_security_apt_wocao.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), frack113",
+                "date": "2019-12-20",
+                "title": "Operation Wocao Activity - Security",
+                "id": "74ad4314-482e-4c3e-b237-3f7ed3b9ca8d"
+            },
+            "rule_text": "title: Operation Wocao Activity - Security\nid: 74ad4314-482e-4c3e-b237-3f7ed3b9ca8d\nstatus: test\ndescription: Detects activity mentioned in Operation Wocao report\nreferences:\n- https://web.archive.org/web/20200226212615/https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\n- https://web.archive.org/web/20200226212615/https://resources.fox-it.com/rs/170-CAK-271/images/201912_Report_Operation_Wocao.pdf\n- https://twitter.com/SBousseaden/status/1207671369963646976\nauthor: Florian Roth (Nextron Systems), frack113\ndate: 2019-12-20\nmodified: 2022-11-27\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.discovery\n- attack.stealth\n- attack.t1012\n- attack.t1036.004\n- attack.t1027\n- attack.execution\n- attack.t1053.005\n- attack.t1059.001\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4799\n    TargetUserName|startswith: Administr\n    CallerProcessName|endswith: \\checkadmin.exe\n  condition: selection\nfalsepositives:\n- Administrators that use checkadmin.exe tool to enumerate local administrators\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

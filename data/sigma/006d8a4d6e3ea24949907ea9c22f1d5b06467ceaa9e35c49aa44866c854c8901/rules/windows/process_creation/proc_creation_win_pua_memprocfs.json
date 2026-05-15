@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_memprocfs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-04-27",
+                "title": "PUA - Memory Dump Mount Via MemProcFS",
+                "id": "8a1b2c3d-4e5f-6789-abcd-ef1234567890"
+            },
+            "rule_text": "title: PUA - Memory Dump Mount Via MemProcFS\nid: 8a1b2c3d-4e5f-6789-abcd-ef1234567890\nstatus: experimental\ndescription: 'Detects execution of MemProcFS a memory forensics tool with the ''-device''\n  parameter.\n\n  MemProcFS mounts physical memory as a virtual file system, allowing direct access\n  to process memory and system structures.\n\n  Threat actors were seen abusing this utility to mount memory dumps and then extract\n  sensitive information from processes like LSASS or extract registry hives to obtain\n  credentials, LSA secrets, SAM data, and cached domain credentials.\n\n  MemProcFS usage that is not part of authorized forensic analysis should be treated\n  as suspicious and warrants further investigation.\n\n  '\nreferences:\n- https://github.com/ufrisk/MemProcFS\n- https://0xdf.gitlab.io/2024/10/05/htb-freelancer.html#\n- https://www.huntress.com/blog/curling-for-data-a-dive-into-a-threat-actors-malicious-ttps\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-04-27\ntags:\n- attack.credential-access\n- attack.t1003\n- attack.t1003.001\n- attack.t1003.004\n- attack.t1003.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\MemProcFS.exe\n  - OriginalFileName: MemProcFS.exe\n  - Description: MemProcFS\n  selection_cli:\n    CommandLine|contains: -device\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use during memory forensics; if not part of authorized analysis, warrants\n  urgent investigation\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_pua_memprocfs/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

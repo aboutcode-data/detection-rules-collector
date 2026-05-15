@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_access/file_access_win_susp_credhist.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-17",
+                "title": "Access To Windows Credential History File By Uncommon Applications",
+                "id": "7a2a22ea-a203-4cd3-9abf-20eb1c5c6cd2"
+            },
+            "rule_text": "title: Access To Windows Credential History File By Uncommon Applications\nid: 7a2a22ea-a203-4cd3-9abf-20eb1c5c6cd2\nstatus: test\ndescription: 'Detects file access requests to the Windows Credential History File\n  by an uncommon application.\n\n  This can be a sign of credential stealing. Example case would be usage of mimikatz\n  \"dpapi::credhist\" function\n\n  '\nreferences:\n- https://tools.thehacker.recipes/mimikatz/modules/dpapi/credhist\n- https://www.passcape.com/windows_password_recovery_dpapi_credhist\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-17\nmodified: 2024-07-29\ntags:\n- attack.credential-access\n- attack.t1555.004\nlogsource:\n  category: file_access\n  product: windows\n  definition: 'Requirements: Microsoft-Windows-Kernel-File ETW provider'\ndetection:\n  selection:\n    FileName|endswith: \\Microsoft\\Protect\\CREDHIST\n  filter_main_system_folders:\n    Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n    - C:\\Windows\\system32\\\n    - C:\\Windows\\SysWOW64\\\n  filter_main_explorer:\n    Image: C:\\Windows\\explorer.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

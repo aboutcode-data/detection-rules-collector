@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/MonitoringTool/Win32/AimSniff/MonitoringTool_Win32_AimSniff.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MonitoringTool_Win32_AimSniff",
+                "tags": [],
+                "description": "MonitoringTool:Win32/AimSniff,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule MonitoringTool_Win32_AimSniff\n{\n\tmeta:\n\t\tdescription = \"MonitoringTool:Win32/AimSniff,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {00 00 64 00 70 00 6e 00 73 00 76 00 72 00 61 00 00 00 }\n\t\t$a_00_1 = {00 00 5c 00 61 00 69 00 6d 00 61 00 70 00 70 00 69 00 6e 00 69 00 2e 00 69 00 6e 00 69 00 }\n\t\t$a_00_2 = {61 64 73 6e 77 61 00 73 76 63 68 6f 73 74 }\n\t\t$a_02_3 = {00 5c 00 64 00 61 00 74 00 61 00 5c 00 [0-10] 2e 00 65 00 78 00 65 00 }\n\t\t$a_00_4 = {00 00 5c 00 65 00 6d 00 78 00 66 00 69 00 6c 00 65 00 30 00 30 00 34 00 2e 00 64 00 61 00 74 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 2 + ( #a_00_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

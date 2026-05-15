@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Tofsee/Trojan_Win32_Tofsee_PVF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Tofsee_PVF_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Tofsee.PVF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Tofsee_PVF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Tofsee.PVF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {81 fe 9c 19 00 00 7d ?? 6a 00 6a 00 ff d3 e8 ?? ?? ?? ?? 30 04 37 83 ee 01 79 }\n\t\t$a_02_1 = {81 ff 12 23 00 00 7d ?? 6a 00 ff 15 ?? ?? ?? ?? 8b 74 24 0c e8 ?? ?? ?? ?? 30 04 3e 4f 79 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

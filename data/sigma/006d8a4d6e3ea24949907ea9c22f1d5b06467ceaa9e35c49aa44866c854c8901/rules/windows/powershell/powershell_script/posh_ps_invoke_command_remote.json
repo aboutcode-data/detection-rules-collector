@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_invoke_command_remote.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-07",
+                "title": "Execute Invoke-command on Remote Host",
+                "id": "7b836d7f-179c-4ba4-90a7-a7e60afb48e6"
+            },
+            "rule_text": "title: Execute Invoke-command on Remote Host\nid: 7b836d7f-179c-4ba4-90a7-a7e60afb48e6\nstatus: test\ndescription: Adversaries may use Valid Accounts to interact with remote systems using\n  Windows Remote Management (WinRM). The adversary may then perform actions as the\n  logged-on user.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.006/T1021.006.md#atomic-test-2---invoke-command\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/invoke-command?view=powershell-7.4\nauthor: frack113\ndate: 2022-01-07\ntags:\n- attack.lateral-movement\n- attack.t1021.006\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains|all:\n    - 'invoke-command '\n    - ' -ComputerName '\n  condition: selection_cmdlet\nfalsepositives:\n- Legitimate script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

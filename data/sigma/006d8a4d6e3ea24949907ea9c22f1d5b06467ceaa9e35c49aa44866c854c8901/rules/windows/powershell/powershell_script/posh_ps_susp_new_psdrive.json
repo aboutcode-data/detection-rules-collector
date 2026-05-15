@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_new_psdrive.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-08-13",
+                "title": "Suspicious New-PSDrive to Admin Share",
+                "id": "1c563233-030e-4a07-af8c-ee0490a66d3a"
+            },
+            "rule_text": "title: Suspicious New-PSDrive to Admin Share\nid: 1c563233-030e-4a07-af8c-ee0490a66d3a\nstatus: test\ndescription: Adversaries may use to interact with a remote network share using Server\n  Message Block (SMB). The adversary may then perform actions as the logged-on user.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.002/T1021.002.md#atomic-test-2---map-admin-share-powershell\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-psdrive?view=powershell-7.2\nauthor: frack113\ndate: 2022-08-13\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - New-PSDrive\n    - '-psprovider '\n    - filesystem\n    - '-root '\n    - \\\\\\\\\n    - $\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

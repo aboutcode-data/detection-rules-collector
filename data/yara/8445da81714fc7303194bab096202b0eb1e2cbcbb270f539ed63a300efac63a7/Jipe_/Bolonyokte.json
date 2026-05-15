@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Jipe_/Bolonyokte.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Bolonyokte",
+                "tags": [
+                    "rat"
+                ],
+                "description": "UnknownDotNet RAT - Bolonyokte",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-02-01",
+                "filetype": "memory",
+                "version": "1.0"
+            },
+            "rule_text": "rule Bolonyokte : rat\n{\n\tmeta:\n\t\tdescription = \"UnknownDotNet RAT - Bolonyokte\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-02-01\"\n\t\tfiletype = \"memory\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$campaign1 = \"Bolonyokte\" ascii wide\n\t\t$campaign2 = \"donadoni\" ascii wide\n\t\t$decoy1 = \"nyse.com\" ascii wide\n\t\t$decoy2 = \"NYSEArca_Listing_Fees.pdf\" ascii wide\n\t\t$decoy3 = \"bf13-5d45cb40\" ascii wide\n\t\t$artifact1 = \"Backup.zip\" ascii wide\n\t\t$artifact2 = \"updates.txt\" ascii wide\n\t\t$artifact3 = \"vdirs.dat\" ascii wide\n\t\t$artifact4 = \"default.dat\"\n\t\t$artifact5 = \"index.html\"\n\t\t$artifact6 = \"mime.dat\"\n\t\t$func1 = \"FtpUrl\"\n\t\t$func2 = \"ScreenCapture\"\n\t\t$func3 = \"CaptureMouse\"\n\t\t$func4 = \"UploadFile\"\n\t\t$ebanking1 = \"Internet Banking\" wide\n\t\t$ebanking2 = \"(Online Banking)|(Online banking)\"\n\t\t$ebanking3 = \"(e-banking)|(e-Banking)\" nocase\n\t\t$ebanking4 = \"login\"\n\t\t$ebanking5 = \"en ligne\" wide\n\t\t$ebanking6 = \"bancaires\" wide\n\t\t$ebanking7 = \"(eBanking)|(Ebanking)\" wide\n\t\t$ebanking8 = \"Anmeldung\" wide\n\t\t$ebanking9 = \"internet banking\" nocase wide\n\t\t$ebanking10 = \"Banking Online\" nocase wide\n\t\t$ebanking11 = \"Web Banking\" wide\n\t\t$ebanking12 = \"Power\"\n\n\tcondition:\n\t\tany of ( $campaign* ) or 2 of ( $decoy* ) or 2 of ( $artifact* ) or all of ( $func* ) or 3 of ( $ebanking* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

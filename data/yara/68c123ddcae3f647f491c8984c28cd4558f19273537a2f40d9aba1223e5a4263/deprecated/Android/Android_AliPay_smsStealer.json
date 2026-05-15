@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_AliPay_smsStealer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Android_AliPay_smsStealer",
+                "tags": [
+                    "android"
+                ],
+                "description": "Yara rule for detection of Fake AliPay Sms Stealer",
+                "sample": "f4794dd02d35d4ea95c51d23ba182675cc3528f42f4fa9f50e2d245c08ecf06b",
+                "source": "http://research.zscaler.com/2016/02/fake-security-app-for-alipay-customers.html",
+                "ref": "https://analyst.koodous.com/rulesets/1192",
+                "author": "https://twitter.com/5h1vang"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_AliPay_smsStealer : android\n{\n\tmeta:\n\t\tdescription = \"Yara rule for detection of Fake AliPay Sms Stealer\"\n\t\tsample = \"f4794dd02d35d4ea95c51d23ba182675cc3528f42f4fa9f50e2d245c08ecf06b\"\n\t\tsource = \"http://research.zscaler.com/2016/02/fake-security-app-for-alipay-customers.html\"\n\t\tref = \"https://analyst.koodous.com/rulesets/1192\"\n\t\tauthor = \"https://twitter.com/5h1vang\"\n\n\tstrings:\n\t\t$str_1 = \"START_SERVICE\"\n\t\t$str_2 = \"extra_key_sms\"\n\t\t$str_3 = \"android.provider.Telephony.SMS_RECEIVED\"\n\t\t$str_4 = \"mPhoneNumber\"\n\n\tcondition:\n\t\tandroguard.certificate.sha1( \"0CDFC700D0BDDC3EA50D71B54594BF3711D0F5B2\" ) or androguard.permission ( /android.permission.RECEIVE_SMS/ ) and androguard.permission ( /android.permission.INTERNET/ ) and androguard.permission ( /android.permission.RECEIVE_BOOT_COMPLETED/ ) and all of ( $str_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_clip_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-27",
+                "title": "Data Copied To Clipboard Via Clip.EXE",
+                "id": "ddeff553-5233-4ae9-bbab-d64d2bd634be"
+            },
+            "rule_text": "title: Data Copied To Clipboard Via Clip.EXE\nid: ddeff553-5233-4ae9-bbab-d64d2bd634be\nstatus: test\ndescription: Detects the execution of clip.exe in order to copy data to the clipboard.\n  Adversaries may collect data stored in the clipboard from users copying information\n  within or between applications.\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/clip\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1115/T1115.md\nauthor: frack113\ndate: 2021-07-27\nmodified: 2023-02-21\ntags:\n- attack.collection\n- attack.t1115\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\clip.exe\n  - OriginalFileName: clip.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_clip_execution/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Utilize Clipboard to store or execute commands from\n  technique: T1115\n  atomic_guid: 0cd14633-58d4-4422-9ede-daa2c9474ae7\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_plink_port_forwarding.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-01-19",
+                "title": "Suspicious Plink Port Forwarding",
+                "id": "48a61b29-389f-4032-b317-b30de6b95314"
+            },
+            "rule_text": "title: Suspicious Plink Port Forwarding\nid: 48a61b29-389f-4032-b317-b30de6b95314\nstatus: test\ndescription: Detects suspicious Plink tunnel port forwarding to a local port\nreferences:\n- https://www.real-sec.com/2019/04/bypassing-network-restrictions-through-rdp-tunneling/\n- https://medium.com/@informationsecurity/remote-ssh-tunneling-with-plink-exe-7831072b3d7d\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-01-19\nmodified: 2022-10-09\ntags:\n- attack.command-and-control\n- attack.t1572\n- attack.lateral-movement\n- attack.t1021.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Description: Command-line SSH, Telnet, and Rlogin client\n    CommandLine|contains: ' -R '\n  condition: selection\nfalsepositives:\n- Administrative activity using a remote port forwarding to a local port\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

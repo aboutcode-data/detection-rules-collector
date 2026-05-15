@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disallowrun_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-08-19",
+                "title": "Add DisallowRun Execution to Registry",
+                "id": "275641a5-a492-45e2-a817-7c81e9d9d3e9"
+            },
+            "rule_text": "title: Add DisallowRun Execution to Registry\nid: 275641a5-a492-45e2-a817-7c81e9d9d3e9\nstatus: test\ndescription: Detect set DisallowRun to 1 to prevent user running specific computer\n  program\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1112/T1112.md\nauthor: frack113\ndate: 2022-08-19\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\DisallowRun\n    Details: DWORD (0x00000001)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

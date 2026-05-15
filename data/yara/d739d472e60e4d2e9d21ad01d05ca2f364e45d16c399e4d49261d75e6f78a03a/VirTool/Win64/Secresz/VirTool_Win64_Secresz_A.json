@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/Secresz/VirTool_Win64_Secresz_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_Secresz_A",
+                "tags": [],
+                "description": "VirTool:Win64/Secresz.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_Secresz_A\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/Secresz.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 75 f0 ?? ?? ?? ?? 4c 8b 45 d0 8b d3 48 8b cf e8 ?? ?? ?? ?? 48 8b 0d 09 30 00 00 85 c0 ?? ?? ?? ?? ?? ?? ?? ?? ?? e8 ?? ?? ?? ?? 33 d2 48 8b 4d d0 ff ?? ?? ?? ?? ?? 48 8b 4d d8 ff }\n\t\t$a_03_1 = {48 8b 5c 24 60 48 8b 7c 24 58 48 2b df 48 83 fb 02 ?? ?? ?? ?? ?? ?? 80 3f 4d ?? ?? ?? ?? ?? ?? 80 7f 01 5a [0-13] b9 04 01 00 00 ff ?? ?? ?? ?? ?? ff ?? ?? ?? ?? ?? 44 8b c8 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

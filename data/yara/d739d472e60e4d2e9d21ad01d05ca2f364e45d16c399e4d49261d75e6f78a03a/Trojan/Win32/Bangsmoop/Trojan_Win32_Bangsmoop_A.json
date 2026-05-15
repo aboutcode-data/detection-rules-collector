@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Bangsmoop/Trojan_Win32_Bangsmoop_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Bangsmoop_A",
+                "tags": [],
+                "description": "Trojan:Win32/Bangsmoop.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Bangsmoop_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Bangsmoop.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {b9 00 20 00 00 66 09 48 16 }\n\t\t$a_01_1 = {b8 00 20 00 00 66 09 46 16 }\n\t\t$a_03_2 = {83 c4 0c 80 ?? e9 75 }\n\t\t$a_03_3 = {d8 f5 01 00 25 ff 00 00 0f 94 c1 90 09 04 00 33 c9 81 }\n\t\t$a_03_4 = {83 f8 66 74 ?? 83 f8 6b }\n\t\t$a_03_5 = {0f b7 47 14 [0-02] 8d 74 38 18 6a 28 56 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

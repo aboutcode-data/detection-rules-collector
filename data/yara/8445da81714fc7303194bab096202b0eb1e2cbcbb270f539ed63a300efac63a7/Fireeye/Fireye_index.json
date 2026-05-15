@@ -1,0 +1,74 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Fireeye/Fireye_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_DeputyDog_Strings",
+                "tags": [],
+                "author": "FireEye Labs",
+                "version": "1.0",
+                "description": "detects string seen in samples used in 2013-3893 0day attacks",
+                "reference": "8aba4b5184072f2a50cbc5ecfe326701"
+            },
+            "rule_text": "rule APT_DeputyDog_Strings\n{\n\tmeta:\n\t\tauthor = \"FireEye Labs\"\n\t\tversion = \"1.0\"\n\t\tdescription = \"detects string seen in samples used in 2013-3893 0day attacks\"\n\t\treference = \"8aba4b5184072f2a50cbc5ecfe326701\"\n\n\tstrings:\n\t\t$mz = {4d 5a}\n\t\t$a = \"DGGYDSYRL\"\n\n\tcondition:\n\t\t($mz at 0 ) and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "callTogether_certificate",
+                "tags": [],
+                "author": "Fireeye Labs",
+                "version": "1.0",
+                "reference_hash": "d08e038d318b94764d199d7a85047637",
+                "reference": "https://www.fireeye.com/blog/threat-research/2014/11/operation-poisoned-handover-unveiling-ties-between-apt-activity-in-hong-kongs-pro-democracy-movement.html",
+                "description": "detects binaries signed with the CallTogether certificate"
+            },
+            "rule_text": "rule callTogether_certificate\n{\n\tmeta:\n\t\tauthor = \"Fireeye Labs\"\n\t\tversion = \"1.0\"\n\t\treference_hash = \"d08e038d318b94764d199d7a85047637\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2014/11/operation-poisoned-handover-unveiling-ties-between-apt-activity-in-hong-kongs-pro-democracy-movement.html\"\n\t\tdescription = \"detects binaries signed with the CallTogether certificate\"\n\n\tstrings:\n\t\t$serial = {452156C3B3FB0176365BDB5B7715BC4C}\n\t\t$o = \"CallTogether, Inc.\"\n\n\tcondition:\n\t\t$serial and $o\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FE_APT_9002_rat",
+                "tags": [],
+                "author": "FireEye Labs",
+                "reference": "https://www.fireeye.com/blog/threat-research/2013/11/operation-ephemeral-hydra-ie-zero-day-linked-to-deputydog-uses-diskless-method.html"
+            },
+            "rule_text": "rule FE_APT_9002_rat\n{\n\tmeta:\n\t\tauthor = \"FireEye Labs\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2013/11/operation-ephemeral-hydra-ie-zero-day-linked-to-deputydog-uses-diskless-method.html\"\n\n\tstrings:\n\t\t$mz = {4d 5a}\n\t\t$a = \"rat_UnInstall\" wide ascii\n\n\tcondition:\n\t\t($mz at 0 ) and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MACROCHECK",
+                "tags": [],
+                "description": "Identify office documents with the MACROCHECK credential stealer in them.  It can be run against .doc files or VBA macros extraced from .docx files (vbaProject.bin files).",
+                "author": "Fireeye Labs",
+                "version": "1.0"
+            },
+            "rule_text": "rule MACROCHECK\n{\n\tmeta:\n\t\tdescription = \"Identify office documents with the MACROCHECK credential stealer in them.  It can be run against .doc files or VBA macros extraced from .docx files (vbaProject.bin files).\"\n\t\tauthor = \"Fireeye Labs\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$PARAMpword = \"pword=\" ascii wide\n\t\t$PARAMmsg = \"msg=\" ascii wide\n\t\t$PARAMuname = \"uname=\" ascii\n\t\t$userform = \"UserForm\" ascii wide\n\t\t$userloginform = \"UserLoginForm\" ascii wide\n\t\t$invalid = \"Invalid username or password\" ascii wide\n\t\t$up1 = \"uploadPOST\" ascii wide\n\t\t$up2 = \"postUpload\" ascii wide\n\n\tcondition:\n\t\tall of ( $PARAM* ) or ( ( $invalid or $userloginform or $userform ) and ( $up1 or $up2 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Molerats_certs",
+                "tags": [],
+                "author": "FireEye Labs",
+                "description": "this rule detections code signed with certificates used by the Molerats actor",
+                "reference": "https://www.fireeye.com/blog/threat-research/2013/08/operation-molerats-middle-east-cyber-attacks-using-poison-ivy.html"
+            },
+            "rule_text": "rule Molerats_certs\n{\n\tmeta:\n\t\tauthor = \"FireEye Labs\"\n\t\tdescription = \"this rule detections code signed with certificates used by the Molerats actor\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2013/08/operation-molerats-middle-east-cyber-attacks-using-poison-ivy.html\"\n\n\tstrings:\n\t\t$cert1 = {06 50 11 A5 BC BF 83 C0 93 28 16 5E 7E 85 27 75}\n\t\t$cert2 = {03 e1 e1 aa a5 bc a1 9f ba 8c 42 05 8b 4a bf 28}\n\t\t$cert3 = {0c c0 35 9c 9c 3c da 00 d7 e9 da 2d c6 ba 7b 6d}\n\n\tcondition:\n\t\t1 of ( $cert* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "qti_certificate",
+                "tags": [],
+                "author": "Fireeye Labs",
+                "reference_hash": "cfa3e3471430a0096a4e7ea2e3da6195",
+                "reference": "https://www.fireeye.com/blog/threat-research/2014/11/operation-poisoned-handover-unveiling-ties-between-apt-activity-in-hong-kongs-pro-democracy-movement.html",
+                "description": "detects binaries signed with the QTI International Inc certificate"
+            },
+            "rule_text": "rule qti_certificate\n{\n\tmeta:\n\t\tauthor = \"Fireeye Labs\"\n\t\treference_hash = \"cfa3e3471430a0096a4e7ea2e3da6195\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2014/11/operation-poisoned-handover-unveiling-ties-between-apt-activity-in-hong-kongs-pro-democracy-movement.html\"\n\t\tdescription = \"detects binaries signed with the QTI International Inc certificate\"\n\n\tstrings:\n\t\t$cn = \"QTI International Inc\"\n\t\t$serial = { 2e df b9 fd cf a0 0c cb 5a b0 09 ee 3a db 97 b9 }\n\n\tcondition:\n\t\t$cn and $serial\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

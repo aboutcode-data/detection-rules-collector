@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/phish me/PM_Zip_With_Exe.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PM_Zip_With_Exe",
+                "tags": [],
+                "author": "R.Tokazowski",
+                "company": "PhishMe, Inc.",
+                "URL": "http://phishme.com/two-attacks-two-dyres-infrastructure/"
+            },
+            "rule_text": "rule PM_Zip_With_Exe\n{\n\tmeta:\n\t\tauthor = \"R.Tokazowski\"\n\t\tcompany = \"PhishMe, Inc.\"\n\t\tURL = \"http://phishme.com/two-attacks-two-dyres-infrastructure/\"\n\n\tstrings:\n\t\t$hdr = \"PK\"\n\t\t$e1 = \".exe\" nocase\n\t\t$e2 = \".scr\" nocase\n\n\tcondition:\n\t\t$hdr at 0 and ( ( $e1 in ( filesize - 100 .. filesize ) ) or ( $e2 in ( filesize - 100 .. filesize ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_rurat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-19",
+                "title": "Renamed Remote Utilities RAT (RURAT) Execution",
+                "id": "9ef27c24-4903-4192-881a-3adde7ff92a5"
+            },
+            "rule_text": "title: Renamed Remote Utilities RAT (RURAT) Execution\nid: 9ef27c24-4903-4192-881a-3adde7ff92a5\nstatus: test\ndescription: Detects execution of renamed Remote Utilities (RURAT) via Product PE\n  header field\nreferences:\n- https://redcanary.com/blog/misbehaving-rats/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-19\nmodified: 2023-02-03\ntags:\n- attack.collection\n- attack.command-and-control\n- attack.discovery\n- attack.stealth\n- attack.s0592\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Product: Remote Utilities\n  filter:\n    Image|endswith:\n    - \\rutserv.exe\n    - \\rfusclient.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

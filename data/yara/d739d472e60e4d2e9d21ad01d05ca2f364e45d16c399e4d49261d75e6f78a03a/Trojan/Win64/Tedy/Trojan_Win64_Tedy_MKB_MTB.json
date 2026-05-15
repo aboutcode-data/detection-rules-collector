@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Tedy/Trojan_Win64_Tedy_MKB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Tedy_MKB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Tedy.MKB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Tedy_MKB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Tedy.MKB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f7 e9 8b c2 c1 e8 1f 03 d0 8d 04 52 2b c8 8b c1 33 c9 83 f8 02 0f 45 c8 }\n\t\t$a_01_1 = {f7 e8 8b c2 c1 e8 1f 03 d0 8d 04 52 44 2b c0 41 8b c0 45 33 c0 83 f8 02 44 0f 45 c0 }\n\t\t$a_01_2 = {41 8b c1 99 2b c2 d1 f8 48 63 c8 48 2b f9 45 84 cc }\n\t\t$a_01_3 = {41 8b c2 99 2b c2 d1 f8 48 63 c8 4c 2b c1 41 f6 c2 01 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 15 + ( #a_01_1 & 1 ) * 15 + ( #a_01_2 & 1 ) * 10 + ( #a_01_3 & 1 ) * 10 ) >= 25\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/cloud/azure/signin_logs/azure_ad_signin_axios_user_agent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Marco Pedrinazzi (@pedrinazziM) (InTheCyber)",
+                "date": "2026-04-28",
+                "title": "Azure Sign-In With Axios User Agent",
+                "id": "ea1a07f0-3dac-47a2-aeb4-86f5379ba2b4"
+            },
+            "rule_text": "title: Azure Sign-In With Axios User Agent\nid: ea1a07f0-3dac-47a2-aeb4-86f5379ba2b4\nstatus: experimental\ndescription: \"Detects sign-in attempts in Azure/Entra ID logs where the user agent\\\n  \\ contains \\\"axios\\\",\\nindicating potential use of automated credential harvesting\\\n  \\ or AiTM phishing infrastructure.\\nAxios is a Node.js HTTP client abused to intercept\\\n  \\ and replay stolen credentials and MFA tokens.\\nWhen triaging results, analysts\\\n  \\ should:\\n    - Check the sign-in risk level, MFA status, and conditional access\\\n  \\ results for signs of bypass.\\n    - Look for sign-ins from unusual locations or\\\n  \\ IPs, especially if the same IP targets multiple accounts.\\n    - Prioritize successful\\\n  \\ sign-ins over failed ones, as they may indicate a completed credential replay\\\n  \\ or AiTM attack.\\n\"\nreferences:\n- https://thehackernews.com/2025/09/axios-abuse-and-salty-2fa-kits-fuel.html\n- https://www.proofpoint.com/us/blog/threat-insight/http-client-tools-exploitation-account-takeover-attacks\nauthor: Marco Pedrinazzi (@pedrinazziM) (InTheCyber)\ndate: 2026-04-28\ntags:\n- attack.credential-access\n- attack.collection\n- attack.t1557\n- detection.threat-hunting\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    userAgent|contains: axios\n  condition: selection\nfalsepositives:\n- Legitimate internal or third-party applications built with Node.js that use Axios\n  as their HTTP client for authenticating against Azure/Entra ID.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

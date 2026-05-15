@@ -1,0 +1,154 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_sandworm_exim_expl.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_Sandworm_Keywords_May20_1",
+                "tags": [],
+                "description": "Detects commands used by Sandworm group to exploit critical vulernability CVE-2019-10149 in Exim",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "id": "e0d4e90e-5547-5487-8d0c-a141d88fff7c"
+            },
+            "rule_text": "rule APT_Sandworm_Keywords_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects commands used by Sandworm group to exploit critical vulernability CVE-2019-10149 in Exim\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\tid = \"e0d4e90e-5547-5487-8d0c-a141d88fff7c\"\n\n\tstrings:\n\t\t$x1 = \"MAIL FROM:<$(run(\"\n\t\t$x2 = \"exec\\\\x20\\\\x2Fusr\\\\x2Fbin\\\\x2Fwget\\\\x20\\\\x2DO\\\\x20\\\\x2D\\\\x20http\"\n\n\tcondition:\n\t\tfilesize < 8000KB and 1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Sandworm_SSH_Key_May20_1",
+                "tags": [],
+                "description": "Detects SSH key used by Sandworm on exploited machines",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "hash1": "dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730",
+                "hash2": "538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e",
+                "id": "ea2968b8-7ae4-56b8-9547-816c5e37c50a"
+            },
+            "rule_text": "rule APT_Sandworm_SSH_Key_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects SSH key used by Sandworm on exploited machines\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730\"\n\t\thash2 = \"538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e\"\n\t\tid = \"ea2968b8-7ae4-56b8-9547-816c5e37c50a\"\n\n\tstrings:\n\t\t$x1 = \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2q/NGN/brzNfJiIp2zswtL33tr74pIAjMeWtXN1p5Hqp5fTp058U1EN4NmgmjX0KzNjjV\"\n\n\tcondition:\n\t\tfilesize < 1000KB and 1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Sandworm_SSHD_Config_Modification_May20_1",
+                "tags": [],
+                "description": "Detects ssh config entry inserted by Sandworm on compromised machines",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "hash1": "dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730",
+                "hash2": "538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e",
+                "id": "dd60eeb7-3d4b-5a6a-8054-50c617ee8c73"
+            },
+            "rule_text": "rule APT_Sandworm_SSHD_Config_Modification_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects ssh config entry inserted by Sandworm on compromised machines\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730\"\n\t\thash2 = \"538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e\"\n\t\tid = \"dd60eeb7-3d4b-5a6a-8054-50c617ee8c73\"\n\n\tstrings:\n\t\t$x1 = \"AllowUsers mysql_db\" ascii\n\t\t$a1 = \"ListenAddress\" ascii fullword\n\n\tcondition:\n\t\tfilesize < 10KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Sandworm_InitFile_May20_1",
+                "tags": [],
+                "description": "Detects mysql init script used by Sandworm on compromised machines",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "hash1": "dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730",
+                "hash2": "538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e",
+                "id": "0bd613e3-6bd4-5cec-bc0d-2bdb83caf142"
+            },
+            "rule_text": "rule APT_Sandworm_InitFile_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects mysql init script used by Sandworm on compromised machines\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730\"\n\t\thash2 = \"538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e\"\n\t\tid = \"0bd613e3-6bd4-5cec-bc0d-2bdb83caf142\"\n\n\tstrings:\n\t\t$s1 = \"GRANT ALL PRIVILEGES ON * . * TO 'mysqldb'@'localhost';\" ascii\n\t\t$s2 = \"CREATE USER 'mysqldb'@'localhost' IDENTIFIED BY '\" ascii fullword\n\n\tcondition:\n\t\tfilesize < 10KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Sandworm_User_May20_1",
+                "tags": [],
+                "description": "Detects user added by Sandworm on compromised machines",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "hash1": "dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730",
+                "hash2": "538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e",
+                "id": "ada549a4-abcc-5c0a-9601-75631e78c835"
+            },
+            "rule_text": "rule APT_Sandworm_User_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects user added by Sandworm on compromised machines\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730\"\n\t\thash2 = \"538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e\"\n\t\tid = \"ada549a4-abcc-5c0a-9601-75631e78c835\"\n\n\tstrings:\n\t\t$s1 = \"mysql_db:x:\" ascii\n\t\t$a1 = \"root:x:\"\n\t\t$a2 = \"daemon:x:\"\n\n\tcondition:\n\t\tfilesize < 4KB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_WEBSHELL_PHP_Sandworm_May20_1",
+                "tags": [],
+                "description": "Detects GIF header PHP webshell used by Sandworm on compromised machines",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "hash1": "dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730",
+                "hash2": "538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e",
+                "id": "b9ec02c2-fa83-5f21-95cf-3528047b2d01"
+            },
+            "rule_text": "rule APT_WEBSHELL_PHP_Sandworm_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects GIF header PHP webshell used by Sandworm on compromised machines\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730\"\n\t\thash2 = \"538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e\"\n\t\tid = \"b9ec02c2-fa83-5f21-95cf-3528047b2d01\"\n\n\tstrings:\n\t\t$h1 = \"GIF89a <?php $\" ascii\n\t\t$s1 = \"str_replace(\" ascii\n\n\tcondition:\n\t\tfilesize < 10KB and $h1 at 0 and $s1\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_SH_Sandworm_Shell_Script_May20_1",
+                "tags": [],
+                "description": "Detects shell script used by Sandworm in attack against Exim mail server",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf",
+                "date": "2020-05-28",
+                "hash1": "dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730",
+                "hash2": "538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e",
+                "id": "21cf2c89-5511-5eb6-a2dd-4ad54ebfa2d1"
+            },
+            "rule_text": "rule APT_SH_Sandworm_Shell_Script_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects shell script used by Sandworm in attack against Exim mail server\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://media.defense.gov/2020/May/28/2002306626/-1/-1/0/CSA%20Sandworm%20Actors%20Exploiting%20Vulnerability%20in%20Exim%20Transfer%20Agent%2020200528.pdf\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"dc074464e50502459038ac127b50b8c68ed52817a61c2f97f0add33447c8f730\"\n\t\thash2 = \"538d713cb47a6b5ec6a3416404e0fc1ebcbc219a127315529f519f936420c80e\"\n\t\tid = \"21cf2c89-5511-5eb6-a2dd-4ad54ebfa2d1\"\n\n\tstrings:\n\t\t$x1 = \"echo \\\"GRANT ALL PRIVILEGES ON * . * TO 'mysqldb'@'localhost';\\\" >> init-file.txt\" ascii fullword\n\t\t$x2 = \"import base64,sys;exec(base64.b64decode({2:str,3:lambda b:bytes(b,'UTF-8')}[sys.version\" ascii fullword\n\t\t$x3 = \"sed -i -e '/PasswordAuthentication/s/no/yes/g; /PermitRootLogin/s/no/yes/g;\" ascii fullword\n\t\t$x4 = \"useradd -M -l -g root -G root -b /root -u 0 -o mysql_db\" ascii fullword\n\t\t$s1 = \"/ip.php?port=${PORT}\\\"\" ascii fullword\n\t\t$s2 = \"sed -i -e '/PasswordAuthentication\" ascii fullword\n\t\t$s3 = \"PATH_KEY=/root/.ssh/authorized_keys\" ascii fullword\n\t\t$s4 = \"CREATE USER\" ascii fullword\n\t\t$s5 = \"crontab -l | { cat; echo\" ascii fullword\n\t\t$s6 = \"mysqld --user=mysql --init-file=/etc/opt/init-file.txt --console\" ascii fullword\n\t\t$s7 = \"sshkey.php\" ascii fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x2123 and filesize < 20KB and 1 of ( $x* ) or 4 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_RU_Sandworm_PY_May20_1",
+                "tags": [],
+                "description": "Detects Sandworm Python loader",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/billyleonard/status/1266054881225236482",
+                "date": "2020-05-28",
+                "hash1": "c025008463fdbf44b2f845f2d82702805d931771aea4b506573b83c8f58bccca",
+                "id": "a392d800-1fe8-5ae9-b813-e1dfcedecda6"
+            },
+            "rule_text": "rule APT_RU_Sandworm_PY_May20_1\n{\n\tmeta:\n\t\tdescription = \"Detects Sandworm Python loader\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/billyleonard/status/1266054881225236482\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"c025008463fdbf44b2f845f2d82702805d931771aea4b506573b83c8f58bccca\"\n\t\tid = \"a392d800-1fe8-5ae9-b813-e1dfcedecda6\"\n\n\tstrings:\n\t\t$x1 = \"o.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko')]\" ascii fullword\n\t\t$s1 = \"exec(o.open('http://\" ascii\n\t\t$s2 = \"__import__({2:'urllib2',3:'urllib.request'}\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x6d69 and filesize < 1KB and 1 of ( $x* ) or 2 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_RU_Sandworm_PY_May20_2",
+                "tags": [],
+                "description": "Detects Sandworm Python loader",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/billyleonard/status/1266054881225236482",
+                "date": "2020-05-28",
+                "hash1": "abfa83cf54db8fa548942acd845b4f34acc94c46d4e1fb5ce7e97cc0c6596676",
+                "id": "5b32ad64-d959-5632-a03c-17aa055b213f"
+            },
+            "rule_text": "rule APT_RU_Sandworm_PY_May20_2\n{\n\tmeta:\n\t\tdescription = \"Detects Sandworm Python loader\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/billyleonard/status/1266054881225236482\"\n\t\tdate = \"2020-05-28\"\n\t\thash1 = \"abfa83cf54db8fa548942acd845b4f34acc94c46d4e1fb5ce7e97cc0c6596676\"\n\t\tid = \"5b32ad64-d959-5632-a03c-17aa055b213f\"\n\n\tstrings:\n\t\t$x1 = \"import sys;import re, subprocess;cmd\" ascii fullword\n\t\t$x2 = \"UA='Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko';server='http\"\n\t\t$x3 = \"';t='/admin/get.php';req\" ascii\n\t\t$x4 = \"ps -ef | grep Little\\\\ Snitch | grep \" ascii fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x6d69 and filesize < 2KB and 1 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2019-10149"
+            ]
+        }
+    ]
+}

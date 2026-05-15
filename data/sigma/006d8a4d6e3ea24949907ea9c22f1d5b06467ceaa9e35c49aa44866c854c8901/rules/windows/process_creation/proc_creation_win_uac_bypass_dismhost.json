@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_dismhost.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-30",
+                "title": "UAC Bypass Using DismHost",
+                "id": "853e74f9-9392-4935-ad3b-2e8c040dae86"
+            },
+            "rule_text": "title: UAC Bypass Using DismHost\nid: 853e74f9-9392-4935-ad3b-2e8c040dae86\nstatus: test\ndescription: Detects the pattern of UAC Bypass using DismHost DLL hijacking (UACMe\n  63)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-30\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|contains|all:\n    - C:\\Users\\\n    - \\AppData\\Local\\Temp\\\n    - \\DismHost.exe\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wuauclt_no_cli_flags_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-26",
+                "title": "Suspicious Windows Update Agent Empty Cmdline",
+                "id": "52d097e2-063e-4c9c-8fbb-855c8948d135"
+            },
+            "rule_text": "title: Suspicious Windows Update Agent Empty Cmdline\nid: 52d097e2-063e-4c9c-8fbb-855c8948d135\nstatus: test\ndescription: 'Detects suspicious Windows Update Agent activity in which a wuauclt.exe\n  process command line doesn''t contain any command line flags\n\n  '\nreferences:\n- https://redcanary.com/blog/blackbyte-ransomware/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-26\nmodified: 2023-11-11\ntags:\n- attack.stealth\n- attack.t1036\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\Wuauclt.exe\n  - OriginalFileName: Wuauclt.exe\n  selection_cli:\n    CommandLine|endswith:\n    - Wuauclt\n    - Wuauclt.exe\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

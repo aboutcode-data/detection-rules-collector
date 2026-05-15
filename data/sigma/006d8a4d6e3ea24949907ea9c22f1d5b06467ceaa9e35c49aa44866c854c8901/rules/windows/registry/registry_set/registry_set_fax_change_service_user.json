@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_fax_change_service_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-07-17",
+                "title": "Change User Account Associated with the FAX Service",
+                "id": "e3fdf743-f05b-4051-990a-b66919be1743"
+            },
+            "rule_text": "title: Change User Account Associated with the FAX Service\nid: e3fdf743-f05b-4051-990a-b66919be1743\nstatus: test\ndescription: Detect change of the user account associated with the FAX service to\n  avoid the escalation problem.\nreferences:\n- https://twitter.com/dottor_morte/status/1544652325570191361\n- https://raw.githubusercontent.com/RiccardoAncarani/talks/master/F-Secure/unorthodox-lateral-movement.pdf\nauthor: frack113\ndate: 2022-07-17\nmodified: 2022-12-30\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject: HKLM\\System\\CurrentControlSet\\Services\\Fax\\ObjectName\n  filter:\n    Details|contains: NetworkService\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/PWC/Tendrit_2014.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Tendrit_2014",
+                "tags": [
+                    "OnePHP"
+                ],
+                "author": "PwC Cyber Threat Operations   :: @tlansec",
+                "date": "2014-12",
+                "ref": "[http://pwc.blogs.com/cyber_security_updates/2014/12/festive-spearphishing-merry-christmas-from-an-apt-actor.html]",
+                "hash": "7b83a7cc1afae7d8b09483e36bc8dfbb"
+            },
+            "rule_text": "rule Tendrit_2014 : OnePHP\n{\n\tmeta:\n\t\tauthor = \"PwC Cyber Threat Operations   :: @tlansec\"\n\t\tdate = \"2014-12\"\n\t\tref = \"[http://pwc.blogs.com/cyber_security_updates/2014/12/festive-spearphishing-merry-christmas-from-an-apt-actor.html]\"\n\t\thash = \"7b83a7cc1afae7d8b09483e36bc8dfbb\"\n\n\tstrings:\n\t\t$url1 = \"favicon\"\n\t\t$url2 = \"policyref\"\n\t\t$url3 = \"css.ashx\"\n\t\t$url4 = \"gsh.js\"\n\t\t$url5 = \"direct\"\n\t\t$error1 = \"Open HOST_URL error\"\n\t\t$error2 = \"UEDone\"\n\t\t$error3 = \"InternetOpen error\"\n\t\t$error4 = \"Create process fail\"\n\t\t$error5 = \"cmdshell closed\"\n\t\t$error6 = \"invalid command\"\n\t\t$error7 = \"mget over&bingle\"\n\t\t$error8 = \"mget over&fail\"\n\n\tcondition:\n\t\t( all of ( $url* ) or all of ( $error* ) ) and filesize < 300KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

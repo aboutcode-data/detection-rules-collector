@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Mimic/Ransom_Win32_Mimic_ATZ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Mimic_ATZ_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Mimic.ATZ!MTB,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Mimic_ATZ_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Mimic.ATZ!MTB,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {83 65 f8 00 0f af 05 d8 6e 5f 00 8d 4d f0 33 d2 c7 45 fc e8 9a 53 00 f7 f7 03 05 d8 6e 5f 00 50 }\n\t\t$a_01_1 = {8b 56 08 8b 45 08 c1 ea 03 c1 e8 03 2b d0 }\n\t\t$a_01_2 = {33 c0 40 f0 0f c1 41 14 40 83 f8 02 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

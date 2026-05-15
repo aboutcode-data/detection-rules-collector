@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_printbrm.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-05-02",
+                "title": "PrintBrm ZIP Creation of Extraction",
+                "id": "cafeeba3-01da-4ab4-b6c4-a31b1d9730c7"
+            },
+            "rule_text": "title: PrintBrm ZIP Creation of Extraction\nid: cafeeba3-01da-4ab4-b6c4-a31b1d9730c7\nstatus: test\ndescription: Detects the execution of the LOLBIN PrintBrm.exe, which can be used to\n  create or extract ZIP files. PrintBrm.exe should not be run on a normal workstation.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/PrintBrm/\nauthor: frack113\ndate: 2022-05-02\ntags:\n- attack.command-and-control\n- attack.stealth\n- attack.t1105\n- attack.t1564.004\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: \\PrintBrm.exe\n    CommandLine|contains|all:\n    - ' -f'\n    - .zip\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

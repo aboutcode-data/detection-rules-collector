@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Lampa/Trojan_Win32_Lampa_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Lampa_A",
+                "tags": [],
+                "description": "Trojan:Win32/Lampa.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Lampa_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Lampa.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 00 8a 00 30 01 8b 0d ?? ?? ?? ?? 41 81 f9 ae 01 00 00 89 0d 90 1b 00 0f 82 }\n\t\t$a_03_1 = {8b 09 8a 09 30 08 a1 ?? ?? ?? ?? 40 3d ae 01 00 00 a3 ?? ?? ?? ?? 0f 82 }\n\t\t$a_03_2 = {6a 40 68 00 02 00 00 ff 35 ?? ?? ?? ?? ff 15 ?? ?? ?? ?? a1 ?? ?? ?? ?? 2b 05 ?? ?? ?? ?? 2d 00 50 0f 00 a3 ?? ?? ?? ?? 79 0c a1 ?? ?? ?? ?? a3 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

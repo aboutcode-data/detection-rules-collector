@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/file_event/file_event_lnx_persistence_sudoers_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-05",
+                "title": "Persistence Via Sudoers.d Files",
+                "id": "ddb26b76-4447-4807-871f-1b035b2bfa5d"
+            },
+            "rule_text": "title: Persistence Via Sudoers.d Files\nid: ddb26b76-4447-4807-871f-1b035b2bfa5d\nstatus: test\ndescription: 'Detects the creation or modification of files within the \"sudoers.d\"\n  directory on Linux systems.\n\n  Such activity may indicate an attempt to establish or maintain privilege escalation\n  by granting specific users elevated permissions.\n\n  Unauthorized changes to sudoers files are a common technique used by attackers to\n  persist administrative access.\n\n  '\nreferences:\n- https://github.com/h3xduck/TripleCross/blob/1f1c3e0958af8ad9f6ebe10ab442e75de33e91de/apps/deployer.sh\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-05\nmodified: 2026-03-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1548.003\nlogsource:\n  product: linux\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|startswith: /etc/sudoers.d/\n  filter_main_dpkg:\n    Image|endswith: /usr/bin/dpkg\n    TargetFilename: /etc/sudoers.d/README.dpkg-new\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Creation of legitimate files in sudoers.d folder as part of administrator work\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

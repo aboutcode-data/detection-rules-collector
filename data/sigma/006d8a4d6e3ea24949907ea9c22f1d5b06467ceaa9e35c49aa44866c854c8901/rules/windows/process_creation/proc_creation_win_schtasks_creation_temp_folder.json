@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_creation_temp_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-03-11",
+                "title": "Suspicious Scheduled Task Creation Involving Temp Folder",
+                "id": "39019a4e-317f-4ce3-ae63-309a8c6b53c5"
+            },
+            "rule_text": "title: Suspicious Scheduled Task Creation Involving Temp Folder\nid: 39019a4e-317f-4ce3-ae63-309a8c6b53c5\nstatus: test\ndescription: Detects the creation of scheduled tasks that involves a temporary folder\n  and runs only once\nreferences:\n- https://discuss.elastic.co/t/detection-and-response-for-hafnium-activity/266289/3\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-03-11\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|all:\n    - ' /create '\n    - ' /sc once '\n    - \\Temp\\\n  condition: selection\nfalsepositives:\n- Administrative activity\n- Software installation\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

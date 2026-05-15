@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wusa_susp_parent_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-11-26",
+                "title": "Wusa.EXE Executed By Parent Process Located In Suspicious Location",
+                "id": "ef64fc9c-a45e-43cc-8fd8-7d75d73b4c99"
+            },
+            "rule_text": "title: Wusa.EXE Executed By Parent Process Located In Suspicious Location\nid: ef64fc9c-a45e-43cc-8fd8-7d75d73b4c99\nstatus: test\ndescription: 'Detects execution of the \"wusa.exe\" (Windows Update Standalone Installer)\n  utility by a parent process that is located in a suspicious location.\n\n  Attackers could instantiate an instance of \"wusa.exe\" in order to bypass User Account\n  Control (UAC). They can duplicate the access token from \"wusa.exe\" to gain elevated\n  privileges.\n\n  '\nreferences:\n- https://www.fortinet.com/blog/threat-research/konni-campaign-distributed-via-malicious-document\nauthor: X__Junior (Nextron Systems)\ndate: 2023-11-26\nmodified: 2024-08-15\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\wusa.exe\n  selection_paths_1:\n    ParentImage|contains:\n    - :\\Perflogs\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\Appdata\\Local\\Temp\\\n    - \\Temporary Internet\n  selection_paths_2:\n  - ParentImage|contains|all:\n    - :\\Users\\\n    - \\Favorites\\\n  - ParentImage|contains|all:\n    - :\\Users\\\n    - \\Favourites\\\n  - ParentImage|contains|all:\n    - :\\Users\\\n    - \\Contacts\\\n  - ParentImage|contains|all:\n    - :\\Users\\\n    - \\Pictures\\\n  filter_main_msu:\n    CommandLine|contains: .msu\n  condition: selection_img and 1 of selection_paths_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

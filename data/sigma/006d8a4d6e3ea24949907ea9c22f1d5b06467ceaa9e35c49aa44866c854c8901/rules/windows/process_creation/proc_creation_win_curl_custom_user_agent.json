@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_custom_user_agent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-27",
+                "title": "Curl Web Request With Potential Custom User-Agent",
+                "id": "85de1f22-d189-44e4-8239-dc276b45379b"
+            },
+            "rule_text": "title: Curl Web Request With Potential Custom User-Agent\nid: 85de1f22-d189-44e4-8239-dc276b45379b\nstatus: test\ndescription: Detects execution of \"curl.exe\" with a potential custom \"User-Agent\".\n  Attackers can leverage this to download or exfiltrate data via \"curl\" to a domain\n  that only accept specific \"User-Agent\" strings\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\n- https://github.com/WithSecureLabs/iocs/blob/344203de742bb7e68bd56618f66d34be95a9f9fc/FIN7VEEAM/iocs.csv\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-27\nmodified: 2025-12-11\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_header_flag_1:\n    CommandLine|re: \\s-H\\s\n  selection_header_flag_2:\n    CommandLine|contains: --header\n  selection_user_agent:\n    CommandLine|contains: 'User-Agent:'\n  condition: selection_img and 1 of selection_header_* and selection_user_agent\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_custom_user_agent/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

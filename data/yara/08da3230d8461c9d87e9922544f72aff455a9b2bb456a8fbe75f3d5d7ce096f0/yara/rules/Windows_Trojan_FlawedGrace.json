@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_FlawedGrace.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_FlawedGrace_8c5eb04b",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "8c5eb04b-301b-4d05-a010-3329e5b764c6",
+                "fingerprint": "46ce025974792cdefe9d4f4493cee477c0eaf641564cd44becd687c27d9e7c30",
+                "creation_date": "2023-11-01",
+                "last_modified": "2023-11-02",
+                "threat_name": "Windows.Trojan.FlawedGrace",
+                "reference_sample": "966112f3143d751a95c000a990709572ac8b49b23c0e57b2691955d6fda1016e",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_FlawedGrace_8c5eb04b\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"8c5eb04b-301b-4d05-a010-3329e5b764c6\"\n\t\tfingerprint = \"46ce025974792cdefe9d4f4493cee477c0eaf641564cd44becd687c27d9e7c30\"\n\t\tcreation_date = \"2023-11-01\"\n\t\tlast_modified = \"2023-11-02\"\n\t\tthreat_name = \"Windows.Trojan.FlawedGrace\"\n\t\treference_sample = \"966112f3143d751a95c000a990709572ac8b49b23c0e57b2691955d6fda1016e\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"Grace finalized, no more library calls allowed.\" ascii fullword\n\t\t$a2 = \".?AVReadThread@TunnelIO@NS@@\" ascii fullword\n\t\t$a3 = \".?AVTunnelClientDirectIO@NS@@\" ascii fullword\n\t\t$a4 = \".?AVWireClientConnectionThread@NS@@\" ascii fullword\n\t\t$a5 = \".?AVWireParam@NS@@\" ascii fullword\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

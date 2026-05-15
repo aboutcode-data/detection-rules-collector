@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Tenable/kaiten.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Kaiten",
+                "tags": [],
+                "description": "Linux IRC DDoS Malware",
+                "family": "Linux.Backdoor.Kaiten",
+                "filetype": "ELF",
+                "hash": "2c772242de272bff1bb940b0687445739ec544aceec1bc5591a374a57cd652b5"
+            },
+            "rule_text": "import \"elf\"\n\nrule Kaiten\n{\n\tmeta:\n\t\tdescription = \"Linux IRC DDoS Malware\"\n\t\tfamily = \"Linux.Backdoor.Kaiten\"\n\t\tfiletype = \"ELF\"\n\t\thash = \"6b5386d96b90a4cb811c5ddd6f35f6b0d4c65c69c8160216077e7a0f43a8888d\"\n\t\thash = \"965a9594ef80e7134e1a9e5a4cce0a3dce98636107d1f6410224386dfccb9d5b\"\n\t\thash = \"2c772242de272bff1bb940b0687445739ec544aceec1bc5591a374a57cd652b5\"\n\n\tstrings:\n\t\t$irc = /(PING)|(PONG)|(NOTICE)|(PRIVMSG)/\n\t\t$kill = \"Killing pid %d\" nocase\n\t\t$subnet = \"What kind of subnet address is that\" nocase\n\t\t$version = /(Helel mod)|(Kaiten wa goraku)/\n\t\t$flood = \"UDP <target> <port> <secs>\" nocase\n\n\tcondition:\n\t\telf.type== elf.ET_EXEC and $irc and 2 of ( $kill , $subnet , $version , $flood )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

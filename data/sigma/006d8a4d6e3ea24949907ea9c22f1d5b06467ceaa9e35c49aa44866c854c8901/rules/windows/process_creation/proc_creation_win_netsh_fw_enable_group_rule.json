@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_netsh_fw_enable_group_rule.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-09",
+                "title": "Netsh Allow Group Policy on Microsoft Defender Firewall",
+                "id": "347906f3-e207-4d18-ae5b-a9403d6bcdef"
+            },
+            "rule_text": "title: Netsh Allow Group Policy on Microsoft Defender Firewall\nid: 347906f3-e207-4d18-ae5b-a9403d6bcdef\nstatus: test\ndescription: Adversaries may modify system firewalls in order to bypass controls limiting\n  network usage\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.004/T1562.004.md#atomic-test-3---allow-smb-and-rdp-on-microsoft-defender-firewall\n- https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/netsh-advfirewall-firewall-control-firewall-behavior\nauthor: frack113\ndate: 2022-01-09\nmodified: 2023-02-14\ntags:\n- attack.defense-impairment\n- attack.t1686.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\netsh.exe\n  - OriginalFileName: netsh.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - advfirewall\n    - firewall\n    - set\n    - rule\n    - group=\n    - new\n    - enable=Yes\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_Quasarrat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_Quasarrat_e52df647",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "e52df647-c197-4790-b051-8951fba80c3b",
+                "fingerprint": "c888f0856c6568b83ab60193f8144a61e758e6ff53f6ead8565282ae8b3a9815",
+                "creation_date": "2021-06-27",
+                "last_modified": "2021-08-23",
+                "threat_name": "Windows.Trojan.Quasarrat",
+                "reference_sample": "a58efd253a25cc764d63476931da2ddb305a0328253a810515f6735a6690de1d",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_Quasarrat_e52df647\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"e52df647-c197-4790-b051-8951fba80c3b\"\n\t\tfingerprint = \"c888f0856c6568b83ab60193f8144a61e758e6ff53f6ead8565282ae8b3a9815\"\n\t\tcreation_date = \"2021-06-27\"\n\t\tlast_modified = \"2021-08-23\"\n\t\tthreat_name = \"Windows.Trojan.Quasarrat\"\n\t\treference_sample = \"a58efd253a25cc764d63476931da2ddb305a0328253a810515f6735a6690de1d\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"GetKeyloggerLogsResponse\" ascii fullword\n\t\t$a2 = \"DoDownloadAndExecute\" ascii fullword\n\t\t$a3 = \"http://api.ipify.org/\" wide fullword\n\t\t$a4 = \"Domain: {1}{0}Cookie Name: {2}{0}Value: {3}{0}Path: {4}{0}Expired: {5}{0}HttpOnly: {6}{0}Secure: {7}\" wide fullword\n\t\t$a5 = \"\\\" /sc ONLOGON /tr \\\"\" wide fullword\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

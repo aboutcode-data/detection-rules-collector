@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/nex/shellcode.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "shellcode",
+                "tags": [],
+                "author": "nex",
+                "description": "Matched shellcode byte patterns",
+                "modified": "Glenn Edwards (@hiddenillusion)"
+            },
+            "rule_text": "import \"pe\"\n\nrule shellcode\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Matched shellcode byte patterns\"\n\t\tmodified = \"Glenn Edwards (@hiddenillusion)\"\n\n\tstrings:\n\t\t$s0 = { 64 8b 64 }\n\t\t$s1 = { 64 a1 30 }\n\t\t$s2 = { 64 8b 15 30 }\n\t\t$s3 = { 64 8b 35 30 }\n\t\t$s4 = { 55 8b ec 83 c4 }\n\t\t$s5 = { 55 8b ec 81 ec }\n\t\t$s6 = { 55 8b ec e8 }\n\t\t$s7 = { 55 8b ec e9 }\n\n\tcondition:\n\t\tfor any of ( $s* ) : ( $ at pe.entry_point )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

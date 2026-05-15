@@ -1,0 +1,41 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/vitorafonso/banker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Banker",
+                "tags": [],
+                "description": "Detects a Banker",
+                "author": "vitorafonso",
+                "sample": "e5df30b41b0c50594c2b77c1d5d6916a9ce925f792c563f692426c2d50aa2524",
+                "report": "https://blog.fortinet.com/2016/11/01/android-banking-malware-masquerades-as-flash-player-targeting-large-banks-and-popular-social-media-apps"
+            },
+            "rule_text": "rule Banker\n{\n\tmeta:\n\t\tdescription = \"Detects a Banker\"\n\t\tauthor = \"vitorafonso\"\n\t\tsample = \"e5df30b41b0c50594c2b77c1d5d6916a9ce925f792c563f692426c2d50aa2524\"\n\t\treport = \"https://blog.fortinet.com/2016/11/01/android-banking-malware-masquerades-as-flash-player-targeting-large-banks-and-popular-social-media-apps\"\n\n\tstrings:\n\t\t$a1 = \"kill_on\"\n\t\t$a2 = \"intercept_down\"\n\t\t$a3 = \"send_sms\"\n\t\t$a4 = \"check_manager_status\"\n\t\t$a5 = \"browserappsupdate\"\n\t\t$a6 = \"YnJvd3NlcmFwcHN1cGRhdGU=\"\n\t\t$a7 = \"browserrestart\"\n\t\t$a8 = \"YnJvd3NlcnJlc3RhcnQ=\"\n\t\t$a9 = \"setMobileDataEnabled\"\n\t\t$a10 = \"adminPhone\"\n\n\tcondition:\n\t\t8 of ( $a* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Acecard",
+                "tags": [],
+                "description": "Detects some acecard samples",
+                "author": "vitorafonso",
+                "sample": "0973da0f5cc7e4570659174612a650f3dbd93b3545f07bcc8b438af09dc257a9",
+                "report": "https://securelist.com/blog/research/73777/the-evolution-of-acecard/"
+            },
+            "rule_text": "rule Acecard\n{\n\tmeta:\n\t\tdescription = \"Detects some acecard samples\"\n\t\tauthor = \"vitorafonso\"\n\t\tsample = \"0973da0f5cc7e4570659174612a650f3dbd93b3545f07bcc8b438af09dc257a9\"\n\t\treport = \"https://securelist.com/blog/research/73777/the-evolution-of-acecard/\"\n\n\tstrings:\n\t\t$a = \"#control_number\"\n\t\t$b = \"client number\"\n\t\t$c = \"INTERCEPTING_INCOMING_ENABLED\"\n\t\t$d = \"#intercept_sms_start\"\n\t\t$e = \"#intercept_sms_stop\"\n\t\t$f = \"intercepted incoming sms\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Acecard2",
+                "tags": [],
+                "description": "Detects some acecard samples",
+                "author": "vitorafonso",
+                "sample": "88c744e563f7637e5630cb9b01cad663033ce2861cf01100f6c4e6fbb3e56df9",
+                "report": "https://securelist.com/blog/research/73777/the-evolution-of-acecard/"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Acecard2\n{\n\tmeta:\n\t\tdescription = \"Detects some acecard samples\"\n\t\tauthor = \"vitorafonso\"\n\t\tsample = \"88c744e563f7637e5630cb9b01cad663033ce2861cf01100f6c4e6fbb3e56df9\"\n\t\treport = \"https://securelist.com/blog/research/73777/the-evolution-of-acecard/\"\n\n\tstrings:\n\t\t$a = \"Internet password\"\n\t\t$b = \"Security no.\"\n\t\t$c = \"Keep your Internet Banking and secret authorisation code (SMS) secret. Don't reveal these details to anyone, not even if they claim to be NAB.\"\n\t\t$d = \"TYPE_INSTALLED_APPS\"\n\t\t$e = \"TYPE_INTERCEPTED_INCOMING_SMS\"\n\t\t$f = \"TYPE_LISTENED_INCOMING_SMS\"\n\t\t$g = \"TYPE_CONTROL_NUMBER_DATA\"\n\n\tcondition:\n\t\tall of them and androguard.permission ( /android.permission.RECEIVE_SMS/ )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

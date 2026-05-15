@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_desktop_ini_created_by_uncommon_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Maxime Thiebaut (@0xThiebaut), Tim Shelton (HAWK.IO)",
+                "date": "2020-03-19",
+                "title": "Desktop.INI Created by Uncommon Process",
+                "id": "81315b50-6b60-4d8f-9928-3466e1022515"
+            },
+            "rule_text": "title: Desktop.INI Created by Uncommon Process\nid: 81315b50-6b60-4d8f-9928-3466e1022515\nstatus: test\ndescription: Detects unusual processes accessing desktop.ini, which can be leveraged\n  to alter how Explorer displays a folder's content (i.e. renaming files) without\n  changing them on disk.\nreferences:\n- https://isc.sans.edu/forums/diary/Desktopini+as+a+postexploitation+tool/25912/\nauthor: Maxime Thiebaut (@0xThiebaut), Tim Shelton (HAWK.IO)\ndate: 2020-03-19\nmodified: 2025-12-09\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.009\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith: \\desktop.ini\n  filter_main_generic:\n    Image|startswith:\n    - C:\\Windows\\\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  filter_main_upgrade:\n    TargetFilename|startswith: C:\\$WINDOWS.~BT\\NewOS\\\n  filter_optional_jetbrains:\n    Image|startswith: C:\\Users\\\n    Image|endswith: \\AppData\\Local\\JetBrains\\Toolbox\\bin\\7z.exe\n    TargetFilename|contains: \\JetBrains\\apps\\\n  filter_optional_onedrive:\n    Image|startswith: C:\\Users\\\n    Image|contains: \\AppData\\Local\\Microsoft\\OneDrive\\\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Operations performed through Windows SCCM or equivalent\n- Read only access list authority\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/zlib.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "zlib",
+                "tags": [
+                    "info",
+                    "feature",
+                    "library"
+                ],
+                "author": "@h3x2b <tracker@h3x.eu>",
+                "description": "Detects usage of zlib deflate by copyright string"
+            },
+            "rule_text": "rule zlib : info feature library\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker@h3x.eu>\"\n\t\tdescription = \"Detects usage of zlib deflate by copyright string\"\n\n\tstrings:\n\t\t$zlib_00 = \" deflate 1.2.11 Copyright 1995-2017 Jean-loup Gailly and Mark Adler \"\n\t\t$zlib_01 = \"deflate_copyright\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7f454c46 and 1 of ( $zlib_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_wmimplant.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NVISO",
+                "date": "2020-03-26",
+                "title": "WMImplant Hack Tool",
+                "id": "8028c2c3-e25a-46e3-827f-bbb5abf181d7"
+            },
+            "rule_text": "title: WMImplant Hack Tool\nid: 8028c2c3-e25a-46e3-827f-bbb5abf181d7\nstatus: test\ndescription: Detects parameters used by WMImplant\nreferences:\n- https://github.com/FortyNorthSecurity/WMImplant\nauthor: NVISO\ndate: 2020-03-26\nmodified: 2022-12-25\ntags:\n- attack.execution\n- attack.t1047\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - WMImplant\n    - ' change_user '\n    - ' gen_cli '\n    - ' command_exec '\n    - ' disable_wdigest '\n    - ' disable_winrm '\n    - ' enable_wdigest '\n    - ' enable_winrm '\n    - ' registry_mod '\n    - ' remote_posh '\n    - ' sched_job '\n    - ' service_mod '\n    - ' process_kill '\n    - ' active_users '\n    - ' basic_info '\n    - ' power_off '\n    - ' vacant_system '\n    - ' logon_events '\n  condition: selection\nfalsepositives:\n- Administrative scripts that use the same keywords.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

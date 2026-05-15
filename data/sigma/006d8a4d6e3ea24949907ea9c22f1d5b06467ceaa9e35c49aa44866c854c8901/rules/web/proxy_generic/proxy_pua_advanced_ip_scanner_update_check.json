@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/proxy_generic/proxy_pua_advanced_ip_scanner_update_check.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Axel Olsson",
+                "date": "2022-08-14",
+                "title": "PUA - Advanced IP/Port Scanner Update Check",
+                "id": "1a9bb21a-1bb5-42d7-aa05-3219c7c8f47d"
+            },
+            "rule_text": "title: PUA - Advanced IP/Port Scanner Update Check\nid: 1a9bb21a-1bb5-42d7-aa05-3219c7c8f47d\nstatus: test\ndescription: Detect the update check performed by Advanced IP/Port Scanner utilities.\nreferences:\n- https://www.advanced-ip-scanner.com/\n- https://www.advanced-port-scanner.com/\nauthor: Axel Olsson\ndate: 2022-08-14\nmodified: 2024-02-15\ntags:\n- attack.discovery\n- attack.reconnaissance\n- attack.t1590\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri|contains: /checkupdate.php\n    c-uri-query|contains|all:\n    - lng=\n    - ver=\n    - beta=\n    - type=\n    - rmode=\n    - product=\n  condition: selection\nfalsepositives:\n- Expected if you legitimately use the Advanced IP or Port Scanner utilities in your\n  environement.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

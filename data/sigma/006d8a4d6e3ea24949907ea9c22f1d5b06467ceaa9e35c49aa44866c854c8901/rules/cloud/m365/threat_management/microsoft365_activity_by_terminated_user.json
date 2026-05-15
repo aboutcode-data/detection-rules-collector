@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/m365/threat_management/microsoft365_activity_by_terminated_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-23",
+                "title": "Activity Performed by Terminated User",
+                "id": "2e669ed8-742e-4fe5-b3c4-5a59b486c2ee"
+            },
+            "rule_text": "title: Activity Performed by Terminated User\nid: 2e669ed8-742e-4fe5-b3c4-5a59b486c2ee\nstatus: test\ndescription: 'Detects when a Microsoft Cloud App Security reported for users whose\n  account were terminated in Azure AD, but still perform activities in other platforms\n  such as AWS or Salesforce.\n\n  This is especially relevant for users who use another account to manage resources,\n  since these accounts are often not terminated when a user leaves the company.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/defender-cloud-apps/anomaly-detection-policy\n- https://learn.microsoft.com/en-us/defender-cloud-apps/policy-template-reference\nauthor: Austin Songer @austinsonger\ndate: 2021-08-23\nmodified: 2022-10-09\ntags:\n- attack.impact\nlogsource:\n  service: threat_management\n  product: m365\ndetection:\n  selection:\n    eventSource: SecurityComplianceCenter\n    eventName: Activity performed by terminated user\n    status: success\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

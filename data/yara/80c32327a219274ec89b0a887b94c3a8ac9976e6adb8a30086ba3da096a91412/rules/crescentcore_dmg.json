@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/crescentcore_dmg.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CrescentCore_DMG",
+                "tags": [
+                    "installer",
+                    "macosmalware"
+                ],
+                "Author": "Adam M. Swanda",
+                "Website": "https://www.deadbits.org",
+                "Repo": "https://github.com/deadbits/yara-rules",
+                "Date": "2019-07-18"
+            },
+            "rule_text": "rule CrescentCore_DMG : installer macosmalware\n{\n\tmeta:\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tWebsite = \"https://www.deadbits.org\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\t\tDate = \"2019-07-18\"\n\n\tstrings:\n\t\t$header0 = \"__PAGEZERO\" ascii\n\t\t$header1 = \"__TEXT\" ascii\n\t\t$path0 = \"/Users/mehdi/Desktop/RED MOON/Project/WaningCrescent/WaningCrescent/\" ascii\n\t\t$install0 = \".app\\\" /Applications\" ascii fullword\n\t\t$install1 = \"open \\\"/Applications/\" ascii fullword\n\t\t$str1 = /Flash_Player\\dVirusMp/ ascii\n\t\t$str2 = /Flash_Player\\dAntivirus33/ ascii\n\t\t$str3 = /Flash_Player\\d{2}Armageddon/ ascii\n\t\t$str4 = /Flash_Player\\d{2}Armageddon\\w\\dapocalypsyy/\n\t\t$str5 = /Flash_Player\\d{2}Armageddon\\w\\ddoomsdayyy/\n\t\t$str6 = /SearchModel\\w\\dbrowser/\n\t\t$str8 = /SearchModel\\w\\dcountry/\n\t\t$str9 = /SearchModel\\w\\dhomepage/\n\t\t$str10 = /SearchModel\\w\\dthankyou/\n\t\t$str11 = /SearchModel\\w\\dinterrupt/\n\t\t$str12 = /SearchModel\\w\\dsearch/\n\t\t$str13 = /SearchModel\\w\\dsuccess/\n\t\t$str14 = /SearchModel\\w\\d{2}carrierURL/\n\n\tcondition:\n\t\t( uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xcefaedfe or uint32( 0 ) == 0xfeedfacf or uint32( 0 ) == 0xcffaedfe or uint32( 0 ) == 0xbebafeca ) and $header0 and $header1 and ( ( $path0 and ( any of ( $install* ) ) ) or ( 5 of ( $str* ) ) ) or all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

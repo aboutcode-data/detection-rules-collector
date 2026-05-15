@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_namespace_defender.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-11",
+                "title": "Potential Windows Defender Tampering Via Wmic.EXE",
+                "id": "51cbac1e-eee3-4a90-b1b7-358efb81fa0a"
+            },
+            "rule_text": "title: Potential Windows Defender Tampering Via Wmic.EXE\nid: 51cbac1e-eee3-4a90-b1b7-358efb81fa0a\nstatus: test\ndescription: Detects potential tampering with Windows Defender settings such as adding\n  exclusion using wmic\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/5c1e6f1b4fafd01c8d1ece85f510160fc1275fbf/atomics/T1562.001/T1562.001.md\n- https://www.bleepingcomputer.com/news/security/gootkit-malware-bypasses-windows-defender-by-setting-path-exclusions/\n- https://www.bleepingcomputer.com/news/security/iobit-forums-hacked-to-spread-ransomware-to-its-members/\nauthor: frack113\ndate: 2022-12-11\nmodified: 2023-02-14\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1047\n- attack.t1685\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - OriginalFileName: wmic.exe\n  - Image|endswith: \\WMIC.exe\n  selection_cli:\n    CommandLine|contains: /Namespace:\\\\\\\\root\\\\Microsoft\\\\Windows\\\\Defender\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

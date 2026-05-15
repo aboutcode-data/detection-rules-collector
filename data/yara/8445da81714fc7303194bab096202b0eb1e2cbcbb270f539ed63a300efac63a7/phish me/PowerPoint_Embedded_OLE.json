@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/phish me/PowerPoint_Embedded_OLE.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PowerPoint_Embedded_OLE",
+                "tags": [],
+                "description": "PPSX/PPTX Containers containing embedded data.",
+                "author": "PhishMe"
+            },
+            "rule_text": "rule PowerPoint_Embedded_OLE\n{\n\tmeta:\n\t\tdescription = \"PPSX/PPTX Containers containing embedded data.\"\n\t\tauthor = \"PhishMe\"\n\n\tstrings:\n\t\t$magic = {50 4b}\n\t\t$meta1 = \"ppt/embeddings/oleObject\"\n\t\t$meta2 = \"ppt/slides/\"\n\n\tcondition:\n\t\t$magic at 0 and all of ( $meta* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Redline/Trojan_BAT_Redline_IC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Redline_IC_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Redline.IC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Redline_IC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Redline.IC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0b 07 14 72 ?? ?? ?? ?? 72 ?? ?? ?? ?? 72 ?? ?? ?? ?? 28 ?? ?? ?? 0a 18 8d ?? ?? ?? ?? 14 14 14 17 7e ?? ?? ?? ?? 20 ?? ?? ?? ?? 97 29 ?? ?? ?? 11 26 2a }\n\t\t$a_80_1 = {73 00 69 00 78 00 42 00 34 00 6c 00 30 00 }\n\t\t$a_01_2 = {73 69 78 42 34 6c 30 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_80_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

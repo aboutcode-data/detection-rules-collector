@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/hunt_susp_msoffice_addins_wxll.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "susp_msoffice_addins_wxll",
+                "tags": [],
+                "author": "SBousseaden",
+                "date": "11/10/2020",
+                "description": "hunt for suspicious MS Office Addins with code injection capabilities",
+                "reference": "https://twitter.com/JohnLaTwC/status/1315287078855352326"
+            },
+            "rule_text": "import \"pe\"\n\nrule susp_msoffice_addins_wxll\n{\n\tmeta:\n\t\tauthor = \"SBousseaden\"\n\t\tdate = \"11/10/2020\"\n\t\tdescription = \"hunt for suspicious MS Office Addins with code injection capabilities\"\n\t\treference = \"https://twitter.com/JohnLaTwC/status/1315287078855352326\"\n\n\tstrings:\n\t\t$inj1 = \"WriteProcessMemory\"\n\t\t$inj2 = \"NtWriteVirtualMemory\"\n\t\t$inj3 = \"RtlMoveMemory\"\n\t\t$inj4 = \"VirtualAllocEx\"\n\t\t$inj5 = \"NtAllocateVirtualMemory\"\n\t\t$inj6 = \"NtUnmapViewOfSection\"\n\t\t$inj7 = \"VirtualProtect\"\n\t\t$inj8 = \"NtProtectVirtualMemory\"\n\t\t$inj9 = \"SetThreadContext\"\n\t\t$inj10 = \"NtSetContextThread\"\n\t\t$inj11 = \"ResumeThread\"\n\t\t$inj12 = \"NtResumeThread\"\n\t\t$inj13 = \"QueueUserAPC\"\n\t\t$inj14 = \"NtQueueApcThread\"\n\t\t$inj15 = \"NtQueueApcThreadEx\"\n\t\t$inj16 = \"CreateRemoteThread\"\n\t\t$inj17 = \"NtCreateThreadEx\"\n\t\t$inj18 = \"RtlCreateUserThread\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( pe.exports ( \"wdAutoOpen\" ) or pe.exports ( \"xlAutoOpen\" ) ) and 3 of ( $inj* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

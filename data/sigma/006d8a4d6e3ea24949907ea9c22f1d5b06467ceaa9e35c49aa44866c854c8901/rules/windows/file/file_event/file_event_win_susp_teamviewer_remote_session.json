@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_teamviewer_remote_session.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-30",
+                "title": "TeamViewer Remote Session",
+                "id": "162ab1e4-6874-4564-853c-53ec3ab8be01"
+            },
+            "rule_text": "title: TeamViewer Remote Session\nid: 162ab1e4-6874-4564-853c-53ec3ab8be01\nstatus: test\ndescription: Detects the creation of log files during a TeamViewer remote session\nreferences:\n- https://www.teamviewer.com/en-us/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-30\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection1:\n    TargetFilename|endswith:\n    - \\TeamViewer\\RemotePrinting\\tvprint.db\n    - \\TeamViewer\\TVNetwork.log\n  selection2:\n    TargetFilename|contains|all:\n    - \\TeamViewer\n    - _Logfile.log\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate uses of TeamViewer in an organisation\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

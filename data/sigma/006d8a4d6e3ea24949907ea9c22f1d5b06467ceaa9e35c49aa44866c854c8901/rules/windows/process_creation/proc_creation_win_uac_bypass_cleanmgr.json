@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_cleanmgr.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-30",
+                "title": "UAC Bypass Using Disk Cleanup",
+                "id": "b697e69c-746f-4a86-9f59-7bfff8eab881"
+            },
+            "rule_text": "title: UAC Bypass Using Disk Cleanup\nid: b697e69c-746f-4a86-9f59-7bfff8eab881\nstatus: test\ndescription: Detects the pattern of UAC Bypass using scheduled tasks and variable\n  expansion of cleanmgr.exe (UACMe 34)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-30\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|endswith: '\"\\system32\\cleanmgr.exe /autoclean /d C:'\n    ParentCommandLine: C:\\Windows\\system32\\svchost.exe -k netsvcs -p -s Schedule\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

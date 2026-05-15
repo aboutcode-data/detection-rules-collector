@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Glupteba/Trojan_Win32_Glupteba_GIC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Glupteba_GIC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Glupteba.GIC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Glupteba_GIC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Glupteba.GIC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 04 24 83 c4 04 e8 ?? ?? ?? ?? 29 ff 81 c7 ?? ?? ?? ?? 31 02 42 39 f2 75 e1 21 cf }\n\t\t$a_03_1 = {5b 29 f6 29 d2 e8 ?? ?? ?? ?? 31 1f 47 21 f6 39 cf 75 ?? c3 21 d2 8d 1c 18 46 21 d6 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

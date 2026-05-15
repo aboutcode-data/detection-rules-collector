@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_add_port_monitor.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-30",
+                "title": "Add Port Monitor Persistence in Registry",
+                "id": "944e8941-f6f6-4ee8-ac05-1c224e923c0e"
+            },
+            "rule_text": "title: Add Port Monitor Persistence in Registry\nid: 944e8941-f6f6-4ee8-ac05-1c224e923c0e\nstatus: test\ndescription: 'Adversaries may use port monitors to run an attacker supplied DLL during\n  system boot for persistence or privilege escalation.\n\n  A port monitor can be set through the AddMonitor API call to set a DLL to be loaded\n  at startup.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.010/T1547.010.md\nauthor: frack113\ndate: 2021-12-30\nmodified: 2024-03-25\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.010\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Control\\Print\\Monitors\\\n    Details|endswith: .dll\n  filter_optional_cutepdf:\n    Image: C:\\Windows\\System32\\spoolsv.exe\n    TargetObject|contains: \\Control\\Print\\Monitors\\CutePDF Writer Monitor v4.0\\Driver\n    Details: cpwmon64_v40.dll\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  filter_optional_monvnc:\n    TargetObject|contains: \\Control\\Print\\Monitors\\MONVNC\\Driver\n  filter_optional_vnc:\n    TargetObject|contains|all:\n    - Control\\Print\\Environments\\\n    - \\Drivers\\\n    - \\VNC Printer\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_add_port_monitor/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Add Port Monitor persistence in Registry\n  technique: T1547.010\n  atomic_guid: d34ef297-f178-4462-871e-9ce618d44e50\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_hijacking_firwall_snap_in.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-27",
+                "title": "UAC Bypass via Windows Firewall Snap-In Hijack",
+                "id": "e52cb31c-10ed-4aea-bcb7-593c9f4a315b"
+            },
+            "rule_text": "title: UAC Bypass via Windows Firewall Snap-In Hijack\nid: e52cb31c-10ed-4aea-bcb7-593c9f4a315b\nstatus: test\ndescription: Detects attempts to bypass User Account Control (UAC) by hijacking the\n  Microsoft Management Console (MMC) Windows Firewall snap-in\nreferences:\n- https://www.elastic.co/guide/en/security/current/uac-bypass-via-windows-firewall-snap-in-hijack.html#uac-bypass-via-windows-firewall-snap-in-hijack\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-27\ntags:\n- attack.privilege-escalation\n- attack.t1548\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\mmc.exe\n    ParentCommandLine|contains: WF.msc\n  filter:\n    Image|endswith: \\WerFault.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

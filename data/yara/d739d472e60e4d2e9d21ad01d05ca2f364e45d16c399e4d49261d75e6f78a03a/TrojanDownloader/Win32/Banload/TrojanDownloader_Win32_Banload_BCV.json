@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Banload/TrojanDownloader_Win32_Banload_BCV.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Banload_BCV",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Banload.BCV,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Banload_BCV\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Banload.BCV,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c7 80 9c 00 00 00 30 75 00 00 8b 45 ec e8 ?? ?? ?? ?? 83 c0 54 ba ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 45 ec e8 ?? ?? ?? ?? 83 c0 70 ba ?? ?? ?? ?? e8 ?? ?? ?? ?? b2 01 }\n\t\t$a_01_1 = {64 61 64 6f 73 3d 00 }\n\t\t$a_01_2 = {67 72 61 76 61 72 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

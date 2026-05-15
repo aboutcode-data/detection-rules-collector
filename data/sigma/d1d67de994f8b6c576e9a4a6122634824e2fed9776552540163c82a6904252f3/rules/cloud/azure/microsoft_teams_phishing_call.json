@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/cloud/azure/microsoft_teams_phishing_call.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-12-13",
+                "title": "Microsoft Teams Phishing Call",
+                "id": "60ca259a-3e0a-432e-b912-1951576862ec"
+            },
+            "rule_text": "title: Microsoft Teams Phishing Call\nid: 60ca259a-3e0a-432e-b912-1951576862ec\ndescription: TTPs observed in an Incident Response engagement, where a foreign user\n  initiates a Teams call and pretends to be from the internal IT help desk, trying\n  to coerce the user into installing a remote management tool that grants them access\n  to the computer.\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2024-12-13\nlogsource:\n  product: m365\n  service: teams\ndetection:\n  selection_external_chat:\n    Workload|cased: MicrosoftTeams\n    Operation|cased: ChatCreated\n    ParticipantInfo.HasForeignTenantUsers: 'true'\n  selection_suspicious_name:\n  - Members.DisplayName|contains:\n    - Help Desk Manager\n  - Members.DisplayName|re:\n    - '[^\\x00-\\x7F]{10,}'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\ntags:\n- attack.initial-access\n- attack.t1566.004\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

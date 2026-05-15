@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_create_volume_shadow_copy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-12",
+                "title": "Create Volume Shadow Copy with Powershell",
+                "id": "afd12fed-b0ec-45c9-a13d-aa86625dac81"
+            },
+            "rule_text": "title: Create Volume Shadow Copy with Powershell\nid: afd12fed-b0ec-45c9-a13d-aa86625dac81\nstatus: test\ndescription: Adversaries may attempt to access or create a copy of the Active Directory\n  domain database in order to steal credential information\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1&viewFallbackFrom=powershell-7\nauthor: frack113\ndate: 2022-01-12\ntags:\n- attack.credential-access\n- attack.t1003.003\n- attack.ds0005\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Win32_ShadowCopy\n    - ).Create(\n    - ClientAccessible\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

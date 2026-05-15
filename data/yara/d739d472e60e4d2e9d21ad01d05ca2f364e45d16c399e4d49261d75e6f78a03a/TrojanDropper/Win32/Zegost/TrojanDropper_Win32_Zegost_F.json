@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Zegost/TrojanDropper_Win32_Zegost_F.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Zegost_F",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Zegost.F,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 07 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Zegost_F\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Zegost.F,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {b9 41 00 00 00 33 c0 8d bd ?? ?? ff ff 88 45 ?? f3 ab 8d 8d ?? ?? ff ff 56 8d 55 ?? 51 8d 85 ?? ?? ff ff 52 50 c6 45 ?? 25 88 5d ?? c6 45 ?? 5c c6 45 ?? 25 88 5d ?? c6 45 ?? 65 c6 45 ?? 78 c6 45 ?? 2e c6 45 ?? 64 c6 45 ?? 6c c6 45 ?? 6c e8 }\n\t\t$a_03_1 = {00 80 b8 7f 75 ?? 8b 44 24 ?? 85 c0 75 }\n\t\t$a_03_2 = {00 08 f5 7f 75 ?? 8b 44 24 ?? 85 c0 75 }\n\t\t$a_03_3 = {68 02 00 00 80 c7 45 ?? 20 01 00 00 c6 45 ?? 54 c6 45 ?? 79 c6 45 ?? 70 c6 45 ?? 65 c6 45 ?? 00 e8 }\n\t\t$a_01_4 = {72 74 67 34 33 77 73 }\n\t\t$a_01_5 = {57 69 6e 64 6f 77 73 20 45 76 65 6e 74 20 45 6e 67 69 6e 65 }\n\t\t$a_01_6 = {53 59 53 54 45 4d 5c 43 75 72 72 65 6e 74 43 6f 6e 74 72 6f 6c 53 65 74 5c 53 65 72 76 69 63 65 73 5c 25 73 00 00 00 00 6e 65 74 73 76 63 73 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 + ( #a_03_3 & 1 ) * 2 + ( #a_01_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 + ( #a_01_6 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_lnx_barracuda_cve_2023_2868.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_ELF_ReverseShell_SSLShell_Jun23_1",
+                "tags": [],
+                "description": "Detects reverse shell named SSLShell used in Barracuda ESG exploitation (CVE-2023-2868)",
+                "author": "Florian Roth",
+                "reference": "https://www.barracuda.com/company/legal/esg-vulnerability",
+                "date": "2023-06-07",
+                "score": 75,
+                "hash1": "8849a3273e0362c45b4928375d196714224ec22cb1d2df5d029bf57349860347",
+                "id": "91b34eb7-61d2-592e-a444-249da43994ca"
+            },
+            "rule_text": "rule MAL_ELF_ReverseShell_SSLShell_Jun23_1\n{\n\tmeta:\n\t\tdescription = \"Detects reverse shell named SSLShell used in Barracuda ESG exploitation (CVE-2023-2868)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.barracuda.com/company/legal/esg-vulnerability\"\n\t\tdate = \"2023-06-07\"\n\t\tscore = 75\n\t\thash1 = \"8849a3273e0362c45b4928375d196714224ec22cb1d2df5d029bf57349860347\"\n\t\tid = \"91b34eb7-61d2-592e-a444-249da43994ca\"\n\n\tstrings:\n\t\t$sc1 = { 00 2D 63 00 2F 62 69 6E 2F 73 68 00 }\n\t\t$s1 = \"SSLShell\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7f454c46 and uint16( 0x10 ) == 0x0002 and filesize < 5MB and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2023-2868"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_ELF_SALTWATER_Jun23_1",
+                "tags": [],
+                "description": "Detects SALTWATER malware used in Barracuda ESG exploitations (CVE-2023-2868)",
+                "author": "Florian Roth",
+                "reference": "https://www.barracuda.com/company/legal/esg-vulnerability",
+                "date": "2023-06-07",
+                "score": 80,
+                "hash1": "601f44cc102ae5a113c0b5fe5d18350db8a24d780c0ff289880cc45de28e2b80",
+                "id": "10a038f6-6096-5d3a-aaf5-db441685102b"
+            },
+            "rule_text": "rule MAL_ELF_SALTWATER_Jun23_1\n{\n\tmeta:\n\t\tdescription = \"Detects SALTWATER malware used in Barracuda ESG exploitations (CVE-2023-2868)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.barracuda.com/company/legal/esg-vulnerability\"\n\t\tdate = \"2023-06-07\"\n\t\tscore = 80\n\t\thash1 = \"601f44cc102ae5a113c0b5fe5d18350db8a24d780c0ff289880cc45de28e2b80\"\n\t\tid = \"10a038f6-6096-5d3a-aaf5-db441685102b\"\n\n\tstrings:\n\t\t$x1 = \"libbindshell.so\"\n\t\t$s1 = \"ShellChannel\"\n\t\t$s2 = \"MyWriteAll\"\n\t\t$s3 = \"CheckRemoteIp\"\n\t\t$s4 = \"run_cmd\"\n\t\t$s5 = \"DownloadByProxyChannel\"\n\t\t$s6 = \"[-] error: popen failed\"\n\t\t$s7 = \"/home/product/code/config/ssl_engine_cert.pem\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x457f and filesize < 6000KB and ( ( 1 of ( $x* ) and 2 of them ) or 3 of them ) or all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2023-2868"
+            ]
+        }
+    ]
+}

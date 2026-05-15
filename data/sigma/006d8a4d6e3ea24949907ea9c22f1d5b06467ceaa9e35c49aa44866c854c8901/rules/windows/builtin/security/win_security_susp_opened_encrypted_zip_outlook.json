@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_opened_encrypted_zip_outlook.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-05-09",
+                "title": "Password Protected ZIP File Opened (Email Attachment)",
+                "id": "571498c8-908e-40b4-910b-d2369159a3da"
+            },
+            "rule_text": "title: Password Protected ZIP File Opened (Email Attachment)\nid: 571498c8-908e-40b4-910b-d2369159a3da\nstatus: test\ndescription: Detects the extraction of password protected ZIP archives. See the filename\n  variable for more details on which file has been opened.\nreferences:\n- https://twitter.com/sbousseaden/status/1523383197513379841\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-05-09\ntags:\n- attack.initial-access\n- attack.stealth\n- attack.t1027\n- attack.t1566.001\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5379\n    TargetName|contains|all:\n    - Microsoft_Windows_Shell_ZipFolder:filename\n    - \\Temporary Internet Files\\Content.Outlook\n  condition: selection\nfalsepositives:\n- Legitimate used of encrypted ZIP files\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

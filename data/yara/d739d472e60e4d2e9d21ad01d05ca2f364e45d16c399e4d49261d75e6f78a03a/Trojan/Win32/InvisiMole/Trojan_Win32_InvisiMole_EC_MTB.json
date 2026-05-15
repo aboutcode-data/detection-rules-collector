@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/InvisiMole/Trojan_Win32_InvisiMole_EC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_InvisiMole_EC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/InvisiMole.EC!MTB,SIGNATURE_TYPE_PEHSTR,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_InvisiMole_EC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/InvisiMole.EC!MTB,SIGNATURE_TYPE_PEHSTR,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 08 8b f1 c1 ee 1e 33 f1 69 f6 65 89 07 6c 03 f2 89 70 04 83 c0 04 42 }\n\t\t$a_01_1 = {f7 d8 1b c0 25 00 00 00 02 50 6a 03 6a 00 6a 01 68 00 01 00 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

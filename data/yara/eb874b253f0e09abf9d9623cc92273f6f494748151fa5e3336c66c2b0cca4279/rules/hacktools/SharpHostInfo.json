@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/hacktools/SharpHostInfo.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SharpHostInfo",
+                "tags": [],
+                "id": "6pYAh7DjfYOnvcl9PJGDjY",
+                "fingerprint": "v1_sha256_a9973815c925b2c564ef1f4c2d4019e2d7a854d398a2378a0d86e6e4c3feadb4",
+                "version": "1.0",
+                "date": "2025-07-24",
+                "modified": "2025-07-24",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies SharpHostInfo, a tool used for quickly detecting intranet host information and also abused by attackers such as Storm-2603.",
+                "category": "TOOL",
+                "tool": "SHARPHOSTINFO",
+                "reference": "https://www.microsoft.com/en-us/security/blog/2025/07/22/disrupting-active-exploitation-of-on-premises-sharepoint-vulnerabilities",
+                "hash": "d6da885c90a5d1fb88d0a3f0b5d9817a82d5772d5510a0773c80ca581ce2486d"
+            },
+            "rule_text": "rule SharpHostInfo\n{\n\tmeta:\n\t\tid = \"6pYAh7DjfYOnvcl9PJGDjY\"\n\t\tfingerprint = \"v1_sha256_a9973815c925b2c564ef1f4c2d4019e2d7a854d398a2378a0d86e6e4c3feadb4\"\n\t\tversion = \"1.0\"\n\t\tdate = \"2025-07-24\"\n\t\tmodified = \"2025-07-24\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies SharpHostInfo, a tool used for quickly detecting intranet host information and also abused by attackers such as Storm-2603.\"\n\t\tcategory = \"TOOL\"\n\t\ttool = \"SHARPHOSTINFO\"\n\t\treference = \"https://github.com/shmilylty/SharpHostInfo\"\n\t\treference = \"https://www.microsoft.com/en-us/security/blog/2025/07/22/disrupting-active-exploitation-of-on-premises-sharepoint-vulnerabilities\"\n\t\thash = \"d6da885c90a5d1fb88d0a3f0b5d9817a82d5772d5510a0773c80ca581ce2486d\"\n\n\tstrings:\n\t\t$str_a = \"[!] Failed:\"\n\t\t$str_b = \"[!] Error:\"\n\t\t$str_c = \"manuf.json\" fullword\n\t\t$str_d = \"Detect target:\"\n\t\t$str_e = \"Detect Service:\"\n\t\t$str_f = \"Detect thead:\"\n\t\t$str_g = \"Detect timeout:\"\n\t\t$str_h = \"The parsed detection target is empty\"\n\t\t$str_i = \"An exception occurred while reading the file list!\"\n\t\t$str_j = \"ParsingSocketStremResponse\"\n\t\t$sharphost = \"SharpHostInfo\" fullword\n\n\tcondition:\n\t\t8 of ( $str_* ) or $sharphost\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

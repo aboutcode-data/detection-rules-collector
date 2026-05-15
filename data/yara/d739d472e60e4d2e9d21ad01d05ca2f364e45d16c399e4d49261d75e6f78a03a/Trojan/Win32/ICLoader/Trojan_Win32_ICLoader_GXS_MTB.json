@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ICLoader/Trojan_Win32_ICLoader_GXS_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ICLoader_GXS_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/ICLoader.GXS!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ICLoader_GXS_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ICLoader.GXS!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {23 df 5f 89 1d ?? ?? ?? ?? 33 db 8a da 8b 15 ?? ?? ?? ?? 0f af c3 dc 05 }\n\t\t$a_03_1 = {32 c2 8a 15 ?? ?? ?? ?? a2 ?? ?? ?? ?? 8a c1 0c 10 8a 1d ?? ?? ?? ?? c0 e8 03 25 ?? ?? ?? ?? 57 89 44 24 10 8a c2 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

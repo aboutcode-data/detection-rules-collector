@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_ace_with_exe.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ACE_Containing_EXE",
+                "tags": [],
+                "author": "Florian Roth (Nextron Systems) - based on Nick Hoffman' rule - Morphick Inc",
+                "description": "Looks for ACE Archives containing an exe/scr file",
+                "date": "2015-09-09",
+                "score": 50,
+                "id": "0756f0e7-39f1-572d-a77d-1f7826332360"
+            },
+            "rule_text": "rule ACE_Containing_EXE\n{\n\tmeta:\n\t\tauthor = \"Florian Roth (Nextron Systems) - based on Nick Hoffman' rule - Morphick Inc\"\n\t\tdescription = \"Looks for ACE Archives containing an exe/scr file\"\n\t\tdate = \"2015-09-09\"\n\t\tscore = 50\n\t\tid = \"0756f0e7-39f1-572d-a77d-1f7826332360\"\n\n\tstrings:\n\t\t$header = { 2a 2a 41 43 45 2a 2a }\n\t\t$extensions1 = \".exe\"\n\t\t$extensions2 = \".EXE\"\n\t\t$extensions3 = \".scr\"\n\t\t$extensions4 = \".SCR\"\n\n\tcondition:\n\t\t$header at 7 and for any of ( $extensions* ) : ( $ in ( 81 .. ( 81 + uint16( 79 ) ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

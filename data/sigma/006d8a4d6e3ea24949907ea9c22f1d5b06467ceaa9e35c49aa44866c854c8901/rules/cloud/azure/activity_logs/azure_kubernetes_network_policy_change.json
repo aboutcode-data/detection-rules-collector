@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_kubernetes_network_policy_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-07",
+                "title": "Azure Kubernetes Network Policy Change",
+                "id": "08d6ac24-c927-4469-b3b7-2e422d6e3c43"
+            },
+            "rule_text": "title: Azure Kubernetes Network Policy Change\nid: 08d6ac24-c927-4469-b3b7-2e422d6e3c43\nstatus: test\ndescription: Identifies when a Azure Kubernetes network policy is modified or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\n- https://www.microsoft.com/security/blog/2021/03/23/secure-containerized-environments-with-updated-threat-matrix-for-kubernetes/\n- https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/\n- https://medium.com/mitre-engenuity/att-ck-for-containers-now-available-4c2359654bf1\nauthor: Austin Songer @austinsonger\ndate: 2021-08-07\nmodified: 2022-08-23\ntags:\n- attack.impact\n- attack.credential-access\n- attack.t1485\n- attack.t1496\n- attack.t1489\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/NETWORKING.K8S.IO/NETWORKPOLICIES/WRITE\n    - MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/NETWORKING.K8S.IO/NETWORKPOLICIES/DELETE\n    - MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/EXTENSIONS/NETWORKPOLICIES/WRITE\n    - MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/EXTENSIONS/NETWORKPOLICIES/DELETE\n  condition: selection\nfalsepositives:\n- Network Policy being modified and deleted may be performed by a system administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Network Policy being modified and deleted from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

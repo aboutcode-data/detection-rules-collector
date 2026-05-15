@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/Lodrypt/VirTool_Win32_Lodrypt_A_dr.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_Lodrypt_A_dr",
+                "tags": [],
+                "description": "VirTool:Win32/Lodrypt.A!dr,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_Lodrypt_A_dr\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/Lodrypt.A!dr,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {33 ff eb 1b ?? ?? ?? 32 c9 b8 ?? ?? ?? ?? fe c1 30 08 40 3d ?? ?? ?? ?? 7e f6 e9 ?? ?? 00 00 bb ?? ?? ?? ?? 66 b8 99 99 57 ff d3 }\n\t\t$a_02_1 = {ff ff 6a 0a 68 ?? ?? ?? ?? e8 ?? ?? ff ff 8d 55 e0 33 c0 e8 ?? ?? ff ff 8b 45 e0 8d 55 e4 e8 ?? ?? ff ff 8d 45 e4 ba ?? ?? ?? ?? e8 ?? ?? ff ff 8b 45 e4 e8 ?? ?? ff ff 33 c0 5a 59 59 64 89 10 }\n\t\t$a_00_2 = {52 54 5f 52 43 44 41 54 41 00 00 00 43 4f 4e 54 45 4e 54 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

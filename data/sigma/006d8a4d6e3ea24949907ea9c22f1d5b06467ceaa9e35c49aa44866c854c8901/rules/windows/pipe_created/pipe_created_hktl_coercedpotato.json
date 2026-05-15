@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/pipe_created/pipe_created_hktl_coercedpotato.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2023-10-11",
+                "title": "HackTool - CoercedPotato Named Pipe Creation",
+                "id": "4d0083b3-580b-40da-9bba-626c19fe4033"
+            },
+            "rule_text": "title: HackTool - CoercedPotato Named Pipe Creation\nid: 4d0083b3-580b-40da-9bba-626c19fe4033\nstatus: test\ndescription: Detects the pattern of a pipe name as used by the hack tool CoercedPotato\nreferences:\n- https://blog.hackvens.fr/articles/CoercedPotato.html\n- https://github.com/hackvens/CoercedPotato\nauthor: Florian Roth (Nextron Systems)\ndate: 2023-10-11\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  product: windows\n  category: pipe_created\n  definition: Note that you have to configure logging for Named Pipe Events in Sysmon\n    config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon\n    configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth\n    verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,\n    https://github.com/olafhartong/sysmon-modular. How to test detection? You can\n    check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575\ndetection:\n  selection:\n    PipeName|contains: \\coerced\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

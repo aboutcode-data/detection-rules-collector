@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kevthehermit/njRat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "njRat",
+                "tags": [],
+                "author": " Kevin Breen <kevin@techanarchy.net>",
+                "date": "2014/04",
+                "ref": "http://malwareconfig.com/stats/njRat",
+                "maltype": "Remote Access Trojan",
+                "filetype": "exe"
+            },
+            "rule_text": "rule njRat\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tdate = \"2014/04\"\n\t\tref = \"http://malwareconfig.com/stats/njRat\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n\n\tstrings:\n\t\t$s1 = {7C 00 27 00 7C 00 27 00 7C}\n\t\t$s2 = \"netsh firewall add allowedprogram\" wide\n\t\t$s3 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" wide\n\t\t$s4 = \"yyyy-MM-dd\" wide\n\t\t$v1 = \"cmd.exe /k ping 0 & del\" wide\n\t\t$v2 = \"cmd.exe /c ping 127.0.0.1 & del\" wide\n\t\t$v3 = \"cmd.exe /c ping 0 -n 2 & del\" wide\n\n\tcondition:\n\t\tall of ( $s* ) and any of ( $v* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

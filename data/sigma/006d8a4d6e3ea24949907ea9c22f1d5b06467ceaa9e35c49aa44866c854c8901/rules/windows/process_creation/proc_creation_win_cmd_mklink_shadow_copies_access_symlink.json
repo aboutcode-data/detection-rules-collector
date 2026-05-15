@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_mklink_shadow_copies_access_symlink.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Teymur Kheirkhabarov, oscd.community",
+                "date": "2019-10-22",
+                "title": "VolumeShadowCopy Symlink Creation Via Mklink",
+                "id": "40b19fa6-d835-400c-b301-41f3a2baacaf"
+            },
+            "rule_text": "title: VolumeShadowCopy Symlink Creation Via Mklink\nid: 40b19fa6-d835-400c-b301-41f3a2baacaf\nstatus: stable\ndescription: Shadow Copies storage symbolic link creation using operating systems\n  utilities\nreferences:\n- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment\nauthor: Teymur Kheirkhabarov, oscd.community\ndate: 2019-10-22\nmodified: 2023-03-06\ntags:\n- attack.credential-access\n- attack.t1003.002\n- attack.t1003.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - mklink\n    - HarddiskVolumeShadowCopy\n  condition: selection\nfalsepositives:\n- Legitimate administrator working with shadow copies, access for backup purposes\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

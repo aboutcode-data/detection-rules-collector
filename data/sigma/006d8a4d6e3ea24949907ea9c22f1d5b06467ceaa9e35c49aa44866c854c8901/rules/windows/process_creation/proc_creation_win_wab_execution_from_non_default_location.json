@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wab_execution_from_non_default_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-12",
+                "title": "Wab Execution From Non Default Location",
+                "id": "395907ee-96e5-4666-af2e-2ca91688e151"
+            },
+            "rule_text": "title: Wab Execution From Non Default Location\nid: 395907ee-96e5-4666-af2e-2ca91688e151\nstatus: test\ndescription: Detects execution of wab.exe (Windows Contacts) and Wabmig.exe (Microsoft\n  Address Book Import Tool) from non default locations as seen with bumblebee activity\nreferences:\n- https://thedfirreport.com/2022/08/08/bumblebee-roasts-its-way-to-domain-admin/\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/bumblebee-loader-cybercrime\n- https://thedfirreport.com/2022/09/26/bumblebee-round-two/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-12\nmodified: 2022-09-27\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\wab.exe\n    - \\wabmig.exe\n  filter:\n    Image|startswith:\n    - C:\\Windows\\WinSxS\\\n    - C:\\Program Files\\Windows Mail\\\n    - C:\\Program Files (x86)\\Windows Mail\\\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/advanced-threat-research/Yara-Rules/blob/master/ransomware/RANSOM_Pico.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "pico_ransomware",
+                "tags": [],
+                "description": "Rule to detect Pico Ransomware",
+                "author": "Marc Rivero | McAfee ATR Team",
+                "date": "2018-08-30",
+                "rule_version": "v1",
+                "malware_type": "ransomware",
+                "malware_family": "Ransom:W32/Pico",
+                "actor_type": "Cybercrime",
+                "actor_group": "Unknown",
+                "reference": "https://twitter.com/siri_urz/status/1035138577934557184",
+                "hash": "cc4a9e410d38a29d0b6c19e79223b270e3a1c326b79c03bec73840b37778bc06"
+            },
+            "rule_text": "rule pico_ransomware\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Pico Ransomware\"\n\t\tauthor = \"Marc Rivero | McAfee ATR Team\"\n\t\tdate = \"2018-08-30\"\n\t\trule_version = \"v1\"\n\t\tmalware_type = \"ransomware\"\n\t\tmalware_family = \"Ransom:W32/Pico\"\n\t\tactor_type = \"Cybercrime\"\n\t\tactor_group = \"Unknown\"\n\t\treference = \"https://twitter.com/siri_urz/status/1035138577934557184\"\n\t\thash = \"cc4a9e410d38a29d0b6c19e79223b270e3a1c326b79c03bec73840b37778bc06\"\n\n\tstrings:\n\t\t$s1 = \"C:\\\\Users\\\\rikfe\\\\Desktop\\\\Ransomware\\\\ThanatosSource\\\\Release\\\\Ransomware.pdb\" fullword ascii\n\t\t$s2 = \"\\\\Downloads\\\\README.txt\" fullword ascii\n\t\t$s3 = \"\\\\Music\\\\README.txt\" fullword ascii\n\t\t$s4 = \"\\\\Videos\\\\README.txt\" fullword ascii\n\t\t$s5 = \"\\\\Pictures\\\\README.txt\" fullword ascii\n\t\t$s6 = \"\\\\Desktop\\\\README.txt\" fullword ascii\n\t\t$s7 = \"\\\\Documents\\\\README.txt\" fullword ascii\n\t\t$s8 = \"/c taskkill /im \" fullword ascii\n\t\t$s9 = \"\\\\AppData\\\\Roaming\\\\\" fullword ascii\n\t\t$s10 = \"gMozilla/5.0 (Windows NT 6.1) Thanatos/1.1\" fullword wide\n\t\t$s11 = \"AppData\\\\Roaming\" fullword ascii\n\t\t$s12 = \"\\\\Downloads\" fullword ascii\n\t\t$s13 = \"operator co_await\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 700KB ) and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

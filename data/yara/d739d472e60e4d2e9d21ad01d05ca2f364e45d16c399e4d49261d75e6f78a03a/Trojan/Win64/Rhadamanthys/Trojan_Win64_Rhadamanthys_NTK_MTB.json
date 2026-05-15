@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Rhadamanthys/Trojan_Win64_Rhadamanthys_NTK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Rhadamanthys_NTK_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Rhadamanthys.NTK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Rhadamanthys_NTK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Rhadamanthys.NTK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {5f 70 61 79 6c 6f 61 64 5f 69 6e 69 74 }\n\t\t$a_03_1 = {0f b6 44 24 ?? 88 41 07 0f b6 44 24 08 88 41 ?? 0f b6 44 24 ?? 88 41 09 0f b6 44 24 }\n\t\t$a_03_2 = {45 31 c9 ff d3 48 89 c7 31 c9 ba ?? 00 00 00 45 31 c0 45 31 c9 ff d3 48 89 c3 48 85 ff 0f 95 c0 48 85 db 0f 95 c1 20 c1 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 3 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

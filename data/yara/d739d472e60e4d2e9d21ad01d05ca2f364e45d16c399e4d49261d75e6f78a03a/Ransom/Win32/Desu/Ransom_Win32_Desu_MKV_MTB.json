@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Desu/Ransom_Win32_Desu_MKV_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Desu_MKV_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Desu.MKV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Desu_MKV_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Desu.MKV!MTB,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {f7 e7 c1 ea 02 8d 04 52 03 c0 2b c8 8a 04 39 8b 4d ?? 32 04 3b 88 04 39 47 3b 7d 18 72 }\n\t\t$a_01_1 = {53 4f 52 52 59 21 20 59 6f 75 72 20 66 69 6c 65 73 20 61 72 65 20 65 6e 63 72 79 70 74 65 64 }\n\t\t$a_01_2 = {64 65 73 75 20 72 61 6e 73 6f 6d 77 61 72 65 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 1 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

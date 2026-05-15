@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Oyster/Trojan_Win64_Oyster_CD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Oyster_CD_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Oyster.CD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Oyster_CD_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Oyster.CD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 8b c8 ff 15 ?? ?? ?? ?? 48 8b 05 ?? ?? ?? ?? 48 05 ?? ?? ?? ?? ff d0 45 33 c9 45 33 c0 33 d2 33 c9 }\n\t\t$a_01_1 = {4b 00 45 00 52 00 4e 00 45 00 4c 00 33 00 32 00 2e 00 44 00 4c 00 4c }\n\t\t$a_01_2 = {4c 6f 61 64 4c 69 62 72 61 72 79 41 }\n\t\t$a_01_3 = {47 65 74 50 72 6f 63 41 64 64 72 65 73 73 }\n\t\t$a_01_4 = {56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

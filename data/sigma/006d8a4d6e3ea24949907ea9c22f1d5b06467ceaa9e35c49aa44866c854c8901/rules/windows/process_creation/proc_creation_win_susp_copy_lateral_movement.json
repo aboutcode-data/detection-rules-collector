@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_copy_lateral_movement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), oscd.community, Teymur Kheirkhabarov @HeirhabarovT, Zach Stanford @svch0st, Nasreddine Bencherchali",
+                "date": "2019-12-30",
+                "title": "Copy From Or To Admin Share Or Sysvol Folder",
+                "id": "855bc8b5-2ae8-402e-a9ed-b889e6df1900"
+            },
+            "rule_text": "title: Copy From Or To Admin Share Or Sysvol Folder\nid: 855bc8b5-2ae8-402e-a9ed-b889e6df1900\nstatus: test\ndescription: Detects a copy command or a copy utility execution to or from an Admin\n  share or remote\nreferences:\n- https://twitter.com/SBousseaden/status/1211636381086339073\n- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view\n- https://www.elastic.co/guide/en/security/current/remote-file-copy-to-a-hidden-share.html\n- https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/\nauthor: Florian Roth (Nextron Systems), oscd.community, Teymur Kheirkhabarov @HeirhabarovT,\n  Zach Stanford @svch0st, Nasreddine Bencherchali\ndate: 2019-12-30\nmodified: 2025-10-22\ntags:\n- attack.lateral-movement\n- attack.collection\n- attack.exfiltration\n- attack.t1039\n- attack.t1048\n- attack.t1021.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_target:\n    CommandLine|contains:\n    - \\\\\\\\*\\\\*$\n    - \\Sysvol\\\n  selection_other_tools:\n  - Image|endswith:\n    - \\robocopy.exe\n    - \\xcopy.exe\n  - OriginalFileName:\n    - robocopy.exe\n    - XCOPY.EXE\n  selection_cmd_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cmd_cli:\n    CommandLine|contains: copy\n  selection_pwsh_img:\n  - Image|contains:\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - powershell_ise.exe\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_pwsh_cli:\n    CommandLine|contains:\n    - copy-item\n    - 'copy '\n    - 'cpi '\n    - ' cp '\n    - 'move '\n    - ' move-item'\n    - ' mi '\n    - ' mv '\n  condition: selection_target and (selection_other_tools or all of selection_cmd_*\n    or all of selection_pwsh_*)\nfalsepositives:\n- Administrative scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/firewall/net_firewall_cleartext_protocols.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Alexandr Yampolskyi, SOC Prime, Tim Shelton",
+                "date": "2019-03-26",
+                "title": "Cleartext Protocol Usage",
+                "id": "d7fb8f0e-bd5f-45c2-b467-19571c490d7e"
+            },
+            "rule_text": "title: Cleartext Protocol Usage\nid: d7fb8f0e-bd5f-45c2-b467-19571c490d7e\nstatus: stable\ndescription: 'Ensure that all account usernames and authentication credentials are\n  transmitted across networks using encrypted channels.\n\n  Ensure that an encryption is used for all sensitive information in transit. Ensure\n  that an encrypted channels is used for all administrative account access.\n\n  '\nreferences:\n- https://www.cisecurity.org/controls/cis-controls-list/\n- https://www.pcisecuritystandards.org/documents/PCI_DSS_v3-2-1.pdf\n- https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04162018.pdf\nauthor: Alexandr Yampolskyi, SOC Prime, Tim Shelton\ndate: 2019-03-26\nmodified: 2022-10-10\ntags:\n- attack.credential-access\nlogsource:\n  category: firewall\ndetection:\n  selection:\n    dst_port:\n    - 8080\n    - 21\n    - 80\n    - 23\n    - 50000\n    - 1521\n    - 27017\n    - 3306\n    - 1433\n    - 11211\n    - 15672\n    - 5900\n    - 5901\n    - 5902\n    - 5903\n    - 5904\n  selection_allow1:\n    action:\n    - forward\n    - accept\n    - 2\n  selection_allow2:\n    blocked: 'false'\n  condition: selection and 1 of selection_allow*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_cmd_susp_process_ancestry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Command Shell Suspicious Process Ancestry (RedCanary Threat Detection Report)",
+                "id": "60cb2beb-d2ba-4a47-ad68-e97576985c70"
+            },
+            "rule_text": "title: Command Shell Suspicious Process Ancestry (RedCanary Threat Detection Report)\nid: 60cb2beb-d2ba-4a47-ad68-e97576985c70\nstatus: experimental\ndescription: Detects IIS worker process spawning command shell. Part of the RedCanary\n  2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.execution\n- attack.t1059.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\w3wp.exe\n    - \\wmiprvse.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains:\n    - http://\n    - https://\n    - echo\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

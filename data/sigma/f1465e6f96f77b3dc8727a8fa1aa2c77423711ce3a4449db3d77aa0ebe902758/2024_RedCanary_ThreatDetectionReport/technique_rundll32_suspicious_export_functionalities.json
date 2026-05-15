@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_rundll32_suspicious_export_functionalities.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Suspicious Export Functionalities - Rundll32",
+                "id": "705d6f7b-779f-41c5-9994-8b191094577b"
+            },
+            "rule_text": "title: Suspicious Export Functionalities - Rundll32\nid: 705d6f7b-779f-41c5-9994-8b191094577b\nstatus: experimental\ndescription: \"Consider monitoring for instances of rundll32.exe running Windows \\n\\\n  native DLLs that have export functionalities that adversaries commonly \\nleverage\\\n  \\ for executing malicious code and evading defensive controls. \\nThe following pseudo-analytic\\\n  \\ applies specifically to adversaries who \\nuse the MiniDump export functionality\\\n  \\ of comsvcs.dll to dump the \\ncontents of LSASS, but this logic could be adapted\\\n  \\ to detect other \\nmalicious activity as well. Part of the RedCanary 2024 Threat\\\n  \\ Detection \\nReport.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.defense_evasion\n- attack.t1218\n- attack.t1218.011\n- attack.credential_access\n- attack.t1003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    Image|endswith: \\rundll32.exe\n  selection2:\n    CommandLine|contains: comsvcs.dll\n  selection3:\n    CommandLine|contains:\n    - MiniDump\n    - '#24'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

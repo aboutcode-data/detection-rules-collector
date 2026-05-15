@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_macos_keylogger_logkext.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_macos_keylogger_logkext",
+                "tags": [],
+                "description": "LogKext is an open source keylogger for Mac OS X, a product of FSB software.",
+                "reference": "https://github.com/SlEePlEs5/logKext",
+                "author": "@mimeframe"
+            },
+            "rule_text": "rule hacktool_macos_keylogger_logkext\n{\n\tmeta:\n\t\tdescription = \"LogKext is an open source keylogger for Mac OS X, a product of FSB software.\"\n\t\treference = \"https://github.com/SlEePlEs5/logKext\"\n\t\tauthor = \"@mimeframe\"\n\n\tstrings:\n\t\t$a1 = \"logKextPassKey\" wide ascii\n\t\t$a2 = \"Couldn't get system keychain:\" wide ascii\n\t\t$a3 = \"Error finding secret in keychain\" wide ascii\n\t\t$a4 = \"com_fsb_iokit_logKext\" wide ascii\n\t\t$b1 = \"logKext Password:\" wide ascii\n\t\t$b2 = \"Logging controls whether the daemon is logging keystrokes (default is on).\" wide ascii\n\t\t$c1 = \"logKextPassKey\" wide ascii\n\t\t$c2 = \"Error: couldn't create secAccess\" wide ascii\n\t\t$d1 = \"IOHIKeyboard\" wide ascii\n\t\t$d2 = \"Clear keyboards called with kextkeys\" wide ascii\n\t\t$d3 = \"Added notification for keyboard\" wide ascii\n\n\tcondition:\n\t\t3 of ( $a* ) or all of ( $b* ) or all of ( $c* ) or all of ( $d* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

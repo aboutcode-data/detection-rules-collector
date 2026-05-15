@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/godlua_linux.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "GodLua_Linux",
+                "tags": [
+                    "linuxmalware"
+                ],
+                "Author": "Adam M. Swanda",
+                "Website": "https://www.deadbits.org",
+                "Repo": "https://github.com/deadbits/yara-rules",
+                "Date": "2019-07-18"
+            },
+            "rule_text": "rule GodLua_Linux : linuxmalware\n{\n\tmeta:\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tWebsite = \"https://www.deadbits.org\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\t\tDate = \"2019-07-18\"\n\n\tstrings:\n\t\t$tmp0 = \"/tmp\" ascii fullword\n\t\t$tmp1 = \"TMPDIR\" ascii\n\t\t$str1 = \"\\\"description\\\": \\\"\" ascii fullword\n\t\t$str2 = \"searchers\" ascii fullword\n\t\t$str3 = \"/dev/misc/watchdog\" ascii fullword\n\t\t$str4 = \"/dev/wdt\" ascii fullword\n\t\t$str5 = \"/dev/misc/wdt\"\n\t\t$str6 = \"lcurl.safe\" ascii fullword\n\t\t$str7 = \"luachild\" ascii fullword\n\t\t$str8 = \"cjson.safe\" ascii fullword\n\t\t$str9 = \"HostUrl\" ascii fullword\n\t\t$str10 = \"HostConnect\" ascii fullword\n\t\t$str11 = \"LUABOX\" ascii fullword\n\t\t$str12 = \"Infinity\" ascii fullword\n\t\t$str13 = \"/bin/sh\" ascii fullword\n\t\t$str14 = /\\.onion(\\.)?/ ascii fullword\n\t\t$str15 = \"/etc/resolv.conf\" ascii fullword\n\t\t$str16 = \"hosts:\" ascii fullword\n\t\t$resolvers = /([0-9]{1,3}\\.){3}[0-9]{1,3}:53,([0-9]{1,3}\\.){3}[0-9]{1,3},([0-9]{1,3}\\.){3}[0-9]{1,3}:5353,([0-9]{1,3}\\.){3}[0-9]{1,3}:443/ ascii\n\t\t$identifier0 = \"$LuaVersion: God \" ascii\n\t\t$identifier1 = /fbi\\/d\\.\\/d.\\/d/ ascii\n\t\t$identifier2 = \"Copyright (C) FBI Systems, 2012-2019, https://fbi.gov\" fullword ascii\n\t\t$identifier3 = \"God 5.1\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x457f and ( all of them or ( any of ( $identifier* ) and $resolvers and any of ( $tmp* ) and 4 of ( $str* ) ) or ( any of ( $identifier* ) and any of ( $tmp* ) and 4 of ( $str* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

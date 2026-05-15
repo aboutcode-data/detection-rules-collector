@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_dsenableroot_enable_root_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-08-22",
+                "title": "Root Account Enable Via Dsenableroot",
+                "id": "821bcf4d-46c7-4b87-bc57-9509d3ba7c11"
+            },
+            "rule_text": "title: Root Account Enable Via Dsenableroot\nid: 821bcf4d-46c7-4b87-bc57-9509d3ba7c11\nstatus: test\ndescription: Detects attempts to enable the root account via \"dsenableroot\"\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/b27a3cb25025161d49ac861cb216db68c46a3537/atomics/T1078.003/T1078.003.md\n- https://github.com/elastic/detection-rules/blob/4312d8c9583be524578a14fe6295c3370b9a9307/rules/macos/persistence_enable_root_account.toml\n- https://ss64.com/osx/dsenableroot.html\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-08-22\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078\n- attack.t1078.001\n- attack.t1078.003\n- attack.initial-access\n- attack.persistence\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /dsenableroot\n  filter_main_disable:\n    CommandLine|contains: ' -d '\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

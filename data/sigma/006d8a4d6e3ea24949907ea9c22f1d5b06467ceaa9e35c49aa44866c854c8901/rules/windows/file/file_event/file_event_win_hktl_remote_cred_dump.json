@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_hktl_remote_cred_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "SecurityAura",
+                "date": "2022-11-16",
+                "title": "HackTool - Potential Remote Credential Dumping Activity Via CrackMapExec Or Impacket-Secretsdump",
+                "id": "6e2a900a-ced9-4e4a-a9c2-13e706f9518a"
+            },
+            "rule_text": "title: HackTool - Potential Remote Credential Dumping Activity Via CrackMapExec Or\n  Impacket-Secretsdump\nid: 6e2a900a-ced9-4e4a-a9c2-13e706f9518a\nstatus: test\ndescription: Detects default filenames output from the execution of CrackMapExec and\n  Impacket-secretsdump against an endpoint.\nreferences:\n- https://github.com/Porchetta-Industries/CrackMapExec\n- https://github.com/fortra/impacket/blob/ff8c200fd040b04d3b5ff05449646737f836235d/examples/secretsdump.py\nauthor: SecurityAura\ndate: 2022-11-16\nmodified: 2024-06-27\ntags:\n- attack.credential-access\n- attack.t1003\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n    TargetFilename|re: \\\\Windows\\\\System32\\\\[a-zA-Z0-9]{8}\\.tmp$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_unc1151_ua.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_UNC1151_WindowsInstaller_Silent_InstallProduct_MacroMethod",
+                "tags": [],
+                "author": "Proofpoint Threat Research",
+                "date": "2021-07-28",
+                "hash1": "1561ece482c78a2d587b66c8eaf211e806ff438e506fcef8f14ae367db82d9b3",
+                "hash2": "a8fd0a5de66fa39056c0ddf2ec74ccd38b2ede147afa602aba00a3f0b55a88e0",
+                "reference": "Thttps://www.proofpoint.com/us/blog/threat-insight/asylum-ambuscade-state-actor-uses-compromised-private-ukrainian-military-emails",
+                "id": "9ae80d54-33b9-55d7-957f-0738243e089f"
+            },
+            "rule_text": "rule APT_UNC1151_WindowsInstaller_Silent_InstallProduct_MacroMethod\n{\n\tmeta:\n\t\tauthor = \"Proofpoint Threat Research\"\n\t\tdate = \"2021-07-28\"\n\t\thash1 = \"1561ece482c78a2d587b66c8eaf211e806ff438e506fcef8f14ae367db82d9b3\"\n\t\thash2 = \"a8fd0a5de66fa39056c0ddf2ec74ccd38b2ede147afa602aba00a3f0b55a88e0\"\n\t\treference = \"Thttps://www.proofpoint.com/us/blog/threat-insight/asylum-ambuscade-state-actor-uses-compromised-private-ukrainian-military-emails\"\n\t\tid = \"9ae80d54-33b9-55d7-957f-0738243e089f\"\n\n\tstrings:\n\t\t$doc_header = {D0 CF 11 E0 A1 B1 1A E1}\n\t\t$s1 = \".UILevel = 2\"\n\t\t$s2 = \"CreateObject(\\\"WindowsInstaller.Installer\\\")\"\n\t\t$s3 = \".InstallProduct \\\"http\"\n\n\tcondition:\n\t\t$doc_header at 0 and all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_setgid_setuid.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ömer Günal",
+                "date": "2020-06-16",
+                "title": "Setuid and Setgid",
+                "id": "c21c4eaa-ba2e-419a-92b2-8371703cbe21"
+            },
+            "rule_text": "title: Setuid and Setgid\nid: c21c4eaa-ba2e-419a-92b2-8371703cbe21\nstatus: test\ndescription: Detects suspicious change of file privileges with chown and chmod commands\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.001/T1548.001.md\nauthor: \"\\xD6mer G\\xFCnal\"\ndate: 2020-06-16\nmodified: 2022-10-05\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1548.001\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_root:\n    CommandLine|contains: chown root\n  selection_perm:\n    CommandLine|contains:\n    - ' chmod u+s'\n    - ' chmod g+s'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

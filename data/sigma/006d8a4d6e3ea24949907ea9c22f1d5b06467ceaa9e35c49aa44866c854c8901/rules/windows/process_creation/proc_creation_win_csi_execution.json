@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_csi_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Konstantin Grishchenko, oscd.community",
+                "date": "2020-10-17",
+                "title": "Suspicious Csi.exe Usage",
+                "id": "40b95d31-1afc-469e-8d34-9a3a667d058e"
+            },
+            "rule_text": "title: Suspicious Csi.exe Usage\nid: 40b95d31-1afc-469e-8d34-9a3a667d058e\nstatus: test\ndescription: \"Csi.exe is a signed binary from Microsoft that comes with Visual Studio\\\n  \\ and provides C# interactive capabilities. It can be used to run C# code from a\\\n  \\ file passed as a parameter in command line. Early version of this utility provided\\\n  \\ with Microsoft \\u201CRoslyn\\u201D Community Technology Preview was named 'rcsi.exe'\"\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Csi/\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Rcsi/\n- https://enigma0x3.net/2016/11/21/bypassing-application-whitelisting-by-using-rcsi-exe/\n- https://twitter.com/Z3Jpa29z/status/1317545798981324801\nauthor: Konstantin Grishchenko, oscd.community\ndate: 2020-10-17\nmodified: 2022-07-11\ntags:\n- attack.lateral-movement\n- attack.execution\n- attack.stealth\n- attack.t1072\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\csi.exe\n    - \\rcsi.exe\n  - OriginalFileName:\n    - csi.exe\n    - rcsi.exe\n  selection_cli:\n    Company: Microsoft Corporation\n  condition: all of selection*\nfalsepositives:\n- Legitimate usage by software developers\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

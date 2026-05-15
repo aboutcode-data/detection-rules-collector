@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/account_management/win_security_access_token_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michaela Adams, Zach Mathis",
+                "date": "2022-11-06",
+                "title": "Potential Access Token Abuse",
+                "id": "02f7c9c1-1ae8-4c6a-8add-04693807f92f"
+            },
+            "rule_text": "title: Potential Access Token Abuse\nid: 02f7c9c1-1ae8-4c6a-8add-04693807f92f\nstatus: test\ndescription: Detects potential token impersonation and theft. Example, when using\n  \"DuplicateToken(Ex)\" and \"ImpersonateLoggedOnUser\" with the \"LOGON32_LOGON_NEW_CREDENTIALS\n  flag\".\nreferences:\n- https://www.elastic.co/fr/blog/how-attackers-abuse-access-token-manipulation\n- https://www.manageengine.com/log-management/cyber-security/access-token-manipulation.html\nauthor: Michaela Adams, Zach Mathis\ndate: 2022-11-06\nmodified: 2023-04-26\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134.001\n- stp.4u\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    LogonType: 9\n    LogonProcessName: Advapi\n    AuthenticationPackageName: Negotiate\n    ImpersonationLevel: '%%1833'\n  condition: selection\nfalsepositives:\n- Anti-Virus\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

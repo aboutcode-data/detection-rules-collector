@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/EyeStye/Trojan_Win32_EyeStye_AK.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_EyeStye_AK",
+                "tags": [],
+                "description": "Trojan:Win32/EyeStye.AK,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_EyeStye_AK\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/EyeStye.AK,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {c3 8b 45 0c 3d ?? ?? 00 00 75 ?? 8b 45 08 b9 ?? 00 00 00 f2 35 ?? ?? ?? ?? ff d0 90 09 03 00 (|?? f0 )}\n\t\t$a_00_1 = {0f b6 5c 15 00 45 83 fd 0f 75 05 bd 00 00 00 00 46 30 1f 47 3b f1 72 e8 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 2 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

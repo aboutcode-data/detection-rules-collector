@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_yellow_cockatoo_ps_susp_dotnet_methods.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "PowerShell Suspicious .NET Methods",
+                "id": "016c4ee2-ca34-474b-bfdc-43e017a29b47"
+            },
+            "rule_text": "title: PowerShell Suspicious .NET Methods\nid: 016c4ee2-ca34-474b-bfdc-43e017a29b47\nstatus: experimental\ndescription: \"Detects the loading of suspicious .NET methods, seen in PowerShell script\\\n  \\ load content. This \\nbehavior is not limited to Yellow Cockatoo and can be applied\\\n  \\ universally for malicious \\nPowerShell obfuscation attempts. Part of the RedCanary\\\n  \\ 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/yellow-cockatoo/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.defense_evasion\n- attack.t1140\n- attack.t1574\n- attack.t1574.013\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - aescryptoserviceprovider\n    - frombase64string\n    - user32.dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

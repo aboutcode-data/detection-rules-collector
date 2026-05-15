@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_msdt_susp_directories.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Vadim Varganov, Florian Roth (Nextron Systems)",
+                "date": "2022-08-24",
+                "title": "File Creation In Suspicious Directory By Msdt.EXE",
+                "id": "318557a5-150c-4c8d-b70e-a9910e199857"
+            },
+            "rule_text": "title: File Creation In Suspicious Directory By Msdt.EXE\nid: 318557a5-150c-4c8d-b70e-a9910e199857\nstatus: test\ndescription: Detects msdt.exe creating files in suspicious directories which could\n  be a sign of exploitation of either Follina or Dogwalk vulnerabilities\nreferences:\n- https://irsl.medium.com/the-trouble-with-microsofts-troubleshooters-6e32fc80b8bd\n- https://msrc-blog.microsoft.com/2022/05/30/guidance-for-cve-2022-30190-microsoft-support-diagnostic-tool-vulnerability/\nauthor: Vadim Varganov, Florian Roth (Nextron Systems)\ndate: 2022-08-24\nmodified: 2023-02-23\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.001\n- cve.2022-30190\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\msdt.exe\n    TargetFilename|contains:\n    - \\Desktop\\\n    - \\Start Menu\\Programs\\Startup\\\n    - C:\\PerfLogs\\\n    - C:\\ProgramData\\\n    - C:\\Users\\Public\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2022-30190"
+            ]
+        }
+    ]
+}

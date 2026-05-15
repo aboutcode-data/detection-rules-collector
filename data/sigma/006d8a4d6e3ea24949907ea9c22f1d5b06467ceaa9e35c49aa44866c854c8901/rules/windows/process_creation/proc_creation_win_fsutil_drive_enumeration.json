@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_fsutil_drive_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'",
+                "date": "2022-03-29",
+                "title": "Fsutil Drive Enumeration",
+                "id": "63de06b9-a385-40b5-8b32-73f2b9ef84b6"
+            },
+            "rule_text": "title: Fsutil Drive Enumeration\nid: 63de06b9-a385-40b5-8b32-73f2b9ef84b6\nstatus: test\ndescription: Attackers may leverage fsutil to enumerated connected drives.\nreferences:\n- Turla has used fsutil fsinfo drives to list connected drives.\n- https://github.com/elastic/detection-rules/blob/414d32027632a49fb239abb8fbbb55d3fa8dd861/rules/windows/discovery_peripheral_device.toml\nauthor: Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'\ndate: 2022-03-29\nmodified: 2022-07-14\ntags:\n- attack.discovery\n- attack.t1120\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\fsutil.exe\n  - OriginalFileName: fsutil.exe\n  selection_cli:\n    CommandLine|contains: drives\n  condition: all of selection_*\nfalsepositives:\n- Certain software or administrative tasks may trigger false positives.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

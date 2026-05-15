@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_git_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Shell Execution via Git - Linux",
+                "id": "47b3bbd4-1bf7-48cc-84ab-995362aaa75a"
+            },
+            "rule_text": "title: Shell Execution via Git - Linux\nid: 47b3bbd4-1bf7-48cc-84ab-995362aaa75a\nstatus: test\ndescription: 'Detects the use of the \"git\" utility to execute a shell. Such behavior\n  may be associated with privilege escalation, unauthorized command execution, or\n  to break out from restricted environments.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/git/#shell\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    ParentImage|endswith: /git\n    ParentCommandLine|contains|all:\n    - ' -p '\n    - help\n    CommandLine|contains:\n    - bash 0<&1\n    - dash 0<&1\n    - sh 0<&1\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

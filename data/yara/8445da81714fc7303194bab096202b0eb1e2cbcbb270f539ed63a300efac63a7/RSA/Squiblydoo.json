@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/RSA/Squiblydoo.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RSA_IR_Windows_COM_bypass_script",
+                "tags": [],
+                "author": "RSA IR",
+                "Date": "22 Apr 2016",
+                "reference": "https://community.rsa.com/community/products/netwitness/blog/2016/04/26/detection-of-com-whitelist-bypassing-with-ecat",
+                "comment1": "Detects potential scripts used by COM+ Whitelist Bypass",
+                "comment2": "More information on bypass located at: http://subt0x10.blogspot.com/2016/04/bypass-application-whitelisting-script.html"
+            },
+            "rule_text": "rule RSA_IR_Windows_COM_bypass_script\n{\n\tmeta:\n\t\tauthor = \"RSA IR\"\n\t\tDate = \"22 Apr 2016\"\n\t\treference = \"https://community.rsa.com/community/products/netwitness/blog/2016/04/26/detection-of-com-whitelist-bypassing-with-ecat\"\n\t\tcomment1 = \"Detects potential scripts used by COM+ Whitelist Bypass\"\n\t\tcomment2 = \"More information on bypass located at: http://subt0x10.blogspot.com/2016/04/bypass-application-whitelisting-script.html\"\n\n\tstrings:\n\t\t$s1 = \"<scriptlet>\" nocase\n\t\t$s2 = \"<registration\" nocase\n\t\t$s3 = \"classid=\" nocase\n\t\t$s4 = \"[CDATA[\" nocase\n\t\t$s5 = \"</script>\" nocase\n\t\t$s6 = \"</registration>\" nocase\n\t\t$s7 = \"</scriptlet>\" nocase\n\n\tcondition:\n\t\tall of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

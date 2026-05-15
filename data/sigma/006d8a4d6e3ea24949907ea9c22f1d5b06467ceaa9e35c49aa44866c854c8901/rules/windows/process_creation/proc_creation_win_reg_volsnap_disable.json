@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_volsnap_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-01-28",
+                "title": "Disabled Volume Snapshots",
+                "id": "dee4af55-1f22-4e1d-a9d2-4bdc7ecb472a"
+            },
+            "rule_text": "title: Disabled Volume Snapshots\nid: dee4af55-1f22-4e1d-a9d2-4bdc7ecb472a\nstatus: test\ndescription: Detects commands that temporarily turn off Volume Snapshots\nreferences:\n- https://twitter.com/0gtweet/status/1354766164166115331\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-01-28\nmodified: 2023-12-15\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - \\Services\\VSS\\Diag\n    - /d Disabled\n  condition: selection\nfalsepositives:\n- Legitimate administration\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

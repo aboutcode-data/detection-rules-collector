@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_baaupdate_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "andrewdanis, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-10-18",
+                "title": "Suspicious BitLocker Access Agent Update Utility Execution",
+                "id": "9f38c1db-e2ae-40bf-81d0-5b68f73fb512"
+            },
+            "rule_text": "title: Suspicious BitLocker Access Agent Update Utility Execution\nid: 9f38c1db-e2ae-40bf-81d0-5b68f73fb512\nrelated:\n- id: 6e8fe0a8-ba0b-4a93-8f9e-82657e7a5984\n  type: similar\nstatus: experimental\ndescription: 'Detects the execution of the BitLocker Access Agent Update Utility (baaupdate.exe)\n  which is not a common parent process for other processes.\n\n  Suspicious child processes spawned by baaupdate.exe could indicate an attempt at\n  lateral movement via BitLocker DCOM & COM Hijacking.\n\n  '\nreferences:\n- https://github.com/rtecCyberSec/BitlockMove\nauthor: andrewdanis, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-10-18\ntags:\n- attack.stealth\n- attack.t1218\n- attack.lateral-movement\n- attack.t1021.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\baaupdate.exe\n    Image|endswith:\n    - \\bitsadmin.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\schtasks.exe\n    - \\wmic.exe\n    - \\wscript.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

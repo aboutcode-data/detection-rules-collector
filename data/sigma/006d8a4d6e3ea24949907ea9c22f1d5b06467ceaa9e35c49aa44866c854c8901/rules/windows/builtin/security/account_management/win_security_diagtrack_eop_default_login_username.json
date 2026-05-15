@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/account_management/win_security_diagtrack_eop_default_login_username.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-03",
+                "title": "DiagTrackEoP Default Login Username",
+                "id": "2111118f-7e46-4fc8-974a-59fd8ec95196"
+            },
+            "rule_text": "title: DiagTrackEoP Default Login Username\nid: 2111118f-7e46-4fc8-974a-59fd8ec95196\nstatus: test\ndescription: Detects the default \"UserName\" used by the DiagTrackEoP POC\nreferences:\n- https://github.com/Wh04m1001/DiagTrackEoP/blob/3a2fc99c9700623eb7dc7d4b5f314fd9ce5ef51f/main.cpp#L46\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-03\ntags:\n- attack.privilege-escalation\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    LogonType: 9\n    TargetOutboundUserName: thisisnotvaliduser\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

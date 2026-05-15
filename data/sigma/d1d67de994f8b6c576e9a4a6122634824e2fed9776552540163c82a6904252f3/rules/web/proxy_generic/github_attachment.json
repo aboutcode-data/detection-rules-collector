@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/github_attachment.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Kim Bokholm, Ramine Etow, Patrik Olson",
+                "date": "2024-04-22",
+                "title": "File Attached to GitHub Issue",
+                "id": "6634348b-c8ba-4edf-aa3a-9cd7852c7430"
+            },
+            "rule_text": "title: File Attached to GitHub Issue\nid: 6634348b-c8ba-4edf-aa3a-9cd7852c7430\ndescription: Files can be attached to GitHub issues of well-known repositories, giving\n  them a credible URL. Investigate the url, see if the payload is malicious.\nreferences:\n- https://x.com/Ax_Sharma/status/1781706435115491409\nstatus: test\nauthor: NTT Security - Kim Bokholm, Ramine Etow, Patrik Olson\ndate: '2024-04-22'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-host: github.com\n    cs-uri|contains: /files/\n    cs-uri|re: /files/[0-9]+/\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

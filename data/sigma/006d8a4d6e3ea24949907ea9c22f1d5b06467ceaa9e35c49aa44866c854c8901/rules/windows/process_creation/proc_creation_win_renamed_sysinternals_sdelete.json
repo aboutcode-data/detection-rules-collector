@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_sysinternals_sdelete.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-09-06",
+                "title": "Renamed Sysinternals Sdelete Execution",
+                "id": "c1d867fe-8d95-4487-aab4-e53f2d339f90"
+            },
+            "rule_text": "title: Renamed Sysinternals Sdelete Execution\nid: c1d867fe-8d95-4487-aab4-e53f2d339f90\nstatus: test\ndescription: Detects the use of a renamed SysInternals Sdelete, which is something\n  an administrator shouldn't do (the renaming)\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/sdelete\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-09-06\nmodified: 2023-02-03\ntags:\n- attack.impact\n- attack.t1485\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: sdelete.exe\n  filter:\n    Image|endswith:\n    - \\sdelete.exe\n    - \\sdelete64.exe\n  condition: selection and not filter\nfalsepositives:\n- System administrator usage\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

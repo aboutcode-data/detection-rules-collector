@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_7za.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior",
+                "date": "2023-06-09",
+                "title": "Potential 7za.DLL Sideloading",
+                "id": "4f6edb78-5c21-42ab-a558-fd2a6fc1fd57"
+            },
+            "rule_text": "title: Potential 7za.DLL Sideloading\nid: 4f6edb78-5c21-42ab-a558-fd2a6fc1fd57\nstatus: test\ndescription: Detects potential DLL sideloading of \"7za.dll\"\nreferences:\n- https://www.gov.pl/attachment/ee91f24d-3e67-436d-aa50-7fa56acf789d\nauthor: X__Junior\ndate: 2023-06-09\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\7za.dll\n  filter_main_legit_path:\n    Image|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate third party application located in \"AppData\" may leverage this DLL to\n  offer 7z compression functionality and may generate false positives. Apply additional\n  filters as needed.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

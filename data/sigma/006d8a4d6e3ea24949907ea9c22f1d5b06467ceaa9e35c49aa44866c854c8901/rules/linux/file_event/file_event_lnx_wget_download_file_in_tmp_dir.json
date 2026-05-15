@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/file_event/file_event_lnx_wget_download_file_in_tmp_dir.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-06-02",
+                "title": "Wget Creating Files in Tmp Directory",
+                "id": "35a05c60-9012-49b6-a11f-6bab741c9f74"
+            },
+            "rule_text": "title: Wget Creating Files in Tmp Directory\nid: 35a05c60-9012-49b6-a11f-6bab741c9f74\nstatus: test\ndescription: Detects the use of wget to download content in a temporary directory\n  such as \"/tmp\" or \"/var/tmp\"\nreferences:\n- https://blogs.jpcert.or.jp/en/2023/05/gobrat.html\n- https://jstnk9.github.io/jstnk9/research/GobRAT-Malware/\n- https://www.virustotal.com/gui/file/60bcd645450e4c846238cf0e7226dc40c84c96eba99f6b2cffcd0ab4a391c8b3/detection\n- https://www.virustotal.com/gui/file/3e44c807a25a56f4068b5b8186eee5002eed6f26d665a8b791c472ad154585d1/detection\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-06-02\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  product: linux\n  category: file_event\ndetection:\n  selection:\n    Image|endswith: /wget\n    TargetFilename|startswith:\n    - /tmp/\n    - /var/tmp/\n  condition: selection\nfalsepositives:\n- Legitimate downloads of files in the tmp folder.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

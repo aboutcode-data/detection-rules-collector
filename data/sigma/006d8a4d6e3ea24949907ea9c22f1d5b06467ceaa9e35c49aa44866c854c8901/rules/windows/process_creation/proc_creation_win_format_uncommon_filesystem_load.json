@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_format_uncommon_filesystem_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-04",
+                "title": "Uncommon FileSystem Load Attempt By Format.com",
+                "id": "9fb6b26e-7f9e-4517-a48b-8cac4a1b6c60"
+            },
+            "rule_text": "title: Uncommon FileSystem Load Attempt By Format.com\nid: 9fb6b26e-7f9e-4517-a48b-8cac4a1b6c60\nstatus: test\ndescription: 'Detects the execution of format.com with an uncommon filesystem selection\n  that could indicate a defense evasion activity in which \"format.com\" is used to\n  load malicious DLL files or other programs.\n\n  '\nreferences:\n- https://twitter.com/0gtweet/status/1477925112561209344\n- https://twitter.com/wdormann/status/1478011052130459653?s=20\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-04\nmodified: 2024-05-13\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\format.com\n    CommandLine|contains: '/fs:'\n  filter_main_known_fs:\n    CommandLine|contains:\n    - /fs:exFAT\n    - /fs:FAT\n    - /fs:NTFS\n    - /fs:ReFS\n    - /fs:UDF\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

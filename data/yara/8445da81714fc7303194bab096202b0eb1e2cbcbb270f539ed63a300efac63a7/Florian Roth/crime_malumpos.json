@@ -1,0 +1,29 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/crime_malumpos.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PoS_Malware_MalumPOS",
+                "tags": [],
+                "author": "Trend Micro, Inc.",
+                "date": "2015-05-25",
+                "description": "Used to detect MalumPOS memory dumper",
+                "sample_filtype": "exe"
+            },
+            "rule_text": "rule PoS_Malware_MalumPOS\n{\n\tmeta:\n\t\tauthor = \"Trend Micro, Inc.\"\n\t\tdate = \"2015-05-25\"\n\t\tdescription = \"Used to detect MalumPOS memory dumper\"\n\t\tsample_filtype = \"exe\"\n\n\tstrings:\n\t\t$string1 = \"SOFTWARE\\\\Borland\\\\Delphi\\\\RTL\"\n\t\t$string2 = \"B)[0-9]{13,19}\\\\\"\n\t\t$string3 = \"[A-Za-z\\\\s]{0,30}\\\\/[A-Za-z\\\\s]{0,30}\\\\\"\n\t\t$string4 = \"TRegExpr(exec): ExecNext Without Exec[Pos]\"\n\t\t$string5 = /Y:\\\\PROGRAMS\\\\.{20,300}\\.pas/\n\n\tcondition:\n\t\tall of ( $string* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PoS_Malware_MalumPOS_Config",
+                "tags": [],
+                "author": "Florian Roth",
+                "date": "2015-06-25",
+                "description": "MalumPOS Config File",
+                "reference": "http://blog.trendmicro.com/trendlabs-security-intelligence/trend-micro-discovers-malumpos-targets-hotels-and-other-us-industries/"
+            },
+            "rule_text": "rule PoS_Malware_MalumPOS_Config\n{\n\tmeta:\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015-06-25\"\n\t\tdescription = \"MalumPOS Config File\"\n\t\treference = \"http://blog.trendmicro.com/trendlabs-security-intelligence/trend-micro-discovers-malumpos-targets-hotels-and-other-us-industries/\"\n\n\tstrings:\n\t\t$s1 = \"[PARAMS]\"\n\t\t$s2 = \"Name=\"\n\t\t$s3 = \"InterfacesIP=\"\n\t\t$s4 = \"Port=\"\n\n\tcondition:\n\t\tall of ( $s* ) and filename == \"log.ini\" and filesize < 20KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

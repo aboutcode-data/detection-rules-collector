@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Virus/Win32/Fontra/Virus_Win32_Fontra_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Virus_Win32_Fontra_C",
+                "tags": [],
+                "description": "Virus:Win32/Fontra.C,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Virus_Win32_Fontra_C\n{\n\tmeta:\n\t\tdescription = \"Virus:Win32/Fontra.C,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {60 8b c6 66 9c 66 81 3e 4d 5a 75 23 83 7e 3c 40 76 1d 03 76 3c 0b d2 74 06 03 c2 3b f0 73 10 66 81 3e 50 45 75 09 66 9d 61 b8 01 00 00 00 c3 }\n\t\t$a_02_1 = {83 7e 08 0a 75 ?? 8d 85 ?? ?? ?? ?? eb ?? 83 7e 08 5a 75 ?? 8d 85 ?? ?? ?? ?? eb ?? 83 7e 08 00 75 ?? 83 7e 10 02 75 ?? 8d 85 ?? ?? ?? ?? eb ?? 8d 85 ?? ?? ?? ?? eb ?? 83 7e 04 03 75 ?? 83 7e 08 33 }\n\t\t$a_00_2 = {8a 07 24 0f 8a 04 30 88 07 47 e2 f4 8b 3c 24 c6 07 7b c6 47 09 2d c6 47 0e 2d c6 47 13 2d c6 47 18 2d c6 47 25 7d c6 47 26 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Latrodectus/Trojan_Win32_Latrodectus_YAE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Latrodectus_YAE_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Latrodectus.YAE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Latrodectus_YAE_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Latrodectus.YAE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {b8 68 00 00 00 66 89 85 ?? ?? ?? ?? b9 74 00 00 00 66 89 8d ?? ?? ?? ?? ba 74 00 00 00 66 89 95 ?? ?? ?? ?? b8 70 00 00 00 66 89 85 ?? ?? ?? ?? b9 3a 00 }\n\t\t$a_03_1 = {b9 6b 00 00 00 ?? ?? ?? ?? ba 65 00 00 00 ?? ?? ?? ?? b8 72 00 00 00 ?? ?? ?? ?? b9 6e 00 00 00 ?? ?? ?? ?? ba 65 00 00 00 ?? ?? ?? ?? b8 6c }\n\t\t$a_03_2 = {68 c5 93 48 37 6a 01 e8 [0-12] 68 02 0d 58 c6 6a 01 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 5 + ( #a_03_2 & 1 ) * 5 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_uac_bypass_winsat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-30",
+                "title": "UAC Bypass Abusing Winsat Path Parsing - Registry",
+                "id": "6597be7b-ac61-4ac8-bef4-d3ec88174853"
+            },
+            "rule_text": "title: UAC Bypass Abusing Winsat Path Parsing - Registry\nid: 6597be7b-ac61-4ac8-bef4-d3ec88174853\nstatus: test\ndescription: Detects the pattern of UAC Bypass using a path parsing issue in winsat.exe\n  (UACMe 52)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-30\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Root\\InventoryApplicationFile\\winsat.exe|\n    TargetObject|endswith: \\LowerCaseLongPath\n    Details|startswith: c:\\users\\\n    Details|endswith: \\appdata\\local\\temp\\system32\\winsat.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

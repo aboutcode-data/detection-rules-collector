@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_usermod_susp_group.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "TuanLe (GTSC)",
+                "date": "2022-12-21",
+                "title": "User Added To Root/Sudoers Group Using Usermod",
+                "id": "6a50f16c-3b7b-42d1-b081-0fdd3ba70a73"
+            },
+            "rule_text": "title: User Added To Root/Sudoers Group Using Usermod\nid: 6a50f16c-3b7b-42d1-b081-0fdd3ba70a73\nstatus: test\ndescription: Detects usage of the \"usermod\" binary to add users add users to the root\n  or suoders groups\nreferences:\n- https://pberba.github.io/security/2021/11/23/linux-threat-hunting-for-persistence-account-creation-manipulation/\n- https://www.configserverfirewall.com/ubuntu-linux/ubuntu-add-user-to-root-group/\nauthor: TuanLe (GTSC)\ndate: 2022-12-21\ntags:\n- attack.privilege-escalation\n- attack.persistence\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /usermod\n    CommandLine|contains:\n    - -aG root\n    - -aG sudoers\n  condition: selection\nfalsepositives:\n- Legitimate administrator activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Ledap/Trojan_Win32_Ledap_gen_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Ledap_gen_A",
+                "tags": [],
+                "description": "Trojan:Win32/Ledap.gen!A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Ledap_gen_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Ledap.gen!A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {50 6c 75 67 69 6e 4d 61 69 6e 00 50 6c 75 67 69 6e 4e 61 6d 65 00 50 6c 75 67 69 6e 54 79 70 65 }\n\t\t$a_01_1 = {46 00 49 00 4c 00 03 00 46 00 49 00 4e 00 00 00 }\n\t\t$a_03_2 = {8b 45 50 c7 40 1c ?? ?? ?? ?? 8b 45 50 c7 40 5c ?? ?? ?? ?? eb 0c bb 7a 27 00 00 }\n\t\t$a_01_3 = {50 8b 06 50 8d 46 04 50 53 e8 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_rundll32_by_ordinal.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-10-22",
+                "title": "DLL Call by Ordinal Via Rundll32.EXE",
+                "id": "e79a9e79-eb72-4e78-a628-0e7e8f59e89c"
+            },
+            "rule_text": "title: DLL Call by Ordinal Via Rundll32.EXE\nid: e79a9e79-eb72-4e78-a628-0e7e8f59e89c\nstatus: stable\ndescription: Detects calls of DLLs exports by ordinal numbers via rundll32.dll.\nreferences:\n- https://web.archive.org/web/20200530031906/https://techtalk.pcmatic.com/2017/11/30/running-dll-files-malware-analysis/\n- https://github.com/Neo23x0/DLLRunner\n- https://twitter.com/cyb3rops/status/1186631731543236608\n- https://www.welivesecurity.com/2022/03/01/isaacwiper-hermeticwizard-wiper-worm-targeting-ukraine/\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-10-22\nmodified: 2024-07-16\ntags:\n- attack.stealth\n- attack.t1218.011\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains:\n    - ',#'\n    - ', #'\n    - '.dll #'\n    - '.ocx #'\n  filter_optional_edge:\n    CommandLine|contains|all:\n    - EDGEHTML.dll\n    - '#141'\n  filter_optional_vsbuild_dll:\n    ParentImage|contains:\n    - \\Msbuild\\Current\\Bin\\\n    - \\VC\\Tools\\MSVC\\\n    - \\Tracker.exe\n    CommandLine|contains:\n    - \\FileTracker32.dll,#1\n    - \\FileTracker32.dll\",#1\n    - \\FileTracker64.dll,#1\n    - \\FileTracker64.dll\",#1\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- False positives depend on scripts and administrative tools used in the monitored\n  environment.\n- Windows control panel elements have been identified as source (mmc).\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

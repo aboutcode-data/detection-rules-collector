@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/cmd_susp_process_ancestry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Command Shell Unusual or Suspicious Process Ancestry",
+                "id": "157c153a-97d1-43e4-bc25-5461f52c935d"
+            },
+            "rule_text": "title: Command Shell Unusual or Suspicious Process Ancestry\nid: 157c153a-97d1-43e4-bc25-5461f52c935d\nstatus: experimental\ndescription: Looks for suspicious process interactions between the Windows IIS worker\n  process (w3wp.exe) and the command shell. Inspired by the 2022 Red Canary Threat\n  Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.persistence\n- attack.t1505\n- attack.execution\n- attack.t1059.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_process:\n    Image|endswith: \\cmd.exe\n    ParentImage|endswith:\n    - \\w3wp.exe\n    - \\wmiprvse.exe\n  selection_cmdline:\n  - CommandLine|contains:\n    - http://\n    - https://\n    - echo\n  - CommandLine|contains|all:\n    - /c\n    - powershell.exe\n  condition: selection_process and selection_cmdline\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

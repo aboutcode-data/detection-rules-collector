@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/VBInject/VirTool_Win32_VBInject_AEA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_VBInject_AEA",
+                "tags": [],
+                "description": "VirTool:Win32/VBInject.AEA,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_VBInject_AEA\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/VBInject.AEA,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {dd 1c 01 6a 08 58 69 c0 ?? ?? 00 00 8b 4d ?? dd 05 ?? ?? 40 00 dd 1c 01 6a 08 58 69 c0 ?? ?? 00 00 8b 4d ?? dd 05 ?? ?? 40 00 dd 1c 01 c7 85 ?? ?? ff ff 70 17 00 00 c7 85 ?? ?? ff ff 01 00 00 00 83 25 ?? ?? ?? 00 00 eb }\n\t\t$a_03_1 = {00 1c 25 00 00 6a 08 58 69 c0 ?? ?? 00 00 8b 4d ?? dd 05 ?? ?? 40 00 dd 1c 01 6a 08 58 69 c0 ?? ?? 00 00 8b 4d ?? dd 05 ?? ?? 40 00 dd 1c 01 6a 08 58 69 c0 ?? ?? 00 00 }\n\t\t$a_03_2 = {50 6a 04 e8 ?? ?? ?? ff 83 c4 14 a1 ?? ?? ?? 00 8b 4d ?? dd 04 c1 e8 ?? ?? ?? ff 8b 90 09 1b 00 8d 85 ?? ff ff ff 50 8d 85 ?? ff ff ff 50 8d 85 ?? ff ff ff 50 8d 85 ?? ff ff ff }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

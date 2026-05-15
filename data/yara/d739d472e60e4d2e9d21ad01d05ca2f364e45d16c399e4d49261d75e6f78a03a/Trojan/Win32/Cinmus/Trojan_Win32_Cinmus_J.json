@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Cinmus/Trojan_Win32_Cinmus_J.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Cinmus_J",
+                "tags": [],
+                "description": "Trojan:Win32/Cinmus.J,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Cinmus_J\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Cinmus.J,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {81 7d e4 00 00 00 83 74 }\n\t\t$a_03_1 = {83 7d fc 04 7d ?? 8b 45 fc ff 34 85 ?? ?? ?? ?? ff 75 f8 e8 ?? ?? ?? ?? 8b 4d fc 8b 15 ?? ?? ?? ?? 89 04 8a }\n\t\t$a_03_2 = {83 7d f8 04 0f 8d ?? ?? 00 00 8b 45 f8 ff 34 85 ?? ?? ?? ?? ff 75 fc e8 ?? ?? ?? ?? 8b 4d f8 8b 15 ?? ?? ?? ?? 89 04 8a }\n\t\t$a_00_3 = {5c 00 42 00 61 00 73 00 65 00 4e 00 61 00 6d 00 65 00 64 00 4f 00 62 00 6a 00 65 00 63 00 74 00 73 00 5c 00 55 00 49 00 44 00 5f 00 31 00 33 00 32 00 39 00 31 00 34 00 37 00 36 00 30 00 32 00 5f 00 4d 00 49 00 45 00 45 00 76 00 65 00 6e 00 74 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 2 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_wsudo_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-02",
+                "title": "PUA - Wsudo Suspicious Execution",
+                "id": "bdeeabc9-ff2a-4a51-be59-bb253aac7891"
+            },
+            "rule_text": "title: PUA - Wsudo Suspicious Execution\nid: bdeeabc9-ff2a-4a51-be59-bb253aac7891\nstatus: test\ndescription: Detects usage of wsudo (Windows Sudo Utility). Which is a tool that let\n  the user execute programs with different permissions (System, Trusted Installer,\n  Administrator...etc)\nreferences:\n- https://github.com/M2Team/Privexec/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-02\nmodified: 2023-02-14\ntags:\n- attack.execution\n- attack.privilege-escalation\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_metadata:\n  - Image|endswith: \\wsudo.exe\n  - OriginalFileName: wsudo.exe\n  - Description: Windows sudo utility\n  - ParentImage|endswith: \\wsudo-bridge.exe\n  selection_cli:\n    CommandLine|contains:\n    - -u System\n    - -uSystem\n    - -u TrustedInstaller\n    - -uTrustedInstaller\n    - ' --ti '\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

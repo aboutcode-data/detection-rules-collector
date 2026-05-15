@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RenameSystemUtilities/file_creation_exe_extension.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/11",
+                "title": "Command or Scripting Interpreter Creating EXE File",
+                "id": "47d68f87-d0f0-4386-8362-d62b7135a494"
+            },
+            "rule_text": "title: Command or Scripting Interpreter Creating EXE File\nid: 47d68f87-d0f0-4386-8362-d62b7135a494\nstatus: experimental\ndescription: Detects the suspicious child use of shell or scripting interpreter to\n  create a file ending in exe.\nreferences:\n- https://security.stackexchange.com/questions/210843/is-it-possible-to-change-original-filename-of-an-exe\n- https://github.com/electron/rcedit\nauthor: Micah Babinski\ndate: 2022/12/11\ntags:\n- attack.defense_evasion\n- attack.t1036.003\n- attack.t1036\nlogsource:\n  category: file_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\wscript.exe\n    - \\python.exe\n    - \\pythonw.exe\n    TargetFilename|endswith: .exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

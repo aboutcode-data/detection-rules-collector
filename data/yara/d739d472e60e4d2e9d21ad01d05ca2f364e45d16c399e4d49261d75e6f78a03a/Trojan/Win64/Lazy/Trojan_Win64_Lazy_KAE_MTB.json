@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Lazy/Trojan_Win64_Lazy_KAE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Lazy_KAE_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Lazy.KAE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Lazy_KAE_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Lazy.KAE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {66 0f 72 d2 ?? 0f 28 c1 66 0f 72 f1 ?? 66 0f 72 e1 ?? 66 41 0f db c8 f3 0f 6f 9c 84 20 10 00 00 66 0f ef d9 66 0f ef da f3 0f 7f 9c 84 ac 13 00 00 48 83 c0 }\n\t\t$a_01_1 = {66 0f ef e9 66 0f ef ea f3 0f 6f 8c 84 30 10 00 00 66 0f ef cb 66 0f ef cc f3 0f 7f 6c 84 2c f3 0f 7f 4c 84 3c 48 83 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_auditctl_clear_rules.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Mohamed LAKRI",
+                "date": "2025-10-17",
+                "title": "Audit Rules Deleted Via Auditctl",
+                "id": "bed26dea-4525-47f4-b24a-76e30e44ffb0"
+            },
+            "rule_text": "title: Audit Rules Deleted Via Auditctl\nid: bed26dea-4525-47f4-b24a-76e30e44ffb0\nstatus: experimental\ndescription: 'Detects the execution of ''auditctl'' with the ''-D'' command line parameter,\n  which deletes all configured audit rules and watches on Linux systems.\n\n  This technique is commonly used by attackers to disable audit logging and cover\n  their tracks by removing monitoring capabilities.\n\n  Removal of audit rules can significantly impair detection of malicious activities\n  on the affected system.\n\n  '\nreferences:\n- https://www.atomicredteam.io/atomic-red-team/atomics/T1562.012\n- https://linux.die.net/man/8/auditct\nauthor: Mohamed LAKRI\ndate: 2025-10-17\ntags:\n- attack.defense-impairment\n- attack.t1685.004\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /auditctl\n    CommandLine|re: -D\n  condition: selection\nfalsepositives:\n- An administrator troubleshooting. Investigate all attempts.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

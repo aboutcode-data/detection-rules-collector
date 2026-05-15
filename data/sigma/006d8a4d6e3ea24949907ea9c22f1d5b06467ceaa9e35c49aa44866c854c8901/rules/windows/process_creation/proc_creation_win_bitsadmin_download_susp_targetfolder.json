@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_targetfolder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-28",
+                "title": "File Download Via Bitsadmin To A Suspicious Target Folder",
+                "id": "2ddef153-167b-4e89-86b6-757a9e65dcac"
+            },
+            "rule_text": "title: File Download Via Bitsadmin To A Suspicious Target Folder\nid: 2ddef153-167b-4e89-86b6-757a9e65dcac\nrelated:\n- id: 6e30c82f-a9f8-4aab-b79c-7c12bce6f248\n  type: obsolete\n- id: 1cf465a1-2609-4c15-9b66-c32dbe4bfd67\n  type: similar\nstatus: test\ndescription: Detects usage of bitsadmin downloading a file to a suspicious target\n  folder\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\n- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/\n- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-28\nmodified: 2025-12-10\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\n- attack.s0190\n- attack.t1036.003\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bitsadmin.exe\n  - OriginalFileName: bitsadmin.exe\n  selection_flags:\n    CommandLine|contains:\n    - ' /transfer '\n    - ' /create '\n    - ' /addfile '\n  selection_folder:\n    CommandLine|contains:\n    - :\\Perflogs\n    - :\\ProgramData\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\\n    - \\$Recycle.Bin\\\n    - \\AppData\\Local\\\n    - \\AppData\\Roaming\\\n    - \\Contacts\\\n    - \\Desktop\\\n    - \\Favorites\\\n    - \\Favourites\\\n    - \\inetpub\\wwwroot\\\n    - \\Music\\\n    - \\Pictures\\\n    - \\Start Menu\\Programs\\Startup\\\n    - \\Users\\Default\\\n    - \\Videos\\\n    - '%ProgramData%'\n    - '%public%'\n    - '%temp%'\n    - '%tmp%'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_targetfolder/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Windows - BITSAdmin BITS Download\n  technique: T1105\n  atomic_guid: a1921cd3-9a2d-47d5-a891-f1d0f2a7a31b\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_access/proc_access_win_lsass_powershell_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Natalia Shornikova",
+                "date": "2020-10-06",
+                "title": "Potential Credential Dumping Attempt Via PowerShell",
+                "id": "0f920ebe-7aea-4c54-b202-9aa0c609cfe5"
+            },
+            "rule_text": "title: Potential Credential Dumping Attempt Via PowerShell\nid: 0f920ebe-7aea-4c54-b202-9aa0c609cfe5\nrelated:\n- id: 3f07b9d1-2082-4c56-9277-613a621983cc\n  type: obsolete\n- id: fb656378-f909-47c1-8747-278bf09f4f4f\n  type: similar\nstatus: test\ndescription: Detects a PowerShell process requesting access to \"lsass.exe\", which\n  can be indicative of potential credential dumping attempts\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: oscd.community, Natalia Shornikova\ndate: 2020-10-06\nmodified: 2023-11-28\ntags:\n- attack.credential-access\n- attack.t1003.001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: process_access\ndetection:\n  selection:\n    SourceImage|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    TargetImage|endswith: \\lsass.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

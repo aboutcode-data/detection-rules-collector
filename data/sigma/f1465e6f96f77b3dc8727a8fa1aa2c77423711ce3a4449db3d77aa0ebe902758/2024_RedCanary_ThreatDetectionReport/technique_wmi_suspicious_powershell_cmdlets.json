@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_wmi_suspicious_powershell_cmdlets.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Suspicious PowerShell Cmdlets - WMI",
+                "id": "e29d3301-3b64-4305-9e91-8aabfbef2015"
+            },
+            "rule_text": "title: Suspicious PowerShell Cmdlets - WMI\nid: e29d3301-3b64-4305-9e91-8aabfbef2015\nstatus: experimental\ndescription: \"There are numerous default PowerShell cmdlets that allow administrators\\\n  \\ to leverage WMI via \\nPowerShell. Both adversaries and administrators use these\\\n  \\ cmdlets to query the operating \\nsystem or execute commands, either locally or\\\n  \\ remotely. Cmdlets like Get-WMIObject are often \\nused for reconnaissance. Part\\\n  \\ of the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1047\n- attack.t1059\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\powershell.exe\n    CommandLine|contains:\n    - invoke-wmimethod\n    - invoke-cimmethod\n    - get-wmiobject\n    - get-ciminstance\n    - wmiclass\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

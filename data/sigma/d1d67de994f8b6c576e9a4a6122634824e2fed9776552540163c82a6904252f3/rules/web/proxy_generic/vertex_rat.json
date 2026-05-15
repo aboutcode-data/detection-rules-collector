@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/vertex_rat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2025-11-25",
+                "title": "Vertex RAT",
+                "id": "369292df-dfe7-462d-b6ab-4b2d540850aa"
+            },
+            "rule_text": "title: Vertex RAT\nid: 369292df-dfe7-462d-b6ab-4b2d540850aa\ndescription: Patterns observed in Vertex RAT C2 traffic\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2025-11-25\nreferences:\n- https://www.virustotal.com/gui/file/357f209134726e0f42febd8edb0babed6925489255746022e20df2e79ecf9a0d/behavior\nlogsource:\n  category: proxy\ndetection:\n  selection_uri:\n    cs-uri-stem|endswith:\n    - /tasks.php\n    - /adduser.php\n    cs-uri-query|contains:\n    - uid=\n    - lan=\n    - cmpname=\n  selection_agent:\n    cs-user-agent|cased: V32\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

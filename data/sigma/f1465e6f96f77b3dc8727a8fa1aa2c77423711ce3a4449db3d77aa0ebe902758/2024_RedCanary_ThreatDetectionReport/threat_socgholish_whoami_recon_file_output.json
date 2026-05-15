@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_socgholish_whoami_recon_file_output.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Whoami Recon Writing Output to File",
+                "id": "abcdf274-2fbd-4736-a16b-032fcac54eee"
+            },
+            "rule_text": "title: Whoami Recon Writing Output to File\nid: abcdf274-2fbd-4736-a16b-032fcac54eee\nstatus: experimental\ndescription: \"SocGholish employs several scripted reconnaissance commands. While much\\\n  \\ of this activity \\noccurs in memory, one that stands out is the execution of whoami\\\n  \\ with the output redirected \\nto a local temp file with the naming convention rad<5-hex-chars>.tmp.\\\n  \\ Part of the RedCanary \\n2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/socgholish/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.discovery\n- attack.t1033\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\wscript.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains: whoami /all >>\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

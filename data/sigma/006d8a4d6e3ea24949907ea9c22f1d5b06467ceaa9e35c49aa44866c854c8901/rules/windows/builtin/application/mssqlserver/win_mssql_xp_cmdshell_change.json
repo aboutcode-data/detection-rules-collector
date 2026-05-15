@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/mssqlserver/win_mssql_xp_cmdshell_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-12",
+                "title": "MSSQL XPCmdshell Option Change",
+                "id": "d08dd86f-681e-4a00-a92c-1db218754417"
+            },
+            "rule_text": "title: MSSQL XPCmdshell Option Change\nid: d08dd86f-681e-4a00-a92c-1db218754417\nstatus: test\ndescription: 'Detects when the MSSQL \"xp_cmdshell\" stored procedure setting is changed.\n\n  '\nreferences:\n- https://www.netspi.com/blog/technical/network-penetration-testing/sql-server-persistence-part-1-startup-stored-procedures/\n- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-12\nmodified: 2024-06-26\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name|contains: MSSQL\n    EventID: 15457\n    Data|contains: xp_cmdshell\n  condition: selection\nfalsepositives:\n- Legitimate enable/disable of the setting\n- Note that since the event contain the change for both values. This means that this\n  will trigger on both enable and disable\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_powershell_module_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-09",
+                "title": "PowerShell Module File Created",
+                "id": "e36941d0-c0f0-443f-bc6f-cb2952eb69ea"
+            },
+            "rule_text": "title: PowerShell Module File Created\nid: e36941d0-c0f0-443f-bc6f-cb2952eb69ea\nstatus: test\ndescription: Detects the creation of a new PowerShell module \".psm1\", \".psd1\", \".dll\",\n  \".ps1\", etc.\nreferences:\n- Internal Research\n- https://learn.microsoft.com/en-us/powershell/scripting/developer/module/understanding-a-windows-powershell-module?view=powershell-7.3\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-09\ntags:\n- attack.persistence\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    TargetFilename|contains:\n    - \\WindowsPowerShell\\Modules\\\n    - \\PowerShell\\7\\Modules\\\n  condition: selection\nfalsepositives:\n- Likely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

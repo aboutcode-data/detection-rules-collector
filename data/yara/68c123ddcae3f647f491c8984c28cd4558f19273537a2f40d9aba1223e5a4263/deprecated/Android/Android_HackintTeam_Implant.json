@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_HackintTeam_Implant.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HackingTeam_Android",
+                "tags": [
+                    "Android",
+                    "Implant"
+                ],
+                "description": "HackingTeam Android implant, known to detect version v4 - v7",
+                "author": "Tim 'diff' Strazzere <strazz@gmail.com>",
+                "reference": "http://rednaga.io/2016/11/14/hackingteam_back_for_your_androids/",
+                "date": "2016-11-14",
+                "version": "1.0"
+            },
+            "rule_text": "rule HackingTeam_Android : Android Implant\n{\n\tmeta:\n\t\tdescription = \"HackingTeam Android implant, known to detect version v4 - v7\"\n\t\tauthor = \"Tim 'diff' Strazzere <strazz@gmail.com>\"\n\t\treference = \"http://rednaga.io/2016/11/14/hackingteam_back_for_your_androids/\"\n\t\tdate = \"2016-11-14\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$decryptor = {  12 01               // const/4 v1, 0x0\n                        D8 00 ?? ??         // add-int/lit8 ??, ??, ??\n                        6E 10 ?? ?? ?? 00   // invoke-virtual {??} -> String.toCharArray()\n                        0C 04               // move-result-object v4\n                        21 45               // array-length v5, v4\n                        01 02               // move v2, v0\n                        01 10               // move v0, v1\n                        32 50 11 00         // if-eq v0, v5, 0xb\n                        49 03 04 00         // aget-char v3, v4, v0\n                        DD 06 02 5F         // and-int/lit8 v6, v2, 0x5f <- potentially change the hardcoded xor bit to ??\n                        B7 36               // xor-int/2addr v6, v3\n                        D8 03 02 ??         // and-int/lit8 v3, v2, ??\n                        D8 02 00 01         // and-int/lit8 v2, v0, 0x1\n                        8E 66               // int-to-char v6, v6\n                        50 06 04 00         // aput-char v6, v4, v0\n                        01 20               // move v0, v2\n                        01 32               // move v2, v3\n                        28 F0               // goto 0xa\n                        71 30 ?? ?? 14 05   // invoke-static {v4, v1, v5}, ?? -> String.valueOf()\n                        0C 00               // move-result-object v0\n                        6E 10 ?? ?? 00 00   // invoke-virtual {v0} ?? -> String.intern()\n                        0C 00               // move-result-object v0\n                        11 00               // return-object v0\n                     }\n\t\t$settings = {\n                        00 24 4C 63 6F 6D 2F 67 6F 6F 67 6C 65 2F 61 6E\n                        64 72 6F 69 64 2F 67 6C 6F 62 61 6C 2F 53 65 74\n                        74 69 6E 67 73 3B 00\n                    }\n\t\t$getSmsInputNumbers = {\n                                00 12 67 65 74 53 6D 73 49 6E 70 75 74 4E 75 6D\n                                62 65 72 73 00\n                              }\n\n\tcondition:\n\t\t$decryptor and ( $settings and $getSmsInputNumbers )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

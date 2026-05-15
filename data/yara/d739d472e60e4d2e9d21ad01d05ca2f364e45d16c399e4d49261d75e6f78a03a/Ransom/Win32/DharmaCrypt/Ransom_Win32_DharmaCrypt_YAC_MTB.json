@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/DharmaCrypt/Ransom_Win32_DharmaCrypt_YAC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_DharmaCrypt_YAC_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/DharmaCrypt.YAC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_DharmaCrypt_YAC_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/DharmaCrypt.YAC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 74 24 54 8a 44 24 27 8b 4c 24 3c 8b 7c 24 4c 8b 2d ?? ?? ?? ?? 32 c3 03 5c 24 5c 88 01 8b 44 24 34 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_DharmaCrypt_YAC_MTB_2",
+                "tags": [],
+                "description": "Ransom:Win32/DharmaCrypt.YAC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_DharmaCrypt_YAC_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/DharmaCrypt.YAC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 c6 01 8b 8d ?? ?? ?? ?? 8d 3c 49 8d 14 7a f7 da 03 d0 0f af ca }\n\t\t$a_01_1 = {8b 85 a8 fe ff ff 33 85 f4 fe ff ff 8b 95 4c ff ff ff 89 85 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

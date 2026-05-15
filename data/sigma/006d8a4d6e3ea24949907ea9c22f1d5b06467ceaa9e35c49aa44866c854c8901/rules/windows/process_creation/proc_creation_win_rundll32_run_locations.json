@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_run_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "juju4, Jonhnathan Ribeiro, oscd.community",
+                "date": "2019-01-16",
+                "title": "Suspicious Process Start Locations",
+                "id": "15b75071-74cc-47e0-b4c6-b43744a62a2b"
+            },
+            "rule_text": "title: Suspicious Process Start Locations\nid: 15b75071-74cc-47e0-b4c6-b43744a62a2b\nstatus: test\ndescription: Detects suspicious process run from unusual locations\nreferences:\n- https://car.mitre.org/wiki/CAR-2013-05-002\nauthor: juju4, Jonhnathan Ribeiro, oscd.community\ndate: 2019-01-16\nmodified: 2022-01-07\ntags:\n- attack.stealth\n- attack.t1036\n- car.2013-05-002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|contains:\n    - :\\RECYCLER\\\n    - :\\SystemVolumeInformation\\\n  - Image|startswith:\n    - C:\\Windows\\Tasks\\\n    - C:\\Windows\\debug\\\n    - C:\\Windows\\fonts\\\n    - C:\\Windows\\help\\\n    - C:\\Windows\\drivers\\\n    - C:\\Windows\\addins\\\n    - C:\\Windows\\cursors\\\n    - C:\\Windows\\system32\\tasks\\\n  condition: selection\nfalsepositives:\n- False positives depend on scripts and administrative tools used in the monitored\n  environment\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

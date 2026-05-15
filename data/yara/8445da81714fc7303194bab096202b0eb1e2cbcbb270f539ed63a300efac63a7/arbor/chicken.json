@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/arbor/chicken.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "chicken_dos",
+                "tags": [],
+                "author": "Jason Jones <jasonjones@arbor.net>",
+                "description": "Win32-variant of Chicken ident for both dropper and dropped file"
+            },
+            "rule_text": "rule chicken_dos\n{\n\tmeta:\n\t\tauthor = \"Jason Jones <jasonjones@arbor.net>\"\n\t\tdescription = \"Win32-variant of Chicken ident for both dropper and dropped file\"\n\n\tstrings:\n\t\t$pdb1 = \"\\\\Chicken\\\\Release\\\\svchost.pdb\"\n\t\t$pdb2 = \"\\\\IntergrateCHK\\\\Release\\\\IntergrateCHK.pdb\"\n\t\t$str2 = \"fake.cf\"\n\t\t$str3 = \"8.8.8.8\"\n\t\t$str4 = \"Processor(%d)\\\\\"\n\t\t$str5 = \"DbProtectSupport\"\n\t\t$str1 = \"dm1712/`jvpnpkte/bpl\"\n\t\t$str6 = \"InstallService NPF %d\"\n\t\t$str7 = \"68961\"\n\t\t$str8 = \"InstallService DbProtectSupport %d\"\n\t\t$str9 = \"C:\\\\Program Files\\\\DbProtectSupport\\\\npf.sys\"\n\n\tcondition:\n\t\t($pdb1 or $pdb2 ) and 5 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "chicken_dos_linux",
+                "tags": [],
+                "author": "Jason Jones <jasonjones@arbor.net>",
+                "description": "Linux-variant of Chicken ident for both dropper and dropped file"
+            },
+            "rule_text": "rule chicken_dos_linux\n{\n\tmeta:\n\t\tauthor = \"Jason Jones <jasonjones@arbor.net>\"\n\t\tdescription = \"Linux-variant of Chicken ident for both dropper and dropped file\"\n\n\tstrings:\n\t\t$cfg = \"fake.cfg\"\n\t\t$file1 = \"ThreadAttack.cpp\"\n\t\t$file2 = \"Fake.cpp\"\n\t\t$str1 = \"dns_array\"\n\t\t$str2 = \"DomainRandEx\"\n\t\t$str3 = \"cpu %llu %llu %llu %llu\"\n\t\t$str4 = \"[ %02d.%02d %02d:%02d:%02d.%03ld ] [%lu] [%s] %s\" ascii\n\n\tcondition:\n\t\t$cfg and all of ( $file* ) and 3 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_registry_privilege_escalation_via_service_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov",
+                "date": "2019-10-26",
+                "title": "Potential Privilege Escalation via Service Permissions Weakness",
+                "id": "0f9c21f1-6a73-4b0e-9809-cb562cb8d981"
+            },
+            "rule_text": "title: Potential Privilege Escalation via Service Permissions Weakness\nid: 0f9c21f1-6a73-4b0e-9809-cb562cb8d981\nstatus: test\ndescription: Detect modification of services configuration (ImagePath, FailureCommand\n  and ServiceDLL) in registry by processes with Medium integrity level\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment\n- https://pentestlab.blog/2017/03/31/insecure-registry-permissions/\nauthor: Teymur Kheirkhabarov\ndate: 2019-10-26\nmodified: 2024-12-01\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.011\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    IntegrityLevel:\n    - Medium\n    - S-1-16-8192\n    CommandLine|contains|all:\n    - ControlSet\n    - services\n    CommandLine|contains:\n    - \\ImagePath\n    - \\FailureCommand\n    - \\ServiceDll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

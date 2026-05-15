@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_control_panel_item.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Kyaw Min Thein, Furkan Caliskan (@caliskanfurkan_)",
+                "date": "2020-06-22",
+                "title": "Control Panel Items",
+                "id": "0ba863e6-def5-4e50-9cea-4dd8c7dc46a4"
+            },
+            "rule_text": "title: Control Panel Items\nid: 0ba863e6-def5-4e50-9cea-4dd8c7dc46a4\nstatus: test\ndescription: Detects the malicious use of a control panel item\nreferences:\n- https://ired.team/offensive-security/code-execution/code-execution-through-control-panel-add-ins\nauthor: Kyaw Min Thein, Furkan Caliskan (@caliskanfurkan_)\ndate: 2020-06-22\nmodified: 2023-10-11\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1218.002\n- attack.persistence\n- attack.t1546\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_reg_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_reg_cli:\n    CommandLine|contains|all:\n    - add\n    - CurrentVersion\\Control Panel\\CPLs\n  selection_cpl:\n    CommandLine|endswith: .cpl\n  filter_cpl_sys:\n    CommandLine|contains:\n    - \\System32\\\n    - '%System%'\n    - '|C:\\Windows\\system32|'\n  filter_cpl_igfx:\n    CommandLine|contains|all:\n    - 'regsvr32 '\n    - ' /s '\n    - igfxCPL.cpl\n  condition: all of selection_reg_* or (selection_cpl and not 1 of filter_cpl_*)\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

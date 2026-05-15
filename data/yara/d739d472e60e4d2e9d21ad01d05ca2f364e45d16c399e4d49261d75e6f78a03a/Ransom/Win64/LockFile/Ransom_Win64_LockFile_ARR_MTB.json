@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win64/LockFile/Ransom_Win64_LockFile_ARR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win64_LockFile_ARR_MTB",
+                "tags": [],
+                "description": "Ransom:Win64/LockFile.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_Win64_LockFile_ARR_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win64/LockFile.ARR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {44 8a 04 0a 44 30 04 0f 4c 8d 41 ?? 4c 89 c1 4c 39 c3 }\n\t\t$a_01_1 = {66 41 0f fe d4 66 44 0f ef eb 66 0f ef f1 66 41 0f ef fe 66 45 0f 6f fe 66 0f ef c2 66 45 0f 6f f5 }\n\t\t$a_81_2 = {59 4f 55 52 20 46 49 4c 45 53 20 48 41 56 45 20 42 45 45 4e 20 45 4e 43 52 59 50 54 45 44 21 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 9 + ( #a_81_2 & 1 ) * 1 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

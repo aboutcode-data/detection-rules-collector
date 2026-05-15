@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mftrace_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-09",
+                "title": "Potential Mftrace.EXE Abuse",
+                "id": "3d48c9d3-1aa6-418d-98d3-8fd3c01a564e"
+            },
+            "rule_text": "title: Potential Mftrace.EXE Abuse\nid: 3d48c9d3-1aa6-418d-98d3-8fd3c01a564e\nstatus: test\ndescription: Detects child processes of the \"Trace log generation tool for Media Foundation\n  Tools\" (Mftrace.exe) which can abused to execute arbitrary binaries.\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Mftrace/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-09\nmodified: 2023-08-03\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\mftrace.exe\n  condition: selection\nfalsepositives:\n- Legitimate use for tracing purposes\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

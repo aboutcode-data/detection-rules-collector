@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_priv_escalation_via_named_pipe.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-27",
+                "title": "Privilege Escalation via Named Pipe Impersonation",
+                "id": "9bd04a79-dabe-4f1f-a5ff-92430265c96b"
+            },
+            "rule_text": "title: Privilege Escalation via Named Pipe Impersonation\nid: 9bd04a79-dabe-4f1f-a5ff-92430265c96b\nrelated:\n- id: f35c5d71-b489-4e22-a115-f003df287317\n  type: derived\nstatus: test\ndescription: Detects a remote file copy attempt to a hidden network share. This may\n  indicate lateral movement or data staging activity.\nreferences:\n- https://www.elastic.co/guide/en/security/current/privilege-escalation-via-named-pipe-impersonation.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-27\nmodified: 2022-12-30\ntags:\n- attack.lateral-movement\n- attack.t1021\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_name:\n  - Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n  - OriginalFileName:\n    - Cmd.Exe\n    - PowerShell.EXE\n  selection_args:\n    CommandLine|contains|all:\n    - echo\n    - '>'\n    - \\\\\\\\.\\\\pipe\\\\\n  condition: all of selection*\nfalsepositives:\n- Other programs that cause these patterns (please report)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

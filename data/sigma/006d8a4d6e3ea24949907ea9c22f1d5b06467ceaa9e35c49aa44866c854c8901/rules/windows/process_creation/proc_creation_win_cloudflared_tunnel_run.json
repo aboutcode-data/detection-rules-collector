@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cloudflared_tunnel_run.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Janantha Marasinghe, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-17",
+                "title": "Cloudflared Tunnel Execution",
+                "id": "9a019ffc-3580-4c9d-8d87-079f7e8d3fd4"
+            },
+            "rule_text": "title: Cloudflared Tunnel Execution\nid: 9a019ffc-3580-4c9d-8d87-079f7e8d3fd4\nstatus: test\ndescription: Detects execution of the \"cloudflared\" tool to connect back to a tunnel.\n  This was seen used by threat actors to maintain persistence and remote access to\n  compromised networks.\nreferences:\n- https://blog.reconinfosec.com/emergence-of-akira-ransomware-group\n- https://github.com/cloudflare/cloudflared\n- https://developers.cloudflare.com/cloudflare-one/connections/connect-apps\nauthor: Janantha Marasinghe, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-17\nmodified: 2023-12-20\ntags:\n- attack.command-and-control\n- attack.t1102\n- attack.t1090\n- attack.t1572\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - ' tunnel '\n    - ' run '\n    CommandLine|contains:\n    - '-config '\n    - '-credentials-contents '\n    - '-credentials-file '\n    - '-token '\n  condition: selection\nfalsepositives:\n- Legitimate usage of Cloudflared tunnel.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

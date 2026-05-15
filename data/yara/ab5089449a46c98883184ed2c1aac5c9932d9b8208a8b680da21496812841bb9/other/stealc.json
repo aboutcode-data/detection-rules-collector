@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/stealc.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_Stealc_str",
+                "tags": [],
+                "description": "Stealc infostealer",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "c9bcdc77108fd94f32851543d38be6982f3bb611c3a1115fc90013f965ed0b66"
+            },
+            "rule_text": "rule malware_Stealc_str\n{\n\tmeta:\n\t\tdescription = \"Stealc infostealer\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"c9bcdc77108fd94f32851543d38be6982f3bb611c3a1115fc90013f965ed0b66\"\n\n\tstrings:\n\t\t$decode_code = {\n          68 D0 07 00 00\n          6A 00\n          8D 85 ?? ?? ?? ??\n          50\n          FF 15 ?? ?? ?? ??\n          83 C4 0C\n          C7 85 ?? ?? ?? ?? 00 00 00 00\n          EB ??\n          8B 8D ?? ?? ?? ??\n          83 C1 01\n          89 8D ?? ?? ?? ??\n          81 BD ?? ?? ?? ?? 00 01 00 00\n        }\n\t\t$anti_code1 = {6A 04 68 00 30 00 00 68 C0 41 C8 17 6A 00 FF 15}\n\t\t$anti_code2 = {90 8A C0 68 C0 9E E6 05 8B 45 ?? 50 E8}\n\t\t$s1 = \"- IP: IP?\" ascii\n\t\t$s2 = \"- Country: ISO?\" ascii\n\t\t$s3 = \"- Display Resolution:\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( $decode_code or all of ( $anti_code* ) or all of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

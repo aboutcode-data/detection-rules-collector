@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disable_macroruntimescanscope.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-25",
+                "title": "Disable Macro Runtime Scan Scope",
+                "id": "ab871450-37dc-4a3a-997f-6662aa8ae0f1"
+            },
+            "rule_text": "title: Disable Macro Runtime Scan Scope\nid: ab871450-37dc-4a3a-997f-6662aa8ae0f1\ndescription: Detects tampering with the MacroRuntimeScanScope registry key to disable\n  runtime scanning of enabled macros\nstatus: test\ndate: 2022-10-25\nmodified: 2023-08-17\nauthor: Nasreddine Bencherchali (Nextron Systems)\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2018/09/12/office-vba-amsi-parting-the-veil-on-malicious-macros/\n- https://admx.help/?Category=Office2016&Policy=office16.Office.Microsoft.Policies.Windows::L_MacroRuntimeScanScope\n- https://github.com/S3cur3Th1sSh1t/OffensiveVBA/blob/28cc6a2802d8176195ac19b3c8e9a749009a82a3/src/AMSIbypasses.vba\ntags:\n- attack.defense-impairment\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\SOFTWARE\\\n    - \\Microsoft\\Office\\\n    - \\Common\\Security\n    TargetObject|endswith: \\MacroRuntimeScanScope\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

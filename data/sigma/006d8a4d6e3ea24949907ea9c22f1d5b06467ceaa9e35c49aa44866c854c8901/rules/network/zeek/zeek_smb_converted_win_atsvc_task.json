@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_smb_converted_win_atsvc_task.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden, @neu5rn",
+                "date": "2020-04-03",
+                "title": "Remote Task Creation via ATSVC Named Pipe - Zeek",
+                "id": "dde85b37-40cd-4a94-b00c-0b8794f956b5"
+            },
+            "rule_text": "title: Remote Task Creation via ATSVC Named Pipe - Zeek\nid: dde85b37-40cd-4a94-b00c-0b8794f956b5\nrelated:\n- id: f6de6525-4509-495a-8a82-1f8b0ed73a00\n  type: derived\nstatus: test\ndescription: Detects remote task creation via at.exe or API interacting with ATSVC\n  namedpipe\nreferences:\n- https://web.archive.org/web/20230409194125/https://blog.menasec.net/2019/03/threat-hunting-25-scheduled-tasks-for.html\nauthor: Samir Bousseaden, @neu5rn\ndate: 2020-04-03\nmodified: 2022-12-27\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.lateral-movement\n- attack.persistence\n- car.2013-05-004\n- car.2015-04-001\n- attack.t1053.002\nlogsource:\n  product: zeek\n  service: smb_files\ndetection:\n  selection:\n    path: \\\\\\*\\IPC$\n    name: atsvc\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

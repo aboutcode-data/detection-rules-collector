@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Copak/Trojan_Win32_Copak_CM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Copak_CM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Copak.CM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Copak_CM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Copak.CM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {09 d3 31 0f 4a 89 d3 47 09 da 39 f7 75 e3 }\n\t\t$a_03_1 = {8b 0c 24 83 c4 04 e8 [0-04] 31 0f 4a 81 c7 01 00 00 00 39 f7 75 de }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

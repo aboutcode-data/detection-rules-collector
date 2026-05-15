@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_chrome_frame_helper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)",
+                "date": "2022-08-17",
+                "title": "Potential Chrome Frame Helper DLL Sideloading",
+                "id": "72ca7c75-bf85-45cd-aca7-255d360e423c"
+            },
+            "rule_text": "title: Potential Chrome Frame Helper DLL Sideloading\nid: 72ca7c75-bf85-45cd-aca7-255d360e423c\nstatus: test\ndescription: Detects potential DLL sideloading of \"chrome_frame_helper.dll\"\nreferences:\n- https://hijacklibs.net/entries/3rd_party/google/chrome_frame_helper.html\nauthor: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)\ndate: 2022-08-17\nmodified: 2023-05-15\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\chrome_frame_helper.dll\n  filter_main_path:\n    ImageLoaded|startswith:\n    - C:\\Program Files\\Google\\Chrome\\Application\\\n    - C:\\Program Files (x86)\\Google\\Chrome\\Application\\\n  filter_optional_user_path:\n    ImageLoaded|contains: \\AppData\\local\\Google\\Chrome\\Application\\\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

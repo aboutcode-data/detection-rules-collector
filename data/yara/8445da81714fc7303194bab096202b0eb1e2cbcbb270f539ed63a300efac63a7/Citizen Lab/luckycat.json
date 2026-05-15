@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/luckycat.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LuckyCatCode",
+                "tags": [
+                    "LuckyCat",
+                    "Family"
+                ],
+                "description": "LuckyCat code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule LuckyCatCode : LuckyCat Family\n{\n\tmeta:\n\t\tdescription = \"LuckyCat code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$xordecrypt = { BF 0F 00 00 00 F7 F7 ?? ?? ?? ?? 32 14 39 80 F2 7B }\n\t\t$dll = { C6 ?? ?? ?? 64 C6 ?? ?? ?? 6C C6 ?? ?? ?? 6C }\n\t\t$commonletters = { B? 63 B? 61 B? 73 B? 65 }\n\n\tcondition:\n\t\t$xordecrypt or ( $dll and $commonletters )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LuckyCatStrings",
+                "tags": [
+                    "LuckyCat",
+                    "Family"
+                ],
+                "description": "LuckyCat Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule LuckyCatStrings : LuckyCat Family\n{\n\tmeta:\n\t\tdescription = \"LuckyCat Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$xorencrypted = { 77 76 75 7B 7A 79 78 7F 7E 7D 7C 73 72 71 70 }\n\t\t$tempvbs = \"%s\\\\~temp.vbs\"\n\t\t$countphp = \"count.php\\x00\"\n\t\t$trojanname = /WMILINK=.*TrojanName=/\n\t\t$tmpfile = \"d0908076343423d3456.tmp\"\n\t\t$dirfile = \"cmd /c dir /s /a C:\\\\\\\\ >'+tmpfolder+'\\\\\\\\C.tmp\"\n\t\t$ipandmac = \"objIP.DNSHostName+'_'+objIP.MACAddress.split(':').join('')+'_'+addinf+'@')\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LuckyCat",
+                "tags": [
+                    "Family"
+                ],
+                "description": "LuckyCat",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "rule LuckyCat : Family\n{\n\tmeta:\n\t\tdescription = \"LuckyCat\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tcondition:\n\t\tLuckyCatCode or LuckyCatStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

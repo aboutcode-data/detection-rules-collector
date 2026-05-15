@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mstsc_rdp_hijack_shadowing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-01-24",
+                "title": "Potential MSTSC Shadowing Activity",
+                "id": "6ba5a05f-b095-4f0a-8654-b825f4f16334"
+            },
+            "rule_text": "title: Potential MSTSC Shadowing Activity\nid: 6ba5a05f-b095-4f0a-8654-b825f4f16334\nstatus: test\ndescription: Detects RDP session hijacking by using MSTSC shadowing\nreferences:\n- https://twitter.com/kmkz_security/status/1220694202301976576\n- https://github.com/kmkz/Pentesting/blob/47592e5e160d3b86c2024f09ef04ceb87d204995/Post-Exploitation-Cheat-Sheet\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-01-24\nmodified: 2023-02-05\ntags:\n- attack.lateral-movement\n- attack.t1563.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - noconsentprompt\n    - 'shadow:'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

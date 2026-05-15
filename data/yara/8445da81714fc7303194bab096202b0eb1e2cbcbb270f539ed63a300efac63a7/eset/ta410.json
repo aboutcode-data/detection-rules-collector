@@ -1,0 +1,334 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/eset/ta410.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_Tendyron_dropper",
+                "tags": [],
+                "description": "TA410 Tendyron Dropper",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2020-12-09"
+            },
+            "rule_text": "rule apt_Windows_TA410_Tendyron_dropper\n{\n\tmeta:\n\t\tdescription = \"TA410 Tendyron Dropper\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2020-12-09\"\n\n\tstrings:\n\t\t$s1 = \"Global\\\\{F473B3BE-08EE-4710-A727-9E248F804F4A}\" wide\n\t\t$s2 = \"Global\\\\8D32CCB321B2\" wide\n\t\t$s3 = \"Global\\\\E4FE94F75490\" wide\n\t\t$s4 = \"Program Files (x86)\\\\Internet Explorer\\\\iexplore.exe\" wide\n\t\t$s5 = \"\\\\RPC Control\\\\OLE\" wide\n\t\t$s6 = \"ALPC Port\" wide\n\n\tcondition:\n\t\tint16 ( 0 ) == 0x5A4D and 4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_Tendyron_installer",
+                "tags": [],
+                "description": "TA410 Tendyron Installer",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2020-12-09"
+            },
+            "rule_text": "rule apt_Windows_TA410_Tendyron_installer\n{\n\tmeta:\n\t\tdescription = \"TA410 Tendyron Installer\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2020-12-09\"\n\n\tstrings:\n\t\t$s1 = \"Tendyron\" wide\n\t\t$s2 = \"OnKeyToken_KEB.dll\" wide\n\t\t$s3 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" wide\n\t\t$s4 = \"Global\\\\8D32CCB321B2\"\n\t\t$s5 = \"\\\\RTFExploit\\\\\"\n\n\tcondition:\n\t\tint16 ( 0 ) == 0x5A4D and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_Tendyron_Downloader",
+                "tags": [],
+                "description": "TA410 Tendyron Downloader",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2020-12-09"
+            },
+            "rule_text": "rule apt_Windows_TA410_Tendyron_Downloader\n{\n\tmeta:\n\t\tdescription = \"TA410 Tendyron Downloader\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2020-12-09\"\n\n\tstrings:\n\t\t$chunk_1 = {\n            8A 10\n            80 F2 5C\n            80 C2 5C\n            88 10\n            40\n            83 E9 01\n            75 ??\n        }\n\t\t$s1 = \"startModule\" fullword\n\n\tcondition:\n\t\tint16 ( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_X4_strings",
+                "tags": [],
+                "description": "Matches various strings found in TA410 X4",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2020-10-09"
+            },
+            "rule_text": "rule apt_Windows_TA410_X4_strings\n{\n\tmeta:\n\t\tdescription = \"Matches various strings found in TA410 X4\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2020-10-09\"\n\n\tstrings:\n\t\t$s1 = \"[X]InLoadSC\" ascii wide nocase\n\t\t$s3 = \"MachineKeys\\\\Log\\\\rsa.txt\" ascii wide nocase\n\t\t$s4 = \"MachineKeys\\\\Log\\\\output.log\" ascii wide nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_X4_hash_values",
+                "tags": [],
+                "description": "Matches X4 hash function found in TA410 X4",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2020-10-09"
+            },
+            "rule_text": "rule apt_Windows_TA410_X4_hash_values\n{\n\tmeta:\n\t\tdescription = \"Matches X4 hash function found in TA410 X4\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2020-10-09\"\n\n\tstrings:\n\t\t$s1 = {D1 10 76 C2 B6 03}\n\t\t$s2 = {71 3E A8 0D}\n\t\t$s3 = {DC 78 94 0E}\n\t\t$s4 = {40 0D E7 D6 06}\n\t\t$s5 = {83 BB FD E8 06}\n\t\t$s6 = {92 9D 9B FF EC 03}\n\t\t$s7 = {DD 0E FC FA F5 03}\n\t\t$s8 = {15 60 1E FB F5 03}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_X4_hash_fct",
+                "tags": [],
+                "description": "Matches X4 hash function found in TA410 X4",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2020-10-09"
+            },
+            "rule_text": "rule apt_Windows_TA410_X4_hash_fct\n{\n\tmeta:\n\t\tdescription = \"Matches X4 hash function found in TA410 X4\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2020-10-09\"\n\n\tstrings:\n\t\t$chunk_1 = {\n            0F B6 01\n            84 C0\n            74 ??\n            48 69 D2 83 00 00 00\n            48 0F BE C0\n            48 03 D0\n            48 FF C1\n            E9 ?? ?? ?? ??\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_LookBack_decryption",
+                "tags": [],
+                "description": "Matches encryption/decryption function used by LookBack.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_LookBack_decryption\n{\n\tmeta:\n\t\tdescription = \"Matches encryption/decryption function used by LookBack.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$initialize = {\n            8B C6           //mov eax, esi\n            99              //cdq\n            83 E2 03        //and edx, 3\n            03 C2           //add eax, edx\n            C1 F8 02        //sar eax, 2\n            8A C8           //mov cl, al\n            02 C0           //add al, al\n            02 C8           //add cl, al\n            88 4C 34 10         //mov byte ptr [esp + esi + 0x10], cl\n            46              //inc esi\n            81 FE 00 01 00 00       //cmp esi, 0x100\n            72 ??\n        }\n\t\t$generate = {\n            8A 94 1C 10 01 ?? ??    //mov dl, byte ptr [esp + ebx + 0x110]\n            8D 8C 24 10 01 ?? ??    //lea ecx, [esp + 0x110]\n            0F B6 C3        //movzx eax, bl\n            0F B6 44 04 10      //movzx eax, byte ptr [esp + eax + 0x10]\n            32 C2           //xor al, dl\n            02 F0           //add dh, al\n            0F B6 C6        //movzx eax, dh\n            03 C8           //add ecx, eax\n            0F B6 01        //movzx eax, byte ptr [ecx]\n            88 84 1C 10 01 ?? ??    //mov byte ptr [esp + ebx + 0x110], al\n            43              //inc ebx\n            88 11           //mov byte ptr [ecx], dl\n            81 FB 00 06 00 00       //cmp ebx, 0x600\n            72 ??           //jb 0x10025930\n        }\n\t\t$decrypt = {\n            0F B6 C6        //movzx eax, dh\n            8D 8C 24 10 01 ?? ??    //lea ecx, [esp + 0x110]\n            03 C8           //add ecx, eax\n            8A 19           //mov bl, byte ptr [ecx]\n            8A C3           //mov al, bl\n            02 C6           //add al, dh\n            FE C6           //inc dh\n            02 F8           //add bh, al\n            0F B6 C7        //movzx eax, bh\n            8A 94 04 10 01 ?? ??    //mov dl, byte ptr [esp + eax + 0x110]\n            88 9C 04 10 01 ?? ??    //mov byte ptr [esp + eax + 0x110], bl\n            88 11           //mov byte ptr [ecx], dl\n            0F B6 C2        //movzx eax, dl\n            0F B6 CB        //movzx ecx, bl\n            33 C8           //xor ecx, eax\n            8A 84 0C 10 01 ?? ??    //mov al, byte ptr [esp + ecx + 0x110]\n            30 04 2E        //xor byte ptr [esi + ebp], al\n            46              //inc esi\n            3B F7           //cmp esi, edi\n            7C ??           //jl 0x10025980\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_LookBack_loader",
+                "tags": [],
+                "description": "Matches the modified function in LookBack libcurl loader.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_LookBack_loader\n{\n\tmeta:\n\t\tdescription = \"Matches the modified function in LookBack libcurl loader.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$chunk_1 = {\n            FF 15 ?? ?? ?? ??      //call dword ptr [0x100530e0]\n            6A 40          //push 0x40\n            68 00 10 00 00     //push 0x1000\n            68 F0 04 00 00     //push 0x4f0\n            6A 00          //push 0\n            FF 15 ?? ?? ?? ??      //call dword ptr [0x100530d4]\n            8B E8          //mov ebp, eax\n            B9 3C 01 00 00     //mov ecx, 0x13c\n            BE 60 30 06 10     //mov esi, 0x10063060\n            8B FD          //mov edi, ebp\n            68 F0 04 00 00     //push 0x4f0\n            F3 A5          //rep movsd dword ptr es:[edi], dword ptr [esi]\n            55             //push ebp\n            E8 ?? ?? ?? ??     //call 0x100258d0\n            8B 0D ?? ?? ?? ??      //mov ecx, dword ptr [0x100530e4]\n            A1 ?? ?? ?? ??     //mov eax, dword ptr [0x100530c8]\n            68 6C 02 00 00     //push 0x26c\n            89 4C 24 ??        //mov dword ptr [esp + 0x1c], ecx\n            89 44 24 ??        //mov dword ptr [esp + 0x20], eax\n            FF 15 ?? ?? ?? ??      //call dword ptr [0x10063038]\n            8B D8          //mov ebx, eax\n            B9 9B 00 00 00     //mov ecx, 0x9b\n            BE 50 35 06 10     //mov esi, 0x10063550\n            8B FB          //mov edi, ebx\n            68 6C 02 00 00      //push 0x26c\n            F3 A5          //rep movsd dword ptr es:[edi], dword ptr [esi]\n            53             //push ebx\n            E8 ?? ?? ?? ??     //call 0x100258d0\n            83 C4 14           //add esp, 0x14\n            8D 44 24 ??        //lea eax, [esp + 0x10]\n            50             //push eax\n            53             //push ebx\n            8D 44 24 ??        //lea eax, [esp + 0x3c]\n            50             //push eax\n            A1 ?? ?? ?? ??     //mov eax, dword ptr [0x10063058]\n            FF 74 24 ??        //push dword ptr [esp + 0x28]\n            03 C5          //add eax, ebp\n            FF D0          //call eax\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_LookBack_strings",
+                "tags": [],
+                "description": "Matches multiple strings and export names in TA410 LookBack.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "import \"pe\"\n\nrule apt_Windows_TA410_LookBack_strings\n{\n\tmeta:\n\t\tdescription = \"Matches multiple strings and export names in TA410 LookBack.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$s1 = \"SodomMainFree\" ascii wide\n\t\t$s2 = \"SodomMainInit\" ascii wide\n\t\t$s3 = \"SodomNormal.bin\" ascii wide\n\t\t$s4 = \"SodomHttp.bin\" ascii wide\n\t\t$s5 = \"sodom.ini\" ascii wide\n\t\t$s6 = \"SodomMainProc\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 2 of them or pe.exports ( \"SodomBodyLoad\" ) or pe.exports ( \"SodomBodyLoadTest\" ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_LookBack_HTTP",
+                "tags": [],
+                "description": "Matches LookBack's hardcoded HTTP request",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_LookBack_HTTP\n{\n\tmeta:\n\t\tdescription = \"Matches LookBack's hardcoded HTTP request\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$s1 = \"POST http://%s/status.php?r=%d%d HTTP/1.1\\x0d\\nAccept: text/html, application/xhtml+xml, */*\\x0d\\nAccept-Language: en-us\\x0d\\nUser-Agent: %s\\x0d\\nContent-Type: application/x-www-form-urlencoded\\x0d\\nAccept-Encoding: gzip, deflate\\x0d\\nHost: %s\\x0d\\nContent-Length: %d\\x0d\\nConnection: Keep-Alive\\x0d\\nCache-Control: no-cache\\x0d\\n\\x0d\\n\" ascii wide\n\t\t$s2 = \"id=1&op=report&status=\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_LookBack_magic",
+                "tags": [],
+                "description": "Matches message header creation in LookBack.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_LookBack_magic\n{\n\tmeta:\n\t\tdescription = \"Matches message header creation in LookBack.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$s1 = {\n            C7 03 C2 2E AB 48           //mov dword ptr [ebx], 0x48ab2ec2\n            ( A1 | 8B 15 ) ?? ?? ?? ??      //mov (eax | edx), x\n            [0-1]               //push ebp\n            89 ?3 04            //mov dword ptr [ebc + 4], reg\n            8B 4? 24 ??             //mov reg, dword ptr [esp + X]\n            89 4? 08            //mov dword ptr [ebx + 8], ??\n            89 ?? 0C            //mov dword ptr [ebx + 0xc], ??\n            8B 4? 24 ??             //mov reg, dword ptr [esp + X]\n            [1-2]               //push 1 or 2 args\n            E8 ?? ?? ?? ??          //call\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_loader_strings",
+                "tags": [],
+                "description": "Matches various strings found in TA410 FlowCloud first stage.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_loader_strings\n{\n\tmeta:\n\t\tdescription = \"Matches various strings found in TA410 FlowCloud first stage.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$key = \"y983nfdicu3j2dcn09wur9*^&initialize(y4r3inf;'fdskaf'SKF\"\n\t\t$s2 = \"startModule\" fullword\n\t\t$s4 = \"auto_start_module\" wide\n\t\t$s5 = \"load_main_module_after_install\" wide\n\t\t$s6 = \"terminate_if_fail\" wide\n\t\t$s7 = \"clear_run_mru\" wide\n\t\t$s8 = \"install_to_vista\" wide\n\t\t$s9 = \"load_ext_module\" wide\n\t\t$s10 = \"sll_only\" wide\n\t\t$s11 = \"fail_if_already_installed\" wide\n\t\t$s12 = \"clear_hardware_info\" wide\n\t\t$s13 = \"av_check\" wide fullword\n\t\t$s14 = \"check_rs\" wide\n\t\t$s15 = \"check_360\" wide\n\t\t$s16 = \"responsor.dat\" wide ascii\n\t\t$s17 = \"auto_start_after_install_check_anti\" wide fullword\n\t\t$s18 = \"auto_start_after_install\" wide fullword\n\t\t$s19 = \"extern_config.dat\" wide fullword\n\t\t$s20 = \"is_hhw\" wide fullword\n\t\t$s21 = \"SYSTEM\\\\Setup\\\\PrintResponsor\" wide\n\t\t$event = \"Global\\\\Event_{201a283f-e52b-450e-bf44-7dc436037e56}\" wide ascii\n\t\t$s23 = \"invalid encrypto hdr while decrypting\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( $key or $event or 5 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_header_decryption",
+                "tags": [],
+                "description": "Matches the function used to decrypt resources headers in TA410 FlowCloud",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_header_decryption\n{\n\tmeta:\n\t\tdescription = \"Matches the function used to decrypt resources headers in TA410 FlowCloud\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\n\tstrings:\n\t\t$chunk_1 = {\n            8B 1E\n            8B CF\n            D3 CB\n            8D 0C 28\n            83 C7 06\n            30 18\n            8B 1E\n            D3 CB\n            8D 0C 02\n            30 58 ??\n            8B 1E\n            D3 CB\n            8B 4C 24 ??\n            03 C8\n            30 58 ??\n            8B 1E\n            D3 CB\n            8B 4C 24 ??\n            03 C8\n            30 58 ??\n            8B 1E\n            D3 CB\n            8B 4C 24 ??\n            03 C8\n            83 C0 06\n            30 58 ??\n            8B 1E\n            D3 CB\n            30 58 ??\n            83 FF 10\n            72 ??\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_dll_hijacking_strings",
+                "tags": [],
+                "description": "Matches filenames inside TA410 FlowCloud malicious DLL.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_dll_hijacking_strings\n{\n\tmeta:\n\t\tdescription = \"Matches filenames inside TA410 FlowCloud malicious DLL.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$dat1 = \"emedres.dat\" wide\n\t\t$dat2 = \"vviewres.dat\" wide\n\t\t$dat3 = \"setlangloc.dat\" wide\n\t\t$dll1 = \"emedres.dll\" wide\n\t\t$dll2 = \"vviewres.dll\" wide\n\t\t$dll3 = \"setlangloc.dll\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( all of ( $dat* ) or all of ( $dll* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_malicious_dll_antianalysis",
+                "tags": [],
+                "description": "Matches anti-analysis techniques used in TA410 FlowCloud hijacking DLL.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_malicious_dll_antianalysis\n{\n\tmeta:\n\t\tdescription = \"Matches anti-analysis techniques used in TA410 FlowCloud hijacking DLL.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$chunk_1 = {\n            33 C0\n            E8 ?? ?? ?? ??\n            83 C0 10\n            3D 00 00 00 80\n            7D 01\n            EB FF\n            E0 50\n            C3\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_pdb",
+                "tags": [],
+                "description": "Matches PDB paths found in TA410 FlowCloud.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "import \"pe\"\n\nrule apt_Windows_TA410_FlowCloud_pdb\n{\n\tmeta:\n\t\tdescription = \"Matches PDB paths found in TA410 FlowCloud.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( pe.pdb_path contains \"\\\\FlowCloud\\\\trunk\\\\\" or pe.pdb_path contains \"\\\\flowcloud\\\\trunk\\\\\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_shellcode_decryption",
+                "tags": [],
+                "description": "Matches the decryption function used in TA410 FlowCloud self-decrypting DLL",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_shellcode_decryption\n{\n\tmeta:\n\t\tdescription = \"Matches the decryption function used in TA410 FlowCloud self-decrypting DLL\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$chunk_1 = {\n            33 D2\n            8B 45 ??\n            BB 6B 04 00 00\n            F7 F3\n            81 C2 A8 01 00 00\n            81 E2 FF 00 00 00\n            8B 7D ??\n            33 C9\n            EB ??\n            30 14 39\n            00 14 39\n            41\n            3B 4D ??\n            72 ??\n        }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_fcClient_strings",
+                "tags": [],
+                "description": "Strings found in fcClient/rescure.dat module.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_fcClient_strings\n{\n\tmeta:\n\t\tdescription = \"Strings found in fcClient/rescure.dat module.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$s1 = \"df257bdd-847c-490e-9ef9-1d7dc883d3c0\"\n\t\t$s2 = \"\\\\{2AFF264E-B722-4359-8E0F-947B85594A9A}\"\n\t\t$s3 = \"Global\\\\{26C96B51-2B5D-4D7B-BED1-3DCA4848EDD1}\" wide\n\t\t$s4 = \"{804423C2-F490-4ac3-BFA5-13DEDE63A71A}\" wide\n\t\t$s5 = \"{A5124AF5-DF23-49bf-B0ED-A18ED3DEA027}\" wide\n\t\t$s6 = \"XXXModule_func.dll\"\n\t\t$driver1 = \"\\\\drivers\\\\hidmouse.sys\" wide fullword\n\t\t$driver2 = \"\\\\drivers\\\\hidusb.sys\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $s* ) or all of ( $driver* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_fcClientDll_strings",
+                "tags": [],
+                "description": "Strings found in fcClientDll/responsor.dat module.",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_FlowCloud_fcClientDll_strings\n{\n\tmeta:\n\t\tdescription = \"Strings found in fcClientDll/responsor.dat module.\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$s1 = \"http://%s/html/portlet/ext/draco/resources/draco_manager.swf/[[DYNAMIC]]/1\"\n\t\t$s2 = \"Cookie: COOKIE_SUPPORT=true; JSESSIONID=5C7E7A60D01D2891F40648DAB6CB3DF4.jvm1; COMPANY_ID=10301; ID=666e7375545678695645673d; PASSWORD=7a4b48574d746470447a303d; LOGIN=6863303130; SCREEN_NAME=4a2b455377766b657451493d; GUEST_LANGUAGE_ID=en-US\"\n\t\t$fc_msg = \".fc_net.msg\"\n\t\t$s4 = \"\\\\pipe\\\\namedpipe_keymousespy_english\" wide\n\t\t$s5 = \"8932910381748^&*^$58876$%^ghjfgsa413901280dfjslajflsdka&*(^7867=89^&*F(^&*5678f5ds765f76%&*%&*5\"\n\t\t$s6 = \"cls_{CACB140B-0B82-4340-9B05-7983017BA3A4}\" wide\n\t\t$s7 = \"HTTP/1.1 200 OK\\x0d\\nServer: Apache-Coyote/1.1\\x0d\\nPragma: No-cache\\x0d\\nCache-Control: no-cache\\x0d\\nExpires: Thu, 01 Jan 1970 08:00:00 CST\\x0d\\nLast-Modified: Fri, 27 Apr 2012 08:11:04 GMT\\x0d\\nContent-Type: application/xml\\x0d\\nContent-Length: %d\\x0d\\nDate: %s GMT\"\n\t\t$sql1 = \"create table if not exists table_filed_space\"\n\t\t$sql2 = \"create table if not exists clipboard\"\n\t\t$sql3 = \"create trigger if not exists file_after_delete after delete on file\"\n\t\t$sql4 = \"create trigger if not exists file_data_after_insert after insert on file_data\"\n\t\t$sql5 = \"create trigger if not exists file_data_after_delete after delete on file_data\"\n\t\t$sql6 = \"create trigger if not exists file_data_after_update after update on file_data\"\n\t\t$sql7 = \"insert into file_data(file_id, ofs, data, status)\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $s* ) or #fc_msg >= 8 or 4 of ( $sql* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_Rootkit_strings",
+                "tags": [],
+                "description": "Strings found in TA410's Rootkit",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "rule apt_Windows_TA410_Rootkit_strings\n{\n\tmeta:\n\t\tdescription = \"Strings found in TA410's Rootkit\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tstrings:\n\t\t$driver1 = \"\\\\Driver\\\\kbdclass\" wide\n\t\t$driver2 = \"\\\\Driver\\\\mouclass\" wide\n\t\t$device1 = \"\\\\Device\\\\KeyboardClass0\" wide\n\t\t$device2 = \"\\\\Device\\\\PointerClass0\" wide\n\t\t$driver3 = \"\\\\Driver\\\\tcpip\" wide\n\t\t$device3 = \"\\\\Device\\\\tcp\" wide\n\t\t$driver4 = \"\\\\Driver\\\\nsiproxy\" wide\n\t\t$device4 = \"\\\\Device\\\\Nsi\" wide\n\t\t$reg1 = \"\\\\Registry\\\\Machine\\\\SYSTEM\\\\Setup\\\\AllowStart\\\\ceipCommon\" wide\n\t\t$reg2 = \"RHH%d\" wide\n\t\t$reg3 = \"RHP%d\" wide\n\t\t$s1 = \"\\\\SystemRoot\\\\System32\\\\drivers\\\\hidmouse.sys\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of ( $s1 , $reg* ) and ( all of ( $driver* ) or all of ( $device* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_v5_resources",
+                "tags": [],
+                "description": "Matches sequence of PE resource IDs found in TA410 FlowCloud version 5.0.2",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "import \"pe\"\n\nrule apt_Windows_TA410_FlowCloud_v5_resources\n{\n\tmeta:\n\t\tdescription = \"Matches sequence of PE resource IDs found in TA410 FlowCloud version 5.0.2\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and pe.number_of_resources >= 13 and for 12 resource in pe.resources : ( resource.type == 10 and resource.language == 1033 and ( resource.name_string == \"1\\x000\\x000\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x000\\x00\" or resource.name_string == \"1\\x000\\x000\\x001\\x00\" or resource.name_string == \"1\\x000\\x001\\x00\" or resource.name_string == \"1\\x000\\x002\\x00\" or resource.name_string == \"1\\x000\\x003\\x00\" or resource.name_string == \"1\\x000\\x004\\x00\" or resource.name_string == \"1\\x000\\x005\\x00\" or resource.name_string == \"1\\x000\\x006\\x00\" or resource.name_string == \"1\\x000\\x007\\x00\" or resource.name_string == \"1\\x000\\x008\\x00\" or resource.name_string == \"1\\x000\\x009\\x00\" or resource.name_string == \"1\\x001\\x000\\x00\" or resource.name_string == \"2\\x000\\x000\\x000\\x00\" or resource.name_string == \"2\\x000\\x000\\x001\\x00\" ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_Windows_TA410_FlowCloud_v4_resources",
+                "tags": [],
+                "description": "Matches sequence of PE resource IDs found in TA410 FlowCloud version 4.1.3",
+                "reference": "https://www.welivesecurity.com/",
+                "source": "https://github.com/eset/malware-ioc/",
+                "license": "BSD 2-Clause",
+                "version": "1",
+                "author": "ESET Research",
+                "date": "2021-10-12"
+            },
+            "rule_text": "import \"pe\"\n\nrule apt_Windows_TA410_FlowCloud_v4_resources\n{\n\tmeta:\n\t\tdescription = \"Matches sequence of PE resource IDs found in TA410 FlowCloud version 4.1.3\"\n\t\treference = \"https://www.welivesecurity.com/\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tlicense = \"BSD 2-Clause\"\n\t\tversion = \"1\"\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"2021-10-12\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and pe.number_of_resources >= 6 and for 5 resource in pe.resources : ( resource.type == 10 and resource.language == 1033 and ( resource.name_string == \"1\\x000\\x000\\x000\\x000\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x001\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x002\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x003\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x004\\x00\" or resource.name_string == \"1\\x000\\x000\\x000\\x005\\x00\" or resource.name_string == \"1\\x000\\x001\\x000\\x000\\x00\" ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

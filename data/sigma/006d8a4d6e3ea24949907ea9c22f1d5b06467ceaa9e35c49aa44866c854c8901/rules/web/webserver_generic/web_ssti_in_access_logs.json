@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/webserver_generic/web_ssti_in_access_logs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-14",
+                "title": "Server Side Template Injection Strings",
+                "id": "ada3bc4f-f0fd-42b9-ba91-e105e8af7342"
+            },
+            "rule_text": "title: Server Side Template Injection Strings\nid: ada3bc4f-f0fd-42b9-ba91-e105e8af7342\nstatus: test\ndescription: Detects SSTI attempts sent via GET requests in access logs\nreferences:\n- https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection\n- https://github.com/payloadbox/ssti-payloads\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-14\ntags:\n- attack.stealth\n- attack.t1221\nlogsource:\n  category: webserver\ndetection:\n  select_method:\n    cs-method: GET\n  keywords:\n  - ={{\n  - =%7B%7B\n  - =${\n  - =$%7B\n  - =<%=\n  - =%3C%25=\n  - =@(\n  - freemarker.template.utility.Execute\n  - .getClass().forName('javax.script.ScriptEngineManager')\n  - T(org.apache.commons.io.IOUtils)\n  filter:\n    sc-status: 404\n  condition: select_method and keywords and not filter\nfalsepositives:\n- User searches in search boxes of the respective website\n- Internal vulnerability scanners can cause some serious FPs when used, if you experience\n  a lot of FPs due to this think of adding more filters such as \"User Agent\" strings\n  and more response codes\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_email_exfil.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems),  Azure-Sentinel (idea)",
+                "date": "2022-09-09",
+                "title": "Email Exifiltration Via Powershell",
+                "id": "312d0384-401c-4b8b-abdf-685ffba9a332"
+            },
+            "rule_text": "title: Email Exifiltration Via Powershell\nid: 312d0384-401c-4b8b-abdf-685ffba9a332\nstatus: test\ndescription: Detects email exfiltration via powershell cmdlets\nreferences:\n- https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/\n- https://github.com/Azure/Azure-Sentinel/blob/7e6aa438e254d468feec061618a7877aa528ee9f/Hunting%20Queries/Microsoft%20365%20Defender/Ransomware/DEV-0270/Email%20data%20exfiltration%20via%20PowerShell.yaml\nauthor: Nasreddine Bencherchali (Nextron Systems),  Azure-Sentinel (idea)\ndate: 2022-09-09\ntags:\n- attack.exfiltration\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    CommandLine|contains|all:\n    - Add-PSSnapin\n    - Get-Recipient\n    - -ExpandProperty\n    - EmailAddresses\n    - SmtpAddress\n    - -hidetableheaders\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

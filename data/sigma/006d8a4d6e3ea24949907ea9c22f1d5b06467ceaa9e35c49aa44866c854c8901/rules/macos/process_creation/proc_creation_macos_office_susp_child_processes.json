@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_office_susp_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-01-31",
+                "title": "Suspicious Microsoft Office Child Process - MacOS",
+                "id": "69483748-1525-4a6c-95ca-90dc8d431b68"
+            },
+            "rule_text": "title: Suspicious Microsoft Office Child Process - MacOS\nid: 69483748-1525-4a6c-95ca-90dc8d431b68\nstatus: test\ndescription: Detects suspicious child processes spawning from microsoft office suite\n  applications such as word or excel. This could indicates malicious macro execution\nreferences:\n- https://redcanary.com/blog/applescript/\n- https://objective-see.org/blog/blog_0x4B.html\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-01-31\nmodified: 2023-02-04\ntags:\n- attack.execution\n- attack.persistence\n- attack.t1059.002\n- attack.t1137.002\n- attack.t1204.002\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|contains:\n    - Microsoft Word\n    - Microsoft Excel\n    - Microsoft PowerPoint\n    - Microsoft OneNote\n    Image|endswith:\n    - /bash\n    - /curl\n    - /dash\n    - /fish\n    - /osacompile\n    - /osascript\n    - /sh\n    - /zsh\n    - /python\n    - /python3\n    - /wget\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

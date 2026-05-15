@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_OmniRat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Android_OmniRat",
+                "tags": [],
+                "author": "Jacob Soo Lead Re",
+                "date": "01-July-2016",
+                "description": "This rule try to detects OmniRat",
+                "source": "https://blog.avast.com/2015/11/05/droidjack-isnt-the-only-spying-software-out-there-avast-discovers-that-omnirat-is-currently-being-used-and-spread-by-criminals-to-gain-full-remote-co"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_OmniRat\n{\n\tmeta:\n\t\tauthor = \"Jacob Soo Lead Re\"\n\t\tdate = \"01-July-2016\"\n\t\tdescription = \"This rule try to detects OmniRat\"\n\t\tsource = \"https://blog.avast.com/2015/11/05/droidjack-isnt-the-only-spying-software-out-there-avast-discovers-that-omnirat-is-currently-being-used-and-spread-by-criminals-to-gain-full-remote-co\"\n\n\tstrings:\n\t\t$a = \"android.engine.apk\"\n\n\tcondition:\n\t\t(androguard.activity ( /com.app.MainActivity/i ) and androguard.permission ( /android.permission.WRITE_EXTERNAL_STORAGE/i ) and androguard.package_name ( /com.app/i ) ) and $a\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

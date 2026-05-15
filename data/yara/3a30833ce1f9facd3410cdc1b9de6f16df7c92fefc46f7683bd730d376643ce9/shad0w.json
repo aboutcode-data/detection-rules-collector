@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/shad0w.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "shad0w_beacon",
+                "tags": [],
+                "description": "Shad0w beacon default suspicous strings",
+                "author": "SBousseaden",
+                "reference": "https://github.com/bats3c/shad0w",
+                "date": "2020-06-04"
+            },
+            "rule_text": "import \"pe\"\n\nrule shad0w_beacon\n{\n\tmeta:\n\t\tdescription = \"Shad0w beacon default suspicous strings\"\n\t\tauthor = \"SBousseaden\"\n\t\treference = \"https://github.com/bats3c/shad0w\"\n\t\tdate = \"2020-06-04\"\n\n\tstrings:\n\t\t$s1 = \"LdrLoadD\"\n\t\t$s2 = {53 65 74 50 72 2A 65 73 73 4D}\n\t\t$s3 = \"Policy\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of ( $s* ) and pe.sections [ 0 ] . name == \"XPU0\" and pe.imports ( \"winhttp.dll\" , \"WinHttpOpen\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

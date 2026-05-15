@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/WannaCrypt/Ransom_Win32_WannaCrypt_F_dha.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_WannaCrypt_F_dha",
+                "tags": [],
+                "description": "Ransom:Win32/WannaCrypt.F!dha,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_WannaCrypt_F_dha\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/WannaCrypt.F!dha,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6d 73 73 65 63 73 76 ?? 2e 65 78 65 }\n\t\t$a_01_1 = {50 6c 61 79 47 61 6d 65 }\n\t\t$a_01_2 = {6c 61 75 6e 63 68 65 72 2e 64 6c 6c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

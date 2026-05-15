@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/Other/win_av_relevant_match.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Arnim Rupp",
+                "date": "2017-02-19",
+                "title": "Relevant Anti-Virus Signature Keywords In Application Log",
+                "id": "78bc5783-81d9-4d73-ac97-59f6db4f72a8"
+            },
+            "rule_text": "title: Relevant Anti-Virus Signature Keywords In Application Log\nid: 78bc5783-81d9-4d73-ac97-59f6db4f72a8\nstatus: test\ndescription: 'Detects potentially highly relevant antivirus events in the application\n  log based on known virus signature names and malware keywords.\n\n  '\nreferences:\n- https://www.virustotal.com/gui/file/13828b390d5f58b002e808c2c4f02fdd920e236cc8015480fa33b6c1a9300e31\n- https://www.virustotal.com/gui/file/15b57c1b68cd6ce3c161042e0f3be9f32d78151fe95461eedc59a79fc222c7ed\n- https://www.virustotal.com/gui/file/5092b2672b4cb87a8dd1c2e6047b487b95995ad8ed5e9fc217f46b8bfb1b8c01\n- https://www.nextron-systems.com/?s=antivirus\nauthor: Florian Roth (Nextron Systems), Arnim Rupp\ndate: 2017-02-19\nmodified: 2024-12-25\ntags:\n- attack.resource-development\n- attack.t1588\nlogsource:\n  product: windows\n  service: application\ndetection:\n  keywords:\n  - Adfind\n  - 'ASP/BackDoor '\n  - ATK/\n  - Backdoor.ASP\n  - Backdoor.Cobalt\n  - Backdoor.JSP\n  - Backdoor.PHP\n  - Blackworm\n  - Brutel\n  - BruteR\n  - Chopper\n  - Cobalt\n  - COBEACON\n  - Cometer\n  - CRYPTES\n  - Cryptor\n  - Destructor\n  - DumpCreds\n  - Exploit.Script.CVE\n  - FastReverseProxy\n  - Filecoder\n  - 'GrandCrab '\n  - HackTool\n  - HKTL\n  - HTool-\n  - /HTool\n  - .HTool\n  - IISExchgSpawnCMD\n  - Impacket\n  - 'JSP/BackDoor '\n  - Keylogger\n  - Koadic\n  - Krypt\n  - Lazagne\n  - Metasploit\n  - Meterpreter\n  - MeteTool\n  - mikatz\n  - Mimikatz\n  - Mpreter\n  - MsfShell\n  - Nighthawk\n  - Packed.Generic.347\n  - PentestPowerShell\n  - Phobos\n  - 'PHP/BackDoor '\n  - Potato\n  - PowerSploit\n  - PowerSSH\n  - PshlSpy\n  - PSWTool\n  - PWCrack\n  - PWDump\n  - Ransom\n  - Rozena\n  - Ryzerlo\n  - Sbelt\n  - Seatbelt\n  - 'SecurityTool '\n  - SharpDump\n  - Shellcode\n  - Sliver\n  - Splinter\n  - Swrort\n  - Tescrypt\n  - TeslaCrypt\n  - TurtleLoader\n  - Valyria\n  - Webshell\n  filter_optional_generic:\n  - anti_ransomware_service.exe\n  - Anti-Ransomware\n  - Crack\n  - cyber-protect-service.exe\n  - encryptor\n  - Keygen\n  filter_optional_information:\n    Level: 4\n  filter_optional_restartmanager:\n    Provider_Name: Microsoft-Windows-RestartManager\n  condition: keywords and not 1 of filter_optional_*\nfalsepositives:\n- Some software piracy tools (key generators, cracks) are classified as hack tools\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

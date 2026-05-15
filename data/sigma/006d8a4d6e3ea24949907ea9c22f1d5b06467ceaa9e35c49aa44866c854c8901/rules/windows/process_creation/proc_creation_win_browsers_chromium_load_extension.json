@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_browsers_chromium_load_extension.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Aedan Russell, frack113, X__Junior (Nextron Systems)",
+                "date": "2022-06-19",
+                "title": "Chromium Browser Instance Executed With Custom Extension",
+                "id": "88d6e60c-759d-4ac1-a447-c0f1466c2d21"
+            },
+            "rule_text": "title: Chromium Browser Instance Executed With Custom Extension\nid: 88d6e60c-759d-4ac1-a447-c0f1466c2d21\nrelated:\n- id: 27ba3207-dd30-4812-abbf-5d20c57d474e\n  type: similar\nstatus: test\ndescription: Detects a Chromium based browser process with the 'load-extension' flag\n  to start a instance with a custom extension\nreferences:\n- https://redcanary.com/blog/chromeloader/\n- https://emkc.org/s/RJjuLa\n- https://www.mandiant.com/resources/blog/lnk-between-browsers\nauthor: Aedan Russell, frack113, X__Junior (Nextron Systems)\ndate: 2022-06-19\nmodified: 2023-11-28\ntags:\n- attack.persistence\n- attack.t1176.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\brave.exe\n    - \\chrome.exe\n    - \\msedge.exe\n    - \\opera.exe\n    - \\vivaldi.exe\n    CommandLine|contains: --load-extension=\n  condition: selection\nfalsepositives:\n- Usage of Chrome Extensions in testing tools such as BurpSuite will trigger this\n  alert\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_browsers_chromium_load_extension/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

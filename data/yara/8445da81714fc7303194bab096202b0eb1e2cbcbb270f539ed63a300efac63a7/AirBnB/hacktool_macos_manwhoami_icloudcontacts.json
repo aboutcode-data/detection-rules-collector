@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_macos_manwhoami_icloudcontacts.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_macos_manwhoami_icloudcontacts",
+                "tags": [],
+                "description": "Pulls iCloud Contacts for an account. No dependencies. No user notification.",
+                "reference": "https://github.com/manwhoami/iCloudContacts",
+                "author": "@mimeframe"
+            },
+            "rule_text": "rule hacktool_macos_manwhoami_icloudcontacts\n{\n\tmeta:\n\t\tdescription = \"Pulls iCloud Contacts for an account. No dependencies. No user notification.\"\n\t\treference = \"https://github.com/manwhoami/iCloudContacts\"\n\t\tauthor = \"@mimeframe\"\n\n\tstrings:\n\t\t$a1 = \"https://setup.icloud.com/setup/authenticate/\" wide ascii\n\t\t$a2 = \"https://p04-contacts.icloud.com/\" wide ascii\n\t\t$a3 = \"HTTP Error 401: Unauthorized. Are you sure the credentials are correct?\" wide ascii\n\t\t$a4 = \"HTTP Error 404: URL not found. Did you enter a username?\" wide ascii\n\n\tcondition:\n\t\t3 of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

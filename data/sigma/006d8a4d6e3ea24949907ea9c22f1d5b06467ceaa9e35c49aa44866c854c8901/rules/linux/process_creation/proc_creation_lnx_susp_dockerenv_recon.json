@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_dockerenv_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Seth Hanford",
+                "date": "2023-08-23",
+                "title": "Docker Container Discovery Via Dockerenv Listing",
+                "id": "11701de9-d5a5-44aa-8238-84252f131895"
+            },
+            "rule_text": "title: Docker Container Discovery Via Dockerenv Listing\nid: 11701de9-d5a5-44aa-8238-84252f131895\nstatus: test\ndescription: Detects listing or file reading of \".dockerenv\" which can be a sing of\n  potential container discovery\nreferences:\n- https://blog.skyplabs.net/posts/container-detection/\n- https://stackoverflow.com/questions/20010199/how-to-determine-if-a-process-runs-inside-lxc-docker\ntags:\n- attack.discovery\n- attack.t1082\nauthor: Seth Hanford\ndate: 2023-08-23\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith:\n    - /cat\n    - /dir\n    - /find\n    - /ls\n    - /stat\n    - /test\n    - grep\n    CommandLine|endswith: .dockerenv\n  condition: selection\nfalsepositives:\n- Legitimate system administrator usage of these commands\n- Some container tools or deployments may use these techniques natively to determine\n  how they proceed with execution, and will need to be filtered\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

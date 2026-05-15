@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_registry_reconnaissance.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-07-02",
+                "title": "Potential Registry Reconnaissance Via PowerShell Script",
+                "id": "064060aa-09fb-4636-817f-020a32aa7e9e"
+            },
+            "rule_text": "title: Potential Registry Reconnaissance Via PowerShell Script\nid: 064060aa-09fb-4636-817f-020a32aa7e9e\nrelated:\n- id: 970007b7-ce32-49d0-a4a4-fbef016950bd\n  type: similar\nstatus: test\ndescription: Detects PowerShell scripts with potential registry reconnaissance capabilities.\n  Adversaries may interact with the Windows registry to gather information about the\n  system credentials, configuration, and installed software.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1012/T1012.md\nauthor: frack113\ndate: 2023-07-02\ntags:\n- attack.discovery\n- attack.t1012\n- attack.t1007\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|re: (Get-Item|gci|Get-ChildItem).{1,64}-Path.{1,64}\\\\(currentcontrolset\\\\services|CurrentVersion\\\\Policies\\\\Explorer\\\\Run|CurrentVersion\\\\Run|CurrentVersion\\\\ShellServiceObjectDelayLoad|CurrentVersion\\\\Windows\\winlogon)\\\\\n  condition: selection\nfalsepositives:\n- Due to the nature of the script block, the matching of the string could sometimes\n  result in a false positive. Use this rule to hunt for potential malicious or suspicious\n  scripts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

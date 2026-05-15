@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_python_shell_os_system.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Inline Python Execution - Spawn Shell Via OS System Library",
+                "id": "2d2f44ff-4611-4778-a8fc-323a0e9850cc"
+            },
+            "rule_text": "title: Inline Python Execution - Spawn Shell Via OS System Library\nid: 2d2f44ff-4611-4778-a8fc-323a0e9850cc\nstatus: test\ndescription: 'Detects execution of inline Python code via the \"-c\" in order to call\n  the \"system\" function from the \"os\" library, and spawn a shell.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/python/#shell\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n  - Image|endswith:\n    - /python\n    - /python2\n    - /python3\n  - Image|contains:\n    - /python2.\n    - /python3.\n  selection_cli:\n    CommandLine|contains|all:\n    - ' -c '\n    - os.system(\n    CommandLine|contains:\n    - /bin/bash\n    - /bin/dash\n    - /bin/fish\n    - /bin/sh\n    - /bin/zsh\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

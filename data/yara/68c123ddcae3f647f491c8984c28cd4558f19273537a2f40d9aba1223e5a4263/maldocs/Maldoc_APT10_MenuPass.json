@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/maldocs/Maldoc_APT10_MenuPass.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Maldoc_APT10_MenuPass",
+                "tags": [],
+                "description": "Detects APT10 MenuPass Phishing",
+                "author": "Colin Cowie",
+                "reference": "https://www.fireeye.com/blog/threat-research/2018/09/apt10-targeting-japanese-corporations-using-updated-ttps.html",
+                "date": "2018-09-13"
+            },
+            "rule_text": "import \"hash\"\n\nrule Maldoc_APT10_MenuPass\n{\n\tmeta:\n\t\tdescription = \"Detects APT10 MenuPass Phishing\"\n\t\tauthor = \"Colin Cowie\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2018/09/apt10-targeting-japanese-corporations-using-updated-ttps.html\"\n\t\tdate = \"2018-09-13\"\n\n\tstrings:\n\t\t$s1 = \"C:\\\\ProgramData\\\\padre1.txt\"\n\t\t$s2 = \"C:\\\\ProgramData\\\\padre2.txt\"\n\t\t$s3 = \"C:\\\\ProgramData\\\\padre3.txt\"\n\t\t$s5 = \"C:\\\\ProgramData\\\\libcurl.txt\"\n\t\t$s6 = \"C:\\\\ProgramData\\\\3F2E3AB9\"\n\n\tcondition:\n\t\tany of them or hash.md5 ( 0 , filesize ) == \"4f83c01e8f7507d23c67ab085bf79e97\" or hash.md5 ( 0 , filesize ) == \"f188936d2c8423cf064d6b8160769f21\" or hash.md5 ( 0 , filesize ) == \"cca227f70a64e1e7fcf5bccdc6cc25dd\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

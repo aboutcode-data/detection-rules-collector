@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dllhost_no_cli_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-27",
+                "title": "Dllhost.EXE Execution Anomaly",
+                "id": "e7888eb1-13b0-4616-bd99-4bc0c2b054b9"
+            },
+            "rule_text": "title: Dllhost.EXE Execution Anomaly\nid: e7888eb1-13b0-4616-bd99-4bc0c2b054b9\nstatus: test\ndescription: Detects a \"dllhost\" process spawning with no commandline arguments which\n  is very rare to happen and could indicate process injection activity or malware\n  mimicking similar system processes.\nreferences:\n- https://redcanary.com/blog/child-processes/\n- https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08\n- https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/goofy-guineapig/NCSC-MAR-Goofy-Guineapig.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-27\nmodified: 2023-05-15\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\dllhost.exe\n    CommandLine:\n    - dllhost.exe\n    - dllhost\n  filter_main_null:\n    CommandLine: null\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/9002.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT9002Code",
+                "tags": [
+                    "APT9002",
+                    "Family"
+                ],
+                "description": "9002 code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT9002Code : APT9002 Family\n{\n\tmeta:\n\t\tdescription = \"9002 code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = { B9 7A 21 00 00 BE ?? ?? ?? ?? 8B F8 ?? ?? ?? F3 A5 }\n\t\t$ = { 8A 14 3E 8A 1C 01 32 DA 88 1C 01 8B 54 3E 04 40 3B C2 72 EC }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT9002Strings",
+                "tags": [
+                    "APT9002",
+                    "Family"
+                ],
+                "description": "9002 Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT9002Strings : APT9002 Family\n{\n\tmeta:\n\t\tdescription = \"9002 Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"POST http://%ls:%d/%x HTTP/1.1\"\n\t\t$ = \"%%TEMP%%\\\\%s_p.ax\" wide ascii\n\t\t$ = \"%TEMP%\\\\uid.ax\" wide ascii\n\t\t$ = \"%%TEMP%%\\\\%s.ax\" wide ascii\n\t\t$ = \"sysinfo\\x00sysbin01\"\n\t\t$ = \"\\\\FlashUpdate.exe\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT9002",
+                "tags": [
+                    "Family"
+                ],
+                "description": "9002",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule APT9002 : Family\n{\n\tmeta:\n\t\tdescription = \"9002\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tAPT9002Code or APT9002Strings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

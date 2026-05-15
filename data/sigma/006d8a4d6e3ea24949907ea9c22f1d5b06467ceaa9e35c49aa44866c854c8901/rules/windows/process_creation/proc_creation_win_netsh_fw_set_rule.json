@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_netsh_fw_set_rule.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-07-18",
+                "title": "Firewall Rule Update Via Netsh.EXE",
+                "id": "a70dcb37-3bee-453a-99df-d0c683151be6"
+            },
+            "rule_text": "title: Firewall Rule Update Via Netsh.EXE\nid: a70dcb37-3bee-453a-99df-d0c683151be6\nstatus: test\ndescription: Detects execution of netsh with the \"advfirewall\" and the \"set\" option\n  in order to set new values for properties of a existing rule\nreferences:\n- https://ss64.com/nt/netsh.html\nauthor: X__Junior (Nextron Systems)\ndate: 2023-07-18\ntags:\n- attack.defense-impairment\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\netsh.exe\n  - OriginalFileName: netsh.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' firewall '\n    - ' set '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activity\n- Software installations and removal\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

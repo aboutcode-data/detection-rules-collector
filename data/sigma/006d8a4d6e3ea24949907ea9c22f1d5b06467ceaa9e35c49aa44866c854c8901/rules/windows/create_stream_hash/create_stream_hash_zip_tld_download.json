@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/create_stream_hash/create_stream_hash_zip_tld_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2023-05-18",
+                "title": "Potentially Suspicious File Download From ZIP TLD",
+                "id": "0bb4bbeb-fe52-4044-b40c-430a04577ebe"
+            },
+            "rule_text": "title: Potentially Suspicious File Download From ZIP TLD\nid: 0bb4bbeb-fe52-4044-b40c-430a04577ebe\nstatus: test\ndescription: Detects the download of a file with a potentially suspicious extension\n  from a .zip top level domain.\nreferences:\n- https://twitter.com/cyb3rops/status/1659175181695287297\n- https://fabian-voith.de/2020/06/25/sysmon-v11-1-reads-alternate-data-streams/\nauthor: Florian Roth (Nextron Systems)\ndate: 2023-05-18\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  category: create_stream_hash\ndetection:\n  selection:\n    Contents|contains: .zip/\n    TargetFilename|contains:\n    - .bat:Zone\n    - .dat:Zone\n    - .dll:Zone\n    - .doc:Zone\n    - .docm:Zone\n    - .exe:Zone\n    - .hta:Zone\n    - .pptm:Zone\n    - .ps1:Zone\n    - .rar:Zone\n    - .rtf:Zone\n    - .sct:Zone\n    - .vbe:Zone\n    - .vbs:Zone\n    - .ws:Zone\n    - .wsf:Zone\n    - .xll:Zone\n    - .xls:Zone\n    - .xlsm:Zone\n    - .zip:Zone\n  condition: selection\nfalsepositives:\n- Legitimate file downloads from a websites and web services that uses the \".zip\"\n  top level domain.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

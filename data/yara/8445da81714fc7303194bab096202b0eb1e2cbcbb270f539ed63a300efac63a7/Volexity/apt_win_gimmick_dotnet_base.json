@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/apt_win_gimmick_dotnet_base.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_win_gimmick_dotnet_base",
+                "tags": [
+                    "StormCloud"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Detects the base version of GIMMICK in .NET.",
+                "reference": "https://www.volexity.com/blog/2022/03/22/storm-cloud-on-the-horizon-gimmick-malware-strikes-at-macos/",
+                "date": "2020-03-16",
+                "hash1": "b554bfe4c2da7d0ac42d1b4f28f4aae854331fd6d2b3af22af961f6919740234",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "memory_suitable": 1
+            },
+            "rule_text": "rule apt_win_gimmick_dotnet_base : StormCloud\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Detects the base version of GIMMICK in .NET.\"\n\t\treference = \"https://www.volexity.com/blog/2022/03/22/storm-cloud-on-the-horizon-gimmick-malware-strikes-at-macos/\"\n\t\tdate = \"2020-03-16\"\n\t\thash1 = \"b554bfe4c2da7d0ac42d1b4f28f4aae854331fd6d2b3af22af961f6919740234\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\tmemory_suitable = 1\n\n\tstrings:\n\t\t$other1 = \"srcStr is null\" wide\n\t\t$other2 = \"srcBs is null \" wide\n\t\t$other3 = \"Key cannot be null\" wide\n\t\t$other4 = \"Faild to get target constructor, targetType=\" wide\n\t\t$other5 = \"hexMoudule(public key) cannot be null or empty.\" wide\n\t\t$other6 = \"https://oauth2.googleapis.com/token\" wide\n\t\t$magic1 = \"TWljcm9zb2Z0IUAjJCVeJiooKQ==\" ascii wide\n\t\t$magic2 = \"DAE47700E8CF3DAB0@\" ascii wide\n\n\tcondition:\n\t\t5 of ( $other* ) or any of ( $magic* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

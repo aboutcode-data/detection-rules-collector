@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Banload/TrojanDownloader_Win32_Banload_ASV.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Banload_ASV",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Banload.ASV,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Banload_ASV\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Banload.ASV,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {ba 58 56 00 00 ed 81 fb 68 58 4d 56 0f 94 45 ff 5b }\n\t\t$a_01_1 = {0f b6 44 30 ff 33 c3 89 45 }\n\t\t$a_01_2 = {8b 18 ff 53 10 83 7d e8 00 75 d0 33 c0 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 10 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

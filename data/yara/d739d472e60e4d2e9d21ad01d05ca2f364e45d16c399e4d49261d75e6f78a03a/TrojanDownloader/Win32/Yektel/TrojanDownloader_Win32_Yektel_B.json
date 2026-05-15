@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Yektel/TrojanDownloader_Win32_Yektel_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Yektel_B",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Yektel.B,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Yektel_B\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Yektel.B,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {47 66 81 ff 28 23 7d 52 33 c0 89 04 24 54 6a 00 55 e8 ?? ?? ?? ff e8 ?? ?? ?? ff }\n\t\t$a_03_1 = {66 ff 45 ee 66 81 7d ee 28 23 7d 69 33 c0 89 45 f4 8d 45 f4 50 6a 00 8b 45 f8 50 e8 ?? ?? ff ff e8 ?? ?? ff ff }\n\t\t$a_03_2 = {19 04 74 0b 66 81 3d ?? ?? ?? ?? 22 04 75 1f a1 ?? ?? ?? ?? 8b 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

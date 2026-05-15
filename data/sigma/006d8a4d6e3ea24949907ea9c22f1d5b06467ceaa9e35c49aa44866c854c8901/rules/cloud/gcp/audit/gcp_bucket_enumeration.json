@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/gcp/audit/gcp_bucket_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-14",
+                "title": "Google Cloud Storage Buckets Enumeration",
+                "id": "e2feb918-4e77-4608-9697-990a1aaf74c3"
+            },
+            "rule_text": "title: Google Cloud Storage Buckets Enumeration\nid: e2feb918-4e77-4608-9697-990a1aaf74c3\nstatus: test\ndescription: Detects when storage bucket is enumerated in Google Cloud.\nreferences:\n- https://cloud.google.com/storage/docs/json_api/v1/buckets\nauthor: Austin Songer @austinsonger\ndate: 2021-08-14\nmodified: 2022-10-09\ntags:\n- attack.discovery\nlogsource:\n  product: gcp\n  service: gcp.audit\ndetection:\n  selection:\n    gcp.audit.method_name:\n    - storage.buckets.list\n    - storage.buckets.listChannels\n  condition: selection\nfalsepositives:\n- Storage Buckets being enumerated may be performed by a system administrator. Verify\n  whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Storage Buckets enumerated from unfamiliar users should be investigated. If known\n  behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

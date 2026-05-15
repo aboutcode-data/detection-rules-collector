@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_conhost_headless_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-07-23",
+                "title": "Headless Process Launched Via Conhost.EXE",
+                "id": "00ca75ab-d5ce-43be-b86c-55ff39c6abfc"
+            },
+            "rule_text": "title: Headless Process Launched Via Conhost.EXE\nid: 00ca75ab-d5ce-43be-b86c-55ff39c6abfc\nrelated:\n- id: 056c7317-9a09-4bd4-9067-d051312752ea\n  type: derived\nstatus: test\ndescription: 'Detects the launch of a child process via \"conhost.exe\" with the \"--headless\"\n  flag.\n\n  The \"--headless\" flag hides the windows from the user upon execution.\n\n  '\nreferences:\n- https://www.huntress.com/blog/fake-browser-updates-lead-to-boinc-volunteer-computing-software\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-07-23\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.t1059.003\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\conhost.exe\n    ParentCommandLine|contains: --headless\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

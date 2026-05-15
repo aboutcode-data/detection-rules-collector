@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_service_installation_by_unusal_client.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch (Nextron Systems), Elastic (idea)",
+                "date": "2022-09-15",
+                "title": "Service Installed By Unusual Client - Security",
+                "id": "c4e92a97-a9ff-4392-9d2d-7a4c642768ca"
+            },
+            "rule_text": "title: Service Installed By Unusual Client - Security\nid: c4e92a97-a9ff-4392-9d2d-7a4c642768ca\nrelated:\n- id: 71c276aa-49cd-43d2-b920-2dcd3e6962d5\n  type: similar\nstatus: test\ndescription: Detects a service installed by a client which has PID 0 or whose parent\n  has PID 0\nreferences:\n- https://www.elastic.co/guide/en/security/current/windows-service-installed-via-an-unusual-client.html\n- https://www.x86matthew.com/view_post?id=create_svc_rpc\n- https://twitter.com/SBousseaden/status/1490608838701166596\nauthor: Tim Rauch (Nextron Systems), Elastic (idea)\ndate: 2022-09-15\nmodified: 2023-01-04\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1543\nlogsource:\n  service: security\n  product: windows\n  definition: 'Requirements: The System Security Extension audit subcategory need\n    to be enabled to log the EID 4697'\ndetection:\n  selection_eid:\n    EventID: 4697\n  selection_pid:\n  - ClientProcessId: 0\n  - ParentProcessId: 0\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

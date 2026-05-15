@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_eventvwr_recentviews.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-22",
+                "title": "UAC Bypass Using Event Viewer RecentViews",
+                "id": "30fc8de7-d833-40c4-96b6-28319fbc4f6c"
+            },
+            "rule_text": "title: UAC Bypass Using Event Viewer RecentViews\nid: 30fc8de7-d833-40c4-96b6-28319fbc4f6c\nrelated:\n- id: 63e4f530-65dc-49cc-8f80-ccfa95c69d43\n  type: similar\nstatus: test\ndescription: Detects the pattern of UAC Bypass using Event Viewer RecentViews\nreferences:\n- https://twitter.com/orange_8361/status/1518970259868626944\n- https://lolbas-project.github.io/lolbas/Binaries/Eventvwr/#execute\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-22\ntags:\n- attack.privilege-escalation\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_path:\n    CommandLine|contains:\n    - \\Event Viewer\\RecentViews\n    - \\EventV~1\\RecentViews\n  selection_redirect:\n    CommandLine|contains: '>'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

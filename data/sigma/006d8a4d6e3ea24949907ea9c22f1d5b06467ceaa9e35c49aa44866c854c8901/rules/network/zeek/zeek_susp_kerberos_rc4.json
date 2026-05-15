@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_susp_kerberos_rc4.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "sigma",
+                "date": "2020-02-12",
+                "title": "Kerberos Network Traffic RC4 Ticket Encryption",
+                "id": "503fe26e-b5f2-4944-a126-eab405cc06e5"
+            },
+            "rule_text": "title: Kerberos Network Traffic RC4 Ticket Encryption\nid: 503fe26e-b5f2-4944-a126-eab405cc06e5\nstatus: test\ndescription: Detects kerberos TGS request using RC4 encryption which may be indicative\n  of kerberoasting\nreferences:\n- https://adsecurity.org/?p=3458\nauthor: sigma\ndate: 2020-02-12\nmodified: 2021-11-27\ntags:\n- attack.credential-access\n- attack.t1558.003\nlogsource:\n  product: zeek\n  service: kerberos\ndetection:\n  selection:\n    request_type: TGS\n    cipher: rc4-hmac\n  computer_acct:\n    service|startswith: $\n  condition: selection and not computer_acct\nfalsepositives:\n- Normal enterprise SPN requests activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

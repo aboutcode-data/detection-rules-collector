@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmdkey_adding_generic_creds.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-03",
+                "title": "New Generic Credentials Added Via Cmdkey.EXE",
+                "id": "b1ec66c6-f4d1-4b5c-96dd-af28ccae7727"
+            },
+            "rule_text": "title: New Generic Credentials Added Via Cmdkey.EXE\nid: b1ec66c6-f4d1-4b5c-96dd-af28ccae7727\nstatus: test\ndescription: 'Detects usage of \"cmdkey.exe\" to add generic credentials.\n\n  As an example, this can be used before connecting to an RDP session via command\n  line interface.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.001/T1021.001.md#t1021001---remote-desktop-protocol\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-03\nmodified: 2024-03-05\ntags:\n- attack.credential-access\n- attack.t1003.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cmdkey.exe\n  - OriginalFileName: cmdkey.exe\n  selection_cli_generic:\n    CommandLine|contains|windash: ' -g'\n  selection_cli_user:\n    CommandLine|contains|windash: ' -u'\n  selection_cli_password:\n    CommandLine|contains|windash: ' -p'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage for administration purposes\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_cmdkey_adding_generic_creds/info.yml\nsimulation:\n- type: atomic-red-team\n  name: RDP to DomainController\n  technique: T1021.001\n  atomic_guid: 355d4632-8cb9-449d-91ce-b566d0253d3e\n",
+            "vulnerabilities": []
+        }
+    ]
+}

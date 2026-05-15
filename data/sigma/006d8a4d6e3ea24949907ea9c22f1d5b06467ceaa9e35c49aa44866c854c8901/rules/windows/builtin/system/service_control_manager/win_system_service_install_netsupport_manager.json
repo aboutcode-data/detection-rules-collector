@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_netsupport_manager.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-31",
+                "title": "NetSupport Manager Service Install",
+                "id": "2d510d8d-912b-45c5-b1df-36faa3d8c3f4"
+            },
+            "rule_text": "title: NetSupport Manager Service Install\nid: 2d510d8d-912b-45c5-b1df-36faa3d8c3f4\nstatus: test\ndescription: Detects NetSupport Manager service installation on the target system.\nreferences:\n- http://resources.netsupportsoftware.com/resources/manualpdfs/nsm_manual_uk.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-31\ntags:\n- attack.persistence\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_root:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ImagePath|contains: \\NetSupport Manager\\client32.exe\n  - ServiceName: Client32\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the tool\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

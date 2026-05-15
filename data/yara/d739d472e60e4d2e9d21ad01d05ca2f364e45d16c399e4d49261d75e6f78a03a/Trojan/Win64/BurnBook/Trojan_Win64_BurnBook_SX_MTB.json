@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/BurnBook/Trojan_Win64_BurnBook_SX_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_BurnBook_SX_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/BurnBook.SX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_BurnBook_SX_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/BurnBook.SX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {43 30 0c 3e 41 ff c6 0f b6 ?? 01 fe ?? 88 ?? 01 [0-02] 40 75 }\n\t\t$a_03_1 = {43 30 0c 3e 41 ff c6 fe [0-02] 0f b6 ?? 01 0f b6 ?? 3c 40 75 }\n\t\t$a_03_2 = {33 d2 48 8d 8d ?? ?? ?? ?? 41 b8 04 01 00 00 e8 ?? ?? ?? ?? 48 8d 0d ?? ?? ?? ?? e8 ?? ?? ?? ?? 48 8b d8 48 85 c0 0f 84 ?? ?? ?? ?? 48 8d ?? ?? ?? ?? ?? 4c [0-03] 8d 45 ?? 48 89 44 24 20 ba 04 01 00 00 }\n\t\t$a_01_3 = {41 50 50 44 41 54 41 }\n\t\t$a_01_4 = {73 75 6d 61 74 72 61 70 64 66 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 20 + ( #a_03_2 & 1 ) * 10 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 32\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

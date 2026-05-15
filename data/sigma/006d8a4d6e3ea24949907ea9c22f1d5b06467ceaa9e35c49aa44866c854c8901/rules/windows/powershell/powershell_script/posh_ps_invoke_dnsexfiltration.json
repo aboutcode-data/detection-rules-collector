@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_invoke_dnsexfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-07",
+                "title": "Powershell DNSExfiltration",
+                "id": "d59d7842-9a21-4bc6-ba98-64bfe0091355"
+            },
+            "rule_text": "title: Powershell DNSExfiltration\nid: d59d7842-9a21-4bc6-ba98-64bfe0091355\nstatus: test\ndescription: DNSExfiltrator allows for transferring (exfiltrate) a file over a DNS\n  request covert channel\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048/T1048.md#atomic-test-3---dnsexfiltration-doh\n- https://github.com/Arno0x/DNSExfiltrator\nauthor: frack113\ndate: 2022-01-07\ntags:\n- attack.exfiltration\n- attack.t1048\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n  - ScriptBlockText|contains: Invoke-DNSExfiltrator\n  - ScriptBlockText|contains|all:\n    - ' -i '\n    - ' -d '\n    - ' -p '\n    - ' -doh '\n    - ' -t '\n  condition: selection_cmdlet\nfalsepositives:\n- Legitimate script\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_persistence_windows_telemetry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman",
+                "date": "2020-09-29",
+                "title": "Potential Persistence Via Microsoft Compatibility Appraiser",
+                "id": "f548a603-c9f2-4c89-b511-b089f7e94549"
+            },
+            "rule_text": "title: Potential Persistence Via Microsoft Compatibility Appraiser\nid: f548a603-c9f2-4c89-b511-b089f7e94549\nrelated:\n- id: 73a883d0-0348-4be4-a8d8-51031c2564f8\n  type: derived\nstatus: test\ndescription: 'Detects manual execution of the \"Microsoft Compatibility Appraiser\"\n  task via schtasks.\n\n  In order to trigger persistence stored in the \"\\AppCompatFlags\\TelemetryController\"\n  registry key.\n\n  '\nreferences:\n- https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/\nauthor: Sreeman\ndate: 2020-09-29\nmodified: 2023-02-10\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.005\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\schtasks.exe\n  - OriginalFileName: schtasks.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - 'run '\n    - \\Application Experience\\Microsoft Compatibility Appraiser\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

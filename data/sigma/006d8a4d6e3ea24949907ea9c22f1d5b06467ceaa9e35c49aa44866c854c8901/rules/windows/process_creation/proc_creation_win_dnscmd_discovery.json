@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dnscmd_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@gott_cyber",
+                "date": "2022-07-31",
+                "title": "Potential Discovery Activity Via Dnscmd.EXE",
+                "id": "b6457d63-d2a2-4e29-859d-4e7affc153d1"
+            },
+            "rule_text": "title: Potential Discovery Activity Via Dnscmd.EXE\nid: b6457d63-d2a2-4e29-859d-4e7affc153d1\nstatus: test\ndescription: Detects an attempt to leverage dnscmd.exe to enumerate the DNS zones\n  of a domain. DNS zones used to host the DNS records for a particular domain.\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dnscmd\n- https://learn.microsoft.com/en-us/azure/dns/dns-zones-records\n- https://lolbas-project.github.io/lolbas/Binaries/Dnscmd/\nauthor: '@gott_cyber'\ndate: 2022-07-31\nmodified: 2023-02-04\ntags:\n- attack.discovery\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\dnscmd.exe\n  selection_cli:\n    CommandLine|contains:\n    - /enumrecords\n    - /enumzones\n    - /ZonePrint\n    - /info\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

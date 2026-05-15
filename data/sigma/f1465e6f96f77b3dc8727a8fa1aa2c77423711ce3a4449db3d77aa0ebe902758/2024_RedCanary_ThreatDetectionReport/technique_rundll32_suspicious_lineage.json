@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_rundll32_suspicious_lineage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Rundll32 with Suspicious Process Lineage",
+                "id": "5025ecc7-1efd-41de-aee2-38f4b9d8d281"
+            },
+            "rule_text": "title: Rundll32 with Suspicious Process Lineage\nid: 5025ecc7-1efd-41de-aee2-38f4b9d8d281\nstatus: experimental\ndescription: \"As is the case with most techniques in this report, it's critical that\\\n  \\ \\nyou are able to take stock of what is normal in your environment if you \\nhope\\\n  \\ to be able to identify what isn't. In the context of Rundll32, you\\u2019ll \\n\\\n  want to monitor for executions of rundll32.exe from unusual parent processes, \\n\\\n  and the following pseudo-analytic\\u2014based on an amalgamation of Red Canary \\n\\\n  detection logic\\u2014should help security teams do just that. Part of the RedCanary\\\n  \\ \\n2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.defense_evasion\n- attack.t1218\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\winword.exe\n    - \\excel.exe\n    - \\msaccess.exe\n    - \\lsass.exe\n    - \\taskeng.exe\n    - \\winlogon.exe\n    - \\schtasks.exe\n    - \\regsvr32.exe\n    - \\wmiprvse.exe\n    - \\wsmprovhost.exe\n    Image|endswith: \\rundll32.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

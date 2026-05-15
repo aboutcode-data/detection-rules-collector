@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_powershell_execution_via_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2018-08-25",
+                "title": "Potential PowerShell Execution Via DLL",
+                "id": "6812a10b-60ea-420c-832f-dfcc33b646ba"
+            },
+            "rule_text": "title: Potential PowerShell Execution Via DLL\nid: 6812a10b-60ea-420c-832f-dfcc33b646ba\nstatus: test\ndescription: 'Detects potential PowerShell execution from a DLL instead of the usual\n  PowerShell process as seen used in PowerShdll.\n\n  This detection assumes that PowerShell commands are passed via the CommandLine.\n\n  '\nreferences:\n- https://github.com/p3nt4/PowerShdll/blob/62cfa172fb4e1f7f4ac00ca942685baeb88ff356/README.md\nauthor: Markus Neis, Nasreddine Bencherchali (Nextron Systems)\ndate: 2018-08-25\nmodified: 2024-03-07\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\InstallUtil.exe\n    - \\RegAsm.exe\n    - \\RegSvcs.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n  - OriginalFileName:\n    - InstallUtil.exe\n    - RegAsm.exe\n    - RegSvcs.exe\n    - REGSVR32.EXE\n    - RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains:\n    - Default.GetString\n    - DownloadString\n    - FromBase64String\n    - 'ICM '\n    - 'IEX '\n    - Invoke-Command\n    - Invoke-Expression\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

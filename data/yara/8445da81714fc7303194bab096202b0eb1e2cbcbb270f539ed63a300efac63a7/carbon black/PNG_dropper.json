@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/carbon black/PNG_dropper.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PNG_dropper",
+                "tags": [
+                    "RU",
+                    "TR",
+                    "APT"
+                ],
+                "author": "CarbonBlack Threat Research",
+                "date": "2017-June-11",
+                "description": "Dropper tool that extracts payload from PNG resources",
+                "reference": "https://www.carbonblack.com/2017/08/18/threat-analysis-carbon-black-threat-research-dissects-png-dropper/",
+                "yara_version": "3.5.0",
+                "exemplar_hashes": "3a5918c69b6ee801ab8bfc4fc872ac32cc96a47b53c3525723cc27f150e0bfa3, 69389f0d35d003ec3c9506243fd264afefe099d99fcc0e7d977007a12290a290, eeb7784b77d86627bac32e4db20da382cb4643ff8eb86ab1abaebaa56a650158 "
+            },
+            "rule_text": "rule PNG_dropper : RU TR APT\n{\n\tmeta:\n\t\tauthor = \"CarbonBlack Threat Research\"\n\t\tdate = \"2017-June-11\"\n\t\tdescription = \"Dropper tool that extracts payload from PNG resources\"\n\t\treference = \"https://www.carbonblack.com/2017/08/18/threat-analysis-carbon-black-threat-research-dissects-png-dropper/\"\n\t\tyara_version = \"3.5.0\"\n\t\texemplar_hashes = \"3a5918c69b6ee801ab8bfc4fc872ac32cc96a47b53c3525723cc27f150e0bfa3, 69389f0d35d003ec3c9506243fd264afefe099d99fcc0e7d977007a12290a290, eeb7784b77d86627bac32e4db20da382cb4643ff8eb86ab1abaebaa56a650158 \"\n\n\tstrings:\n\t\t$s1 = \"GdipGetImageWidth\"\n\t\t$s2 = \"GdipGetImageHeight\"\n\t\t$s3 = \"GdipCreateBitmapFromStream\"\n\t\t$s4 = \"GdipCreateBitmapFromStreamICM\"\n\t\t$s5 = \"GdipBitmapLockBits\"\n\t\t$s6 = \"GdipBitmapUnlockBits\"\n\t\t$s7 = \"LockResource\"\n\t\t$s8 = \"LoadResource\"\n\t\t$s9 = \"ExpandEnvironmentStringsW\"\n\t\t$s10 = \"SetFileTime\"\n\t\t$s11 = \"memcmp\"\n\t\t$s12 = \"strlen\"\n\t\t$s13 = \"memcpy\"\n\t\t$s14 = \"memchr\"\n\t\t$s15 = \"memmove\"\n\t\t$s16 = \"ZwQueryValueKey\"\n\t\t$s17 = \"ZwQueryInformationProcess\"\n\t\t$s18 = \"FindNextFile\"\n\t\t$s19 = \"GetModuleHandle\"\n\t\t$s20 = \"VirtualFree\"\n\t\t$PNG1 = {89 50 4E 47 [8] 49 48 44 52}\n\t\t$bin32_bit1 = {50 68 07 10 06 00 6A 07 8?}\n\t\t$bin64_bit1 = {41 B? 07 10 06 00}\n\t\t$bin64_bit2 = {41 B? 07 00 00 00}\n\t\t$bin32_virt1 = {6A 40 68 00 10 00 00 50 53}\n\t\t$bin64_virt1 = {40 41 B? 00 10 00 00}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and filesize < 6MB and 18 of ( $s* ) and ( #PNG1 > 7 ) and ( ( #bin32_bit1 > 1 and $bin32_virt1 ) or ( for 1 of ( $bin64_bit* ) : ( # > 2 ) and $bin64_virt1 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/VT/D3F@ck_Loader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "D3fackLoader",
+                "tags": [],
+                "author": "RussianPanda",
+                "target_entity": "file"
+            },
+            "rule_text": "import \"vt\"\n\nrule D3fackLoader\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\ttarget_entity = \"file\"\n\n\tcondition:\n\t\tfor any vt_behaviour_files_opened in vt.behaviour.files_opened : ( vt_behaviour_files_opened == \"ds.txt\" ) and for any vt_behaviour_processes_created in vt.behaviour.processes_created : ( vt_behaviour_processes_created == \"C:\\\\Windows\\\\SysWOW64\\\\findstr.exe FINDSTR  /I \\\"Virtual VBOX VMware\\\"\" ) and vt.metadata.analysis_stats.malicious > 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

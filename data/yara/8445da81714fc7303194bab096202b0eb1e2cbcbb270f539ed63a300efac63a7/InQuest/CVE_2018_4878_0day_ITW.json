@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/CVE_2018_4878_0day_ITW.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CVE_2018_4878_0day_ITW",
+                "tags": []
+            },
+            "rule_text": "rule CVE_2018_4878_0day_ITW\n{\n\tstrings:\n\t\t$known1 = \"F:\\\\work\\\\flash\\\\obfuscation\\\\loadswf\\\\src\" nocase wide ascii\n\t\t$known2 = \"G:\\\\FlashDeveloping\" nocase wide ascii\n\t\t$known3 = \"Z:\\\\Main\\\\zero day\\\\Troy\" nocase wide ascii\n\t\t$known4 = \"C:\\\\Users\\\\Rose\\\\Adobe Flash Builder 4.6\\\\ExpAll\\\\src\" nocase wide ascii\n\t\t$known5 = \"F:\\\\work\\\\flash\\\\obfuscation\\\\loadswf\\\\src\" nocase wide ascii\n\t\t$known6 = \"admincenter/files/boad/4/manager.php\" nocase wide ascii\n\t\t$header = \"rdf:RDF\" wide ascii\n\t\t$pdb = \"F:\\\\work\\\\flash\\\\obfuscation\\\\loadswf\\\\src\" wide ascii\n\t\t$loader1 = \"URLRequest\" wide ascii\n\t\t$loader2 = \"URLLoader\" wide ascii\n\t\t$loader3 = \"loadswf\" wide ascii\n\t\t$loader4 = \"myUrlReqest\" wide ascii\n\t\t$observed_multivar_1 = /999(\\x05[a-z]10[0-9][0-9]){100}/ nocase wide ascii\n\t\t$observed_multivar_2 = /999(\\x05[a-z]11[0-9][0-9]){100}/ nocase wide ascii\n\t\t$flash_magic = { (43 | 46 | 5A) 57 53 }\n\t\t$exp53_1 = \"C:\\\\Users\\\\Miha\\\\AdobeMinePoC\"\n\t\t$exp53_2 = \"UAFGenerator\"\n\t\t$exp53_3 = \"shellcodBytes\"\n\t\t$exp53_4 = \"DRM_obj\"\n\t\t$exp53_5 = \"MainExp\"\n\n\tcondition:\n\t\t($flash_magic at 0 and all of ( $observed_multivar* ) ) or ( any of ( $known* ) ) or ( all of ( $pdb* ) and all of ( $header* ) and 1 of ( $loader* ) ) or ( $flash_magic at 0 and all of ( $exp53* ) )\n}\n",
+            "vulnerabilities": [
+                "CVE-2018-4878"
+            ]
+        }
+    ]
+}

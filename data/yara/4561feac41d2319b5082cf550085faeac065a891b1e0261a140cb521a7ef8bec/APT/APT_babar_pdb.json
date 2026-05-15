@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/advanced-threat-research/Yara-Rules/blob/master/APT/APT_babar_pdb.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_babar_malware",
+                "tags": [],
+                "description": "Rule to detect Babar malware",
+                "author": "Marc Rivero | McAfee ATR Team",
+                "date": "2015-02-18",
+                "rule_version": "v1",
+                "malware_type": "backdoor",
+                "malware_family": "Backdoor:W32/Babar",
+                "actor_type": "Cybercrime",
+                "actor_group": "Unknown",
+                "reference": "http://motherboard.vice.com/read/meet-babar-a-new-malware-almost-certainly-created-by-france",
+                "hash": "c72a055b677cd9e5e2b2dcbba520425d023d906e6ee609b79c643d9034938ebf"
+            },
+            "rule_text": "rule apt_babar_malware\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Babar malware\"\n\t\tauthor = \"Marc Rivero | McAfee ATR Team\"\n\t\tdate = \"2015-02-18\"\n\t\trule_version = \"v1\"\n\t\tmalware_type = \"backdoor\"\n\t\tmalware_family = \"Backdoor:W32/Babar\"\n\t\tactor_type = \"Cybercrime\"\n\t\tactor_group = \"Unknown\"\n\t\treference = \"http://motherboard.vice.com/read/meet-babar-a-new-malware-almost-certainly-created-by-france\"\n\t\thash = \"c72a055b677cd9e5e2b2dcbba520425d023d906e6ee609b79c643d9034938ebf\"\n\n\tstrings:\n\t\t$s1 = \"c:\\\\Documents and Settings\\\\admin\\\\Desktop\\\\Babar64\\\\Babar64\\\\obj\\\\DllWrapper Release\\\\Release.pdb\" fullword ascii\n\t\t$s2 = \"%COMMON_APPDATA%\" fullword ascii\n\t\t$s3 = \"%%WINDIR%%\\\\%s\\\\%s\" fullword ascii\n\t\t$s4 = \"/s /n %s \\\"%s\\\"\" fullword ascii\n\t\t$s5 = \"/c start /wait \" fullword ascii\n\t\t$s6 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\System\\\\\" fullword ascii\n\t\t$s7 = \"constructor or from DllMain.\" fullword ascii\n\t\t$s8 = \"ComSpec\" fullword ascii\n\t\t$s9 = \"APPDATA\" fullword ascii\n\t\t$s10 = \"WINDIR\" fullword ascii\n\t\t$s11 = \"USERPROFILE\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 2000KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

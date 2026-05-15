@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/3102.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT3102Code",
+                "tags": [
+                    "APT3102",
+                    "Family"
+                ],
+                "description": "3102 code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT3102Code : APT3102 Family\n{\n\tmeta:\n\t\tdescription = \"3102 code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$setupthread = { B9 02 07 00 00 BE ?? ?? ?? ?? 8B F8 6A 00 F3 A5 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT3102Strings",
+                "tags": [
+                    "APT3102",
+                    "Family"
+                ],
+                "description": "3102 Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT3102Strings : APT3102 Family\n{\n\tmeta:\n\t\tdescription = \"3102 Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"rundll32_exec.dll\\x00Update\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT3102",
+                "tags": [
+                    "Family"
+                ],
+                "description": "3102",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule APT3102 : Family\n{\n\tmeta:\n\t\tdescription = \"3102\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tAPT3102Code or APT3102Strings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

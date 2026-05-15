@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_localuser.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-28",
+                "title": "Powershell LocalAccount Manipulation",
+                "id": "4fdc44df-bfe9-4fcc-b041-68f5a2d3031c"
+            },
+            "rule_text": "title: Powershell LocalAccount Manipulation\nid: 4fdc44df-bfe9-4fcc-b041-68f5a2d3031c\nstatus: test\ndescription: 'Adversaries may manipulate accounts to maintain access to victim systems.\n\n  Account manipulation may consist of any action that preserves adversary access to\n  a compromised account, such as modifying credentials or permission groups\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1098/T1098.md#atomic-test-1---admin-account-manipulate\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/?view=powershell-5.1\nauthor: frack113\ndate: 2021-12-28\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1098\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Disable-LocalUser\n    - Enable-LocalUser\n    - Get-LocalUser\n    - Set-LocalUser\n    - New-LocalUser\n    - Rename-LocalUser\n    - Remove-LocalUser\n  condition: selection\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/tekdefense/DarkComet.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "DarkComet_Config_Artifacts_Memory",
+                "tags": [],
+                "Description": "Looks for configuration artifacts from DarkComet. Works with memory dump and unpacked samples.",
+                "filetype": "MemoryDump",
+                "Author": "Ian Ahl @TekDefese",
+                "Date": "12-19-2013",
+                "reference": "http://www.tekdefense.com/news/2013/12/23/analyzing-darkcomet-in-memory.html"
+            },
+            "rule_text": "rule DarkComet_Config_Artifacts_Memory\n{\n\tmeta:\n\t\tDescription = \"Looks for configuration artifacts from DarkComet. Works with memory dump and unpacked samples.\"\n\t\tfiletype = \"MemoryDump\"\n\t\tAuthor = \"Ian Ahl @TekDefese\"\n\t\tDate = \"12-19-2013\"\n\t\treference = \"http://www.tekdefense.com/news/2013/12/23/analyzing-darkcomet-in-memory.html\"\n\n\tstrings:\n\t\t$s0 = \"GENCODE={\" ascii\n\t\t$s1 = \"MELT={\" ascii\n\t\t$s2 = \"COMBOPATH={\" ascii\n\t\t$s3 = \"NETDATA={\" ascii\n\t\t$s4 = \"PERSINST={\" ascii\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DarkComet_Default_Mutex_Memory",
+                "tags": [],
+                "Description": "Looks for default DarkComet mutexs",
+                "filetype": "MemoryDump",
+                "Author": "Ian Ahl @TekDefese",
+                "Date": "12-20-2013",
+                "reference": "http://www.tekdefense.com/news/2013/12/23/analyzing-darkcomet-in-memory.html"
+            },
+            "rule_text": "rule DarkComet_Default_Mutex_Memory\n{\n\tmeta:\n\t\tDescription = \"Looks for default DarkComet mutexs\"\n\t\tfiletype = \"MemoryDump\"\n\t\tAuthor = \"Ian Ahl @TekDefese\"\n\t\tDate = \"12-20-2013\"\n\t\treference = \"http://www.tekdefense.com/news/2013/12/23/analyzing-darkcomet-in-memory.html\"\n\n\tstrings:\n\t\t$s = \"DC_MUTEX-\" ascii nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DarkComet_Keylogs_Memory",
+                "tags": [],
+                "Description": "Looks for key log artifacts",
+                "filetype": "MemoryDump",
+                "Author": "Ian Ahl @TekDefese",
+                "Date": "12-20-2013",
+                "reference": "http://www.tekdefense.com/news/2013/12/23/analyzing-darkcomet-in-memory.html"
+            },
+            "rule_text": "rule DarkComet_Keylogs_Memory\n{\n\tmeta:\n\t\tDescription = \"Looks for key log artifacts\"\n\t\tfiletype = \"MemoryDump\"\n\t\tAuthor = \"Ian Ahl @TekDefese\"\n\t\tDate = \"12-20-2013\"\n\t\treference = \"http://www.tekdefense.com/news/2013/12/23/analyzing-darkcomet-in-memory.html\"\n\n\tstrings:\n\t\t$s0 = \"[<-]\"\n\t\t$s1 = \":: Clipboard Change :\"\n\t\t$s2 = \"[LEFT]\"\n\t\t$s4 = \"[RIGHT]\"\n\t\t$s5 = \"[UP]\"\n\t\t$s6 = \"[DOWN]\"\n\t\t$s7 = \"[DEL]\"\n\t\t$s8 = /::.{1,100}\\(\\d{1,2}:\\d{1,2}:\\d{1,2}\\s\\w{2}\\)/\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

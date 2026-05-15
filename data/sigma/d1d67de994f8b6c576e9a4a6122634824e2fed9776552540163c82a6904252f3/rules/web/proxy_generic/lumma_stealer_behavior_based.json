@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/lumma_stealer_behavior_based.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Leandro Ferreira",
+                "date": "2024-09-25",
+                "title": "Lumma Stealer C2 Behavior",
+                "id": "99a00f52-0a98-4673-95f7-9b4fbf6463a9"
+            },
+            "rule_text": "title: Lumma Stealer C2 Behavior\nid: 99a00f52-0a98-4673-95f7-9b4fbf6463a9\ndescription: Searches for common communication patterns with suspiscious tlds associated\n  with Lumma Stealer\nstatus: experimental\nauthor: NTT Security - Leandro Ferreira\ndate: '2024-09-25'\nmodified: '2024-09-30'\nreferences:\n- https://medium.com/@Cyfirma_/lumma-stealer-tactics-impact-and-defense-strategies-6f44a682742f\n- https://threatfox.abuse.ch/browse/malware/win.lumma/\n- https://github.com/SamuraiMDR/sigma-rules/blob/main/rules/proxy/lumma_stealer.yml\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-method: POST\n    c-uri: /api\n    cs-referer: ''\n    cs-host|endswith:\n    - .fun\n    - .shop\n    - .pw\n    - .xyz\n    - .store\n    - .site\n  condition: selection\nfalsepositives:\n- No known cases of false positives\nlevel: high\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

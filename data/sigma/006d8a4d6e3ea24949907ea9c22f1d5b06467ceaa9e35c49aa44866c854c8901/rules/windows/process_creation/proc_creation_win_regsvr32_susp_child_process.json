@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regsvr32_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "elhoim, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-05-05",
+                "title": "Potentially Suspicious Child Process Of Regsvr32",
+                "id": "6f0947a4-1c5e-4e0d-8ac7-53159b8f23ca"
+            },
+            "rule_text": "title: Potentially Suspicious Child Process Of Regsvr32\nid: 6f0947a4-1c5e-4e0d-8ac7-53159b8f23ca\nrelated:\n- id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d\n  type: obsolete\nstatus: test\ndescription: Detects potentially suspicious child processes of \"regsvr32.exe\".\nreferences:\n- https://redcanary.com/blog/intelligence-insights-april-2022/\n- https://www.echotrail.io/insights/search/regsvr32.exe\n- https://www.ired.team/offensive-security/code-execution/t1117-regsvr32-aka-squiblydoo\nauthor: elhoim, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-05-05\nmodified: 2023-05-26\ntags:\n- attack.stealth\n- attack.t1218.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\regsvr32.exe\n    Image|endswith:\n    - \\calc.exe\n    - \\cscript.exe\n    - \\explorer.exe\n    - \\mshta.exe\n    - \\net.exe\n    - \\net1.exe\n    - \\nltest.exe\n    - \\notepad.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\reg.exe\n    - \\schtasks.exe\n    - \\werfault.exe\n    - \\wscript.exe\n  filter_main_werfault:\n    Image|endswith: \\werfault.exe\n    CommandLine|contains: ' -u -p '\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely, but can rarely occur. Apply additional filters accordingly.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

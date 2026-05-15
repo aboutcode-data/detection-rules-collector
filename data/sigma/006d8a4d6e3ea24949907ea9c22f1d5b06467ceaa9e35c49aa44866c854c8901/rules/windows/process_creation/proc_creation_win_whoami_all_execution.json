@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_whoami_all_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-12-04",
+                "title": "Enumerate All Information With Whoami.EXE",
+                "id": "c248c896-e412-4279-8c15-1c558067b6fa"
+            },
+            "rule_text": "title: Enumerate All Information With Whoami.EXE\nid: c248c896-e412-4279-8c15-1c558067b6fa\nstatus: test\ndescription: Detects the execution of \"whoami.exe\" with the \"/all\" flag\nreferences:\n- https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/\n- https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/\n- https://www.youtube.com/watch?v=DsJ9ByX84o4&t=6s\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-12-04\nmodified: 2024-03-05\ntags:\n- attack.discovery\n- attack.t1033\n- car.2016-03-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_main_img:\n  - Image|endswith: \\whoami.exe\n  - OriginalFileName: whoami.exe\n  selection_main_cli:\n    CommandLine|contains|windash: ' -all'\n  condition: all of selection_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

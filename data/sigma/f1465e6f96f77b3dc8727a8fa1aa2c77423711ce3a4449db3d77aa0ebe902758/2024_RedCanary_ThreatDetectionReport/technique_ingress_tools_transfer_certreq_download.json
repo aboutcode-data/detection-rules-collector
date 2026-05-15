@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_ingress_tools_transfer_certreq_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Certreq Downloading Malicious Binaries",
+                "id": "da4eca65-03c5-497a-a8f0-d4b0534a5c53"
+            },
+            "rule_text": "title: Certreq Downloading Malicious Binaries\nid: da4eca65-03c5-497a-a8f0-d4b0534a5c53\nstatus: experimental\ndescription: \"Just like certutil, certreq can also be abused by adversaries to download\\\n  \\ and \\nupload data. The following analytic will look for the execution of certreq.exe\\\n  \\ \\nwith command options that suggest a file is being downloaded. Part of the \\n\\\n  RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/ingress-tool-transfer/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.command_and_control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\certreq.exe\n    CommandLine|contains:\n    - -post\n    - -config\n    - http\n    - get\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_pssuspend_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-23",
+                "title": "Sysinternals PsSuspend Suspicious Execution",
+                "id": "4beb6ae0-f85b-41e2-8f18-8668abc8af78"
+            },
+            "rule_text": "title: Sysinternals PsSuspend Suspicious Execution\nid: 4beb6ae0-f85b-41e2-8f18-8668abc8af78\nrelated:\n- id: 48bbc537-b652-4b4e-bd1d-281172df448f\n  type: similar\nstatus: test\ndescription: Detects suspicious execution of Sysinternals PsSuspend, where the utility\n  is used to suspend critical processes such as AV or EDR to bypass defenses\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/pssuspend\n- https://twitter.com/0gtweet/status/1638069413717975046\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-23\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: pssuspend.exe\n  - Image|endswith:\n    - \\pssuspend.exe\n    - \\pssuspend64.exe\n  selection_cli:\n    CommandLine|contains: msmpeng.exe\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

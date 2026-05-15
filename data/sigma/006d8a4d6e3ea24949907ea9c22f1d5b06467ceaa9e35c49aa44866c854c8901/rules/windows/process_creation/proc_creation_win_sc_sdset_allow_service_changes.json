@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_sdset_allow_service_changes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-28",
+                "title": "Allow Service Access Using Security Descriptor Tampering Via Sc.EXE",
+                "id": "6c8fbee5-dee8-49bc-851d-c3142d02aa47"
+            },
+            "rule_text": "title: Allow Service Access Using Security Descriptor Tampering Via Sc.EXE\nid: 6c8fbee5-dee8-49bc-851d-c3142d02aa47\nrelated:\n- id: a537cfc3-4297-4789-92b5-345bfd845ad0\n  type: similar\nstatus: test\ndescription: Detects suspicious DACL modifications to allow access to a service from\n  a suspicious trustee. This can be used to override access restrictions set by previous\n  ACLs.\nreferences:\n- https://twitter.com/0gtweet/status/1628720819537936386\n- https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/\n- https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-28\nmodified: 2025-10-22\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1543.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sc:\n  - Image|endswith: \\sc.exe\n  - OriginalFileName: sc.exe\n  selection_sdset:\n    CommandLine|contains|all:\n    - sdset\n    - A;\n  selection_trustee:\n    CommandLine|contains:\n    - ;IU\n    - ;SU\n    - ;BA\n    - ;SY\n    - ;WD\n  filter_optional_hexnode:\n    ParentImage: C:\\Hexnode\\Hexnode Agent\\Current\\HexnodeAgent.exe\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

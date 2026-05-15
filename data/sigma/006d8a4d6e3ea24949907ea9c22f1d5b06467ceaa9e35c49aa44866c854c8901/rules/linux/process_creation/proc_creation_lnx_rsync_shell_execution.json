@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_rsync_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.), Florian Roth",
+                "date": "2024-09-02",
+                "title": "Shell Execution via Rsync - Linux",
+                "id": "e2326866-609f-4015-aea9-7ec634e8aa04"
+            },
+            "rule_text": "title: Shell Execution via Rsync - Linux\nid: e2326866-609f-4015-aea9-7ec634e8aa04\nstatus: experimental\ndescription: 'Detects the use of the \"rsync\" utility to execute a shell. Such behavior\n  may be associated with privilege escalation, unauthorized command execution, or\n  to break out from restricted environments.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/rsync/#shell\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.),\n  Florian Roth\ndate: 2024-09-02\nmodified: 2025-01-18\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith:\n    - /rsync\n    - /rsyncd\n    CommandLine|contains: ' -e '\n  selection_cli:\n    CommandLine|contains:\n    - '/ash '\n    - '/bash '\n    - '/dash '\n    - '/csh '\n    - '/sh '\n    - '/zsh '\n    - '/tcsh '\n    - '/ksh '\n    - '''ash '\n    - '''bash '\n    - '''dash '\n    - '''csh '\n    - '''sh '\n    - '''zsh '\n    - '''tcsh '\n    - '''ksh '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate cases in which \"rsync\" is used to execute a shell\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

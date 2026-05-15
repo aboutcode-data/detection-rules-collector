@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_goopdate.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-15",
+                "title": "Potential Goopdate.DLL Sideloading",
+                "id": "b6188d2f-b3c4-4d2c-a17d-9706e0851af0"
+            },
+            "rule_text": "title: Potential Goopdate.DLL Sideloading\nid: b6188d2f-b3c4-4d2c-a17d-9706e0851af0\nstatus: test\ndescription: Detects potential DLL sideloading of \"goopdate.dll\", a DLL used by googleupdate.exe\nreferences:\n- https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/goofy-guineapig/NCSC-MAR-Goofy-Guineapig.pdf\nauthor: X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-15\nmodified: 2025-10-07\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\goopdate.dll\n  filter_main_generic:\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n  filter_optional_dropbox_installer_temp:\n    Image|contains|all:\n    - \\AppData\\Local\\Temp\\GUM\n    - .tmp\\Dropbox\n    ImageLoaded|contains|all:\n    - \\AppData\\Local\\Temp\\GUM\n    - .tmp\\goopdate.dll\n  filter_optional_googleupdate_temp:\n    Image|contains:\n    - \\AppData\\Local\\Temp\\GUM\n    - :\\Windows\\SystemTemp\\GUM\n    Image|endswith: .tmp\\GoogleUpdate.exe\n    ImageLoaded|contains:\n    - \\AppData\\Local\\Temp\\GUM\n    - :\\Windows\\SystemTemp\\GUM\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- False positives are expected from Google Chrome installations running from user\n  locations (AppData) and other custom locations. Apply additional filters accordingly.\n- Other third party chromium browsers located in AppData\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

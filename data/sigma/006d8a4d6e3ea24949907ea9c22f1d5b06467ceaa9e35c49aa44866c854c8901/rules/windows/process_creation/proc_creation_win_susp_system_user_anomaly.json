@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_system_user_anomaly.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), David ANDRE (additional keywords)",
+                "date": "2021-12-20",
+                "title": "Suspicious SYSTEM User Process Creation",
+                "id": "2617e7ed-adb7-40ba-b0f3-8f9945fe6c09"
+            },
+            "rule_text": "title: Suspicious SYSTEM User Process Creation\nid: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09\nstatus: test\ndescription: Detects a suspicious process creation as SYSTEM user (suspicious program\n  or command line parameter)\nreferences:\n- Internal Research\n- https://tools.thehacker.recipes/mimikatz/modules\nauthor: Florian Roth (Nextron Systems), David ANDRE (additional keywords)\ndate: 2021-12-20\nmodified: 2025-10-19\ntags:\n- attack.credential-access\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134\n- attack.t1003\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    IntegrityLevel:\n    - System\n    - S-1-16-16384\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  selection_special:\n  - Image|endswith:\n    - \\calc.exe\n    - \\cscript.exe\n    - \\forfiles.exe\n    - \\hh.exe\n    - \\mshta.exe\n    - \\ping.exe\n    - \\wscript.exe\n  - CommandLine|re: net\\s+user\\s+\n  - CommandLine|contains:\n    - ' -NoP '\n    - ' -W Hidden '\n    - ' -decode '\n    - ' /decode '\n    - ' /urlcache '\n    - ' -urlcache '\n    - ' -e* JAB'\n    - ' -e* SUVYI'\n    - ' -e* SQBFAFgA'\n    - ' -e* aWV4I'\n    - ' -e* IAB'\n    - ' -e* PAA'\n    - ' -e* aQBlAHgA'\n    - vssadmin delete shadows\n    - reg SAVE HKLM\n    - ' -ma '\n    - Microsoft\\Windows\\CurrentVersion\\Run\n    - .downloadstring(\n    - .downloadfile(\n    - ' /ticket:'\n    - 'dpapi::'\n    - event::clear\n    - event::drop\n    - id::modify\n    - 'kerberos::'\n    - 'lsadump::'\n    - 'misc::'\n    - 'privilege::'\n    - 'rpc::'\n    - 'sekurlsa::'\n    - 'sid::'\n    - 'token::'\n    - vault::cred\n    - vault::list\n    - ' p::d '\n    - ;iex(\n    - MiniDump\n  filter_main_ping:\n    CommandLine|contains|all:\n    - ping\n    - 127.0.0.1\n    - ' -n '\n  filter_vs:\n    Image|endswith: \\PING.EXE\n    ParentCommandLine|contains: \\DismFoDInstall.cmd\n  filter_config_mgr:\n    ParentImage|contains: :\\Packages\\Plugins\\Microsoft.GuestConfiguration.ConfigurationforWindows\\\n  filter_java:\n    ParentImage|contains:\n    - :\\Program Files (x86)\\Java\\\n    - :\\Program Files\\Java\\\n    ParentImage|endswith: \\bin\\javaws.exe\n    Image|contains:\n    - :\\Program Files (x86)\\Java\\\n    - :\\Program Files\\Java\\\n    Image|endswith: \\bin\\jp2launcher.exe\n    CommandLine|contains: ' -ma '\n  condition: all of selection* and not 1 of filter_*\nfalsepositives:\n- Administrative activity\n- Scripts and administrative tools used in the monitored environment\n- Monitoring activity\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

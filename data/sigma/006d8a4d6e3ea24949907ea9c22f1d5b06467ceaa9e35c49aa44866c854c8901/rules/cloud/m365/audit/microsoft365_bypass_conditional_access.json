@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/m365/audit/microsoft365_bypass_conditional_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Josh Nickels, Marius Rothenbücher",
+                "date": "2025-01-08",
+                "title": "Azure Login Bypassing Conditional Access Policies",
+                "id": "13f2d3f5-6497-44a7-bf5f-dc13ffafe5dc"
+            },
+            "rule_text": "title: Azure Login Bypassing Conditional Access Policies\nid: 13f2d3f5-6497-44a7-bf5f-dc13ffafe5dc\nstatus: experimental\ndescription: 'Detects a successful login to the Microsoft Intune Company Portal which\n  could allow bypassing Conditional Access Policies and InTune device trust using\n  a tool like TokenSmith.\n\n  '\nauthor: \"Josh Nickels, Marius Rothenb\\xFCcher\"\nreferences:\n- https://labs.jumpsec.com/tokensmith-bypassing-intune-compliant-device-conditional-access/\n- https://github.com/JumpsecLabs/TokenSmith\ndate: 2025-01-08\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.stealth\n- attack.t1078\nlogsource:\n  service: audit\n  product: m365\ndetection:\n  selection:\n    Operation: UserLoggedIn\n    ApplicationId: 9ba1a5c7-f17a-4de9-a1f1-6178c8d51223\n    ResultStatus: Success\n    RequestType: Cmsi:Cmsi\n  filter_main_bjectid:\n    ObjectId: 0000000a-0000-0000-c000-000000000000\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

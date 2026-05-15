@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_sdclt.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-05-02",
+                "title": "Potential UAC Bypass Via Sdclt.EXE",
+                "id": "40f9af16-589d-4984-b78d-8c2aec023197"
+            },
+            "rule_text": "title: Potential UAC Bypass Via Sdclt.EXE\nid: 40f9af16-589d-4984-b78d-8c2aec023197\nstatus: test\ndescription: A General detection for sdclt being spawned as an elevated process. This\n  could be an indicator of sdclt being used for bypass UAC techniques.\nreferences:\n- https://github.com/OTRF/detection-hackathon-apt29/issues/6\n- https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/3.B.2_C36B49B5-DF58-4A34-9FE9-56189B9DEFEA.md\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-05-02\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: sdclt.exe\n    IntegrityLevel:\n    - High\n    - S-1-16-12288\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

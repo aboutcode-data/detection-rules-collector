@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/nex/embedded_win_api.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "embedded_win_api",
+                "tags": [],
+                "author": "nex",
+                "description": "A non-Windows executable contains win32 API functions names"
+            },
+            "rule_text": "rule embedded_win_api\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"A non-Windows executable contains win32 API functions names\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$api1 = \"CreateFileA\"\n\t\t$api2 = \"GetProcAddress\"\n\t\t$api3 = \"LoadLibraryA\"\n\t\t$api4 = \"WinExec\"\n\t\t$api5 = \"GetSystemDirectoryA\"\n\t\t$api6 = \"WriteFile\"\n\t\t$api7 = \"ShellExecute\"\n\t\t$api8 = \"GetWindowsDirectory\"\n\t\t$api9 = \"URLDownloadToFile\"\n\t\t$api10 = \"IsBadReadPtr\"\n\t\t$api11 = \"IsBadWritePtr\"\n\t\t$api12 = \"SetFilePointer\"\n\t\t$api13 = \"GetTempPath\"\n\t\t$api14 = \"GetWindowsDirectory\"\n\n\tcondition:\n\t\tnot ( $mz at 0 ) and any of ( $api* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

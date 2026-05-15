@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sharpsuccessor_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-06-06",
+                "title": "HKTL - SharpSuccessor Privilege Escalation Tool Execution",
+                "id": "38a1ac5f-9c74-47d2-a345-dd6f5eb4e7c8"
+            },
+            "rule_text": "title: HKTL - SharpSuccessor Privilege Escalation Tool Execution\nid: 38a1ac5f-9c74-47d2-a345-dd6f5eb4e7c8\nstatus: experimental\ndescription: 'Detects the execution of SharpSuccessor, a tool used to exploit the\n  BadSuccessor attack for privilege escalation in WinServer 2025 Active Directory\n  environments.\n\n  Successful usage of this tool can let the attackers gain the domain admin privileges\n  by exploiting the BadSuccessor vulnerability.\n\n  '\nreferences:\n- https://github.com/logangoins/SharpSuccessor\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-06-06\ntags:\n- attack.privilege-escalation\n- attack.t1068\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\SharpSuccessor.exe\n  - OriginalFileName: SharpSuccessor.exe\n  - CommandLine|contains: SharpSuccessor\n  - CommandLine|contains|all:\n    - ' add '\n    - ' /impersonate'\n    - ' /path'\n    - ' /account'\n    - ' /name'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

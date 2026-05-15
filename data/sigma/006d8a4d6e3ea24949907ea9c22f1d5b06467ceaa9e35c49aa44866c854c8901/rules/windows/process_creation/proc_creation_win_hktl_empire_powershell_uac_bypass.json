@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_empire_powershell_uac_bypass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Ecco",
+                "date": "2019-08-30",
+                "title": "HackTool - Empire PowerShell UAC Bypass",
+                "id": "3268b746-88d8-4cd3-bffc-30077d02c787"
+            },
+            "rule_text": "title: HackTool - Empire PowerShell UAC Bypass\nid: 3268b746-88d8-4cd3-bffc-30077d02c787\nstatus: stable\ndescription: Detects some Empire PowerShell UAC bypass methods\nreferences:\n- https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-EventVwrBypass.ps1#L64\n- https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-FodHelperBypass.ps1#L64\nauthor: Ecco\ndate: 2019-08-30\nmodified: 2023-02-21\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\n- car.2019-04-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - ' -NoP -NonI -w Hidden -c $x=$((gp HKCU:Software\\Microsoft\\Windows Update).Update)'\n    - ' -NoP -NonI -c $x=$((gp HKCU:Software\\Microsoft\\Windows Update).Update);'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

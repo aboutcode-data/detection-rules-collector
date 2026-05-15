@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/google_translate_phishing_lure.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2022-11-21",
+                "title": "Phishing Lure via Google Translate",
+                "id": "910e7e3d-794c-4ec2-b94f-9cbb1857b50c"
+            },
+            "rule_text": "title: Phishing Lure via Google Translate\nid: 910e7e3d-794c-4ec2-b94f-9cbb1857b50c\ndescription: It is common for phishing lures to be served from IPFS or object storage\n  services, using Google Translate as a proxy\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: '2022-11-21'\nlogsource:\n  category: proxy\ndetection:\n  google_translate:\n  - cs-host: translate.goog\n  - cs-host|endswith: .translate.goog\n  sus_ipfs:\n    c-uri-query|contains: _x_tr_hp=bafy\n  sus_storage_bucket:\n    cs-host|contains:\n    - linodeobjects-com\n    - digitaloceanspaces-com\n    - dream-io\n    - wasabisys-com\n    - vultrobjects-com\n    - backblazeb2-com\n    - storageapi-fleek-co\n    - blob-core-windows-net\n    - r2-dev\n  sus_aws_s3:\n    cs-host|contains: amazonaws-com\n    cs-host|re: \\bs3\\b\n  condition: google_translate and 1 of sus*\nfalsepositives:\n- Unlikely, but do verify that the url is serving a phishing page\nlevel: high\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_snapins_hafnium.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "FPT.EagleEye, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-03-03",
+                "title": "Exchange PowerShell Snap-Ins Usage",
+                "id": "25676e10-2121-446e-80a4-71ff8506af47"
+            },
+            "rule_text": "title: Exchange PowerShell Snap-Ins Usage\nid: 25676e10-2121-446e-80a4-71ff8506af47\nstatus: test\ndescription: Detects adding and using Exchange PowerShell snap-ins to export mailbox\n  data. As seen used by HAFNIUM and APT27\nreferences:\n- https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/\n- https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/\n- https://www.intrinsec.com/apt27-analysis/\nauthor: FPT.EagleEye, Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-03-03\nmodified: 2023-03-24\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.collection\n- attack.t1114\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli:\n    CommandLine|contains: Add-PSSnapin\n  selection_module:\n    CommandLine|contains:\n    - Microsoft.Exchange.Powershell.Snapin\n    - Microsoft.Exchange.Management.PowerShell.SnapIn\n  filter_msiexec:\n    ParentImage: C:\\Windows\\System32\\msiexec.exe\n    CommandLine|contains: $exserver=Get-ExchangeServer ([Environment]::MachineName)\n      -ErrorVariable exerr 2> $null\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

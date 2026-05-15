@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/chuongdong/ContiV2.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ContiV2",
+                "tags": [],
+                "description": "YARA rule for Conti Ransomware v2",
+                "reference": "http://chuongdong.com/reverse%20engineering/2020/12/15/ContiRansomware/",
+                "author": "@cPeterr",
+                "date": "2020-12-15",
+                "rule_version": "v2",
+                "malware_type": "ransomware",
+                "malware_family": "Ransom:W32/Conti",
+                "tlp": "white"
+            },
+            "rule_text": "rule ContiV2\n{\n\tmeta:\n\t\tdescription = \"YARA rule for Conti Ransomware v2\"\n\t\treference = \"http://chuongdong.com/reverse%20engineering/2020/12/15/ContiRansomware/\"\n\t\tauthor = \"@cPeterr\"\n\t\tdate = \"2020-12-15\"\n\t\trule_version = \"v2\"\n\t\tmalware_type = \"ransomware\"\n\t\tmalware_family = \"Ransom:W32/Conti\"\n\t\ttlp = \"white\"\n\n\tstrings:\n\t\t$str1 = \"polzarutu1982@protonmail.com\"\n\t\t$str2 = \"http://m232fdxbfmbrcehbrj5iayknxnggf6niqfj6x4iedrgtab4qupzjlaid.onion\"\n\t\t$str3 = \"expand 32-byte k\"\n\t\t$string_decryption = { 8a 07 8d 7f 01 0f b6 c0 b9 ?? 00 00 00 2b c8 6b c1 ?? 99 f7 fe 8d 42 7f 99 f7 fe 88 57 ff }\n\t\t$compare_size = { ?? ?? 00 00 50 00 }\n\n\tcondition:\n\t\tall of ( $str* ) and $string_decryption and $compare_size\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

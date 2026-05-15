@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nick Hoffman/N3utrino.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "N3utrino",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Detects versions of Neutrino malware",
+                "ref": "http://www.morphick.com/resources/lab-blog/evening-n3utrino"
+            },
+            "rule_text": "rule N3utrino\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Detects versions of Neutrino malware\"\n\t\tref = \"http://www.morphick.com/resources/lab-blog/evening-n3utrino\"\n\n\tstrings:\n\t\t$post_host_information = \"getcmd=1&uid=%s&os=%s&av=%s&nat=%s&version=%s&serial=%s&quality=%i\"\n\t\t$post_cc_information = \"dumpgrab=1&track_type=%s&track_data=%s&process_name=%s\"\n\t\t$post_taskexec = \"taskexec=1&task_id=%s\"\n\t\t$post_taskfail = \"taskfail=1&task_id=%s\"\n\t\t$command1 = \"loader\"\n\t\t$command2 = \"findfile\"\n\t\t$command3 = \"spread\"\n\t\t$command4 = \"archive\"\n\t\t$command5 = \"usb\"\n\t\t$command6 = \"botkiller\"\n\t\t$command7 = \"dwflood\"\n\t\t$command8 = \"keylogger\"\n\n\tcondition:\n\t\t4 of ( $command* ) or any of ( $post* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_system_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-05",
+                "title": "Scheduled Task Creation Masquerading as System Processes",
+                "id": "9f8573c9-22b4-40e3-89c1-72bc2b8d49ab"
+            },
+            "rule_text": "title: Scheduled Task Creation Masquerading as System Processes\nid: 9f8573c9-22b4-40e3-89c1-72bc2b8d49ab\nstatus: experimental\ndescription: Detects the creation of scheduled tasks that involve system processes,\n  which may indicate malicious actors masquerading as or abusing these processes to\n  execute payloads or maintain persistence.\nreferences:\n- https://tria.ge/241015-l98snsyeje/behavioral2\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-05\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.stealth\n- attack.t1053.005\n- attack.t1036.004\n- attack.t1036.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\schtasks.exe\n  - OriginalFileName: schtasks.exe\n  selection_cli:\n    CommandLine|contains|windash: ' /create '\n    CommandLine|contains:\n    - ' audiodg'\n    - ' conhost'\n    - ' dwm.exe'\n    - ' explorer'\n    - ' lsass'\n    - ' lsm'\n    - ' mmc'\n    - ' msiexec'\n    - ' regsvr32'\n    - ' rundll32'\n    - ' services'\n    - ' spoolsv'\n    - ' svchost'\n    - ' taskeng'\n    - ' taskhost'\n    - ' wininit'\n    - ' winlogon'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate system administration tasks scheduling trusted system processes.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

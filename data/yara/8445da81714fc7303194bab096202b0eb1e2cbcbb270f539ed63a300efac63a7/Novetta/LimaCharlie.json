@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/LimaCharlie.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LimaCharlie",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source_x86": "6ee6ae79ee1502a11ece81e971a54f189a271be9ec700101a2bd7a21198b94c7",
+                "Source_x64": "90ace24eb132c776a6d5bb0451437db21e84601495a2165d75f520af637e71e8"
+            },
+            "rule_text": "import \"pe\"\n\nrule LimaCharlie\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource_x86 = \"6ee6ae79ee1502a11ece81e971a54f189a271be9ec700101a2bd7a21198b94c7\"\n\t\tSource_x64 = \"90ace24eb132c776a6d5bb0451437db21e84601495a2165d75f520af637e71e8\"\n\n\tstrings:\n\t\t$misspelling = \"Defualt Sleep = %d\" wide\n\t\t$x86 = {\n\t\t\tFF ?? 74 \n\t\t\t5? \n\t\t\t5? \n\t\t\t8F ?? 48 01 00 00 \n\t\t\t85 C0 \n\t\t\t5? \n\t\t\t8F ?? 44 01 00 00 \n\t\t\t75 ?? \n\t\t\tF6 [2] 01 \n\t\t\t74 \n\t\t}\n\t\t$x64 = {\n\t\t\t48 [2] 70 \n\t\t\t48 [2] 60 01 00 00 \n\t\t\t48 [2] 68 01 00 00 \n\t\t\t48 85 C0 \n\t\t\t75 ?? \n\t\t\tF6 [2] 01 \n\t\t\t74 \n\t\t}\n\n\tcondition:\n\t\t$x86 in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or $x64 in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or $misspelling\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

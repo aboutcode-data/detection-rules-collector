@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Amadey/Trojan_Win32_Amadey_RB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Amadey_RB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Amadey.RB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Amadey_RB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Amadey.RB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 f4 01 d0 88 08 8d 95 ec ?? fc ff 8b 45 f4 01 d0 0f b6 00 83 f0 49 89 c1 8d 95 ec ?? fc ff 8b 45 f4 01 d0 88 08 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Amadey_RB_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Amadey.RB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Amadey_RB_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Amadey.RB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {6a 00 ff b1 e0 00 00 00 8b 81 e4 00 00 00 03 c6 50 8b 81 dc 00 00 00 03 85 98 fe ff ff 50 ff b5 a0 fe ff ff ff 15 }\n\t\t$a_01_1 = {50 8d 85 b4 fe ff ff 50 6a 00 6a 00 6a 04 6a 00 6a 00 6a 00 6a 00 8d 85 f8 fe ff ff 50 ff 15 }\n\t\t$a_01_2 = {41 6d 61 64 65 79 5c 52 65 6c 65 61 73 65 5c 41 6d 61 64 65 79 2e 70 64 62 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/APT32_KerrDown.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT32_KerrDown",
+                "tags": [
+                    "apt",
+                    "apt32",
+                    "winmalware",
+                    "downloader"
+                ],
+                "Author": "Adam M. Swanda",
+                "Website": "https://www.deadbits.org",
+                "Repo": "https://github.com/deadbits/yara-rules",
+                "Date": "2019-08-08",
+                "Note": "List of samples used to create rule at end of file as block comment"
+            },
+            "rule_text": "rule APT32_KerrDown : apt apt32 winmalware downloader\n{\n\tmeta:\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tWebsite = \"https://www.deadbits.org\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\t\tDate = \"2019-08-08\"\n\t\tNote = \"List of samples used to create rule at end of file as block comment\"\n\n\tstrings:\n\t\t$hijack = \"DllHijack.dll\" ascii fullword\n\t\t$fmain = \"FMain\" ascii fullword\n\t\t$gfids = \".gfids\" ascii fullword\n\t\t$sec01 = \".xdata$x\" ascii fullword\n\t\t$sec02 = \".rdata$zzzdbg\" ascii fullword\n\t\t$sec03 = \".rdata$sxdata\" ascii fullword\n\t\t$str01 = \"wdCommandDispatch\" ascii fullword\n\t\t$str02 = \"TerminateProcess\" ascii fullword\n\t\t$str03 = \"IsProcessorFeaturePresent\" ascii fullword\n\t\t$str04 = \"IsDebuggerPresent\" ascii fullword\n\t\t$str05 = \"SetUnhandledExceptionFilter\" ascii fullword\n\t\t$str06 = \"QueryPerformanceCounter\" ascii fullword\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d ) and ( ( $hijack and $fmain and $gfids ) or ( $gfids and 6 of them ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

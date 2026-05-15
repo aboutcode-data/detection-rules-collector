@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/apt_win_freshfire.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_win_freshfire",
+                "tags": [
+                    "APT29"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-05-27",
+                "description": "The FRESHFIRE malware family. The malware acts as a downloader, pulling down an encrypted snippet of code from a remote source, executing it, and deleting it from the remote server.",
+                "reference": "https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/",
+                "hash": "ad67aaa50fd60d02f1378b4155f69cffa9591eaeb80523489a2355512cc30e8c",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "import \"pe\"\n\nrule apt_win_freshfire : APT29\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-05-27\"\n\t\tdescription = \"The FRESHFIRE malware family. The malware acts as a downloader, pulling down an encrypted snippet of code from a remote source, executing it, and deleting it from the remote server.\"\n\t\treference = \"https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/\"\n\t\thash = \"ad67aaa50fd60d02f1378b4155f69cffa9591eaeb80523489a2355512cc30e8c\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$uniq1 = \"UlswcXJJWhtHIHrVqWJJ\"\n\t\t$uniq2 = \"gyibvmt\\x00\"\n\t\t$path1 = \"root/time/%d/%s.json\"\n\t\t$path2 = \"C:\\\\dell.sdr\"\n\t\t$path3 = \"root/data/%d/%s.json\"\n\n\tcondition:\n\t\t(pe.number_of_exports == 1 and pe.exports ( \"WaitPrompt\" ) ) or any of ( $uniq* ) or 2 of ( $path* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

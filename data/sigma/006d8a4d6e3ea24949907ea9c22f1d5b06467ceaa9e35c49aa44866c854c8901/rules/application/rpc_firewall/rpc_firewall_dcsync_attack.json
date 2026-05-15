@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_dcsync_attack.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "Possible DCSync Attack",
+                "id": "56fda488-113e-4ce9-8076-afc2457922c3"
+            },
+            "rule_text": "title: Possible DCSync Attack\nid: 56fda488-113e-4ce9-8076-afc2457922c3\nstatus: test\ndescription: Detects remote RPC calls to MS-DRSR from non DC hosts, which could indicate\n  DCSync / DCShadow attacks.\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-drsr/f977faaa-673e-4f66-b9bf-48c640241d47?redirectedfrom=MSDN\n- https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/ddd4608fe8684fcf2fcf9b48c5f0b3c28097f8a3/documents/MS-DRSR.md\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.t1033\n- attack.discovery\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes,\n    enable DRSR UUID (e3514235-4b06-11d1-ab04-00c04fc2dcd2) for \"dangerous\" opcodes\n    (not 0,1 or 12) only from trusted IPs (DCs)'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid: e3514235-4b06-11d1-ab04-00c04fc2dcd2\n  filter:\n    OpNum:\n    - 0\n    - 1\n    - 12\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

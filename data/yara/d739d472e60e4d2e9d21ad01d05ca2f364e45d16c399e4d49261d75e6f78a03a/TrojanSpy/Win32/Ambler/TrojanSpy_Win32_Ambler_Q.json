@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Ambler/TrojanSpy_Win32_Ambler_Q.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Ambler_Q",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Ambler.Q,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Ambler_Q\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Ambler.Q,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {25 73 5f 73 6b 65 79 5f 25 73 5f 25 73 2e 63 61 62 }\n\t\t$a_00_1 = {66 69 72 65 66 6f 78 2e 65 00 }\n\t\t$a_03_2 = {6a 40 6a 1e 53 ff 15 ?? ?? ?? ?? 8d 43 05 89 33 50 56 89 45 f8 e8 ?? ?? ?? ?? 83 c4 08 88 43 04 8b 45 fc 8d 55 fc 2b fe 52 50 83 ef 05 }\n\t\t$a_01_3 = {00 6e 6f 6c 6f 67 00 00 00 61 62 00 00 64 6d 2e 63 6f 6d }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 5 + ( #a_03_2 & 1 ) * 5 + ( #a_01_3 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

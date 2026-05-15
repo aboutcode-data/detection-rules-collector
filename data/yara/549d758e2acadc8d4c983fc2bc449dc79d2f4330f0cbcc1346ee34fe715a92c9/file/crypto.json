@@ -1,0 +1,56 @@
+{
+    "source_url": "https://github.com/Xumeiquer/yara-forensics/blob/master/file/crypto.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "pgp_wde",
+                "tags": [
+                    "PGP",
+                    "WDE"
+                ],
+                "author": "Jaume Martin",
+                "description": "PGP Whole Disk Encryption"
+            },
+            "rule_text": "rule pgp_wde : PGP WDE\n{\n\tmeta:\n\t\tauthor = \"Jaume Martin\"\n\t\tdescription = \"PGP Whole Disk Encryption\"\n\n\tstrings:\n\t\t$a = {50 47 50 64 4D 41 49 4E}\n\n\tcondition:\n\t\t$a at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "pgp_skr",
+                "tags": [
+                    "PGP",
+                    "SKR"
+                ],
+                "author": "Jaume Martin",
+                "description": "Private keyring"
+            },
+            "rule_text": "rule pgp_skr : PGP SKR\n{\n\tmeta:\n\t\tauthor = \"Jaume Martin\"\n\t\tdescription = \"Private keyring\"\n\n\tstrings:\n\t\t$a = {95 00}\n\t\t$b = {95 01}\n\n\tcondition:\n\t\t$a at 0 or $b at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "pgp_pkr",
+                "tags": [
+                    "PGP",
+                    "PKR"
+                ],
+                "author": "Jaume Martin",
+                "description": "Public keyring"
+            },
+            "rule_text": "rule pgp_pkr : PGP PKR\n{\n\tmeta:\n\t\tauthor = \"Jaume Martin\"\n\t\tdescription = \"Public keyring\"\n\n\tstrings:\n\t\t$a = {99 01}\n\n\tcondition:\n\t\t$a at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "x509",
+                "tags": [
+                    "DER",
+                    "x509"
+                ],
+                "author": "Jaume Martin"
+            },
+            "rule_text": "rule x509 : DER x509\n{\n\tmeta:\n\t\tauthor = \"Jaume Martin\"\n\n\tstrings:\n\t\t$a = {30 82}\n\n\tcondition:\n\t\t$a at 0\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

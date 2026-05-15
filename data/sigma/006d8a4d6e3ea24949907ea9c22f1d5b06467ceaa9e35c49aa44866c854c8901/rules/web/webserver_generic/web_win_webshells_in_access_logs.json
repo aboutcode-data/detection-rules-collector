@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/webserver_generic/web_win_webshells_in_access_logs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2017-02-19",
+                "title": "Windows Webshell Strings",
+                "id": "7ff9db12-1b94-4a79-ba68-a2402c5d6729"
+            },
+            "rule_text": "title: Windows Webshell Strings\nid: 7ff9db12-1b94-4a79-ba68-a2402c5d6729\nstatus: test\ndescription: Detects common commands used in Windows webshells\nreferences:\n- https://bad-jubies.github.io/RCE-NOW-WHAT/\n- https://m365internals.com/2022/10/07/hunting-in-on-premises-exchange-server-logs/\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2017-02-19\nmodified: 2022-11-18\ntags:\n- attack.persistence\n- attack.t1505.003\nlogsource:\n  category: webserver\ndetection:\n  selection_method:\n    cs-method: GET\n  selection_keywords:\n  - =whoami\n  - =net%20user\n  - =net+user\n  - =net%2Buser\n  - =cmd%20/c%\n  - =cmd+/c+\n  - =cmd%2B/c%\n  - =cmd%20/r%\n  - =cmd+/r+\n  - =cmd%2B/r%\n  - =cmd%20/k%\n  - =cmd+/k+\n  - =cmd%2B/k%\n  - =powershell%\n  - =powershell+\n  - =tasklist%\n  - =tasklist+\n  - =wmic%\n  - =wmic+\n  - =ssh%\n  - =ssh+\n  - =python%\n  - =python+\n  - =python3%\n  - =python3+\n  - =ipconfig\n  - =wget%\n  - =wget+\n  - =curl%\n  - =curl+\n  - =certutil\n  - =copy%20%5C%5C\n  - =dsquery%\n  - =dsquery+\n  - =nltest%\n  - =nltest+\n  condition: all of selection_*\nfalsepositives:\n- Web sites like wikis with articles on os commands and pages that include the os\n  commands in the URLs\n- User searches in search boxes of the respective website\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

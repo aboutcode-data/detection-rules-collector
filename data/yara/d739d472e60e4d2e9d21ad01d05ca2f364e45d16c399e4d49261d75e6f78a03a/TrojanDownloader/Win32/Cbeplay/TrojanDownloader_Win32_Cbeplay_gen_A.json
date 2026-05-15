@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Cbeplay/TrojanDownloader_Win32_Cbeplay_gen_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Cbeplay_gen_A",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Cbeplay.gen!A,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0a 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Cbeplay_gen_A\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Cbeplay.gen!A,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0a 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {6f 73 3d 25 64 26 76 65 72 3d 25 73 26 69 64 78 3d 25 73 26 75 73 65 72 3d 25 73 }\n\t\t$a_80_1 = {25 73 26 69 6f 63 74 6c 3d 25 64 26 64 61 74 61 3d 25 73 }\n\t\t$a_00_2 = {2e 70 68 70 00 50 4f 53 54 20 2f 25 73 20 48 54 54 50 2f 31 2e 31 }\n\t\t$a_00_3 = {44 37 45 42 36 30 38 35 2d 45 37 30 41 2d 34 66 35 61 2d 39 39 32 31 2d 45 36 42 44 32 34 34 41 38 43 31 37 00 }\n\t\t$a_03_4 = {6a 01 6a 1a 8d 4c 24 ?? 51 6a 00 ff 15 ?? ?? ?? ?? 85 c0 75 ?? ff 15 ?? ?? ?? ?? 8b f8 (eb ?? e9 ??|?? ?? ?? 8b) 96 34 02 00 00 52 }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 2 + ( #a_80_1 & 1 ) * 2 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 6 + ( #a_03_4 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

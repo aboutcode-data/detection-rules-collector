@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_chmod_targeting_sensitive_directories.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2022-06-03",
+                "title": "Chmod Targeting Sensitive Directories",
+                "id": "6419afd1-3742-47a5-a7e6-b50386cd15f8"
+            },
+            "rule_text": "title: Chmod Targeting Sensitive Directories\nid: 6419afd1-3742-47a5-a7e6-b50386cd15f8\nstatus: test\ndescription: 'Detects chmod targeting files in sensitive directory paths on Linux\n  systems.\n\n  Attackers may use chmod to change permissions of files in these directories to maintain\n  persistence, escalate privileges, or disrupt system operations.\n\n  '\nreferences:\n- https://www.intezer.com/blog/malware-analysis/new-backdoor-sysjoker/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.002/T1222.002.md\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2022-06-03\nmodified: 2026-03-18\ntags:\n- attack.defense-impairment\n- attack.t1222.002\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /chmod\n    CommandLine|contains:\n    - /tmp/\n    - /.Library/\n    - /etc/\n    - /opt/\n  filter_main_update_shells:\n    CommandLine|contains: chmod --reference=/etc/shells\n    ParentCommandLine|endswith: /update-shells\n  filter_main_postinst:\n    CommandLine|contains: /etc/\n    ParentCommandLine|contains|all:\n    - /var/lib/dpkg/info/\n    - .postinst configure\n  filter_main_apt_key:\n    CommandLine|startswith: chmod 700 /tmp/apt-key-gpghome.\n  filter_main_mkinitramfs:\n    CommandLine|startswith: chmod 755 /var/tmp/mkinitramfs\n  filter_main_landscape:\n    CommandLine: chmod 0775 /etc/landscape/\n  filter_main_ubuntu_apparmor:\n    CommandLine: chmod 644 /etc/apparmor.d/tunables/home.d/ubuntu\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Some false positives are to be expected. Apply additional filters as needed before\n  pushing to production.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

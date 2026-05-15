@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_apt_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-28",
+                "title": "Shell Invocation via Apt - Linux",
+                "id": "bb382fd5-b454-47ea-a264-1828e4c766d6"
+            },
+            "rule_text": "title: Shell Invocation via Apt - Linux\nid: bb382fd5-b454-47ea-a264-1828e4c766d6\nstatus: test\ndescription: 'Detects the use of the \"apt\" and \"apt-get\" commands to execute a shell\n  or proxy commands.\n\n  Such behavior may be associated with privilege escalation, unauthorized command\n  execution, or to break out from restricted environments.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/apt/\n- https://gtfobins.github.io/gtfobins/apt-get/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-28\nmodified: 2024-09-02\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith:\n    - /apt\n    - /apt-get\n    CommandLine|contains: APT::Update::Pre-Invoke::=\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_citrix_trolleyexpress_procdump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-10",
+                "title": "Process Access via TrolleyExpress Exclusion",
+                "id": "4c0aaedc-154c-4427-ada0-d80ef9c9deb6"
+            },
+            "rule_text": "title: Process Access via TrolleyExpress Exclusion\nid: 4c0aaedc-154c-4427-ada0-d80ef9c9deb6\nstatus: test\ndescription: Detects a possible process memory dump that uses the white-listed Citrix\n  TrolleyExpress.exe filename as a way to dump the lsass process memory\nreferences:\n- https://twitter.com/_xpn_/status/1491557187168178176\n- https://www.youtube.com/watch?v=Ie831jF0bb0\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-10\nmodified: 2022-05-13\ntags:\n- attack.stealth\n- attack.t1218.011\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - \\TrolleyExpress 7\n    - \\TrolleyExpress 8\n    - \\TrolleyExpress 9\n    - \\TrolleyExpress.exe 7\n    - \\TrolleyExpress.exe 8\n    - \\TrolleyExpress.exe 9\n    - '\\TrolleyExpress.exe -ma '\n  renamed:\n    Image|endswith: \\TrolleyExpress.exe\n  filter_renamed:\n    OriginalFileName|contains: CtxInstall\n  filter_empty:\n    OriginalFileName: null\n  condition: selection or ( renamed and not 1 of filter* )\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

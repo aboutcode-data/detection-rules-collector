@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_ime_suspicious_paths.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-11-21",
+                "title": "Suspicious Path In Keyboard Layout IME File Registry Value",
+                "id": "9d8f9bb8-01af-4e15-a3a2-349071530530"
+            },
+            "rule_text": "title: Suspicious Path In Keyboard Layout IME File Registry Value\nid: 9d8f9bb8-01af-4e15-a3a2-349071530530\nrelated:\n- id: b888e3f2-224d-4435-b00b-9dd66e9ea1f1\n  type: derived\nstatus: test\ndescription: 'Detects usage of Windows Input Method Editor (IME) keyboard layout feature,\n  which allows an attacker to load a DLL into the process after sending the WM_INPUTLANGCHANGEREQUEST\n  message.\n\n  Before doing this, the client needs to register the DLL in a special registry key\n  that is assumed to implement this keyboard layout. This registry key should store\n  a value named \"Ime File\" with a DLL path.\n\n  IMEs are essential for languages that have more characters than can be represented\n  on a standard keyboard, such as Chinese, Japanese, and Korean.\n\n  '\nreferences:\n- https://www.linkedin.com/pulse/guntior-story-advanced-bootkit-doesnt-rely-windows-disk-baranov-wue8e/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-11-21\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection_registry:\n    TargetObject|contains|all:\n    - \\Control\\Keyboard Layouts\\\n    - Ime File\n  selection_folders_1:\n    Details|contains:\n    - :\\Perflogs\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n    - \\AppData\\Roaming\\\n    - \\Temporary Internet\n  selection_folders_2:\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Favorites\\\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Favourites\\\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Contacts\\\n  condition: selection_registry and 1 of selection_folders_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_use_of_vsjitdebugger_bin.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Agro (@agro_sev), Ensar Şamil (@sblmsrsn), oscd.community",
+                "date": "2020-10-14",
+                "title": "Malicious PE Execution by Microsoft Visual Studio Debugger",
+                "id": "15c7904e-6ad1-4a45-9b46-5fb25df37fd2"
+            },
+            "rule_text": "title: Malicious PE Execution by Microsoft Visual Studio Debugger\nid: 15c7904e-6ad1-4a45-9b46-5fb25df37fd2\nstatus: test\ndescription: 'There is an option for a MS VS Just-In-Time Debugger \"vsjitdebugger.exe\"\n  to launch specified executable and attach a debugger.\n\n  This option may be used adversaries to execute malicious code by signed verified\n  binary.\n\n  The debugger is installed alongside with Microsoft Visual Studio package.\n\n  '\nreferences:\n- https://twitter.com/pabraeken/status/990758590020452353\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Vsjitdebugger/\n- https://learn.microsoft.com/en-us/visualstudio/debugger/debug-using-the-just-in-time-debugger?view=vs-2019\nauthor: \"Agro (@agro_sev), Ensar \\u015Eamil (@sblmsrsn), oscd.community\"\ndate: 2020-10-14\nmodified: 2022-10-09\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\vsjitdebugger.exe\n  reduction1:\n    Image|endswith: \\vsimmersiveactivatehelper*.exe\n  reduction2:\n    Image|endswith: \\devenv.exe\n  condition: selection and not (reduction1 or reduction2)\nfalsepositives:\n- The process spawned by vsjitdebugger.exe is uncommon.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_keylogging.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-30",
+                "title": "Powershell Keylogging",
+                "id": "34f90d3c-c297-49e9-b26d-911b05a4866c"
+            },
+            "rule_text": "title: Powershell Keylogging\nid: 34f90d3c-c297-49e9-b26d-911b05a4866c\nstatus: test\ndescription: Adversaries may log user keystrokes to intercept credentials as the user\n  types them.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1056.001/src/Get-Keystrokes.ps1\nauthor: frack113\ndate: 2021-07-30\nmodified: 2022-07-11\ntags:\n- attack.credential-access\n- attack.collection\n- attack.t1056.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_basic:\n    ScriptBlockText|contains: Get-Keystrokes\n  selection_high:\n    ScriptBlockText|contains|all:\n    - Get-ProcAddress user32.dll GetAsyncKeyState\n    - Get-ProcAddress user32.dll GetForegroundWindow\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

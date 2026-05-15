@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_dns_susp_zbit_flag.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron, SOC Prime Team, Corelight",
+                "date": "2021-05-04",
+                "title": "Suspicious DNS Z Flag Bit Set",
+                "id": "ede05abc-2c9e-4624-9944-9ff17fdc0bf5"
+            },
+            "rule_text": "title: Suspicious DNS Z Flag Bit Set\nid: ede05abc-2c9e-4624-9944-9ff17fdc0bf5\nstatus: test\ndescription: 'The DNS Z flag is bit within the DNS protocol header that is, per the\n  IETF design, meant to be used reserved (unused).\n\n  Although recently it has been used in DNSSec, the value being set to anything other\n  than 0 should be rare.\n\n  Otherwise if it is set to non 0 and DNSSec is being used, then excluding the legitimate\n  domains is low effort and high reward.\n\n  Determine if multiple of these files were accessed in a short period of time to\n  further enhance the possibility of seeing if this was a one off or the possibility\n  of larger sensitive file gathering.\n\n  This Sigma query is designed to accompany the Corelight Threat Hunting Guide, which\n  can be found here: https://www3.corelight.com/corelights-introductory-guide-to-threat-hunting-with-zeek-bro-logs''\n\n  '\nreferences:\n- https://twitter.com/neu5ron/status/1346245602502443009\n- https://tdm.socprime.com/tdm/info/eLbyj4JjI15v#sigma\n- https://tools.ietf.org/html/rfc2929#section-2.1\n- https://www.netresec.com/?page=Blog&month=2021-01&post=Finding-Targeted-SUNBURST-Victims-with-pDNS\nauthor: '@neu5ron, SOC Prime Team, Corelight'\ndate: 2021-05-04\nmodified: 2022-11-29\ntags:\n- attack.t1095\n- attack.t1571\n- attack.command-and-control\nlogsource:\n  product: zeek\n  service: dns\ndetection:\n  z_flag_unset:\n    Z: 0\n  most_probable_valid_domain:\n    query|contains: .\n  exclude_tlds:\n    query|endswith:\n    - .arpa\n    - .local\n    - .ultradns.net\n    - .twtrdns.net\n    - .azuredns-prd.info\n    - .azure-dns.com\n    - .azuredns-ff.info\n    - .azuredns-ff.org\n    - .azuregov-dns.org\n  exclude_query_types:\n    qtype_name:\n    - ns\n    - mx\n  exclude_responses:\n    answers|endswith: \\\\x00\n  exclude_netbios:\n    id.resp_p:\n    - 137\n    - 138\n    - 139\n  condition: not z_flag_unset and most_probable_valid_domain and not (exclude_tlds\n    or exclude_query_types or exclude_responses or exclude_netbios)\nfalsepositives:\n- Internal or legitimate external domains using DNSSec. Verify if these are legitimate\n  DNSSec domains and then exclude them.\n- If you work in a Public Sector then it may be good to exclude things like endswith\n  \".edu\", \".gov\" and or \".mil\"\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

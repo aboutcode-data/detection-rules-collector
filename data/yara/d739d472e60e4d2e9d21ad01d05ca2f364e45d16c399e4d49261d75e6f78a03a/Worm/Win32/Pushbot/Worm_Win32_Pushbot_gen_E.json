@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Pushbot/Worm_Win32_Pushbot_gen_E.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Pushbot_gen_E",
+                "tags": [],
+                "description": "Worm:Win32/Pushbot.gen!E,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0a 00 07 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Pushbot_gen_E\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Pushbot.gen!E,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0a 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {20 4d 65 73 73 61 67 65 20 73 65 6e 74 20 74 6f 3a 20 25 64 20 43 6f 6e 74 61 63 74 73 2e }\n\t\t$a_00_1 = {20 6d 65 73 73 61 67 65 20 73 65 6e 74 20 74 6f 20 25 64 20 6c 6f 73 65 72 73 2e }\n\t\t$a_00_2 = {49 20 74 72 69 65 64 20 74 6f 20 66 6f 6f 6c 20 25 64 20 6d 6f 72 6f 6e 73 2e }\n\t\t$a_03_3 = {83 f8 01 7e 25 50 a1 ?? ?? ?? ?? 69 c0 ?? 01 00 00 (05 ?? ?? ?? ?? 68 ?? ??|?? ?? 68 ?? ?? ?? ?? 05) ?? ?? ?? ?? 50 ff b5 ?? ?? ff ff e8 }\n\t\t$a_03_4 = {83 f8 01 7e 1d 50 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 59 50 ff 75 00 e8 }\n\t\t$a_03_5 = {69 c0 60 01 00 00 05 ?? ?? ?? ?? 50 ff b5 ?? ?? ff ff e8 90 09 19 00 83 3d ?? ?? ?? ?? 01 7e ?? ff 35 ?? ?? ?? ?? 68 ?? ?? ?? ?? a1 }\n\t\t$a_03_6 = {00 01 7e 1e ff 35 ?? ?? ?? 00 68 ?? ?? ?? 00 68 ?? ?? ?? 00 ff b5 ?? ?? ff ff e8 90 09 05 00 83 3d }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 10 + ( #a_03_4 & 1 ) * 10 + ( #a_03_5 & 1 ) * 10 + ( #a_03_6 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

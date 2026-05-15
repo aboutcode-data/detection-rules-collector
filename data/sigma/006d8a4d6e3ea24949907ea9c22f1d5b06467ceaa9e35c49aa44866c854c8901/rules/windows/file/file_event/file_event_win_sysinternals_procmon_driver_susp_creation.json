@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_sysinternals_procmon_driver_susp_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-05",
+                "title": "Process Monitor Driver Creation By Non-Sysinternals Binary",
+                "id": "a05baa88-e922-4001-bc4d-8738135f27de"
+            },
+            "rule_text": "title: Process Monitor Driver Creation By Non-Sysinternals Binary\nid: a05baa88-e922-4001-bc4d-8738135f27de\nstatus: test\ndescription: Detects creation of the Process Monitor driver by processes other than\n  Process Monitor (procmon) itself.\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-05\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1068\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|contains: \\procmon\n    TargetFilename|endswith: .sys\n  filter_main_process_explorer:\n    Image|endswith:\n    - \\procmon.exe\n    - \\procmon64.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Some false positives may occur with legitimate renamed process monitor binaries\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

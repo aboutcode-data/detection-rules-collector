@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/hunt_susp_vhd.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hunt_susp_vhd",
+                "tags": [],
+                "description": "Virtual hard disk file with embedded PE",
+                "author": "SBousseaden",
+                "date": "13/07/2020"
+            },
+            "rule_text": "rule hunt_susp_vhd\n{\n\tmeta:\n\t\tdescription = \"Virtual hard disk file with embedded PE\"\n\t\tauthor = \"SBousseaden\"\n\t\tdate = \"13/07/2020\"\n\n\tstrings:\n\t\t$hvhd = {636F6E6563746978}\n\t\t$s1 = {4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF 00 00}\n\t\t$s2 = \"!This program cannot be run in DOS mode.\" base64\n\t\t$s3 = \"!This program cannot be run in DOS mode.\" xor\n\n\tcondition:\n\t\t$hvhd at 0 and any of ( $s* ) and filesize <= 10MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_esxcli_user_account_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Cedric Maurugeon",
+                "date": "2023-08-22",
+                "title": "ESXi Account Creation Via ESXCLI",
+                "id": "b28e4eb3-8bbc-4f0c-819f-edfe8e2f25db"
+            },
+            "rule_text": "title: ESXi Account Creation Via ESXCLI\nid: b28e4eb3-8bbc-4f0c-819f-edfe8e2f25db\nstatus: test\ndescription: Detects user account creation on ESXi system via esxcli\nreferences:\n- https://developer.broadcom.com/xapis/esxcli-command-reference/7.0.0/namespace/esxcli_system.html\nauthor: Cedric Maurugeon\ndate: 2023-08-22\ntags:\n- attack.persistence\n- attack.execution\n- attack.t1136\n- attack.t1059.012\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /esxcli\n    CommandLine|contains|all:\n    - 'system '\n    - 'account '\n    - 'add '\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

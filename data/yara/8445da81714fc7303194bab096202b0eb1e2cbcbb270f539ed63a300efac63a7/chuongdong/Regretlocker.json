@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/chuongdong/Regretlocker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "regretlocker",
+                "tags": [],
+                "description": "YARA rule for RegretLocker",
+                "reference": "http://chuongdong.com/reverse%20engineering/2020/11/17/RegretLocker/",
+                "author": "@cPeterr",
+                "tlp": "white"
+            },
+            "rule_text": "rule regretlocker\n{\n\tmeta:\n\t\tdescription = \"YARA rule for RegretLocker\"\n\t\treference = \"http://chuongdong.com/reverse%20engineering/2020/11/17/RegretLocker/\"\n\t\tauthor = \"@cPeterr\"\n\t\ttlp = \"white\"\n\n\tstrings:\n\t\t$str1 = \"tor-lib.dll\"\n\t\t$str2 = \"http://regretzjibibtcgb.onion/input\"\n\t\t$str3 = \".mouse\"\n\t\t$cmd1 = \"taskkill /F /IM \\\\\"\n\t\t$cmd2 = \"wmic SHADOWCOPY DELETE\"\n\t\t$cmd3 = \"wbadmin DELETE SYSTEMSTATEBACKUP\"\n\t\t$cmd4 = \"bcdedit.exe / set{ default } bootstatuspolicy ignoreallfailures\"\n\t\t$cmd5 = \"bcdedit.exe / set{ default } recoveryenabled No\"\n\t\t$func1 = \"open_virtual_drive()\"\n\t\t$func2 = \"smb_scanner()\"\n\t\t$checklarge = { 81 fe 00 00 40 06 }\n\n\tcondition:\n\t\tall of ( $str* ) and any of ( $cmd* ) and any of ( $func* ) and $checklarge\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

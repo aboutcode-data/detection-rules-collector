@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/GandCrab/Ransom_Win32_GandCrab_MTC_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_GandCrab_MTC_bit",
+                "tags": [],
+                "description": "Ransom:Win32/GandCrab.MTC!bit,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_GandCrab_MTC_bit\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/GandCrab.MTC!bit,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b c1 80 b0 ?? ?? ?? ?? 05 40 3d 2b 87 00 00 }\n\t\t$a_01_1 = {4b 00 52 00 41 00 42 00 2d 00 44 00 45 00 43 00 52 00 59 00 50 00 54 00 2e 00 74 00 78 00 74 00 }\n\t\t$a_01_2 = {43 00 52 00 41 00 42 00 2d 00 44 00 45 00 43 00 52 00 59 00 50 00 54 00 2e 00 74 00 78 00 74 00 }\n\t\t$a_01_3 = {25 00 73 00 2e 00 4b 00 52 00 41 00 42 00 }\n\t\t$a_01_4 = {25 00 73 00 25 00 78 00 25 00 78 00 25 00 78 00 25 00 78 00 2e 00 6c 00 6f 00 63 00 6b 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

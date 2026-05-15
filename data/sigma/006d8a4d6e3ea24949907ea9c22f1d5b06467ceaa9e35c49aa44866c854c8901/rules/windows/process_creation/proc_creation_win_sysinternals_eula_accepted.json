@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_eula_accepted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis",
+                "date": "2017-08-28",
+                "title": "Potential Execution of Sysinternals Tools",
+                "id": "7cccd811-7ae9-4ebe-9afd-cb5c406b824b"
+            },
+            "rule_text": "title: Potential Execution of Sysinternals Tools\nid: 7cccd811-7ae9-4ebe-9afd-cb5c406b824b\nrelated:\n- id: 25ffa65d-76d8-4da5-a832-3f2b0136e133\n  type: derived\nstatus: test\ndescription: Detects command lines that contain the 'accepteula' flag which could\n  be a sign of execution of one of the Sysinternals tools\nreferences:\n- https://twitter.com/Moti_B/status/1008587936735035392\nauthor: Markus Neis\ndate: 2017-08-28\nmodified: 2024-03-13\ntags:\n- attack.resource-development\n- attack.t1588.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|windash: ' -accepteula'\n  condition: selection\nfalsepositives:\n- Legitimate use of SysInternals tools\n- Programs that use the same command line flag\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

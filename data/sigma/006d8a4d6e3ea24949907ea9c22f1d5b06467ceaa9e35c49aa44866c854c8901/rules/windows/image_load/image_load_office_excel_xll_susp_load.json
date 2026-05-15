@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_office_excel_xll_susp_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-12",
+                "title": "Microsoft Excel Add-In Loaded From Uncommon Location",
+                "id": "af4c4609-5755-42fe-8075-4effb49f5d44"
+            },
+            "rule_text": "title: Microsoft Excel Add-In Loaded From Uncommon Location\nid: af4c4609-5755-42fe-8075-4effb49f5d44\nrelated:\n- id: c5f4b5cb-4c25-4249-ba91-aa03626e3185\n  type: derived\nstatus: test\ndescription: Detects Microsoft Excel loading an Add-In (.xll) file from an uncommon\n  location\nreferences:\n- https://www.mandiant.com/resources/blog/lnk-between-browsers\n- https://wazuh.com/blog/detecting-xll-files-used-for-dropping-fin7-jssloader-with-wazuh/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-12\ntags:\n- attack.execution\n- attack.t1204.002\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\excel.exe\n    ImageLoaded|contains:\n    - \\Desktop\\\n    - \\Downloads\\\n    - \\Perflogs\\\n    - \\Temp\\\n    - \\Users\\Public\\\n    - \\Windows\\Tasks\\\n    ImageLoaded|endswith: .xll\n  condition: selection\nfalsepositives:\n- Some tuning might be required to allow or remove certain locations used by the rule\n  if you consider them as safe locations\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

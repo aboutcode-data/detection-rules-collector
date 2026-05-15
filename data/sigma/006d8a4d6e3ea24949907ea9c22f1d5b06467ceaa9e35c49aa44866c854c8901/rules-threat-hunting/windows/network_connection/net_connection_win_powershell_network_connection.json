@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_powershell_network_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-13",
+                "title": "Network Connection Initiated By PowerShell Process",
+                "id": "1f21ec3f-810d-4b0e-8045-322202e22b4b"
+            },
+            "rule_text": "title: Network Connection Initiated By PowerShell Process\nid: 1f21ec3f-810d-4b0e-8045-322202e22b4b\nstatus: test\ndescription: 'Detects a network connection that was initiated from a PowerShell process.\n\n  Often times malicious powershell scripts download additional payloads or communicate\n  back to command and control channels via uncommon ports or IPs.\n\n  Use this rule as a basis for hunting for anomalies.\n\n  '\nreferences:\n- https://www.youtube.com/watch?v=DLtJTxMWZ2o\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-13\nmodified: 2024-03-13\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    Initiated: 'true'\n  filter_main_local_ip:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 169.254.0.0/16\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  filter_main_msrange:\n    DestinationIp|cidr:\n    - 20.184.0.0/13\n    - 51.103.210.0/23\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Administrative scripts\n- Microsoft IP range\n- Additional filters are required. Adjust to your environment (e.g. extend filters\n  with company's ip range')\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

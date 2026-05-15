@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_svchost_uncommon_command_line_flags.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Liran Ravich",
+                "date": "2025-11-14",
+                "title": "Uncommon Svchost Command Line Parameter",
+                "id": "f17211f1-1f24-4d0c-829f-31e28dc93cdd"
+            },
+            "rule_text": "title: Uncommon Svchost Command Line Parameter\nid: f17211f1-1f24-4d0c-829f-31e28dc93cdd\nstatus: experimental\ndescription: 'Detects instances of svchost.exe running with an unusual or uncommon\n  command line parameter by excluding known legitimate or common patterns.\n\n  This could point at a file masquerading as svchost, a process injection, or hollowing\n  of a legitimate svchost instance.\n\n  '\nreferences:\n- https://cardinalops.com/blog/the-art-of-anomaly-hunting-patterns-detection/\n- https://www.security.com/threat-intelligence/blackbyte-exbyte-ransomware\n- https://cloud.google.com/blog/topics/threat-intelligence/apt41-initiates-global-intrusion-campaign-using-multiple-exploits/\n- https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2018/03/08064518/Carbanak_APT_eng.pdf\nauthor: Liran Ravich\ndate: 2025-11-14\nmodified: 2026-03-23\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1036.005\n- attack.t1055\n- attack.t1055.012\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\svchost.exe\n  filter_main_flags:\n    CommandLine|re: -k\\s\\w{1,64}(?:\\s?(?:-p|-s))?\n  filter_main_empty:\n    CommandLine: ''\n  filter_main_null:\n    CommandLine: null\n  filter_optional_defender:\n    ParentImage|endswith: \\MsMpEng.exe\n    CommandLine|contains: svchost.exe\n  filter_optional_mrt:\n    ParentImage|endswith: \\MRT.exe\n    CommandLine: svchost.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

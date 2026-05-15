@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_import_module_susp_dirs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-07",
+                "title": "Import PowerShell Modules From Suspicious Directories",
+                "id": "21f9162c-5f5d-4b01-89a8-b705bd7d10ab"
+            },
+            "rule_text": "title: Import PowerShell Modules From Suspicious Directories\nid: 21f9162c-5f5d-4b01-89a8-b705bd7d10ab\nrelated:\n- id: c31364f7-8be6-4b77-8483-dd2b5a7b69a3\n  type: similar\nstatus: test\ndescription: Detects powershell scripts that import modules from suspicious directories\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-07\nmodified: 2023-01-10\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Import-Module \"$Env:Temp\\\n    - Import-Module '$Env:Temp\\\n    - Import-Module $Env:Temp\\\n    - Import-Module \"$Env:Appdata\\\n    - Import-Module '$Env:Appdata\\\n    - Import-Module $Env:Appdata\\\n    - Import-Module C:\\Users\\Public\\\n    - ipmo \"$Env:Temp\\\n    - ipmo '$Env:Temp\\\n    - ipmo $Env:Temp\\\n    - ipmo \"$Env:Appdata\\\n    - ipmo '$Env:Appdata\\\n    - ipmo $Env:Appdata\\\n    - ipmo C:\\Users\\Public\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

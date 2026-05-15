@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_hellsing_proxytool.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_hellsing_proxytool",
+                "tags": [],
+                "version": "1.0",
+                "filetype": "PE",
+                "author": "Costin Raiu, Kaspersky Lab",
+                "copyright": "Kaspersky Lab",
+                "date": "2015-04-07",
+                "description": "detection for Hellsing proxy testing tool"
+            },
+            "rule_text": "rule apt_hellsing_proxytool\n{\n\tmeta:\n\t\tversion = \"1.0\"\n\t\tfiletype = \"PE\"\n\t\tauthor = \"Costin Raiu, Kaspersky Lab\"\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdate = \"2015-04-07\"\n\t\tdescription = \"detection for Hellsing proxy testing tool\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = \"PROXY_INFO: automatic proxy url => %s \"\n\t\t$a2 = \"PROXY_INFO: connection type => %d \"\n\t\t$a3 = \"PROXY_INFO: proxy server => %s \"\n\t\t$a4 = \"PROXY_INFO: bypass list => %s \"\n\t\t$a5 = \"InternetQueryOption failed with GetLastError() %d\"\n\t\t$a6 = \"D:\\\\Hellsing\\\\release\\\\exe\\\\exe\\\\\" nocase\n\n\tcondition:\n\t\t($mz at 0 ) and ( 2 of ( $a* ) ) and filesize < 300000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/webshells/WShell_ASPXSpy.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_WebShell_asp",
+                "tags": [
+                    "ASPXSpy"
+                ],
+                "description": "Detect ASPXSpy",
+                "author": "xylitol@temari.fr",
+                "date": "2019-02-26"
+            },
+            "rule_text": "rule Backdoor_WebShell_asp : ASPXSpy\n{\n\tmeta:\n\t\tdescription = \"Detect ASPXSpy\"\n\t\tauthor = \"xylitol@temari.fr\"\n\t\tdate = \"2019-02-26\"\n\n\tstrings:\n\t\t$string1 = \"CmdShell\" wide ascii\n\t\t$string2 = \"ADSViewer\" wide ascii\n\t\t$string3 = \"ASPXSpy.Bin\" wide ascii\n\t\t$string4 = \"PortScan\" wide ascii\n\t\t$plugin = \"Test.AspxSpyPlugins\" wide ascii\n\n\tcondition:\n\t\t3 of ( $string* ) or $plugin\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

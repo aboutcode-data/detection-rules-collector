@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/U-W/vssadmin.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "vssadmin",
+                "tags": [],
+                "description": "Detection patterns for the tool 'vssadmin' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "vssadmin",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule vssadmin\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'vssadmin' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"vssadmin\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\.exe\\sdelete\\sshadows/ nocase ascii wide\n\t\t$string2 = \"vssadmin create shadow /for=C:\" nocase ascii wide\n\t\t$string3 = /vssadmin\\screate\\sshadow\\s\\/for\\=C\\:.{0,1000}\\s\\\\Temp\\\\.{0,1000}\\.tmp/ nocase ascii wide\n\t\t$string4 = \"vssadmin delete shadows /all /quiet\" nocase ascii wide\n\t\t$string5 = \"vssadmin delete shadows\" nocase ascii wide\n\t\t$string6 = \"vssadmin list shadows\" nocase ascii wide\n\t\t$string7 = /vssadmin.{0,1000}\\sDelete\\sShadows\\s\\/All\\s\\/Quiet/ nocase ascii wide\n\t\t$string8 = /vssadmin.{0,1000}resize\\sshadowstorage\\s\\/for\\=c\\:\\s\\/on\\=c\\:\\s\\/maxsize\\=1/ nocase ascii wide\n\t\t$string9 = /vssadmin\\.exe\\sCreate\\sShadow\\s\\/for\\=/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

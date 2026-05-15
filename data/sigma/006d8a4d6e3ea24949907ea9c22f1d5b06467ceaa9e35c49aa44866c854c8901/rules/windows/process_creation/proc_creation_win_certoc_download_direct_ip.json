@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_certoc_download_direct_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-18",
+                "title": "File Download From IP Based URL Via CertOC.EXE",
+                "id": "b86f6dea-0b2f-41f5-bdcc-a057bd19cd6a"
+            },
+            "rule_text": "title: File Download From IP Based URL Via CertOC.EXE\nid: b86f6dea-0b2f-41f5-bdcc-a057bd19cd6a\nrelated:\n- id: 70ad0861-d1fe-491c-a45f-fa48148a300d\n  type: similar\nstatus: test\ndescription: Detects when a user downloads a file from an IP based URL using CertOC.exe\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Certoc/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-18\ntags:\n- attack.command-and-control\n- attack.execution\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\certoc.exe\n  - OriginalFileName: CertOC.exe\n  selection_ip:\n    CommandLine|re: ://[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\n  selection_cli:\n    CommandLine|contains: -GetCACAPS\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

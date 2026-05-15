@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/APT_NGO_wuaclt.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_NGO_wuaclt",
+                "tags": []
+            },
+            "rule_text": "rule APT_NGO_wuaclt\n{\n\tstrings:\n\t\t$a = \"%%APPDATA%%\\\\Microsoft\\\\wuauclt\\\\wuauclt.dat\"\n\t\t$b = \"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)\"\n\t\t$c = \"/news/show.asp?id%d=%d\"\n\t\t$d = \"%%APPDATA%%\\\\Microsoft\\\\wuauclt\\\\\"\n\t\t$e = \"0l23kj@nboxu\"\n\t\t$f = \"%%s.asp?id=%%d&Sid=%%d\"\n\t\t$g = \"User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SP Q%%d)\"\n\t\t$h = \"Cookies: UseID=KGIOODAOOK%%s\"\n\n\tcondition:\n\t\t($a and $b and $c ) or ( $d and $e ) or ( $f and $g and $h )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_NGO_wuaclt_PDF",
+                "tags": []
+            },
+            "rule_text": "rule APT_NGO_wuaclt_PDF\n{\n\tstrings:\n\t\t$pdf = \"%PDF\" nocase\n\t\t$comment = {3C 21 2D 2D 0D 0A 63 57 4B 51 6D 5A 6C 61 56 56 56 56 56 56 56 56 56 56 56 56 56 63 77 53 64 63 6A 4B 7A 38 35 6D 37 4A 56 6D 37 4A 46 78 6B 5A 6D 5A 6D 52 44 63 5A 58 41 73 6D 5A 6D 5A 7A 42 4A 31 79 73 2F 4F 0D 0A}\n\n\tcondition:\n\t\t$pdf at 0 and $comment in ( 0 .. 200 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_webshell_chopper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), MSTI (query)",
+                "date": "2022-10-01",
+                "title": "Chopper Webshell Process Pattern",
+                "id": "fa3c117a-bc0d-416e-a31b-0c0e80653efb"
+            },
+            "rule_text": "title: Chopper Webshell Process Pattern\nid: fa3c117a-bc0d-416e-a31b-0c0e80653efb\nstatus: test\ndescription: Detects patterns found in process executions cause by China Chopper like\n  tiny (ASPX) webshells\nreferences:\n- https://www.microsoft.com/security/blog/2022/09/30/analyzing-attacks-using-the-exchange-vulnerabilities-cve-2022-41040-and-cve-2022-41082/\nauthor: Florian Roth (Nextron Systems), MSTI (query)\ndate: 2022-10-01\ntags:\n- attack.persistence\n- attack.discovery\n- attack.t1505.003\n- attack.t1018\n- attack.t1033\n- attack.t1087\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_origin:\n  - Image|endswith: \\w3wp.exe\n  - ParentImage|endswith: \\w3wp.exe\n  selection_cmdline:\n    CommandLine|contains:\n    - '&ipconfig&echo'\n    - '&quser&echo'\n    - '&whoami&echo'\n    - '&c:&echo'\n    - '&cd&echo'\n    - '&dir&echo'\n    - '&echo [E]'\n    - '&echo [S]'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2022-41040",
+                "CVE-2022-41082"
+            ]
+        }
+    ]
+}

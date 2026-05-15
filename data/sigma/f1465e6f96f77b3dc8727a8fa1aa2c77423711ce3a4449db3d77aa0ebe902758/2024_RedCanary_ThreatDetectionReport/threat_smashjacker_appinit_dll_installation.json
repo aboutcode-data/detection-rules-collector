@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_smashjacker_appinit_dll_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "AppInit DLL Installation",
+                "id": "65e7b868-ebe9-4e8a-b828-3bd2181bc407"
+            },
+            "rule_text": "title: AppInit DLL Installation\nid: 65e7b868-ebe9-4e8a-b828-3bd2181bc407\nstatus: experimental\ndescription: \"One persistence mechanism used by some variations of SmashJacker was\\\n  \\ an AppInit DLL. \\nIt would use a reg.exe command to create appropriate Windows\\\n  \\ Registry keys for \\npersistence. Part of the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/smashjacker/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.privilege_escalation\n- attack.persistence\n- attack.t1546\n- attack.t1546.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\reg.exe\n    CommandLine|contains|all:\n    - add\n    - AppInit_DLLs\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

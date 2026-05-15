@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Redline/Trojan_Win32_Redline_GCR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Redline_GCR_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Redline.GCR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Redline_GCR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Redline.GCR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {31 c0 29 c8 88 45 e3 8b 4d e4 0f b6 45 e3 31 c8 88 45 e3 0f b6 45 e3 2d ?? ?? ?? ?? 88 45 e3 8a 4d e3 8b 45 e4 88 4c 05 e9 8b 45 e4 83 c0 ?? 89 45 e4 }\n\t\t$a_03_1 = {5c 00 4d 00 69 00 63 00 72 00 6f 00 73 00 6f 00 66 00 74 00 2e 00 4e 00 45 00 54 00 5c 00 46 00 72 00 61 00 6d 00 65 00 77 00 6f 00 72 00 6b 00 5c 00 [0-20] 5c 00 41 00 70 00 70 00 4c 00 61 00 75 00 6e 00 63 00 68 00 2e 00 65 00 78 00 65 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

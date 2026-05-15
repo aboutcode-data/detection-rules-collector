@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_discovery_via_reg_queries.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "lazarg",
+                "date": "2025-06-12",
+                "title": "System Information Discovery via Registry Queries",
+                "id": "0022869c-49f7-4ff2-ba03-85ac42ddac58"
+            },
+            "rule_text": "title: System Information Discovery via Registry Queries\nid: 0022869c-49f7-4ff2-ba03-85ac42ddac58\nstatus: experimental\ndescription: Detects attempts to query system information directly from the Windows\n  Registry.\nreferences:\n- https://cert.gov.ua/article/6277849\n- https://github.com/redcanaryco/atomic-red-team/blob/75fa21076dcefa348a7521403cdd6bfc4e88623c/atomics/T1082/T1082.md\n- https://github.com/redcanaryco/atomic-red-team/blob/75fa21076dcefa348a7521403cdd6bfc4e88623c/atomics/T1124/T1124.md\nauthor: lazarg\ndate: 2025-06-12\nmodified: 2025-10-25\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd_reg:\n    Image|endswith: \\reg.exe\n    CommandLine|contains: query\n    CommandLine|contains|windash: -v\n  selection_cmd_powershell:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    CommandLine|contains:\n    - Get-ItemPropertyValue\n    - gpv\n  selection_keys:\n    CommandLine|contains:\n    - \\SOFTWARE\\Microsoft\\Windows Defender\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\n    - \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\n    - \\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation\n    - \\SYSTEM\\CurrentControlSet\\Services\n  condition: 1 of selection_cmd_* and selection_keys\nfalsepositives:\n- Unlikely\nlevel: low\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_discovery_via_reg_queries/info.yml\nsimulation:\n- type: atomic-red-team\n  name: System Information Discovery\n  technique: T1010\n  atomic_guid: 66703791-c902-4560-8770-42b8a91f7667\n- type: atomic-red-team\n  name: Discover OS Product Name via Registry\n  technique: T1082\n  atomic_guid: be3b5fe3-a575-4fb8-83f6-ad4a68dd5ce7\n- type: atomic-red-team\n  name: Discover OS Build Number via Registry\n  technique: T1082\n  atomic_guid: acfcd709-0013-4f1e-b9ee-bc1e7bafaaec\n",
+            "vulnerabilities": []
+        }
+    ]
+}

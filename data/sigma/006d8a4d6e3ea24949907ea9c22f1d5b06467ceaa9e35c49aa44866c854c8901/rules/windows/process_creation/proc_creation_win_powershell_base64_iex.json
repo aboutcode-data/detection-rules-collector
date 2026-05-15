@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_base64_iex.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-08-23",
+                "title": "PowerShell Base64 Encoded IEX Cmdlet",
+                "id": "88f680b8-070e-402c-ae11-d2914f2257f1"
+            },
+            "rule_text": "title: PowerShell Base64 Encoded IEX Cmdlet\nid: 88f680b8-070e-402c-ae11-d2914f2257f1\nstatus: test\ndescription: Detects usage of a base64 encoded \"IEX\" cmdlet in a process command line\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-08-23\nmodified: 2023-04-06\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - CommandLine|base64offset|contains:\n    - IEX ([\n    - iex ([\n    - iex (New\n    - IEX (New\n    - IEX([\n    - iex([\n    - iex(New\n    - IEX(New\n    - IEX(('\n    - iex(('\n  - CommandLine|contains:\n    - SQBFAFgAIAAoAFsA\n    - kARQBYACAAKABbA\n    - JAEUAWAAgACgAWw\n    - aQBlAHgAIAAoAFsA\n    - kAZQB4ACAAKABbA\n    - pAGUAeAAgACgAWw\n    - aQBlAHgAIAAoAE4AZQB3A\n    - kAZQB4ACAAKABOAGUAdw\n    - pAGUAeAAgACgATgBlAHcA\n    - SQBFAFgAIAAoAE4AZQB3A\n    - kARQBYACAAKABOAGUAdw\n    - JAEUAWAAgACgATgBlAHcA\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

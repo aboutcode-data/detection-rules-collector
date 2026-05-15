@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Remcos/Trojan_Win32_Remcos_GJ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Remcos_GJ_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Remcos.GJ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Remcos_GJ_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Remcos.GJ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 4c 24 0c 30 04 31 81 ff 91 05 00 00 75 90 09 05 00 e8 }\n\t\t$a_03_1 = {05 c3 9e 26 00 81 3d ?? ?? ?? ?? 81 13 00 00 a3 ?? ?? ?? ?? 0f b7 35 ?? ?? ?? ?? 75 90 09 05 00 a1 }\n\t\t$a_03_2 = {05 c3 9e 26 00 81 3d ?? ?? ?? ?? 81 13 00 00 56 a3 ?? ?? ?? ?? 0f b7 35 ?? ?? ?? ?? 75 90 09 05 00 a1 }\n\t\t$a_03_3 = {83 44 24 04 0d a1 ?? ?? ?? ?? 0f af 44 24 ?? 81 3d ?? ?? ?? ?? 9e 13 00 00 a3 ?? ?? ?? ?? 75 }\n\t\t$a_03_4 = {83 04 24 04 0d a1 ?? ?? ?? ?? 0f af 04 24 ?? 81 3d ?? ?? ?? ?? 9e 13 00 00 a3 ?? ?? ?? ?? 75 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

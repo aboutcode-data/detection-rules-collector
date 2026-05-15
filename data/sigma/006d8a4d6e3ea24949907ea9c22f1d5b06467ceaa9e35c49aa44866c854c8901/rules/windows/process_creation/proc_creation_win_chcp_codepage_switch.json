@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_chcp_codepage_switch.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community",
+                "date": "2019-10-14",
+                "title": "Suspicious CodePage Switch Via CHCP",
+                "id": "c7942406-33dd-4377-a564-0f62db0593a3"
+            },
+            "rule_text": "title: Suspicious CodePage Switch Via CHCP\nid: c7942406-33dd-4377-a564-0f62db0593a3\nstatus: test\ndescription: Detects a code page switch in command line or batch scripts to a rare\n  language\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers\n- https://twitter.com/cglyer/status/1183756892952248325\nauthor: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community\ndate: 2019-10-14\nmodified: 2023-03-07\ntags:\n- attack.stealth\n- attack.t1036\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\chcp.com\n    CommandLine|endswith:\n    - ' 936'\n    - ' 1258'\n  condition: selection\nfalsepositives:\n- Administrative activity (adjust code pages according to your organization's region)\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_chcp_codepage_switch/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

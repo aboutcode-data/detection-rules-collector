@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_BlackCat_Ransomware/win_susp_process_fsutil_allowing_connections.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/05",
+                "title": "Suspicious Fsutil Execution Allowing Remote Connections",
+                "id": "27e58290-85bf-4bd4-8eab-1c493139b659"
+            },
+            "rule_text": "title: Suspicious Fsutil Execution Allowing Remote Connections\nid: 27e58290-85bf-4bd4-8eab-1c493139b659\nstatus: experimental\ndescription: Detects the use of fsutil to permit additional types of symbolic links\n  on a computer. These can be used to enable ransomware to follow shortcusts to find\n  all files it wants to encrypt.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/06/13/the-many-lives-of-blackcat-ransomware/\n- https://www.cybereason.com/blog/cybereason-vs.-blackcat-ransomware\nauthor: Micah Babinski\ndate: 2022/12/05\ntags:\n- attack.persistence\n- attack.t1547\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\fsutil.exe\n    CommandLine|contains|all:\n    - behavior\n    - set\n    - SymlinkEvaluation\n    CommandLine|re: ^.*(R|L)2(R|L):1.*$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_explorer_nouaccheck.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-23",
+                "title": "Explorer NOUACCHECK Flag",
+                "id": "534f2ef7-e8a2-4433-816d-c91bccde289b"
+            },
+            "rule_text": "title: Explorer NOUACCHECK Flag\nid: 534f2ef7-e8a2-4433-816d-c91bccde289b\nstatus: test\ndescription: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag\n  that allows to run all sub processes of that newly started explorer.exe without\n  any UAC checks\nreferences:\n- https://twitter.com/ORCA6665/status/1496478087244095491\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-23\nmodified: 2022-04-21\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\explorer.exe\n    CommandLine|contains: /NOUACCHECK\n  filter_dc_logon:\n  - ParentCommandLine: C:\\Windows\\system32\\svchost.exe -k netsvcs -p -s Schedule\n  - ParentImage: C:\\Windows\\System32\\svchost.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Domain Controller User Logon\n- Unknown how many legitimate software products use that method\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_clipboard_collection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur, Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC",
+                "date": "2021-10-15",
+                "title": "Clipboard Collection with Xclip Tool",
+                "id": "ec127035-a636-4b9a-8555-0efd4e59f316"
+            },
+            "rule_text": "title: Clipboard Collection with Xclip Tool\nid: ec127035-a636-4b9a-8555-0efd4e59f316\nstatus: test\ndescription: 'Detects attempts to collect data stored in the clipboard from users\n  with the usage of xclip tool. Xclip has to be installed.\n\n  Highly recommended using rule on servers, due to high usage of clipboard utilities\n  on user workstations.\n\n  '\nreferences:\n- https://www.packetlabs.net/posts/clipboard-data-security/\nauthor: Pawel Mazur, Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research),\n  MSTIC\ndate: 2021-10-15\nmodified: 2022-09-15\ntags:\n- attack.collection\n- attack.t1115\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|contains: xclip\n    CommandLine|contains|all:\n    - -sel\n    - clip\n    - -o\n  condition: selection\nfalsepositives:\n- Legitimate usage of xclip tools.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

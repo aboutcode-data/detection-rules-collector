@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_compression_params.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Samir Bousseaden",
+                "date": "2019-10-15",
+                "title": "Potentially Suspicious Compression Tool Parameters",
+                "id": "27a72a60-7e5e-47b1-9d17-909c9abafdcd"
+            },
+            "rule_text": "title: Potentially Suspicious Compression Tool Parameters\nid: 27a72a60-7e5e-47b1-9d17-909c9abafdcd\nstatus: test\ndescription: Detects potentially suspicious command line arguments of common data\n  compression tools\nreferences:\n- https://twitter.com/SBousseaden/status/1184067445612535811\nauthor: Florian Roth (Nextron Systems), Samir Bousseaden\ndate: 2019-10-15\nmodified: 2023-08-29\ntags:\n- attack.collection\n- attack.t1560.001\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName:\n    - 7z*.exe\n    - '*rar.exe'\n    - '*Command*Line*RAR*'\n    CommandLine|contains:\n    - ' -p'\n    - ' -ta'\n    - ' -tb'\n    - ' -sdel'\n    - ' -dw'\n    - ' -hp'\n  filter_main_generic:\n    ParentImage|contains:\n    - :\\Program Files\\\n    - :\\Program Files (x86)\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

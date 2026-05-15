@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/Excel_IQY_File.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IQY_File",
+                "tags": [],
+                "Author": "InQuest Labs",
+                "Website": "http://blog.inquest.net/blog/2018/08/23/hunting-iqy-files-with-yara/",
+                "Description": "Detects all Excel IQY files by identifying the WEB 'magic' on the first line and also includes any URL.",
+                "Severity": "0"
+            },
+            "rule_text": "rule IQY_File\n{\n\tmeta:\n\t\tAuthor = \"InQuest Labs\"\n\t\tWebsite = \"http://blog.inquest.net/blog/2018/08/23/hunting-iqy-files-with-yara/\"\n\t\tDescription = \"Detects all Excel IQY files by identifying the WEB 'magic' on the first line and also includes any URL.\"\n\t\tSeverity = \"0\"\n\n\tstrings:\n\t\t$web = /^[ \\t]*WEB[ \\t]*(\\x0A|\\x0D\\x0A)/ nocase\n\t\t$url = /https?:\\/\\/([\\w\\.-]+)([\\/\\w \\.-]*)/\n\n\tcondition:\n\t\t$web at 0 and $url\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

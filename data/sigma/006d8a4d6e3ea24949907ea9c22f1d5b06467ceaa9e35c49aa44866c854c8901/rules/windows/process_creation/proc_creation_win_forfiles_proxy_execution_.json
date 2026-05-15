@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_forfiles_proxy_execution_.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic, E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community",
+                "date": "2022-06-14",
+                "title": "Forfiles Command Execution",
+                "id": "9aa5106d-bce3-4b13-86df-3a20f1d5cf0b"
+            },
+            "rule_text": "title: Forfiles Command Execution\nid: 9aa5106d-bce3-4b13-86df-3a20f1d5cf0b\nrelated:\n- id: a85cf4e3-56ee-4e79-adeb-789f8fb209a8\n  type: obsolete\n- id: fa47597e-90e9-41cd-ab72-c3b74cfb0d02\n  type: obsolete\nstatus: test\ndescription: 'Detects the execution of \"forfiles\" with the \"/c\" flag.\n\n  While this is an expected behavior of the tool, it can be abused in order to proxy\n  execution through it with any binary.\n\n  Can be used to bypass application whitelisting.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Forfiles/\n- https://pentestlab.blog/2020/07/06/indirect-command-execution/\nauthor: Tim Rauch, Elastic, E.M. Anhaus (originally from Atomic Blue Detections, Endgame),\n  oscd.community\ndate: 2022-06-14\nmodified: 2024-03-05\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\forfiles.exe\n  - OriginalFileName: forfiles.exe\n  selection_cli:\n    CommandLine|contains|windash: ' -c '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use via a batch script or by an administrator.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

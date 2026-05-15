@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Cerbu/Trojan_Win64_Cerbu_MKA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Cerbu_MKA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Cerbu.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Cerbu_MKA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Cerbu.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {40 00 00 e0 2e 70 64 61 74 61 00 49 00 e0 05 }\n\t\t$a_03_1 = {c0 d0 00 80 05 00 00 20 ?? ?? 01 90 90 d3 05 }\n\t\t$a_01_2 = {c0 2e 69 64 61 74 61 20 20 00 10 00 00 00 d0 d0 }\n\t\t$a_01_3 = {40 00 00 e0 2e 72 73 72 63 00 00 00 80 05 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 15 + ( #a_01_2 & 1 ) * 3 + ( #a_01_3 & 1 ) * 2 ) >= 40\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

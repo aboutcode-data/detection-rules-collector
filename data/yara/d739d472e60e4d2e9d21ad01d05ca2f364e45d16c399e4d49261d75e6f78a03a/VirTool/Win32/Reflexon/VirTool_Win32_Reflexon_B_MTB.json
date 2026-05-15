@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/Reflexon/VirTool_Win32_Reflexon_B_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_Reflexon_B_MTB",
+                "tags": [],
+                "description": "VirTool:Win32/Reflexon.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_Reflexon_B_MTB\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/Reflexon.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c7 01 4c 8b d1 b8 4c 8d ?? ?? ?? 66 c7 41 08 0f 05 48 05 c0 00 00 00 c6 41 0a c3 41 b8 20 00 00 00 89 79 04 48 89 ?? ?? ?? ?? ?? 49 8b ca c7 00 4c 8b d1 b8 66 c7 40 08 0f 05 c6 40 0a c3 89 58 04 }\n\t\t$a_03_1 = {81 79 40 4c 8b d1 b8 ?? ?? ff c2 41 3b d0 ?? ?? e9 ?? ?? ?? ?? 66 41 ff c0 66 45 3b c3 0f }\n\t\t$a_03_2 = {48 89 44 24 68 48 8b d8 48 85 c0 0f 84 ?? ?? ?? ?? 33 f6 48 8d ?? ?? ?? ?? ?? 0f 57 c0 89 75 a4 48 8b c8 89 75 bc 0f 11 45 e8 ff 15 ?? ?? ?? ?? 48 85 c0 0f 84 ?? ?? ?? ?? 48 8d ?? ?? ?? ?? ?? 48 8d ?? ?? ?? ?? 48 8d ?? ?? c7 45 a0 30 00 00 00 0f 57 c0 }\n\t\t$a_03_3 = {8b 59 44 8b 79 34 85 db 0f 84 ?? ?? ?? ?? 33 c9 ba 00 01 00 00 41 b8 00 30 00 00 44 8d ?? ?? ff 15 ?? ?? ?? ?? 4c 8b d0 48 85 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_application_gateway_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer",
+                "date": "2021-08-16",
+                "title": "Azure Application Gateway Modified or Deleted",
+                "id": "ad87d14e-7599-4633-ba81-aeb60cfe8cd6"
+            },
+            "rule_text": "title: Azure Application Gateway Modified or Deleted\nid: ad87d14e-7599-4633-ba81-aeb60cfe8cd6\nstatus: test\ndescription: Identifies when a application gateway is modified or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer\ndate: 2021-08-16\nmodified: 2022-08-23\ntags:\n- attack.impact\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.NETWORK/APPLICATIONGATEWAYS/WRITE\n    - MICROSOFT.NETWORK/APPLICATIONGATEWAYS/DELETE\n  condition: selection\nfalsepositives:\n- Application gateway being modified or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Application gateway modified or deleted from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

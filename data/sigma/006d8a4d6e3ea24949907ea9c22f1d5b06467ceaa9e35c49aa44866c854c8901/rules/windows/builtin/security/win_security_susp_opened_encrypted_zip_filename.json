@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_opened_encrypted_zip_filename.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-05-09",
+                "title": "Password Protected ZIP File Opened (Suspicious Filenames)",
+                "id": "54f0434b-726f-48a1-b2aa-067df14516e4"
+            },
+            "rule_text": "title: Password Protected ZIP File Opened (Suspicious Filenames)\nid: 54f0434b-726f-48a1-b2aa-067df14516e4\nstatus: test\ndescription: Detects the extraction of password protected ZIP archives with suspicious\n  file names. See the filename variable for more details on which file has been opened.\nreferences:\n- https://twitter.com/sbousseaden/status/1523383197513379841\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-05-09\ntags:\n- attack.command-and-control\n- attack.stealth\n- attack.t1027\n- attack.t1105\n- attack.t1036\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5379\n    TargetName|contains: Microsoft_Windows_Shell_ZipFolder:filename\n  selection_filename:\n    TargetName|contains:\n    - invoice\n    - new order\n    - rechnung\n    - factura\n    - delivery\n    - purchase\n    - order\n    - payment\n  condition: selection and selection_filename\nfalsepositives:\n- Legitimate used of encrypted ZIP files\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

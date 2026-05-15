@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/microsoft_windows_kerberos_key_distribution_center/win_system_kdcsvc_tgs_no_suitable_encryption_key_found.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@SerkinValery",
+                "date": "2024-03-07",
+                "title": "No Suitable Encryption Key Found For Generating Kerberos Ticket",
+                "id": "b1e0b3f5-b62e-41be-886a-daffde446ad4"
+            },
+            "rule_text": "title: No Suitable Encryption Key Found For Generating Kerberos Ticket\nid: b1e0b3f5-b62e-41be-886a-daffde446ad4\nstatus: test\ndescription: 'Detects errors when a target server doesn''t have suitable keys for\n  generating kerberos tickets.\n\n  This issue can occur for example when a service uses a user account or a computer\n  account that is configured for only DES encryption on a computer that is running\n  Windows 7 which has DES encryption for Kerberos authentication disabled.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd348773(v=ws.10)\n- https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/kdc-event-16-27-des-encryption-disabled\nauthor: '@SerkinValery'\ndate: 2024-03-07\nmodified: 2025-09-22\ntags:\n- attack.credential-access\n- attack.t1558.003\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name:\n    - Kerberos-Key-Distribution-Center\n    - Microsoft-Windows-Kerberos-Key-Distribution-Center\n    EventID:\n    - 16\n    - 27\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

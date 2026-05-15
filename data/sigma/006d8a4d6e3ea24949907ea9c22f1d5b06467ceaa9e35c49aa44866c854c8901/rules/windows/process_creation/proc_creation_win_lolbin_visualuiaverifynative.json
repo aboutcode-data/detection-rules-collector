@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_visualuiaverifynative.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2022-06-01",
+                "title": "Use of VisualUiaVerifyNative.exe",
+                "id": "b30a8bc5-e21b-4ca2-9420-0a94019ac56a"
+            },
+            "rule_text": "title: Use of VisualUiaVerifyNative.exe\nid: b30a8bc5-e21b-4ca2-9420-0a94019ac56a\nstatus: test\ndescription: VisualUiaVerifyNative.exe is a Windows SDK that can be used for AWL bypass\n  and is listed in Microsoft's recommended block rules.\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/VisualUiaVerifyNative/\n- https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/applications-that-can-bypass-wdac\n- https://bohops.com/2020/10/15/exploring-the-wdac-microsoft-recommended-block-rules-visualuiaverifynative/\n- https://github.com/MicrosoftDocs/windows-itpro-docs/commit/937db704b9148e9cee7c7010cad4d00ce9c4fdad\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2022-06-01\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\VisualUiaVerifyNative.exe\n  - OriginalFileName: VisualUiaVerifyNative.exe\n  condition: selection\nfalsepositives:\n- Legitimate testing of Microsoft UI parts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

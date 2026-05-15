@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Banker/TrojanSpy_Win32_Banker_AOA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Banker_AOA",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Banker.AOA,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Banker_AOA\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Banker.AOA,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {5c 47 62 50 6c 75 67 69 6e }\n\t\t$a_01_1 = {5c 53 63 70 61 64 }\n\t\t$a_01_2 = {42 72 61 64 69 6e 68 61 }\n\t\t$a_01_3 = {4c 61 72 61 6e 6a 61 }\n\t\t$a_03_4 = {ba 04 00 00 00 e8 ?? ?? ?? ?? a1 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8d 55 d0 b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 55 d0 b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8d 55 cc b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 55 cc b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8d 55 c8 b8 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 55 c8 8b c6 e8 ?? ?? ?? ?? 0f b6 05 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

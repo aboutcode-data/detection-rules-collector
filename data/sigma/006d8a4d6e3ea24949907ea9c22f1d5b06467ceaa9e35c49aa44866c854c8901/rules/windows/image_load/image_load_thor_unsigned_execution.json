@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_thor_unsigned_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-29",
+                "title": "Suspicious Unsigned Thor Scanner Execution",
+                "id": "ea5c131b-380d-49f9-aeb3-920694da4d4b"
+            },
+            "rule_text": "title: Suspicious Unsigned Thor Scanner Execution\nid: ea5c131b-380d-49f9-aeb3-920694da4d4b\nstatus: stable\ndescription: Detects loading and execution of an unsigned thor scanner binary.\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-29\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\thor.exe\n    - \\thor64.exe\n    ImageLoaded|endswith:\n    - \\thor.exe\n    - \\thor64.exe\n  filter_main:\n    Signed: 'true'\n    SignatureStatus: valid\n    Signature: Nextron Systems GmbH\n  condition: selection and not filter_main\nfalsepositives:\n- Other legitimate binaries named \"thor.exe\" that aren't published by Nextron Systems\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

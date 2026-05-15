@@ -1,0 +1,29 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/Rifdoor.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "detect_rifdoor",
+                "tags": [
+                    "rifdoor"
+                ],
+                "description": "detect_rifdoor",
+                "author": "@malgamy12",
+                "date": "2022/11/11",
+                "license": "DRL 1.1",
+                "hash1": "19b2144927bd071e30df9fce5f3d49f1",
+                "hash2": "d8ba4b4bfc5e0877fa8e8c1b26876ea6",
+                "hash3": "d94d6f773c0ed5514d3e571e4b3681ba",
+                "hash4": "5aca1e4ec64ba417d1b0ebea88bdd06e",
+                "hash5": "45f8d44cba70520ca2ea97427ddaab3e",
+                "hash6": "d3b2956904bed8c8146b8bb556b8911a",
+                "hash7": "e4c4c9abdd8613afa17f58d721039a46",
+                "hash8": "cf847663a7a9d6ddbe3a1f0d5e5236b6",
+                "hash9": "01a0b932d82ed3b78ccfb2bb5826c32f",
+                "hash10": "c6687e1fab97b2d7433a5e51fcf2aa30"
+            },
+            "rule_text": "rule detect_rifdoor : rifdoor\n{\n\tmeta:\n\t\tdescription = \"detect_rifdoor\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"2022/11/11\"\n\t\tlicense = \"DRL 1.1\"\n\t\thash1 = \"19b2144927bd071e30df9fce5f3d49f1\"\n\t\thash2 = \"d8ba4b4bfc5e0877fa8e8c1b26876ea6\"\n\t\thash3 = \"d94d6f773c0ed5514d3e571e4b3681ba\"\n\t\thash4 = \"5aca1e4ec64ba417d1b0ebea88bdd06e\"\n\t\thash5 = \"45f8d44cba70520ca2ea97427ddaab3e\"\n\t\thash6 = \"d3b2956904bed8c8146b8bb556b8911a\"\n\t\thash7 = \"e4c4c9abdd8613afa17f58d721039a46\"\n\t\thash8 = \"cf847663a7a9d6ddbe3a1f0d5e5236b6\"\n\t\thash9 = \"01a0b932d82ed3b78ccfb2bb5826c32f\"\n\t\thash10 = \"c6687e1fab97b2d7433a5e51fcf2aa30\"\n\n\tstrings:\n\t\t$pdb = \"rifle.pdb\" ascii\n\t\t$s1 = \"MUTEX394039_4830023\" ascii\n\t\t$s2 = \"CMD:%s %s %d/%d/%d %d:%d:%d\" ascii\n\t\t$s3 = \"/c del /q \\\"%s\\\" >> NUL\" ascii\n\t\t$chunk_1 = {80 32 ?? 41 80 39 ?? 8B D1 75}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( $pdb or ( 2 of ( $s* ) and $chunk_1 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

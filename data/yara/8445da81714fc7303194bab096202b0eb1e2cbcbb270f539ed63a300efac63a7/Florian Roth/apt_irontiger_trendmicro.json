@@ -1,0 +1,203 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/apt_irontiger_trendmicro.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IronTiger_ASPXSpy",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "ASPXSpy detection. It might be used by other fraudsters",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_ASPXSpy\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"ASPXSpy detection. It might be used by other fraudsters\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str2 = \"IIS Spy\" wide ascii\n\t\t$str3 = \"protected void DGCoW(object sender,EventArgs e)\" nocase wide ascii\n\n\tcondition:\n\t\tany of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_ChangePort_Toolkit_driversinstall",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - Changeport Toolkit driverinstall",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_ChangePort_Toolkit_driversinstall\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - Changeport Toolkit driverinstall\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"openmydoor\" nocase wide ascii\n\t\t$str2 = \"Install service error\" nocase wide ascii\n\t\t$str3 = \"start remove service\" nocase wide ascii\n\t\t$str4 = \"NdisVersion\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 2 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_ChangePort_Toolkit_ChangePortExe",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - Toolkit ChangePort",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_ChangePort_Toolkit_ChangePortExe\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - Toolkit ChangePort\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"Unable to alloc the adapter!\" nocase wide ascii\n\t\t$str2 = \"Wait for master fuck\" nocase wide ascii\n\t\t$str3 = \"xx.exe <HOST> <PORT>\" nocase wide ascii\n\t\t$str4 = \"chkroot2007\" nocase wide ascii\n\t\t$str5 = \"Door is bind on %s\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 2 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_dllshellexc2010",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "dllshellexc2010 Exchange backdoor + remote shell",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_dllshellexc2010\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"dllshellexc2010 Exchange backdoor + remote shell\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"Microsoft.Exchange.Clients.Auth.dll\" nocase ascii wide\n\t\t$str2 = \"Dllshellexc2010\" nocase wide ascii\n\t\t$str3 = \"Users\\\\ljw\\\\Documents\" nocase wide ascii\n\t\t$bla1 = \"please input path\" nocase wide ascii\n\t\t$bla2 = \"auth.owa\" nocase wide ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d ) and ( ( any of ( $str* ) ) or ( all of ( $bla* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_dnstunnel",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "This rule detects a dns tunnel tool used in Operation Iron Tiger",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_dnstunnel\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"This rule detects a dns tunnel tool used in Operation Iron Tiger\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"\\\\DnsTunClient\\\\\" nocase wide ascii\n\t\t$str2 = \"\\\\t-DNSTunnel\\\\\" nocase wide ascii\n\t\t$str3 = \"xssok.blogspot\" nocase wide ascii\n\t\t$str4 = \"dnstunclient\" nocase wide ascii\n\t\t$mistake1 = \"because of error, can not analysis\" nocase wide ascii\n\t\t$mistake2 = \"can not deal witn the error\" nocase wide ascii\n\t\t$mistake3 = \"the other retun one RST\" nocase wide ascii\n\t\t$mistake4 = \"Coversation produce one error\" nocase wide ascii\n\t\t$mistake5 = \"Program try to use the have deleted the buffer\" nocase wide ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d ) and ( ( any of ( $str* ) ) or ( any of ( $mistake* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_EFH3_encoder",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger EFH3 Encoder",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_EFH3_encoder\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger EFH3 Encoder\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"EFH3 [HEX] [SRCFILE] [DSTFILE]\" nocase wide ascii\n\t\t$str2 = \"123.EXE 123.EFH\" nocase wide ascii\n\t\t$str3 = \"ENCODER: b[i]: = \" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_GetPassword_x64",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - GetPassword x64",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_GetPassword_x64\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - GetPassword x64\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"(LUID ERROR)\" nocase wide ascii\n\t\t$str2 = \"Users\\\\K8team\\\\Desktop\\\\GetPassword\" nocase wide ascii\n\t\t$str3 = \"Debug x64\\\\GetPassword.pdb\" nocase wide ascii\n\t\t$bla1 = \"Authentication Package:\" nocase wide ascii\n\t\t$bla2 = \"Authentication Domain:\" nocase wide ascii\n\t\t$bla3 = \"* Password:\" nocase wide ascii\n\t\t$bla4 = \"Primary User:\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( ( any of ( $str* ) ) or ( all of ( $bla* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_Gh0stRAT_variant",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "This is a detection for a s.exe variant seen in Op. Iron Tiger",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_Gh0stRAT_variant\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"This is a detection for a s.exe variant seen in Op. Iron Tiger\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"Game Over Good Luck By Wind\" nocase wide ascii\n\t\t$str2 = \"ReleiceName\" nocase wide ascii\n\t\t$str3 = \"jingtisanmenxiachuanxiao.vbs\" nocase wide ascii\n\t\t$str4 = \"Winds Update\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $str* ) ) and not filename == \"UpdateSystemMib.exe\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_GTalk_Trojan",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - GTalk Trojan",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_GTalk_Trojan\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - GTalk Trojan\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"gtalklite.com\" nocase wide ascii\n\t\t$str2 = \"computer=%s&lanip=%s&uid=%s&os=%s&data=%s\" nocase wide ascii\n\t\t$str3 = \"D13idmAdm\" nocase wide ascii\n\t\t$str4 = \"Error: PeekNamedPipe failed with %i\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 2 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_HTTPBrowser_Dropper",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - HTTPBrowser Dropper",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_HTTPBrowser_Dropper\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - HTTPBrowser Dropper\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \".dllUT\" nocase wide ascii\n\t\t$str2 = \".exeUT\" nocase wide ascii\n\t\t$str3 = \".urlUT\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 2 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_HTTP_SOCKS_Proxy_soexe",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Toolset - HTTP SOCKS Proxy soexe",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_HTTP_SOCKS_Proxy_soexe\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Toolset - HTTP SOCKS Proxy soexe\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"listen SOCKET error.\" nocase wide ascii\n\t\t$str2 = \"WSAAsyncSelect SOCKET error.\" nocase wide ascii\n\t\t$str3 = \"new SOCKETINFO error!\" nocase wide ascii\n\t\t$str4 = \"Http/1.1 403 Forbidden\" nocase wide ascii\n\t\t$str5 = \"Create SOCKET error.\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 3 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_NBDDos_Gh0stvariant_dropper",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - NBDDos Gh0stvariant Dropper",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_NBDDos_Gh0stvariant_dropper\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - NBDDos Gh0stvariant Dropper\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"This service can't be stoped.\" nocase wide ascii\n\t\t$str2 = \"Provides support for media palyer\" nocase wide ascii\n\t\t$str4 = \"CreaetProcess Error\" nocase wide ascii\n\t\t$bla1 = \"Kill You\" nocase wide ascii\n\t\t$bla2 = \"%4.2f GB\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( ( any of ( $str* ) ) or ( all of ( $bla* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_PlugX_DosEmulator",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - PlugX DosEmulator",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_PlugX_DosEmulator\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - PlugX DosEmulator\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"Dos Emluator Ver\" nocase wide ascii\n\t\t$str2 = \"\\\\PIPE\\\\FASTDOS\" nocase wide ascii\n\t\t$str3 = \"FastDos.cpp\" nocase wide ascii\n\t\t$str4 = \"fail,error code = %d.\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_PlugX_FastProxy",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - PlugX FastProxy",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_PlugX_FastProxy\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - PlugX FastProxy\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"SAFEPROXY HTServerTimer Quit!\" nocase wide ascii\n\t\t$str2 = \"Useage: %s pid\" nocase wide ascii\n\t\t$str3 = \"%s PORT[%d] TO PORT[%d] SUCCESS!\" nocase wide ascii\n\t\t$str4 = \"p0: port for listener\" nocase wide ascii\n\t\t$str5 = \"\\\\users\\\\whg\\\\desktop\\\\plug\\\\\" nocase wide ascii\n\t\t$str6 = \"[+Y] cwnd : %3d, fligth:\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( any of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_PlugX_Server",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - PlugX Server",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_PlugX_Server\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - PlugX Server\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"\\\\UnitFrmManagerKeyLog.pas\" nocase wide ascii\n\t\t$str2 = \"\\\\UnitFrmManagerRegister.pas\" nocase wide ascii\n\t\t$str3 = \"Input Name...\" nocase wide ascii\n\t\t$str4 = \"New Value#\" nocase wide ascii\n\t\t$str5 = \"TThreadRControl.Execute SEH!!!\" nocase wide ascii\n\t\t$str6 = \"\\\\UnitFrmRControl.pas\" nocase wide ascii\n\t\t$str7 = \"OnSocket(event is error)!\" nocase wide ascii\n\t\t$str8 = \"Make 3F Version Ok!!!\" nocase wide ascii\n\t\t$str9 = \"PELEASE DO NOT CHANGE THE DOCAMENT\" nocase wide ascii\n\t\t$str10 = \"Press [Ok] Continue Run, Press [Cancel] Exit\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 2 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_ReadPWD86",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - ReadPWD86",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_ReadPWD86\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - ReadPWD86\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"Fail To Load LSASRV\" nocase wide ascii\n\t\t$str2 = \"Fail To Search LSASS Data\" nocase wide ascii\n\t\t$str3 = \"User Principal\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( all of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_Ring_Gh0stvariant",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Malware - Ring Gh0stvariant",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_Ring_Gh0stvariant\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Malware - Ring Gh0stvariant\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"RING RAT Exception\" nocase wide ascii\n\t\t$str2 = \"(can not update server recently)!\" nocase wide ascii\n\t\t$str4 = \"CreaetProcess Error\" nocase wide ascii\n\t\t$bla1 = \"Sucess!\" nocase wide ascii\n\t\t$bla2 = \"user canceled!\" nocase wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( ( any of ( $str* ) ) or ( all of ( $bla* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IronTiger_wmiexec",
+                "tags": [],
+                "author": "Cyber Safety Solutions, Trend Micro",
+                "description": "Iron Tiger Tool - wmi.vbs detection",
+                "reference": "http://goo.gl/T5fSJC"
+            },
+            "rule_text": "rule IronTiger_wmiexec\n{\n\tmeta:\n\t\tauthor = \"Cyber Safety Solutions, Trend Micro\"\n\t\tdescription = \"Iron Tiger Tool - wmi.vbs detection\"\n\t\treference = \"http://goo.gl/T5fSJC\"\n\n\tstrings:\n\t\t$str1 = \"Temp Result File , Change it to where you like\" nocase wide ascii\n\t\t$str2 = \"wmiexec\" nocase wide ascii\n\t\t$str3 = \"By. Twi1ight\" nocase wide ascii\n\t\t$str4 = \"[both mode] ,delay TIME to read result\" nocase wide ascii\n\t\t$str5 = \"such as nc.exe or Trojan\" nocase wide ascii\n\t\t$str6 = \"+++shell mode+++\" nocase wide ascii\n\t\t$str7 = \"win2008 fso has no privilege to delete file\" nocase wide ascii\n\n\tcondition:\n\t\t2 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

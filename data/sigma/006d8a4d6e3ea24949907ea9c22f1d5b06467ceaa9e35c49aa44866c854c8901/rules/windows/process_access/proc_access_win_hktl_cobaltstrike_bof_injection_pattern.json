@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_hktl_cobaltstrike_bof_injection_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-04",
+                "title": "HackTool - CobaltStrike BOF Injection Pattern",
+                "id": "09706624-b7f6-455d-9d02-adee024cee1d"
+            },
+            "rule_text": "title: HackTool - CobaltStrike BOF Injection Pattern\nid: 09706624-b7f6-455d-9d02-adee024cee1d\nstatus: test\ndescription: Detects a typical pattern of a CobaltStrike BOF which inject into other\n  processes\nreferences:\n- https://github.com/boku7/injectAmsiBypass\n- https://github.com/boku7/spawn\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-04\nmodified: 2023-11-28\ntags:\n- attack.execution\n- attack.defense-impairment\n- attack.t1106\n- attack.t1685\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    CallTrace|re: ^C:\\\\Windows\\\\SYSTEM32\\\\ntdll\\.dll\\+[a-z0-9]{4,6}\\|C:\\\\Windows\\\\System32\\\\KERNELBASE\\.dll\\+[a-z0-9]{4,6}\\|UNKNOWN\\([A-Z0-9]{16}\\)$\n    GrantedAccess:\n    - '0x1028'\n    - '0x1fffff'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

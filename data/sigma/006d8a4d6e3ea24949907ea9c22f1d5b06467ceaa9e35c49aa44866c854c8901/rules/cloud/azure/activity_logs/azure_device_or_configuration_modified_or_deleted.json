@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_device_or_configuration_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-09-03",
+                "title": "Azure Device or Configuration Modified or Deleted",
+                "id": "46530378-f9db-4af9-a9e5-889c177d3881"
+            },
+            "rule_text": "title: Azure Device or Configuration Modified or Deleted\nid: 46530378-f9db-4af9-a9e5-889c177d3881\nstatus: test\ndescription: Identifies when a device or device configuration in azure is modified\n  or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities#core-directory\nauthor: Austin Songer @austinsonger\ndate: 2021-09-03\nmodified: 2022-10-09\ntags:\n- attack.impact\n- attack.t1485\n- attack.t1565.001\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    properties.message:\n    - Delete device\n    - Delete device configuration\n    - Update device\n    - Update device configuration\n  condition: selection\nfalsepositives:\n- Device or device configuration being modified or deleted may be performed by a system\n  administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Device or device configuration modified or deleted from unfamiliar users should\n  be investigated. If known behavior is causing false positives, it can be exempted\n  from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

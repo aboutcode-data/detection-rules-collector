@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/apt_macOS_gimmick.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_macOS_gimmick",
+                "tags": [
+                    "StormCloud"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Detects the macOS port of the GIMMICK malware.",
+                "reference": "https://www.volexity.com/blog/2022/03/22/storm-cloud-on-the-horizon-gimmick-malware-strikes-at-macos/",
+                "date": "2021-10-18",
+                "hash1": "2a9296ac999e78f6c0bee8aca8bfa4d4638aa30d9c8ccc65124b1cbfc9caab5f",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "memory_suitable": 1
+            },
+            "rule_text": "rule apt_macOS_gimmick : StormCloud\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Detects the macOS port of the GIMMICK malware.\"\n\t\treference = \"https://www.volexity.com/blog/2022/03/22/storm-cloud-on-the-horizon-gimmick-malware-strikes-at-macos/\"\n\t\tdate = \"2021-10-18\"\n\t\thash1 = \"2a9296ac999e78f6c0bee8aca8bfa4d4638aa30d9c8ccc65124b1cbfc9caab5f\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\tmemory_suitable = 1\n\n\tstrings:\n\t\t$s1 = \"http://cgi1.apnic.net/cgi-bin/my-ip.php --connect-timeout 10 -m 20\" wide ascii\n\t\t$json1 = \"base_json\" ascii wide\n\t\t$json2 = \"down_json\" ascii wide\n\t\t$json3 = \"upload_json\" ascii wide\n\t\t$json4 = \"termin_json\" ascii wide\n\t\t$json5 = \"request_json\" ascii wide\n\t\t$json6 = \"online_json\" ascii wide\n\t\t$json7 = \"work_json\" ascii wide\n\t\t$msg1 = \"bash_pid: %d, FDS_CHILD: %d, FDS_PARENT: %d\" ascii wide\n\t\t$msg2 = \"pid %d is dead\" ascii wide\n\t\t$msg3 = \"exit with code %d\" ascii wide\n\t\t$msg4 = \"recv signal %d\" ascii wide\n\t\t$cmd1 = \"ReadCmdQueue\" ascii wide\n\t\t$cmd2 = \"read_cmd_server_timer\" ascii wide\n\t\t$cmd3 = \"enableProxys\" ascii wide\n\t\t$cmd4 = \"result_block\" ascii wide\n\t\t$cmd5 = \"createDirLock\" ascii wide\n\t\t$cmd6 = \"proxyLock\" ascii wide\n\t\t$cmd7 = \"createDirTmpItem\" ascii wide\n\t\t$cmd8 = \"dowfileLock\" ascii wide\n\t\t$cmd9 = \"downFileTmpItem\" ascii wide\n\t\t$cmd10 = \"filePathTmpItem\" ascii wide\n\t\t$cmd11 = \"uploadItems\" ascii wide\n\t\t$cmd12 = \"downItems\" ascii wide\n\t\t$cmd13 = \"failUploadItems\" ascii wide\n\t\t$cmd14 = \"failDownItems\" ascii wide\n\t\t$cmd15 = \"downloadCmds\" ascii wide\n\t\t$cmd16 = \"uploadFiles\" ascii wide\n\n\tcondition:\n\t\t$s1 or 5 of ( $json* ) or 3 of ( $msg* ) or 9 of ( $cmd* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

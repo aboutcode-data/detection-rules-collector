@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msxsl_remote_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel",
+                "date": "2023-11-09",
+                "title": "Remote XSL Execution Via Msxsl.EXE",
+                "id": "75d0a94e-6252-448d-a7be-d953dff527bb"
+            },
+            "rule_text": "title: Remote XSL Execution Via Msxsl.EXE\nid: 75d0a94e-6252-448d-a7be-d953dff527bb\nstatus: test\ndescription: Detects the execution of the \"msxsl\" binary with an \"http\" keyword in\n  the command line. This might indicate a potential remote execution of XSL files.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1220/T1220.md\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Msxsl/\nauthor: Swachchhanda Shrawan Poudel\ndate: 2023-11-09\ntags:\n- attack.stealth\n- attack.t1220\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\msxsl.exe\n    CommandLine|contains: http\n  condition: selection\nfalsepositives:\n- Msxsl is not installed by default and is deprecated, so unlikely on most systems.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

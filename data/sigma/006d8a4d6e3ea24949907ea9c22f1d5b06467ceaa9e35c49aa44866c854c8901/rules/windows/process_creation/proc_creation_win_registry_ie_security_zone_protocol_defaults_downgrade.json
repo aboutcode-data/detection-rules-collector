@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_registry_ie_security_zone_protocol_defaults_downgrade.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-05",
+                "title": "IE ZoneMap Setting Downgraded To MyComputer Zone For HTTP Protocols Via CLI",
+                "id": "10344bb3-7f65-46c2-b915-2d00d47be5b0"
+            },
+            "rule_text": "title: IE ZoneMap Setting Downgraded To MyComputer Zone For HTTP Protocols Via CLI\nid: 10344bb3-7f65-46c2-b915-2d00d47be5b0\nrelated:\n- id: 3fd4c8d7-8362-4557-a8e6-83b29cc0d724\n  type: similar\nstatus: test\ndescription: 'Detects changes to Internet Explorer''s (IE / Windows Internet properties)\n  ZoneMap configuration of the \"HTTP\" and \"HTTPS\" protocols to point to the \"My Computer\"\n  zone. This allows downloaded files from the Internet to be granted the same level\n  of trust as files stored locally.\n\n  '\nreferences:\n- https://twitter.com/M_haggis/status/1699056847154725107\n- https://twitter.com/JAMESWT_MHT/status/1699042827261391247\n- https://learn.microsoft.com/en-us/troubleshoot/developer/browsers/security-privacy/ie-security-zones-registry-entries\n- https://www.virustotal.com/gui/file/339ff720c74dc44265b917b6d3e3ba0411d61f3cd3c328e9a2bae81592c8a6e5/content\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-05\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - \\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\ZoneMap\\ProtocolDefaults\n    - http\n    - ' 0'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

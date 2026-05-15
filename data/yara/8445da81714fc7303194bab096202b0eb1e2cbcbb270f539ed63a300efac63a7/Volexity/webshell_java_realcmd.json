@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/webshell_java_realcmd.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_java_realcmd",
+                "tags": [
+                    "Commodity",
+                    "Webshells"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Detects the RealCMD webshell, one of the payloads for BEHINDER.",
+                "date": "2022-06-01",
+                "hash1": "a9a30455d6f3a0a8cd0274ae954aa41674b6fd52877fafc84a9cb833fd8858f6",
+                "reference": "https://github.com/Freakboy/Behinder/blob/master/src/main/java/vip/youwe/sheller/payload/java/RealCMD.java",
+                "reference2": "https://www.volexity.com/blog/2022/06/02/zero-day-exploitation-of-atlassian-confluence/",
+                "memory_suitable": 1,
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule webshell_java_realcmd : Commodity Webshells\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Detects the RealCMD webshell, one of the payloads for BEHINDER.\"\n\t\tdate = \"2022-06-01\"\n\t\thash1 = \"a9a30455d6f3a0a8cd0274ae954aa41674b6fd52877fafc84a9cb833fd8858f6\"\n\t\treference = \"https://github.com/Freakboy/Behinder/blob/master/src/main/java/vip/youwe/sheller/payload/java/RealCMD.java\"\n\t\treference2 = \"https://www.volexity.com/blog/2022/06/02/zero-day-exploitation-of-atlassian-confluence/\"\n\t\tmemory_suitable = 1\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$fn1 = \"runCmd\" wide ascii fullword\n\t\t$fn2 = \"RealCMD\" ascii wide fullword\n\t\t$fn3 = \"buildJson\" ascii wide fullword\n\t\t$fn4 = \"Encrypt\" ascii wide fullword\n\t\t$s1 = \"AES/ECB/PKCS5Padding\" ascii wide\n\t\t$s2 = \"python -c 'import pty; pty.spawn\" ascii wide\n\t\t$s3 = \"status\" ascii wide\n\t\t$s4 = \"success\" ascii wide\n\t\t$s5 = \"sun.jnu.encoding\" ascii wide\n\t\t$s6 = \"java.util.Base64\" ascii wide\n\n\tcondition:\n\t\tall of ( $fn* ) or all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

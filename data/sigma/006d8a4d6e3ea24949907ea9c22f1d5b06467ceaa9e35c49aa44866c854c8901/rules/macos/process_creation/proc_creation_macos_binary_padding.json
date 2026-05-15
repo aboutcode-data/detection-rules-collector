@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_binary_padding.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Igor Fits, Mikhail Larin, oscd.community",
+                "date": "2020-10-19",
+                "title": "Binary Padding - MacOS",
+                "id": "95361ce5-c891-4b0a-87ca-e24607884a96"
+            },
+            "rule_text": "title: Binary Padding - MacOS\nid: 95361ce5-c891-4b0a-87ca-e24607884a96\nstatus: test\ndescription: Adversaries may use binary padding to add junk data and change the on-disk\n  representation of malware. This rule detect using dd and truncate to add a junk\n  data to file.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1027.001/T1027.001.md\n- https://linux.die.net/man/1/truncate\n- https://linux.die.net/man/1/dd\nauthor: Igor Fits, Mikhail Larin, oscd.community\ndate: 2020-10-19\nmodified: 2023-02-17\ntags:\n- attack.stealth\n- attack.t1027.001\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection_truncate:\n    Image|endswith: /truncate\n    CommandLine|contains: -s +\n  selection_dd:\n    Image|endswith: /dd\n    CommandLine|contains:\n    - if=/dev/zero\n    - if=/dev/random\n    - if=/dev/urandom\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate script work\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

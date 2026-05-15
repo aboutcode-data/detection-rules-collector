@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_app_role_added.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'",
+                "date": "2022-07-19",
+                "title": "App Assigned To Azure RBAC/Microsoft Entra Role",
+                "id": "b04934b2-0a68-4845-8a19-bdfed3a68a7a"
+            },
+            "rule_text": "title: App Assigned To Azure RBAC/Microsoft Entra Role\nid: b04934b2-0a68-4845-8a19-bdfed3a68a7a\nstatus: test\ndescription: Detects when an app is assigned Azure AD roles, such as global administrator,\n  or Azure RBAC roles, such as subscription owner.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications#service-principal-assigned-to-a-role\nauthor: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'\ndate: 2022-07-19\nmodified: 2024-11-04\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1098.003\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    targetResources.type: Service Principal\n    properties.message:\n    - Add member to role\n    - Add eligible member to role\n    - Add scoped member to role\n  condition: selection\nfalsepositives:\n- When the permission is legitimately needed for the app\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

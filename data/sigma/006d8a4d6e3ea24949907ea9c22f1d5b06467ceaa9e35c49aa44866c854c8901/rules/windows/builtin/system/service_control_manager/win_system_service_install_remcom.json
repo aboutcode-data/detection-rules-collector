@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_remcom.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-07",
+                "title": "RemCom Service Installation",
+                "id": "9e36ed87-4986-482e-8e3b-5c23ffff11bf"
+            },
+            "rule_text": "title: RemCom Service Installation\nid: 9e36ed87-4986-482e-8e3b-5c23ffff11bf\nstatus: test\ndescription: Detects RemCom service installation and execution events\nreferences:\n- https://github.com/kavika13/RemCom/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-07\ntags:\n- attack.execution\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ServiceName: RemComSvc\n  - ImagePath|endswith: \\RemComSvc.exe\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

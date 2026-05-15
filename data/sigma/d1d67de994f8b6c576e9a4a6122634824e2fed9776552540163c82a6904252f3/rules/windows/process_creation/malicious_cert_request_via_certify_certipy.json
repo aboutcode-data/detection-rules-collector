@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/malicious_cert_request_via_certify_certipy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Ramine Etow",
+                "date": "2025-08-14",
+                "title": "Malicious Certificate Request with Alternate Name via Certify or Certipy",
+                "id": "6b0e5a6a-bf0c-4bbe-ac4b-87e1e7accbd3"
+            },
+            "rule_text": "title: Malicious Certificate Request with Alternate Name via Certify or Certipy\nid: 6b0e5a6a-bf0c-4bbe-ac4b-87e1e7accbd3\nstatus: stable\ndescription: Detects the use of Certify.exe or Certipy to request a certificate with\n  a specified Subject Alternative Name (SAN). This is a common technique (ESC1) used\n  in AD CS abuse to impersonate other users, often high-privileged ones like Domain\n  Admins, by embedding their identity in the SAN field of a certificate.\nreferences:\n- https://redfoxsec.com/blog/exploiting-active-directory-certificate-services-ad-cs/\nauthor: NTT Security - Ramine Etow\ndate: 2025-08-14\ntags:\n- attack.privilege_escalation\n- attack.t1649\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_certify:\n    Image|endswith: \\Certify.exe\n    CommandLine|contains|all:\n    - request\n    - /altname\n  selection_certipy:\n    Image|endswith: \\certipy.exe\n    CommandLine|contains|all:\n    - req\n    - -alt\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate use of these tools by penetration testers or security researchers during\n  authorized testing.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

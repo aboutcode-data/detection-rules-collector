@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/webshell_aspx_reGeorgTunnel.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_aspx_reGeorgTunnel",
+                "tags": [
+                    "Webshell",
+                    "Commodity"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-03-01",
+                "description": "variation on reGeorgtunnel",
+                "hash": "406b680edc9a1bb0e2c7c451c56904857848b5f15570401450b73b232ff38928",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "reference": "https://github.com/sensepost/reGeorg/blob/master/tunnel.aspx",
+                "reference2": "https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/"
+            },
+            "rule_text": "rule webshell_aspx_reGeorgTunnel : Webshell Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-03-01\"\n\t\tdescription = \"variation on reGeorgtunnel\"\n\t\thash = \"406b680edc9a1bb0e2c7c451c56904857848b5f15570401450b73b232ff38928\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\treference = \"https://github.com/sensepost/reGeorg/blob/master/tunnel.aspx\"\n\t\treference2 = \"https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/\"\n\n\tstrings:\n\t\t$s1 = \"System.Net.Sockets\"\n\t\t$s2 = \"System.Text.Encoding.Default.GetString(Convert.FromBase64String(StrTr(Request.Headers.Get\"\n\t\t$t1 = \".Split('|')\"\n\t\t$t2 = \"Request.Headers.Get\"\n\t\t$t3 = \".Substring(\"\n\t\t$t4 = \"new Socket(\"\n\t\t$t5 = \"IPAddress ip;\"\n\n\tcondition:\n\t\tall of ( $s* ) or all of ( $t* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

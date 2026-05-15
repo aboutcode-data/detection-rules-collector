@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_dseditgroup_add_to_admin_group.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-08-22",
+                "title": "User Added To Admin Group Via DseditGroup",
+                "id": "5d0fdb62-f225-42fb-8402-3dfe64da468a"
+            },
+            "rule_text": "title: User Added To Admin Group Via DseditGroup\nid: 5d0fdb62-f225-42fb-8402-3dfe64da468a\nstatus: test\ndescription: Detects attempts to create and/or add an account to the admin group,\n  thus granting admin privileges.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1078.003/T1078.003.md#atomic-test-5---add-a-newexisting-user-to-the-admin-group-using-dseditgroup-utility---macos\n- https://ss64.com/osx/dseditgroup.html\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-08-22\ntags:\n- attack.persistence\n- attack.initial-access\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078.003\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /dseditgroup\n    CommandLine|contains|all:\n    - ' -o edit '\n    - ' -a '\n    - ' -t user'\n    - admin\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

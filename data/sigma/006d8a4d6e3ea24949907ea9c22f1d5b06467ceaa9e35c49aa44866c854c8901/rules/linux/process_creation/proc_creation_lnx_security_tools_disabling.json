@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_security_tools_disabling.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ömer Günal, Alejandro Ortuno, oscd.community",
+                "date": "2020-06-17",
+                "title": "Disabling Security Tools",
+                "id": "e3a8a052-111f-4606-9aee-f28ebeb76776"
+            },
+            "rule_text": "title: Disabling Security Tools\nid: e3a8a052-111f-4606-9aee-f28ebeb76776\nstatus: test\ndescription: Detects disabling security tools\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.004/T1562.004.md\nauthor: \"\\xD6mer G\\xFCnal, Alejandro Ortuno, oscd.community\"\ndate: 2020-06-17\nmodified: 2022-10-09\ntags:\n- attack.defense-impairment\n- attack.t1686\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_iptables_1:\n    Image|endswith: /service\n    CommandLine|contains|all:\n    - iptables\n    - stop\n  selection_iptables_2:\n    Image|endswith: /service\n    CommandLine|contains|all:\n    - ip6tables\n    - stop\n  selection_iptables_3:\n    Image|endswith: /chkconfig\n    CommandLine|contains|all:\n    - iptables\n    - stop\n  selection_iptables_4:\n    Image|endswith: /chkconfig\n    CommandLine|contains|all:\n    - ip6tables\n    - stop\n  selection_firewall_1:\n    Image|endswith: /systemctl\n    CommandLine|contains|all:\n    - firewalld\n    - stop\n  selection_firewall_2:\n    Image|endswith: /systemctl\n    CommandLine|contains|all:\n    - firewalld\n    - disable\n  selection_carbonblack_1:\n    Image|endswith: /service\n    CommandLine|contains|all:\n    - cbdaemon\n    - stop\n  selection_carbonblack_2:\n    Image|endswith: /chkconfig\n    CommandLine|contains|all:\n    - cbdaemon\n    - 'off'\n  selection_carbonblack_3:\n    Image|endswith: /systemctl\n    CommandLine|contains|all:\n    - cbdaemon\n    - stop\n  selection_carbonblack_4:\n    Image|endswith: /systemctl\n    CommandLine|contains|all:\n    - cbdaemon\n    - disable\n  selection_selinux:\n    Image|endswith: /setenforce\n    CommandLine|contains: '0'\n  selection_crowdstrike_1:\n    Image|endswith: /systemctl\n    CommandLine|contains|all:\n    - stop\n    - falcon-sensor\n  selection_crowdstrike_2:\n    Image|endswith: /systemctl\n    CommandLine|contains|all:\n    - disable\n    - falcon-sensor\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

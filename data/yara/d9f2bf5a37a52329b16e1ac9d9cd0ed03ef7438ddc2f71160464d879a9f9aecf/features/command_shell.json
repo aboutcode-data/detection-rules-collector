@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/features/command_shell.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "command_shell",
+                "tags": [],
+                "description": "Microsoft Windows Command Shell",
+                "Block": false,
+                "Quarantine": false
+            },
+            "rule_text": "rule command_shell\n{\n\tmeta:\n\t\tdescription = \"Microsoft Windows Command Shell\"\n\t\tBlock = false\n\t\tQuarantine = false\n\n\tstrings:\n\t\t$internal_error = \"CMD Internal Error %s\"\n\t\t$shell_open_command = \"\\\\Shell\\\\Open\\\\Command\" ascii wide\n\t\t$mklink = \"ENDLOCAL\" ascii wide\n\t\t$errorlevel = \"ERRORLEVEL\" ascii wide\n\t\t$cmdextversion = \"CMDEXTVERSION\" ascii wide\n\t\t$dpath = \"DPATH\" ascii wide\n\t\t$color = \"COLOR\" ascii wide\n\t\t$chdir = \"CHDIR\" ascii wide\n\t\t$pushd = \"PUSHD\" ascii wide\n\t\t$ftype = \"FTYPE\" ascii wide\n\t\t$erase = \"ERASE\" ascii wide\n\t\t$defined = \"DEFINED\" ascii wide\n\t\t$prompt = \"PROMPT\" ascii wide\n\t\t$setlocal = \"SETLOCAL\" ascii wide\n\n\tcondition:\n\t\tIsPeFile and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

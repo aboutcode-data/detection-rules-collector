@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_url_to_local_exe.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "URL_File_Local_EXE",
+                "tags": [],
+                "description": "Detects an .url file that points to a local executable",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/malwareforme/status/915300883012870144",
+                "date": "2017-10-04",
+                "score": 60,
+                "id": "8b157e98-7b69-5649-b1d8-40bd6b685bf6"
+            },
+            "rule_text": "rule URL_File_Local_EXE\n{\n\tmeta:\n\t\tdescription = \"Detects an .url file that points to a local executable\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/malwareforme/status/915300883012870144\"\n\t\tdate = \"2017-10-04\"\n\t\tscore = 60\n\t\tid = \"8b157e98-7b69-5649-b1d8-40bd6b685bf6\"\n\n\tstrings:\n\t\t$s1 = \"[InternetShortcut]\" ascii wide fullword\n\t\t$s2 = /URL=file:\\/\\/\\/C:\\\\[^\\n]{1,50}\\.exe/\n\n\tcondition:\n\t\tfilesize < 400 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

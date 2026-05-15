@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/Techniques/check_installed_software.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "check_installed_software",
+                "tags": [],
+                "author": "RussianPanda",
+                "date": "1/14/2024",
+                "reference": "https://unprotect.it/technique/checking-installed-software/",
+                "hash": "db44d4cd1ea8142790a6b26880b41ee23de5db5c2a63afb9ee54585882f1aa07"
+            },
+            "rule_text": "rule check_installed_software\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"1/14/2024\"\n\t\treference = \"https://unprotect.it/technique/checking-installed-software/\"\n\t\thash = \"db44d4cd1ea8142790a6b26880b41ee23de5db5c2a63afb9ee54585882f1aa07\"\n\n\tstrings:\n\t\t$d1 = \"DisplayVersion\"\n\t\t$u1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Uninstall\"\n\t\t$reg = \"RegOpenKeyExA\"\n\t\t$h = {68 (01|02) 00 00 80}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and $reg and $h and for any i in ( 1 .. #u1 ) : ( $d1 in ( @u1 [ i ] - 200 .. @u1 [ i ] + 200 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

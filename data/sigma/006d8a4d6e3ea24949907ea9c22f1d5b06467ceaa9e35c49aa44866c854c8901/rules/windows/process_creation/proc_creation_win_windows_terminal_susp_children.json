@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_windows_terminal_susp_children.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-25",
+                "title": "Suspicious WindowsTerminal Child Processes",
+                "id": "8de89e52-f6e1-4b5b-afd1-41ecfa300d48"
+            },
+            "rule_text": "title: Suspicious WindowsTerminal Child Processes\nid: 8de89e52-f6e1-4b5b-afd1-41ecfa300d48\nstatus: test\ndescription: Detects suspicious children spawned via the Windows Terminal application\n  which could be a sign of persistence via WindowsTerminal (see references section)\nreferences:\n- https://persistence-info.github.io/Data/windowsterminalprofile.html\n- https://twitter.com/nas_bench/status/1550836225652686848\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-25\nmodified: 2023-02-14\ntags:\n- attack.execution\n- attack.persistence\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\WindowsTerminal.exe\n    - \\wt.exe\n  selection_susp:\n  - Image|endswith:\n    - \\rundll32.exe\n    - \\regsvr32.exe\n    - \\certutil.exe\n    - \\cscript.exe\n    - \\wscript.exe\n    - \\csc.exe\n  - Image|contains:\n    - C:\\Users\\Public\\\n    - \\Downloads\\\n    - \\Desktop\\\n    - \\AppData\\Local\\Temp\\\n    - \\Windows\\TEMP\\\n  - CommandLine|contains:\n    - ' iex '\n    - ' icm'\n    - Invoke-\n    - 'Import-Module '\n    - 'ipmo '\n    - DownloadString(\n    - ' /c '\n    - ' /k '\n    - ' /r '\n  filter_builtin_visual_studio_shell:\n    CommandLine|contains|all:\n    - Import-Module\n    - Microsoft.VisualStudio.DevShell.dll\n    - Enter-VsDevShell\n  filter_open_settings:\n    CommandLine|contains|all:\n    - \\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_\n    - \\LocalState\\settings.json\n  filter_vsdevcmd:\n    CommandLine|contains|all:\n    - C:\\Program Files\\Microsoft Visual Studio\\\n    - \\Common7\\Tools\\VsDevCmd.bat\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Other legitimate \"Windows Terminal\" profiles\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

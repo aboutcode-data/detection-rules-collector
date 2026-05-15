@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Agent/Trojan_Win32_Agent_AIA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Agent_AIA",
+                "tags": [],
+                "description": "Trojan:Win32/Agent.AIA,SIGNATURE_TYPE_PEHSTR,6e 00 64 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Agent_AIA\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Agent.AIA,SIGNATURE_TYPE_PEHSTR,6e 00 64 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {b8 46 55 43 4b 3d 46 55 43 4b 75 }\n\t\t$a_01_1 = {46 55 43 4b 3d 46 55 43 4b }\n\t\t$a_01_2 = {66 75 63 6b 61 6c 6c 62 6c 79 61 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 100 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 10 ) >= 100\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

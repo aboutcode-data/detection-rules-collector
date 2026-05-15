@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nick Hoffman/Check_UserNames.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Check_UserNames",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Looks for malware checking for common sandbox usernames",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_UserNames\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Looks for malware checking for common sandbox usernames\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$user1 = \"MALTEST\" wide ascii\n\t\t$user2 = \"TEQUILABOOMBOOM\" wide ascii\n\t\t$user3 = \"SANDBOX\" wide ascii\n\t\t$user4 = \"VIRUS\" wide ascii\n\t\t$user5 = \"MALWARE\" wide ascii\n\n\tcondition:\n\t\tall of ( $user* ) and pe.imports ( \"advapi32.dll\" , \"GetUserNameA\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

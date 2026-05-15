@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/elceef/yara-rulz/blob/master/rules/HTML_Windows_Search.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HTML_Windows_Search_Abuse",
+                "tags": [],
+                "description": "Detects HTML files abusing Windows system functionalities to redirect and download malicious payloads",
+                "author": "marcin@ulikowski.pl",
+                "date": "2024-06-15",
+                "hash1": "d136dcfc355885c502ff2c3be229791538541b748b6c07df3ced95f9a7eb2f30"
+            },
+            "rule_text": "rule HTML_Windows_Search_Abuse\n{\n\tmeta:\n\t\tdescription = \"Detects HTML files abusing Windows system functionalities to redirect and download malicious payloads\"\n\t\tauthor = \"marcin@ulikowski.pl\"\n\t\tdate = \"2024-06-15\"\n\t\thash1 = \"d136dcfc355885c502ff2c3be229791538541b748b6c07df3ced95f9a7eb2f30\"\n\n\tstrings:\n\t\t$location1 = \"location.href\" wide ascii\n\t\t$location2 = \"location.replace(\" wide ascii\n\t\t$location3 = \"location.assign(\" wide ascii\n\t\t$metarefresh = \"<meta http-equiv=\\\"refresh\\\"\" nocase wide ascii\n\t\t$search1 = \"\\\"search-ms:query=\" wide ascii\n\t\t$search2 = \"\\\"search:query=\" wide ascii\n\t\t$search3 = \"URL=search:query=\" wide ascii\n\t\t$crumb1 = \"&crumb=location:\" wide ascii\n\t\t$crumb2 = \"&amp;crumb=location:\" wide ascii\n\n\tcondition:\n\t\t( any of ( $location* ) or $metarefresh ) and any of ( $search* ) and any of ( $crumb* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

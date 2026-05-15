@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_web_request_cmd_and_cmdlets.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "James Pemberton / @4A616D6573",
+                "date": "2019-10-24",
+                "title": "Usage Of Web Request Commands And Cmdlets - ScriptBlock",
+                "id": "1139d2e2-84b1-4226-b445-354492eba8ba"
+            },
+            "rule_text": "title: Usage Of Web Request Commands And Cmdlets - ScriptBlock\nid: 1139d2e2-84b1-4226-b445-354492eba8ba\nrelated:\n- id: 9fc51a3c-81b3-4fa7-b35f-7c02cf10fd2d\n  type: derived\nstatus: test\ndescription: Detects the use of various web request commands with commandline tools\n  and Windows PowerShell cmdlets (including aliases) via PowerShell scriptblock logs\nreferences:\n- https://4sysops.com/archives/use-powershell-to-download-a-file-with-http-https-and-ftp/\n- https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell\nauthor: James Pemberton / @4A616D6573\ndate: 2019-10-24\nmodified: 2025-10-20\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - '[System.Net.WebRequest]::create'\n    - 'curl '\n    - Invoke-RestMethod\n    - Invoke-WebRequest\n    - ' irm '\n    - 'iwr '\n    - Resume-BitsTransfer\n    - Start-BitsTransfer\n    - 'wget '\n    - WinHttp.WinHttpRequest\n  filter:\n    Path|startswith: C:\\Packages\\Plugins\\Microsoft.GuestConfiguration.ConfigurationforWindows\\\n  condition: selection and not filter\nfalsepositives:\n- Use of Get-Command and Get-Help modules to reference Invoke-WebRequest and Start-BitsTransfer.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

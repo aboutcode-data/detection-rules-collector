@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Trickbot/Trojan_Win32_TrickBot_DSS_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_TrickBot_DSS_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/TrickBot.DSS!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_TrickBot_DSS_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/TrickBot.DSS!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {55 8b ec 51 53 56 6a 04 33 c0 ba 05 2e 00 00 5b 0f b6 88 ?? ?? ?? ?? 81 f9 ff 00 00 00 0f 87 ?? ?? ?? ?? ff 24 8d ?? ?? ?? ?? c6 80 ?? ?? ?? ?? 00 e9 ?? ?? ?? ?? c6 80 ?? ?? ?? ?? 01 e9 ?? ?? ?? ?? c6 80 ?? ?? ?? ?? 02 e9 }\n\t\t$a_02_1 = {55 8b ec 83 ec 24 a1 ?? ?? ?? ?? 33 c5 89 45 fc c7 45 e0 ?? ?? ?? ?? c7 45 f0 00 00 00 00 c7 45 dc 00 00 00 00 c7 45 f0 00 00 00 00 eb }\n\t\t$a_02_2 = {8b 45 f0 83 c0 01 89 45 f0 81 7d f0 05 2e 00 00 0f 83 ?? ?? ?? ?? 8b 4d f0 0f b6 91 ?? ?? ?? ?? 89 55 e8 81 7d e8 ff 00 00 00 0f 87 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

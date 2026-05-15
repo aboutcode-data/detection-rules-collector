@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_command_shell_from_service_ctrl_mgr.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Service Control Manager Spawning Command Shell with Suspect Strings",
+                "id": "cdf9f0ba-857a-4f91-9f30-724ade93b797"
+            },
+            "rule_text": "title: Service Control Manager Spawning Command Shell with Suspect Strings\nid: cdf9f0ba-857a-4f91-9f30-724ade93b797\nstatus: experimental\ndescription: \"The following pseudo detector should generate an alert when services.exe\\\n  \\ spawns \\ncmd.exe along with a corresponding echo or /c command, which are common\\\n  \\ attributes \\nof post exploitation that we\\u2019ve seen in association with this\\\n  \\ technique. Part of \\nthe RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1059\n- attack.t1059.003\n- attack.t1569\n- attack.t1569.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\services.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains:\n    - echo\n    - /c\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

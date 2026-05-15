@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_parent_execute_itself.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "frack113",
+                "date": "2025-10-17",
+                "title": "Potential Executable Run Itself As Sacrificial Process",
+                "id": "bafd07c6-3ea5-454a-b4be-058fbb073de7"
+            },
+            "rule_text": "title: Potential Executable Run Itself As Sacrificial Process\nid: bafd07c6-3ea5-454a-b4be-058fbb073de7\nstatus: experimental\ndescription: \"Detects when an executable launches an identical instance of itself,\\\n  \\ a behavior often used to create a suspended \\u201Csacrificial\\u201D process for\\\n  \\ code injection or evasion.\\nInvestigate for indicators such as the process being\\\n  \\ started in suspended mode, rapid parent termination, memory manipulation (e.g.,\\\n  \\ WriteProcessMemory, CreateRemoteThread), or unsigned binaries.\\nReview command-line\\\n  \\ arguments, process ancestry, and network activity to confirm if this is legitimate\\\n  \\ behavior or process injection activity.\\n\"\nreferences:\n- https://www.joesandbox.com/analysis/1605063/0/html\nauthor: frack113\ndate: 2025-10-17\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|fieldref: ParentImage\n  filter_main_path:\n    Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  filter_main_original_fn:\n    OriginalFileName:\n    - Cmd.Exe\n    - CompatTelRunner.exe\n    - Discord.exe\n    - electron.exe\n    - EXPLORER.EXE\n    - httpd.exe\n    - IE4UINIT.EXE\n    - mmc.exe\n    - MpCmdRun.exe\n    - mscorsvw.exe\n    - msiexec.exe\n    - NGenTask.exe\n    - OneDriveSetup.exe\n    - PowerShell.EXE\n    - REGSVR32.EXE\n    - smss.exe\n    - Spotify.exe\n    - WerMgr\n  filter_main_product:\n    Product:\n    - Avira\n    - Evernote\n    - Firefox\n    - Microsoft Office\n    - Ninite\n    - Opera Browser Assistant Installer\n    - Opera Installer\n    - Sysinternals Sysmon\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Legitimate software that may launch a new instance of itself, especially updaters\n  or installers. Investigate each alert and apply whitelisting as needed.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

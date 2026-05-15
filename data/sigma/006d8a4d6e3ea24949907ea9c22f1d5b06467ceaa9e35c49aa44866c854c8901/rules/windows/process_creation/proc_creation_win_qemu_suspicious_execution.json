@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_qemu_suspicious_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal (@faisalusuf), Hunter Juhan (@threatHNTR)",
+                "date": "2024-06-03",
+                "title": "Potentially Suspicious Usage Of Qemu",
+                "id": "5fc297ae-25b6-488a-8f25-cc12ac29b744"
+            },
+            "rule_text": "title: Potentially Suspicious Usage Of Qemu\nid: 5fc297ae-25b6-488a-8f25-cc12ac29b744\nstatus: test\ndescription: 'Detects potentially suspicious execution of the Qemu utility in a Windows\n  environment.\n\n  Threat actors have leveraged this utility and this technique for achieving network\n  access as reported by Kaspersky.\n\n  '\nreferences:\n- https://securelist.com/network-tunneling-with-qemu/111803/\n- https://www.qemu.org/docs/master/system/invocation.html#hxtool-5\nauthor: Muhammad Faisal (@faisalusuf), Hunter Juhan (@threatHNTR)\ndate: 2024-06-03\ntags:\n- attack.command-and-control\n- attack.t1090\n- attack.t1572\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - -m 1M\n    - -m 2M\n    - -m 3M\n    CommandLine|contains|all:\n    - restrict=off\n    - '-netdev '\n    - connect=\n    - -nographic\n  filter_main_normal_usecase:\n    CommandLine|contains:\n    - ' -cdrom '\n    - ' type=virt '\n    - ' -blockdev '\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

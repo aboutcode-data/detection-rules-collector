@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_alert_enable_weak_encryption.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron",
+                "date": "2017-07-30",
+                "title": "Weak Encryption Enabled and Kerberoast",
+                "id": "f6de9536-0441-4b3f-a646-f4e00f300ffd"
+            },
+            "rule_text": "title: Weak Encryption Enabled and Kerberoast\nid: f6de9536-0441-4b3f-a646-f4e00f300ffd\nstatus: test\ndescription: Detects scenario where weak encryption is enabled for a user profile\n  which could be used for hash/password cracking.\nreferences:\n- https://adsecurity.org/?p=2053\n- https://blog.harmj0y.net/redteaming/another-word-on-delegation/\nauthor: '@neu5ron'\ndate: 2017-07-30\nmodified: 2021-11-27\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Policy : Account Management > Audit User Account\n    Management, Group Policy : Computer Configuration\\Windows Settings\\Security Settings\\Advanced\n    Audit Policy Configuration\\Audit Policies\\Account Management\\Audit User Account\n    Management'\ndetection:\n  selection:\n    EventID: 4738\n  olduac_des:\n    OldUacValue|endswith:\n    - 8???\n    - 9???\n    - A???\n    - B???\n    - C???\n    - D???\n    - E???\n    - F???\n  newuac_des:\n    NewUacValue|endswith:\n    - 8???\n    - 9???\n    - A???\n    - B???\n    - C???\n    - D???\n    - E???\n    - F???\n  olduac_preauth:\n    OldUacValue|endswith:\n    - 1????\n    - 3????\n    - 5????\n    - 7????\n    - 9????\n    - B????\n    - D????\n    - F????\n  newuac_preauth:\n    NewUacValue|endswith:\n    - 1????\n    - 3????\n    - 5????\n    - 7????\n    - 9????\n    - B????\n    - D????\n    - F????\n  olduac_encrypted:\n    OldUacValue|endswith:\n    - 8??\n    - 9??\n    - A??\n    - B??\n    - C??\n    - D??\n    - E??\n    - F??\n  newuac_encrypted:\n    NewUacValue|endswith:\n    - 8??\n    - 9??\n    - A??\n    - B??\n    - C??\n    - D??\n    - E??\n    - F??\n  condition: selection and ((newuac_des and not olduac_des) or (newuac_preauth and\n    not olduac_preauth) or (newuac_encrypted and not olduac_encrypted))\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_quarks_pwdump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-05",
+                "title": "HackTool - Quarks PwDump Execution",
+                "id": "0685b176-c816-4837-8e7b-1216f346636b"
+            },
+            "rule_text": "title: HackTool - Quarks PwDump Execution\nid: 0685b176-c816-4837-8e7b-1216f346636b\nstatus: test\ndescription: Detects usage of the Quarks PwDump tool via commandline arguments\nreferences:\n- https://github.com/quarkslab/quarkspwdump\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/seedworm-apt-iran-middle-east\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-05\nmodified: 2023-02-05\ntags:\n- attack.credential-access\n- attack.t1003.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\QuarksPwDump.exe\n  selection_cli:\n    CommandLine:\n    - ' -dhl'\n    - ' --dump-hash-local'\n    - ' -dhdc'\n    - ' --dump-hash-domain-cached'\n    - ' --dump-bitlocker'\n    - ' -dhd '\n    - ' --dump-hash-domain '\n    - --ntds-file\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

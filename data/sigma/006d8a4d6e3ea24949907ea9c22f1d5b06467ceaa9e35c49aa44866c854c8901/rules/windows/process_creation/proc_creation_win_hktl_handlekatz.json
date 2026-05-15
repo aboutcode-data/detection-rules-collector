@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_handlekatz.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-18",
+                "title": "HackTool - HandleKatz LSASS Dumper Execution",
+                "id": "ca621ba5-54ab-4035-9942-d378e6fcde3c"
+            },
+            "rule_text": "title: HackTool - HandleKatz LSASS Dumper Execution\nid: ca621ba5-54ab-4035-9942-d378e6fcde3c\nstatus: test\ndescription: Detects the use of HandleKatz, a tool that demonstrates the usage of\n  cloned handles to Lsass in order to create an obfuscated memory dump of the same\nreferences:\n- https://github.com/codewhitesec/HandleKatz\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-18\nmodified: 2024-11-23\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_loader_img:\n    Image|endswith: \\loader.exe\n    CommandLine|contains: '--pid:'\n  selection_loader_imphash:\n    Hashes|contains:\n    - IMPHASH=38D9E015591BBFD4929E0D0F47FA0055\n    - IMPHASH=0E2216679CA6E1094D63322E3412D650\n  selection_flags:\n    CommandLine|contains|all:\n    - '--pid:'\n    - '--outfile:'\n    CommandLine|contains:\n    - .dmp\n    - lsass\n    - .obf\n    - dump\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wget_download_susp_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-02-23",
+                "title": "Suspicious File Download From IP Via Wget.EXE - Paths",
+                "id": "40aa399c-7b02-4715-8e5f-73572b493f33"
+            },
+            "rule_text": "title: Suspicious File Download From IP Via Wget.EXE - Paths\nid: 40aa399c-7b02-4715-8e5f-73572b493f33\nstatus: test\ndescription: Detects potentially suspicious file downloads directly from IP addresses\n  and stored in suspicious locations using Wget.exe\nreferences:\n- https://www.gnu.org/software/wget/manual/wget.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-02-23\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wget.exe\n  - OriginalFileName: wget.exe\n  selection_ip:\n    CommandLine|re: ://[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\n  selection_http:\n    CommandLine|contains: http\n  selection_flag:\n  - CommandLine|re: \\s-O\\s\n  - CommandLine|contains: --output-document\n  selection_paths:\n  - CommandLine|contains:\n    - :\\PerfLogs\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Help\\\n    - :\\Windows\\Temp\\\n    - \\Temporary Internet\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Favorites\\\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Favourites\\\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Contacts\\\n  - CommandLine|contains|all:\n    - :\\Users\\\n    - \\Pictures\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

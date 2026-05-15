@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_anydesk_silent_install.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ján Trenčanský",
+                "date": "2021-08-06",
+                "title": "Remote Access Tool - AnyDesk Silent Installation",
+                "id": "114e7f1c-f137-48c8-8f54-3088c24ce4b9"
+            },
+            "rule_text": "title: Remote Access Tool - AnyDesk Silent Installation\nid: 114e7f1c-f137-48c8-8f54-3088c24ce4b9\nstatus: test\ndescription: Detects AnyDesk Remote Desktop silent installation. Which can be used\n  by attackers to gain remote access.\nreferences:\n- https://twitter.com/TheDFIRReport/status/1423361119926816776?s=20\n- https://support.anydesk.com/Automatic_Deployment\nauthor: \"J\\xE1n Tren\\u010Dansk\\xFD\"\ndate: 2021-08-06\nmodified: 2023-03-05\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - --install\n    - --start-with-win\n    - --silent\n  condition: selection\nfalsepositives:\n- Legitimate deployment of AnyDesk\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

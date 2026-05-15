@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_sensitive_file_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-09-16",
+                "title": "Powershell Sensitive File Discovery",
+                "id": "7d416556-6502-45b2-9bad-9d2f05f38997"
+            },
+            "rule_text": "title: Powershell Sensitive File Discovery\nid: 7d416556-6502-45b2-9bad-9d2f05f38997\nrelated:\n- id: d23f2ba5-9da0-4463-8908-8ee47f614bb9\n  type: derived\nstatus: test\ndescription: Detect adversaries enumerate sensitive files\nreferences:\n- https://twitter.com/malmoeb/status/1570814999370801158\nauthor: frack113\ndate: 2022-09-16\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_action:\n    ScriptBlockText|contains:\n    - ls\n    - get-childitem\n    - gci\n  selection_recurse:\n    ScriptBlockText|contains: -recurse\n  selection_file:\n    ScriptBlockText|contains:\n    - .pass\n    - .kdbx\n    - .kdb\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Chaflicon/Trojan_Win32_Chaflicon_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Chaflicon_C",
+                "tags": [],
+                "description": "Trojan:Win32/Chaflicon.C,SIGNATURE_TYPE_PEHSTR_EXT,05 00 04 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Chaflicon_C\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Chaflicon.C,SIGNATURE_TYPE_PEHSTR_EXT,05 00 04 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 17 89 d0 33 d2 89 17 8b e8 ff d5 83 3f 00 75 ?? 83 3d ?? ?? ?? ?? 00 74 11 e8 }\n\t\t$a_00_1 = {5b 56 45 52 53 41 4f 4c 4f 41 44 45 52 5d }\n\t\t$a_00_2 = {5b 4c 49 4e 4b 43 4f 4e 54 41 44 4f }\n\t\t$a_00_3 = {5b 46 54 50 55 53 45 52 5d }\n\t\t$a_00_4 = {5b 4c 49 4e 4b 45 58 45 5d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

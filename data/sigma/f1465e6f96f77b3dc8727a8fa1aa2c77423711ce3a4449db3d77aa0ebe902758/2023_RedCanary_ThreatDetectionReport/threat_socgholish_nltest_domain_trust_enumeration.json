@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_socgholish_nltest_domain_trust_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "SocGholish NLTest Domain Trust Enumeration (RedCanary Threat Detection Report)",
+                "id": "cdd824c2-ebda-404e-ad62-b2acf251976a"
+            },
+            "rule_text": "title: SocGholish NLTest Domain Trust Enumeration (RedCanary Threat Detection Report)\nid: cdd824c2-ebda-404e-ad62-b2acf251976a\nstatus: experimental\ndescription: Detects domain trust enumeration with nltest.exe, a procedure associated\n  with SocGholish. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/socgholish/#threat-socgholish\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.discovery\n- attack.t1482\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\nltest.exe\n    CommandLine|contains|windash:\n    - /domain_trusts\n    - /all_trusts\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Conti/Ransom_Win32_Conti_ZG.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Conti_ZG",
+                "tags": [],
+                "description": "Ransom:Win32/Conti.ZG,SIGNATURE_TYPE_PEHSTR_EXT,ffffffc9 00 ffffffc9 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Conti_ZG\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Conti.ZG,SIGNATURE_TYPE_PEHSTR_EXT,ffffffc9 00 ffffffc9 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f1 d5 00 fa 4c 62 cc f4 0f 0b }\n\t\t$a_01_1 = {8d 04 5b c7 }\n\t\t$a_01_2 = {8d 34 c5 95 e9 d1 5b }\n\t\t$a_03_3 = {75 15 0f b6 4a 02 c1 e1 10 90 0a 1a 00 33 c9 [0-01] 83 ?? 01 74 1a 83 ?? 01 74 0c 83 ?? 01 }\n\t\t$a_01_4 = {0f b6 42 01 c1 e0 08 33 c8 0f b6 02 33 c8 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 50 + ( #a_01_2 & 1 ) * 50 + ( #a_03_3 & 1 ) * 50 + ( #a_01_4 & 1 ) * 50 ) >= 201\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

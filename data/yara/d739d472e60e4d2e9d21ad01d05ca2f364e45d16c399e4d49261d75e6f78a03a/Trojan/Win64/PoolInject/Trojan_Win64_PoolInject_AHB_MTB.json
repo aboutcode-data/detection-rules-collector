@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/PoolInject/Trojan_Win64_PoolInject_AHB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_PoolInject_AHB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/PoolInject.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_PoolInject_AHB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/PoolInject.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {88 44 24 09 0f b6 44 24 09 c1 f8 ?? 0f b6 4c 24 09 c1 e1 ?? 0b c1 0f b6 4c 24 09 33 c8 8b c1 88 44 24 09 }\n\t\t$a_03_1 = {48 8b 84 24 b0 00 00 00 48 25 ?? ?? ?? ?? 0f b7 c0 89 44 24 70 48 8b 84 24 b0 00 00 00 48 c1 e8 ?? 48 25 ?? ?? ?? ?? 0f b7 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 30 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

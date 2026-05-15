@@ -1,0 +1,48 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/crimeware/SystemBC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SystemBC_Socks",
+                "tags": [],
+                "id": "6zIY8rmud3SM6CWLPwxaky",
+                "fingerprint": "09472e26edd142cd68a602f1b6e31abbd4c8ec90c36d355a01692d44ef02a14f",
+                "version": "1.0",
+                "creation_date": "2021-07-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies SystemBC RAT, Socks proxy version.",
+                "category": "MALWARE",
+                "malware": "SYSTEMBC",
+                "malware_type": "RAT"
+            },
+            "rule_text": "rule SystemBC_Socks\n{\n\tmeta:\n\t\tid = \"6zIY8rmud3SM6CWLPwxaky\"\n\t\tfingerprint = \"09472e26edd142cd68a602f1b6e31abbd4c8ec90c36d355a01692d44ef02a14f\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2021-07-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies SystemBC RAT, Socks proxy version.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"SYSTEMBC\"\n\t\tmalware_type = \"RAT\"\n\n\tstrings:\n\t\t$code1 = { 68 10 27 00 00 e8 ?? ?? ?? ?? 8d ?? 72 fe ff ff 50 68 02 02 00 00 e8 ?? ?? \n    ?? ?? 85 c0 75 ?? c7 8? ?? ?? ?? ?? ?? ?? ?? ?? 8d ?? 60 fe ff ff 50 6a ff 68 ?? ?? \n    ?? ?? e8 ?? ?? ?? ?? 8d ?? 60 fe ff ff 50 e8 ?? ?? ?? ?? 89 8? ?? ?? ?? ?? ff b? ?? \n    ?? ?? ?? ff b? ?? ?? ?? ?? e8 ?? ?? ?? ?? 85 c0 75 ?? 81 b? ?? ?? ?? ?? ?? ?? ?? ?? \n    75 ?? c7 8? ?? ?? ?? ?? ?? ?? ?? ?? eb ?? }\n\t\t$code2 = { 55 8b ec 81 c4 d0 fe ff ff 53 57 56 8d ?? f4 2b cc 51 8d ?? ?4 10 50 e8 \n    ?? ?? ?? ?? 6a 06 6a 01 6a 02 e8 ?? ?? ?? ?? 89 4? ?? 6a 04 ff 7? ?? 8d ?? fc 50 e8 \n    ?? ?? ?? ?? c7 8? ?? ?? ?? ?? 01 00 00 00 6a 04 8d ?? d4 fe ff ff 50 6a 01 6a 06 ff \n    7? ?? e8 ?? ?? ?? ?? 8d ?? d8 fe ff ff 50 6a ff ff 7? ?? e8 ?? ?? ?? ?? 6a 02 8d ?? \n    d8 fe ff ff 50 e8 ?? ?? ?? ?? 89 4? ?? 8b 4? ?? 3d 00 00 01 00 76 ?? 50 e8 ?? ?? ?? ?? }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SystemBC_Config",
+                "tags": [],
+                "id": "70WDDM1D5xtPBqsUdBiPTK",
+                "fingerprint": "8de029e2f4fc81742a3e04976a58360e403ce5737098c14e0a007c306a1e0f01",
+                "version": "1.0",
+                "creation_date": "2021-07-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies SystemBC RAT, decrypted config.",
+                "category": "MALWARE",
+                "malware_type": "RAT"
+            },
+            "rule_text": "rule SystemBC_Config\n{\n\tmeta:\n\t\tid = \"70WDDM1D5xtPBqsUdBiPTK\"\n\t\tfingerprint = \"8de029e2f4fc81742a3e04976a58360e403ce5737098c14e0a007c306a1e0f01\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2021-07-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies SystemBC RAT, decrypted config.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware_type = \"RAT\"\n\n\tstrings:\n\t\t$ = \"BEGINDATA\" ascii wide fullword\n\t\t$ = \"HOST1:\" ascii wide fullword\n\t\t$ = \"HOST2:\" ascii wide fullword\n\t\t$ = \"PORT1:\" ascii wide fullword\n\t\t$ = \"TOR:\" ascii wide fullword\n\t\t$ = \"-WindowStyle Hidden -ep bypass -file\" ascii wide\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

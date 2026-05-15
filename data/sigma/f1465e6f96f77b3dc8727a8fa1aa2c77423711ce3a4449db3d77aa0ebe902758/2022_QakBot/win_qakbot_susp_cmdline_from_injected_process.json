@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_QakBot/win_qakbot_susp_cmdline_from_injected_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Adithya Chandra and Sushant Kumar Arya, Trellix",
+                "date": "2022/04/08",
+                "title": "Suspicious Command Arguments from Explorer or Wermgr",
+                "id": "ebda47a5-173e-493d-93a6-d7123076ee11"
+            },
+            "rule_text": "title: Suspicious Command Arguments from Explorer or Wermgr\nid: ebda47a5-173e-493d-93a6-d7123076ee11\nstatus: experimental\ndescription: Detects the suspicious command line arguments from potentially-injected\n  versions of explorer or wermgr processes.\nreferences:\n- https://www.trellix.com/en-us/about/newsroom/stories/research/demystifying-qbot-malware.html\nauthor: Adithya Chandra and Sushant Kumar Arya, Trellix\ndate: 2022/04/08\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\explorer.exe\n    - \\wermgr.exe\n    CommandLine|contains|windash:\n    - whoami /all\n    - arp -a\n    - ipconfig /all\n    - net view /all\n    - cmd /c set\n    - nslookup -querytype=ALL -timeout=10 _ldap._tcp.dc._msdcs\n    - nltest /domain_trusts /all_trusts\n    - net share\n    - netstat -nao\n    - net localgroup\n    - qwinsta\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

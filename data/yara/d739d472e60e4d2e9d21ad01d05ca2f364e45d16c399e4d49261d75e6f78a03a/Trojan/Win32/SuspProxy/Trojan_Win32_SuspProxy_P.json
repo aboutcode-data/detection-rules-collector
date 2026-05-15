@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/SuspProxy/Trojan_Win32_SuspProxy_P.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_SuspProxy_P",
+                "tags": [],
+                "description": "Trojan:Win32/SuspProxy.P,SIGNATURE_TYPE_CMDHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_SuspProxy_P\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/SuspProxy.P,SIGNATURE_TYPE_CMDHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {63 6d 64 2e 65 78 65 20 2f 63 }\n\t\t$a_80_1 = {41 70 70 44 61 74 61 5c 4c 6f 63 61 6c 5c 54 65 6d 70 }\n\t\t$a_80_2 = {72 65 70 5f 65 6d 70 6f 64 65 72 2e 76 62 73 }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 1 + ( #a_80_1 & 1 ) * 1 + ( #a_80_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

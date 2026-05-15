@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_susp_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Tim Shelton",
+                "date": "2022-04-26",
+                "title": "Potentially Suspicious PowerShell Child Processes",
+                "id": "e4b6d2a7-d8a4-4f19-acbd-943c16d90647"
+            },
+            "rule_text": "title: Potentially Suspicious PowerShell Child Processes\nid: e4b6d2a7-d8a4-4f19-acbd-943c16d90647\nstatus: test\ndescription: 'Detects potentially suspicious child processes spawned by PowerShell.\n\n  Use this rule to hunt for potential anomalies initiating from PowerShell scripts\n  and commands.\n\n  '\nreferences:\n- https://twitter.com/ankit_anubhav/status/1518835408502620162\nauthor: Florian Roth (Nextron Systems), Tim Shelton\ndate: 2022-04-26\nmodified: 2024-07-16\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    Image|endswith:\n    - \\bash.exe\n    - \\bitsadmin.exe\n    - \\certutil.exe\n    - \\cscript.exe\n    - \\forfiles.exe\n    - \\hh.exe\n    - \\mshta.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\schtasks.exe\n    - \\scrcons.exe\n    - \\scriptrunner.exe\n    - \\sh.exe\n    - \\wmic.exe\n    - \\wscript.exe\n  filter_optional_amazon:\n    ParentCommandLine|contains: \\Program Files\\Amazon\\WorkspacesConfig\\Scripts\\\n    CommandLine|contains: \\Program Files\\Amazon\\WorkspacesConfig\\Scripts\\\n  filter_main_certutil_verify_store:\n    Image|endswith: \\certutil.exe\n    CommandLine|contains: '-verifystore '\n  filter_main_wmic:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains:\n    - qfe list\n    - 'diskdrive '\n    - 'csproduct '\n    - 'computersystem '\n    - ' os '\n    - ''\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- False positives are to be expected from PowerShell scripts that might make use of\n  additional binaries such as \"mshta\", \"bitsadmin\", etc. Apply additional filters\n  for those scripts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

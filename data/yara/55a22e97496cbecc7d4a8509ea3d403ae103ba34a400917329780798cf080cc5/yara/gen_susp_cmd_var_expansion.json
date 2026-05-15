@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_susp_cmd_var_expansion.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_CMD_Var_Expansion",
+                "tags": [],
+                "description": "Detects Office droppers that include a variable expansion string",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/asfakian/status/1044859525675843585",
+                "date": "2018-09-26",
+                "score": 60,
+                "id": "3f3ebea0-1d33-513d-b32b-9d87607525e8"
+            },
+            "rule_text": "rule SUSP_CMD_Var_Expansion\n{\n\tmeta:\n\t\tdescription = \"Detects Office droppers that include a variable expansion string\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/asfakian/status/1044859525675843585\"\n\t\tdate = \"2018-09-26\"\n\t\tscore = 60\n\t\tid = \"3f3ebea0-1d33-513d-b32b-9d87607525e8\"\n\n\tstrings:\n\t\t$a1 = \" /V:ON\" ascii wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0xcfd0 and filesize < 500KB and $a1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

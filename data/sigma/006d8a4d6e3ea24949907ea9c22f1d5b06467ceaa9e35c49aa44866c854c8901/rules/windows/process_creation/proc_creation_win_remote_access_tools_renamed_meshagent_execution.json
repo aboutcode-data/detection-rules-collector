@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_renamed_meshagent_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Norbert Jaśniewicz (AlphaSOC)",
+                "date": "2025-05-19",
+                "title": "Remote Access Tool - Renamed MeshAgent Execution - Windows",
+                "id": "b471f462-eb0d-4832-be35-28d94bdb4780"
+            },
+            "rule_text": "title: Remote Access Tool - Renamed MeshAgent Execution - Windows\nid: b471f462-eb0d-4832-be35-28d94bdb4780\nrelated:\n- id: bd3b5eaa-439d-4a42-8f35-a49f5c8a2582\n  type: similar\n- id: 2fbbe9ff-0afc-470b-bdc0-592198339968\n  type: derived\nstatus: experimental\ndescription: 'Detects the execution of a renamed instance of the Remote Monitoring\n  and Management (RMM) tool, MeshAgent.\n\n  RMM tools such as MeshAgent are commonly utilized by IT administrators for legitimate\n  remote support and system management.\n\n  However, malicious actors may exploit these tools by renaming them to bypass detection\n  mechanisms, enabling unauthorized access and control over compromised systems.\n\n  '\nreferences:\n- https://www.huntress.com/blog/know-thy-enemy-a-novel-november-case-on-persistent-remote-access\n- https://thecyberexpress.com/ukraine-hit-by-meshagent-malware-campaign/\n- https://wazuh.com/blog/how-to-detect-meshagent-with-wazuh/\n- https://www.security.com/threat-intelligence/medusa-ransomware-attacks\nauthor: \"Norbert Ja\\u015Bniewicz (AlphaSOC)\"\ndate: 2025-05-19\ntags:\n- attack.command-and-control\n- attack.stealth\n- attack.t1219.002\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_meshagent:\n  - CommandLine|contains: --meshServiceName\n  - OriginalFileName|contains: meshagent\n  filter_main_legitimate:\n    Image|endswith: \\meshagent.exe\n  condition: selection_meshagent and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

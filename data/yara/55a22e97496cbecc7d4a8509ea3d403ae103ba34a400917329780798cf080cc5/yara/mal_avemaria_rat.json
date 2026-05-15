@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_avemaria_rat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_AveMaria_RAT_Jul19",
+                "tags": [],
+                "description": "Detects AveMaria RAT",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/abuse_ch/status/1145697917161934856",
+                "date": "2019-07-01",
+                "hash1": "5a927db1566468f23803746ba0ccc9235c79ca8672b1444822631ddbf2651a59",
+                "id": "960048cf-7a56-50cf-8498-549f900770d8"
+            },
+            "rule_text": "rule MAL_AveMaria_RAT_Jul19\n{\n\tmeta:\n\t\tdescription = \"Detects AveMaria RAT\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/abuse_ch/status/1145697917161934856\"\n\t\tdate = \"2019-07-01\"\n\t\thash1 = \"5a927db1566468f23803746ba0ccc9235c79ca8672b1444822631ddbf2651a59\"\n\t\tid = \"960048cf-7a56-50cf-8498-549f900770d8\"\n\n\tstrings:\n\t\t$a1 = \"operator co_await\" fullword ascii\n\t\t$s1 = \"uohlyatqn\" fullword ascii\n\t\t$s2 = \"index = [%d][%d][%d][%d]\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 3000KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

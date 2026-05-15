@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_parents.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-21",
+                "title": "Suspicious Process Parents",
+                "id": "cbec226f-63d9-4eca-9f52-dfb6652f24df"
+            },
+            "rule_text": "title: Suspicious Process Parents\nid: cbec226f-63d9-4eca-9f52-dfb6652f24df\nstatus: test\ndescription: Detects suspicious parent processes that should not have any children\n  or should only have a single possible child program\nreferences:\n- https://twitter.com/x86matthew/status/1505476263464607744?s=12\n- https://svch0st.medium.com/stats-from-hunting-cobalt-strike-beacons-c17e56255f9b\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-21\nmodified: 2022-09-08\ntags:\n- attack.stealth\n- attack.t1036\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\minesweeper.exe\n    - \\winver.exe\n    - \\bitsadmin.exe\n  selection_special:\n    ParentImage|endswith:\n    - \\csrss.exe\n    - \\certutil.exe\n    - \\eventvwr.exe\n    - \\calc.exe\n    - \\notepad.exe\n  filter_special:\n    Image|endswith:\n    - \\WerFault.exe\n    - \\wermgr.exe\n    - \\conhost.exe\n    - \\mmc.exe\n    - \\win32calc.exe\n    - \\notepad.exe\n  filter_null:\n    Image: null\n  condition: selection or ( selection_special and not 1 of filter_* )\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

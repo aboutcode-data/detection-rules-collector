@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_set_nopolicies_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-03-18",
+                "title": "Registry Explorer Policy Modification",
+                "id": "1c3121ed-041b-4d97-a075-07f54f20fb4a"
+            },
+            "rule_text": "title: Registry Explorer Policy Modification\nid: 1c3121ed-041b-4d97-a075-07f54f20fb4a\nstatus: test\ndescription: Detects registry modifications that disable internal tools or functions\n  in explorer (malware like Agent Tesla uses this technique)\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md\nauthor: frack113\ndate: 2022-03-18\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_set_1:\n    TargetObject|endswith:\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoLogOff\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoDesktop\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoRun\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoFind\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoControlPanel\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoFileMenu\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoClose\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoSetTaskbar\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoPropertiesMyDocuments\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\NoTrayContextMenu\n    Details: DWORD (0x00000001)\n  condition: selection_set_1\nfalsepositives:\n- Legitimate admin script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

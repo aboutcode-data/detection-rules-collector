@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_process_reading_sudoers.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-20",
+                "title": "Access of Sudoers File Content",
+                "id": "0f79c4d2-4e1f-4683-9c36-b5469a665e06"
+            },
+            "rule_text": "title: Access of Sudoers File Content\nid: 0f79c4d2-4e1f-4683-9c36-b5469a665e06\nstatus: test\ndescription: Detects the execution of a text-based file access or inspection utilities\n  to read the content of /etc/sudoers in order to potentially list all users that\n  have sudo rights.\nreferences:\n- https://github.com/sleventyeleven/linuxprivchecker/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-20\nmodified: 2025-06-04\ntags:\n- attack.reconnaissance\n- attack.t1592.004\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith:\n    - /cat\n    - /ed\n    - /egrep\n    - /emacs\n    - /fgrep\n    - /grep\n    - /head\n    - /less\n    - /more\n    - /nano\n    - /tail\n    CommandLine|contains: ' /etc/sudoers'\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

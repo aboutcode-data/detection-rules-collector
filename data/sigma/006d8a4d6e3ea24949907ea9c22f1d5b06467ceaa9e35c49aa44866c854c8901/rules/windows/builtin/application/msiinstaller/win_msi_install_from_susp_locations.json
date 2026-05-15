@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/msiinstaller/win_msi_install_from_susp_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-31",
+                "title": "MSI Installation From Suspicious Locations",
+                "id": "c7c8aa1c-5aff-408e-828b-998e3620b341"
+            },
+            "rule_text": "title: MSI Installation From Suspicious Locations\nid: c7c8aa1c-5aff-408e-828b-998e3620b341\nstatus: test\ndescription: Detects MSI package installation from suspicious locations\nreferences:\n- https://www.trendmicro.com/en_us/research/22/h/ransomware-actor-abuses-genshin-impact-anti-cheat-driver-to-kill-antivirus.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-31\nmodified: 2023-10-23\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name: MsiInstaller\n    EventID:\n    - 1040\n    - 1042\n    Data|contains:\n    - :\\Windows\\TEMP\\\n    - \\\\\\\\\n    - \\Desktop\\\n    - \\PerfLogs\\\n    - \\Users\\Public\\\n  filter_winget:\n    Data|contains: \\AppData\\Local\\Temp\\WinGet\\\n  filter_updhealthtools:\n    Data|contains: C:\\Windows\\TEMP\\UpdHealthTools.msi\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- False positives may occur if you allow installation from folders such as the desktop,\n  the public folder or remote shares. A baseline is required before production use.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

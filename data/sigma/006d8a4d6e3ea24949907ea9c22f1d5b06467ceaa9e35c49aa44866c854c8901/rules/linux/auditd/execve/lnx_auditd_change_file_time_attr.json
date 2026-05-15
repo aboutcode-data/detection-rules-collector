@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_change_file_time_attr.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Igor Fits, oscd.community",
+                "date": "2020-10-15",
+                "title": "File Time Attribute Change - Linux",
+                "id": "b3cec4e7-6901-4b0d-a02d-8ab2d8eb818b"
+            },
+            "rule_text": "title: File Time Attribute Change - Linux\nid: b3cec4e7-6901-4b0d-a02d-8ab2d8eb818b\nstatus: test\ndescription: Detect file time attribute change to hide new or changes to existing\n  files.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.006/T1070.006.md\nauthor: Igor Fits, oscd.community\ndate: 2020-10-15\nmodified: 2022-11-28\ntags:\n- attack.stealth\n- attack.t1070.006\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  execve:\n    type: EXECVE\n  touch:\n  - touch\n  selection2:\n  - -t\n  - -acmr\n  - -d\n  - -r\n  condition: execve and touch and selection2\nfalsepositives:\n- Unknown\nlevel: medium\nsimulation:\n- type: atomic-red-team\n  name: Set a file's access timestamp\n  technique: T1070.006\n  atomic_guid: 5f9113d5-ed75-47ed-ba23-ea3573d05810\n- type: atomic-red-team\n  name: Set a file's modification timestamp\n  technique: T1070.006\n  atomic_guid: 20ef1523-8758-4898-b5a2-d026cc3d2c52\n- type: atomic-red-team\n  name: Modify file timestamps using reference file\n  technique: T1070.006\n  atomic_guid: 631ea661-d661-44b0-abdb-7a7f3fc08e50\n",
+            "vulnerabilities": []
+        }
+    ]
+}

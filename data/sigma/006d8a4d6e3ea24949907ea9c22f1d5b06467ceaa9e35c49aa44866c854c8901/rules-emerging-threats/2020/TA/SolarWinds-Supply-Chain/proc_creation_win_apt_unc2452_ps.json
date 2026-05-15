@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/SolarWinds-Supply-Chain/proc_creation_win_apt_unc2452_ps.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-01-20",
+                "title": "UNC2452 PowerShell Pattern",
+                "id": "b7155193-8a81-4d8f-805d-88de864ca50c"
+            },
+            "rule_text": "title: UNC2452 PowerShell Pattern\nid: b7155193-8a81-4d8f-805d-88de864ca50c\nstatus: test\ndescription: Detects a specific PowerShell command line pattern used by the UNC2452\n  actors as mentioned in Microsoft and Symantec reports\nreferences:\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/solarwinds-raindrop-malware\n- https://www.microsoft.com/security/blog/2020/12/18/analyzing-solorigate-the-compromised-dll-file-that-started-a-sophisticated-cyberattack-and-how-microsoft-defender-helps-protect/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1047/T1047.md#atomic-test-7---create-a-process-using-wmi-query-and-an-encoded-command\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-01-20\nmodified: 2022-10-09\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.t1047\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cli_1:\n    CommandLine|contains|all:\n    - Invoke-WMIMethod win32_process -name create -argumentlist\n    - rundll32 c:\\windows\n  selection_cli_2:\n    CommandLine|contains|all:\n    - 'wmic /node:'\n    - process call create \"rundll32 c:\\windows\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

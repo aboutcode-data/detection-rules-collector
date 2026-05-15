@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_computerdefaults.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-31",
+                "title": "UAC Bypass Tools Using ComputerDefaults",
+                "id": "3c05e90d-7eba-4324-9972-5d7f711a60a8"
+            },
+            "rule_text": "title: UAC Bypass Tools Using ComputerDefaults\nid: 3c05e90d-7eba-4324-9972-5d7f711a60a8\nstatus: test\ndescription: Detects tools such as UACMe used to bypass UAC with computerdefaults.exe\n  (UACMe 59)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-31\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n    Image: C:\\Windows\\System32\\ComputerDefaults.exe\n  filter:\n    ParentImage|contains:\n    - :\\Windows\\System32\n    - :\\Program Files\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

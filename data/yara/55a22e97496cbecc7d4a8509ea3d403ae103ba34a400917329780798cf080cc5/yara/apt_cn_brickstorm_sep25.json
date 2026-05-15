@@ -1,0 +1,124 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_cn_brickstorm_sep25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_G_APT_Backdoor_BRICKSTORM_3",
+                "tags": [],
+                "description": "Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign",
+                "md5": "931eacd7e5250d29903924c31f41b7e5"
+            },
+            "rule_text": "rule MAL_G_APT_Backdoor_BRICKSTORM_3\n{\n\tmeta:\n\t\tdescription = \"Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\t\tmd5 = \"931eacd7e5250d29903924c31f41b7e5\"\n\n\tstrings:\n\t\t$str1 = { 48 8B 05 ?? ?? ?? ?? 48 89 04 24 E8 ?? ?? ?? ?? 48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 48 89 04 24 [0-5] E8 ?? ?? ?? ?? EB ?? }\n\t\t$str4 = \"decompress\" ascii\n\t\t$str5 = \"MIMEHeader\" ascii\n\t\t$str6 = \"ResolveReference\" ascii\n\t\t$str7 = \"115792089210356248762697446949407573529996955224135760342422259061068512044369115792089210356248762697446949407573530086143415290314195533631308867097853951\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x457F and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_G_Backdoor_BRICKSTORM_2",
+                "tags": [],
+                "description": "Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule MAL_G_Backdoor_BRICKSTORM_2\n{\n\tmeta:\n\t\tdescription = \"Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$decr1 = { 0F B6 4C 04 ?? 0F B6 54 04 ?? 31 D1 88 4C 04 ?? 48 FF C0 [0-4] 48 83 F8 ?? 7C }\n\t\t$decr2 = { 40 88 7C 34 34 48 FF C3 48 FF C6 48 39 D6 7D 18 0F B6 3B 48 39 CE 73 63 44 0F B6 04 30 44 31 C7 48 83 FE 04 72 DA }\n\t\t$decr3 = { 0F B6 54 0C ?? 0F B6 5C 0C ?? 31 DA 88 14 08 48 FF C1 48 83 F9 ?? 7C E8 }\n\t\t$str1 = \"main.selfWatcher\"\n\t\t$str2 = \"main.copyFile\"\n\t\t$str3 = \"main.startNew\"\n\t\t$str4 = \"WRITE_LOG=true\"\n\t\t$str5 = \"WRITE_LOGWednesday\"\n\t\t$str6 = \"vami-httpdvideo/webm\"\n\t\t$str7 = \"/opt/vmware/sbin/\"\n\t\t$str8 = \"/home/vsphere-ui/\"\n\t\t$str9 = \"/opt/vmware/sbin/vami-http\"\n\t\t$str10 = \"main.getVFromEnv\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and filesize < 10MB and ( 1 of ( $decr* ) and 1 of ( $str* ) or 5 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_G_APT_Backdoor_BRICKSTORM_1",
+                "tags": [],
+                "description": "Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign",
+                "md5": "4645f2f6800bc654d5fa812237896b00"
+            },
+            "rule_text": "rule MAL_G_APT_Backdoor_BRICKSTORM_1\n{\n\tmeta:\n\t\tdescription = \"Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\t\tmd5 = \"4645f2f6800bc654d5fa812237896b00\"\n\n\tstrings:\n\t\t$ = \"WRITE_LOGWednesday\"\n\t\t$ = \"/home/vsphere-ui/\"\n\t\t$ = \"WRITE_LOG=true\"\n\t\t$ = \"dns rcode: %v\"\n\t\t$ = \"/libs/doh.createDnsMessage\"\n\t\t$ = \"/libs/func1.(*Client).BackgroundRun\"\n\t\t$ = \"/libs/func1.CreateClient\"\n\t\t$ = \"/core/extends/command.CommandNoContext\"\n\t\t$ = \"/core/extends/command.ExecuteCmd\"\n\t\t$ = \"/core/extends/command.RunShell\"\n\t\t$ = \"/libs/fs.(*RemoteDriver).DeleteFile\"\n\t\t$ = \"/libs/fs.(*RemoteDriver).GetFile\"\n\t\t$ = \"/libs/fs.(*RemoteDriver).PutFile\"\n\t\t$ = \"/libs/doh/doh.go\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and 5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_G_APT_Backdoor_BRICKSTORM_2",
+                "tags": [],
+                "description": "Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule MAL_G_APT_Backdoor_BRICKSTORM_2\n{\n\tmeta:\n\t\tdescription = \"Detects BRICKSTORM backdoor used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$str1 = { 0F 57 C0 0F 11 84 ?? ?? ?? ?? ?? C6 44 ?? ?? 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 0F 57 C0 0F 11 84 ?? ?? ?? ?? ?? 0F 11 84 ?? ?? ?? ?? ?? 4? 8B 84 ?? ?? ?? ?? ?? 4? 89 04 ?? 4? 8B 8C ?? ?? ?? ?? ?? 4? 89 4C ?? ?? E8 ?? ?? ?? ?? 4? 83 7C ?? ?? 00 0F 84 ?? ?? ?? ?? 4? 8D 05 ?? ?? ?? ?? 4? 89 ?? ?? E8 ?? ?? ?? ?? 4? 8B 7C ?? ?? 4? 8B 84 ?? ?? ?? ?? ?? 4? 89 47 08 83 3D ?? ?? ?? ?? 00 75 ?? 4? 8B 84 ?? ?? ?? ?? ?? 4? 89 07 4? 89 BC ?? ?? ?? ?? ?? 4? C7 84 ?? ?? ?? ?? ?? 01 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 01 00 00 00 0F 57 C0 0F 11 84 ?? ?? ?? ?? ?? 4? 8B ?? ?? ?? ?? ?? ?? 4? 81 C4 ?? ?? ?? ?? C3 }\n\t\t$str2 = { 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 4? 8B 84 ?? ?? ?? ?? ?? 4? 89 04 ?? 4? 8B 8C ?? ?? ?? ?? ?? 4? 89 4C ?? ?? E8 ?? ?? ?? ?? 4? 8B 44 ?? ?? 4? 85 C0 0F 84 ?? ?? ?? ?? 4? 8D 05 ?? ?? ?? ?? 4? 89 ?? ?? E8 ?? ?? ?? ?? 4? 8B 44 ?? ?? 4? 8B 8C ?? ?? ?? ?? ?? 4? 89 48 08 8B 0D ?? ?? ?? ?? 85 C9 75 ?? 4? 8B 8C ?? ?? ?? ?? ?? 4? 89 08 84 00 4? 89 84 ?? ?? ?? ?? ?? 4? C7 84 ?? ?? ?? ?? ?? 01 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 01 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 4? C7 84 ?? ?? ?? ?? ?? 00 00 00 00 90 E8 ?? ?? ?? ?? 4? 8B ?? ?4 D8 00 00 00 4? 81 C4 E0 00 00 00 C3 }\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7F454C46 and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WEBSHELL_G_APT_BackdoorWebshell_SLAYSTYLE_1",
+                "tags": [],
+                "description": "Detects webshell used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule WEBSHELL_G_APT_BackdoorWebshell_SLAYSTYLE_1\n{\n\tmeta:\n\t\tdescription = \"Detects webshell used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$str1_alt = \"=request.getParameter(\\\"\"\n\t\t$str2 = \"=new String(java.util.Base64.getDecoder().decode(\" ascii wide nocase\n\t\t$str21_alt = \"={\\\"/bin/sh\\\",\\\"-c\\\",\" ascii\n\t\t$str3 = \"= Runtime.getRuntime().exec(\" ascii\n\t\t$str4 = \"java.io.InputStream\" ascii\n\t\t$str5 = \"java.util.Base64.getEncoder().encodeToString(org.apache.commons.io.IOUtils.toByteArray(\" ascii\n\n\tcondition:\n\t\tfilesize < 5MB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WEBSHELL_G_APT_BackdoorWebshell_SLAYSTYLE_2",
+                "tags": [],
+                "description": "Detects webshell used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule WEBSHELL_G_APT_BackdoorWebshell_SLAYSTYLE_2\n{\n\tmeta:\n\t\tdescription = \"Detects webshell used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$str1 = \"request.getParameter\"\n\t\t$str2 = \"/bin/sh\"\n\t\t$str3 = \"java.io.InputStream\"\n\t\t$str4 = \"Runtime.getRuntime().exec(\"\n\t\t$str5 = \"2>&1\"\n\n\tcondition:\n\t\t( uint16( 0 ) != 0x5A4D and uint32( 0 ) != 0x464C457F ) and filesize < 7KB and all of them and @str4 > @str2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_G_Backdoor_BRICKSTEAL_1",
+                "tags": [],
+                "description": "Detects backdoor BRICKSTEAL used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule MAL_G_Backdoor_BRICKSTEAL_1\n{\n\tmeta:\n\t\tdescription = \"Detects backdoor BRICKSTEAL used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$str1 = \"comvmware\"\n\t\t$str2 = \"abcdABCD1234!@#$\"\n\t\t$str3 = \"ads.png\"\n\t\t$str4 = \"User-Agent\"\n\t\t$str5 = \"com/vmware/\"\n\n\tcondition:\n\t\tall of them and filesize < 10KB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_G_Dropper_BRICKSTEAL_1",
+                "tags": [],
+                "description": "Detects backdoor BRICKSTEAL dropper used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule MAL_G_Dropper_BRICKSTEAL_1\n{\n\tmeta:\n\t\tdescription = \"Detects backdoor BRICKSTEAL dropper used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$str1 = \"Base64.getDecoder().decode\"\n\t\t$str2 = \"Thread.currentThread().getContextClassLoader()\"\n\t\t$str3 = \".class.getDeclaredMethod\"\n\t\t$str4 = \"byte[].class\"\n\t\t$str5 = \"method.invoke\"\n\t\t$str6 = \"filterClass.newInstance()\"\n\t\t$str7 = \"/websso/SAML2/SSO/*\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_G_Dropper_BRICKSTEAL_2",
+                "tags": [],
+                "description": "Detects backdoor BRICKSTEAL dropper used by APT group UNC5221 (China Nexus)",
+                "author": "Google Threat Intelligence Group (GTIG) (modified by Florian Roth)",
+                "date": "2025-09-25",
+                "score": 75,
+                "reference": "https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign"
+            },
+            "rule_text": "rule MAL_G_Dropper_BRICKSTEAL_2\n{\n\tmeta:\n\t\tdescription = \"Detects backdoor BRICKSTEAL dropper used by APT group UNC5221 (China Nexus)\"\n\t\tauthor = \"Google Threat Intelligence Group (GTIG) (modified by Florian Roth)\"\n\t\tdate = \"2025-09-25\"\n\t\tscore = 75\n\t\treference = \"https://cloud.google.com/blog/topics/threat-intelligence/brickstorm-espionage-campaign\"\n\n\tstrings:\n\t\t$str1_alt = \"(Class<?>) method.invoke(\" ascii wide\n\t\t$str2 = \"(\\\"yv66vg\" ascii wide\n\t\t$str3 = \"request.getSession().getServletContext\" ascii wide\n\t\t$str4 = \".getClass().getDeclaredField(\" ascii wide\n\t\t$str5 = \"new FilterDef();\" ascii wide\n\t\t$str6 = \"new FilterMap();\" ascii wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_webshell_susp_process_spawned_from_webserver.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thomas Patzke, Florian Roth (Nextron Systems), Zach Stanford @svch0st, Tim Shelton, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-01-16",
+                "title": "Suspicious Process By Web Server Process",
+                "id": "8202070f-edeb-4d31-a010-a26c72ac5600"
+            },
+            "rule_text": "title: Suspicious Process By Web Server Process\nid: 8202070f-edeb-4d31-a010-a26c72ac5600\nstatus: test\ndescription: 'Detects potentially suspicious processes being spawned by a web server\n  process which could be the result of a successfully placed web shell or exploitation\n\n  '\nreferences:\n- https://media.defense.gov/2020/Jun/09/2002313081/-1/-1/0/CSI-DETECT-AND-PREVENT-WEB-SHELL-MALWARE-20200422.PDF\nauthor: Thomas Patzke, Florian Roth (Nextron Systems), Zach Stanford @svch0st, Tim\n  Shelton, Nasreddine Bencherchali (Nextron Systems)\ndate: 2019-01-16\nmodified: 2024-11-26\ntags:\n- attack.persistence\n- attack.initial-access\n- attack.t1505.003\n- attack.t1190\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_webserver_image:\n    ParentImage|endswith:\n    - \\caddy.exe\n    - \\httpd.exe\n    - \\nginx.exe\n    - \\php-cgi.exe\n    - \\php.exe\n    - \\tomcat.exe\n    - \\UMWorkerProcess.exe\n    - \\w3wp.exe\n    - \\ws_TomcatService.exe\n  selection_webserver_characteristics_tomcat1:\n    ParentImage|endswith:\n    - \\java.exe\n    - \\javaw.exe\n    ParentImage|contains:\n    - -tomcat-\n    - \\tomcat\n  selection_webserver_characteristics_tomcat2:\n    ParentImage|endswith:\n    - \\java.exe\n    - \\javaw.exe\n    ParentCommandLine|contains:\n    - CATALINA_HOME\n    - catalina.home\n    - catalina.jar\n  selection_anomaly_children:\n    Image|endswith:\n    - \\arp.exe\n    - \\at.exe\n    - \\bash.exe\n    - \\bitsadmin.exe\n    - \\certutil.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\dsget.exe\n    - \\hostname.exe\n    - \\nbtstat.exe\n    - \\net.exe\n    - \\net1.exe\n    - \\netdom.exe\n    - \\netsh.exe\n    - \\nltest.exe\n    - \\ntdsutil.exe\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\qprocess.exe\n    - \\query.exe\n    - \\qwinsta.exe\n    - \\reg.exe\n    - \\rundll32.exe\n    - \\sc.exe\n    - \\sh.exe\n    - \\wmic.exe\n    - \\wscript.exe\n    - \\wusa.exe\n  filter_main_fp_1:\n    ParentImage|endswith: \\java.exe\n    CommandLine|endswith: Windows\\system32\\cmd.exe /c C:\\ManageEngine\\ADManager \"Plus\\ES\\bin\\elasticsearch.bat\n      -Enode.name=RMP-NODE1 -pelasticsearch-pid.txt\n  filter_main_fp_2:\n    ParentImage|endswith: \\java.exe\n    CommandLine|contains|all:\n    - sc query\n    - ADManager Plus\n  condition: 1 of selection_webserver_* and selection_anomaly_children and not 1 of\n    filter_main_*\nfalsepositives:\n- Particular web applications may spawn a shell process legitimately\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

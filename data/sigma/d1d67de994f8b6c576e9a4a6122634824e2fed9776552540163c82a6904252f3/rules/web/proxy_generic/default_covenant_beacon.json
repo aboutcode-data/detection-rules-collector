@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/default_covenant_beacon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Robin Hellsten",
+                "date": "2021-11-05",
+                "title": "Default Covenant HTTP Beacon",
+                "id": "07793b33-09c4-48e1-95a7-cd2e7f4ef31c"
+            },
+            "rule_text": "title: Default Covenant HTTP Beacon\nid: 07793b33-09c4-48e1-95a7-cd2e7f4ef31c\ndescription: Detects URI combos used by Covenant\nstatus: stable\nauthor: NTT Security - Robin Hellsten\ndate: '2021-11-05'\nmodified: '2022-03-17'\nreferences:\n- https://github.com/cobbr/Covenant/blob/c53155615563cf68979820356b8430e4eb01207d/Covenant/Data/Profiles/DefaultHttpProfile.yaml\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri|startswith:\n    - /en-us/index.html\n    - /en-us/docs.html\n    - /en-us/test.html\n    c-uri-query|endswith:\n    - '&v=1'\n    c-useragent:\n    - Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0\n      Safari/537.36\n  condition: selection\nfalsepositives:\n- Rather common URL patterns as it want to blend in. False positives are possible\n  (but not super common, as UA and query also needs to match)\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

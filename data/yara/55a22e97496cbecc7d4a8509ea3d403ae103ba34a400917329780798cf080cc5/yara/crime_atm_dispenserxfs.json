@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_atm_dispenserxfs.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ATM_Malware_DispenserXFS",
+                "tags": [],
+                "description": "Detects ATM Malware DispenserXFS",
+                "author": "@Xylit0l @r3c0nst / Modified by Florian Roth",
+                "reference": "https://twitter.com/r3c0nst/status/1100775857306652673",
+                "date": "2019/02/27",
+                "modified": "2023-01-06",
+                "score": 80,
+                "id": "7c06102c-93d3-52f4-8c25-430f6f7a601f"
+            },
+            "rule_text": "import \"pe\"\n\nrule ATM_Malware_DispenserXFS\n{\n\tmeta:\n\t\tdescription = \"Detects ATM Malware DispenserXFS\"\n\t\tauthor = \"@Xylit0l @r3c0nst / Modified by Florian Roth\"\n\t\treference = \"https://twitter.com/r3c0nst/status/1100775857306652673\"\n\t\tdate = \"2019/02/27\"\n\t\tmodified = \"2023-01-06\"\n\t\tscore = 80\n\t\tid = \"7c06102c-93d3-52f4-8c25-430f6f7a601f\"\n\n\tstrings:\n\t\t$xc1 = { 68 FF FF 00 00 68 60 EA 00 00 6A 10 }\n\t\t$s1 = \"\\\\dispenserXFS.pdb\" ascii\n\t\t$s3 = \"C:\\\\xfsasdf.txt\" fullword ascii\n\t\t$s4 = \"Injected mxsfs killer into %d.\" fullword ascii\n\t\t$s5 = \"Waiting for freeze msxfs processes...\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( 1 of them or pe.imphash ( ) == \"617e037ae26d1931818db0790fb44bfe\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

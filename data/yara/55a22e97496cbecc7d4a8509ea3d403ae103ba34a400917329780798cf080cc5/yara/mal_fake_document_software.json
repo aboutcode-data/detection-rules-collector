@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_fake_document_software.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_Fake_Document_Software_Indicators_Nov23",
+                "tags": [],
+                "description": "Detects indicators of fake document/image utility software that acts as a downloader for additional malware",
+                "author": "Jonathan Peters",
+                "date": "2023-11-13",
+                "reference": "https://nochlab.blogspot.com/2023/09/net-in-javascript-fake-pdf-converter.html",
+                "hash1": "ac5356ae011effb9d401bf428c92a48cf82c9b61f4c24a29a9718e3379f90f1d",
+                "hash2": "d1c29c2243c511ca3264ad568a6be62f374e104b903eca93debce6691e1c5007",
+                "score": 80,
+                "id": "231474cd-1ec9-5738-bf48-ef707689056d"
+            },
+            "rule_text": "rule MAL_Fake_Document_Software_Indicators_Nov23\n{\n\tmeta:\n\t\tdescription = \"Detects indicators of fake document/image utility software that acts as a downloader for additional malware\"\n\t\tauthor = \"Jonathan Peters\"\n\t\tdate = \"2023-11-13\"\n\t\treference = \"https://nochlab.blogspot.com/2023/09/net-in-javascript-fake-pdf-converter.html\"\n\t\thash1 = \"ac5356ae011effb9d401bf428c92a48cf82c9b61f4c24a29a9718e3379f90f1d\"\n\t\thash2 = \"d1c29c2243c511ca3264ad568a6be62f374e104b903eca93debce6691e1c5007\"\n\t\tscore = 80\n\t\tid = \"231474cd-1ec9-5738-bf48-ef707689056d\"\n\n\tstrings:\n\t\t$ = \"tweakscode.com\" wide\n\t\t$ = \"www.createmygif.com\" wide\n\t\t$ = \"www.videownload.com\" wide\n\t\t$ = \"www.pdfconverterz.com\" wide\n\t\t$ = \"www.pdfconvertercompare.com\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

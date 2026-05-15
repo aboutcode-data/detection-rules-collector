@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_apt34.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT34_Malware_HTA",
+                "tags": [],
+                "description": "Detects APT 34 malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.fireeye.com/blog/threat-research/2017/12/targeted-attack-in-middle-east-by-apt34.html",
+                "date": "2017-12-07",
+                "hash1": "f6fa94cc8efea0dbd7d4d4ca4cf85ac6da97ee5cf0c59d16a6aafccd2b9d8b9a",
+                "id": "683faded-7e4b-5b2f-9f85-300db96ed9d1"
+            },
+            "rule_text": "rule APT34_Malware_HTA\n{\n\tmeta:\n\t\tdescription = \"Detects APT 34 malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2017/12/targeted-attack-in-middle-east-by-apt34.html\"\n\t\tdate = \"2017-12-07\"\n\t\thash1 = \"f6fa94cc8efea0dbd7d4d4ca4cf85ac6da97ee5cf0c59d16a6aafccd2b9d8b9a\"\n\t\tid = \"683faded-7e4b-5b2f-9f85-300db96ed9d1\"\n\n\tstrings:\n\t\t$x1 = \"WshShell.run \\\"cmd.exe /C C:\\\\ProgramData\\\\\" ascii\n\t\t$x2 = \".bat&ping 127.0.0.1 -n 6 > nul&wscript  /b\" ascii\n\t\t$x3 = \"cmd.exe /C certutil -f  -decode C:\\\\ProgramData\\\\\" ascii\n\t\t$x4 = \"a.WriteLine(\\\"set Shell0 = CreateObject(\" ascii\n\t\t$x5 = \"& vbCrLf & \\\"Shell0.run\" ascii\n\t\t$s1 = \"<title>Blog.tkacprow.pl: HTA Hello World!</title>\" fullword ascii\n\t\t$s2 = \"<body onload=\\\"test()\\\">\" fullword ascii\n\n\tcondition:\n\t\tfilesize < 60KB and ( 1 of ( $x* ) or all of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT34_Malware_Exeruner",
+                "tags": [],
+                "description": "Detects APT 34 malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.fireeye.com/blog/threat-research/2017/12/targeted-attack-in-middle-east-by-apt34.html",
+                "date": "2017-12-07",
+                "hash1": "c75c85acf0e0092d688a605778425ba4cb2a57878925eee3dc0f4dd8d636a27a",
+                "id": "8ddfa59d-9b8a-5cb6-a992-6498ac9be75d"
+            },
+            "rule_text": "rule APT34_Malware_Exeruner\n{\n\tmeta:\n\t\tdescription = \"Detects APT 34 malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.fireeye.com/blog/threat-research/2017/12/targeted-attack-in-middle-east-by-apt34.html\"\n\t\tdate = \"2017-12-07\"\n\t\thash1 = \"c75c85acf0e0092d688a605778425ba4cb2a57878925eee3dc0f4dd8d636a27a\"\n\t\tid = \"8ddfa59d-9b8a-5cb6-a992-6498ac9be75d\"\n\n\tstrings:\n\t\t$x1 = \"\\\\obj\\\\Debug\\\\exeruner.pdb\" ascii\n\t\t$x2 = \"\\\"wscript.shell`\\\")`nShell0.run\" wide\n\t\t$x3 = \"powershell.exe -exec bypass -enc \\\" + ${global:$http_ag} +\" wide\n\t\t$x4 = \"/c powershell -exec bypass -window hidden -nologo -command \" fullword wide\n\t\t$x5 = \"\\\\UpdateTasks\\\\JavaUpdatesTasksHosts\\\\\" wide\n\t\t$x6 = \"schtasks /create /F /ru SYSTEM /sc minute /mo 1 /tn\" wide\n\t\t$x7 = \"UpdateChecker.ps1 & ping 127.0.0.1\" wide\n\t\t$s8 = \"exeruner.exe\" fullword wide\n\t\t$s9 = \"${global:$address1} = $env:ProgramData + \\\"\\\\Windows\\\\Microsoft\\\\java\\\";\" fullword wide\n\t\t$s10 = \"C:\\\\ProgramData\\\\Windows\\\\Microsoft\\\\java\" fullword wide\n\t\t$s11 = \"function runByVBS\" fullword wide\n\t\t$s12 = \"$84e31856-683b-41c0-81dd-a02d8b795026\" fullword ascii\n\t\t$s13 = \"${global:$dns_ag} = \\\"aQBmACAAKAAoAEcAZQB0AC0AVwBtAGk\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 100KB and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

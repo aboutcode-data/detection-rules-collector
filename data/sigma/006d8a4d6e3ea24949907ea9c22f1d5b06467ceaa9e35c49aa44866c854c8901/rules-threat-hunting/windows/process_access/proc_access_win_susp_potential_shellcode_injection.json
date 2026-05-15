@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_access/proc_access_win_susp_potential_shellcode_injection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2022-03-11",
+                "title": "Potential Shellcode Injection",
+                "id": "250ae82f-736e-4844-a68b-0b5e8cc887da"
+            },
+            "rule_text": "title: Potential Shellcode Injection\nid: 250ae82f-736e-4844-a68b-0b5e8cc887da\nstatus: test\ndescription: Detects potential shellcode injection as seen used by tools such as Metasploit's\n  migrate and Empire's psinject.\nreferences:\n- https://github.com/EmpireProject/PSInject\nauthor: Bhabesh Raj\ndate: 2022-03-11\nmodified: 2024-07-02\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\n- detection.threat-hunting\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    GrantedAccess:\n    - '0x147a'\n    - '0x1f3fff'\n    CallTrace|contains: UNKNOWN\n  filter_main_wmiprvse:\n    SourceImage: C:\\Windows\\System32\\Wbem\\Wmiprvse.exe\n    TargetImage: C:\\Windows\\system32\\lsass.exe\n  filter_optional_dell_folders:\n    SourceImage|startswith:\n    - C:\\Program Files\\Dell\\\n    - C:\\Program Files (x86)\\Dell\\\n    TargetImage|startswith:\n    - C:\\Program Files\\Dell\\\n    - C:\\Program Files (x86)\\Dell\\\n  filter_optional_dell_specifc:\n    SourceImage: C:\\Program Files (x86)\\Dell\\UpdateService\\ServiceShell.exe\n    TargetImage: C:\\Windows\\Explorer.EXE\n  filter_optional_visual_studio:\n    SourceImage|startswith: C:\\Program Files\\Microsoft Visual Studio\\\n    TargetImage|startswith: C:\\Program Files\\Microsoft Visual Studio\\\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

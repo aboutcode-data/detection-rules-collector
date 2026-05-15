@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_venom_linux_rootkit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Venom_Rootkit",
+                "tags": [],
+                "description": "Venom Linux Rootkit",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://security.web.cern.ch/security/venom.shtml",
+                "date": "2017-01-12",
+                "id": "fedc6fa9-7dfb-5e54-a7bf-9a16f96d6886"
+            },
+            "rule_text": "rule Venom_Rootkit\n{\n\tmeta:\n\t\tdescription = \"Venom Linux Rootkit\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://security.web.cern.ch/security/venom.shtml\"\n\t\tdate = \"2017-01-12\"\n\t\tid = \"fedc6fa9-7dfb-5e54-a7bf-9a16f96d6886\"\n\n\tstrings:\n\t\t$s1 = \"%%VENOM%CTRL%MODE%%\" ascii fullword\n\t\t$s2 = \"%%VENOM%OK%OK%%\" ascii fullword\n\t\t$s3 = \"%%VENOM%WIN%WN%%\" ascii fullword\n\t\t$s4 = \"%%VENOM%AUTHENTICATE%%\" ascii fullword\n\t\t$s5 = \". entering interactive shell\" ascii fullword\n\t\t$s6 = \". processing ltun request\" ascii fullword\n\t\t$s7 = \". processing rtun request\" ascii fullword\n\t\t$s8 = \". processing get request\" ascii fullword\n\t\t$s9 = \". processing put request\" ascii fullword\n\t\t$s10 = \"venom by mouzone\" ascii fullword\n\t\t$s11 = \"justCANTbeSTOPPED\" ascii fullword\n\n\tcondition:\n\t\tfilesize < 4000KB and 2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

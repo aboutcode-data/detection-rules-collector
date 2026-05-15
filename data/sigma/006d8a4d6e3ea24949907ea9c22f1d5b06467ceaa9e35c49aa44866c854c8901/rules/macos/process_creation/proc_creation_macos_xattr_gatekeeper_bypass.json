@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_xattr_gatekeeper_bypass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, oscd.community",
+                "date": "2020-10-19",
+                "title": "Gatekeeper Bypass via Xattr",
+                "id": "f5141b6d-9f42-41c6-a7bf-2a780678b29b"
+            },
+            "rule_text": "title: Gatekeeper Bypass via Xattr\nid: f5141b6d-9f42-41c6-a7bf-2a780678b29b\nstatus: test\ndescription: Detects macOS Gatekeeper bypass via xattr utility\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/1fed40dc7e48f16ed44dcdd9c73b9222a70cca85/atomics/T1553.001/T1553.001.md\n- https://www.loobins.io/binaries/xattr/\nauthor: Daniil Yugoslavskiy, oscd.community\ndate: 2020-10-19\nmodified: 2024-04-18\ntags:\n- attack.defense-impairment\n- attack.t1553.001\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /xattr\n    CommandLine|contains|all:\n    - -d\n    - com.apple.quarantine\n  condition: selection\nfalsepositives:\n- Legitimate activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

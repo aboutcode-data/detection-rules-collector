@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_gpg4win_portable_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-06",
+                "title": "Portable Gpg.EXE Execution",
+                "id": "77df53a5-1d78-4f32-bc5a-0e7465bd8f41"
+            },
+            "rule_text": "title: Portable Gpg.EXE Execution\nid: 77df53a5-1d78-4f32-bc5a-0e7465bd8f41\nstatus: test\ndescription: Detects the execution of \"gpg.exe\" from uncommon location. Often used\n  by ransomware and loaders to decrypt/encrypt data.\nreferences:\n- https://www.trendmicro.com/vinfo/vn/threat-encyclopedia/malware/ransom.bat.zarlock.a\n- https://securelist.com/locked-out/68960/\n- https://github.com/redcanaryco/atomic-red-team/blob/c4097dc7ed14d7f7d08c89d148c4307097e8c294/atomics/T1486/T1486.md\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-06\nmodified: 2023-11-10\ntags:\n- attack.impact\n- attack.t1486\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith:\n    - \\gpg.exe\n    - \\gpg2.exe\n  - OriginalFileName: gpg.exe\n  - Description: \"GnuPG\\u2019s OpenPGP tool\"\n  filter_main_legit_location:\n    Image|contains:\n    - :\\Program Files (x86)\\GNU\\GnuPG\\bin\\\n    - :\\Program Files (x86)\\GnuPG VS-Desktop\\\n    - :\\Program Files (x86)\\GnuPG\\bin\\\n    - :\\Program Files (x86)\\Gpg4win\\bin\\\n  condition: selection and not 1 of filter_main_*\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

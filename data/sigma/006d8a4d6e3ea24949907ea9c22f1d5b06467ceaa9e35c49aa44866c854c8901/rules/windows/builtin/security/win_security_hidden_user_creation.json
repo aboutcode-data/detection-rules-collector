@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_hidden_user_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-05-03",
+                "title": "Hidden Local User Creation",
+                "id": "7b449a5e-1db5-4dd0-a2dc-4e3a67282538"
+            },
+            "rule_text": "title: Hidden Local User Creation\nid: 7b449a5e-1db5-4dd0-a2dc-4e3a67282538\nstatus: test\ndescription: Detects the creation of a local hidden user account which should not\n  happen for event ID 4720.\nreferences:\n- https://twitter.com/SBousseaden/status/1387743867663958021\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-05-03\nmodified: 2024-01-16\ntags:\n- attack.persistence\n- attack.t1136.001\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4720\n    TargetUserName|endswith: $\n  filter_main_homegroup:\n    TargetUserName: HomeGroupUser$\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

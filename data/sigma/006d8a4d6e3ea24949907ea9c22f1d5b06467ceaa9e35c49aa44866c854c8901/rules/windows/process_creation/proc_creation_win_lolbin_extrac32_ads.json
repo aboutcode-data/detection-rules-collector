@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_extrac32_ads.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-11-26",
+                "title": "Suspicious Extrac32 Alternate Data Stream Execution",
+                "id": "4b13db67-0c45-40f1-aba8-66a1a7198a1e"
+            },
+            "rule_text": "title: Suspicious Extrac32 Alternate Data Stream Execution\nid: 4b13db67-0c45-40f1-aba8-66a1a7198a1e\nstatus: test\ndescription: Extract data from cab file and hide it in an alternate data stream\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Extrac32/\nauthor: frack113\ndate: 2021-11-26\nmodified: 2022-12-30\ntags:\n- attack.stealth\n- attack.t1564.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - extrac32.exe\n    - .cab\n    CommandLine|re: :[^\\\\]\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

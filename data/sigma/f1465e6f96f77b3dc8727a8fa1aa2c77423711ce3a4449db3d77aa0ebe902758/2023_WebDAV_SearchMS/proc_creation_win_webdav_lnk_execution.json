@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_WebDAV_SearchMS/proc_creation_win_webdav_lnk_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2023/07/31",
+                "title": "Suspicious WebDAV LNK Execution",
+                "id": "1412aa78-a24c-4abd-83df-767dfb2c5bbe"
+            },
+            "rule_text": "title: Suspicious WebDAV LNK Execution\nid: 1412aa78-a24c-4abd-83df-767dfb2c5bbe\nrelated:\n- id: f0507c0f-a3a2-40f5-acc6-7f543c334993\n  type: similar\nstatus: experimental\ndescription: Detects possible execution via LNK file accessed on a WebDAV server.\nreferences:\n- https://www.trellix.com/en-us/about/newsroom/stories/research/beyond-file-search-a-novel-method.html\n- https://micahbabinski.medium.com/search-ms-webdav-and-chill-99c5b23ac462\nauthor: Micah Babinski\ndate: 2023/07/31\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.t1204\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    ParentImage|endswith: \\explorer.exe\n    Image|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\cmd.exe\n  selection_cmd:\n    CommandLine|contains: \\DavWWWRoot\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_wmi_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Gleb Sukhodolskiy, Timur Zinniatullin oscd.community",
+                "date": "2017-08-22",
+                "title": "WMI Persistence - Security",
+                "id": "f033f3f3-fd24-4995-97d8-a3bb17550a88"
+            },
+            "rule_text": "title: WMI Persistence - Security\nid: f033f3f3-fd24-4995-97d8-a3bb17550a88\nrelated:\n- id: 0b7889b4-5577-4521-a60a-3376ee7f9f7b\n  type: derived\nstatus: test\ndescription: Detects suspicious WMI event filter and command line event consumer based\n  on WMI and Security Logs.\nreferences:\n- https://twitter.com/mattifestation/status/899646620148539397\n- https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/\nauthor: Florian Roth (Nextron Systems), Gleb Sukhodolskiy, Timur Zinniatullin oscd.community\ndate: 2017-08-22\nmodified: 2022-11-29\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1546.003\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4662\n    ObjectType: WMI Namespace\n    ObjectName|contains: subscription\n  condition: selection\nfalsepositives:\n- Unknown (data set is too small; further testing needed)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

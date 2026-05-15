@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Banload/TrojanDownloader_Win32_Banload_HL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Banload_HL",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Banload.HL,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Banload_HL\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Banload.HL,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {55 52 4c 44 6f 77 6e 6c 6f 61 64 54 6f 46 69 6c 65 41 }\n\t\t$a_01_1 = {53 68 65 6c 6c 45 78 65 63 75 74 65 41 }\n\t\t$a_01_2 = {ff ff ff ff 07 00 00 00 5c 55 70 64 61 74 65 }\n\t\t$a_03_3 = {8d 85 f7 fb ff ff 8b 55 fc e8 ?? ?? ?? ?? 8d 85 f6 f7 ff ff 8b 55 f8 e8 ?? ?? ?? ?? 6a 03 6a 00 8d 85 f6 f7 ff ff 50 8d 85 f7 fb ff ff 50 6a 00 6a 00 e8 ?? ?? ?? ?? 33 c0 }\n\t\t$a_03_4 = {68 fe 00 00 00 8d 85 ?? fe ff ff 50 e8 ?? ?? ?? ?? 8d 55 fc 8d 85 ?? fe ff ff e8 ?? ?? ?? ?? c7 05 ?? ?? ?? ?? 01 00 00 00 8d 45 [0-06] e8 ?? ?? ?? ?? 6a 00 6a 00 8d 85 ?? fe ff ff b9 ?? ?? ?? ?? 8b 55 fc e8 ?? ?? ?? ?? 8b 85 ?? fe ff ff e8 ?? ?? ?? ?? 50 8b 45 ?? e8 ?? ?? ?? ?? 50 6a 00 e8 ?? ?? ?? ?? 8d 85 ?? fe ff ff b9 ?? ?? ?? ?? 8b 55 fc e8 ?? ?? ?? ?? 8b 85 ?? fe ff ff }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

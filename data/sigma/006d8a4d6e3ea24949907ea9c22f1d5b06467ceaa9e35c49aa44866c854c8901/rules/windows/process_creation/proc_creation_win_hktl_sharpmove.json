@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sharpmove.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Luca Di Bartolomeo (CrimpSec)",
+                "date": "2024-01-29",
+                "title": "HackTool - SharpMove Tool Execution",
+                "id": "055fb54c-a8f4-4aee-bd44-f74cf30a0d9d"
+            },
+            "rule_text": "title: HackTool - SharpMove Tool Execution\nid: 055fb54c-a8f4-4aee-bd44-f74cf30a0d9d\nstatus: test\ndescription: 'Detects the execution of SharpMove, a .NET utility performing multiple\n  tasks such as \"Task Creation\", \"SCM\" query, VBScript execution using WMI via its\n  PE metadata and command line options.\n\n  '\nreferences:\n- https://github.com/0xthirteen/SharpMove/\n- https://pentestlab.blog/tag/sharpmove/\nauthor: Luca Di Bartolomeo (CrimpSec)\ndate: 2024-01-29\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\SharpMove.exe\n  - OriginalFileName: SharpMove.exe\n  selection_cli_computer:\n    CommandLine|contains: computername=\n  selection_cli_actions:\n    CommandLine|contains:\n    - action=create\n    - action=dcom\n    - action=executevbs\n    - action=hijackdcom\n    - action=modschtask\n    - action=modsvc\n    - action=query\n    - action=scm\n    - action=startservice\n    - action=taskscheduler\n  condition: selection_img or all of selection_cli_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

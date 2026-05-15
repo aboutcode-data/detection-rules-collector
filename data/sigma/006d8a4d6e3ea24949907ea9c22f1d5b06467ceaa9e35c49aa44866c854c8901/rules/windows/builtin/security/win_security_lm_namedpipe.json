@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_lm_namedpipe.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden",
+                "date": "2019-04-03",
+                "title": "First Time Seen Remote Named Pipe",
+                "id": "52d8b0c6-53d6-439a-9e41-52ad442ad9ad"
+            },
+            "rule_text": "title: First Time Seen Remote Named Pipe\nid: 52d8b0c6-53d6-439a-9e41-52ad442ad9ad\nstatus: test\ndescription: This detection excludes known namped pipes accessible remotely and notify\n  on newly observed ones, may help to detect lateral movement and remote exec using\n  named pipes\nreferences:\n- https://twitter.com/menasec1/status/1104489274387451904\nauthor: Samir Bousseaden\ndate: 2019-04-03\nmodified: 2023-03-14\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: windows\n  service: security\n  definition: The advanced audit policy setting \"Object Access > Audit Detailed File\n    Share\" must be configured for Success/Failure\ndetection:\n  selection1:\n    EventID: 5145\n    ShareName: \\\\\\\\\\*\\\\IPC$\n  false_positives:\n    RelativeTargetName:\n    - atsvc\n    - samr\n    - lsarpc\n    - lsass\n    - winreg\n    - netlogon\n    - srvsvc\n    - protected_storage\n    - wkssvc\n    - browser\n    - netdfs\n    - svcctl\n    - spoolss\n    - ntsvcs\n    - LSM_API_service\n    - HydraLsPipe\n    - TermSrv_API_service\n    - MsFteWds\n    - sql\\query\n    - eventlog\n  condition: selection1 and not false_positives\nfalsepositives:\n- Update the excluded named pipe to filter out any newly observed legit named pipe\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

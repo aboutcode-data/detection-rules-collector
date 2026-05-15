@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/L-N/linuxprivchecker.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "linuxprivchecker",
+                "tags": [],
+                "description": "Detection patterns for the tool 'linuxprivchecker' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "linuxprivchecker",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule linuxprivchecker\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'linuxprivchecker' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"linuxprivchecker\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\-name\\s\\.htpasswd/\n\t\t$string2 = \" -perm -2000 -o -perm -4000\"\n\t\t$string3 = /\\/linuxprivchecker\\.git/\n\t\t$string4 = \"24d861124682031773ac0f6df9e5011b18a8d925c8c22469330826e64ccc2bab\"\n\t\t$string5 = \"cat /etc/shadow\"\n\t\t$string6 = \"cat /etc/sudoers 2>/dev/null\"\n\t\t$string7 = /find\\s\\/\\s\\-exec\\s\\/usr\\/bin\\/awk\\s\\'BEGIN\\s\\{system\\(\\\\\\\\\"\\/bin\\/bash\\\\\\\\\"/\n\t\t$string8 = /find.{0,1000}\\s\\-perm\\s\\-4000\\s/\n\t\t$string9 = /http\\:\\/\\/www\\.exploit\\-db\\.com\\/exploits\\// nocase ascii wide\n\t\t$string10 = /linuxprivchecker\\.py/\n\t\t$string11 = \"sleventyeleven/linuxprivchecker\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

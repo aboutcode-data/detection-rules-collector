@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_DCRat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_DCRat_1aeea1ac",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "1aeea1ac-69b9-4cc6-91af-18b7a79f35ce",
+                "fingerprint": "fc67d76dc916b7736de783aa245483381a8fe071c533f3761e550af80a873fe9",
+                "creation_date": "2022-01-15",
+                "last_modified": "2022-04-12",
+                "threat_name": "Windows.Trojan.DCRat",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_DCRat_1aeea1ac\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"1aeea1ac-69b9-4cc6-91af-18b7a79f35ce\"\n\t\tfingerprint = \"fc67d76dc916b7736de783aa245483381a8fe071c533f3761e550af80a873fe9\"\n\t\tcreation_date = \"2022-01-15\"\n\t\tlast_modified = \"2022-04-12\"\n\t\tthreat_name = \"Windows.Trojan.DCRat\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"havecamera\" ascii fullword\n\t\t$a2 = \"timeout 3 > NUL\" wide fullword\n\t\t$a3 = \"START \\\"\\\" \\\"\" wide fullword\n\t\t$a4 = \"L2Mgc2NodGFza3MgL2NyZWF0ZSAvZiAvc2Mgb25sb2dvbiAvcmwgaGlnaGVzdCAvdG4g\" wide fullword\n\t\t$a5 = \"U09GVFdBUkVcTWljcm9zb2Z0XFdpbmRvd3NcQ3VycmVudFZlcnNpb25cUnVuXA==\" wide fullword\n\t\t$b1 = \"DcRatByqwqdanchun\" ascii fullword\n\t\t$b2 = \"DcRat By qwqdanchun1\" ascii fullword\n\n\tcondition:\n\t\t5 of ( $a* ) or 1 of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

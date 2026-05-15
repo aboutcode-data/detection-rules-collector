@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/trojan_win_backwash_iis.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_win_backwash_iis",
+                "tags": [
+                    "XEGroup"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2020-09-04",
+                "description": "Variant of the BACKWASH malware family with IIS worm functionality.",
+                "reference": "https://www.volexity.com/blog/2021/12/07/xe-group-exposed-8-years-of-hacking-card-skimming-for-profit/",
+                "hash": "98e39573a3d355d7fdf3439d9418fdbf4e42c2e03051b5313d5c84f3df485627",
+                "memory_suitable": 1,
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule trojan_win_backwash_iis : XEGroup\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2020-09-04\"\n\t\tdescription = \"Variant of the BACKWASH malware family with IIS worm functionality.\"\n\t\treference = \"https://www.volexity.com/blog/2021/12/07/xe-group-exposed-8-years-of-hacking-card-skimming-for-profit/\"\n\t\thash = \"98e39573a3d355d7fdf3439d9418fdbf4e42c2e03051b5313d5c84f3df485627\"\n\t\tmemory_suitable = 1\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$a1 = \"GetShell\" ascii\n\t\t$a2 = \"smallShell\" ascii\n\t\t$a3 = \"createSmallShell\" ascii\n\t\t$a4 = \"getSites\" ascii\n\t\t$a5 = \"getFiles \" ascii\n\t\t$b1 = \"action=saveshell&domain=\" ascii wide\n\t\t$b2 = \"&shell=backsession.aspx\" ascii wide\n\n\tcondition:\n\t\tall of ( $a* ) or any of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

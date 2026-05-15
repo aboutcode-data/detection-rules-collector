@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Genasom/Ransom_Win32_Genasom_DK.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Genasom_DK",
+                "tags": [],
+                "description": "Ransom:Win32/Genasom.DK,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Genasom_DK\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Genasom.DK,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {74 1d 8d 55 f8 8b 83 00 03 00 00 e8 ?? ?? ?? ?? 8b 45 f8 ba ?? ?? ?? ?? e8 ?? ?? ?? ?? 75 0c }\n\t\t$a_01_1 = {8b 45 08 66 83 39 73 75 09 a8 02 74 05 66 c7 01 00 00 a8 02 74 0b 66 83 39 09 75 05 }\n\t\t$a_01_2 = {2f 66 20 2f 69 6d 20 65 78 70 6c 6f 72 65 72 2e 65 78 65 00 74 61 73 6b 6b 69 6c 6c 2e 65 78 65 00 }\n\t\t$a_01_3 = {f6 45 08 02 74 0b 66 83 39 73 75 05 66 c7 01 00 00 }\n\t\t$a_01_4 = {25 57 69 6e 44 69 72 25 5c 57 69 6e 33 32 2e 65 78 65 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

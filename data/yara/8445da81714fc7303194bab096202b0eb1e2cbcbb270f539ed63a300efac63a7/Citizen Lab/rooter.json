@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/rooter.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RooterCode",
+                "tags": [
+                    "Rooter",
+                    "Family"
+                ],
+                "description": "Rooter code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule RooterCode : Rooter Family\n{\n\tmeta:\n\t\tdescription = \"Rooter code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$ = { 80 B0 ?? ?? ?? ?? 30 40 3D 00 50 00 00 7C F1 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RooterStrings",
+                "tags": [
+                    "Rooter",
+                    "Family"
+                ],
+                "description": "Rooter Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule RooterStrings : Rooter Family\n{\n\tmeta:\n\t\tdescription = \"Rooter Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$group1 = \"seed\\x00\"\n\t\t$group2 = \"prot\\x00\"\n\t\t$group3 = \"ownin\\x00\"\n\t\t$group4 = \"feed0\\x00\"\n\t\t$group5 = \"nown\\x00\"\n\n\tcondition:\n\t\t3 of ( $group* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Rooter",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Rooter",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "rule Rooter : Family\n{\n\tmeta:\n\t\tdescription = \"Rooter\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tcondition:\n\t\tRooterCode or RooterStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

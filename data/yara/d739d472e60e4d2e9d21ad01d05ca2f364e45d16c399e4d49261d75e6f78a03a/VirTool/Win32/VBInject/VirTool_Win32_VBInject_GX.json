@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/VBInject/VirTool_Win32_VBInject_GX.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_VBInject_GX",
+                "tags": [],
+                "description": "VirTool:Win32/VBInject.GX,SIGNATURE_TYPE_PEHSTR_EXT,1f 00 1f 00 05 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_VBInject_GX\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/VBInject.GX,SIGNATURE_TYPE_PEHSTR_EXT,1f 00 1f 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {08 02 00 00 00 68 a1 6a 8b ?? ?? ?? 40 00 c7 ?? 0c 02 00 00 3d d8 51 e8 }\n\t\t$a_03_1 = {70 01 00 00 68 d0 37 10 8b ?? ?? ?? 40 00 c7 ?? 74 01 00 00 f2 51 e8 d5 }\n\t\t$a_03_2 = {30 01 00 00 00 68 88 fe 8b ?? ?? ?? 40 00 c7 ?? 34 01 00 00 b3 16 51 e8 }\n\t\t$a_03_3 = {dc 04 00 00 c1 cf 0d 03 8b ?? ?? ?? 40 00 c7 ?? e8 04 00 00 e1 8b 5a 24 }\n\t\t$a_03_4 = {dc 04 00 00 c1 cf 0d 03 8b ?? ?? ?? ?? 00 c7 ?? ?? 03 00 00 e8 24 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_03_2 & 1 ) * 10 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 ) >= 31\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

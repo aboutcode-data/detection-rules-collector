@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_QakBot/win_qakbot_susp_calc_dll_load_trellix.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/19",
+                "title": "Suspicious Calc DLL Load",
+                "id": "b47b9cc3-6f9a-4a58-a669-5e5e126514b1"
+            },
+            "rule_text": "title: Suspicious Calc DLL Load\nid: b47b9cc3-6f9a-4a58-a669-5e5e126514b1\nstatus: experimental\ndescription: Detects Windows 7 calc.exe loading DLLs from suspicious or abnormal file\n  paths.\nreferences:\n- https://www.trellix.com/en-us/about/newsroom/stories/research/demystifying-qbot-malware.html\nauthor: Micah Babinski\ndate: 2022/11/19\ntags:\n- attack.persistence\n- attack.t1574\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\calc.exe\n  filter:\n    ImageLoaded|startswith:\n    - C:\\Windows\\System32\n    - C:\\Windows\\SysWOW64\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

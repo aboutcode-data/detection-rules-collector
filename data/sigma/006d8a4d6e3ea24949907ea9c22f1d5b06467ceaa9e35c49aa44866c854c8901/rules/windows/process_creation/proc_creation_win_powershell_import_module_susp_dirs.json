@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_import_module_susp_dirs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-10",
+                "title": "Import PowerShell Modules From Suspicious Directories - ProcCreation",
+                "id": "c31364f7-8be6-4b77-8483-dd2b5a7b69a3"
+            },
+            "rule_text": "title: Import PowerShell Modules From Suspicious Directories - ProcCreation\nid: c31364f7-8be6-4b77-8483-dd2b5a7b69a3\nrelated:\n- id: 21f9162c-5f5d-4b01-89a8-b705bd7d10ab\n  type: similar\nstatus: test\ndescription: Detects powershell scripts that import modules from suspicious directories\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-10\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - Import-Module \"$Env:Temp\\\n    - Import-Module '$Env:Temp\\\n    - Import-Module $Env:Temp\\\n    - Import-Module \"$Env:Appdata\\\n    - Import-Module '$Env:Appdata\\\n    - Import-Module $Env:Appdata\\\n    - Import-Module C:\\Users\\Public\\\n    - ipmo \"$Env:Temp\\\n    - ipmo '$Env:Temp\\\n    - ipmo $Env:Temp\\\n    - ipmo \"$Env:Appdata\\\n    - ipmo '$Env:Appdata\\\n    - ipmo $Env:Appdata\\\n    - ipmo C:\\Users\\Public\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

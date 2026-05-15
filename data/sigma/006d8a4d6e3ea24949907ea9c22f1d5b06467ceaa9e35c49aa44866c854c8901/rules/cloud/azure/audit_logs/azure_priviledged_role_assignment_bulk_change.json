@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_priviledged_role_assignment_bulk_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'",
+                "date": "2022-08-05",
+                "title": "Bulk Deletion Changes To Privileged Account Permissions",
+                "id": "102e11e3-2db5-4c9e-bc26-357d42585d21"
+            },
+            "rule_text": "title: Bulk Deletion Changes To Privileged Account Permissions\nid: 102e11e3-2db5-4c9e-bc26-357d42585d21\nstatus: test\ndescription: Detects when a user is removed from a privileged role. Bulk changes should\n  be investigated.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-privileged-identity-management#azure-ad-roles-assignment\nauthor: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'\ndate: 2022-08-05\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1098\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message:\n    - Remove eligible member (permanent)\n    - Remove eligible member (eligible)\n  condition: selection\nfalsepositives:\n- Legtimate administrator actions of removing members from a role\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

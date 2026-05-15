@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/compress.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "xz_magic",
+                "tags": [
+                    "info",
+                    "compress"
+                ],
+                "author": "@h3x2b <tracker@h3x.eu>",
+                "description": "Detects XZ stream magics in ELF executable"
+            },
+            "rule_text": "rule xz_magic : info compress\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker@h3x.eu>\"\n\t\tdescription = \"Detects XZ stream magics in ELF executable\"\n\n\tstrings:\n\t\t$xz_00 = { fd 37 7a 58 }\n\t\t$xz_01 = \"YZB\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7f454c46 and 2 of ( $xz_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

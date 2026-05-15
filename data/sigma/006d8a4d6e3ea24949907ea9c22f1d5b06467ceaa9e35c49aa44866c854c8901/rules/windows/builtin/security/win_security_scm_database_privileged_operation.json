@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_scm_database_privileged_operation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g, Tim Shelton",
+                "date": "2019-08-15",
+                "title": "SCM Database Privileged Operation",
+                "id": "dae8171c-5ec6-4396-b210-8466585b53e9"
+            },
+            "rule_text": "title: SCM Database Privileged Operation\nid: dae8171c-5ec6-4396-b210-8466585b53e9\nstatus: test\ndescription: Detects non-system users performing privileged operation os the SCM database\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190826-RemoteSCMHandle/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g, Tim Shelton\ndate: 2019-08-15\nmodified: 2022-09-18\ntags:\n- attack.privilege-escalation\n- attack.t1548\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4674\n    ObjectType: SC_MANAGER OBJECT\n    ObjectName: servicesactive\n    PrivilegeList: SeTakeOwnershipPrivilege\n  filter:\n    SubjectLogonId: '0x3e4'\n    ProcessName|endswith: :\\Windows\\System32\\services.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

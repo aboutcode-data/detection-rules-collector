@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/SuspRemoteCmdCommand/VirTool_Win32_SuspRemoteCmdCommand_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_SuspRemoteCmdCommand_B",
+                "tags": [],
+                "description": "VirTool:Win32/SuspRemoteCmdCommand.B,SIGNATURE_TYPE_CMDHSTR_EXT,04 00 04 00 05 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_SuspRemoteCmdCommand_B\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/SuspRemoteCmdCommand.B,SIGNATURE_TYPE_CMDHSTR_EXT,04 00 04 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {5c 00 63 00 6d 00 64 00 2e 00 65 00 78 00 65 00 00 00 }\n\t\t$a_00_1 = {20 00 2f 00 63 00 20 00 }\n\t\t$a_00_2 = {20 00 2f 00 51 00 20 00 }\n\t\t$a_02_3 = {20 00 5c 00 5c 00 90 29 03 00 2e 00 90 29 03 00 2e 00 90 29 03 00 2e 00 90 29 03 00 5c 00 [0-20] 5c 00 [0-20] 2e 00 62 00 61 00 74 00 }\n\t\t$a_00_4 = {5c 00 5c 00 31 00 32 00 37 00 2e 00 30 00 2e 00 30 00 2e 00 31 00 5c 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * - 100 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

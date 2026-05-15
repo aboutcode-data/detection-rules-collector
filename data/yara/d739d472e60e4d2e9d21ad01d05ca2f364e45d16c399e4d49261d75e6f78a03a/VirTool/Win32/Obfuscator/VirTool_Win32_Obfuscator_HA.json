@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/Obfuscator/VirTool_Win32_Obfuscator_HA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_Obfuscator_HA",
+                "tags": [],
+                "description": "VirTool:Win32/Obfuscator.HA,SIGNATURE_TYPE_PEHSTR_EXT,09 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_Obfuscator_HA\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/Obfuscator.HA,SIGNATURE_TYPE_PEHSTR_EXT,09 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c1 e8 10 83 c0 02 8d 80 ?? ?? ?? ?? ff e0 }\n\t\t$a_03_1 = {64 8b 15 18 00 00 00 41 52 [0-10] 5e 48 c7 46 14 }\n\t\t$a_01_2 = {c7 46 14 38 37 36 34 01 f0 }\n\t\t$a_01_3 = {0f 70 ca ff 0f 77 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

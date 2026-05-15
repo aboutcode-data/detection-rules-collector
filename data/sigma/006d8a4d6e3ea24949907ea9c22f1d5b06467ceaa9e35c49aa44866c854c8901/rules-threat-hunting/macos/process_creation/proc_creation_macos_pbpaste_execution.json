@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/macos/process_creation/proc_creation_macos_pbpaste_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniel Cortez",
+                "date": "2024-07-30",
+                "title": "Clipboard Data Collection Via Pbpaste",
+                "id": "d8af0da1-2959-40f9-a3e4-37a6aa1228b7"
+            },
+            "rule_text": "title: Clipboard Data Collection Via Pbpaste\nid: d8af0da1-2959-40f9-a3e4-37a6aa1228b7\nstatus: test\ndescription: 'Detects execution of the \"pbpaste\" utility, which retrieves the contents\n  of the clipboard (a.k.a. pasteboard) and writes them to the standard output (stdout).\n\n  The utility is often used for creating new files with the clipboard content or for\n  piping clipboard contents to other commands.\n\n  It can also be used in shell scripts that may require clipboard content as input.\n\n  Attackers can abuse this utility in order to collect data from the user clipboard,\n  which may contain passwords or sensitive information.\n\n  Use this rule to hunt for potential abuse of the utility by looking at the parent\n  process and any potentially suspicious command line content.\n\n  '\nreferences:\n- https://www.loobins.io/binaries/pbpaste/\n- https://medium.com/@NullByteWht/hacking-macos-how-to-dump-1password-keepassx-lastpass-passwords-in-plaintext-723c5b1c311b\n- https://media.defense.gov/2021/Jul/19/2002805003/-1/-1/1/CSA_CHINESE_STATE-SPONSORED_CYBER_TTPS.PDF\nauthor: Daniel Cortez\ndate: 2024-07-30\ntags:\n- attack.collection\n- attack.credential-access\n- attack.t1115\n- detection.threat-hunting\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /pbpaste\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

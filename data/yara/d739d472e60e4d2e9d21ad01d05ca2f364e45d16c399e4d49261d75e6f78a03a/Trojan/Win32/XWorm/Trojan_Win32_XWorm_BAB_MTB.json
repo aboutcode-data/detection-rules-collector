@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/XWorm/Trojan_Win32_XWorm_BAB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_XWorm_BAB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/XWorm.BAB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_XWorm_BAB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/XWorm.BAB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {00 00 01 00 00 20 00 00 00 a2 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20 00 00 60 }\n\t\t$a_01_1 = {0e 05 00 00 00 20 01 00 00 04 00 00 00 a6 00 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 00 40 }\n\t\t$a_01_2 = {0c 00 00 00 00 40 01 00 00 02 00 00 00 aa 00 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 00 42 }\n\t\t$a_81_3 = {63 68 65 63 6b 70 72 6f 74 65 63 74 69 6f 6e }\n\t\t$a_81_4 = {53 4f 46 54 57 41 52 45 5c 57 69 6e 4c 69 63 65 6e 73 65 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 10 + ( #a_81_3 & 1 ) * 1 + ( #a_81_4 & 1 ) * 1 ) >= 32\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_presentationhost_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-19",
+                "title": "Arbitrary File Download Via PresentationHost.EXE",
+                "id": "b124ddf4-778d-418e-907f-6dd3fc0d31cd"
+            },
+            "rule_text": "title: Arbitrary File Download Via PresentationHost.EXE\nid: b124ddf4-778d-418e-907f-6dd3fc0d31cd\nstatus: test\ndescription: Detects usage of \"PresentationHost\" which is a utility that runs \".xbap\"\n  (Browser Applications) files to download arbitrary files\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/pull/239/files\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-19\nmodified: 2023-11-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\presentationhost.exe\n  - OriginalFileName: PresentationHost.exe\n  selection_cli:\n    CommandLine|contains:\n    - http://\n    - https://\n    - ftp://\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

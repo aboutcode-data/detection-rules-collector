@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/Techniques/win_sus_InternetShortcutFile.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_sus_InternetShortcutFile",
+                "tags": [],
+                "description": "Detects suspicious Internet Shortcut Files that are often used to retrieve malware",
+                "author": "RussianPanda",
+                "date": "2024-02-17"
+            },
+            "rule_text": "rule win_sus_InternetShortcutFile\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious Internet Shortcut Files that are often used to retrieve malware\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2024-02-17\"\n\n\tstrings:\n\t\t$s1 = \"[InternetShortcut]\"\n\t\t$s2 = {55 52 4C 3D 66 69 6C 65 3A 2F 2F}\n\t\t$a1 = \".exe\"\n\t\t$a2 = \".dll\"\n\t\t$a3 = \".js\"\n\t\t$a4 = \".msi\"\n\t\t$a5 = \".msix\"\n\t\t$a6 = \".bat\"\n\t\t$a7 = \".cmd\"\n\n\tcondition:\n\t\tall of ( $s* ) and any of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

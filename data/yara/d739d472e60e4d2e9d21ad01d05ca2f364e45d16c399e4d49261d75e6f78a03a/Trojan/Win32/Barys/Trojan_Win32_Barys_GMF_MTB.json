@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Barys/Trojan_Win32_Barys_GMF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Barys_GMF_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Barys.GMF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Barys_GMF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Barys.GMF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {2b 1f 00 00 18 0b 30 ?? aa 5c d7 07 b5 03 }\n\t\t$a_01_1 = {09 f3 00 51 3c 30 16 09 50 bd 44 26 0c fc }\n\t\t$a_01_2 = {68 61 72 79 41 68 4c 69 62 72 68 4c 6f 61 64 54 55 }\n\t\t$a_01_3 = {68 54 68 72 65 68 45 78 69 74 54 55 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 22\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

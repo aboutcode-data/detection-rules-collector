@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_disable_psreadline_command_history.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ali Alwashali",
+                "date": "2022-08-21",
+                "title": "Disable Powershell Command History",
+                "id": "602f5669-6927-4688-84db-0d4b7afb2150"
+            },
+            "rule_text": "title: Disable Powershell Command History\nid: 602f5669-6927-4688-84db-0d4b7afb2150\nstatus: test\ndescription: Detects scripts or commands that disabled the Powershell command history\n  by removing psreadline module\nreferences:\n- https://twitter.com/DissectMalware/status/1062879286749773824\nauthor: Ali Alwashali\ndate: 2022-08-21\ntags:\n- attack.stealth\n- attack.t1070.003\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Remove-Module\n    - psreadline\n  condition: selection\nfalsepositives:\n- Legitimate script that disables the command history\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

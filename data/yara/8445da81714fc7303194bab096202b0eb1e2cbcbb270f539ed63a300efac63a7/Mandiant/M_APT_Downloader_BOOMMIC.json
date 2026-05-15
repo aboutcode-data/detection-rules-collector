@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/M_APT_Downloader_BOOMMIC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "M_APT_Downloader_BOOMMIC",
+                "tags": [],
+                "author": "Mandiant",
+                "description": "Rule looking for BOOMMIC malware",
+                "reference": "https://www.mandiant.com/resources/tracking-apt29-phishing-campaigns"
+            },
+            "rule_text": "rule M_APT_Downloader_BOOMMIC\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdescription = \"Rule looking for BOOMMIC malware\"\n\t\treference = \"https://www.mandiant.com/resources/tracking-apt29-phishing-campaigns\"\n\n\tstrings:\n\t\t$loc_10001000 = { 55 8B EC 8D 45 0C 50 8B 4D 08 51 6A 02 FF 15 [4] 85 C0 74 09 B8 01 00 00 00 EB 04 EB 02 33 C0 5D C3 }\n\t\t$loc_100012fd = {6A 00 8D 55 EC 52 8B 45 D4 50 6A 05 8B 4D E4 51 FF 15 }\n\t\t$func1 = \"GetComputerNameExA\" ascii\n\t\t$func2 = \"HttpQueryInfoA\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and uint32( uint32( 0x3C ) ) == 0x00004550 and filesize < 1MB and ( ( $loc_10001000 and $func1 ) or ( $loc_100012fd and $func2 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

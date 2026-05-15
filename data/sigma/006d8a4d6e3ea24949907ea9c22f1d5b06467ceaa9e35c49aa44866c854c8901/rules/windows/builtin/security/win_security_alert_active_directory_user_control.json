@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_alert_active_directory_user_control.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron",
+                "date": "2017-07-30",
+                "title": "Enabled User Right in AD to Control User Objects",
+                "id": "311b6ce2-7890-4383-a8c2-663a9f6b43cd"
+            },
+            "rule_text": "title: Enabled User Right in AD to Control User Objects\nid: 311b6ce2-7890-4383-a8c2-663a9f6b43cd\nstatus: test\ndescription: Detects scenario where if a user is assigned the SeEnableDelegationPrivilege\n  right in Active Directory it would allow control of other AD user objects.\nreferences:\n- https://blog.harmj0y.net/activedirectory/the-most-dangerous-user-right-you-probably-have-never-heard-of/\nauthor: '@neu5ron'\ndate: 2017-07-30\nmodified: 2021-12-02\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1098\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Policy : Policy Change > Audit Authorization Policy\n    Change, Group Policy : Computer Configuration\\Windows Settings\\Security Settings\\Advanced\n    Audit Policy Configuration\\Audit Policies\\Policy Change\\Audit Authorization Policy\n    Change'\ndetection:\n  selection_base:\n    EventID: 4704\n  selection_keywords:\n    PrivilegeList|contains: SeEnableDelegationPrivilege\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

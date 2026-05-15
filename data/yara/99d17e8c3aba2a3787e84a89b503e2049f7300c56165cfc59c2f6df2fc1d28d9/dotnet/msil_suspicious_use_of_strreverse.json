@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/dr4k0nia/yara-rules/blob/master/dotnet/msil_suspicious_use_of_strreverse.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "msil_suspicious_use_of_strreverse",
+                "tags": [],
+                "description": "Detects mixed use of Microsoft.CSharp and VisualBasic to use StrReverse",
+                "author": "dr4k0nia",
+                "version": "1.1",
+                "date": "01/31/2023",
+                "modified": "02/22/2023",
+                "hash": "02ce0980427dea835fc9d9eed025dd26672bf2c15f0b10486ff8107ce3950701"
+            },
+            "rule_text": "import \"dotnet\"\n\nrule msil_suspicious_use_of_strreverse\n{\n\tmeta:\n\t\tdescription = \"Detects mixed use of Microsoft.CSharp and VisualBasic to use StrReverse\"\n\t\tauthor = \"dr4k0nia\"\n\t\tversion = \"1.1\"\n\t\tdate = \"01/31/2023\"\n\t\tmodified = \"02/22/2023\"\n\t\thash = \"02ce0980427dea835fc9d9eed025dd26672bf2c15f0b10486ff8107ce3950701\"\n\n\tstrings:\n\t\t$csharp = \"Microsoft.CSharp\"\n\t\t$vbnet = \"Microsoft.VisualBasic\"\n\t\t$strreverse = \"StrReverse\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and dotnet.is_dotnet and filesize < 50MB and $csharp and $vbnet and $strreverse\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

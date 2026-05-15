@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Otlard/TrojanDropper_Win32_Otlard_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Otlard_A",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Otlard.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Otlard_A\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Otlard.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {bb 85 00 00 00 88 84 0d ?? ?? ?? ?? 8b c6 99 f7 fb 41 8a c2 b2 03 f6 ea }\n\t\t$a_01_1 = {6a 01 6a 01 bb ff 01 0f 00 53 }\n\t\t$a_01_2 = {25 63 25 63 25 63 25 30 34 78 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

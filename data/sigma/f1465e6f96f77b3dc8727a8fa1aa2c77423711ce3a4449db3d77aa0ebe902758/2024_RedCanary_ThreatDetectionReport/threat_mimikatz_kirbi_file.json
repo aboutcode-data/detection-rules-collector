@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_mimikatz_kirbi_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Kerberos .kirbi Ticket Files",
+                "id": "8132d811-8314-40bc-9bb0-4bcdc33605e9"
+            },
+            "rule_text": "title: Kerberos .kirbi Ticket Files\nid: 8132d811-8314-40bc-9bb0-4bcdc33605e9\nstatus: experimental\ndescription: \"Kerberos ticket files (.kirbi) are of interest to adversaries as they\\\n  \\ can \\ncontain sensitive data such as NTLM hashes that can be cracked offline.\\\n  \\ To \\nperform these attacks, a unique file extension variable is defined within\\\n  \\ \\nMimikatz that designates the default extension as .kirbi. Part of the \\nRedCanary\\\n  \\ 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/impacket/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.s0002\n- attack.credential_access\n- attack.t1558\n- attack.t1558.003\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith: .kirbi\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

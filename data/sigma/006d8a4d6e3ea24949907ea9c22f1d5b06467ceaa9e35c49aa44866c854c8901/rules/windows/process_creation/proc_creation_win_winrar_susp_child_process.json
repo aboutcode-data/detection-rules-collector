@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winrar_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-31",
+                "title": "Potentially Suspicious Child Process Of WinRAR.EXE",
+                "id": "146aace8-9bd6-42ba-be7a-0070d8027b76"
+            },
+            "rule_text": "title: Potentially Suspicious Child Process Of WinRAR.EXE\nid: 146aace8-9bd6-42ba-be7a-0070d8027b76\nrelated:\n- id: ec3a3c2f-9bb0-4a9b-8f4b-5ec386544343\n  type: similar\nstatus: test\ndescription: Detects potentially suspicious child processes of WinRAR.exe.\nreferences:\n- https://www.group-ib.com/blog/cve-2023-38831-winrar-zero-day/\n- https://github.com/knight0x07/WinRAR-Code-Execution-Vulnerability-CVE-2023-38831/blob/26ab6c40b6d2c09bb4fc60feaa4a3a90cfd20c23/Part-1-Overview.md\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-31\ntags:\n- attack.execution\n- attack.t1203\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\WinRAR.exe\n  selection_binaries:\n  - Image|endswith:\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\wscript.exe\n  - OriginalFileName:\n    - Cmd.Exe\n    - cscript.exe\n    - mshta.exe\n    - PowerShell.EXE\n    - pwsh.dll\n    - regsvr32.exe\n    - RUNDLL32.EXE\n    - wscript.exe\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": [
+                "CVE-2023-38831"
+            ]
+        }
+    ]
+}

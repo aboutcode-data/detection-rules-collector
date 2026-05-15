@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules_binaries_strict/offensive_tool_keyword/G-H/GreatSCT.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "GreatSCT",
+                "tags": [],
+                "description": "Detection patterns for the tool 'GreatSCT' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "GreatSCT",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule GreatSCT\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'GreatSCT' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"GreatSCT\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\-c\\s.{0,100}OBFUSCATION\\=.{0,100}\\.ps1/ nocase ascii wide\n\t\t$string2 = \" GreatSCT/\" nocase ascii wide\n\t\t$string3 = \" --list-payloads\" nocase ascii wide\n\t\t$string4 = \" --msfoptions \" nocase ascii wide\n\t\t$string5 = \"/Bypass/payloads\" nocase ascii wide\n\t\t$string6 = \"/GreatSCT/\" nocase ascii wide\n\t\t$string7 = \"/GreatSCT/GreatSCT\"\n\t\t$string8 = \"/greatsct-output\" nocase ascii wide\n\t\t$string9 = \"/regsvcs/meterpreter\" nocase ascii wide\n\t\t$string10 = \"/regsvr32/shellcode_inject\" nocase ascii wide\n\t\t$string11 = \"func_get_powershell_dll\" nocase ascii wide\n\t\t$string12 = \"func_install_wine_dotnettojscript\" nocase ascii wide\n\t\t$string13 = \"GreatSCT\" nocase ascii wide\n\t\t$string14 = /GreatSCT\\.git/ nocase ascii wide\n\t\t$string15 = /GreatSCT\\.py/ nocase ascii wide\n\t\t$string16 = /invoke_obfuscation\\.py/ nocase ascii wide\n\t\t$string17 = \"--msfvenom \" nocase ascii wide\n\t\t$string18 = \"mshta/shellcode_inject\" nocase ascii wide\n\t\t$metadata_regex_import = /\\bimport\\s+[a-zA-Z0-9_.]+\\b/ nocase\n\t\t$metadata_regex_function = /function\\s+[a-zA-Z_][a-zA-Z0-9_]*\\(/ nocase ascii\n\t\t$metadata_regex_php = /<\\?php/ nocase ascii\n\t\t$metadata_regex_createobject = /(CreateObject|WScript\\.)/ nocase ascii\n\t\t$metadata_regex_script = /<script\\b/ nocase ascii\n\t\t$metadata_regex_javascript = /(let\\s|const\\s|function\\s|document\\.|console\\.)/ nocase ascii\n\t\t$metadata_regex_powershell = /(Write-Host|Get-[a-zA-Z]+|Invoke-|param\\(|\\.SYNOPSIS)/ nocase ascii\n\t\t$metadata_regex_batch = /@(echo\\s|call\\s|set\\s|goto\\s|if\\s|for\\s|rem\\s)/ nocase ascii\n\t\t$metadata_regex_shebang = /^#!\\// nocase ascii\n\n\tcondition:\n\t\t(( filesize < 20MB and ( uint16( 0 ) == 0x5a4d or uint16( 0 ) == 0x457f or uint32be( 0 ) == 0x7f454c46 or uint16( 0 ) == 0xfeca or uint16( 0 ) == 0xfacf or uint32( 0 ) == 0xbebafeca or uint32( 0 ) == 0x504B0304 or uint32( 0 ) == 0xCAFEBABE or uint32( 0 ) == 0x4D534346 or uint32( 0 ) == 0xD0CF11E0 or uint16( 0 ) == 0x2321 or uint16( 0 ) == 0x3c3f ) ) and any of ( $string* ) ) or ( filesize < 2MB and ( any of ( $string* ) and for any of ( $metadata_regex_* ) : ( @ <= 20000 ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Baldr/Trojan_Win32_Baldr_AD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Baldr_AD_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Baldr.AD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Baldr_AD_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Baldr.AD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b cf 33 d2 6a ?? 8b c1 5e f7 f6 8a 44 15 ?? 30 81 ?? ?? ?? ?? 41 81 f9 ?? ?? ?? ?? 72 }\n\t\t$a_00_1 = {61 00 76 00 34 00 2e 00 30 00 2e 00 33 00 30 00 33 00 31 00 39 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

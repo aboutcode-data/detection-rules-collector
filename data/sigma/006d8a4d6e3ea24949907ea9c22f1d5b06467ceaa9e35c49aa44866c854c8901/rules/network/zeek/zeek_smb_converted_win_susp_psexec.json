@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_smb_converted_win_susp_psexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden, @neu5ron, Tim Shelton",
+                "date": "2020-04-02",
+                "title": "Suspicious PsExec Execution - Zeek",
+                "id": "f1b3a22a-45e6-4004-afb5-4291f9c21166"
+            },
+            "rule_text": "title: Suspicious PsExec Execution - Zeek\nid: f1b3a22a-45e6-4004-afb5-4291f9c21166\nrelated:\n- id: c462f537-a1e3-41a6-b5fc-b2c2cef9bf82\n  type: derived\nstatus: test\ndescription: detects execution of psexec or paexec with renamed service name, this\n  rule helps to filter out the noise if psexec is used for legit purposes or if attacker\n  uses a different psexec client other than sysinternal one\nreferences:\n- https://web.archive.org/web/20230329171218/https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html\nauthor: Samir Bousseaden, @neu5ron, Tim Shelton\ndate: 2020-04-02\nmodified: 2022-12-27\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: zeek\n  service: smb_files\ndetection:\n  selection:\n    path|contains|all:\n    - \\\\\n    - \\IPC$\n    name|endswith:\n    - -stdin\n    - -stdout\n    - -stderr\n  filter:\n    name|startswith: PSEXESVC\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

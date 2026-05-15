@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_sysinternals_livekd_driver_susp_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-16",
+                "title": "LiveKD Driver Creation By Uncommon Process",
+                "id": "059c5af9-5131-4d8d-92b2-de4ad6146712"
+            },
+            "rule_text": "title: LiveKD Driver Creation By Uncommon Process\nid: 059c5af9-5131-4d8d-92b2-de4ad6146712\nrelated:\n- id: 16fe46bb-4f64-46aa-817d-ff7bec4a2352\n  type: similar\nstatus: test\ndescription: Detects the creation of the LiveKD driver by a process image other than\n  \"livekd.exe\".\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-16\ntags:\n- attack.privilege-escalation\n- attack.stealth\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename: C:\\Windows\\System32\\drivers\\LiveKdD.SYS\n  filter_main_legit_name:\n    Image|endswith:\n    - \\livekd.exe\n    - \\livek64.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Administrators might rename LiveKD before its usage which could trigger this. Add\n  additional names you use to the filter\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

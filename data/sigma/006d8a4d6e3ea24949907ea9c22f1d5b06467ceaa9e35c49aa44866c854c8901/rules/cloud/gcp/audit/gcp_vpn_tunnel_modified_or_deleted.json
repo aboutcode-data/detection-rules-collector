@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/gcp/audit/gcp_vpn_tunnel_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-16",
+                "title": "Google Cloud VPN Tunnel Modified or Deleted",
+                "id": "99980a85-3a61-43d3-ac0f-b68d6b4797b1"
+            },
+            "rule_text": "title: Google Cloud VPN Tunnel Modified or Deleted\nid: 99980a85-3a61-43d3-ac0f-b68d6b4797b1\nstatus: test\ndescription: Identifies when a VPN Tunnel Modified or Deleted in Google Cloud.\nreferences:\n- https://any-api.com/googleapis_com/compute/docs/vpnTunnels\nauthor: Austin Songer @austinsonger\ndate: 2021-08-16\nmodified: 2022-10-09\ntags:\n- attack.impact\nlogsource:\n  product: gcp\n  service: gcp.audit\ndetection:\n  selection:\n    gcp.audit.method_name:\n    - compute.vpnTunnels.insert\n    - compute.vpnTunnels.delete\n  condition: selection\nfalsepositives:\n- VPN Tunnel being modified or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- VPN Tunnel modified or deleted from unfamiliar users should be investigated. If\n  known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

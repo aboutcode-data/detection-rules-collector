@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Banker/TrojanSpy_Win32_Banker_DQ.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Banker_DQ",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Banker.DQ,SIGNATURE_TYPE_PEHSTR_EXT,ffffff98 08 ffffffd0 07 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Banker_DQ\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Banker.DQ,SIGNATURE_TYPE_PEHSTR_EXT,ffffff98 08 ffffffd0 07 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {c6 00 30 a1 ?? ?? 48 00 ba ?? ?? 47 00 e8 ?? ?? f8 ff e8 ?? ?? f9 ff dd 1d ?? ?? 48 00 9b ff 35 ?? ?? 48 00 ff 35 ?? ?? 48 00 8d 45 fc e8 ?? ?? f9 ff 8b 55 fc b8 ?? ?? 48 00 e8 ?? ?? f8 ff 68 ?? ?? 47 00 ff 35 ?? ?? 48 00 68 ?? ?? 47 00 8d 45 f8 ba 03 00 00 00 e8 ?? ?? f8 ff 8b 45 f8 }\n\t\t$a_02_1 = {33 d2 8b 83 ?? 04 00 00 e8 ?? ?? fb ff e9 ?? ?? 00 00 e8 ?? ?? f9 ff d8 25 ?? ?? 47 00 dd 1d ?? ?? 48 00 9b ff 35 ?? ?? 48 00 ff 35 ?? ?? 48 00 8d 45 f4 e8 ?? ?? f9 ff 8b 55 f4 b8 ?? ?? 48 00 e8 ?? ?? f8 ff 68 ?? ?? 47 00 ff 35 ?? ?? 48 00 68 ?? ?? 47 00 8d 45 f0 ba 03 00 00 00 }\n\t\t$a_00_2 = {77 69 6e 6c 6f 67 }\n\t\t$a_00_3 = {6d 73 62 63 62 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1000 + ( #a_02_1 & 1 ) * 1000 + ( #a_00_2 & 1 ) * 100 + ( #a_00_3 & 1 ) * 100 ) >= 2000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

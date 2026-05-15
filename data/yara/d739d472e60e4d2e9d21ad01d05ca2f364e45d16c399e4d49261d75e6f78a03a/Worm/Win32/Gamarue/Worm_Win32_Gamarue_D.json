@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Gamarue/Worm_Win32_Gamarue_D.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Gamarue_D",
+                "tags": [],
+                "description": "Worm:Win32/Gamarue.D,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 04 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Gamarue_D\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Gamarue.D,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {64 8b 1d 30 00 00 00 8b 5b 0c 8b 5b 0c 83 c3 24 8b 5b 04 }\n\t\t$a_00_1 = {68 65 78 65 00 68 6f 73 74 2e 68 73 76 63 68 8b dc }\n\t\t$a_00_2 = {51 51 51 ff 75 bc ff 75 a8 ff 55 c8 }\n\t\t$a_02_3 = {ac 84 c0 74 09 0c ?? 32 d0 c1 c2 ?? eb fe }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

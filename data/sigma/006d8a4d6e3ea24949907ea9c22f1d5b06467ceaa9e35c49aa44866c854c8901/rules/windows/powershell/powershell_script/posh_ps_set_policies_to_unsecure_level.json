@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_set_policies_to_unsecure_level.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-10-20",
+                "title": "Change PowerShell Policies to an Insecure Level - PowerShell",
+                "id": "61d0475c-173f-4844-86f7-f3eebae1c66b"
+            },
+            "rule_text": "title: Change PowerShell Policies to an Insecure Level - PowerShell\nid: 61d0475c-173f-4844-86f7-f3eebae1c66b\nrelated:\n- id: cf2e938e-9a3e-4fe8-a347-411642b28a9f\n  type: similar\n- id: 87e3c4e8-a6a8-4ad9-bb4f-46e7ff99a180\n  type: similar\n- id: fad91067-08c5-4d1a-8d8c-d96a21b37814\n  type: similar\nstatus: test\ndescription: Detects changing the PowerShell script execution policy to a potentially\n  insecure level using the \"Set-ExecutionPolicy\" cmdlet.\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.4\n- https://adsecurity.org/?p=2604\nauthor: frack113\ndate: 2021-10-20\nmodified: 2023-12-14\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains: Set-ExecutionPolicy\n  selection_option:\n    ScriptBlockText|contains:\n    - Unrestricted\n    - bypass\n  filter_optional_chocolatey:\n    ScriptBlockText|contains:\n    - (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')\n    - (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Administrator script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

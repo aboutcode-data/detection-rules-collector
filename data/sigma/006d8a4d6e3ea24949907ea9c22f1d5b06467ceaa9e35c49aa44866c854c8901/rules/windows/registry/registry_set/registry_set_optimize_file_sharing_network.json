@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_optimize_file_sharing_network.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-03-19",
+                "title": "MaxMpxCt Registry Value Changed",
+                "id": "0e6a9e62-627e-496c-aef5-bfa39da29b5e"
+            },
+            "rule_text": "title: MaxMpxCt Registry Value Changed\nid: 0e6a9e62-627e-496c-aef5-bfa39da29b5e\nstatus: test\ndescription: 'Detects changes to the \"MaxMpxCt\" registry value.\n\n  MaxMpxCt specifies the maximum outstanding network requests for the server per client,\n  which is used when negotiating a Server Message Block (SMB) connection with a client.\n  Note if the value is set beyond 125 older Windows 9x clients will fail to negotiate.\n\n  Ransomware threat actors and operators (specifically BlackCat) were seen increasing\n  this value in order to handle a higher volume of traffic.\n\n  '\nreferences:\n- https://www.huntress.com/blog/blackcat-ransomware-affiliate-ttps\n- https://securityscorecard.com/research/deep-dive-into-alphv-blackcat-ransomware\n- https://www.intrinsec.com/alphv-ransomware-gang-analysis/?cn-reloaded=1\n- https://www.sentinelone.com/labs/blackcat-ransomware-highly-configurable-rust-driven-raas-on-the-prowl-for-victims/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-03-19\ntags:\n- attack.stealth\n- attack.t1070.005\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Services\\LanmanServer\\Parameters\\MaxMpxCt\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

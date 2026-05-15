@@ -1,0 +1,59 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_powershell_obfuscation.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PowerShell_ISESteroids_Obfuscation",
+                "tags": [],
+                "description": "Detects PowerShell ISESteroids obfuscation",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/danielhbohannon/status/877953970437844993",
+                "date": "2017-06-23",
+                "id": "d686c4de-28fd-5d77-91d4-dde5661b75cd"
+            },
+            "rule_text": "rule PowerShell_ISESteroids_Obfuscation\n{\n\tmeta:\n\t\tdescription = \"Detects PowerShell ISESteroids obfuscation\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/danielhbohannon/status/877953970437844993\"\n\t\tdate = \"2017-06-23\"\n\t\tid = \"d686c4de-28fd-5d77-91d4-dde5661b75cd\"\n\n\tstrings:\n\t\t$x1 = \"/\\\\/===\\\\__\" ascii\n\t\t$x2 = \"${__/\\\\/==\" ascii\n\t\t$x3 = \"Catch { }\" fullword ascii\n\t\t$x4 = \"\\\\_/=} ${_\" ascii\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_Obfuscted_PowerShell_Code",
+                "tags": [],
+                "description": "Detects obfuscated PowerShell Code",
+                "date": "2018-12-13",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/silv0123/status/1073072691584880640",
+                "id": "e2d8fc9e-ce2b-5118-8305-0d5839561d4f"
+            },
+            "rule_text": "rule SUSP_Obfuscted_PowerShell_Code\n{\n\tmeta:\n\t\tdescription = \"Detects obfuscated PowerShell Code\"\n\t\tdate = \"2018-12-13\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/silv0123/status/1073072691584880640\"\n\t\tid = \"e2d8fc9e-ce2b-5118-8305-0d5839561d4f\"\n\n\tstrings:\n\t\t$s1 = \"').Invoke(\" ascii\n\t\t$s2 = \"(\\\"{1}{0}\\\"\" ascii\n\t\t$s3 = \"{0}\\\" -f\" ascii\n\n\tcondition:\n\t\t#s1> 11 and #s2 > 10 and #s3 > 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_PowerShell_Caret_Obfuscation_2",
+                "tags": [],
+                "description": "Detects powershell keyword obfuscated with carets",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2019-07-20",
+                "id": "976e261a-029c-5703-835f-a235c5657471"
+            },
+            "rule_text": "rule SUSP_PowerShell_Caret_Obfuscation_2\n{\n\tmeta:\n\t\tdescription = \"Detects powershell keyword obfuscated with carets\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2019-07-20\"\n\t\tid = \"976e261a-029c-5703-835f-a235c5657471\"\n\n\tstrings:\n\t\t$r1 = /p[\\^]?o[\\^]?w[\\^]?e[\\^]?r[\\^]?s[\\^]?h[\\^]?e[\\^]?l\\^l/ ascii wide nocase fullword\n\t\t$r2 = /p\\^o[\\^]?w[\\^]?e[\\^]?r[\\^]?s[\\^]?h[\\^]?e[\\^]?l[\\^]?l/ ascii wide nocase fullword\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_OBFUSC_PowerShell_True_Jun20_1",
+                "tags": [],
+                "description": "Detects indicators often found in obfuscated PowerShell scripts. Note: This detection is based on common characteristics typically associated with the mentioned threats, must be considered a clue and does not conclusively prove maliciousness.",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/corneacristian/mimikatz-bypass/",
+                "date": "2020-06-27",
+                "score": 75,
+                "id": "e9bb870b-ad72-57d3-beff-2f84a81490eb"
+            },
+            "rule_text": "rule SUSP_OBFUSC_PowerShell_True_Jun20_1\n{\n\tmeta:\n\t\tdescription = \"Detects indicators often found in obfuscated PowerShell scripts. Note: This detection is based on common characteristics typically associated with the mentioned threats, must be considered a clue and does not conclusively prove maliciousness.\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/corneacristian/mimikatz-bypass/\"\n\t\tdate = \"2020-06-27\"\n\t\tscore = 75\n\t\tid = \"e9bb870b-ad72-57d3-beff-2f84a81490eb\"\n\n\tstrings:\n\t\t$ = \"${t`rue}\" ascii nocase\n\t\t$ = \"${tr`ue}\" ascii nocase\n\t\t$ = \"${tru`e}\" ascii nocase\n\t\t$ = \"${t`ru`e}\" ascii nocase\n\t\t$ = \"${tr`u`e}\" ascii nocase\n\t\t$ = \"${t`r`ue}\" ascii nocase\n\t\t$ = \"${t`r`u`e}\" ascii nocase\n\n\tcondition:\n\t\tfilesize < 6000KB and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

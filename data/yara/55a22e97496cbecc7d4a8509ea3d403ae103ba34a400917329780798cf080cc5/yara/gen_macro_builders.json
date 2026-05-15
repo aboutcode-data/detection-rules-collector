@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_macro_builders.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_MalDoc_ExcelMacro",
+                "tags": [],
+                "description": "Detects malicious Excel macro Artifacts",
+                "author": "James Quinn",
+                "date": "2020-11-03",
+                "reference": "YARA Exchange - Undisclosed Macro Builder",
+                "id": "76806717-a9a8-520e-b6b6-7718eb088de5"
+            },
+            "rule_text": "rule SUSP_MalDoc_ExcelMacro\n{\n\tmeta:\n\t\tdescription = \"Detects malicious Excel macro Artifacts\"\n\t\tauthor = \"James Quinn\"\n\t\tdate = \"2020-11-03\"\n\t\treference = \"YARA Exchange - Undisclosed Macro Builder\"\n\t\tid = \"76806717-a9a8-520e-b6b6-7718eb088de5\"\n\n\tstrings:\n\t\t$artifact1 = {5c 00 ?? 00 ?? 00 ?? 00 ?? 00 ?? 00 ?? 00 ?? 00 2e 00 ?? 00 ?? 00}\n\t\t$url1 = \"http://\" wide\n\t\t$url2 = \"https://\" wide\n\t\t$import1 = \"URLDownloadToFileA\" wide ascii\n\t\t$macro = \"xl/macrosheets/\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x4b50 and filesize < 2000KB and $artifact1 and $macro and $import1 and 1 of ( $url* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

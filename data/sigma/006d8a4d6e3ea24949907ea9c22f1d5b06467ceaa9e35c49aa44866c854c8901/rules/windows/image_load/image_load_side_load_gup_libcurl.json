@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_gup_libcurl.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-05",
+                "title": "Potential DLL Sideloading Of Libcurl.DLL Via GUP.EXE",
+                "id": "e49b5745-1064-4ac1-9a2e-f687bc2dd37e"
+            },
+            "rule_text": "title: Potential DLL Sideloading Of Libcurl.DLL Via GUP.EXE\nid: e49b5745-1064-4ac1-9a2e-f687bc2dd37e\nstatus: test\ndescription: Detects potential DLL sideloading of \"libcurl.dll\" by the \"gup.exe\" process\n  from an uncommon location\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-05\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\gup.exe\n    ImageLoaded|endswith: \\libcurl.dll\n  filter_main_notepad_plusplus:\n    Image|endswith: \\Notepad++\\updater\\GUP.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

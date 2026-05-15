@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/builtin/lnx_clear_syslog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2021-09-10",
+                "title": "Commands to Clear or Remove the Syslog - Builtin",
+                "id": "e09eb557-96d2-4de9-ba2d-30f712a5afd3"
+            },
+            "rule_text": "title: Commands to Clear or Remove the Syslog - Builtin\nid: e09eb557-96d2-4de9-ba2d-30f712a5afd3\nstatus: test\ndescription: Detects specific commands commonly used to remove or empty the syslog\nreferences:\n- https://www.virustotal.com/gui/file/fc614fb4bda24ae8ca2c44e812d12c0fab6dd7a097472a35dd12ded053ab8474\nauthor: Max Altgelt (Nextron Systems)\ndate: 2021-09-10\nmodified: 2022-11-26\ntags:\n- attack.impact\n- attack.t1565.001\nlogsource:\n  product: linux\ndetection:\n  selection:\n  - rm /var/log/syslog\n  - rm -r /var/log/syslog\n  - rm -f /var/log/syslog\n  - rm -rf /var/log/syslog\n  - mv /var/log/syslog\n  - ' >/var/log/syslog'\n  - ' > /var/log/syslog'\n  falsepositives:\n  - /syslog.\n  condition: selection and not falsepositives\nfalsepositives:\n- Log rotation\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

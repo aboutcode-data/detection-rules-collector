@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/signin_logs/azure_ad_device_registration_or_join_without_mfa.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael Epping, '@mepples21'",
+                "date": "2022-06-28",
+                "title": "Device Registration or Join Without MFA",
+                "id": "5afa454e-030c-4ab4-9253-a90aa7fcc581"
+            },
+            "rule_text": "title: Device Registration or Join Without MFA\nid: 5afa454e-030c-4ab4-9253-a90aa7fcc581\nstatus: test\ndescription: Monitor and alert for device registration or join events where MFA was\n  not performed.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-devices#device-registrations-and-joins-outside-policy\nauthor: Michael Epping, '@mepples21'\ndate: 2022-06-28\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.stealth\n- attack.t1078.004\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    ResourceDisplayName: Device Registration Service\n    conditionalAccessStatus: success\n  filter_mfa:\n    AuthenticationRequirement: multiFactorAuthentication\n  condition: selection and not filter_mfa\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

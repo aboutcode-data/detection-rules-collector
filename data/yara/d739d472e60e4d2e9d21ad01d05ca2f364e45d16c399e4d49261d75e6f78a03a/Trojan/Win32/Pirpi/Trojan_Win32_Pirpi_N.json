@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Pirpi/Trojan_Win32_Pirpi_N.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Pirpi_N",
+                "tags": [],
+                "description": "Trojan:Win32/Pirpi.N,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Pirpi_N\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Pirpi.N,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {3c 02 74 04 3c 01 75 90 14 80 bc 24 ?? ?? 00 00 02 0f 85 ?? ?? 00 00 68 60 ea 00 00 ff 15 ?? ?? ?? ?? 8d 54 24 ?? 52 ff 15 }\n\t\t$a_01_1 = {8b 74 24 0c 85 f6 74 19 33 c0 85 f6 7e 13 8a 54 24 10 53 8a 1c 08 32 da 88 1c 08 40 3b c6 7c f3 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

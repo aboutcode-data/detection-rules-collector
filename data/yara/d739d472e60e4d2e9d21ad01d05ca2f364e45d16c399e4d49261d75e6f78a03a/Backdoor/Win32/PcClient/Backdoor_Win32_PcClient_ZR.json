@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/PcClient/Backdoor_Win32_PcClient_ZR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_PcClient_ZR",
+                "tags": [],
+                "description": "Backdoor:Win32/PcClient.ZR,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 07 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_PcClient_ZR\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/PcClient.ZR,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {3d 00 00 20 03 73 ?? 6a 02 6a 00 6a 00 ?? ff 15 }\n\t\t$a_02_1 = {8a 14 01 80 f2 ?? 88 10 40 4d 75 f4 }\n\t\t$a_02_2 = {6a 00 6a 00 6a 00 6a 00 6a ?? (eb|ff) }\n\t\t$a_00_3 = {73 79 73 6c 6f 67 2e 64 61 74 }\n\t\t$a_00_4 = {25 64 2e 62 61 6b }\n\t\t$a_00_5 = {25 32 64 25 32 64 25 32 64 25 32 64 25 32 64 25 32 64 }\n\t\t$a_00_6 = {72 61 73 70 68 6f 6e 65 2e 70 62 6b }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 2 + ( #a_02_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 + ( #a_00_5 & 1 ) * 1 + ( #a_00_6 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

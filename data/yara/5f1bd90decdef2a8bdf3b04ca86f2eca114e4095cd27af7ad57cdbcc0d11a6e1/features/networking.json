@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/networking.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "winsocks",
+                "tags": [
+                    "feature",
+                    "networking",
+                    "windows"
+                ],
+                "description": "Imports Winsock Library"
+            },
+            "rule_text": "import \"pe\"\n\nrule winsocks : feature networking windows\n{\n\tmeta:\n\t\tdescription = \"Imports Winsock Library\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and pe.imports ( \"wsock32.dll\" , \"WSAStartup\" ) and pe.imports ( \"wsock32.dll\" , \"socket\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

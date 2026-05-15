@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_hdiutil_mount.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Omar Khaled (@beacon_exe)",
+                "date": "2024-08-10",
+                "title": "Disk Image Mounting Via Hdiutil - MacOS",
+                "id": "bf241472-f014-4f01-a869-96f99330ca8c"
+            },
+            "rule_text": "title: Disk Image Mounting Via Hdiutil - MacOS\nid: bf241472-f014-4f01-a869-96f99330ca8c\nstatus: test\ndescription: Detects the execution of the hdiutil utility in order to mount disk images.\nreferences:\n- https://www.loobins.io/binaries/hdiutil/\n- https://www.sentinelone.com/blog/from-the-front-linesunsigned-macos-orat-malware-gambles-for-the-win/\n- https://ss64.com/mac/hdiutil.html\nauthor: Omar Khaled (@beacon_exe)\ndate: 2024-08-10\ntags:\n- attack.initial-access\n- attack.collection\n- attack.t1566.001\n- attack.t1560.001\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /hdiutil\n    CommandLine|contains:\n    - 'attach '\n    - 'mount '\n  condition: selection\nfalsepositives:\n- Legitimate usage of hdiutil by administrators and users.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

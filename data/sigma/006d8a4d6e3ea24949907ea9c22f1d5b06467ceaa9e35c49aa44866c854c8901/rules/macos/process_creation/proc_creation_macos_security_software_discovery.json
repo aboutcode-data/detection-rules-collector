@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_security_software_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, oscd.community",
+                "date": "2020-10-19",
+                "title": "Security Software Discovery - MacOs",
+                "id": "0ed75b9c-c73b-424d-9e7d-496cd565fbe0"
+            },
+            "rule_text": "title: Security Software Discovery - MacOs\nid: 0ed75b9c-c73b-424d-9e7d-496cd565fbe0\nstatus: test\ndescription: Detects usage of system utilities (only grep for now) to discover security\n  software discovery\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md\nauthor: Daniil Yugoslavskiy, oscd.community\ndate: 2020-10-19\nmodified: 2022-11-27\ntags:\n- attack.discovery\n- attack.t1518.001\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  image:\n    Image: /usr/bin/grep\n  selection_cli_1:\n    CommandLine|contains:\n    - nessusd\n    - santad\n    - CbDefense\n    - falcond\n    - td-agent\n    - packetbeat\n    - filebeat\n    - auditbeat\n    - osqueryd\n    - BlockBlock\n    - LuLu\n  selection_cli_2:\n    CommandLine|contains|all:\n    - Little\n    - Snitch\n  condition: image and 1 of selection_cli_*\nfalsepositives:\n- Legitimate activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/capi2/win_capi2_acquire_certificate_private_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Zach Mathis",
+                "date": "2023-05-13",
+                "title": "Certificate Private Key Acquired",
+                "id": "e2b5163d-7deb-4566-9af3-40afea6858c3"
+            },
+            "rule_text": "title: Certificate Private Key Acquired\nid: e2b5163d-7deb-4566-9af3-40afea6858c3\nstatus: test\ndescription: Detects when an application acquires a certificate private key\nreferences:\n- https://www.splunk.com/en_us/blog/security/breaking-the-chain-defending-against-certificate-services-abuse.html\nauthor: Zach Mathis\ndate: 2023-05-13\ntags:\n- attack.credential-access\n- attack.t1649\nlogsource:\n  product: windows\n  service: capi2\n  definition: 'Requirements: The CAPI2 Operational log needs to be enabled'\ndetection:\n  selection:\n    EventID: 70\n  condition: selection\nfalsepositives:\n- Legitimate application requesting certificate exports will trigger this. Apply additional\n  filters as needed\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

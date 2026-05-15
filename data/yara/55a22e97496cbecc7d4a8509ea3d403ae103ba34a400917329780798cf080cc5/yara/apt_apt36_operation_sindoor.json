@@ -1,0 +1,61 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_apt36_operation_sindoor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNX_Sindoor_ELF_Obfuscation_Aug25",
+                "tags": [],
+                "description": "Detects ELF obfuscation technique used by Sindoor dropper related to APT 36",
+                "author": "Pezier Pierre-Henri",
+                "date": "2025-08-29",
+                "score": 70,
+                "reference": "Internal Research",
+                "hash": "6879a2b730e391964afe4dbbc29667844ba0c29239be5503b7c86e59e7052443"
+            },
+            "rule_text": "rule SUSP_LNX_Sindoor_ELF_Obfuscation_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects ELF obfuscation technique used by Sindoor dropper related to APT 36\"\n\t\tauthor = \"Pezier Pierre-Henri\"\n\t\tdate = \"2025-08-29\"\n\t\tscore = 70\n\t\treference = \"Internal Research\"\n\t\thash = \"6879a2b730e391964afe4dbbc29667844ba0c29239be5503b7c86e59e7052443\"\n\n\tstrings:\n\t\t$s1 = \"UPX!\"\n\n\tcondition:\n\t\tfilesize < 10MB and uint16( 0 ) == 0 and uint16( 4 ) > 0 and $s1 in ( 0xc0 .. 0x100 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNX_Sindoor_DesktopFile_Aug25",
+                "tags": [],
+                "description": "Detects ELF obfuscation technique used by Sindoor dropper related to APT 36",
+                "author": "Pezier Pierre-Henri",
+                "date": "2025-08-29",
+                "score": 70,
+                "reference": "Internal Research",
+                "hash": "9943bdf1b2a37434054b14a1a56a8e67aaa6a8b733ca785017d3ed8c1173ac59"
+            },
+            "rule_text": "rule SUSP_LNX_Sindoor_DesktopFile_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects ELF obfuscation technique used by Sindoor dropper related to APT 36\"\n\t\tauthor = \"Pezier Pierre-Henri\"\n\t\tdate = \"2025-08-29\"\n\t\tscore = 70\n\t\treference = \"Internal Research\"\n\t\thash = \"9943bdf1b2a37434054b14a1a56a8e67aaa6a8b733ca785017d3ed8c1173ac59\"\n\n\tstrings:\n\t\t$hdr = \"[Desktop Entry]\"\n\t\t$s1 = \"printf '\\\\\\\\x7FELF' | dd of\"\n\t\t$s2 = \"Future_Note_Warfare_OpSindoor.pdf\"\n\n\tcondition:\n\t\tfilesize < 100KB and $hdr and any of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_Sindoor_Decryptor_Aug25",
+                "tags": [],
+                "description": "Detects AES decryptor used by Sindoor dropper related to APT 36",
+                "author": "Pezier Pierre-Henri",
+                "date": "2025-08-29",
+                "score": 80,
+                "reference": "Internal Research",
+                "hash": "9a1adb50bb08f5a28160802c8f315749b15c9009f25aa6718c7752471db3bb4b"
+            },
+            "rule_text": "rule MAL_Sindoor_Decryptor_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects AES decryptor used by Sindoor dropper related to APT 36\"\n\t\tauthor = \"Pezier Pierre-Henri\"\n\t\tdate = \"2025-08-29\"\n\t\tscore = 80\n\t\treference = \"Internal Research\"\n\t\thash = \"9a1adb50bb08f5a28160802c8f315749b15c9009f25aa6718c7752471db3bb4b\"\n\n\tstrings:\n\t\t$s1 = \"Go build\"\n\t\t$s2 = \"main.rc4EncryptDecrypt\"\n\t\t$s3 = \"main.processFile\"\n\t\t$s4 = \"main.deriveKeyAES\"\n\t\t$s5 = \"use RC4 instead of AES\"\n\n\tcondition:\n\t\tfilesize < 100MB and ( uint16( 0 ) == 0x5a4d or uint32be( 0 ) == 0x7f454c46 or ( uint32be( 0 ) == 0xcafebabe and uint32be( 4 ) < 0x20 ) or uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xfeedfacf ) and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_Sindoor_Downloader_Aug25",
+                "tags": [],
+                "description": "Detects Sindoor downloader related to APT 36",
+                "author": "Pezier Pierre-Henri",
+                "date": "2025-08-29",
+                "score": 80,
+                "reference": "Internal Research",
+                "hash": "38b6b93a536cbab5c289fe542656d8817d7c1217ad75c7f367b15c65d96a21d4"
+            },
+            "rule_text": "rule MAL_Sindoor_Downloader_Aug25\n{\n\tmeta:\n\t\tdescription = \"Detects Sindoor downloader related to APT 36\"\n\t\tauthor = \"Pezier Pierre-Henri\"\n\t\tdate = \"2025-08-29\"\n\t\tscore = 80\n\t\treference = \"Internal Research\"\n\t\thash = \"38b6b93a536cbab5c289fe542656d8817d7c1217ad75c7f367b15c65d96a21d4\"\n\n\tstrings:\n\t\t$s1 = \"Go build\"\n\t\t$s2 = \"main.downloadFile.deferwrap\"\n\t\t$s3 = \"main.decrypt\"\n\t\t$s4 = \"main.HiddenHome\"\n\t\t$s5 = \"main.RealCheck\"\n\n\tcondition:\n\t\tfilesize < 100MB and ( uint16( 0 ) == 0x5a4d or uint32be( 0 ) == 0x7f454c46 or ( uint32be( 0 ) == 0xcafebabe and uint32be( 4 ) < 0x20 ) or uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xfeedfacf ) and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/securityartwork/OfficeMacrosWinintelDLL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "OfficeMacrosWinintelDLL",
+                "tags": [],
+                "Autor": "Manuel Bermudez",
+                "date": "08-01-2015",
+                "description": "Fichero office con macros sospechosa",
+                "link": "https://www.securityartwork.es/2015/04/17/gestion-de-incidentes-practica-actuaciones-ante-malware-ii/"
+            },
+            "rule_text": "rule OfficeMacrosWinintelDLL\n{\n\tmeta:\n\t\tAutor = \"Manuel Bermudez\"\n\t\tdate = \"08-01-2015\"\n\t\tdescription = \"Fichero office con macros sospechosa\"\n\t\tlink = \"https://www.securityartwork.es/2015/04/17/gestion-de-incidentes-practica-actuaciones-ante-malware-ii/\"\n\n\tstrings:\n\t\t$VBA1 = \"VBA6\"\n\t\t$VBA2 = \"VBA7\"\n\t\t$str1 = \"wininet.dll\" nocase\n\t\t$str2 = \"InternetOpenUrl\" nocase\n\t\t$str3 = \"InternetReadFile\" nocase\n\t\t$str4 = \"InternetOpen\" nocase\n\t\t$str5 = \"InternetCloseHandle\" nocase\n\n\tcondition:\n\t\t1 of ( $VBA* ) and 2 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

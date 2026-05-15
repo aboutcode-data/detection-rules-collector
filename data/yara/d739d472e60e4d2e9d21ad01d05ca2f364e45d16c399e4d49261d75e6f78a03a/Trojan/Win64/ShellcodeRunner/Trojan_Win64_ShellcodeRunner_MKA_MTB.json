@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/ShellcodeRunner/Trojan_Win64_ShellcodeRunner_MKA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_ShellcodeRunner_MKA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/ShellcodeRunner.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_ShellcodeRunner_MKA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/ShellcodeRunner.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {48 b8 6b 65 72 6e 65 6c 33 32 48 89 45 d3 48 b8 6c 33 32 2e 64 6c 6c 00 48 89 45 d8 48 b8 4b 45 52 4e 45 4c 33 32 }\n\t\t$a_01_1 = {48 89 45 cb c7 45 c0 4e 54 44 4c 66 c7 45 c4 4c 00 c7 45 ba 6e 74 64 6c 66 c7 45 be 6c 00 48 b8 47 65 74 50 72 6f 63 41 }\n\t\t$a_01_2 = {50 41 47 45 5f 45 58 45 43 55 54 45 5f 52 45 41 44 57 52 49 54 45 }\n\t\t$a_01_3 = {5b 2d 5d 20 4e 6f 20 63 75 73 74 6f 6d 20 44 4c 4c 20 73 70 65 63 69 66 69 65 64 2e 20 46 61 6c 6c 69 6e 67 20 62 61 63 6b 20 74 6f 20 61 6d 73 69 2e 64 6c 6c 2e }\n\t\t$a_01_4 = {5b 2b 5d 20 44 65 66 61 75 6c 74 20 6d 65 6d 6f 72 79 20 70 72 6f 74 65 63 74 69 6f 6e 20 69 6e 20 74 61 72 67 65 74 20 44 4c 4c 20 69 73 3a 20 25 73 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 15 + ( #a_01_2 & 1 ) * 10 + ( #a_01_3 & 1 ) * 5 + ( #a_01_4 & 1 ) * 3 ) >= 35\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

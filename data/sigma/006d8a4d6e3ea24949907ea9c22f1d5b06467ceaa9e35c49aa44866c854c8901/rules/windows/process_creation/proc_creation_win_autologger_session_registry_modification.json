@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_autologger_session_registry_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-12-25",
+                "title": "Windows EventLog Autologger Session Registry Modification Via CommandLine",
+                "id": "d7b81144-b866-48a4-9bcc-275dc69d870e"
+            },
+            "rule_text": "title: Windows EventLog Autologger Session Registry Modification Via CommandLine\nid: d7b81144-b866-48a4-9bcc-275dc69d870e\nrelated:\n- id: f37b4bce-49d0-4087-9f5b-58bffda77316\n  type: similar\nstatus: experimental\ndescription: 'Detects attempts to disable Windows EventLog autologger sessions via\n  registry modification.\n\n  The AutoLogger event tracing session records events that occur early in the operating\n  system boot process.\n\n  Applications and device drivers can use the AutoLogger session to capture traces\n  before the user logs in.\n\n  Adversaries may disable these sessions to evade detection and prevent security monitoring\n  of early boot activities and system events.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/etw/configuring-and-starting-an-autologger-session\n- https://ptylu.github.io/content/report/report.html?report=25\n- https://blog.palantir.com/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-12-25\ntags:\n- attack.defense-impairment\n- attack.t1685.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\reg.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - reg.exe\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli_action:\n    CommandLine|contains:\n    - 'add '\n    - Set-ItemProperty\n    - New-ItemProperty\n    - 'si '\n  selection_cli_base:\n    CommandLine|contains: \\Control\\WMI\\Autologger\\\n  selection_cli_key:\n    CommandLine|contains:\n    - Start\n    - Enabled\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_autologger_session_registry_modification/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Disable EventLog-Application Auto Logger Session Via Registry - Cmd\n  technique: T1562.001\n  atomic_guid: 653c6e17-14a2-4849-851d-f1c0cc8ea9ab\n- type: atomic-red-team\n  name: Disable EventLog-Application Auto Logger Session Via Registry - PowerShell\n  technique: T1562.001\n  atomic_guid: da86f239-9bd3-4e85-92ed-4a94ef111a1c\n- type: atomic-red-team\n  name: Disable EventLog-Application ETW Provider Via Registry - Cmd\n  technique: T1562.001\n  atomic_guid: 1cac9b54-810e-495c-8aac-989e0076583b\n- type: atomic-red-team\n  name: Disable EventLog-Application ETW Provider Via Registry - PowerShell\n  technique: T1562.001\n  atomic_guid: 8f907648-1ebf-4276-b0f0-e2678ca474f0\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/generic_dumps.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NTLM_Dump_Output",
+                "tags": [],
+                "description": "NTML Hash Dump output file - John/LC format",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2015-10-01",
+                "score": 75,
+                "id": "d17ee473-317b-57d4-8ea8-7c89e8f2b2ed"
+            },
+            "rule_text": "rule NTLM_Dump_Output\n{\n\tmeta:\n\t\tdescription = \"NTML Hash Dump output file - John/LC format\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdate = \"2015-10-01\"\n\t\tscore = 75\n\t\tid = \"d17ee473-317b-57d4-8ea8-7c89e8f2b2ed\"\n\n\tstrings:\n\t\t$s0 = \"500:AAD3B435B51404EEAAD3B435B51404EE:\" ascii\n\t\t$s1 = \"500:aad3b435b51404eeaad3b435b51404ee:\" ascii\n\n\tcondition:\n\t\t1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Gsecdump_password_dump_file",
+                "tags": [],
+                "description": "Detects a gsecdump output file",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://t.co/OLIj1yVJ4m",
+                "date": "2018-03-06",
+                "score": 65,
+                "id": "c7c8ab61-f728-5eb2-a5e3-b3dd84980870"
+            },
+            "rule_text": "rule Gsecdump_password_dump_file\n{\n\tmeta:\n\t\tdescription = \"Detects a gsecdump output file\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://t.co/OLIj1yVJ4m\"\n\t\tdate = \"2018-03-06\"\n\t\tscore = 65\n\t\tid = \"c7c8ab61-f728-5eb2-a5e3-b3dd84980870\"\n\n\tstrings:\n\t\t$x1 = \"Administrator(current):500:\" ascii\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x41646d69 and filesize < 3000 and $x1 at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_ZIP_NtdsDIT",
+                "tags": [
+                    "T1003_003"
+                ],
+                "description": "Detects ntds.dit files in ZIP archives that could be a left over of administrative activity or traces of data exfiltration",
+                "author": "Florian Roth (Nextron Systems)",
+                "score": 50,
+                "reference": "https://pentestlab.blog/2018/07/04/dumping-domain-password-hashes/",
+                "date": "2020-08-10",
+                "id": "131ed73d-bb34-5ff6-b145-f95e4469d7f9"
+            },
+            "rule_text": "rule SUSP_ZIP_NtdsDIT : T1003_003\n{\n\tmeta:\n\t\tdescription = \"Detects ntds.dit files in ZIP archives that could be a left over of administrative activity or traces of data exfiltration\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tscore = 50\n\t\treference = \"https://pentestlab.blog/2018/07/04/dumping-domain-password-hashes/\"\n\t\tdate = \"2020-08-10\"\n\t\tid = \"131ed73d-bb34-5ff6-b145-f95e4469d7f9\"\n\n\tstrings:\n\t\t$s1 = \"ntds.dit\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x4b50 and $s1 in ( 0 .. 256 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

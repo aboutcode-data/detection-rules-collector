@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_virtualbox_vboxdrvinst_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Konstantin Grishchenko, oscd.community",
+                "date": "2020-10-06",
+                "title": "Suspicious VBoxDrvInst.exe Parameters",
+                "id": "b7b19cb6-9b32-4fc4-a108-73f19acfe262"
+            },
+            "rule_text": "title: Suspicious VBoxDrvInst.exe Parameters\nid: b7b19cb6-9b32-4fc4-a108-73f19acfe262\nstatus: test\ndescription: 'Detect VBoxDrvInst.exe run with parameters allowing processing INF file.\n\n  This allows to create values in the registry and install drivers.\n\n  For example one could use this technique to obtain persistence via modifying one\n  of Run or RunOnce registry keys\n\n  '\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/blob/4db780e0f0b2e2bb8cb1fa13e09196da9b9f1834/yml/LOLUtilz/OtherBinaries/VBoxDrvInst.yml\n- https://twitter.com/pabraeken/status/993497996179492864\nauthor: Konstantin Grishchenko, oscd.community\ndate: 2020-10-06\nmodified: 2021-11-27\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\VBoxDrvInst.exe\n    CommandLine|contains|all:\n    - driver\n    - executeinf\n  condition: selection\nfalsepositives:\n- Legitimate use of VBoxDrvInst.exe utility by VirtualBox Guest Additions installation\n  process\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

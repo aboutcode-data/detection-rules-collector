@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/WinNT/Wiessy/VirTool_WinNT_Wiessy_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_WinNT_Wiessy_B",
+                "tags": [],
+                "description": "VirTool:WinNT/Wiessy.B,SIGNATURE_TYPE_PEHSTR_EXT,09 00 08 00 05 00 00 "
+            },
+            "rule_text": "rule VirTool_WinNT_Wiessy_B\n{\n\tmeta:\n\t\tdescription = \"VirTool:WinNT/Wiessy.B,SIGNATURE_TYPE_PEHSTR_EXT,09 00 08 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {c7 06 8b ff 55 8b c6 46 04 ec 0f 20 c0 0d 00 00 01 00 }\n\t\t$a_01_1 = {75 47 e8 f2 fd ff ff 84 c0 0f 84 98 02 00 00 8d 45 e0 }\n\t\t$a_01_2 = {5c 44 65 76 69 63 65 5c 48 61 72 64 64 69 73 6b 30 5c 44 52 30 00 }\n\t\t$a_01_3 = {5c 44 6f 73 44 65 76 69 63 65 73 5c 45 43 61 74 44 69 73 6b 31 00 }\n\t\t$a_01_4 = {5c 44 65 76 69 63 65 5c 45 43 61 74 44 69 73 6b 30 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 3 + ( #a_01_1 & 1 ) * 3 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

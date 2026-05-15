@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_services_stop_and_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-15",
+                "title": "Disable Or Stop Services",
+                "id": "de25eeb8-3655-4643-ac3a-b662d3f26b6b"
+            },
+            "rule_text": "title: Disable Or Stop Services\nid: de25eeb8-3655-4643-ac3a-b662d3f26b6b\nstatus: test\ndescription: 'Detects the usage of utilities such as ''systemctl'', ''service''...etc\n  to stop or disable tools and services on Linux systems.\n\n  Attackers may stop or disable security tools and services to evade detection, maintain\n  persistence, or disrupt system operations.\n\n  '\nreferences:\n- https://www.trendmicro.com/pl_pl/research/20/i/the-evolution-of-malicious-shell-scripts.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-15\nmodified: 2025-03-18\ntags:\n- attack.defense-impairment\n- attack.t1685\n- attack.impact\n- attack.t1489\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith:\n    - /service\n    - /systemctl\n    - /chkconfig\n    CommandLine|contains:\n    - ' stop '\n    - ' disable '\n  filter_main_legit_snapd:\n    Image|endswith: /systemctl\n    CommandLine|contains:\n    - --no-reload disable snap-snapd-\n    - ' stop snap-snapd-'\n  filter_main_ssh_preinstall:\n    Image|endswith: /systemctl\n    ParentCommandLine|contains: tmp.ci/preinst upgrade\n    CommandLine|contains|all:\n    - ' stop '\n    - ssh.\n  filter_main_ubuntu_upgrade:\n    ParentCommandLine|contains: /dpkg/info/ubuntu-pro-client.prerm upgrade\n    Image|endswith: /systemctl\n  filter_optional_aws_agent:\n    Image|endswith: /systemctl\n    CommandLine|endswith: snap.amazon-ssm-agent.amazon-ssm-agent.service\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate administration activities\n- Some false positives are to be expected. Apply additional filters as needed before\n  pushing to production.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

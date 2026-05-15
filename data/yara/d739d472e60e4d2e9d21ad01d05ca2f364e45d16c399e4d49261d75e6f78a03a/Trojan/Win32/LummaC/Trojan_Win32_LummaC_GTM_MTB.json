@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/LummaC/Trojan_Win32_LummaC_GTM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_LummaC_GTM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/LummaC.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_LummaC_GTM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/LummaC.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {40 00 00 e0 2e 72 73 72 63 20 20 20 00 10 00 00 00 30 05 00 00 00 00 00 00 70 02 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 00 c0 2e 69 }\n\t\t$a_01_1 = {40 00 00 e0 2e 74 61 67 67 61 6e 74 00 30 00 00 00 60 2f }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_LummaC_GTM_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/LummaC.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_LummaC_GTM_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/LummaC.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {40 00 00 e0 2e 72 73 72 63 00 00 00 ?? ?? 00 00 00 30 05 00 00 ?? 00 00 00 70 02 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 00 c0 2e 69 }\n\t\t$a_03_1 = {40 00 00 c0 20 20 20 20 20 20 20 20 00 ?? ?? 00 00 50 05 00 00 02 00 00 00 }\n\t\t$a_01_2 = {25 75 73 65 72 61 70 70 64 61 74 61 25 5c 52 65 73 74 61 72 74 41 70 70 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 + ( #a_01_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

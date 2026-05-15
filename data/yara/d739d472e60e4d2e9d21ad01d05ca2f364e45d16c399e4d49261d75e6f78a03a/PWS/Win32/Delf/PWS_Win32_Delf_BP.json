@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Delf/PWS_Win32_Delf_BP.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Delf_BP",
+                "tags": [],
+                "description": "PWS:Win32/Delf.BP,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 02 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Delf_BP\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Delf.BP,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {50 4b 31 31 5f 47 65 74 49 6e 74 65 72 6e 61 6c 4b 65 79 53 6c 6f 74 20 46 61 69 6c 65 64 21 }\n\t\t$a_03_1 = {2d 2d 2d 44 65 73 76 61 6c 69 6a 61 64 6f 72 20 76 31 2e [30-39] 20 62 79 20 74 61 6b 65 64 6f 77 6e 2d 2d }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 4 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

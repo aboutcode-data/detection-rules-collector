@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_kerberos_asrep_roasting.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "ANosir",
+                "date": "2025-05-22",
+                "title": "Potential AS-REP Roasting via Kerberos TGT Requests",
+                "id": "3e2f1b2c-4d5e-11ee-be56-0242ac120002"
+            },
+            "rule_text": "title: Potential AS-REP Roasting via Kerberos TGT Requests\nid: 3e2f1b2c-4d5e-11ee-be56-0242ac120002\nstatus: experimental\ndescription: 'Detects suspicious Kerberos TGT requests with pre-authentication disabled\n  (Pre-Authentication Type = 0) and Ticket Encryption Type (0x17) i.e, RC4-HMAC.\n\n  This may indicate an AS-REP Roasting attack, where attackers request AS-REP messages\n  for accounts without pre-authentication and attempt to crack the encrypted ticket\n  offline to recover user passwords.\n\n  '\nreferences:\n- https://medium.com/system-weakness/detecting-as-rep-roasting-attacks-b5b3965f9714\n- https://www.picussecurity.com/resource/blog/as-rep-roasting-attack-explained-mitre-attack-t1558.004\nauthor: ANosir\ndate: 2025-05-22\nmodified: 2025-07-04\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4768\n    TicketEncryptionType: '0x17'\n    ServiceName: krbtgt\n    PreAuthType: 0\n  condition: selection\nfalsepositives:\n- Legacy systems or applications that legitimately use RC4 encryption\n- Misconfigured accounts with pre-authentication disabled\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Didier Stevens/Nviso.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "py2exe",
+                "tags": [],
+                "author": "Didier Stevens (https://www.nviso.be)",
+                "description": "Detect PE file produced by py2exe"
+            },
+            "rule_text": "import \"pe\"\n\nrule py2exe\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://www.nviso.be)\"\n\t\tdescription = \"Detect PE file produced by py2exe\"\n\n\tcondition:\n\t\tfor any i in ( 0 .. pe.number_of_resources - 1 ) : ( pe.resources [ i ] . type_string == \"P\\x00Y\\x00T\\x00H\\x00O\\x00N\\x00S\\x00C\\x00R\\x00I\\x00P\\x00T\\x00\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ppaction",
+                "tags": [],
+                "author": "Nviso labs/Didier Stevens (https://www.nviso.be)",
+                "reference": "https://blog.nviso.be/2017/06/07/malicious-powerpoint-documents-abusing-mouse-over-actions/amp/"
+            },
+            "rule_text": "rule ppaction\n{\n\tmeta:\n\t\tauthor = \"Nviso labs/Didier Stevens (https://www.nviso.be)\"\n\t\treference = \"https://blog.nviso.be/2017/06/07/malicious-powerpoint-documents-abusing-mouse-over-actions/amp/\"\n\n\tstrings:\n\t\t$a = \"ppaction\" nocase\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "powershell",
+                "tags": [],
+                "author": "Nviso labs/Didier Stevens (https://www.nviso.be)",
+                "reference": "https://blog.nviso.be/2017/06/07/malicious-powerpoint-documents-abusing-mouse-over-actions/amp/"
+            },
+            "rule_text": "rule powershell\n{\n\tmeta:\n\t\tauthor = \"Nviso labs/Didier Stevens (https://www.nviso.be)\"\n\t\treference = \"https://blog.nviso.be/2017/06/07/malicious-powerpoint-documents-abusing-mouse-over-actions/amp/\"\n\n\tstrings:\n\t\t$a = \"powershell\" nocase\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

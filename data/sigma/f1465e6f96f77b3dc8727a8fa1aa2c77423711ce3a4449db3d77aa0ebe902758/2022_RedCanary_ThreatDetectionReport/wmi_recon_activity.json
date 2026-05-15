@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/wmi_recon_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "WMIC Suspicious Commands",
+                "id": "21a5815b-5db5-4e13-99e4-052ae6bbcdc1"
+            },
+            "rule_text": "title: WMIC Suspicious Commands\nid: 21a5815b-5db5-4e13-99e4-052ae6bbcdc1\nstatus: experimental\ndescription: Detects adversaries leveraging WMI to gather domain information such\n  as users, groups, AV product in use, or computers in the domain. Inspired by the\n  2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains:\n    - \\ldap\n    - ntdomain\n    - antivirusproduct\n    - useraccount get\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

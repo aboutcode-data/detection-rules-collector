@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/webshell_java_behinder_shellservice.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_java_behinder_shellservice",
+                "tags": [
+                    "Webshells",
+                    "Commodity"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Looks for artifacts generated (generally seen in .class files) related to the Behinder framework.",
+                "date": "2022-03-18",
+                "hash1": "9a9882f9082a506ed0fc4ddaedd50570c5762deadcaf789ac81ecdbb8cf6eff2",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "reference": "https://github.com/MountCloud/BehinderClientSource/blob/master/src/main/java/net/rebeyond/behinder/core/ShellService.java",
+                "reference2": "https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/",
+                "memory_suitable": 1
+            },
+            "rule_text": "rule webshell_java_behinder_shellservice : Webshells Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Looks for artifacts generated (generally seen in .class files) related to the Behinder framework.\"\n\t\tdate = \"2022-03-18\"\n\t\thash1 = \"9a9882f9082a506ed0fc4ddaedd50570c5762deadcaf789ac81ecdbb8cf6eff2\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\treference = \"https://github.com/MountCloud/BehinderClientSource/blob/master/src/main/java/net/rebeyond/behinder/core/ShellService.java\"\n\t\treference2 = \"https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/\"\n\t\tmemory_suitable = 1\n\n\tstrings:\n\t\t$s1 = \"CONNECT\" ascii fullword\n\t\t$s2 = \"DISCONNECT\" ascii fullword\n\t\t$s3 = \"socket_\" ascii fullword\n\t\t$s4 = \"targetIP\" ascii fullword\n\t\t$s5 = \"targetPort\" ascii fullword\n\t\t$s6 = \"socketHash\" ascii fullword\n\t\t$s7 = \"extraData\" ascii fullword\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

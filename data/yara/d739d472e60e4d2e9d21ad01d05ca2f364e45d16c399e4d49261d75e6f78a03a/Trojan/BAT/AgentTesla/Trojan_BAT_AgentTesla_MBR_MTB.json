@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/AgentTesla/Trojan_BAT_AgentTesla_MBR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_AgentTesla_MBR_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/AgentTesla.MBR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_AgentTesla_MBR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/AgentTesla.MBR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {34 44 21 35 41 21 39 30 21 2c 21 30 33 21 2c 21 2c 21 2c 21 30 34 21 2c 21 2c 21 2c 21 46 46 21 46 46 21 2c 21 2c 21 42 38 }\n\t\t$a_01_1 = {21 34 30 21 32 45 21 37 32 21 36 35 21 36 43 21 36 46 21 36 33 21 2c 21 2c 21 30 43 21 2c 21 2c 21 2c 21 2c 21 2c 21 30 31 }\n\t\t$a_81_2 = {53 79 73 74 65 6d 2e 52 65 66 6c 65 63 74 69 6f 6e 2e 41 73 73 65 6d 62 6c 79 }\n\t\t$a_81_3 = {53 79 73 74 65 6d 2e 41 63 74 69 76 61 74 6f 72 }\n\t\t$a_01_4 = {41 41 41 41 41 41 41 41 41 41 41 41 41 2e 72 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_81_2 & 1 ) * 1 + ( #a_81_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

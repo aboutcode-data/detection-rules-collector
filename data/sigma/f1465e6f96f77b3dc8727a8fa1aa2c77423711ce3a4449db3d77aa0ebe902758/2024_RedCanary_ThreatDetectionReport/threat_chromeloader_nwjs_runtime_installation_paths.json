@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_chromeloader_nwjs_runtime_installation_paths.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "ChromeLoader NW.js Runtime App Installation Paths",
+                "id": "be3e4b3e-4076-4ae3-acb9-3713c651158b"
+            },
+            "rule_text": "title: ChromeLoader NW.js Runtime App Installation Paths\nid: be3e4b3e-4076-4ae3-acb9-3713c651158b\nstatus: experimental\ndescription: \"Red Canary has had success detecting ChromeLoader by looking for instances\\\n  \\ of NW.js \\napplications that are unsigned and running from %AppData/Roaming%.\\\n  \\ This behavior is \\nnot unique to ChromeLoader, and some tuning may be required\\\n  \\ to avoid detecting \\nlegitimate applications. A partial list of common ChromeLoader\\\n  \\ NW.js runtime app \\ninstallation paths is included below to help distinguish the\\\n  \\ signal from the noise. \\nPart of the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/chromeloader/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.persistence\n- attack.t1176\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    Image|re: ^.*:\\\\users\\\\.*\\\\appdata\\\\roaming\\\\.*$\n  selection2:\n    Image|endswith:\n    - \\bloom\\bloom.exe\n    - \\cash/\\cash.exe\n    - \\diet\\diet.exe\n    - \\editor\\editor.exe\n    - \\healthy\\healthy.exe\n    - \\leading\\leading.exe\n    - \\movies\\movies.exe\n    - \\music\\music.exe\n    - \\prime\\prime.exe\n    - \\player\\player.exe\n    - \\tone\\tone.exe\n    - \\videos\\videos.exe\n    - \\copy\\nw.exe\n    - \\coreelevate\\nw.exe\n    - \\debuggerstepperboundaryattribute\\nw.exe\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

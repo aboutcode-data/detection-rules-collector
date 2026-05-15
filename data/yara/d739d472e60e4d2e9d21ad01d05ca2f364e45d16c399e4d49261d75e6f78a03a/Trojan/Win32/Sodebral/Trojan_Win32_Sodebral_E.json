@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Sodebral/Trojan_Win32_Sodebral_E.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Sodebral_E",
+                "tags": [],
+                "description": "Trojan:Win32/Sodebral.E,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Sodebral_E\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Sodebral.E,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 e9 04 01 c8 01 ca f7 d9 df 2c 01 df 3c 11 83 c1 08 78 ?? 8b 04 01 89 04 11 c3 }\n\t\t$a_01_1 = {be 01 00 00 00 8b 45 f0 0f b7 44 70 fe 33 }\n\t\t$a_02_2 = {4d 00 45 00 54 00 41 00 20 00 48 00 54 00 54 00 50 00 2d 00 45 00 51 00 55 00 49 00 56 00 3d 00 22 00 52 00 65 00 66 00 72 00 65 00 73 00 68 00 22 00 20 00 43 00 4f 00 4e 00 54 00 45 00 4e 00 54 00 3d 00 22 00 30 00 [0-04] 55 00 52 00 4c 00 3d 00 25 00 30 00 3a 00 73 00 }\n\t\t$a_00_3 = {73 65 72 63 46 4c 41 53 48 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 2 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/silence.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "detect_silence_Downloader",
+                "tags": [
+                    "silence",
+                    "Downloader"
+                ],
+                "description": "detect_silence_Downloader",
+                "author": "@malgamy12",
+                "date": "8/11/2022",
+                "license": "DRL 1.1",
+                "sample1": "BAE2737C39C0DEF9603EF9E6CD4921BF641FAB91",
+                "sample2": "A7421FDA552316FD89FA545D1815DE0AF8EC2858"
+            },
+            "rule_text": "rule detect_silence_Downloader : silence Downloader\n{\n\tmeta:\n\t\tdescription = \"detect_silence_Downloader\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"8/11/2022\"\n\t\tlicense = \"DRL 1.1\"\n\t\tsample1 = \"BAE2737C39C0DEF9603EF9E6CD4921BF641FAB91\"\n\t\tsample2 = \"A7421FDA552316FD89FA545D1815DE0AF8EC2858\"\n\n\tstrings:\n\t\t$intel = \"IntelSofts\" ascii\n\t\t$s1 = \"MicrosoftUpdte\" ascii\n\t\t$s2 = \"php?name=\" ascii\n\t\t$s3 = \"SoftWare\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" ascii\n\t\t$s4 = \"ShellExecuteA\" ascii\n\t\t$s5 = \"InternetOpenA\" ascii\n\t\t$s6 = \"CreateFileA\" ascii\n\t\t$s7 = \"CreateProcessA\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and $intel or ( 6 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

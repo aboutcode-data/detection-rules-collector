@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_winscp_command_open_ftp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "frack113",
+                "date": "2025-10-12",
+                "title": "FTP Connection Open Attempt Via Winscp CLI",
+                "id": "c1477deb-37cf-4439-9ffb-44499acb89d0"
+            },
+            "rule_text": "title: FTP Connection Open Attempt Via Winscp CLI\nid: c1477deb-37cf-4439-9ffb-44499acb89d0\nstatus: experimental\ndescription: Detects the execution of Winscp with the \"-command\" and the \"open\" flags\n  in order to open an FTP connection. Akira ransomware was seen using this technique\n  in order to exfiltrate data.\nreferences:\n- https://blogs.blackberry.com/en/2024/07/akira-ransomware-targets-the-latam-airline-industry\nauthor: frack113\ndate: 2025-10-12\ntags:\n- attack.exfiltration\n- attack.t1048\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\WinSCP.exe\n  - OriginalFileName: winscp.exe\n  selection_cmd:\n    CommandLine|contains|windash: -command\n    CommandLine|contains|all:\n    - 'open '\n    - ftp://\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

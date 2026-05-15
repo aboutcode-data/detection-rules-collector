@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_embed_exe_lnk.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-06",
+                "title": "Hidden Powershell in Link File Pattern",
+                "id": "30e92f50-bb5a-4884-98b5-d20aa80f3d7a"
+            },
+            "rule_text": "title: Hidden Powershell in Link File Pattern\nid: 30e92f50-bb5a-4884-98b5-d20aa80f3d7a\nstatus: test\ndescription: Detects events that appear when a user click on a link file with a powershell\n  command in it\nreferences:\n- https://www.x86matthew.com/view_post?id=embed_exe_lnk\nauthor: frack113\ndate: 2022-02-06\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage: C:\\Windows\\explorer.exe\n    Image: C:\\Windows\\System32\\cmd.exe\n    CommandLine|contains|all:\n    - powershell\n    - .lnk\n  condition: selection\nfalsepositives:\n- Legitimate commands in .lnk files\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

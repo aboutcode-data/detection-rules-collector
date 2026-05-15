@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/Vidar_Stealer.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "detect_vidar",
+                "tags": [
+                    "Vidar"
+                ],
+                "description": "detect_Vidar_Stealer",
+                "author": "@malgamy12",
+                "date": "11/13/2022",
+                "license": "DRL 1.1",
+                "hash": "011e2fb7319d8962563dd48de0fec1400a20c9fdcc7ff0766fdea47959ab6805"
+            },
+            "rule_text": "rule detect_vidar : Vidar\n{\n\tmeta:\n\t\tdescription = \"detect_Vidar_Stealer\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"11/13/2022\"\n\t\tlicense = \"DRL 1.1\"\n\t\thash = \"011e2fb7319d8962563dd48de0fec1400a20c9fdcc7ff0766fdea47959ab6805\"\n\n\tstrings:\n\t\t$s1 = \"*wallet*.dat\" ascii\n\t\t$a1 = \"Autofill\\\\%s_%s.txt\" ascii\n\t\t$a2 = \"History\\\\%s_%s.txt\" ascii\n\t\t$a3 = \"Downloads\\\\%s_%s.txt\" ascii\n\t\t$b1 = \"screenshot.jpg\" ascii\n\t\t$b2 = \"Data\\\\*.dll\" ascii\n\t\t$chunk_1 = {8B C8 33 D2 8B C5 F7 F1 8B 44 24 ?? 8B 4C 24 ?? [2] 8A 04 02 32 04 19 88 03}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and $s1 and ( ( 1 of ( $a* ) and $chunk_1 ) or ( 1 of ( $b* ) and $chunk_1 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

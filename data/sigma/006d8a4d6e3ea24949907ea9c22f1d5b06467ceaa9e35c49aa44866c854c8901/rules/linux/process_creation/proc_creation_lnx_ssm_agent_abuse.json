@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_ssm_agent_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal",
+                "date": "2023-08-03",
+                "title": "Potential Linux Amazon SSM Agent Hijacking",
+                "id": "f9b3edc5-3322-4fc7-8aa3-245d646cc4b7"
+            },
+            "rule_text": "title: Potential Linux Amazon SSM Agent Hijacking\nid: f9b3edc5-3322-4fc7-8aa3-245d646cc4b7\nstatus: test\ndescription: Detects potential Amazon SSM agent hijack attempts as outlined in the\n  Mitiga research report.\nreferences:\n- https://www.mitiga.io/blog/mitiga-security-advisory-abusing-the-ssm-agent-as-a-remote-access-trojan\n- https://www.bleepingcomputer.com/news/security/amazons-aws-ssm-agent-can-be-used-as-post-exploitation-rat-malware/\n- https://www.helpnetsecurity.com/2023/08/02/aws-instances-attackers-access/\nauthor: Muhammad Faisal\ndate: 2023-08-03\ntags:\n- attack.command-and-control\n- attack.persistence\n- attack.t1219.002\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /amazon-ssm-agent\n    CommandLine|contains|all:\n    - '-register '\n    - '-code '\n    - '-id '\n    - '-region '\n  condition: selection\nfalsepositives:\n- Legitimate activity of system administrators\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

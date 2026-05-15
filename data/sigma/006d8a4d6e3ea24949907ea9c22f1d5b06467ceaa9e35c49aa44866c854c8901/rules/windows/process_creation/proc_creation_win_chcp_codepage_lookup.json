@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_chcp_codepage_lookup.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "_pete_0, TheDFIRReport",
+                "date": "2022-02-21",
+                "title": "Console CodePage Lookup Via CHCP",
+                "id": "7090adee-82e2-4269-bd59-80691e7c6338"
+            },
+            "rule_text": "title: Console CodePage Lookup Via CHCP\nid: 7090adee-82e2-4269-bd59-80691e7c6338\nstatus: test\ndescription: Detects use of chcp to look up the system locale value as part of host\n  discovery\nreferences:\n- https://thedfirreport.com/2022/04/04/stolen-images-campaign-ends-in-conti-ransomware/\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/chcp\nauthor: _pete_0, TheDFIRReport\ndate: 2022-02-21\nmodified: 2024-03-05\ntags:\n- attack.discovery\n- attack.t1614.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\cmd.exe\n    ParentCommandLine|contains|windash:\n    - ' -c '\n    - ' -r '\n    - ' -k '\n    Image|endswith: \\chcp.com\n    CommandLine|endswith:\n    - chcp\n    - 'chcp '\n    - 'chcp  '\n  condition: selection\nfalsepositives:\n- During Anaconda update the 'conda.exe' process will eventually execution the 'chcp'\n  command.\n- Discord was seen using chcp to look up code pages\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_chcp_codepage_lookup/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

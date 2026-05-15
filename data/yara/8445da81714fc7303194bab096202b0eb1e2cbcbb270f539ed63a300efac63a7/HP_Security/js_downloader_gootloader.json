@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/HP_Security/js_downloader_gootloader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "js_downloader_gootloader",
+                "tags": [
+                    "downloader"
+                ],
+                "description": "JavaScript downloader known to deliver Gootkit or REvil ransomware",
+                "reference": "https://github.com/hpthreatresearch/tools/blob/main/gootloader/js_downloader_gootloader.yar",
+                "author": "HP Threat Research @HPSecurity",
+                "filetype": "JavaScript",
+                "maltype": "Downloader",
+                "date": "2021-02-22"
+            },
+            "rule_text": "rule js_downloader_gootloader : downloader\n{\n\tmeta:\n\t\tdescription = \"JavaScript downloader known to deliver Gootkit or REvil ransomware\"\n\t\treference = \"https://github.com/hpthreatresearch/tools/blob/main/gootloader/js_downloader_gootloader.yar\"\n\t\tauthor = \"HP Threat Research @HPSecurity\"\n\t\tfiletype = \"JavaScript\"\n\t\tmaltype = \"Downloader\"\n\t\tdate = \"2021-02-22\"\n\n\tstrings:\n\t\t$a = \"function\"\n\t\t$b1 = \"while\"\n\t\t$b2 = \"if\"\n\t\t$b3 = \"else\"\n\t\t$b4 = \"return\"\n\t\t$c = \"charAt\"\n\t\t$d = \"substr\"\n\t\t$e1 = \"\\\".+\"\n\t\t$e2 = \"\\\\=\\\\\\\"\"\n\t\t$e3 = \" r,\"\n\t\t$e4 = \"+;\\\\\\\"\"\n\t\t$f = /(\\w+\\[\\w+\\]\\s+=\\s+\\w+\\[\\w+\\[\\w+\\]\\];)/\n\n\tcondition:\n\t\t#a> 8 and #a > ( #b4 + 3 ) and all of ( $b* ) and ( $c or $d ) and any of ( $e* ) and $f and filesize < 8000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

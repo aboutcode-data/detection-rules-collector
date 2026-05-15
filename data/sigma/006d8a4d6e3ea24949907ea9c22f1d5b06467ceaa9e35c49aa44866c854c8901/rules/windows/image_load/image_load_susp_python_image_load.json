@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_susp_python_image_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Patrick St. John, OTR (Open Threat Research)",
+                "date": "2020-05-03",
+                "title": "Python Image Load By Non-Python Process",
+                "id": "cbb56d62-4060-40f7-9466-d8aaf3123f83"
+            },
+            "rule_text": "title: Python Image Load By Non-Python Process\nid: cbb56d62-4060-40f7-9466-d8aaf3123f83\nstatus: test\ndescription: 'Detects the image load of \"Python Core\" by a non-Python process. This\n  might be indicative of a execution of executable that has been bundled from Python\n  code.\n\n  Various tools like Py2Exe, PyInstaller, and cx_Freeze are used to bundle Python\n  code into standalone executables.\n\n  Threat actors often use these tools to bundle malicious Python scripts into executables,\n  sometimes to obfuscate the code or to bypass security measures.\n\n  '\nreferences:\n- https://www.py2exe.org/\n- https://unit42.paloaltonetworks.com/unit-42-technical-analysis-seaduke/\nauthor: Patrick St. John, OTR (Open Threat Research)\ndate: 2020-05-03\nmodified: 2025-08-18\ntags:\n- attack.stealth\n- attack.t1027.002\nlogsource:\n  product: windows\n  category: image_load\ndetection:\n  selection:\n    Description: Python Core\n  filter_main_generic:\n  - Image|contains: Python\n  - Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n    - C:\\ProgramData\\Anaconda3\\\n  filter_optional_null_image:\n    Image: null\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate Py2Exe Binaries\n- Known false positive caused with Python Anaconda\n- Various legitimate software is bundled from Python code into executables\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

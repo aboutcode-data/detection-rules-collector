@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_cmdlet_scheduled_task.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-28",
+                "title": "Powershell Create Scheduled Task",
+                "id": "363eccc0-279a-4ccf-a3ab-24c2e63b11fb"
+            },
+            "rule_text": "title: Powershell Create Scheduled Task\nid: 363eccc0-279a-4ccf-a3ab-24c2e63b11fb\nstatus: test\ndescription: Adversaries may abuse the Windows Task Scheduler to perform task scheduling\n  for initial or recurring execution of malicious code\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1053.005/T1053.005.md#atomic-test-4---powershell-cmdlet-scheduled-task\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1053.005/T1053.005.md#atomic-test-6---wmi-invoke-cimmethod-scheduled-task\nauthor: frack113\ndate: 2021-12-28\nmodified: 2025-10-07\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.005\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains:\n    - New-ScheduledTaskAction\n    - New-ScheduledTaskTrigger\n    - New-ScheduledTaskPrincipal\n    - New-ScheduledTaskSettingsSet\n    - New-ScheduledTask\n    - Register-ScheduledTask\n  selection_cimmethod:\n    ScriptBlockText|contains|all:\n    - Invoke-CimMethod\n    - -ClassName\n    - PS_ScheduledTask\n    - -NameSpace\n    - Root\\Microsoft\\Windows\\TaskScheduler\n  filter_main_legitimate_scripts:\n    ScriptBlockText|contains|all:\n    - Microsoft.PowerShell.Core\\Export-ModuleMember\n    - Microsoft.Management.Infrastructure.CimInstance\n    - __cmdletization_methodParameter\n  condition: 1 of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

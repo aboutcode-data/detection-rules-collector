@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/lsa_server/win_lsa_server_normal_user_admin.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-01-13",
+                "title": "Standard User In High Privileged Group",
+                "id": "7ac407cc-0f48-4328-aede-de1d2e6fef41"
+            },
+            "rule_text": "title: Standard User In High Privileged Group\nid: 7ac407cc-0f48-4328-aede-de1d2e6fef41\nstatus: test\ndescription: Detect standard users login that are part of high privileged groups such\n  as the Administrator group\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers\n- https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection\n- https://github.com/nasbench/EVTX-ETW-Resources/blob/7a806a148b3d9d381193d4a80356016e6e8b1ee8/ETWProvidersManifests/Windows11/22H2/W11_22H2_Pro_20221220_22621.963/WEPExplorer/LsaSrv.xml\nauthor: frack113\ndate: 2023-01-13\nmodified: 2023-05-05\ntags:\n- attack.credential-access\n- attack.privilege-escalation\nlogsource:\n  product: windows\n  service: lsa-server\n  definition: 'Requirements: Microsoft-Windows-LSA/Operational (199FE037-2B82-40A9-82AC-E1D46C792B99)\n    Event Log must be enabled and collected in order to use this rule.'\ndetection:\n  selection:\n    EventID: 300\n    TargetUserSid|startswith: S-1-5-21-\n    SidList|contains:\n    - S-1-5-32-544\n    - -500}\n    - -518}\n    - -519}\n  filter_main_admin:\n    TargetUserSid|endswith:\n    - '-500'\n    - '-518'\n    - '-519'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Standard domain users who are part of the administrator group. These users shouldn't\n  have these right. But in the case where it's necessary. They should be filtered\n  out using the \"TargetUserName\" field\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

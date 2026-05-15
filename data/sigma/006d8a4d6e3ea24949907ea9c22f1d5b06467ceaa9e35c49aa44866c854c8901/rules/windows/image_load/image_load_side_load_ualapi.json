@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_ualapi.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NVISO",
+                "date": "2020-05-04",
+                "title": "Fax Service DLL Search Order Hijack",
+                "id": "828af599-4c53-4ed2-ba4a-a9f835c434ea"
+            },
+            "rule_text": "title: Fax Service DLL Search Order Hijack\nid: 828af599-4c53-4ed2-ba4a-a9f835c434ea\nstatus: test\ndescription: The Fax service attempts to load ualapi.dll, which is non-existent. An\n  attacker can then (side)load their own malicious DLL using this service.\nreferences:\n- https://windows-internals.com/faxing-your-way-to-system/\nauthor: NVISO\ndate: 2020-05-04\nmodified: 2022-06-02\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\fxssvc.exe\n    ImageLoaded|endswith: ualapi.dll\n  filter:\n    ImageLoaded|startswith: C:\\Windows\\WinSxS\\\n  condition: selection and not filter\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

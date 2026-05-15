@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/LummaStealer/Trojan_Win64_LummaStealer_AR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_LummaStealer_AR_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/LummaStealer.AR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_LummaStealer_AR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/LummaStealer.AR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {4c 8d 56 01 48 89 c1 48 b8 ?? ?? ?? ?? ?? ?? ?? ?? 45 31 db 41 89 d4 49 f7 eb 4c 39 d7 73 b4 48 89 94 24 60 04 00 00 }\n\t\t$a_03_1 = {48 8d 7c 24 18 48 8d 7f e0 66 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 6c 24 f0 48 8d 6c 24 f0 e8 ?? ?? ?? ?? 48 8b 6d 00 31 c9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 30 + ( #a_03_1 & 1 ) * 20 ) >= 50\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_LummaStealer_AR_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win64/LummaStealer.AR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,12 00 12 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_LummaStealer_AR_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/LummaStealer.AR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,12 00 12 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {80 f1 01 89 c3 30 cb 20 c3 20 c1 08 d1 89 d8 30 c8 a8 01 ba ?? ?? ?? ?? 41 0f 45 d1 f6 c1 01 89 d0 41 0f 45 c1 f6 c3 01 0f 44 c2 }\n\t\t$a_03_1 = {89 ca 80 f2 01 30 c1 34 01 89 d3 20 c3 30 d0 08 d8 89 c2 30 ca a8 01 b8 ?? ?? ?? ?? 41 0f 45 c2 f6 c1 01 41 0f 44 c2 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 8 ) >= 18\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

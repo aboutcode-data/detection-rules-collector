@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_email_forwarding_rule_suspicious_folders.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Email Forwarding Rule - Suspicious Folders",
+                "id": "f1595374-3a4a-4b40-aef5-0d854e043a14"
+            },
+            "rule_text": "title: Email Forwarding Rule - Suspicious Folders\nid: f1595374-3a4a-4b40-aef5-0d854e043a14\nstatus: experimental\ndescription: \"Looking for new rules alone may generate too many false positives, so\\\n  \\ adding another \\ncheck for commonly abused folders, suspicious criteria, and odd\\\n  \\ names will help \\nfilter out benign activity. RedCanary suggests looking for new\\\n  \\ inbox rules that move or \\ncopy emails to the following folders. Part of the RedCanary\\\n  \\ 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/email-forwarding-rule/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.collection\n- attack.t1114\n- attack.t1114.003\nlogsource:\n  service: exchange\n  product: m365\ndetection:\n  selection1:\n    Workload: Exchange\n    Operation:\n    - New-InboxRule\n    - Set-InboxRule\n    Parameters|contains: MoveToFolder\n  selection2:\n    Parameters|contains:\n    - RSS Feeds\n    - RSS Subscriptions\n    - Archive\n    - Deleted Items\n    - Conversation History\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/curl_data_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Andreas Foureaux",
+                "date": "2025-11-12",
+                "title": "Potential data exfiltration via curl",
+                "id": "957aec95-cc0d-4b73-ba97-042b8293430e"
+            },
+            "rule_text": "title: Potential data exfiltration via curl\nid: 957aec95-cc0d-4b73-ba97-042b8293430e\nstatus: test\ndescription: Detects the use of curl to upload data\nreferences:\n- https://curl.se/docs/manpage.html\nauthor: NTT Security - Andreas Foureaux\ndate: 2025-11-12\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_image:\n    Image|endswith:\n    - curl\n    - curl.exe\n  selection_command:\n    CommandLine|contains:\n    - --upload-file\n    - --data @\n    - --data-ascii @\n    - --data-binary @\n    - --data-urlencode @\n    - --header @\n    - --json @\n    - ' -T '\n    - ' -H @'\n    - ' -d @'\n    - =@\n  filter_ip:\n  - DestinationIp|cidr:\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 127.0.0.0/8\n  condition: selection_image and selection_command and not filter_ip\nfalsepositives:\n- Legitimate use of curl\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

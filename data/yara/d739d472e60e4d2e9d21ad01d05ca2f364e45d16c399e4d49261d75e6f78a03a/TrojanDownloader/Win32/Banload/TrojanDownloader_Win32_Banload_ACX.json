@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Banload/TrojanDownloader_Win32_Banload_ACX.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Banload_ACX",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Banload.ACX,SIGNATURE_TYPE_PEHSTR_EXT,07 00 05 00 07 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Banload_ACX\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Banload.ACX,SIGNATURE_TYPE_PEHSTR_EXT,07 00 05 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {68 74 74 70 0c }\n\t\t$a_01_1 = {63 68 65 63 6b 0c }\n\t\t$a_01_2 = {65 6d 70 74 79 0c }\n\t\t$a_01_3 = {46 6c 61 73 68 20 50 6c 61 79 65 72 }\n\t\t$a_03_4 = {68 2f 21 00 00 66 b9 67 24 b2 01 a1 ?? ?? ?? ?? e8 }\n\t\t$a_02_5 = {36 32 34 46 38 37 38 31 [0-04] 38 42 37 35 00 }\n\t\t$a_00_6 = {36 32 34 46 38 37 38 45 31 32 34 35 38 42 37 35 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 2 + ( #a_02_5 & 1 ) * 2 + ( #a_00_6 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

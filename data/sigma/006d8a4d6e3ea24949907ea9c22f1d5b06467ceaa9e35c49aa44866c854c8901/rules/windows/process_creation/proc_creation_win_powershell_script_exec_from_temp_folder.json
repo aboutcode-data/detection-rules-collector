@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_script_exec_from_temp_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Max Altgelt (Nextron Systems), Tim Shelton",
+                "date": "2021-07-14",
+                "title": "Potentially Suspicious Powershell Script Execution From Temp Folder",
+                "id": "a6a39bdb-935c-4f0a-ab77-35f4bbf44d33"
+            },
+            "rule_text": "title: Potentially Suspicious Powershell Script Execution From Temp Folder\nid: a6a39bdb-935c-4f0a-ab77-35f4bbf44d33\nstatus: test\ndescription: Detects a potentially suspicious powershell script executions from temporary\n  folder\nreferences:\n- https://www.microsoft.com/security/blog/2021/07/13/microsoft-discovers-threat-actor-targeting-solarwinds-serv-u-software-with-0-day-exploit/\nauthor: Florian Roth (Nextron Systems), Max Altgelt (Nextron Systems), Tim Shelton\ndate: 2021-07-14\nmodified: 2026-02-17\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    CommandLine|contains:\n    - \\Windows\\Temp\n    - \\Temporary Internet\n    - \\AppData\\Local\\Temp\n    - \\AppData\\Roaming\\Temp\n    - '%TEMP%'\n    - '%TMP%'\n    - '%LocalAppData%\\Temp'\n  filter_optional_vscode:\n    CommandLine|contains: -WindowStyle hidden -Verb runAs\n  filter_optional_amazon_ec2:\n    CommandLine|contains: \\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Temp\\Amazon\\EC2-Windows\\\n  filter_optional_generic:\n    CommandLine|contains:\n    - ' >'\n    - Out-File\n    - ConvertTo-Json\n  filter_optional_chocolatey_installer:\n    ParentImage:\n    - C:\\Windows\\System32\\Msiexec.exe\n    - C:\\Windows\\SysWOW64\\Msiexec.exe\n    Image|endswith: \\powershell.exe\n    CommandLine|contains|all:\n    - -NoProfile -ExecutionPolicy Bypass -Command\n    - AppData\\Local\\Temp\\\n    - Install-Chocolatey.ps1\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Administrative scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

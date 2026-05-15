@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_scrcons_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sittikorn S",
+                "date": "2021-06-21",
+                "title": "Script Event Consumer Spawning Process",
+                "id": "f6d1dd2f-b8ce-40ca-bc23-062efb686b34"
+            },
+            "rule_text": "title: Script Event Consumer Spawning Process\nid: f6d1dd2f-b8ce-40ca-bc23-062efb686b34\nstatus: test\ndescription: Detects a suspicious child process of Script Event Consumer (scrcons.exe).\nreferences:\n- https://redcanary.com/blog/child-processes/\n- https://docs.paloaltonetworks.com/cortex/cortex-xdr/cortex-xdr-analytics-alert-reference/cortex-xdr-analytics-alert-reference/scrcons-exe-rare-child-process.html\nauthor: Sittikorn S\ndate: 2021-06-21\nmodified: 2022-07-14\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\scrcons.exe\n    Image|endswith:\n    - \\svchost.exe\n    - \\dllhost.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\schtasks.exe\n    - \\regsvr32.exe\n    - \\mshta.exe\n    - \\rundll32.exe\n    - \\msiexec.exe\n    - \\msbuild.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

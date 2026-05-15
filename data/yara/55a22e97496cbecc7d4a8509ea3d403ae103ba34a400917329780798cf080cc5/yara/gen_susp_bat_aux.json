@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_susp_bat_aux.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_BAT_Aux_Jan20_1",
+                "tags": [],
+                "description": "Detects BAT file often dropped to cleanup temp dirs during infection",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://medium.com/@quoscient/the-chicken-keeps-laying-new-eggs-uncovering-new-gc-maas-tools-used-by-top-tier-threat-actors-531d80a6b4e9",
+                "date": "2020-01-29",
+                "score": 65,
+                "hash1": "f5d558ec505b635b1e37557350562ad6f79b3da5cf2cf74db6e6e648b7a47127",
+                "id": "c97f189e-a0c2-532e-b087-8669da72a2ad"
+            },
+            "rule_text": "rule SUSP_BAT_Aux_Jan20_1\n{\n\tmeta:\n\t\tdescription = \"Detects BAT file often dropped to cleanup temp dirs during infection\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://medium.com/@quoscient/the-chicken-keeps-laying-new-eggs-uncovering-new-gc-maas-tools-used-by-top-tier-threat-actors-531d80a6b4e9\"\n\t\tdate = \"2020-01-29\"\n\t\tscore = 65\n\t\thash1 = \"f5d558ec505b635b1e37557350562ad6f79b3da5cf2cf74db6e6e648b7a47127\"\n\t\tid = \"c97f189e-a0c2-532e-b087-8669da72a2ad\"\n\n\tstrings:\n\t\t$s1 = \"if exist \\\"C:\\\\Users\\\\\" ascii\n\t\t$s2 = \"\\\\AppData\\\\Local\\\\Temp\\\\\" ascii\n\t\t$s3 = \"del \\\"C:\\\\Users\\\\\" ascii\n\t\t$s4 = \".bat\\\"\" ascii\n\t\t$s5 = \".exe\\\" goto\" ascii\n\n\tcondition:\n\t\tuint8( 0 ) == 0x3a and filesize <= 1KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

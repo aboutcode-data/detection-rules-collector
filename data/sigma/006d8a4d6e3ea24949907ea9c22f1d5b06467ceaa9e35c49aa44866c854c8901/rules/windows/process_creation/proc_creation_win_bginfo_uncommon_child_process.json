@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bginfo_uncommon_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Beyu Denis, oscd.community",
+                "date": "2019-10-26",
+                "title": "Uncommon Child Process Of BgInfo.EXE",
+                "id": "aaf46cdc-934e-4284-b329-34aa701e3771"
+            },
+            "rule_text": "title: Uncommon Child Process Of BgInfo.EXE\nid: aaf46cdc-934e-4284-b329-34aa701e3771\nrelated:\n- id: 811f459f-9231-45d4-959a-0266c6311987\n  type: similar\nstatus: test\ndescription: Detects uncommon child processes of \"BgInfo.exe\" which could be a sign\n  of potential abuse of the binary to proxy execution via external VBScript\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Bginfo/\n- https://oddvar.moe/2017/05/18/bypassing-application-whitelisting-with-bginfo/\nauthor: Nasreddine Bencherchali (Nextron Systems), Beyu Denis, oscd.community\ndate: 2019-10-26\nmodified: 2023-08-16\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.005\n- attack.t1218\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\bginfo.exe\n    - \\bginfo64.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

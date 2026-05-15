@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1085/sysmon_rundll32_net_connections.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Florian Roth",
+                "date": "2017/11/04",
+                "title": "Rundll32 Internet Connection",
+                "id": null
+            },
+            "rule_text": "title: Rundll32 Internet Connection\nstatus: experimental\ndescription: Detects a rundll32 that communicates with public IP addresses\nreferences:\n- https://www.hybrid-analysis.com/sample/759fb4c0091a78c5ee035715afe3084686a8493f39014aea72dae36869de9ff6?environmentId=100\nauthor: Florian Roth\ndate: 2017/11/04\ntags:\n- attack.t1085\n- attack.defense_evasion\n- attack.execution\nlogsource:\n  product: windows\n  service: sysmon\ndetection:\n  selection:\n    EventID: 3\n    Image: '*\\rundll32.exe'\n  filter:\n    DestinationIp:\n    - 10.*\n    - 192.168.*\n    - 172.16.*\n    - 172.17.*\n    - 172.18.*\n    - 172.19.*\n    - 172.20.*\n    - 172.21.*\n    - 172.22.*\n    - 172.23.*\n    - 172.24.*\n    - 172.25.*\n    - 172.26.*\n    - 172.27.*\n    - 172.28.*\n    - 172.29.*\n    - 172.30.*\n    - 172.31.*\n    - 127.*\n  condition: selection and not filter\nfalsepositives:\n- Communication to other corporate systems that use IP addresses from public address\n  spaces\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

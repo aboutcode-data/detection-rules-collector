@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_fvey_shadowbroker_jan17.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FVEY_ShadowBrokers_Jan17_Screen_Strings",
+                "tags": [],
+                "description": "Detects strings derived from the ShadowBroker's leak of Windows tools/exploits",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://bit.no.com:43110/theshadowbrokers.bit/post/message7/",
+                "date": "2017-01-08",
+                "id": "59832d0a-0cb2-5eb9-a4e2-36aaa09a3998"
+            },
+            "rule_text": "rule FVEY_ShadowBrokers_Jan17_Screen_Strings\n{\n\tmeta:\n\t\tdescription = \"Detects strings derived from the ShadowBroker's leak of Windows tools/exploits\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://bit.no.com:43110/theshadowbrokers.bit/post/message7/\"\n\t\tdate = \"2017-01-08\"\n\t\tid = \"59832d0a-0cb2-5eb9-a4e2-36aaa09a3998\"\n\n\tstrings:\n\t\t$x1 = \"Danderspritz\" ascii wide fullword\n\t\t$x2 = \"DanderSpritz\" ascii wide fullword\n\t\t$x3 = \"PeddleCheap\" ascii wide fullword\n\t\t$x4 = \"ChimneyPool Addres\" ascii wide fullword\n\t\t$a1 = \"Getting remote time\" fullword ascii\n\t\t$a2 = \"RETRIEVED\" fullword ascii\n\t\t$b1 = \"Added Ops library to Python search path\" fullword ascii\n\t\t$b2 = \"target: z0.0.0.1\" fullword ascii\n\t\t$c1 = \"Psp_Avoidance\" fullword ascii\n\t\t$c2 = \"PasswordDump\" fullword ascii\n\t\t$c4 = \"EventLogEdit\" fullword ascii\n\t\t$d1 = \"Mcl_NtElevation\" fullword ascii wide\n\t\t$d2 = \"Mcl_NtNativeApi\" fullword ascii wide\n\t\t$d3 = \"Mcl_ThreatInject\" fullword ascii wide\n\t\t$d4 = \"Mcl_NtMemory\" fullword ascii wide\n\n\tcondition:\n\t\tfilesize < 2000KB and ( 1 of ( $x* ) or all of ( $a* ) or 1 of ( $b* ) or ( uint16( 0 ) == 0x5a4d and 1 of ( $c* ) ) or 3 of ( $c* ) or ( uint16( 0 ) == 0x5a4d and 3 of ( $d* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

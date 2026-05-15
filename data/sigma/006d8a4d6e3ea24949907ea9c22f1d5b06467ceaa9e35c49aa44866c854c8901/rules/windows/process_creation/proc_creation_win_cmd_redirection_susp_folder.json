@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_redirection_susp_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-12",
+                "title": "Potentially Suspicious CMD Shell Output Redirect",
+                "id": "8e0bb260-d4b2-4fff-bb8d-3f82118e6892"
+            },
+            "rule_text": "title: Potentially Suspicious CMD Shell Output Redirect\nid: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892\nrelated:\n- id: aa2efee7-34dd-446e-8a37-40790a66efd7\n  type: derived\n- id: 4f4eaa9f-5ad4-410c-a4be-bc6132b0175a\n  type: similar\nstatus: test\ndescription: 'Detects inline Windows shell commands redirecting output via the \">\"\n  symbol to a suspicious location.\n\n  This technique is sometimes used by malicious actors in order to redirect the output\n  of reconnaissance commands such as \"hostname\" and \"dir\" to files for future exfiltration.\n\n  '\nreferences:\n- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-12\nmodified: 2024-03-19\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cli_1:\n    CommandLine|contains:\n    - '>?%APPDATA%\\'\n    - '>?%TEMP%\\'\n    - '>?%TMP%\\'\n    - '>?%USERPROFILE%\\'\n    - '>?C:\\ProgramData\\'\n    - '>?C:\\Temp\\'\n    - '>?C:\\Users\\Public\\'\n    - '>?C:\\Windows\\Temp\\'\n  selection_cli_2:\n    CommandLine|contains:\n    - ' >'\n    - '\">'\n    - '''>'\n    CommandLine|contains|all:\n    - C:\\Users\\\n    - \\AppData\\Local\\\n  condition: selection_img and 1 of selection_cli_*\nfalsepositives:\n- Legitimate admin or third party scripts used for diagnostic collection might generate\n  some false positives\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_obfuscated_ip_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), X__Junior (Nextron Systems)",
+                "date": "2022-08-03",
+                "title": "Obfuscated IP Download Activity",
+                "id": "cb5a2333-56cf-4562-8fcb-22ba1bca728d"
+            },
+            "rule_text": "title: Obfuscated IP Download Activity\nid: cb5a2333-56cf-4562-8fcb-22ba1bca728d\nstatus: test\ndescription: Detects use of an encoded/obfuscated version of an IP address (hex, octal...)\n  in an URL combined with a download command\nreferences:\n- https://h.43z.one/ipconverter/\n- https://twitter.com/Yasser_Elsnbary/status/1553804135354564608\n- https://twitter.com/fr0s7_/status/1712780207105404948\nauthor: Florian Roth (Nextron Systems), X__Junior (Nextron Systems)\ndate: 2022-08-03\nmodified: 2026-03-16\ntags:\n- attack.discovery\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_command:\n    CommandLine|contains:\n    - Invoke-WebRequest\n    - 'iwr '\n    - Invoke-RestMethod\n    - 'irm '\n    - 'wget '\n    - 'curl '\n    - DownloadFile\n    - DownloadString\n  selection_ip_1:\n    CommandLine|contains:\n    - ' 0x'\n    - //0x\n    - .0x\n    - .00x\n  selection_ip_2:\n    CommandLine|contains|all:\n    - http://%\n    - '%2e'\n  selection_ip_3:\n  - CommandLine|re: https?://[0-9]{1,3}\\.[0-9]{1,3}\\.0[0-9]{3,4}\n  - CommandLine|re: https?://[0-9]{1,3}\\.0[0-9]{3,7}\n  - CommandLine|re: https?://0[0-9]{3,11}\n  - CommandLine|re: https?://(?:0[0-9]{1,11}\\.){3}0[0-9]{1,11}\n  - CommandLine|re: https?://0[0-9]{1,11}\n  - CommandLine|re: ' [0-7]{7,13}'\n  filter_main_valid_ip:\n    CommandLine|re: https?://(?:(?:25[0-5]|(?:2[0-4]|1\\d|[1-9])?\\d)(?:\\.|\\b)){4}\n  condition: selection_command and 1 of selection_ip_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_sysinternals_psexec_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Renamed PsExec Service Execution",
+                "id": "51ae86a2-e2e1-4097-ad85-c46cb6851de4"
+            },
+            "rule_text": "title: Renamed PsExec Service Execution\nid: 51ae86a2-e2e1-4097-ad85-c46cb6851de4\nstatus: test\ndescription: Detects suspicious launch of a renamed version of the PSEXESVC service\n  with, which is not often used by legitimate administrators\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/psexec\n- https://www.youtube.com/watch?v=ro2QuZTIMBM\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-07-21\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: psexesvc.exe\n  filter:\n    Image: C:\\Windows\\PSEXESVC.exe\n  condition: selection and not filter\nfalsepositives:\n- Legitimate administrative tasks\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

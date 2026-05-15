@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_powershell_script_installed_as_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Natalia Shornikova",
+                "date": "2020-10-06",
+                "title": "PowerShell Scripts Installed as Services",
+                "id": "a2e5019d-a658-4c6a-92bf-7197b54e2cae"
+            },
+            "rule_text": "title: PowerShell Scripts Installed as Services\nid: a2e5019d-a658-4c6a-92bf-7197b54e2cae\nstatus: test\ndescription: Detects powershell script installed as a Service\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: oscd.community, Natalia Shornikova\ndate: 2020-10-06\nmodified: 2022-12-25\ntags:\n- attack.execution\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ImagePath|contains:\n    - powershell\n    - pwsh\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

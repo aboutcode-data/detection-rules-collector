@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Delf/TrojanSpy_Win32_Delf_CM.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Delf_CM",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Delf.CM,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Delf_CM\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Delf.CM,SIGNATURE_TYPE_PEHSTR_EXT,08 00 08 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2a 2e 77 61 62 00 00 00 ff ff ff ff 03 00 00 00 77 61 62 00 ff ff ff ff 05 00 00 00 2a 2e 6d 62 }\n\t\t$a_01_1 = {74 62 62 00 ff ff ff ff 06 00 00 00 2a 2e 6d 62 6f 78 00 00 ff ff ff ff 04 00 00 00 6d 62 6f 78 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 4 + ( #a_01_1 & 1 ) * 4 ) >= 8\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

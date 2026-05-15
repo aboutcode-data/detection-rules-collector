@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_add_sid_history.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Thomas Patzke, @atc_project (improvements)",
+                "date": "2017-02-19",
+                "title": "Addition of SID History to Active Directory Object",
+                "id": "2632954e-db1c-49cb-9936-67d1ef1d17d2"
+            },
+            "rule_text": "title: Addition of SID History to Active Directory Object\nid: 2632954e-db1c-49cb-9936-67d1ef1d17d2\nstatus: stable\ndescription: An attacker can use the SID history attribute to gain additional privileges.\nreferences:\n- https://adsecurity.org/?p=1772\nauthor: Thomas Patzke, @atc_project (improvements)\ndate: 2017-02-19\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134.005\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection1:\n    EventID:\n    - 4765\n    - 4766\n  selection2:\n    EventID: 4738\n  selection3:\n    SidHistory:\n    - '-'\n    - '%%1793'\n  filter_null:\n    SidHistory: null\n  condition: selection1 or (selection2 and not selection3 and not filter_null)\nfalsepositives:\n- Migration of an account into a new domain\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

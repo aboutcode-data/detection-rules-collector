@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Ransomware_Mountlocker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Ransomware_Mountlocker_126a76e2",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "126a76e2-8a97-4347-ac36-9437a512e16c",
+                "fingerprint": "08213f4474c7c8fd7a6e59c9ff139fb45f224109ad4e6162c12cff5ac85cb10c",
+                "creation_date": "2021-06-10",
+                "last_modified": "2021-08-23",
+                "threat_name": "Windows.Ransomware.Mountlocker",
+                "reference_sample": "4a5ac3c6f8383cc33c795804ba5f7f5553c029bbb4a6d28f1e4d8fb5107902c1",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Ransomware_Mountlocker_126a76e2\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"126a76e2-8a97-4347-ac36-9437a512e16c\"\n\t\tfingerprint = \"08213f4474c7c8fd7a6e59c9ff139fb45f224109ad4e6162c12cff5ac85cb10c\"\n\t\tcreation_date = \"2021-06-10\"\n\t\tlast_modified = \"2021-08-23\"\n\t\tthreat_name = \"Windows.Ransomware.Mountlocker\"\n\t\treference_sample = \"4a5ac3c6f8383cc33c795804ba5f7f5553c029bbb4a6d28f1e4d8fb5107902c1\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"[SKIP] locker.dir.check > black_list name=%s\" wide fullword\n\t\t$a2 = \"[OK] locker.dir.check > name=%s\" wide fullword\n\t\t$a3 = \"[ERROR] locker.worm > execute pcname=%s\" wide fullword\n\t\t$a4 = \"[INFO] locker.work.enum.net_drive > enum finish name=%s\" wide fullword\n\t\t$a5 = \"[WARN] locker.work.enum.server_shares > logon on server error=%u pcname=%s\" wide fullword\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

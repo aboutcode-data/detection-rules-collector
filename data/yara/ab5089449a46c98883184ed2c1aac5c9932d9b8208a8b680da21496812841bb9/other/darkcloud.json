@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/darkcloud.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_DarkCloud_Stealer_str",
+                "tags": [],
+                "description": "DarkCloud Stealer",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "a8f6bcae61ed785c8ee0703fb9d3d72b717302c4bc5d651fd2a7aa83b1b696ea"
+            },
+            "rule_text": "rule malware_DarkCloud_Stealer_str\n{\n\tmeta:\n\t\tdescription = \"DarkCloud Stealer\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"a8f6bcae61ed785c8ee0703fb9d3d72b717302c4bc5d651fd2a7aa83b1b696ea\"\n\n\tstrings:\n\t\t$vb1 = \"__vba\" ascii wide\n\t\t$vb2 = \"VB6.OLB\" ascii wide\n\t\t$name1 = \"DarkCloud Gecko Recovery\" ascii wide\n\t\t$name2 = \"DarkCloud CryptoWallets\" ascii wide\n\t\t$name3 = \"DarkCloud FilesGrabber\" ascii wide\n\t\t$name4 = \"DarkCloud Credentials\" ascii wide\n\t\t$name5 = \"===============DARKCLOUD===============\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and any of ( $vb* ) and 3 of ( $name* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

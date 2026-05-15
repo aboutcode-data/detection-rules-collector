@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_atbroker_uncommon_ats_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mateusz Wydra, oscd.community",
+                "date": "2020-10-12",
+                "title": "Uncommon  Assistive Technology Applications Execution Via AtBroker.EXE",
+                "id": "f24bcaea-0cd1-11eb-adc1-0242ac120002"
+            },
+            "rule_text": "title: Uncommon  Assistive Technology Applications Execution Via AtBroker.EXE\nid: f24bcaea-0cd1-11eb-adc1-0242ac120002\nstatus: test\ndescription: Detects the start of a non built-in assistive technology applications\n  via \"Atbroker.EXE\".\nreferences:\n- http://www.hexacorn.com/blog/2016/07/22/beyond-good-ol-run-key-part-42/\n- https://lolbas-project.github.io/lolbas/Binaries/Atbroker/\nauthor: Mateusz Wydra, oscd.community\ndate: 2020-10-12\nmodified: 2024-03-06\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\AtBroker.exe\n  - OriginalFileName: AtBroker.exe\n  selection_cli:\n    CommandLine|contains: start\n  filter_main_builtin:\n    CommandLine|contains:\n    - animations\n    - audiodescription\n    - caretbrowsing\n    - caretwidth\n    - colorfiltering\n    - cursorindicator\n    - cursorscheme\n    - filterkeys\n    - focusborderheight\n    - focusborderwidth\n    - highcontrast\n    - keyboardcues\n    - keyboardpref\n    - livecaptions\n    - magnifierpane\n    - messageduration\n    - minimumhitradius\n    - mousekeys\n    - Narrator\n    - osk\n    - overlappedcontent\n    - showsounds\n    - soundsentry\n    - speechreco\n    - stickykeys\n    - togglekeys\n    - voiceaccess\n    - windowarranging\n    - windowtracking\n    - windowtrackingtimeout\n    - windowtrackingzorder\n  filter_optional_java:\n    CommandLine|contains: Oracle_JavaAccessBridge\n  condition: all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate, non-default assistive technology applications execution\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

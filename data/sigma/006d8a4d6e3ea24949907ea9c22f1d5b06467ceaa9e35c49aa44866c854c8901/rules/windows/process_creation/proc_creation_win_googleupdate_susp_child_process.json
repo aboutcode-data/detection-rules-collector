@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_googleupdate_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-15",
+                "title": "Potentially Suspicious GoogleUpdate Child Process",
+                "id": "84b1ecf9-6eff-4004-bafb-bae5c0e251b2"
+            },
+            "rule_text": "title: Potentially Suspicious GoogleUpdate Child Process\nid: 84b1ecf9-6eff-4004-bafb-bae5c0e251b2\nrelated:\n- id: bdbab15a-3826-48fa-a1b7-723cd8f32fcc\n  type: derived\nstatus: test\ndescription: Detects potentially suspicious child processes of \"GoogleUpdate.exe\"\nreferences:\n- https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/goofy-guineapig/NCSC-MAR-Goofy-Guineapig.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-15\nmodified: 2023-05-22\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\GoogleUpdate.exe\n  filter_main_known_legit:\n  - Image|contains: \\Google\n  - Image|endswith:\n    - \\setup.exe\n    - chrome_updater.exe\n    - chrome_installer.exe\n  filter_main_image_null:\n    Image: null\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

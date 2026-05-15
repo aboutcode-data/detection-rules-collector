@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2018/TA/APT28/proc_creation_win_apt_sofacy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community",
+                "date": "2018-03-01",
+                "title": "Sofacy Trojan Loader Activity",
+                "id": "ba778144-5e3d-40cf-8af9-e28fb1df1e20"
+            },
+            "rule_text": "title: Sofacy Trojan Loader Activity\nid: ba778144-5e3d-40cf-8af9-e28fb1df1e20\nstatus: test\ndescription: Detects Trojan loader activity as used by APT28\nreferences:\n- https://researchcenter.paloaltonetworks.com/2018/02/unit42-sofacy-attacks-multiple-government-entities/\n- https://www.hybrid-analysis.com/sample/ff808d0a12676bfac88fd26f955154f8884f2bb7c534b9936510fd6296c543e8?environmentId=110\n- https://twitter.com/ClearskySec/status/960924755355369472\nauthor: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community\ndate: 2018-03-01\nmodified: 2023-05-31\ntags:\n- attack.execution\n- attack.stealth\n- attack.g0007\n- attack.t1059.003\n- attack.t1218.011\n- car.2013-10-002\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_path:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains:\n    - '%LOCALAPPDATA%'\n    - \\AppData\\Local\\\n  selection_extensions:\n  - CommandLine|contains: .dat\",\n  - CommandLine|endswith:\n    - '.dll #1'\n    - '.dll\" #1'\n    - .dll\",#1\n  filter_main_exclude_temp:\n    CommandLine|contains: \\AppData\\Local\\Temp\\\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_inbox_rule_creation_or_update_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Marco Pedrinazzi (@pedrinazziM) (InTheCyber)",
+                "date": "2026-02-10",
+                "title": "Inbox Rules Creation Or Update Activity Via ExchangePowerShell Cmdlet",
+                "id": "04580eed-e1d6-426b-a570-f6e64a4577f7"
+            },
+            "rule_text": "title: Inbox Rules Creation Or Update Activity Via ExchangePowerShell Cmdlet\nid: 04580eed-e1d6-426b-a570-f6e64a4577f7\nrelated:\n- id: d3577be1-42c9-44a7-b56e-2e8de97349d3\n  type: similar\nstatus: experimental\ndescription: 'Detects inbox rule creation or update via ExchangePowerShell cmdlet,\n  a technique commonly observed in Business Email Compromise (BEC) attacks to hide\n  emails.\n\n  The usage of inbox rules can be a sign of a compromised mailbox, where an attacker\n  is attempting to evade detections by suppressing or redirecting incoming emails.\n\n  Analysts should review these rules in context, validate whether they reflect normal\n  user behavior, and correlate with other indicators such as unusual login activity\n  or recent mailbox rule modifications.\n\n  '\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/email-hiding-rules/\n- https://learn.microsoft.com/it-it/powershell/module/exchangepowershell/new-inboxrule?view=exchange-ps\n- https://learn.microsoft.com/it-it/powershell/module/exchangepowershell/set-inboxrule?view=exchange-ps\nauthor: Marco Pedrinazzi (@pedrinazziM) (InTheCyber)\ndate: 2026-02-10\ntags:\n- attack.stealth\n- attack.t1564.008\n- attack.exfiltration\n- attack.collection\n- attack.t1114.003\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains:\n    - New-InboxRule\n    - Set-InboxRule\n  selection_params:\n    ScriptBlockText|contains:\n    - DeleteMessage\n    - MarkAsRead\n    - MoveToFolder\n    - SubjectOrBodyContainsWords\n  condition: all of selection_*\nfalsepositives:\n- Legitimate inbox rules created by users or administrators to manage email flow such\n  as filtering, organizing, or automating email handling.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

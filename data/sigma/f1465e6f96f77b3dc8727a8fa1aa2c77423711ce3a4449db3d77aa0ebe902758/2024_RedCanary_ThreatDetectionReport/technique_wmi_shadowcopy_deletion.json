@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_wmi_shadowcopy_deletion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "WMI Shadow Copy Deletion",
+                "id": "1c078d3c-749c-40ce-9400-c2dbad604764"
+            },
+            "rule_text": "title: WMI Shadow Copy Deletion\nid: 1c078d3c-749c-40ce-9400-c2dbad604764\nstatus: experimental\ndescription: \"It\\u2019s not uncommon for ransomware operators to leverage WMI to delete\\\n  \\ volume shadows, \\nsignificantly complicating the process for recovering access\\\n  \\ to encrypted systems and files. \\nIf you want to detect ransomware using WMI to\\\n  \\ delete shadow copies, consider looking for \\nwmic.exe execution with command lines\\\n  \\ including shadowcopy or delete. Part of the RedCanary \\n2024 Threat Detection\\\n  \\ Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1047\n- attack.impact\n- attack.t1490\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains:\n    - shadowcopy\n    - delete\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_velociraptor_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-08-29",
+                "title": "Suspicious Velociraptor Child Process",
+                "id": "4bc90587-e6ca-4b41-be0b-ed4d04e4ed0c"
+            },
+            "rule_text": "title: Suspicious Velociraptor Child Process\nid: 4bc90587-e6ca-4b41-be0b-ed4d04e4ed0c\nstatus: experimental\ndescription: Detects the suspicious use of the Velociraptor DFIR tool to execute other\n  tools or download additional payloads, as seen in a campaign where it was abused\n  for remote access and to stage further attacks.\nreferences:\n- https://news.sophos.com/en-us/2025/08/26/velociraptor-incident-response-tool-abused-for-remote-access/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-08-29\ntags:\n- attack.command-and-control\n- attack.persistence\n- attack.t1219\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\Velociraptor.exe\n  selection_child_vscode_tunnel:\n    CommandLine|contains|all:\n    - code.exe\n    - tunnel\n    - --accept-server-license-terms\n  selection_child_msiexec:\n    CommandLine|contains|all:\n    - msiexec\n    - /i\n    - http\n  selection_child_powershell:\n    Image|endswith:\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\pwsh.exe\n    CommandLine|contains:\n    - 'Invoke-WebRequest '\n    - 'IWR '\n    - .DownloadFile\n    - .DownloadString\n  condition: selection_parent and 1 of selection_child_*\nfalsepositives:\n- Legitimate administrators or incident responders might use Velociraptor to execute\n  scripts or tools. However, the combination of Velociraptor spawning these specific\n  processes with these command lines is suspicious. Tuning may be required to exclude\n  known administrative actions or specific scripts.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

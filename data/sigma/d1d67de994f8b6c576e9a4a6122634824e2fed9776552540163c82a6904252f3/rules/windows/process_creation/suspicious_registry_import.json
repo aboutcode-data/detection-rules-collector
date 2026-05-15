@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/suspicious_registry_import.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-08-19",
+                "title": "Suspicious Registry Import",
+                "id": "bb406664-ae52-4ea2-bde5-0a0cf0438aca"
+            },
+            "rule_text": "title: Suspicious Registry Import\nid: bb406664-ae52-4ea2-bde5-0a0cf0438aca\ndescription: Some malware droppers consist of a single .reg file that writes a base64\n  encoded payload into registry and creates a Run key for execution/persistence. Investigate\n  where the .reg file comes from and if possible, if it creates any suspicious registry\n  keys.\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: 2024-08-19\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_reg_import:\n    Image|endswith: \\regedit.exe\n    CommandLine|contains: .reg\n  selection_suspicious_path:\n    CommandLine|contains:\n    - \\Downloads\\\n    - \\Local\\Temp\\\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\ntags:\n- attack.initial-access\n- attack.execution\n- attack.persistence\n- attack.t1547.001\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_elf_file_anomalies.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_ELF_LNX_UPX_Compressed_File",
+                "tags": [],
+                "description": "Detects a suspicious ELF binary with UPX compression",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2018-12-12",
+                "score": 40,
+                "hash1": "038ff8b2fef16f8ee9d70e6c219c5f380afe1a21761791e8cbda21fa4d09fdb4",
+                "id": "078937de-59b3-538e-a5c3-57f4e6050212"
+            },
+            "rule_text": "rule SUSP_ELF_LNX_UPX_Compressed_File\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious ELF binary with UPX compression\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2018-12-12\"\n\t\tscore = 40\n\t\thash1 = \"038ff8b2fef16f8ee9d70e6c219c5f380afe1a21761791e8cbda21fa4d09fdb4\"\n\t\tid = \"078937de-59b3-538e-a5c3-57f4e6050212\"\n\n\tstrings:\n\t\t$s1 = \"PROT_EXEC|PROT_WRITE failed.\" fullword ascii\n\t\t$s2 = \"$Id: UPX\" fullword ascii\n\t\t$s3 = \"$Info: This file is packed with the UPX executable packer\" ascii\n\t\t$fp1 = \"check your UCL installation !\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x457f and filesize < 2000KB and filesize > 30KB and 2 of ( $s* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

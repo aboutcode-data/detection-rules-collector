@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ldifde_export.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-14",
+                "title": "Active Directory Structure Export Via Ldifde.EXE",
+                "id": "4f7a6757-ff79-46db-9687-66501a02d9ec"
+            },
+            "rule_text": "title: Active Directory Structure Export Via Ldifde.EXE\nid: 4f7a6757-ff79-46db-9687-66501a02d9ec\nstatus: test\ndescription: Detects the execution of \"ldifde.exe\" in order to export organizational\n  Active Directory structure.\nreferences:\n- https://businessinsights.bitdefender.com/deep-dive-into-a-backdoordiplomacy-attack-a-study-of-an-attackers-toolkit\n- https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc731033(v=ws.11)\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-14\ntags:\n- attack.exfiltration\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_ldif:\n  - Image|endswith: \\ldifde.exe\n  - OriginalFileName: ldifde.exe\n  selection_cmd:\n    CommandLine|contains: -f\n  filter_import:\n    CommandLine|contains: ' -i'\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

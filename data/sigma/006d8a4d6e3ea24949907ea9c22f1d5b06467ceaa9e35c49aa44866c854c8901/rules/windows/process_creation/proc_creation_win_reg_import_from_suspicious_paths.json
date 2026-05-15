@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_import_from_suspicious_paths.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali",
+                "date": "2022-08-01",
+                "title": "Potential Suspicious Registry File Imported Via Reg.EXE",
+                "id": "62e0298b-e994-4189-bc87-bc699aa62d97"
+            },
+            "rule_text": "title: Potential Suspicious Registry File Imported Via Reg.EXE\nid: 62e0298b-e994-4189-bc87-bc699aa62d97\nrelated:\n- id: 73bba97f-a82d-42ce-b315-9182e76c57b1\n  type: derived\nstatus: test\ndescription: Detects the import of '.reg' files from suspicious paths using the 'reg.exe'\n  utility\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/reg-import\nauthor: frack113, Nasreddine Bencherchali\ndate: 2022-08-01\nmodified: 2023-02-05\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_cli:\n    CommandLine|contains: ' import '\n  selection_paths:\n    CommandLine|contains:\n    - C:\\Users\\\n    - '%temp%'\n    - '%tmp%'\n    - '%appdata%'\n    - \\AppData\\Local\\Temp\\\n    - C:\\Windows\\Temp\\\n    - C:\\ProgramData\\\n  condition: all of selection_*\nfalsepositives:\n- Legitimate import of keys\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

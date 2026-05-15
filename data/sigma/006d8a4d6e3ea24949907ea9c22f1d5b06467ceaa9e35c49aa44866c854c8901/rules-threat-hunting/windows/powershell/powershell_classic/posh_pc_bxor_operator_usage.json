@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_classic/posh_pc_bxor_operator_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, Harish Segar",
+                "date": "2020-06-29",
+                "title": "bXOR Operator Usage In PowerShell Command Line - PowerShell Classic",
+                "id": "812837bb-b17f-45e9-8bd0-0ec35d2e3bd6"
+            },
+            "rule_text": "title: bXOR Operator Usage In PowerShell Command Line - PowerShell Classic\nid: 812837bb-b17f-45e9-8bd0-0ec35d2e3bd6\nstatus: test\ndescription: 'Detects powershell execution with that make use of to the bxor (Bitwise\n  XOR).\n\n  Attackers might use as an alternative obfuscation method to Base64 encoded commands.\n\n  Investigate the CommandLine and process tree to determine if the activity is malicious.\n\n  '\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=46\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_arithmetic_operators?view=powershell-5.1\nauthor: Teymur Kheirkhabarov, Harish Segar\ndate: 2020-06-29\nmodified: 2024-12-11\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_classic_start\ndetection:\n  selection:\n    Data|contains|all:\n    - HostName=ConsoleHost\n    - ' -bxor '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

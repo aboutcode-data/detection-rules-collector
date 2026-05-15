@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_devtoolslauncher.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Beyu Denis, oscd.community (rule), @_felamos (idea)",
+                "date": "2019-10-12",
+                "title": "Devtoolslauncher.exe Executes Specified Binary",
+                "id": "cc268ac1-42d9-40fd-9ed3-8c4e1a5b87e6"
+            },
+            "rule_text": "title: Devtoolslauncher.exe Executes Specified Binary\nid: cc268ac1-42d9-40fd-9ed3-8c4e1a5b87e6\nstatus: test\ndescription: The Devtoolslauncher.exe executes other binary\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Devtoolslauncher/\n- https://twitter.com/_felamos/status/1179811992841797632\nauthor: Beyu Denis, oscd.community (rule), @_felamos (idea)\ndate: 2019-10-12\nmodified: 2021-11-27\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\devtoolslauncher.exe\n    CommandLine|contains: LaunchForDeploy\n  condition: selection\nfalsepositives:\n- Legitimate use of devtoolslauncher.exe by legitimate user\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

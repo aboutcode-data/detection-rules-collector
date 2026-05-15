@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_invoke_obfuscation_var_services.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jonathan Cheong, oscd.community",
+                "date": "2020-10-15",
+                "title": "Invoke-Obfuscation VAR+ Launcher - System",
+                "id": "8ca7004b-e620-4ecb-870e-86129b5b8e75"
+            },
+            "rule_text": "title: Invoke-Obfuscation VAR+ Launcher - System\nid: 8ca7004b-e620-4ecb-870e-86129b5b8e75\nstatus: test\ndescription: Detects Obfuscated use of Environment Variables to execute PowerShell\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Jonathan Cheong, oscd.community\ndate: 2020-10-15\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ImagePath|contains|all:\n    - cmd\n    - '\"set'\n    - -f\n    ImagePath|contains:\n    - /c\n    - /r\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

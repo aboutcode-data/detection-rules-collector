@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_python_pty_spawn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nextron Systems",
+                "date": "2022-06-03",
+                "title": "Python Spawning Pretty TTY Via PTY Module",
+                "id": "c4042d54-110d-45dd-a0e1-05c47822c937"
+            },
+            "rule_text": "title: Python Spawning Pretty TTY Via PTY Module\nid: c4042d54-110d-45dd-a0e1-05c47822c937\nrelated:\n- id: 32e62bc7-3de0-4bb1-90af-532978fe42c0\n  type: similar\nstatus: test\ndescription: 'Detects a python process calling to the PTY module in order to spawn\n  a pretty tty which could be indicative of potential reverse shell activity.\n\n  '\nreferences:\n- https://www.volexity.com/blog/2022/06/02/zero-day-exploitation-of-atlassian-confluence/\nauthor: Nextron Systems\ndate: 2022-06-03\nmodified: 2024-11-04\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n  - Image|endswith:\n    - /python\n    - /python2\n    - /python3\n  - Image|contains:\n    - /python2.\n    - /python3.\n  selection_cli_import:\n    CommandLine|contains:\n    - import pty\n    - 'from pty '\n  selection_cli_spawn:\n    CommandLine|contains: spawn\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

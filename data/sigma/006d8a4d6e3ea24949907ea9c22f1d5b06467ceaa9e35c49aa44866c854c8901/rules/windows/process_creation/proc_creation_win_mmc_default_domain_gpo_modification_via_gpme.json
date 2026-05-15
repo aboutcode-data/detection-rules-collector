@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mmc_default_domain_gpo_modification_via_gpme.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "TropChaud",
+                "date": "2025-11-22",
+                "title": "Windows Default Domain GPO Modification via GPME",
+                "id": "dcff7e85-d01f-4eb5-badd-84e2e6be8294"
+            },
+            "rule_text": "title: Windows Default Domain GPO Modification via GPME\nid: dcff7e85-d01f-4eb5-badd-84e2e6be8294\nrelated:\n- id: e5ac86dd-2da1-454b-be74-05d26c769d7d\n  type: similar\nstatus: experimental\ndescription: 'Detects the use of the Group Policy Management Editor (GPME) to modify\n  Default Domain or Default Domain Controllers Group Policy Objects (GPOs).\n\n  Adversaries may leverage GPME to make stealthy changes in these default GPOs to\n  deploy malicious GPOs configurations across the domain without raising suspicion.\n\n  '\nreferences:\n- https://www.trendmicro.com/en_us/research/25/i/unmasking-the-gentlemen-ransomware.html\n- https://adsecurity.org/?p=3377\n- https://sdmsoftware.com/general-stuff/launching-the-new-gp-management-editor-from-the-command-line/\n- https://www.pentestpartners.com/security-blog/living-off-the-land-gpo-style/\nauthor: TropChaud\ndate: 2025-11-22\ntags:\n- attack.privilege-escalation\n- attack.defense-impairment\n- attack.t1484.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_mmc:\n  - Image|endswith: \\mmc.exe\n  - OriginalFileName: MMC.exe\n  selection_gpme:\n    CommandLine|contains|all:\n    - gpme.msc\n    - 'gpobject:'\n  selection_default_gpos:\n    CommandLine|contains:\n    - 31B2F340-016D-11D2-945F-00C04FB984F9\n    - 6AC1786C-016F-11D2-945F-00C04FB984F9\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of GPME to modify GPOs\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_office_arbitrary_cli_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Beyu Denis, oscd.community",
+                "date": "2022-05-17",
+                "title": "Potential Arbitrary File Download Using Office Application",
+                "id": "4ae3e30b-b03f-43aa-87e3-b622f4048eed"
+            },
+            "rule_text": "title: Potential Arbitrary File Download Using Office Application\nid: 4ae3e30b-b03f-43aa-87e3-b622f4048eed\nrelated:\n- id: 0c79148b-118e-472b-bdb7-9b57b444cc19\n  type: obsolete\nstatus: test\ndescription: Detects potential arbitrary file download using a Microsoft Office application\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Winword/\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Powerpnt/\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Excel/\n- https://medium.com/@reegun/unsanitized-file-validation-leads-to-malicious-payload-download-via-office-binaries-202d02db7191\nauthor: Nasreddine Bencherchali (Nextron Systems), Beyu Denis, oscd.community\ndate: 2022-05-17\nmodified: 2023-06-22\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\EXCEL.EXE\n    - \\POWERPNT.EXE\n    - \\WINWORD.exe\n  - OriginalFileName:\n    - Excel.exe\n    - POWERPNT.EXE\n    - WinWord.exe\n  selection_http:\n    CommandLine|contains:\n    - http://\n    - https://\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

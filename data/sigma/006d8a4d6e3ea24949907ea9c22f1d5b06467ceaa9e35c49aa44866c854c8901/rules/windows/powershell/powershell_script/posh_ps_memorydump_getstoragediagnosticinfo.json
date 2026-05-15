@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_memorydump_getstoragediagnosticinfo.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2021-09-21",
+                "title": "Live Memory Dump Using Powershell",
+                "id": "cd185561-4760-45d6-a63e-a51325112cae"
+            },
+            "rule_text": "title: Live Memory Dump Using Powershell\nid: cd185561-4760-45d6-a63e-a51325112cae\nstatus: test\ndescription: Detects usage of a PowerShell command to dump the live memory of a Windows\n  machine\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/storage/get-storagediagnosticinfo?view=windowsserver2022-ps\nauthor: Max Altgelt (Nextron Systems)\ndate: 2021-09-21\nmodified: 2022-12-25\ntags:\n- attack.credential-access\n- attack.t1003\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Get-StorageDiagnosticInfo\n    - -IncludeLiveDump\n  condition: selection\nfalsepositives:\n- Diagnostics\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

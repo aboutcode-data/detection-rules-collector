@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_odbcconf_response_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Kirill Kiryanov, Beyu Denis, Daniil Yugoslavskiy, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-22",
+                "title": "Response File Execution Via Odbcconf.EXE",
+                "id": "5f03babb-12db-4eec-8c82-7b4cb5580868"
+            },
+            "rule_text": "title: Response File Execution Via Odbcconf.EXE\nid: 5f03babb-12db-4eec-8c82-7b4cb5580868\nrelated:\n- id: 2d32dd6f-3196-4093-b9eb-1ad8ab088ca5\n  type: similar\n- id: 65d2be45-8600-4042-b4c0-577a1ff8a60e\n  type: obsolete\nstatus: test\ndescription: Detects execution of \"odbcconf\" with the \"-f\" flag in order to load a\n  response file which might contain a malicious action.\nreferences:\n- https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16\n- https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/\n- https://www.cybereason.com/blog/threat-analysis-report-bumblebee-loader-the-high-road-to-enterprise-domain-control\n- https://www.hexacorn.com/blog/2020/08/23/odbcconf-lolbin-trifecta/\nauthor: Kirill Kiryanov, Beyu Denis, Daniil Yugoslavskiy, oscd.community, Nasreddine\n  Bencherchali (Nextron Systems)\ndate: 2023-05-22\nmodified: 2024-03-05\ntags:\n- attack.stealth\n- attack.t1218.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\odbcconf.exe\n  - OriginalFileName: odbcconf.exe\n  selection_cli:\n    CommandLine|contains|windash: ' -f '\n  selection_rsp_ext:\n    CommandLine|contains: .rsp\n  condition: all of selection_*\nfalsepositives:\n- The rule is looking for any usage of response file, which might generate false positive\n  when this function is used legitimately. Investigate the contents of the \".rsp\"\n  file to determine if it is malicious and apply additional filters if necessary.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

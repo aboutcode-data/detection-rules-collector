@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/bits_client/win_bits_client_new_transfer_via_ip_address.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "BITS Transfer Job Download From Direct IP",
+                "id": "90f138c1-f578-4ac3-8c49-eecfd847c8b7"
+            },
+            "rule_text": "title: BITS Transfer Job Download From Direct IP\nid: 90f138c1-f578-4ac3-8c49-eecfd847c8b7\nrelated:\n- id: 99c840f2-2012-46fd-9141-c761987550ef\n  type: similar\nstatus: test\ndescription: Detects a BITS transfer job downloading file(s) from a direct IP address.\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\n- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/\n- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\nmodified: 2023-03-27\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\nlogsource:\n  product: windows\n  service: bits-client\ndetection:\n  selection:\n    EventID: 16403\n    RemoteName|contains:\n    - http://1\n    - http://2\n    - http://3\n    - http://4\n    - http://5\n    - http://6\n    - http://7\n    - http://8\n    - http://9\n    - https://1\n    - https://2\n    - https://3\n    - https://4\n    - https://5\n    - https://6\n    - https://7\n    - https://8\n    - https://9\n  filter_optional_local_networks:\n    RemoteName|contains:\n    - ://10.\n    - ://192.168.\n    - ://172.16.\n    - ://172.17.\n    - ://172.18.\n    - ://172.19.\n    - ://172.20.\n    - ://172.21.\n    - ://172.22.\n    - ://172.23.\n    - ://172.24.\n    - ://172.25.\n    - ://172.26.\n    - ://172.27.\n    - ://172.28.\n    - ://172.29.\n    - ://172.30.\n    - ://172.31.\n    - ://127.\n    - ://169.254.\n  filter_optional_seven_zip:\n    RemoteName|contains:\n    - https://7-\n    - http://7-\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_wmi_shadow_copy_deletion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "WMI Shadow Copy Deletion (RedCanary Threat Detection Report)",
+                "id": "31b52a76-ef7a-40dd-8bb1-9c1671f04d0a"
+            },
+            "rule_text": "title: WMI Shadow Copy Deletion (RedCanary Threat Detection Report)\nid: 31b52a76-ef7a-40dd-8bb1-9c1671f04d0a\nstatus: experimental\ndescription: Detects wmic shadow copy deletion activity. Part of the RedCanary 2023\n  Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains|all:\n    - shadowcopy\n    - delete\n  condition: selection\nfalsepositives:\n- Unknown.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

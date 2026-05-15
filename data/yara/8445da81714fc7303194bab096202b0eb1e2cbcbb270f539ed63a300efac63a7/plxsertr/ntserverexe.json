@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/plxsertr/ntserverexe.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "StormNtServerExe",
+                "tags": [
+                    "ntserverexe"
+                ],
+                "author": "plxsert",
+                "date": "2014-01-15",
+                "description": "Storm ntserver payload",
+                "sample_filetype": "exe"
+            },
+            "rule_text": "rule StormNtServerExe : ntserverexe\n{\n\tmeta:\n\t\tauthor = \"plxsert\"\n\t\tdate = \"2014-01-15\"\n\t\tdescription = \"Storm ntserver payload\"\n\t\tsample_filetype = \"exe\"\n\n\tstrings:\n\t\t$callWinExec = { 8B FA C1 E9 02 F3 A5 8B C8 83 E1 03 F3 A4 8D 4C 24 10 51 FF 15 48 50 40 00 }\n\t\t$string0 = \"\\\\ntserver.dll\" fullword\n\t\t$string1 = \"iexplore.exe\" fullword\n\t\t$string3 = \"SeDebugPrivilege\" fullword\n\n\tcondition:\n\t\tall of ( $string* ) and ( $callWinExec in ( 0 .. 0x106c ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

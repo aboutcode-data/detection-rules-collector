@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_user_discovery_get_aduser.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-09",
+                "title": "User Discovery And Export Via Get-ADUser Cmdlet",
+                "id": "1114e048-b69c-4f41-bc20-657245ae6e3f"
+            },
+            "rule_text": "title: User Discovery And Export Via Get-ADUser Cmdlet\nid: 1114e048-b69c-4f41-bc20-657245ae6e3f\nrelated:\n- id: c2993223-6da8-4b1a-88ee-668b8bf315e9\n  type: similar\nstatus: test\ndescription: Detects usage of the Get-ADUser cmdlet to collect user information and\n  output it to a file\nreferences:\n- http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html\n- https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-09\nmodified: 2022-11-17\ntags:\n- attack.discovery\n- attack.t1033\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli:\n    CommandLine|contains|all:\n    - 'Get-ADUser '\n    - ' -Filter \\*'\n    CommandLine|contains:\n    - ' > '\n    - ' | Select '\n    - Out-File\n    - Set-Content\n    - Add-Content\n  condition: all of selection_*\nfalsepositives:\n- Legitimate admin scripts may use the same technique, it's better to exclude specific\n  computers or users who execute these commands or scripts often\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

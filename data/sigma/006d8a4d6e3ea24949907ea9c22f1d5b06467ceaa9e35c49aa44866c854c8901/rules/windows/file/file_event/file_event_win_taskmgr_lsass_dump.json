@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_taskmgr_lsass_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel",
+                "date": "2023-10-19",
+                "title": "LSASS Process Memory Dump Creation Via Taskmgr.EXE",
+                "id": "69ca12af-119d-44ed-b50f-a47af0ebc364"
+            },
+            "rule_text": "title: LSASS Process Memory Dump Creation Via Taskmgr.EXE\nid: 69ca12af-119d-44ed-b50f-a47af0ebc364\nstatus: test\ndescription: Detects the creation of an \"lsass.dmp\" file by the taskmgr process. This\n  indicates a manual dumping of the LSASS.exe process memory using Windows Task Manager.\nauthor: Swachchhanda Shrawan Poudel\ndate: 2023-10-19\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/987e3ca988ae3cff4b9f6e388c139c05bf44bbb8/atomics/T1003.001/T1003.001.md#L1\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - :\\Windows\\system32\\taskmgr.exe\n    - :\\Windows\\SysWOW64\\taskmgr.exe\n    TargetFilename|contains|all:\n    - \\AppData\\Local\\Temp\\\n    - \\lsass\n    - .DMP\n  condition: selection\nfalsepositives:\n- Rare case of troubleshooting by an administrator or support that has to be investigated\n  regardless\nlevel: high\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_taskmgr_lsass_dump/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

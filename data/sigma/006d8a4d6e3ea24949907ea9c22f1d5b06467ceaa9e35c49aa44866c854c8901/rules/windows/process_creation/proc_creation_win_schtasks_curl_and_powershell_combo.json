@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_curl_and_powershell_combo.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-05",
+                "title": "Scheduled Task Creation with Curl and PowerShell Execution Combo",
+                "id": "1d174d38-8fda-4081-a9b6-56d9763c0cd8"
+            },
+            "rule_text": "title: Scheduled Task Creation with Curl and PowerShell Execution Combo\nid: 1d174d38-8fda-4081-a9b6-56d9763c0cd8\nstatus: experimental\ndescription: 'Detects the creation of a scheduled task using schtasks.exe, potentially\n  in combination with curl for downloading payloads and PowerShell for executing them.\n\n  This facilitates executing malicious payloads or connecting with C&C server persistently\n  without dropping the malware sample on the host.\n\n  '\nreferences:\n- https://tria.ge/241015-l98snsyeje/behavioral2\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-05\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.stealth\n- attack.t1053.005\n- attack.t1218\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|windash: ' /create '\n  selection_curl:\n    CommandLine|contains|all:\n    - 'curl '\n    - http\n    - -o\n  selection_powershell:\n    CommandLine|contains: powershell\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of schtasks for administrative purposes.\n- Automation scripts combining curl and PowerShell in controlled environments.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_script_with_upload_capabilities.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-07",
+                "title": "PowerShell Script With File Upload Capabilities",
+                "id": "d2e3f2f6-7e09-4bf2-bc5d-90186809e7fb"
+            },
+            "rule_text": "title: PowerShell Script With File Upload Capabilities\nid: d2e3f2f6-7e09-4bf2-bc5d-90186809e7fb\nstatus: test\ndescription: Detects PowerShell scripts leveraging the \"Invoke-WebRequest\" cmdlet\n  to send data via either \"PUT\" or \"POST\" method.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1020/T1020.md\n- https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html\n- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.4\nauthor: frack113\ndate: 2022-01-07\nmodified: 2025-07-18\ntags:\n- attack.exfiltration\n- attack.t1020\nlogsource:\n  product: windows\n  category: ps_script\n  definition: bade5735-5ab0-4aa7-a642-a11be0e40872\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains:\n    - Invoke-RestMethod\n    - Invoke-WebRequest\n    - 'irm '\n    - 'iwr '\n  selection_flag:\n    ScriptBlockText|contains:\n    - -Method \"POST\"\n    - -Method \"PUT\"\n    - -Method POST\n    - -Method PUT\n    - -Method 'POST'\n    - -Method 'PUT'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

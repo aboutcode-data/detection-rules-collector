@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/steelclover.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SteelClover_PowerHarbor_str",
+                "tags": [],
+                "description": "PowerHarbor in SteelClover",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "f4b3b3624b4cfdd20cb44ace9d7dad26037fa5462e03b17fccf8d5049e961353"
+            },
+            "rule_text": "rule SteelClover_PowerHarbor_str\n{\n\tmeta:\n\t\tdescription = \"PowerHarbor in SteelClover\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"f4b3b3624b4cfdd20cb44ace9d7dad26037fa5462e03b17fccf8d5049e961353\"\n\n\tstrings:\n\t\t$s1 = \"[string]$campaign_id,\" ascii\n\t\t$s2 = \"[string]$RSABotPrivateKey,\" ascii\n\t\t$s3 = \"[string]$RSAPanelPubKey,\" ascii\n\t\t$s4 = \"function Check-DiskDrive {\" ascii\n\t\t$s5 = \"function Check-DisplayConfiguration {\" ascii\n\t\t$s6 = \"function Check-VideoController {\" ascii\n\t\t$s7 = \"$is_vm = Is-VM\" ascii\n\t\t$s8 = \"function Is-VM {\" ascii\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SteelClover_PowerShell_str",
+                "tags": [],
+                "description": "PowerShell in SteelClover",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "05e6f7a4184c9688ccef4dd17ae8ce0fe788df1677c6ba754b37a895a1e430e9"
+            },
+            "rule_text": "rule SteelClover_PowerShell_str\n{\n\tmeta:\n\t\tdescription = \"PowerShell in SteelClover\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"05e6f7a4184c9688ccef4dd17ae8ce0fe788df1677c6ba754b37a895a1e430e9\"\n\n\tstrings:\n\t\t$a1 = \"function Add-Encryption\" ascii\n\t\t$a2 = \"function Remove-Encryption\" ascii\n\t\t$a3 = \"Remove-Encryption -FolderPath $env:APPDATA -Password\" ascii\n\t\t$b1 = \"function Install-GnuPg\" ascii\n\t\t$b2 = \"Install-GnuPG -DownloadFolderPath $env:APPDATA\" ascii\n\n\tcondition:\n\t\tall of ( $a* ) or all of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

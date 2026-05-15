@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/hunt_lsass_ntds_extension.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hunt_lsass_ntds_ext",
+                "tags": [],
+                "author": "SBousseaden",
+                "date": "09/10/2020",
+                "description": "hunting rule for necessary exports in a DLL that can be abused for persistence or alike by loading it into lsass via NTDS registry",
+                "reference": "https://blog.xpnsec.com/exploring-mimikatz-part-1/"
+            },
+            "rule_text": "import \"pe\"\n\nrule hunt_lsass_ntds_ext\n{\n\tmeta:\n\t\tauthor = \"SBousseaden\"\n\t\tdate = \"09/10/2020\"\n\t\tdescription = \"hunting rule for necessary exports in a DLL that can be abused for persistence or alike by loading it into lsass via NTDS registry\"\n\t\treference = \"https://blog.xpnsec.com/exploring-mimikatz-part-1/\"\n\n\tstrings:\n\t\t$s1 = \"%s\\\\debug\\\\%s.log\" wide\n\t\t$s2 = \"lsadb.pdb\"\n\t\t$s3 = \"CN=NTDS Settings\"\n\n\tcondition:\n\t\t(pe.exports ( \"InitializeLsaDbExtension\" ) or pe.exports ( \"InitializeSamDsExtension\" ) ) and not all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

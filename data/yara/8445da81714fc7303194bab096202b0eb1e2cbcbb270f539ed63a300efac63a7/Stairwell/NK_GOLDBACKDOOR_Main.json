@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Stairwell/NK_GOLDBACKDOOR_Main.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NK_GOLDBACKDOOR_Main",
+                "tags": [],
+                "author": "Silas Cutler",
+                "description": "Detection for Main component of GOLDBACKDOOR",
+                "reference": "https://stairwell.com/news/threat-research-the-ink-stained-trail-of-goldbackdoor/",
+                "version": "0.1"
+            },
+            "rule_text": "rule NK_GOLDBACKDOOR_Main\n{\n\tmeta:\n\t\tauthor = \"Silas Cutler\"\n\t\tdescription = \"Detection for Main component of GOLDBACKDOOR\"\n\t\treference = \"https://stairwell.com/news/threat-research-the-ink-stained-trail-of-goldbackdoor/\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$str1 = \"could not exec bash command.\" wide\n\t\t$str2 = \"%userprofile%\\\\AppData\" wide\n\t\t$str3 = \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.3112.113 Safari/537.36\" wide\n\t\t$str4 = \"tickount: %d\"\n\t\t$str5 = \"Service-0x\" wide\n\t\t$str6 = \"Main Returned\"\n\t\t$b64_1 = \"TwBuAGUARAByAHYAVQBwAGQAYQB0AGUAAAA=\"\n\t\t$b64_2 = \"aGFnZW50dHJheQ==\"\n\t\t$b64_3 = \"YXBwbGljYXRpb24vdm5kLmdvb2dsZS1hcHBzLmZvbGRlcg==\"\n\t\t$pdb = \"D:\\\\Development\\\\GOLD-BACKDOOR\\\\\"\n\n\tcondition:\n\t\t4 of them or ( $pdb and 1 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

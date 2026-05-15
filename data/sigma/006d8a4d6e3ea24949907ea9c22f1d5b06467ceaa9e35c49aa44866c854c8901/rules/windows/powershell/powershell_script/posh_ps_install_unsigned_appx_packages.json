@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_install_unsigned_appx_packages.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-31",
+                "title": "Unsigned AppX Installation Attempt Using Add-AppxPackage - PsScript",
+                "id": "975b2262-9a49-439d-92a6-0709cccdf0b2"
+            },
+            "rule_text": "title: Unsigned AppX Installation Attempt Using Add-AppxPackage - PsScript\nid: 975b2262-9a49-439d-92a6-0709cccdf0b2\nrelated:\n- id: 37651c2a-42cd-4a69-ae0d-22a4349aa04a\n  type: similar\n- id: 9a025188-6f2d-42f8-bb2f-d3a83d24a5af\n  type: similar\nstatus: test\ndescription: Detects usage of the \"Add-AppxPackage\" or it's alias \"Add-AppPackage\"\n  to install unsigned AppX packages\nreferences:\n- https://learn.microsoft.com/en-us/windows/msix/package/unsigned-package\n- https://twitter.com/WindowsDocs/status/1620078135080325122\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-31\ntags:\n- attack.persistence\n- attack.stealth\nlogsource:\n  product: windows\n  category: ps_script\n  definition: Script Block Logging must be enable\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains:\n    - 'Add-AppPackage '\n    - 'Add-AppxPackage '\n  selection_flag:\n    ScriptBlockText|contains: ' -AllowUnsigned'\n  condition: all of selection_*\nfalsepositives:\n- Installation of unsigned packages for testing purposes\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

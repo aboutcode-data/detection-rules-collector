@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Cozy-Bear/win_taskscheduler_apt_cozy_bear_graphical_proton_task_names.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "CISA",
+                "date": "2023-12-18",
+                "title": "Scheduled Tasks Names Used By SVR For GraphicalProton Backdoor - Task Scheduler",
+                "id": "2bfc1373-0220-4fbd-8b10-33ddafd2a142"
+            },
+            "rule_text": "title: Scheduled Tasks Names Used By SVR For GraphicalProton Backdoor - Task Scheduler\nid: 2bfc1373-0220-4fbd-8b10-33ddafd2a142\nrelated:\n- id: 8fa65166-f463-4fd2-ad4f-1436133c52e1\n  type: similar\nstatus: test\ndescription: Hunts for known SVR-specific scheduled task names\nauthor: CISA\nreferences:\n- https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-347a\ndate: 2023-12-18\ntags:\n- attack.persistence\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: taskscheduler\n  definition: 'Requirements: The \"Microsoft-Windows-TaskScheduler/Operational\" is\n    disabled by default and needs to be enabled in order for this detection to trigger'\ndetection:\n  selection:\n    EventID:\n    - 129\n    - 140\n    - 141\n    TaskName:\n    - \\defender\n    - \\Microsoft\\DefenderService\n    - \\Microsoft\\Windows\\Application Experience\\StartupAppTaskCheck\n    - \\Microsoft\\Windows\\Application Experience\\StartupAppTaskCkeck\n    - \\Microsoft\\Windows\\ATPUpd\n    - \\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Update\n    - \\Microsoft\\Windows\\DefenderUPDService\n    - \\Microsoft\\Windows\\IISUpdateService\n    - \\Microsoft\\Windows\\Speech\\SpeechModelInstallTask\n    - \\Microsoft\\Windows\\WiMSDFS\n    - \\Microsoft\\Windows\\Windows Defender\\Defender Update Service\n    - \\Microsoft\\Windows\\Windows Defender\\Service Update\n    - \\Microsoft\\Windows\\Windows Error Reporting\\CheckReporting\n    - \\Microsoft\\Windows\\Windows Error Reporting\\SubmitReporting\n    - \\Microsoft\\Windows\\Windows Filtering Platform\\BfeOnServiceStart\n    - \\Microsoft\\Windows\\WindowsDefenderService\n    - \\Microsoft\\Windows\\WindowsDefenderService2\n    - \\Microsoft\\Windows\\WindowsUpdate\\Scheduled AutoCheck\n    - \\Microsoft\\Windows\\WindowsUpdate\\Scheduled Check\n    - \\WindowUpdate\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

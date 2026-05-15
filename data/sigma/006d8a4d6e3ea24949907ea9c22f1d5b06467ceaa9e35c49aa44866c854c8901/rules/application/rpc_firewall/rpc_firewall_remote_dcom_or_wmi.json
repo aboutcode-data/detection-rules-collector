@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_remote_dcom_or_wmi.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "Remote DCOM/WMI Lateral Movement",
+                "id": "68050b10-e477-4377-a99b-3721b422d6ef"
+            },
+            "rule_text": "title: Remote DCOM/WMI Lateral Movement\nid: 68050b10-e477-4377-a99b-3721b422d6ef\nstatus: test\ndescription: Detects remote RPC calls that performs remote DCOM operations. These\n  could be abused for lateral movement via DCOM or WMI.\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-srvs/accf23b0-0f57-441c-9185-43041f1b0ee9\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.lateral-movement\n- attack.execution\n- attack.t1021.003\n- attack.t1047\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes with\n    \"audit:true action:block uuid:367abb81-9844-35f1-ad32-98f038001003'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid:\n    - 4d9f4ab8-7d1c-11cf-861e-0020af6e7c57\n    - 99fcfec4-5260-101b-bbcb-00aa0021347a\n    - 000001a0-0000-0000-c000-000000000046\n    - 00000131-0000-0000-c000-000000000046\n    - 00000143-0000-0000-c000-000000000046\n    - 00000000-0000-0000-c000-000000000046\n  condition: selection\nfalsepositives:\n- Some administrative tasks on remote host\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_etw_trace_evasion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron, Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community",
+                "date": "2019-03-22",
+                "title": "ETW Trace Evasion Activity",
+                "id": "a238b5d0-ce2d-4414-a676-7a531b3d13d6"
+            },
+            "rule_text": "title: ETW Trace Evasion Activity\nid: a238b5d0-ce2d-4414-a676-7a531b3d13d6\nstatus: test\ndescription: 'Detects command line activity that tries to clear or disable any ETW\n  trace log which could be a sign of logging evasion.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil\n- https://abuse.io/lockergoga.txt\n- https://medium.com/palantir/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63\nauthor: '@neu5ron, Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community'\ndate: 2019-03-22\nmodified: 2022-06-28\ntags:\n- attack.stealth\n- attack.defense-impairment\n- attack.t1070\n- attack.t1685\n- car.2016-04-002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_clear_1:\n    CommandLine|contains|all:\n    - cl\n    - /Trace\n  selection_clear_2:\n    CommandLine|contains|all:\n    - clear-log\n    - /Trace\n  selection_disable_1:\n    CommandLine|contains|all:\n    - sl\n    - /e:false\n  selection_disable_2:\n    CommandLine|contains|all:\n    - set-log\n    - /e:false\n  selection_disable_3:\n    CommandLine|contains|all:\n    - logman\n    - update\n    - trace\n    - --p\n    - -ets\n  selection_pwsh_remove:\n    CommandLine|contains: Remove-EtwTraceProvider\n  selection_pwsh_set:\n    CommandLine|contains|all:\n    - Set-EtwTraceProvider\n    - '0x11'\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

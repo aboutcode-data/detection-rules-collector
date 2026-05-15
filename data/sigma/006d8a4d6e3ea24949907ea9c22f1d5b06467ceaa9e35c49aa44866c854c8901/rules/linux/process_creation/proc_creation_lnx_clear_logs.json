@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_clear_logs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Ömer Günal, oscd.community",
+                "date": "2020-10-07",
+                "title": "Linux Logs Clearing Attempts",
+                "id": "80915f59-9b56-4616-9de0-fd0dea6c12fe"
+            },
+            "rule_text": "title: Linux Logs Clearing Attempts\nid: 80915f59-9b56-4616-9de0-fd0dea6c12fe\nstatus: stable\ndescription: 'Detects logs clearing attempts on Linux systems via utilities such as\n  ''rm'', ''rmdir'', ''shred'', and ''unlink'' targeting log files and directories.\n\n  Adversaries often try to clear logs to cover their tracks after performing malicious\n  activities.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.002/T1070.002.md\nauthor: \"\\xD6mer G\\xFCnal, oscd.community\"\ndate: 2020-10-07\nmodified: 2026-03-18\ntags:\n- attack.defense-impairment\n- attack.t1685.006\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith:\n    - /rm\n    - /rmdir\n    - /shred\n    - /unlink\n    CommandLine|contains:\n    - /var/log\n    - /var/spool/mail\n  filter_main_legit_systat:\n    Image|endswith: /rm\n    CommandLine|startswith: rm -f /var/log/sysstat/\n  filter_main_dmseg:\n    Image|endswith: /rm\n    CommandLine|startswith: rm -f -- /var/log//dmesg\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/PWC/MSSUP.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MSSUP",
+                "tags": [
+                    "AST"
+                ],
+                "author": "PwC Cyber Threat Operations",
+                "date": "2014-09-11",
+                "hash": "8083ee212588a05d72561eebe83c57bb",
+                "reference": "http://pwc.blogs.com/cyber_security_updates/2014/09/malware-microevolution.html"
+            },
+            "rule_text": "rule MSSUP : AST\n{\n\tmeta:\n\t\tauthor = \"PwC Cyber Threat Operations\"\n\t\tdate = \"2014-09-11\"\n\t\thash = \"8083ee212588a05d72561eebe83c57bb\"\n\t\treference = \"http://pwc.blogs.com/cyber_security_updates/2014/09/malware-microevolution.html\"\n\n\tstrings:\n\t\t$debug1 = \"d:\\\\Programming\\\\CSharp\\\\BlackBerry\\\\BlackBerry\\\\obj\\\\Debug\\\\MSSUP.pdb\" nocase\n\t\t$debug2 = \"D:\\\\Programming\\\\CSharp\\\\BlackBerry\\\\UploadDownload\\\\bin\\\\x86\\\\Debug\\\\UploadDownload.pdb\" nocase\n\t\t$debug3 = \"Unexpected error has been occurred in {0}, the process must restart for some reason, if it's first time you see this message restart the {0}, if problem was standing contacts the support team .\"\n\t\t$fileheader1 = \"MSSUP\" ascii wide\n\t\t$fileheader2 = \"1.0.0.0\" ascii wide\n\t\t$fileheader3 = \"2014\" ascii wide\n\t\t$configload1 = \"sqlite3.dll\"\n\t\t$configload2 = \"URLExtractRegex\"\n\t\t$configload3 = \"HTTPHeaderName\"\n\t\t$configload4 = \"HTTPHeaderType\"\n\t\t$configload5 = \"MsupPath\"\n\n\tcondition:\n\t\t( all of ( $fileheader* ) or 3 of ( $configload* ) ) and filesize < 200KB or any of ( $debug* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

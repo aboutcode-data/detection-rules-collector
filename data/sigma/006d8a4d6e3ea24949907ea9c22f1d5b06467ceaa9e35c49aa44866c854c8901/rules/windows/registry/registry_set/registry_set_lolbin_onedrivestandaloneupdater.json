@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_lolbin_onedrivestandaloneupdater.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-05-28",
+                "title": "Lolbas OneDriveStandaloneUpdater.exe Proxy Download",
+                "id": "3aff0be0-7802-4a7e-a4fa-c60c74bc5e1d"
+            },
+            "rule_text": "title: Lolbas OneDriveStandaloneUpdater.exe Proxy Download\nid: 3aff0be0-7802-4a7e-a4fa-c60c74bc5e1d\nstatus: test\ndescription: 'Detects setting a custom URL for OneDriveStandaloneUpdater.exe to download\n  a file from the Internet without executing any\n\n  anomalous executables with suspicious arguments. The downloaded file will be in\n  C:\\Users\\redacted\\AppData\\Local\\Microsoft\\OneDrive\\StandaloneUpdaterreSignInSettingsConfig.json\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/OneDriveStandaloneUpdater/\nauthor: frack113\ndate: 2022-05-28\nmodified: 2023-08-17\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\OneDrive\\UpdateOfficeConfig\\UpdateRingSettingURLFromOC\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

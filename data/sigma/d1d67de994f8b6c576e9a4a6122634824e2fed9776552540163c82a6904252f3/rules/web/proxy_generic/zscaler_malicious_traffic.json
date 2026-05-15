@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/zscaler_malicious_traffic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2024-01-05",
+                "title": "Zscaler IPS Malicious Traffic",
+                "id": "ee917445-1684-497a-a762-bc54a4b3f147"
+            },
+            "rule_text": "title: Zscaler IPS Malicious Traffic\nid: ee917445-1684-497a-a762-bc54a4b3f147\ndescription: Zscaler IPS malicious proxy traffic observed\nstatus: experimental\nauthor: NTT Security - Axel Olsson\ndate: '2024-01-05'\nmodified: '2024-01-05'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    vendor: Zscaler\n    signature|contains:\n    - .Trojan.\n    - .Backdoor.\n    - .Ransom.\n    - .Hacktool.\n    url|startswith: http\n    cs-referer: ''\n  filter:\n  - signature|startswith:\n    - Win32.Trojan.Gen.\n    - JS.\n  - signature:\n    - Win32.Trojan.Tiggre!rfn.IZ\n    - Win32.Trojan.Occamy.IZ\n    - Win32.Trojan.Floxif.IZ\n    - Win32.Trojan.Agent.LZ\n    - Win32.Hacktool.Crack.IZ\n    - Android.Trojan.Axent\n    - Win32.Ransom.Cryptolite\n    - Win32.Trojan.Emotet!ml.IZ\n    - Win32.Ransom.WannaCrypt\n    - Win32.Trojan.HttpBrowser\n  condition: selection and not filter\nfalsepositives:\n- Faulty signatures triggering on legitimate traffic\nlevel: medium\ntags:\n- attack.initial_access\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

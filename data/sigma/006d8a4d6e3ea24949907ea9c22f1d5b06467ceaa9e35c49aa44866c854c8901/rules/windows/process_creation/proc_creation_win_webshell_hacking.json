@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_webshell_hacking.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-17",
+                "title": "Webshell Hacking Activity Patterns",
+                "id": "4ebc877f-4612-45cb-b3a5-8e3834db36c9"
+            },
+            "rule_text": "title: Webshell Hacking Activity Patterns\nid: 4ebc877f-4612-45cb-b3a5-8e3834db36c9\nstatus: test\ndescription: 'Detects certain parent child patterns found in cases in which a web\n  shell is used to perform certain credential dumping or exfiltration activities on\n  a compromised system\n\n  '\nreferences:\n- https://youtu.be/7aemGhaE9ds?t=641\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-17\nmodified: 2023-11-09\ntags:\n- attack.persistence\n- attack.discovery\n- attack.t1505.003\n- attack.t1018\n- attack.t1033\n- attack.t1087\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_webserver_image:\n    ParentImage|endswith:\n    - \\caddy.exe\n    - \\httpd.exe\n    - \\nginx.exe\n    - \\php-cgi.exe\n    - \\w3wp.exe\n    - \\ws_tomcatservice.exe\n  selection_webserver_characteristics_tomcat1:\n    ParentImage|endswith:\n    - \\java.exe\n    - \\javaw.exe\n    ParentImage|contains:\n    - -tomcat-\n    - \\tomcat\n  selection_webserver_characteristics_tomcat2:\n    ParentImage|endswith:\n    - \\java.exe\n    - \\javaw.exe\n    CommandLine|contains:\n    - catalina.jar\n    - CATALINA_HOME\n  selection_child_1:\n    CommandLine|contains|all:\n    - rundll32\n    - comsvcs\n  selection_child_2:\n    CommandLine|contains|all:\n    - ' -hp'\n    - ' a '\n    - ' -m'\n  selection_child_3:\n    CommandLine|contains|all:\n    - net\n    - ' user '\n    - ' /add'\n  selection_child_4:\n    CommandLine|contains|all:\n    - net\n    - ' localgroup '\n    - ' administrators '\n    - /add\n  selection_child_5:\n    Image|endswith:\n    - \\ntdsutil.exe\n    - \\ldifde.exe\n    - \\adfind.exe\n    - \\procdump.exe\n    - \\Nanodump.exe\n    - \\vssadmin.exe\n    - \\fsutil.exe\n  selection_child_6:\n    CommandLine|contains:\n    - ' -decode '\n    - ' -NoP '\n    - ' -W Hidden '\n    - ' /decode '\n    - ' /ticket:'\n    - ' sekurlsa'\n    - .dmp full\n    - .downloadfile(\n    - .downloadstring(\n    - FromBase64String\n    - process call create\n    - 'reg save '\n    - whoami /priv\n  condition: 1 of selection_webserver_* and 1 of selection_child_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

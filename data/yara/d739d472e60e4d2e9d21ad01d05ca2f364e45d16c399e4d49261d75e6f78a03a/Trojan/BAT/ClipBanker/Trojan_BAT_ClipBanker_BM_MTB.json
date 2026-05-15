@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/ClipBanker/Trojan_BAT_ClipBanker_BM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_ClipBanker_BM_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/ClipBanker.BM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_ClipBanker_BM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/ClipBanker.BM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {00 06 25 26 0a 06 28 ?? ?? 00 06 25 26 03 50 28 ?? ?? 00 06 25 26 28 ?? ?? 00 06 25 26 0b 28 }\n\t\t$a_03_1 = {0c 08 07 28 ?? ?? 00 06 08 28 ?? 00 00 06 25 26 28 ?? ?? 00 06 08 28 }\n\t\t$a_03_2 = {00 00 06 25 26 02 50 8e 69 28 ?? ?? 00 06 25 26 2a }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_03_2 & 1 ) * 2 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

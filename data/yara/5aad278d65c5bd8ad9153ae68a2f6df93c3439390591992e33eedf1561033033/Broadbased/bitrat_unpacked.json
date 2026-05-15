@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/bitrat_unpacked.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "bitrat_unpacked",
+                "tags": [],
+                "author": "jeFF0Falltrades",
+                "hash": "122cd4f33d1e1b42ce0d959bc35e5d633b029f4869c5510624342b5cc5875c98",
+                "description": "Experimental rule to detect unpacked BitRat payloads on disk or in memory, looking for a combination of strings and decryption/decoding patterns",
+                "reference": "https://krabsonsecurity.com/2020/08/22/bitrat-the-latest-in-copy-pasted-malware-by-incompetent-developers/"
+            },
+            "rule_text": "rule bitrat_unpacked\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\t\thash = \"122cd4f33d1e1b42ce0d959bc35e5d633b029f4869c5510624342b5cc5875c98\"\n\t\tdescription = \"Experimental rule to detect unpacked BitRat payloads on disk or in memory, looking for a combination of strings and decryption/decoding patterns\"\n\t\treference = \"https://krabsonsecurity.com/2020/08/22/bitrat-the-latest-in-copy-pasted-malware-by-incompetent-developers/\"\n\n\tstrings:\n\t\t$str_0 = \"string too long\" wide ascii\n\t\t$str_1 = \"invalid string position\" wide ascii\n\t\t$hex_0 = { 6b ?? 25 99 f7 ?? 8d [2] 99 f7 }\n\t\t$hex_1 = { 0f ba 25 [3] 00 01 0f 82 [4] 0f ba 25 [3] 00 00 }\n\t\t$hex_2 = { 66 0f 6f ?? 66 0f 6f [2] 66 0f 6f [2] 66 0f 6f [2] 66 0f 7f ?? 66 0f 7f [2] 66 0f 7f [2]  66 0f 7f  }\n\t\t$hex_3 = { 8b [2] d3 ?? 33 05 }\n\t\t$hex_4 = { 83 [2] 00 c7 05 [8] c7 05 [8] c7 05 [8] 83 }\n\n\tcondition:\n\t\t6 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

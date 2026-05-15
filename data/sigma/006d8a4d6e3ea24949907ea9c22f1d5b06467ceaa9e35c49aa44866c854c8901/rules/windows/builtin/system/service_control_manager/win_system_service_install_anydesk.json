@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_anydesk.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2022-08-11",
+                "title": "Anydesk Remote Access Software Service Installation",
+                "id": "530a6faa-ff3d-4022-b315-50828e77eef5"
+            },
+            "rule_text": "title: Anydesk Remote Access Software Service Installation\nid: 530a6faa-ff3d-4022-b315-50828e77eef5\nstatus: test\ndescription: Detects the installation of the anydesk software service. Which could\n  be an indication of anydesk abuse if you the software isn't already used.\nreferences:\n- https://thedfirreport.com/2022/08/08/bumblebee-roasts-its-way-to-domain-admin/\n- https://thedfirreport.com/2025/02/24/confluence-exploit-leads-to-lockbit-ransomware/\nauthor: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron\n  Systems)\ndate: 2022-08-11\nmodified: 2025-02-24\ntags:\n- attack.persistence\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_provider:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ServiceName|contains|all:\n    - AnyDesk\n    - Service\n  - ImagePath|contains: AnyDesk\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage of the anydesk tool\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

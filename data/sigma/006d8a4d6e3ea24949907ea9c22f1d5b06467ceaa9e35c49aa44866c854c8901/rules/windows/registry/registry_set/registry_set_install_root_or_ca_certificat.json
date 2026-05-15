@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_install_root_or_ca_certificat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-04-04",
+                "title": "New Root or CA or AuthRoot Certificate to Store",
+                "id": "d223b46b-5621-4037-88fe-fda32eead684"
+            },
+            "rule_text": "title: New Root or CA or AuthRoot Certificate to Store\nid: d223b46b-5621-4037-88fe-fda32eead684\nstatus: test\ndescription: Detects the addition of new root, CA or AuthRoot certificates to the\n  Windows registry\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.004/T1553.004.md#atomic-test-6---add-root-certificate-to-currentuser-certificate-store\n- https://posts.specterops.io/code-signing-certificate-cloning-attacks-and-defenses-6f98657fc6ec\nauthor: frack113\ndate: 2022-04-04\nmodified: 2023-08-17\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\SOFTWARE\\Microsoft\\SystemCertificates\\Root\\Certificates\\\n    - \\SOFTWARE\\Policies\\Microsoft\\SystemCertificates\\Root\\Certificates\\\n    - \\SOFTWARE\\Microsoft\\EnterpriseCertificates\\Root\\Certificates\\\n    - \\SOFTWARE\\Microsoft\\SystemCertificates\\CA\\Certificates\\\n    - \\SOFTWARE\\Policies\\Microsoft\\SystemCertificates\\CA\\Certificates\\\n    - \\SOFTWARE\\Microsoft\\EnterpriseCertificates\\CA\\Certificates\\\n    - \\SOFTWARE\\Microsoft\\SystemCertificates\\AuthRoot\\Certificates\\\n    - \\SOFTWARE\\Policies\\Microsoft\\SystemCertificates\\AuthRoot\\Certificates\\\n    - \\SOFTWARE\\Microsoft\\EnterpriseCertificates\\AuthRoot\\Certificates\\\n    TargetObject|endswith: \\Blob\n    Details: Binary Data\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

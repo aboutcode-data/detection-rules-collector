@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_network_p2s_vpn_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-08",
+                "title": "Azure Point-to-site VPN Modified or Deleted",
+                "id": "d9557b75-267b-4b43-922f-a775e2d1f792"
+            },
+            "rule_text": "title: Azure Point-to-site VPN Modified or Deleted\nid: d9557b75-267b-4b43-922f-a775e2d1f792\nstatus: test\ndescription: Identifies when a Point-to-site VPN is Modified or Deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer @austinsonger\ndate: 2021-08-08\nmodified: 2022-08-23\ntags:\n- attack.impact\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.NETWORK/P2SVPNGATEWAYS/WRITE\n    - MICROSOFT.NETWORK/P2SVPNGATEWAYS/DELETE\n    - MICROSOFT.NETWORK/P2SVPNGATEWAYS/RESET/ACTION\n    - MICROSOFT.NETWORK/P2SVPNGATEWAYS/GENERATEVPNPROFILE/ACTION\n    - MICROSOFT.NETWORK/P2SVPNGATEWAYS/DISCONNECTP2SVPNCONNECTIONS/ACTION\n    - MICROSOFT.NETWORK/P2SVPNGATEWAYS/PROVIDERS/MICROSOFT.INSIGHTS/DIAGNOSTICSETTINGS/WRITE\n  condition: selection\nfalsepositives:\n- Point-to-site VPN being modified or deleted may be performed by a system administrator.\n  Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Point-to-site VPN modified or deleted from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

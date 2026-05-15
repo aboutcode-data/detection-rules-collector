@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_add/registry_add_persistence_disk_cleanup_handler_entry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Potential Persistence Via Disk Cleanup Handler - Registry",
+                "id": "d4f4e0be-cf12-439f-9e25-4e2cdcf7df5a"
+            },
+            "rule_text": "title: Potential Persistence Via Disk Cleanup Handler - Registry\nid: d4f4e0be-cf12-439f-9e25-4e2cdcf7df5a\nstatus: test\ndescription: \"Detects when an attacker modifies values of the Disk Cleanup Handler\\\n  \\ in the registry to achieve persistence.\\nThe disk cleanup manager is part of the\\\n  \\ operating system. It displays the dialog box [\\u2026]\\nThe user has the option\\\n  \\ of enabling or disabling individual handlers by selecting or clearing their check\\\n  \\ box in the disk cleanup manager's UI.\\nAlthough Windows comes with a number of\\\n  \\ disk cleanup handlers, they aren't designed to handle files produced by other\\\n  \\ applications.\\nInstead, the disk cleanup manager is designed to be flexible and\\\n  \\ extensible by enabling any developer to implement and register their own disk\\\n  \\ cleanup handler.\\nAny developer can extend the available disk cleanup services\\\n  \\ by implementing and registering a disk cleanup handler.\\n\"\nreferences:\n- https://persistence-info.github.io/Data/diskcleanuphandler.html\n- https://www.hexacorn.com/blog/2018/09/02/beyond-good-ol-run-key-part-86/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-02-07\ntags:\n- attack.persistence\nlogsource:\n  product: windows\n  category: registry_add\ndetection:\n  selection:\n    EventType: CreateKey\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VolumeCaches\\\n  filter_main_default_keys:\n    TargetObject|endswith:\n    - \\Active Setup Temp Folders\n    - \\BranchCache\n    - \\Content Indexer Cleaner\n    - \\D3D Shader Cache\n    - \\Delivery Optimization Files\n    - \\Device Driver Packages\n    - \\Diagnostic Data Viewer database files\n    - \\Downloaded Program Files\n    - \\DownloadsFolder\n    - \\Feedback Hub Archive log files\n    - \\Internet Cache Files\n    - \\Language Pack\n    - \\Microsoft Office Temp Files\n    - \\Offline Pages Files\n    - \\Old ChkDsk Files\n    - \\Previous Installations\n    - \\Recycle Bin\n    - \\RetailDemo Offline Content\n    - \\Setup Log Files\n    - \\System error memory dump files\n    - \\System error minidump files\n    - \\Temporary Files\n    - \\Temporary Setup Files\n    - \\Temporary Sync Files\n    - \\Thumbnail Cache\n    - \\Update Cleanup\n    - \\Upgrade Discarded Files\n    - \\User file versions\n    - \\Windows Defender\n    - \\Windows Error Reporting Files\n    - \\Windows ESD installation files\n    - \\Windows Upgrade Log Files\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate new entry added by windows\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

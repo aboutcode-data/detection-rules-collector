@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RenameSystemUtilities/file_creation_exe_in_temp_directories_4663.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/11",
+                "title": "File Creation of Executables in Temp Folders (Event 4663)",
+                "id": "069aacee-0176-4bdd-8c8b-09e958b88b70"
+            },
+            "rule_text": "title: File Creation of Executables in Temp Folders (Event 4663)\nid: 069aacee-0176-4bdd-8c8b-09e958b88b70\nstatus: experimental\ndescription: Detects creation of files potentially matching attempts to copy executables\n  to temporary directories to hide usage.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1036.003/T1036.003.md#atomic-test-1---masquerading-as-windows-lsass-process\nauthor: Micah Babinski\ndate: 2022/12/11\ntags:\n- attack.defense_evasion\n- attack.t1036.003\n- attack.t1036\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4663\n    ObjectType: File\n    AccessList: '%%4417'\n    ObjectName|endswith: .exe\n    ObjectName|contains:\n    - temp\n    - tmp\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

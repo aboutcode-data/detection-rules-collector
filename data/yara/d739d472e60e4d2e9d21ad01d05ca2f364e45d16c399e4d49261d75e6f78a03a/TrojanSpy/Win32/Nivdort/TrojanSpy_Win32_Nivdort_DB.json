@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Nivdort/TrojanSpy_Win32_Nivdort_DB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Nivdort_DB",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Nivdort.DB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 07 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Nivdort_DB\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Nivdort.DB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 c4 0c 68 90 90 5f 01 00 ff 15 ?? ?? 44 00 }\n\t\t$a_03_1 = {00 68 05 0d 00 00 ff 15 ?? ?? 44 00 }\n\t\t$a_03_2 = {44 00 68 e8 03 00 00 ff 15 ?? ?? 44 00 (0f b7 05|a1) ?? ?? 90 04 01 02 44 45 00 }\n\t\t$a_03_3 = {00 68 d0 07 00 00 ff 15 ?? ?? 44 00 }\n\t\t$a_03_4 = {68 50 c3 00 00 ff 15 ?? ?? 44 00 (c7 05|b8) }\n\t\t$a_03_5 = {68 00 50 00 00 8d 85 f8 af ff ff 50 57 ff 15 ?? ?? 44 00 }\n\t\t$a_03_6 = {68 10 27 00 00 [0-10] ff 15 ?? ?? 44 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 1 + ( #a_03_6 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

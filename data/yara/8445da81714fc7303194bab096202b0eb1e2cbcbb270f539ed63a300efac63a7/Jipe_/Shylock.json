@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Jipe_/Shylock.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "shylock",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Shylock Banker",
+                "date": "2013-12-12",
+                "version": "1.0",
+                "ref1": "http://iocbucket.com/iocs/1b4660d57928df5ca843c21df0b2adb117026cba",
+                "ref2": "http://www.trusteer.com/blog/merchant-fraud-returns-%E2%80%93-shylock-polymorphic-financial-malware-infections-rise",
+                "ref3": "https://www.csis.dk/en/csis/blog/3811/"
+            },
+            "rule_text": "rule shylock : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Shylock Banker\"\n\t\tdate = \"2013-12-12\"\n\t\tversion = \"1.0\"\n\t\tref1 = \"http://iocbucket.com/iocs/1b4660d57928df5ca843c21df0b2adb117026cba\"\n\t\tref2 = \"http://www.trusteer.com/blog/merchant-fraud-returns-%E2%80%93-shylock-polymorphic-financial-malware-infections-rise\"\n\t\tref3 = \"https://www.csis.dk/en/csis/blog/3811/\"\n\n\tstrings:\n\t\t$process1 = \"MASTER\"\n\t\t$process2 = \"_SHUTDOWN\"\n\t\t$process3 = \"EVT_VNC\"\n\t\t$process4 = \"EVT_BACK\"\n\t\t$process5 = \"EVT_VNC\"\n\t\t$process6 = \"IE_Hook::GetRequestInfo\"\n\t\t$process7 = \"FF_Hook::getRequestInfo\"\n\t\t$process8 = \"EX_Hook::CreateProcess\"\n\t\t$process9 = \"hijackdll.dll\"\n\t\t$process10 = \"MTX_\"\n\t\t$process11 = \"FF::PR_WriteHook entry\"\n\t\t$process12 = \"FF::PR_WriteHook exit\"\n\t\t$process13 = \"HijackProcessAttach::*** MASTER *** MASTER *** MASTER *** %s PID=%u\"\n\t\t$process14 = \"HijackProcessAttach::entry\"\n\t\t$process15 = \"FF::BEFORE INJECT\"\n\t\t$process16 = \"FF::AFTER INJECT\"\n\t\t$process17 = \"IE::AFTER INJECT\"\n\t\t$process18 = \"IE::BEFORE INJECT\"\n\t\t$process19 = \"*** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** VNC *** %s\"\n\t\t$process20 = \"*** LOG INJECTS *** %s\"\n\t\t$process21 = \"*** inject to process %s not allowed\"\n\t\t$process22 = \"*** BackSocks *** BackSocks *** BackSocks *** BackSocks *** BackSocks *** BackSocks *** BackSocks *** %s\"\n\t\t$process23 = \".?AVFF_Hook@@\"\n\t\t$process24 = \".?AVIE_Hook@@\"\n\t\t$process25 = \"Inject::InjectDllFromMemory\"\n\t\t$process26 = \"BadSocks.dll\"\n\t\t$domain1 = \"extensadv.cc\"\n\t\t$domain2 = \"topbeat.cc\"\n\t\t$domain3 = \"brainsphere.cc\"\n\t\t$domain4 = \"commonworldme.cc\"\n\t\t$domain5 = \"gigacat.cc\"\n\t\t$domain6 = \"nw-serv.cc\"\n\t\t$domain7 = \"paragua-analyst.cc\"\n\n\tcondition:\n\t\t3 of ( $process* ) or any of ( $domain* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

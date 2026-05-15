@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/machOdownloader.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_unknown_machOdownloader",
+                "tags": [],
+                "description": "Mach-O malware",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "3266e99f14079b55e428193d5b23aa60862fe784ac8b767c5a1d49dfe80afeeb "
+            },
+            "rule_text": "rule malware_unknown_machOdownloader\n{\n\tmeta:\n\t\tdescription = \"Mach-O malware\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"3266e99f14079b55e428193d5b23aa60862fe784ac8b767c5a1d49dfe80afeeb \"\n\n\tstrings:\n\t\t$str1 = \"DiagPeersHelper\" ascii\n\t\t$str2 = \"DiagnosticsPeer\" ascii\n\t\t$str3 = \"ticsPeer/\" ascii\n\t\t$func0 = { 48 B9 3F 72 65 73 70 6F 6E 73 }\n\t\t$func1 = { 48 B8 74 61 72 20 7A 78 76 66 }\n\t\t$func2 = { E8 [4] C7 84 05 [4] 27 20 2D 43 C7 84 05 [4] 43 20 27 00 48 89 DF 4C 89 E6 E8 33 04 00 00 }\n\n\tcondition:\n\t\t( uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xcefaedfe or uint32( 0 ) == 0xfeedfacf or uint32( 0 ) == 0xcffaedfe or uint32( 0 ) == 0xcafebabe or uint32( 0 ) == 0xbebafeca or uint32( 0 ) == 0xcafebabf or uint32( 0 ) == 0xbfbafeca ) and ( filesize < 10MB ) and ( ( 2 of ( $str* ) ) or ( 2 of ( $func* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

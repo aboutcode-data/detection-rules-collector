@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_smb_converted_win_lm_namedpipe.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden, @neu5ron, Tim Shelton",
+                "date": "2020-04-02",
+                "title": "First Time Seen Remote Named Pipe - Zeek",
+                "id": "021310d9-30a6-480a-84b7-eaa69aeb92bb"
+            },
+            "rule_text": "title: First Time Seen Remote Named Pipe - Zeek\nid: 021310d9-30a6-480a-84b7-eaa69aeb92bb\nrelated:\n- id: 52d8b0c6-53d6-439a-9e41-52ad442ad9ad\n  type: derived\nstatus: test\ndescription: This detection excludes known namped pipes accessible remotely and notify\n  on newly observed ones, may help to detect lateral movement and remote exec using\n  named pipes\nreferences:\n- https://twitter.com/menasec1/status/1104489274387451904\nauthor: Samir Bousseaden, @neu5ron, Tim Shelton\ndate: 2020-04-02\nmodified: 2022-12-27\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  product: zeek\n  service: smb_files\ndetection:\n  selection:\n    path: \\\\\\\\\\*\\\\IPC$\n  filter_keywords:\n  - samr\n  - lsarpc\n  - winreg\n  - netlogon\n  - srvsvc\n  - protected_storage\n  - wkssvc\n  - browser\n  - netdfs\n  - svcctl\n  - spoolss\n  - ntsvcs\n  - LSM_API_service\n  - HydraLsPipe\n  - TermSrv_API_service\n  - MsFteWds\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Update the excluded named pipe to filter out any newly observed legit named pipe\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

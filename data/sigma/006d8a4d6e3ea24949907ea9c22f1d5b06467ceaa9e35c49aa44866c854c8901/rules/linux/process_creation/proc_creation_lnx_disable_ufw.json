@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_disable_ufw.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-01-18",
+                "title": "Ufw Force Stop Using Ufw-Init",
+                "id": "84c9e83c-599a-458a-a0cb-0ecce44e807a"
+            },
+            "rule_text": "title: Ufw Force Stop Using Ufw-Init\nid: 84c9e83c-599a-458a-a0cb-0ecce44e807a\nstatus: test\ndescription: Detects attempts to force stop the ufw using ufw-init\nreferences:\n- https://blogs.blackberry.com/\n- https://twitter.com/Joseliyo_Jstnk/status/1620131033474822144\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-01-18\ntags:\n- attack.defense-impairment\n- attack.t1686\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_init:\n    CommandLine|contains|all:\n    - -ufw-init\n    - force-stop\n  selection_ufw:\n    CommandLine|contains|all:\n    - ufw\n    - disable\n  condition: 1 of selection_*\nfalsepositives:\n- Network administrators\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

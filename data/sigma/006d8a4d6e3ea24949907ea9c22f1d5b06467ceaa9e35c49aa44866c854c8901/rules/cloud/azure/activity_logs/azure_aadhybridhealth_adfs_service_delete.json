@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_aadhybridhealth_adfs_service_delete.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC",
+                "date": "2021-08-26",
+                "title": "Azure Active Directory Hybrid Health AD FS Service Delete",
+                "id": "48739819-8230-4ee3-a8ea-e0289d1fb0ff"
+            },
+            "rule_text": "title: Azure Active Directory Hybrid Health AD FS Service Delete\nid: 48739819-8230-4ee3-a8ea-e0289d1fb0ff\nstatus: test\ndescription: 'This detection uses azureactivity logs (Administrative category) to\n  identify the deletion of an Azure AD Hybrid health AD FS service instance in a tenant.\n\n  A threat actor can create a new AD Health ADFS service and create a fake server\n  to spoof AD FS signing logs.\n\n  The health AD FS service can then be deleted after it is not longer needed via HTTP\n  requests to Azure.\n\n  '\nreferences:\n- https://o365blog.com/post/hybridhealthagent/\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC\ndate: 2021-08-26\nmodified: 2023-10-11\ntags:\n- attack.defense-impairment\n- attack.t1578.003\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    CategoryValue: Administrative\n    ResourceProviderValue: Microsoft.ADHybridHealthService\n    ResourceId|contains: AdFederationService\n    OperationNameValue: Microsoft.ADHybridHealthService/services/delete\n  condition: selection\nfalsepositives:\n- Legitimate AAD Health AD FS service instances being deleted in a tenant\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

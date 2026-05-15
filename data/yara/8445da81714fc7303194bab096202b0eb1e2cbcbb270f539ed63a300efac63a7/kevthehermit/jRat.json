@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kevthehermit/jRat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "jRat",
+                "tags": [],
+                "author": " Kevin Breen <kevin@techanarchy.net>",
+                "date": "2014/04",
+                "ref": "http://malwareconfig.com/stats/jRat",
+                "maltype": "Remote Access Trojan",
+                "filetype": "Java"
+            },
+            "rule_text": "rule jRat\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tdate = \"2014/04\"\n\t\tref = \"http://malwareconfig.com/stats/jRat\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"Java\"\n\n\tstrings:\n\t\t$meta = \"META-INF\"\n\t\t$key = \"key.dat\"\n\t\t$conf = \"config.dat\"\n\t\t$jra1 = \"enc.dat\"\n\t\t$jra2 = \"a.class\"\n\t\t$jra3 = \"b.class\"\n\t\t$jra4 = \"c.class\"\n\t\t$reClass1 = /[a-z]\\.class/\n\t\t$reClass2 = /[a-z][a-f]\\.class/\n\n\tcondition:\n\t\t($meta and $key and $conf and #reClass1 > 10 and #reClass2 > 10 ) or ( $meta and $key and all of ( $jra* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

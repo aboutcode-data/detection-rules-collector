@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_scrcons_wmi_scripteventconsumer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-09-02",
+                "title": "WMI ActiveScriptEventConsumers Activity Via Scrcons.EXE DLL Load",
+                "id": "b439f47d-ef52-4b29-9a2f-57d8a96cb6b8"
+            },
+            "rule_text": "title: WMI ActiveScriptEventConsumers Activity Via Scrcons.EXE DLL Load\nid: b439f47d-ef52-4b29-9a2f-57d8a96cb6b8\nstatus: test\ndescription: Detects signs of the WMI script host process \"scrcons.exe\" loading scripting\n  DLLs which could indicates WMI ActiveScriptEventConsumers EventConsumers activity.\nreferences:\n- https://twitter.com/HunterPlaybook/status/1301207718355759107\n- https://www.mdsec.co.uk/2020/09/i-like-to-move-it-windows-lateral-movement-part-1-wmi-event-subscription/\n- https://threathunterplaybook.com/hunts/windows/200902-RemoteWMIActiveScriptEventConsumers/notebook.html\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-09-02\nmodified: 2023-02-22\ntags:\n- attack.lateral-movement\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.003\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\scrcons.exe\n    ImageLoaded|endswith:\n    - \\vbscript.dll\n    - \\wbemdisp.dll\n    - \\wshom.ocx\n    - \\scrrun.dll\n  condition: selection\nfalsepositives:\n- Legitimate event consumers\n- Dell computers on some versions register an event consumer that is known to cause\n  false positives when brightness is changed by the corresponding keyboard button\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Mikey/Trojan_Win64_Mikey_BAF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Mikey_BAF_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Mikey.BAF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Mikey_BAF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Mikey.BAF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f0 01 00 00 f0 2f 00 00 36 01 }\n\t\t$a_01_1 = {2e 72 73 72 63 00 00 00 00 20 00 00 00 e0 31 00 00 12 }\n\t\t$a_01_2 = {d0 29 00 00 00 32 00 00 fc 02 }\n\t\t$a_03_3 = {40 00 00 e0 2e 64 61 74 61 00 00 00 00 ?? 10 00 00 d0 5b }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 10 + ( #a_03_3 & 1 ) * 10 ) >= 40\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

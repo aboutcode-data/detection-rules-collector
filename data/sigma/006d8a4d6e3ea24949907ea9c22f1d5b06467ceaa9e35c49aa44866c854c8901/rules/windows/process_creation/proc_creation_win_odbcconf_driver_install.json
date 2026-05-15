@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_odbcconf_driver_install.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-22",
+                "title": "Driver/DLL Installation Via Odbcconf.EXE",
+                "id": "3f5491e2-8db8-496b-9e95-1029fce852d4"
+            },
+            "rule_text": "title: Driver/DLL Installation Via Odbcconf.EXE\nid: 3f5491e2-8db8-496b-9e95-1029fce852d4\nrelated:\n- id: cb0fe7c5-f3a3-484d-aa25-d350a7912729\n  type: similar\nstatus: test\ndescription: Detects execution of \"odbcconf\" with \"INSTALLDRIVER\" which installs a\n  new ODBC driver. Attackers abuse this to install and run malicious DLLs.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/\n- https://web.archive.org/web/20191023232753/https://twitter.com/Hexacorn/status/1187143326673330176\n- https://www.hexacorn.com/blog/2020/08/23/odbcconf-lolbin-trifecta/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-22\ntags:\n- attack.stealth\n- attack.t1218.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\odbcconf.exe\n  - OriginalFileName: odbcconf.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - 'INSTALLDRIVER '\n    - .dll\n  condition: all of selection_*\nfalsepositives:\n- Legitimate driver DLLs being registered via \"odbcconf\" will generate false positives.\n  Investigate the path of the DLL and its contents to determine if the action is authorized.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

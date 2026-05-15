@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msix_ai_stub_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Michael Haag, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-03",
+                "title": "Windows MSIX Package Support Framework AI_STUBS Execution",
+                "id": "af5732ed-764e-489d-826d-0447c8b36242"
+            },
+            "rule_text": "title: Windows MSIX Package Support Framework AI_STUBS Execution\nid: af5732ed-764e-489d-826d-0447c8b36242\nstatus: experimental\ndescription: 'Detects execution of Advanced Installer MSIX Package Support Framework\n  (PSF) components, specifically AI_STUBS executables with original filename ''popupwrapper.exe''.\n\n  This activity may indicate malicious MSIX packages build with Advanced Installer\n  leveraging the Package Support Framework to bypass application control restrictions.\n\n  '\nreferences:\n- https://redcanary.com/blog/threat-intelligence/msix-installers/\n- https://redcanary.com/threat-detection-report/techniques/installer-packages/\n- https://learn.microsoft.com/en-us/windows/msix/package/package-support-framework\n- https://www.splunk.com/en_us/blog/security/msix-weaponization-threat-detection-splunk.html\nauthor: Michael Haag, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-03\ntags:\n- attack.execution\n- attack.stealth\n- attack.defense-impairment\n- attack.t1218\n- attack.t1553.005\n- attack.t1204.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\AI_STUBS\\AiStubX64Elevated.exe\n    - \\AI_STUBS\\AiStubX86Elevated.exe\n    - \\AI_STUBS\\AiStubX64.exe\n    - \\AI_STUBS\\AiStubX86.exe\n    OriginalFileName: popupwrapper.exe\n  condition: selection\nfalsepositives:\n- Legitimate applications packaged with Advanced Installer using Package Support Framework\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_create_new_dmsasvc_account.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-05-24",
+                "title": "DMSA Service Account Created in Specific OUs - PowerShell",
+                "id": "02122374-b74e-495c-b285-9e4da973f3d6"
+            },
+            "rule_text": "title: DMSA Service Account Created in Specific OUs - PowerShell\nid: 02122374-b74e-495c-b285-9e4da973f3d6\nrelated:\n- id: e15bc294-ae2a-45ad-b7d6-637b33868bde\n  type: similar\n- id: 0ea8db81-2ff6-4525-9448-33bbe7effc13\n  type: similar\nstatus: experimental\ndescription: 'Detects the creation of a dMSA service account using the New-ADServiceAccount\n  cmdlet in certain OUs.\n\n  The fact that the cmdlet is used to create a dMSASvc account in a specific OU is\n  highly suspicious.\n\n  It is a pattern trying to exploit the BadSuccessor privilege escalation vulnerability\n  in Windows Server 2025.\n\n  On top of that, if the user that is creating the dMSASvc account is not a legitimate\n  administrator or does not have the necessary permissions,\n\n  it is a strong signal of an attempted or successful abuse of the BaDSuccessor vulnerability\n  for privilege escalation within the Windows Server 2025 Active Directory environment.\n\n  '\nreferences:\n- https://www.akamai.com/blog/security-research/abusing-bad-successor-for-privilege-escalation-in-active-directory\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-05-24\ntags:\n- attack.privilege-escalation\n- attack.initial-access\n- attack.persistence\n- attack.stealth\n- attack.t1078.002\n- attack.t1098\nlogsource:\n  category: ps_script\n  product: windows\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - New-ADServiceAccount\n    - -CreateDelegatedServiceAccount\n    - -path\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

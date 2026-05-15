@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/Winnti/proc_creation_win_apt_winnti_pipemon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth (Nextron Systems), oscd.community",
+                "date": "2020-07-30",
+                "title": "Winnti Pipemon Characteristics",
+                "id": "73d70463-75c9-4258-92c6-17500fe972f2"
+            },
+            "rule_text": "title: Winnti Pipemon Characteristics\nid: 73d70463-75c9-4258-92c6-17500fe972f2\nstatus: stable\ndescription: Detects specific process characteristics of Winnti Pipemon malware reported\n  by ESET\nreferences:\n- https://www.welivesecurity.com/2020/05/21/no-game-over-winnti-group/\nauthor: Florian Roth (Nextron Systems), oscd.community\ndate: 2020-07-30\nmodified: 2021-11-27\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\n- attack.g0044\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains: setup0.exe -p\n  selection_2:\n    CommandLine|contains: setup.exe\n    CommandLine|endswith:\n    - -x:0\n    - -x:1\n    - -x:2\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate setups that use similar flags\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

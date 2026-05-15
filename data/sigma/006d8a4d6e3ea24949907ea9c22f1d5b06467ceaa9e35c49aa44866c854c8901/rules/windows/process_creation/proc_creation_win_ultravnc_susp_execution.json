@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ultravnc_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2022-03-04",
+                "title": "Suspicious UltraVNC Execution",
+                "id": "871b9555-69ca-4993-99d3-35a59f9f3599"
+            },
+            "rule_text": "title: Suspicious UltraVNC Execution\nid: 871b9555-69ca-4993-99d3-35a59f9f3599\nstatus: test\ndescription: Detects suspicious UltraVNC command line flag combination that indicate\n  a auto reconnect upon execution, e.g. startup (as seen being used by Gamaredon threat\n  group)\nreferences:\n- https://web.archive.org/web/20220224045756/https://www.ria.ee/sites/default/files/content-editors/kuberturve/tale_of_gamaredon_infection.pdf\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/shuckworm-gamaredon-espionage-ukraine\n- https://unit42.paloaltonetworks.com/unit-42-title-gamaredon-group-toolset-evolution\n- https://uvnc.com/docs/uvnc-viewer/52-ultravnc-viewer-commandline-parameters.html\nauthor: Bhabesh Raj\ndate: 2022-03-04\nmodified: 2022-03-09\ntags:\n- attack.lateral-movement\n- attack.g0047\n- attack.t1021.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - '-autoreconnect '\n    - '-connect '\n    - '-id:'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

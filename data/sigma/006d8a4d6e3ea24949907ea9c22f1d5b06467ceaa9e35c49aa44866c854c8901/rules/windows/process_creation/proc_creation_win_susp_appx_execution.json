@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_appx_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-12",
+                "title": "Potentially Suspicious Windows App Activity",
+                "id": "f91ed517-a6ba-471d-9910-b3b4a398c0f3"
+            },
+            "rule_text": "title: Potentially Suspicious Windows App Activity\nid: f91ed517-a6ba-471d-9910-b3b4a398c0f3\nstatus: test\ndescription: Detects potentially suspicious child process of applications launched\n  from inside the WindowsApps directory. This could be a sign of a rogue \".appx\" package\n  installation/execution\nreferences:\n- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-12\nmodified: 2025-10-07\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_parent:\n    ParentImage|contains: C:\\Program Files\\WindowsApps\\\n  selection_susp_img:\n    Image|endswith:\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\wscript.exe\n  selection_susp_cli:\n    CommandLine|contains:\n    - cmd /c\n    - Invoke-\n    - Base64\n  filter_optional_terminal:\n    ParentImage|contains: :\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal\n    ParentImage|endswith: \\WindowsTerminal.exe\n    Image|endswith:\n    - \\powershell.exe\n    - \\cmd.exe\n    - \\pwsh.exe\n  filter_optional_sysinternals:\n    ParentImage|startswith: C:\\Program Files\\WindowsApps\\Microsoft.SysinternalsSuite\n    Image|endswith: \\cmd.exe\n  condition: selection_parent and 1 of selection_susp_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate packages that make use of external binaries such as Windows Terminal\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

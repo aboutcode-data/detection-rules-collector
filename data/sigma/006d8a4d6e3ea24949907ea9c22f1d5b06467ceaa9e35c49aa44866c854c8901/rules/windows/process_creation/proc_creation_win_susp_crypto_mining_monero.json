@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_crypto_mining_monero.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-10-26",
+                "title": "Potential Crypto Mining Activity",
+                "id": "66c3b204-9f88-4d0a-a7f7-8a57d521ca55"
+            },
+            "rule_text": "title: Potential Crypto Mining Activity\nid: 66c3b204-9f88-4d0a-a7f7-8a57d521ca55\nstatus: stable\ndescription: Detects command line parameters or strings often used by crypto miners\nreferences:\n- https://www.poolwatch.io/coin/monero\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-10-26\nmodified: 2023-02-13\ntags:\n- attack.impact\n- attack.t1496\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - ' --cpu-priority='\n    - --donate-level=0\n    - ' -o pool.'\n    - ' --nicehash'\n    - ' --algo=rx/0 '\n    - stratum+tcp://\n    - stratum+udp://\n    - LS1kb25hdGUtbGV2ZWw9\n    - 0tZG9uYXRlLWxldmVsP\n    - tLWRvbmF0ZS1sZXZlbD\n    - c3RyYXR1bSt0Y3A6Ly\n    - N0cmF0dW0rdGNwOi8v\n    - zdHJhdHVtK3RjcDovL\n    - c3RyYXR1bSt1ZHA6Ly\n    - N0cmF0dW0rdWRwOi8v\n    - zdHJhdHVtK3VkcDovL\n  filter:\n    CommandLine|contains:\n    - ' pool.c '\n    - ' pool.o '\n    - gcc -\n  condition: selection and not filter\nfalsepositives:\n- Legitimate use of crypto miners\n- Some build frameworks\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

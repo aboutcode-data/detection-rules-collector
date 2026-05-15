@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/RSA/PNGRat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PNGRat_C2_Decode",
+                "tags": [],
+                "Author": "BB RSAIR",
+                "Date": "15Jan2015",
+                "reference": "https://community.rsa.com/docs/DOC-30015"
+            },
+            "rule_text": "rule PNGRat_C2_Decode\n{\n\tmeta:\n\t\tAuthor = \"BB RSAIR\"\n\t\tDate = \"15Jan2015\"\n\t\treference = \"https://community.rsa.com/docs/DOC-30015\"\n\n\tstrings:\n\t\t$decode = {8A 43 [0-1] B1 71 48 [0-4] C0 E0 04 41 B8 04 [0-3] 02 03 2A C1 }\n\n\tcondition:\n\t\t$decode and uint16( 0 ) == 0x5A4D\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PngRatV2",
+                "tags": [],
+                "Author": "EMH RSAIR",
+                "Date": "14Dec2014",
+                "reference": "https://community.rsa.com/docs/DOC-30015"
+            },
+            "rule_text": "rule PngRatV2\n{\n\tmeta:\n\t\tAuthor = \"EMH RSAIR\"\n\t\tDate = \"14Dec2014\"\n\t\treference = \"https://community.rsa.com/docs/DOC-30015\"\n\n\tstrings:\n\t\t$mz = { 4D 5A }\n\t\t$reg_pw = \"abe2869f-9b47-4cd9-a358-c22904dba7f7\"\n\t\t$stego_c2 = \"http://social.technet.microsoft.com/Forums/\" nocase\n\t\t$ip_string = \"%u.%u.%u.%u\"\n\t\t$microsoft = {C6 44 24 30 40 C6 44 24 31 4D C6 44 24 32 49 C6 44 24 33 43 C6 44 24 34 52 C6 44 24 35 30 C6 44 24 36 53 C6 44 24 37 30 C6 44 24 38 46 C6 44 24 39 54 C6 44 24}\n\t\t$corporation = {C6 44 24 30 43 48 8B CB C6 44 24 31 30 C6 44 24 32 52 C6 44 24 33 50 C6 44 24 34 30 C6 44 24 35 52 C6 44 24 36 41 C6 44 24 37 54 C6 44 24 38 49 C6 44 24 39 30 C6 44 24 3A 4E C6 44 24 3B 00}\n\n\tcondition:\n\t\tall of them or ( $mz and $reg_pw and $ip_string and $microsoft and $corporation )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

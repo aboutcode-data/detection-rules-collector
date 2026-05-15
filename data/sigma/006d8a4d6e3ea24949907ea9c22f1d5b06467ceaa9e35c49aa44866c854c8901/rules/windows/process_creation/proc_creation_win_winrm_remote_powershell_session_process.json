@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winrm_remote_powershell_session_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-09-12",
+                "title": "Remote PowerShell Session Host Process (WinRM)",
+                "id": "734f8d9b-42b8-41b2-bcf5-abaf49d5a3c8"
+            },
+            "rule_text": "title: Remote PowerShell Session Host Process (WinRM)\nid: 734f8d9b-42b8-41b2-bcf5-abaf49d5a3c8\nstatus: test\ndescription: Detects remote PowerShell sections by monitoring for wsmprovhost (WinRM\n  host process) as a parent or child process (sign of an active PowerShell remote\n  session).\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190511-RemotePwshExecution/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-09-12\nmodified: 2022-10-09\ntags:\n- attack.execution\n- attack.lateral-movement\n- attack.t1059.001\n- attack.t1021.006\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\wsmprovhost.exe\n  - ParentImage|endswith: \\wsmprovhost.exe\n  condition: selection\nfalsepositives:\n- Legitimate usage of remote Powershell, e.g. for monitoring purposes.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

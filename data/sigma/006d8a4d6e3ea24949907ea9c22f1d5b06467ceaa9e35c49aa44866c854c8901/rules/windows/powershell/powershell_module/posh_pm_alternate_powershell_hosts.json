@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_alternate_powershell_hosts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-08-11",
+                "title": "Alternate PowerShell Hosts - PowerShell Module",
+                "id": "64e8e417-c19a-475a-8d19-98ea705394cc"
+            },
+            "rule_text": "title: Alternate PowerShell Hosts - PowerShell Module\nid: 64e8e417-c19a-475a-8d19-98ea705394cc\nstatus: test\ndescription: Detects alternate PowerShell hosts potentially bypassing detections looking\n  for powershell.exe\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190610-PwshAlternateHosts/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-08-11\nmodified: 2025-10-17\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection:\n    ContextInfo|contains: '*'\n  filter_powershell:\n    ContextInfo|contains:\n    - = powershell\n    - = C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell\n    - = C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell\n    - = C:/Windows/System32/WindowsPowerShell/v1.0/powershell\n    - = C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell\n    - = \\\\\\?\\?\\C:Windows\\System32\\WindowsPowerShell\\v1.0\\powershell\n    - = \\\\\\?\\?\\C:Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell\n  filter_sdiagnhost:\n    ContextInfo|contains: = C:\\WINDOWS\\System32\\sdiagnhost.exe -Embedding\n  filter_citrix:\n    ContextInfo|contains: ConfigSyncRun.exe\n  filter_adace:\n    ContextInfo|contains: C:\\Windows\\system32\\dsac.exe\n  filter_winrm:\n    ContextInfo|contains: C:\\Windows\\system32\\wsmprovhost.exe -Embedding\n  filter_help_update:\n    Payload|contains:\n    - Update-Help\n    - Failed to update Help for the module\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Programs using PowerShell directly without invocation of a dedicated interpreter\n- MSP Detection Searcher\n- Citrix ConfigSync.ps1\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/proofpoint/AdGholas_mem_MIME_M2.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AdGholas_mem_MIME_M2",
+                "tags": [],
+                "malfamily": "AdGholas",
+                "author": "Proofpoint",
+                "reference": "https://www.proofpoint.com/us/threat-insight/post/massive-adgholas-malvertising-campaigns-use-steganography-and-file-whitelisting-to-hide-in-plain-sight",
+                "reference2": "https://blog.malwarebytes.com/cybercrime/exploits/2016/12/adgholas-malvertising-business-as-usual/"
+            },
+            "rule_text": "rule AdGholas_mem_MIME_M2\n{\n\tmeta:\n\t\tmalfamily = \"AdGholas\"\n\t\tauthor = \"Proofpoint\"\n\t\treference = \"https://www.proofpoint.com/us/threat-insight/post/massive-adgholas-malvertising-campaigns-use-steganography-and-file-whitelisting-to-hide-in-plain-sight\"\n\t\treference2 = \"https://blog.malwarebytes.com/cybercrime/exploits/2016/12/adgholas-malvertising-business-as-usual/\"\n\n\tstrings:\n\t\t$s1 = \"halog\" nocase ascii wide fullword\n\t\t$s2 = \"pcap\" nocase ascii wide fullword\n\t\t$s3 = \"saz\" nocase ascii wide fullword\n\t\t$s4 = \"chls\" nocase ascii wide fullword\n\t\t$s5 = /return[^\\x3b\\x7d\\n]+href\\s*=\\s*[\\x22\\x27]\\x2e[\\x27\\x22]\\s*\\+\\s*[^\\x3b\\x7d\\n]+\\s*,\\s*[^\\x3b\\x7d\\n]+\\.mimeType/ nocase ascii wide\n\t\t$s6 = /\\x21==[a-zA-Z]+\\x3f\\x210\\x3a\\x211/ nocase ascii wide\n\n\tcondition:\n\t\tall of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

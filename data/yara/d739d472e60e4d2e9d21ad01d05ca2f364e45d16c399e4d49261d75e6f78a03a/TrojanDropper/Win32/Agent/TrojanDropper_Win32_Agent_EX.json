@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Agent/TrojanDropper_Win32_Agent_EX.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Agent_EX",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Agent.EX,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Agent_EX\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Agent.EX,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {83 c3 f6 6a 02 6a 00 53 56 e8 ?? ?? ?? ?? 6a 00 }\n\t\t$a_00_1 = {8a 54 3a ff 80 f2 78 e8 }\n\t\t$a_02_2 = {83 fe 04 0f 87 bc 00 00 00 ff 24 b5 ?? ?? ?? 00 }\n\t\t$a_00_3 = {6c 00 46 00 69 00 6c 00 65 00 6e 00 61 00 6d 00 65 00 00 00 33 00 36 00 30 00 53 00 61 00 66 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 2 + ( #a_02_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

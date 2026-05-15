@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_group_policy_abuse_privilege_addition.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Elastic, Josh Nickels, Marius Rothenbücher",
+                "date": "2024-09-04",
+                "title": "Group Policy Abuse for Privilege Addition",
+                "id": "1c480e10-7ee1-46d4-8ed2-85f9789e3ce4"
+            },
+            "rule_text": "title: Group Policy Abuse for Privilege Addition\nid: 1c480e10-7ee1-46d4-8ed2-85f9789e3ce4\nstatus: test\ndescription: 'Detects the first occurrence of a modification to Group Policy Object\n  Attributes to add privileges to user accounts or use them to add users as local\n  admins.\n\n  '\nauthor: \"Elastic, Josh Nickels, Marius Rothenb\\xFCcher\"\nreferences:\n- https://www.elastic.co/guide/en/security/current/group-policy-abuse-for-privilege-addition.html#_setup_275\ndate: 2024-09-04\ntags:\n- attack.privilege-escalation\n- attack.defense-impairment\n- attack.t1484.001\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: The \"Audit Directory Service Changes\" logging policy\n    must be configured in order to receive events.'\ndetection:\n  selection:\n    EventID: 5136\n    AttributeLDAPDisplayName: gPCMachineExtensionNames\n    AttributeValue|contains:\n    - 827D319E-6EAC-11D2-A4EA-00C04F79F83A\n    - 803E14A0-B4FB-11D0-A0D0-00A0C90F574B\n  condition: selection\nfalsepositives:\n- Users allowed to perform these modifications (user found in field SubjectUserName)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

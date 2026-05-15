@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_invoke_webrequest_direct_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-21",
+                "title": "Suspicious Invoke-WebRequest Execution With DirectIP",
+                "id": "1edff897-9146-48d2-9066-52e8d8f80a2f"
+            },
+            "rule_text": "title: Suspicious Invoke-WebRequest Execution With DirectIP\nid: 1edff897-9146-48d2-9066-52e8d8f80a2f\nstatus: test\ndescription: Detects calls to PowerShell with Invoke-WebRequest cmdlet using direct\n  IP access\nreferences:\n- https://www.huntress.com/blog/critical-vulnerabilities-in-papercut-print-management-software\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-21\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - powershell_ise.EXE\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_commands:\n    CommandLine|contains:\n    - 'curl '\n    - Invoke-RestMethod\n    - Invoke-WebRequest\n    - ' irm '\n    - 'iwr '\n    - 'wget '\n  selection_ip:\n    CommandLine|contains:\n    - ://1\n    - ://2\n    - ://3\n    - ://4\n    - ://5\n    - ://6\n    - ://7\n    - ://8\n    - ://9\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_HTMLSmuggling/2_win_susp_file_extraction.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/15",
+                "title": "ISO, VHD, LNK or IMG File Extracted from Zip (Sysmon)",
+                "id": "f853978d-343e-4879-ab56-dfe07f1f2f0b"
+            },
+            "rule_text": "title: ISO, VHD, LNK or IMG File Extracted from Zip (Sysmon)\nid: f853978d-343e-4879-ab56-dfe07f1f2f0b\nstatus: experimental\ndescription: Detects extraction of ISO, VHD, LNK, or IMG files from zip files. Commonly\n  associated with QakBot and IcedID.\nreferences:\n- https://blog.talosintelligence.com/html-smugglers-turn-to-svg-images/#:~:text=HTML%20smuggling%20is%20a%20technique,directly%20on%20the%20victim's%20device.\n- https://www.malwarebytes.com/blog/news/2021/11/evasive-maneuvers-html-smuggling-explained\nauthor: Micah Babinski\ndate: 2022/12/15\ntags:\n- attack.s0650\n- attack.s0483\n- attack.defense_evasion\n- attack.t1027\n- attack.t1027.006\n- attack.t1564\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\explorer.exe\n    - \\WinRAR.exe\n    TargetFilename|endswith:\n    - .iso\n    - .vhd\n    - .img\n    - .lnk\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

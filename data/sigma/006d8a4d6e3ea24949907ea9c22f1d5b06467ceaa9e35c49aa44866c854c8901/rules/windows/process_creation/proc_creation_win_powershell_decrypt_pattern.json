@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_decrypt_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-30",
+                "title": "PowerShell Execution With Potential Decryption Capabilities",
+                "id": "434c08ba-8406-4d15-8b24-782cb071a691"
+            },
+            "rule_text": "title: PowerShell Execution With Potential Decryption Capabilities\nid: 434c08ba-8406-4d15-8b24-782cb071a691\nstatus: test\ndescription: Detects PowerShell commands that decrypt an \".LNK\" \"file to drop the\n  next stage of the malware.\nreferences:\n- https://research.checkpoint.com/2023/chinese-threat-actors-targeting-europe-in-smugx-campaign/\nauthor: X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-30\nmodified: 2023-12-05\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli_dir:\n    CommandLine|contains:\n    - 'Get-ChildItem '\n    - 'dir '\n    - 'gci '\n    - 'ls '\n  selection_cli_gc:\n    CommandLine|contains:\n    - 'Get-Content '\n    - 'gc '\n    - 'cat '\n    - 'type '\n    - ReadAllBytes\n  selection_cli_specific:\n  - CommandLine|contains|all:\n    - ' ^| '\n    - \\*.lnk\n    - -Recurse\n    - '-Skip '\n  - CommandLine|contains|all:\n    - ' -ExpandProperty '\n    - \\*.lnk\n    - WriteAllBytes\n    - ' .length '\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

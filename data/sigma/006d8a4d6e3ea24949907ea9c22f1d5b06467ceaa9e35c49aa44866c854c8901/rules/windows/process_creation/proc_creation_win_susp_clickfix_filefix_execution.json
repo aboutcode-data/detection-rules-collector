@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_clickfix_filefix_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "montysecurity, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-19",
+                "title": "Suspicious ClickFix/FileFix Execution Pattern",
+                "id": "d487ed4a-fd24-436d-a0b2-f4e95f7b2635"
+            },
+            "rule_text": "title: Suspicious ClickFix/FileFix Execution Pattern\nid: d487ed4a-fd24-436d-a0b2-f4e95f7b2635\nrelated:\n- id: f5fe36cf-f1ec-4c23-903d-09a3110f6bbb\n  type: similar\nstatus: experimental\ndescription: \"Detects suspicious execution patterns where users are tricked into running\\\n  \\ malicious commands via clipboard manipulation, either through the Windows Run\\\n  \\ dialog (ClickFix) or File Explorer address bar (FileFix).\\nAttackers leverage\\\n  \\ social engineering campaigns\\u2014such as fake CAPTCHA challenges or urgent alerts\\u2014\\\n  encouraging victims to paste clipboard contents, often executing mshta.exe, powershell.exe,\\\n  \\ or similar commands to infect systems.\\n\"\nreferences:\n- https://github.com/JohnHammond/recaptcha-phish\n- https://www.zscaler.com/blogs/security-research/deepseek-lure-using-captchas-spread-malware\n- https://www.threatdown.com/blog/clipboard-hijacker-tries-to-install-a-trojan/\n- https://app.any.run/tasks/5c16b4db-4b36-4039-a0ed-9b09abff8be2\n- https://www.esentire.com/security-advisories/netsupport-rat-clickfix-distribution\n- https://www.scpx.com.au/2025/11/16/decades-old-finger-protocol-abused-in-clickfix-malware-attacks/\nauthor: montysecurity, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-19\ntags:\n- attack.execution\n- attack.t1204.001\n- attack.t1204.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\explorer.exe\n    CommandLine|contains: '#'\n  selection_cli_captcha:\n    CommandLine|contains:\n    - account\n    - anti-bot\n    - botcheck\n    - captcha\n    - challenge\n    - confirmation\n    - fraud\n    - human\n    - identification\n    - identificator\n    - identity\n    - robot\n    - validation\n    - verification\n    - verify\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

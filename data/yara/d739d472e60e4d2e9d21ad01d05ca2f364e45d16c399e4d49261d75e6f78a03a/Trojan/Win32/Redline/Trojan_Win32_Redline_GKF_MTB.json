@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Redline/Trojan_Win32_Redline_GKF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Redline_GKF_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Redline.GKF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Redline_GKF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Redline.GKF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 84 3c ?? ?? ?? ?? 03 44 24 14 0f b6 c0 8a 84 04 ?? ?? ?? ?? 30 86 ?? ?? ?? ?? 46 81 fe ?? ?? ?? ?? 0f 82 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Redline_GKF_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Redline.GKF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Redline_GKF_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Redline.GKF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 c0 01 89 85 ?? ?? ?? ?? 8b 8d ?? ?? ?? ?? 3b 0d ?? ?? ?? ?? 73 ?? 0f b6 15 ?? ?? ?? ?? a1 ?? ?? ?? ?? 03 85 ?? ?? ?? ?? 0f b6 08 33 ca 8b 15 ?? ?? ?? ?? 03 95 ?? ?? ?? ?? 88 0a eb }\n\t\t$a_01_1 = {56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

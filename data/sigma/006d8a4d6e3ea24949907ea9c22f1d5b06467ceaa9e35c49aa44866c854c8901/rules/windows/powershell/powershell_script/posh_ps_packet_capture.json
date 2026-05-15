@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_packet_capture.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2024-05-12",
+                "title": "Potential Packet Capture Activity Via Start-NetEventSession - ScriptBlock",
+                "id": "da34e323-1e65-42db-83be-a6725ac2caa3"
+            },
+            "rule_text": "title: Potential Packet Capture Activity Via Start-NetEventSession - ScriptBlock\nid: da34e323-1e65-42db-83be-a6725ac2caa3\nstatus: test\ndescription: 'Detects the execution of powershell scripts with calls to the \"Start-NetEventSession\"\n  cmdlet. Which allows an attacker to start event and packet capture for a network\n  event session.\n\n  Adversaries may attempt to capture network to gather information over the course\n  of an operation.\n\n  Data captured via this technique may include user credentials, especially those\n  sent over an insecure, unencrypted protocol.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/5f866ca4517e837c4ea576e7309d0891e78080a8/atomics/T1040/T1040.md#atomic-test-16---powershell-network-sniffing\n- https://github.com/0xsyr0/Awesome-Cybersecurity-Handbooks/blob/7b8935fe4c82cb64d61343de1a8b2e38dd968534/handbooks/10_post_exploitation.md\n- https://github.com/forgottentq/powershell/blob/9e616363d497143dc955c4fdce68e5c18d28a6cb/captureWindows-Endpoint.ps1#L13\nauthor: frack113\ndate: 2024-05-12\ntags:\n- attack.credential-access\n- attack.discovery\n- attack.t1040\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains: Start-NetEventSession\n  condition: selection\nfalsepositives:\n- Legitimate network diagnostic scripts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

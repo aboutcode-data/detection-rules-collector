@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/dragos/embedded_psexec.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "embedded_psexec",
+                "tags": [],
+                "description": "Look for indications of embedded psexec",
+                "author": "Dragos Inc",
+                "reference": "https://troopers.de/downloads/troopers18/TR18_DM_Mind-The-Gap.pdf"
+            },
+            "rule_text": "rule embedded_psexec\n{\n\tmeta:\n\t\tdescription = \"Look for indications of embedded psexec\"\n\t\tauthor = \"Dragos Inc\"\n\t\treference = \"https://troopers.de/downloads/troopers18/TR18_DM_Mind-The-Gap.pdf\"\n\n\tstrings:\n\t\t$mz = \"!This program cannot be run in DOS mode.\" ascii wide\n\t\t$s1 = \"-accepteula -s\" ascii wide\n\t\t$s2 = \",Sysinternals\" ascii wide\n\n\tcondition:\n\t\tall of ( $s* ) and #mz > 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

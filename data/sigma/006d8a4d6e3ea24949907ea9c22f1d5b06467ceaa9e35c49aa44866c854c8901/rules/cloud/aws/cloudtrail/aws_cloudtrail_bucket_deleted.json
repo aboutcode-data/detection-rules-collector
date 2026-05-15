@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_bucket_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Ivan Saakov, Nasreddine Bencherchali",
+                "date": "2025-10-19",
+                "title": "AWS Bucket Deleted",
+                "id": "39c9f26d-6e3b-4dbb-9c7a-4154b0281112"
+            },
+            "rule_text": "title: AWS Bucket Deleted\nid: 39c9f26d-6e3b-4dbb-9c7a-4154b0281112\nstatus: experimental\ndescription: 'Detects the deletion of S3 buckets in AWS CloudTrail logs.\n\n  Monitoring the deletion of S3 buckets is critical for security and data integrity,\n  as it may indicate potential data loss or unauthorized access attempts.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html\n- https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/delete-bucket.html\nauthor: Ivan Saakov, Nasreddine Bencherchali\ndate: 2025-10-19\ntags:\n- attack.stealth\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection_event_name:\n    eventName: DeleteBucket\n  selection_status_success:\n    errorCode: Success\n  selection_status_null:\n    errorCode: null\n  condition: selection_event_name and 1 of selection_status_*\nfalsepositives:\n- During maintenance operations or testing, authorized administrators may delete S3\n  buckets as part of routine data management or cleanup activities.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/LimaAlfa.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LimaAlfa",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "c9fbad7fc7ff7688776056be3a41714a1f91458a7b16c37c3c906d17daac2c8b",
+                "Status": "Signature is too loose to be useful."
+            },
+            "rule_text": "import \"pe\"\n\nrule LimaAlfa\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"c9fbad7fc7ff7688776056be3a41714a1f91458a7b16c37c3c906d17daac2c8b\"\n\t\tStatus = \"Signature is too loose to be useful.\"\n\n\tstrings:\n\t\t$a = {\n\t\t\t33 C0 \n\t\t\t66 [2] \n\t\t\t8B ?? \n\t\t\t81 ?? 00 F0 FF FF \n\t\t\t81 ?? 00 30 00 00 \n\t\t\t75 ?? \n\t\t\t8B [3] \n\t\t\t25 FF 0F 00 00 \n\t\t\t03 C7 \n\t\t\t01 \n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

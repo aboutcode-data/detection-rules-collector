@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_find_shell_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Shell Execution via Find - Linux",
+                "id": "6adfbf8f-52be-4444-9bac-81b539624146"
+            },
+            "rule_text": "title: Shell Execution via Find - Linux\nid: 6adfbf8f-52be-4444-9bac-81b539624146\nstatus: test\ndescription: 'Detects the use of the find command to execute a shell. Such behavior\n  may be associated with privilege escalation, unauthorized command execution, or\n  exploitation attempt.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/find/#shell\n- https://www.elastic.co/guide/en/security/current/linux-restricted-shell-breakout-via-linux-binary-s.html\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /find\n    CommandLine|contains|all:\n    - ' . '\n    - -exec\n  selection_cli:\n    CommandLine|contains:\n    - /bin/bash\n    - /bin/dash\n    - /bin/fish\n    - /bin/sh\n    - /bin/zsh\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

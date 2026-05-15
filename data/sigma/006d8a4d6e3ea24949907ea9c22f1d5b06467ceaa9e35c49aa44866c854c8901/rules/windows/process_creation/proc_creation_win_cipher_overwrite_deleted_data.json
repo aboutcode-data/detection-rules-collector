@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cipher_overwrite_deleted_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-26",
+                "title": "Deleted Data Overwritten Via Cipher.EXE",
+                "id": "4b046706-5789-4673-b111-66f25fe99534"
+            },
+            "rule_text": "title: Deleted Data Overwritten Via Cipher.EXE\nid: 4b046706-5789-4673-b111-66f25fe99534\nstatus: test\ndescription: 'Detects usage of the \"cipher\" built-in utility in order to overwrite\n  deleted data from disk.\n\n  Adversaries may destroy data and files on specific systems or in large numbers on\n  a network to interrupt availability to systems, services, and network resources.\n\n  Data destruction is likely to render stored data irrecoverable by forensic techniques\n  through overwriting files or data on local and remote drives\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md#atomic-test-3---overwrite-deleted-data-on-c-drive\nauthor: frack113\ndate: 2021-12-26\nmodified: 2023-02-21\ntags:\n- attack.impact\n- attack.t1485\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: CIPHER.EXE\n  - Image|endswith: \\cipher.exe\n  selection_cli:\n    CommandLine|contains: ' /w:'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_cipher_overwrite_deleted_data/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Overwrite deleted data on C drive\n  technique: T1485\n  atomic_guid: 321fd25e-0007-417f-adec-33232252be19\n",
+            "vulnerabilities": []
+        }
+    ]
+}

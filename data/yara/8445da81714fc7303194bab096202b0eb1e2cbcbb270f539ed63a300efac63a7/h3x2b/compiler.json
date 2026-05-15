@@ -1,0 +1,57 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/h3x2b/compiler.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "executable_au3",
+                "tags": [
+                    "info",
+                    "compiler",
+                    "autit"
+                ],
+                "description": "Match AU3 autoit executables"
+            },
+            "rule_text": "rule executable_au3 : info compiler autit\n{\n\tmeta:\n\t\tdescription = \"Match AU3 autoit executables\"\n\n\tstrings:\n\t\t$str_au3_01 = \"AU3\"\n\t\t$str_au3_02 = { A3 48 4B BE 98 6C 4A A9 99 4C 53 0A 86 D6 48 7D }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "vb_pcode",
+                "tags": [
+                    "info",
+                    "compiler",
+                    "vb"
+                ],
+                "description": "VisualBasic compiled to P-Code bytecode"
+            },
+            "rule_text": "rule vb_pcode : info compiler vb\n{\n\tmeta:\n\t\tdescription = \"VisualBasic compiled to P-Code bytecode\"\n\n\tstrings:\n\t\t$str_vb_01 = \"VB5\"\n\t\t$str_vb_pcode = { E9 E9 E9 E9 CC CC CC CC CC CC CC CC CC CC CC CC 9E 9E 9E 9E }\n\n\tcondition:\n\t\t($str_vb_01 ) and $str_vb_pcode\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "vb_native",
+                "tags": [
+                    "info",
+                    "compiler",
+                    "vb"
+                ],
+                "description": "VisualBasic compiled to Native code, http://waleedassar.blogspot.com/2012/03/visual-basic-malware-part-1.html"
+            },
+            "rule_text": "rule vb_native : info compiler vb\n{\n\tmeta:\n\t\tdescription = \"VisualBasic compiled to Native code, http://waleedassar.blogspot.com/2012/03/visual-basic-malware-part-1.html\"\n\n\tstrings:\n\t\t$str_vb_01 = \"VB5\"\n\t\t$str_vb_ncode = { E9 E9 E9 E9 CC CC CC CC CC CC CC CC CC CC CC CC 55 8B EC }\n\n\tcondition:\n\t\t($str_vb_01 ) and $str_vb_ncode\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dotnet_libraries",
+                "tags": [
+                    "info",
+                    "compiler",
+                    "dotnet"
+                ],
+                "description": ".Net runtime mscoree.dll mscorwks.dll"
+            },
+            "rule_text": "rule dotnet_libraries : info compiler dotnet\n{\n\tmeta:\n\t\tdescription = \".Net runtime mscoree.dll mscorwks.dll\"\n\n\tstrings:\n\t\t$str_dn_01 = \"mscoree.dll\"\n\t\t$str_dn_02 = \"_CorExeMain\"\n\t\t$str_dn_03 = \"mscorwks.dll\"\n\t\t$str_dn_04 = \"CoInitializeEE\"\n\n\tcondition:\n\t\t2 of ( $str_dn_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

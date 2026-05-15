@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-07-05",
+                "title": "File Download Via Curl.EXE",
+                "id": "9a517fca-4ba3-4629-9278-a68694697b81"
+            },
+            "rule_text": "title: File Download Via Curl.EXE\nid: 9a517fca-4ba3-4629-9278-a68694697b81\nrelated:\n- id: bbeaed61-1990-4773-bf57-b81dbad7db2d\n  type: derived\n- id: e218595b-bbe7-4ee5-8a96-f32a24ad3468\n  type: derived\nstatus: test\ndescription: Detects file download using curl.exe\nreferences:\n- https://web.archive.org/web/20200128160046/https://twitter.com/reegun21/status/1222093798009790464\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-07-05\nmodified: 2023-02-21\ntags:\n- attack.command-and-control\n- attack.t1105\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - Product: The curl executable\n  selection_remote:\n    CommandLine|contains:\n    - ' -O'\n    - --remote-name\n    - --output\n  condition: all of selection_*\nfalsepositives:\n- Scripts created by developers and admins\n- Administrative activity\n- The \"\\Git\\usr\\bin\\sh.exe\" process uses the \"--output\" flag to download a specific\n  file in the temp directory with the pattern \"gfw-httpget-xxxxxxxx.txt \"\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

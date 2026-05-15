@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-28",
+                "title": "Suspicious Modification Of Scheduled Tasks",
+                "id": "1c0e41cd-21bb-4433-9acc-4a2cd6367b9b"
+            },
+            "rule_text": "title: Suspicious Modification Of Scheduled Tasks\nid: 1c0e41cd-21bb-4433-9acc-4a2cd6367b9b\nrelated:\n- id: 614cf376-6651-47c4-9dcc-6b9527f749f4\n  type: similar\nstatus: test\ndescription: 'Detects when an attacker tries to modify an already existing scheduled\n  tasks to run from a suspicious location\n\n  Attackers can create a simple looking task in order to avoid detection on creation\n  as it''s often the most focused on\n\n  Instead they modify the task after creation to include their malicious payload\n\n  '\nreferences:\n- Internal Research\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-28\nmodified: 2022-11-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.t1053.005\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_schtasks:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|all:\n    - ' /Change '\n    - ' /TN '\n  selection_susp_locations:\n    CommandLine|contains:\n    - \\AppData\\Local\\Temp\n    - \\AppData\\Roaming\\\n    - \\Users\\Public\\\n    - \\WINDOWS\\Temp\\\n    - \\Desktop\\\n    - \\Downloads\\\n    - \\Temporary Internet\n    - C:\\ProgramData\\\n    - C:\\Perflogs\\\n    - '%ProgramData%'\n    - '%appdata%'\n    - '%comspec%'\n    - '%localappdata%'\n  selection_susp_images:\n    CommandLine|contains:\n    - regsvr32\n    - rundll32\n    - 'cmd /c '\n    - 'cmd /k '\n    - 'cmd /r '\n    - 'cmd.exe /c '\n    - 'cmd.exe /k '\n    - 'cmd.exe /r '\n    - powershell\n    - mshta\n    - wscript\n    - cscript\n    - certutil\n    - bitsadmin\n    - bash.exe\n    - 'bash '\n    - scrcons\n    - 'wmic '\n    - wmic.exe\n    - forfiles\n    - scriptrunner\n    - hh.exe\n    - 'hh '\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

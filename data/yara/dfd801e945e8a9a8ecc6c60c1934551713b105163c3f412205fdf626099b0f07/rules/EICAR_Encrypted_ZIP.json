@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/elceef/yara-rulz/blob/master/rules/EICAR_Encrypted_ZIP.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EICAR_Encrypted_ZIP",
+                "tags": [],
+                "description": "Detects EICAR file in any encrypted ZIP archive",
+                "author": "marcin@ulikowski.pl",
+                "date": "2022-12-13"
+            },
+            "rule_text": "rule EICAR_Encrypted_ZIP\n{\n\tmeta:\n\t\tdescription = \"Detects EICAR file in any encrypted ZIP archive\"\n\t\tauthor = \"marcin@ulikowski.pl\"\n\t\tdate = \"2022-12-13\"\n\n\tstrings:\n\t\t$local = {\n\t\t\t50 4b 03 04 // local file header signature (PK)\n\t\t\t?? 00 // minimum version\n\t\t\t?? 00 // flags (bit 0 and 6 indicate encryption)\n\t\t\t?? 00 // compression method\n\t\t\t?? ?? // last modification time\n\t\t\t?? ?? // last modification date\n\t\t\t?? ?? ?? ?? // CRC-32 of uncompressed and unencrypted data\n\t\t\t?? ?? ?? ?? // compressed size\n\t\t\t?? ?? ?? ?? // uncompressed size\n\t\t\t}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #local ) : ( ( uint8( @local [ i ] + 6 ) & 0x01 or uint8( @local [ i ] + 6 ) & 0x40 ) and uint32( @local [ i ] + 14 ) == 0x6851cf3c and uint32( @local [ i ] + 22 ) == 68 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

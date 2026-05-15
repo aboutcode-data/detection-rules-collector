@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_network_firewall_rule_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-08",
+                "title": "Azure Firewall Rule Configuration Modified or Deleted",
+                "id": "2a7d64cf-81fa-4daf-ab1b-ab80b789c067"
+            },
+            "rule_text": "title: Azure Firewall Rule Configuration Modified or Deleted\nid: 2a7d64cf-81fa-4daf-ab1b-ab80b789c067\nstatus: test\ndescription: Identifies when a Firewall Rule Configuration is Modified or Deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer @austinsonger\ndate: 2021-08-08\nmodified: 2022-08-23\ntags:\n- attack.impact\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.NETWORK/FIREWALLPOLICIES/RULECOLLECTIONGROUPS/WRITE\n    - MICROSOFT.NETWORK/FIREWALLPOLICIES/RULECOLLECTIONGROUPS/DELETE\n    - MICROSOFT.NETWORK/FIREWALLPOLICIES/RULEGROUPS/WRITE\n    - MICROSOFT.NETWORK/FIREWALLPOLICIES/RULEGROUPS/DELETE\n  condition: selection\nfalsepositives:\n- Firewall Rule Configuration being modified or deleted may be performed by a system\n  administrator. Verify whether the user identity, user agent, and/or hostname should\n  be making changes in your environment.\n- Firewall Rule Configuration modified or deleted from unfamiliar users should be\n  investigated. If known behavior is causing false positives, it can be exempted from\n  the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

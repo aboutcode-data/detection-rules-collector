@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_rename_sys_utils_unusual_cmdlines.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Processes Executing with Unusual Command Lines (RedCanary Threat Detection Report)",
+                "id": "23aafdd3-8476-49a0-8377-54d26bf7847f"
+            },
+            "rule_text": "title: Processes Executing with Unusual Command Lines (RedCanary Threat Detection\n  Report)\nid: 23aafdd3-8476-49a0-8377-54d26bf7847f\nstatus: experimental\ndescription: \"Detects non-powershell.exe processes executing with command lines that\\\n  \\ are usually \\nassociated with powershell. This is an example for demonstration\\\n  \\ purposes only. \\nPart of the RedCanary 2023 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rename-system-utilities/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.defense_evasion\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - iex\n    - invoke-expression\n  filter_pwsh:\n    Image|endswith: \\powershell.exe\n  condition: selection and not filter_pwsh\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

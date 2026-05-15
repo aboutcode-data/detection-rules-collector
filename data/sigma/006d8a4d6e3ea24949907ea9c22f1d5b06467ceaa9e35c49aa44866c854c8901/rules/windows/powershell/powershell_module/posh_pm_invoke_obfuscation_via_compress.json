@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_invoke_obfuscation_via_compress.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2020-10-18",
+                "title": "Invoke-Obfuscation COMPRESS OBFUSCATION - PowerShell Module",
+                "id": "7034cbbb-cc55-4dc2-8dad-36c0b942e8f1"
+            },
+            "rule_text": "title: Invoke-Obfuscation COMPRESS OBFUSCATION - PowerShell Module\nid: 7034cbbb-cc55-4dc2-8dad-36c0b942e8f1\nrelated:\n- id: 20e5497e-331c-4cd5-8d36-935f6e2a9a07\n  type: derived\nstatus: test\ndescription: Detects Obfuscated Powershell via COMPRESS OBFUSCATION\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Timur Zinniatullin, oscd.community\ndate: 2020-10-18\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_4103:\n    Payload|contains|all:\n    - new-object\n    - text.encoding]::ascii\n    Payload|contains:\n    - system.io.compression.deflatestream\n    - system.io.streamreader\n    Payload|endswith: readtoend\n  condition: selection_4103\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

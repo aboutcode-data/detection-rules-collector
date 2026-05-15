@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_delete/registry_delete_defender_context_menu.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Matt Anderson (Huntress)",
+                "date": "2025-07-11",
+                "title": "Delete Defender Scan ShellEx Context Menu Registry Key",
+                "id": "72a0369a-2576-4aaf-bfc9-6bb24a574ac6"
+            },
+            "rule_text": "title: Delete Defender Scan ShellEx Context Menu Registry Key\nid: 72a0369a-2576-4aaf-bfc9-6bb24a574ac6\nrelated:\n- id: b9e8c7d6-a5f4-4e3d-8b1a-9f0c8d7e6a5b\n  type: similar\nstatus: experimental\ndescription: Detects deletion of registry key that adds 'Scan with Defender' option\n  in context menu. Attackers may use this to make it harder for users to scan files\n  that are suspicious.\nreferences:\n- https://research.splunk.com/endpoint/395ed5fe-ad13-4366-9405-a228427bdd91/\n- https://winaero.com/how-to-delete-scan-with-windows-defender-from-context-menu-in-windows-10/\n- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/\n- https://blog.malwarebytes.com/malwarebytes-news/2021/02/lazyscripter-from-empire-to-double-rat/\nauthor: Matt Anderson (Huntress)\ndate: 2025-07-11\nmodified: 2025-10-07\ntags:\n- attack.defense-impairment\nlogsource:\n  category: registry_delete\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: shellex\\ContextMenuHandlers\\EPP\n  filter_main_defender:\n    Image|startswith:\n    - C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\\n    - C:\\Program Files\\Windows Defender\\\n    - C:\\Program Files (x86)\\Windows Defender\\\n    Image|endswith: \\MsMpEng.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely as this weakens defenses and normally would not be done even if using another\n  AV.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

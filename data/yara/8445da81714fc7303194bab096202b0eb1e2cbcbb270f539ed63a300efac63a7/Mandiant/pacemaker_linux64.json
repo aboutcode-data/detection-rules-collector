@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/pacemaker_linux64.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Trojan_Linux_PACEMAKER",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "md5": "d7881c4de4d57828f7e1cab15687274b",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Trojan_Linux_PACEMAKER\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tmd5 = \"d7881c4de4d57828f7e1cab15687274b\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$s1 = \"\\x00Name:%s || Pwd:%s || AuthNum:%s\\x0a\\x00\"\n\t\t$s2 = \"\\x00/proc/%d/mem\\x00\"\n\t\t$s3 = \"\\x00/proc/%s/maps\\x00\"\n\t\t$s4 = \"\\x00/proc/%s/cmdline\\x00\"\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x464c457f ) and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vsdiagnostics_execution_proxy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-03",
+                "title": "Potential Binary Proxy Execution Via VSDiagnostics.EXE",
+                "id": "ac1c92b4-ac81-405a-9978-4604d78cc47e"
+            },
+            "rule_text": "title: Potential Binary Proxy Execution Via VSDiagnostics.EXE\nid: ac1c92b4-ac81-405a-9978-4604d78cc47e\nstatus: test\ndescription: Detects execution of \"VSDiagnostics.exe\" with the \"start\" command in\n  order to launch and proxy arbitrary binaries.\nreferences:\n- https://twitter.com/0xBoku/status/1679200664013135872\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-03\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\VSDiagnostics.exe\n  - OriginalFileName: VSDiagnostics.exe\n  selection_cli_start:\n    CommandLine|contains: start\n  selection_cli_launch:\n    CommandLine|contains:\n    - ' /launch:'\n    - ' -launch:'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage for tracing and diagnostics purposes\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

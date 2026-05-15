@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/CeeInject/VirTool_Win32_CeeInject_BDR_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_CeeInject_BDR_bit",
+                "tags": [],
+                "description": "VirTool:Win32/CeeInject.BDR!bit,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_CeeInject_BDR_bit\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/CeeInject.BDR!bit,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {55 8b ec 51 89 45 fc 8b 5d fc 68 ?? ?? ?? ?? 01 1c 24 c3 90 0a 30 00 8a 45 08 59 [0-10] 30 01 [0-10] 5d c2 08 00 }\n\t\t$a_03_1 = {55 8b ec 51 89 45 fc 8b 5d fc 68 ?? ?? ?? ?? 01 1c 24 c3 90 0a 40 00 8a 45 08 [0-10] 5b 30 03 [0-10] 5d c2 08 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

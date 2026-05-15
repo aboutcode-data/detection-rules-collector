@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_cmd_redirect.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-22",
+                "title": "CMD Shell Output Redirect",
+                "id": "4f4eaa9f-5ad4-410c-a4be-bc6132b0175a"
+            },
+            "rule_text": "title: CMD Shell Output Redirect\nid: 4f4eaa9f-5ad4-410c-a4be-bc6132b0175a\nrelated:\n- id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892\n  type: similar\nstatus: test\ndescription: 'Detects the use of the redirection character \">\" to redirect information\n  on the command line.\n\n  This technique is sometimes used by malicious actors in order to redirect the output\n  of reconnaissance commands such as \"hostname\" and \"dir\" to files for future exfiltration.\n\n  '\nreferences:\n- https://ss64.com/nt/syntax-redirection.html\nauthor: frack113\ndate: 2022-01-22\nmodified: 2024-03-19\ntags:\n- attack.discovery\n- attack.t1082\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd:\n  - OriginalFileName: Cmd.Exe\n  - Image|endswith: \\cmd.exe\n  selection_cli:\n    CommandLine|contains: '>'\n  filter_optional_idm_extension:\n    CommandLine|contains:\n    - C:\\Program Files (x86)\\Internet Download Manager\\IDMMsgHost.exe\n    - chrome-extension://\n    - \\\\.\\pipe\\chrome.nativeMessaging\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Internet Download Manager extensions use named pipes and redirection via CLI. Filter\n  it out if you use it in your environment\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

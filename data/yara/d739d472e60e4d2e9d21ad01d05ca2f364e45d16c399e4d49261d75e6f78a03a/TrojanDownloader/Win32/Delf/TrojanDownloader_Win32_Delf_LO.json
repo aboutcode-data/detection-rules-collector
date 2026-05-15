@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Delf/TrojanDownloader_Win32_Delf_LO.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Delf_LO",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Delf.LO,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Delf_LO\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Delf.LO,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2e 78 7a 31 39 2e 63 6f 6d }\n\t\t$a_01_1 = {63 2e 37 74 6f 6f 74 2e 63 6e }\n\t\t$a_03_2 = {63 6e 2e 74 6d 70 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 63 6e 2e 65 78 65 ?? ?? 6c 6d 30 32 ?? ?? ?? ?? 6d 79 69 65 }\n\t\t$a_03_3 = {25 64 00 00 64 6b 65 ?? ?? ?? ?? ?? ?? ?? ?? ?? 78 7a 7a 2f ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 63 74 66 6d 6f 6e 5f }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

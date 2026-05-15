@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_delete/registry_delete_enable_windows_recall.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sajid Nawaz Khan",
+                "date": "2024-06-02",
+                "title": "Windows Recall Feature Enabled - DisableAIDataAnalysis Value Deleted",
+                "id": "5dfc1465-8f65-4fde-8eb5-6194380c6a62"
+            },
+            "rule_text": "title: Windows Recall Feature Enabled - DisableAIDataAnalysis Value Deleted\nid: 5dfc1465-8f65-4fde-8eb5-6194380c6a62\nrelated:\n- id: 75180c5f-4ea1-461a-a4f6-6e4700c065d4\n  type: similar\n- id: 817f252c-5143-4dae-b418-48c3e9f63728\n  type: similar\nstatus: test\ndescription: 'Detects the enabling of the Windows Recall feature via registry manipulation.\n  Windows Recall can be enabled by deleting the existing \"DisableAIDataAnalysis\" registry\n  value.\n\n  Adversaries may enable Windows Recall as part of post-exploitation discovery and\n  collection activities.\n\n  This rule assumes that Recall is already explicitly disabled on the host, and subsequently\n  enabled by the adversary.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/client-management/manage-recall\n- https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowsai#disableaidataanalysis\nauthor: Sajid Nawaz Khan\ndate: 2024-06-02\ntags:\n- attack.collection\n- attack.t1113\nlogsource:\n  category: registry_delete\n  product: windows\ndetection:\n  selection:\n    EventType: DeleteValue\n    TargetObject|endswith: \\Microsoft\\Windows\\WindowsAI\\DisableAIDataAnalysis\n  condition: selection\nfalsepositives:\n- Legitimate use/activation of Windows Recall\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

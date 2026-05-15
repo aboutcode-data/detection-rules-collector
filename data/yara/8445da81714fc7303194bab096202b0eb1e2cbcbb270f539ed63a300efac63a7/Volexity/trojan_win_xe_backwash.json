@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/trojan_win_xe_backwash.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_win_xe_backwash",
+                "tags": [
+                    "XEGroup"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2020-09-04",
+                "description": "The BACKWASH malware family, which acts as a reverse shell on the victim machine.",
+                "reference": "https://www.volexity.com/blog/2021/12/07/xe-group-exposed-8-years-of-hacking-card-skimming-for-profit/",
+                "hash": "815d262d38a26d5695606d03d5a1a49b9c00915ead1d8a2c04eb47846100e93f",
+                "memory_suitable": 1,
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule trojan_win_xe_backwash : XEGroup\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2020-09-04\"\n\t\tdescription = \"The BACKWASH malware family, which acts as a reverse shell on the victim machine.\"\n\t\treference = \"https://www.volexity.com/blog/2021/12/07/xe-group-exposed-8-years-of-hacking-card-skimming-for-profit/\"\n\t\thash = \"815d262d38a26d5695606d03d5a1a49b9c00915ead1d8a2c04eb47846100e93f\"\n\t\tmemory_suitable = 1\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$pdb1 = \"x:\\\\MultiOS_ReverseShell-master\\\\Multi-OS_ReverseShell\\\\obj\\\\Release\\\\XEReverseShell.pdb\"\n\t\t$pdb2 = \"\\\\Release\\\\XEReverseShell.pdb\"\n\t\t$a1 = \"RunServer\" ascii\n\t\t$a2 = \"writeShell\" ascii\n\t\t$a3 = \"GetIP\" ascii\n\t\t$b1 = \"xequit\" wide\n\t\t$b2 = \"setshell\" wide\n\n\tcondition:\n\t\tany of ( $pdb* ) or ( ( all of ( $a* ) or all of ( $b* ) ) and filesize < 40KB )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

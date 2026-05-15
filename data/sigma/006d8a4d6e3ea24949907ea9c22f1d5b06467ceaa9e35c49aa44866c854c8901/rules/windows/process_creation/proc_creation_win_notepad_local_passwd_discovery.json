@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_notepad_local_passwd_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "The DFIR Report",
+                "date": "2025-02-21",
+                "title": "Notepad Password Files Discovery",
+                "id": "3b4e950b-a3ea-44d3-877e-432071990709"
+            },
+            "rule_text": "title: Notepad Password Files Discovery\nid: 3b4e950b-a3ea-44d3-877e-432071990709\nstatus: experimental\ndescription: Detects the execution of Notepad to open a file that has the string \"password\"\n  which may indicate unauthorized access to credentials or suspicious activity.\nreferences:\n- https://thedfirreport.com/2025/02/24/confluence-exploit-leads-to-lockbit-ransomware/\n- https://intel.thedfirreport.com/eventReports/view/57\nauthor: The DFIR Report\ntags:\n- attack.discovery\n- attack.t1083\ndate: 2025-02-21\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|endswith: \\explorer.exe\n    Image|endswith: \\notepad.exe\n    CommandLine|endswith:\n    - password*.txt\n    - password*.csv\n    - password*.doc\n    - password*.xls\n  condition: selection\nfalsepositives:\n- Legitimate use of opening files from remote hosts by administrators or users. However,\n  storing passwords in text readable format could potentially be a violation of the\n  organization's policy. Any match should be investigated further.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

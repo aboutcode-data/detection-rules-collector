@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_rdp_file_susp_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-18",
+                "title": ".RDP File Created By Uncommon Application",
+                "id": "fccfb43e-09a7-4bd2-8b37-a5a7df33386d"
+            },
+            "rule_text": "title: .RDP File Created By Uncommon Application\nid: fccfb43e-09a7-4bd2-8b37-a5a7df33386d\nrelated:\n- id: f748c45a-f8d3-4e6f-b617-fe176f695b8f\n  type: derived\nstatus: test\ndescription: 'Detects creation of a file with an \".rdp\" extension by an application\n  that doesn''t commonly create such files.\n\n  '\nreferences:\n- https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/\n- https://web.archive.org/web/20230726144748/https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-18\nmodified: 2024-11-01\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith: .rdp\n    Image|endswith:\n    - \\brave.exe\n    - \\CCleaner Browser\\Application\\CCleanerBrowser.exe\n    - \\chromium.exe\n    - \\firefox.exe\n    - \\Google\\Chrome\\Application\\chrome.exe\n    - \\iexplore.exe\n    - \\microsoftedge.exe\n    - \\msedge.exe\n    - \\Opera.exe\n    - \\Vivaldi.exe\n    - \\Whale.exe\n    - \\olk.exe\n    - \\Outlook.exe\n    - \\RuntimeBroker.exe\n    - \\Thunderbird.exe\n    - \\Discord.exe\n    - \\Keybase.exe\n    - \\msteams.exe\n    - \\Slack.exe\n    - \\teams.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

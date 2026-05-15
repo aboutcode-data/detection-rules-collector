@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_plink_susp_tunneling.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-04",
+                "title": "Potential RDP Tunneling Via Plink",
+                "id": "f38ce0b9-5e97-4b47-a211-7dc8d8b871da"
+            },
+            "rule_text": "title: Potential RDP Tunneling Via Plink\nid: f38ce0b9-5e97-4b47-a211-7dc8d8b871da\nrelated:\n- id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d\n  type: similar\nstatus: test\ndescription: Execution of plink to perform data exfiltration and tunneling\nreferences:\n- https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-04\nmodified: 2023-01-27\ntags:\n- attack.command-and-control\n- attack.t1572\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_a:\n    Image|endswith: \\plink.exe\n    CommandLine|contains: :127.0.0.1:3389\n  selection_b1:\n    Image|endswith: \\plink.exe\n    CommandLine|contains: :3389\n  selection_b2:\n    CommandLine|contains:\n    - ' -P 443'\n    - ' -P 22'\n  condition: selection_a or all of selection_b*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

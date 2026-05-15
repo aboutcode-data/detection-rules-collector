@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bginfo_suspicious_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-16",
+                "title": "Suspicious Child Process Of BgInfo.EXE",
+                "id": "811f459f-9231-45d4-959a-0266c6311987"
+            },
+            "rule_text": "title: Suspicious Child Process Of BgInfo.EXE\nid: 811f459f-9231-45d4-959a-0266c6311987\nrelated:\n- id: aaf46cdc-934e-4284-b329-34aa701e3771\n  type: similar\nstatus: test\ndescription: Detects suspicious child processes of \"BgInfo.exe\" which could be a sign\n  of potential abuse of the binary to proxy execution via external VBScript\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Bginfo/\n- https://oddvar.moe/2017/05/18/bypassing-application-whitelisting-with-bginfo/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-16\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.005\n- attack.t1218\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\bginfo.exe\n    - \\bginfo64.exe\n  selection_child:\n  - Image|endswith:\n    - \\calc.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\notepad.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n  - Image|contains:\n    - \\AppData\\Local\\\n    - \\AppData\\Roaming\\\n    - :\\Users\\Public\\\n    - :\\Temp\\\n    - :\\Windows\\Temp\\\n    - :\\PerfLogs\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

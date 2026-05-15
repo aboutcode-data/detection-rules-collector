@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/hktl_natbypass.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HKTL_NATBypass_Dec22_1",
+                "tags": [
+                    "T1090"
+                ],
+                "description": "Detects NatBypass tool (also used by APT41)",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://github.com/cw1997/NATBypass",
+                "date": "2022-12-27",
+                "score": 80,
+                "hash1": "4550635143c9997d5499d1d4a4c860126ee9299311fed0f85df9bb304dca81ff",
+                "id": "54af4d84-72f7-5ec4-b0bf-7ba228fdf508"
+            },
+            "rule_text": "rule HKTL_NATBypass_Dec22_1 : T1090\n{\n\tmeta:\n\t\tdescription = \"Detects NatBypass tool (also used by APT41)\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://github.com/cw1997/NATBypass\"\n\t\tdate = \"2022-12-27\"\n\t\tscore = 80\n\t\thash1 = \"4550635143c9997d5499d1d4a4c860126ee9299311fed0f85df9bb304dca81ff\"\n\t\tid = \"54af4d84-72f7-5ec4-b0bf-7ba228fdf508\"\n\n\tstrings:\n\t\t$x1 = \"nb -slave 127.0.0.1:3389 8.8.8.8:1997\" ascii\n\t\t$x2 = \"| Welcome to use NATBypass Ver\" ascii\n\t\t$s1 = \"main.port2host.func1\" ascii fullword\n\t\t$s2 = \"start to transmit address:\" ascii\n\t\t$s3 = \"^(\\\\d{1,2}|1\\\\d\\\\d|2[0-4]\\\\d|25[0-5])\\\\.(\\\\d{1,2}|1\\\\d\\\\d|2[0-4]\\\\d|25[0-5])\\\\.(\\\\d{1,2}|1\\\\d\\\\d|2[0-4]\\\\d|25[0-5])\\\\.(\\\\d{1,2}|1\\\\d\\\\d|2[0-4]\\\\d|25[0-5])\"\n\n\tcondition:\n\t\tfilesize < 8000KB and ( 1 of ( $x* ) or 2 of them ) or 3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

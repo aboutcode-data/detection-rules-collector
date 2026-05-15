@@ -1,0 +1,28 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/EmersonElectricCo/misc_no_dosmode_header.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ft_strict_exe",
+                "tags": []
+            },
+            "rule_text": "private rule ft_strict_exe\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "misc_no_dosmode_header",
+                "tags": [
+                    "suspicious"
+                ],
+                "author": "Jason Batchelor",
+                "created": "2016-03-02",
+                "modified": "2016-03-02",
+                "university": "Carnegie Mellon University",
+                "description": "Detect on absence of 'DOS Mode' heaader between MZ and PE boundries"
+            },
+            "rule_text": "rule misc_no_dosmode_header : suspicious\n{\n\tmeta:\n\t\tauthor = \"Jason Batchelor\"\n\t\tcreated = \"2016-03-02\"\n\t\tmodified = \"2016-03-02\"\n\t\tuniversity = \"Carnegie Mellon University\"\n\t\tdescription = \"Detect on absence of 'DOS Mode' heaader between MZ and PE boundries\"\n\n\tstrings:\n\t\t$dosmode = \"This program cannot be run in DOS mode.\"\n\n\tcondition:\n\t\tft_strict_exe and not $dosmode in ( 0x3C .. ( uint32( 0x3C ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

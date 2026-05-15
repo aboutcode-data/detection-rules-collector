@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_insecure_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-06-30",
+                "title": "Insecure Transfer Via Curl.EXE",
+                "id": "cb9cc1d1-e84e-4bdc-b7ad-c31b1b7908ec"
+            },
+            "rule_text": "title: Insecure Transfer Via Curl.EXE\nid: cb9cc1d1-e84e-4bdc-b7ad-c31b1b7908ec\nstatus: test\ndescription: Detects execution of \"curl.exe\" with the \"--insecure\" flag.\nreferences:\n- https://curl.se/docs/manpage.html\nauthor: X__Junior (Nextron Systems)\ndate: 2023-06-30\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_cli:\n  - CommandLine|re: \\s-k\\s\n  - CommandLine|contains: --insecure\n  condition: all of selection_*\nfalsepositives:\n- Access to badly maintained internal or development systems\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_insecure_connection/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

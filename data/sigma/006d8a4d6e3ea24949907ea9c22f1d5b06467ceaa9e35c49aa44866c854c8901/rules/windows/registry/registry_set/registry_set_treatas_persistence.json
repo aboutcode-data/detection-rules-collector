@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_treatas_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-08-28",
+                "title": "COM Hijacking via TreatAs",
+                "id": "dc5c24af-6995-49b2-86eb-a9ff62199e82"
+            },
+            "rule_text": "title: COM Hijacking via TreatAs\nid: dc5c24af-6995-49b2-86eb-a9ff62199e82\nstatus: test\ndescription: Detect modification of TreatAs key to enable \"rundll32.exe -sta\" command\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1546.015/T1546.015.md\n- https://www.youtube.com/watch?v=3gz1QmiMhss&t=1251s\nauthor: frack113\ndate: 2022-08-28\nmodified: 2025-07-11\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.015\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: TreatAs\\(Default)\n  filter_office:\n    Image|startswith: C:\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\\n    Image|endswith: \\OfficeClickToRun.exe\n  filter_office2:\n    Image:\n    - C:\\Program Files\\Microsoft Office\\root\\integration\\integrator.exe\n    - C:\\Program Files (x86)\\Microsoft Office\\root\\integration\\integrator.exe\n  filter_svchost:\n    Image: C:\\Windows\\system32\\svchost.exe\n  filter_misexec:\n    Image:\n    - C:\\Windows\\system32\\msiexec.exe\n    - C:\\Windows\\SysWOW64\\msiexec.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Legitimate use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Emotet/Trojan_Win32_Emotet_MC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Emotet_MC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Emotet.MC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Emotet_MC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Emotet.MC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 fc 83 c0 01 89 45 fc 8b 4d fc 3b 4d 10 73 ?? 8b 55 08 03 55 fc 0f b6 0a 8b 45 fc 33 d2 f7 75 18 8b 45 14 0f b6 14 10 33 ca 8b 45 0c 03 45 fc 88 08 eb }\n\t\t$a_01_1 = {44 6c 6c 52 65 67 69 73 74 65 72 53 65 72 76 65 72 }\n\t\t$a_01_2 = {44 6c 6c 55 6e 72 65 67 69 73 74 65 72 53 65 72 76 65 72 4d 6f 64 65 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

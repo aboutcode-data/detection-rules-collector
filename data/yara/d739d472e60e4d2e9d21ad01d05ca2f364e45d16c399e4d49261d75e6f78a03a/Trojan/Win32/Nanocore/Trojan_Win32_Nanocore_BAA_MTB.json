@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Nanocore/Trojan_Win32_Nanocore_BAA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Nanocore_BAA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Nanocore.BAA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Nanocore_BAA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Nanocore.BAA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8a 04 31 8d 49 01 34 ?? 88 41 ff 83 ef 01 75 }\n\t\t$a_03_1 = {2a c8 8b 45 08 0a d1 8b 4d e8 8b 00 88 14 01 41 89 4d e8 81 ff ?? ?? ?? ?? 72 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

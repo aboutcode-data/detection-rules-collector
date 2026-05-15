@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_malicious_keywords.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sean Metcalf (source), Florian Roth (Nextron Systems)",
+                "date": "2017-03-05",
+                "title": "Malicious PowerShell Keywords",
+                "id": "f62176f3-8128-4faa-bf6c-83261322e5eb"
+            },
+            "rule_text": "title: Malicious PowerShell Keywords\nid: f62176f3-8128-4faa-bf6c-83261322e5eb\nstatus: test\ndescription: Detects keywords from well-known PowerShell exploitation frameworks\nreferences:\n- https://adsecurity.org/?p=2921\nauthor: Sean Metcalf (source), Florian Roth (Nextron Systems)\ndate: 2017-03-05\nmodified: 2023-06-20\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - AdjustTokenPrivileges\n    - IMAGE_NT_OPTIONAL_HDR64_MAGIC\n    - Metasploit\n    - Microsoft.Win32.UnsafeNativeMethods\n    - Mimikatz\n    - MiniDumpWriteDump\n    - PAGE_EXECUTE_READ\n    - ReadProcessMemory.Invoke\n    - SE_PRIVILEGE_ENABLED\n    - SECURITY_DELEGATION\n    - TOKEN_ADJUST_PRIVILEGES\n    - TOKEN_ALL_ACCESS\n    - TOKEN_ASSIGN_PRIMARY\n    - TOKEN_DUPLICATE\n    - TOKEN_ELEVATION\n    - TOKEN_IMPERSONATE\n    - TOKEN_INFORMATION_CLASS\n    - TOKEN_PRIVILEGES\n    - TOKEN_QUERY\n  condition: selection\nfalsepositives:\n- Depending on the scripts, this rule might require some initial tuning to fit the\n  environment\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

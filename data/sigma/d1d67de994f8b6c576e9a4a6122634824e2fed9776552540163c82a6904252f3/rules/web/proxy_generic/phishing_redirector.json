@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/phishing_redirector.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson, Ramine Etow",
+                "date": "2024-08-13",
+                "title": "Phishing Redirector",
+                "id": "3dc81d88-6d9c-4c86-bc5d-ff743d50dbee"
+            },
+            "rule_text": "title: Phishing Redirector\nid: 3dc81d88-6d9c-4c86-bc5d-ff743d50dbee\ndescription: URL pattern seen in multiple successful phishing attacks in the last\n  few days. This phishing redirector has been observed to be deployed on compromised\n  websites. If the user passes the antibot checks, they are redirected to a MITM phishing\n  proxy (EvilProxy). If the phish is successful, you should see authentication attempts\n  from the phishing proxy IP address in Azure AD / Entra ID logs.\nstatus: test\nauthor: NTT Security - Patrik Olson, Ramine Etow\ndate: '2024-08-13'\nmodified: '2024-08-13'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri-query|startswith: classic=\n    c-uri-query|re: ^classic=[A-Za-z0-9]{10,}\n  condition: selection\nfalsepositives:\n- User may have opened phishing lure without entering any credentials. Look for suspicious\n  authentication attempts\nlevel: high\ntags:\n- attack.defense-evasion\n",
+            "vulnerabilities": []
+        }
+    ]
+}

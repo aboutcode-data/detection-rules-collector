@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ping_hex_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2018-03-23",
+                "title": "Ping Hex IP",
+                "id": "1a0d4aba-7668-4365-9ce4-6d79ab088dfd"
+            },
+            "rule_text": "title: Ping Hex IP\nid: 1a0d4aba-7668-4365-9ce4-6d79ab088dfd\nstatus: test\ndescription: Detects a ping command that uses a hex encoded IP address\nreferences:\n- https://github.com/vysecurity/Aggressor-VYSEC/blob/0d61c80387b9432dab64b8b8a9fb52d20cfef80e/ping.cna\n- https://twitter.com/vysecurity/status/977198418354491392\nauthor: Florian Roth (Nextron Systems)\ndate: 2018-03-23\nmodified: 2025-10-17\ntags:\n- attack.stealth\n- attack.t1140\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\ping.exe\n    CommandLine|re: 0x[a-fA-F0-9]{8}\n  condition: selection\nfalsepositives:\n- Unlikely, because no sane admin pings IP addresses in a hexadecimal form\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

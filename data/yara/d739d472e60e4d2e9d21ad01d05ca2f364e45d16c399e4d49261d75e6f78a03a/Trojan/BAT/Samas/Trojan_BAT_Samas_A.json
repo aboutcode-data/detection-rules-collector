@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Samas/Trojan_BAT_Samas_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Samas_A",
+                "tags": [],
+                "description": "Trojan:BAT/Samas.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Samas_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Samas.A,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {53 41 4d 5c 6f 72 69 67 69 6e 61 6c 5c 64 65 6c 66 69 6c 65 74 79 70 65 5c 64 65 6c 66 69 6c 65 74 79 70 65 5c 6f 62 6a 5c 52 65 6c 65 61 73 65 5c 64 65 6c 66 69 6c 65 74 79 70 65 2e 70 64 62 00 }\n\t\t$a_00_1 = {24 33 64 63 66 38 65 34 31 2d 39 39 65 37 2d 34 31 36 37 2d 61 38 66 37 2d 31 62 38 39 66 33 66 35 35 63 62 34 }\n\t\t$a_00_2 = {4d 69 63 72 6f 73 6f 66 74 20 44 65 6c 20 55 70 64 61 74 65 }\n\t\t$a_00_3 = {72 65 63 75 72 73 69 76 65 67 65 74 66 69 6c 65 73 }\n\t\t$a_02_4 = {74 00 61 00 73 00 6b 00 6c 00 69 00 73 00 74 00 [0-04] 2f 00 76 00 20 00 2f 00 66 00 6f 00 20 00 63 00 73 00 76 00 [0-10] 74 00 61 00 73 00 6b 00 6b 00 69 00 6c 00 6c 00 [0-06] 2f 00 66 00 20 00 2f 00 70 00 69 00 64 00 }\n\t\t$a_02_5 = {73 00 70 00 69 00 [0-04] 73 00 70 00 66 00 [0-04] 73 00 61 00 76 00 [0-04] 73 00 69 00 6b 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_02_4 & 1 ) * 2 + ( #a_02_5 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

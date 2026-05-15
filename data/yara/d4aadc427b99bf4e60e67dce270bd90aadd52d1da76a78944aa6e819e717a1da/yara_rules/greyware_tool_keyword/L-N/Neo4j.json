@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/L-N/Neo4j.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Neo4j",
+                "tags": [],
+                "description": "Detection patterns for the tool 'Neo4j' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "Neo4j",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule Neo4j\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'Neo4j' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"Neo4j\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /MATCH\\s\\(c\\:Computer\\s\\{unconsraineddelegation\\:true\\}\\)\\sRETURN\\sc/ nocase ascii wide\n\t\t$string2 = /MATCH\\s\\(c\\:Computer\\).{0,1000}\\(t\\:Computer\\).{0,1000}\\s.{0,1000}\\-\\[\\:AllowedToDelegate\\].{0,1000}\\sreturn\\sp/ nocase ascii wide\n\t\t$string3 = /MATCH\\sp\\=\\(u\\:User\\)\\-\\[\\:SQLAdmin\\].{0,1000}\\(c\\:Computer\\)\\sreturn\\sp/ nocase ascii wide\n\t\t$string4 = \"neo4j start\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

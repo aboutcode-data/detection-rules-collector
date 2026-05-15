@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_remote_potato0.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HKTL_SentinelOne_RemotePotato0_PrivEsc",
+                "tags": [],
+                "author": "SentinelOne",
+                "description": "Detects RemotePotato0 binary",
+                "reference": "https://labs.sentinelone.com/relaying-potatoes-dce-rpc-ntlm-relay-eop",
+                "date": "2021-04-26",
+                "id": "f6dffd6b-e794-5c4a-9700-5c2022168f44"
+            },
+            "rule_text": "rule HKTL_SentinelOne_RemotePotato0_PrivEsc\n{\n\tmeta:\n\t\tauthor = \"SentinelOne\"\n\t\tdescription = \"Detects RemotePotato0 binary\"\n\t\treference = \"https://labs.sentinelone.com/relaying-potatoes-dce-rpc-ntlm-relay-eop\"\n\t\tdate = \"2021-04-26\"\n\t\tid = \"f6dffd6b-e794-5c4a-9700-5c2022168f44\"\n\n\tstrings:\n\t\t$import1 = \"CoGetInstanceFromIStorage\"\n\t\t$istorage_clsid = \"{00000306-0000-0000-c000-000000000046}\" nocase wide ascii\n\t\t$meow_header = { 4d 45 4f 57 }\n\t\t$clsid1 = \"{11111111-2222-3333-4444-555555555555}\" wide ascii\n\t\t$clsid2 = \"{5167B42F-C111-47A1-ACC4-8EABE61B0B54}\" nocase wide ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D ) and $import1 and $istorage_clsid and $meow_header and 1 of ( $clsid* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

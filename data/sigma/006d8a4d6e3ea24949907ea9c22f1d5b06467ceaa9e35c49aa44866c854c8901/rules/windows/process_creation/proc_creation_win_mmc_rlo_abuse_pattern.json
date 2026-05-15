@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mmc_rlo_abuse_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-05",
+                "title": "MMC Executing Files with Reversed Extensions Using RTLO Abuse",
+                "id": "9cfe4b27-1e56-48b4-b7a8-d46851c91a44"
+            },
+            "rule_text": "title: MMC Executing Files with Reversed Extensions Using RTLO Abuse\nid: 9cfe4b27-1e56-48b4-b7a8-d46851c91a44\nstatus: experimental\ndescription: Detects malicious behavior where the MMC utility (`mmc.exe`) executes\n  files with reversed extensions caused by Right-to-Left Override (RLO) abuse, disguising\n  them as document formats.\nreferences:\n- https://www.unicode.org/versions/Unicode5.2.0/ch02.pdf\n- https://en.wikipedia.org/wiki/Right-to-left_override\n- https://tria.ge/241015-l98snsyeje/behavioral2\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-05\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1204.002\n- attack.t1218.014\n- attack.t1036.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_image:\n  - Image|endswith: \\mmc.exe\n  - OriginalFileName: MMC.exe\n  selection_commandline:\n    CommandLine|contains:\n    - cod.msc\n    - fdp.msc\n    - ftr.msc\n    - lmth.msc\n    - slx.msc\n    - tdo.msc\n    - xcod.msc\n    - xslx.msc\n    - xtpp.msc\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative actions using MMC to execute misnamed `.msc` files.\n- Unconventional but non-malicious usage of RLO or reversed extensions.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

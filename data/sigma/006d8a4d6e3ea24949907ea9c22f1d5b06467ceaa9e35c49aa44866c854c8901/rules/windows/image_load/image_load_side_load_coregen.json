@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_coregen.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-31",
+                "title": "Potential DLL Sideloading Using Coregen.exe",
+                "id": "0fa66f66-e3f6-4a9c-93f8-4f2610b00171"
+            },
+            "rule_text": "title: Potential DLL Sideloading Using Coregen.exe\nid: 0fa66f66-e3f6-4a9c-93f8-4f2610b00171\nstatus: test\ndescription: Detect usage of the \"coregen.exe\" (Microsoft CoreCLR Native Image Generator)\n  binary to sideload arbitrary DLLs.\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Coregen/\nauthor: frack113\ndate: 2022-12-31\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1218\n- attack.t1055\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\coregen.exe\n  filter_main_legit_paths:\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\Microsoft Silverlight\\\n    - C:\\Program Files\\Microsoft Silverlight\\\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

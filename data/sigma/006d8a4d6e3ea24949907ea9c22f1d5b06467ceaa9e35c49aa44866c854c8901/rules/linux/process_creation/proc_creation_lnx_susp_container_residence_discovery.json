@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_container_residence_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Seth Hanford",
+                "date": "2023-08-23",
+                "title": "Container Residence Discovery Via Proc Virtual FS",
+                "id": "746c86fb-ccda-4816-8997-01386263acc4"
+            },
+            "rule_text": "title: Container Residence Discovery Via Proc Virtual FS\nid: 746c86fb-ccda-4816-8997-01386263acc4\nstatus: test\ndescription: Detects potential container discovery via listing of certain kernel features\n  in the \"/proc\" virtual filesystem\nreferences:\n- https://blog.skyplabs.net/posts/container-detection/\n- https://stackoverflow.com/questions/20010199/how-to-determine-if-a-process-runs-inside-lxc-docker\ntags:\n- attack.discovery\n- attack.t1082\nauthor: Seth Hanford\ndate: 2023-08-23\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_tools:\n    Image|endswith:\n    - awk\n    - /cat\n    - grep\n    - /head\n    - /less\n    - /more\n    - /nl\n    - /tail\n  selection_procfs_kthreadd:\n    CommandLine|contains: /proc/2/\n  selection_procfs_target:\n    CommandLine|contains: /proc/\n    CommandLine|endswith:\n    - /cgroup\n    - /sched\n  condition: selection_tools and 1 of selection_procfs_*\nfalsepositives:\n- Legitimate system administrator usage of these commands\n- Some container tools or deployments may use these techniques natively to determine\n  how they proceed with execution, and will need to be filtered\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

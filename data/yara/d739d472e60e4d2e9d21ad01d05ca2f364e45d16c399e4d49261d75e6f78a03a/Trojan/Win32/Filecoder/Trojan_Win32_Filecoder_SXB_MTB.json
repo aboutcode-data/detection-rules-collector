@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Filecoder/Trojan_Win32_Filecoder_SXB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Filecoder_SXB_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Filecoder.SXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Filecoder_SXB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Filecoder.SXB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 10 8b 45 ec 0f b6 00 31 c2 8b 45 ec 88 10 83 45 f4 ?? 8d 45 e8 89 c1 }\n\t\t$a_03_1 = {8b 45 f4 3b 45 0c 7d ?? 8d 85 60 ec ff ff 8d 95 68 ec ff ff 89 14 24 89 c1 }\n\t\t$a_01_2 = {6c 6f 67 2e 74 78 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 3 + ( #a_03_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

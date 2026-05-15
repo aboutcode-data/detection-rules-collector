@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Hacktool_ProcessHacker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Hacktool_ProcessHacker_3d01069e",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "3d01069e-7afb-4da0-b7ac-23f90db26495",
+                "fingerprint": "5d6a0835ac6c0548292ff11741428d7b2f4421ead6d9e2ca35379cbceb6ee68c",
+                "creation_date": "2022-03-30",
+                "last_modified": "2022-03-30",
+                "threat_name": "Windows.Hacktool.ProcessHacker",
+                "reference_sample": "70211a3f90376bbc61f49c22a63075d1d4ddd53f0aefa976216c46e6ba39a9f4",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Hacktool_ProcessHacker_3d01069e\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"3d01069e-7afb-4da0-b7ac-23f90db26495\"\n\t\tfingerprint = \"5d6a0835ac6c0548292ff11741428d7b2f4421ead6d9e2ca35379cbceb6ee68c\"\n\t\tcreation_date = \"2022-03-30\"\n\t\tlast_modified = \"2022-03-30\"\n\t\tthreat_name = \"Windows.Hacktool.ProcessHacker\"\n\t\treference_sample = \"70211a3f90376bbc61f49c22a63075d1d4ddd53f0aefa976216c46e6ba39a9f4\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$original_file_name = \"OriginalFilename\\x00kprocesshacker.sys\" wide fullword\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and $original_file_name\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

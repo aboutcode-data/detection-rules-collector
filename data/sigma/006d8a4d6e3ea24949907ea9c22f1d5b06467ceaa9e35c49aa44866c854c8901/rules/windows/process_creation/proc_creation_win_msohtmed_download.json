@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msohtmed_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-19",
+                "title": "Arbitrary File Download Via MSOHTMED.EXE",
+                "id": "459f2f98-397b-4a4a-9f47-6a5ec2f1c69d"
+            },
+            "rule_text": "title: Arbitrary File Download Via MSOHTMED.EXE\nid: 459f2f98-397b-4a4a-9f47-6a5ec2f1c69d\nstatus: test\ndescription: Detects usage of \"MSOHTMED\" to download arbitrary files\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/pull/238/files\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-19\nmodified: 2023-11-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\MSOHTMED.exe\n  - OriginalFileName: MsoHtmEd.exe\n  selection_cli:\n    CommandLine|contains:\n    - ftp://\n    - http://\n    - https://\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_invoke_obfuscation_via_stdin.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-12",
+                "title": "Invoke-Obfuscation Via Stdin - Powershell",
+                "id": "86b896ba-ffa1-4fea-83e3-ee28a4c915c7"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Stdin - Powershell\nid: 86b896ba-ffa1-4fea-83e3-ee28a4c915c7\nstatus: test\ndescription: Detects Obfuscated Powershell via Stdin in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-12\nmodified: 2024-04-05\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_4104:\n    ScriptBlockText|re: (?i)(set).*&&\\s?set.*(environment|invoke|\\$\\{?input).*&&.*\"\n  condition: selection_4104\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

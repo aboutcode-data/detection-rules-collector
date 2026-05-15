@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2019/TA/APC-C-12/proc_creation_win_apt_aptc12_bluemushroom.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Tim Shelton, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-10-02",
+                "title": "Potential APT-C-12 BlueMushroom DLL Load Activity Via Regsvr32",
+                "id": "bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0"
+            },
+            "rule_text": "title: Potential APT-C-12 BlueMushroom DLL Load Activity Via Regsvr32\nid: bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0\nstatus: test\ndescription: Detects potential BlueMushroom DLL loading activity via regsvr32 from\n  AppData Local\nreferences:\n- https://pbs.twimg.com/media/EF3yLGoWkAEGeLa?format=jpg\nauthor: Florian Roth (Nextron Systems), Tim Shelton, Nasreddine Bencherchali (Nextron\n  Systems)\ndate: 2019-10-02\nmodified: 2023-03-29\ntags:\n- attack.stealth\n- attack.t1218.010\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - regsvr32\n    - \\AppData\\Local\\\n    - .dll\n    - ',DllEntry'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

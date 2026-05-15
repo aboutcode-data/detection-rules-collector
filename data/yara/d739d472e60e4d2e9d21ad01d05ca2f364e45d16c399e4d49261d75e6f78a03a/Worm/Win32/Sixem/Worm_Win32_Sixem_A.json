@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Worm/Win32/Sixem/Worm_Win32_Sixem_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Worm_Win32_Sixem_A",
+                "tags": [],
+                "description": "Worm:Win32/Sixem.A,SIGNATURE_TYPE_PEHSTR_EXT,24 00 24 00 06 00 00 "
+            },
+            "rule_text": "rule Worm_Win32_Sixem_A\n{\n\tmeta:\n\t\tdescription = \"Worm:Win32/Sixem.A,SIGNATURE_TYPE_PEHSTR_EXT,24 00 24 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {53 6f 66 74 77 61 72 65 5c 4d 69 63 72 6f 73 6f 66 74 5c 57 69 6e 64 6f 77 73 5c 43 75 72 72 65 6e 74 56 65 72 73 69 6f 6e 5c 55 72 6c }\n\t\t$a_00_1 = {ff ff ff ff 06 00 00 00 69 6e 73 74 61 6c }\n\t\t$a_02_2 = {64 ff 30 64 89 20 6a 00 8b 45 fc e8 ?? ?? ?? ?? 50 8d 45 fc e8 ?? ?? ?? ?? 50 53 e8 ?? ?? ?? ?? 33 c0 5a 59 59 64 89 10 68 ?? ?? ?? ?? 8d 45 fc e8 ?? ?? ?? ?? c3 e9 ?? ?? ?? ?? eb f0 5b 59 5d }\n\t\t$a_00_3 = {6d 61 69 6c 20 66 72 6f 6d }\n\t\t$a_00_4 = {2e 6a 70 67 }\n\t\t$a_00_5 = {53 6f 63 63 65 72 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 10 + ( #a_02_2 & 1 ) * 10 + ( #a_00_3 & 1 ) * 5 + ( #a_00_4 & 1 ) * 1 + ( #a_00_5 & 1 ) * 1 ) >= 36\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

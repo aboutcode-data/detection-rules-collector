@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/BumbleBeeLoader/Trojan_Win64_BumbleBeeLoader_NIE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_BumbleBeeLoader_NIE_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/BumbleBeeLoader.NIE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_BumbleBeeLoader_NIE_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/BumbleBeeLoader.NIE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {48 f7 e9 48 89 d0 48 c1 e8 3f 48 c1 fa 1a 48 01 c2 48 89 54 24 28 48 8d 54 24 28 48 89 f1 }\n\t\t$a_01_1 = {0f 57 c9 f2 0f 2a cb f2 0f 59 c8 f2 0f 11 4c 24 28 f2 0f 10 44 24 28 }\n\t\t$a_01_2 = {85 c0 0f 49 c8 81 e1 00 ff ff ff f7 d9 41 01 cc 41 ff c4 4d 63 f4 }\n\t\t$a_01_3 = {49 89 c6 45 31 ff 45 31 ed 0f 1f 44 00 00 4e 8d 24 3c 49 83 c4 20 44 89 f8 99 41 f7 fe }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

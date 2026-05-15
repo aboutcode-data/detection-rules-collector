@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/RedLineStealer/Trojan_BAT_RedlineStealer_PI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_RedlineStealer_PI_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/RedlineStealer.PI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,09 00 09 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_RedlineStealer_PI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/RedlineStealer.PI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,09 00 09 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {02 72 8f 00 00 70 7d 01 00 00 04 02 7b 01 00 00 04 28 ?? 00 00 0a 3a e8 00 00 00 73 20 00 00 06 28 ?? 00 00 0a 72 ad 00 00 70 28 ?? 00 00 0a 0a 72 bf 00 00 70 0b 72 d5 00 00 70 02 7b 01 00 00 04 6f ?? 00 00 0a 72 e5 00 00 70 28 ?? 00 00 0a 0c 72 07 01 00 70 0d 72 d5 00 00 70 02 7b 01 00 00 04 6f ?? 00 00 0a 72 19 01 00 70 28 ?? 00 00 0a 13 04 72 37 01 00 70 13 05 72 d5 00 00 70 02 7b 01 00 00 04 6f ?? 00 00 0a 72 57 01 00 70 }\n\t\t$a_01_1 = {62 30 33 36 39 65 63 31 2d 38 63 66 38 2d 34 38 35 64 2d 38 66 62 31 2d 36 32 38 33 35 62 35 37 35 64 38 38 }\n\t\t$a_01_2 = {47 00 47 00 57 00 53 00 55 00 70 00 64 00 61 00 74 00 65 00 2e 00 50 00 72 00 6f 00 70 00 65 00 72 00 74 00 69 00 65 00 73 00 2e 00 52 00 65 00 73 00 6f 00 75 00 72 00 63 00 65 00 73 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 ) >= 9\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

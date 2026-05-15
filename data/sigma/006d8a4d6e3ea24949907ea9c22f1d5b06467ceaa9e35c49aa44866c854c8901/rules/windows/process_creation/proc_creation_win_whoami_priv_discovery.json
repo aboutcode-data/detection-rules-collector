@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_whoami_priv_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-05-05",
+                "title": "Security Privileges Enumeration Via Whoami.EXE",
+                "id": "97a80ec7-0e2f-4d05-9ef4-65760e634f6b"
+            },
+            "rule_text": "title: Security Privileges Enumeration Via Whoami.EXE\nid: 97a80ec7-0e2f-4d05-9ef4-65760e634f6b\nstatus: test\ndescription: Detects a whoami.exe executed with the /priv command line flag instructing\n  the tool to show all current user privileges. This is often used after a privilege\n  escalation attempt.\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-05-05\nmodified: 2023-02-28\ntags:\n- attack.privilege-escalation\n- attack.discovery\n- attack.t1033\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\whoami.exe\n  - OriginalFileName: whoami.exe\n  selection_cli:\n    CommandLine|contains:\n    - ' /priv'\n    - ' -priv'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

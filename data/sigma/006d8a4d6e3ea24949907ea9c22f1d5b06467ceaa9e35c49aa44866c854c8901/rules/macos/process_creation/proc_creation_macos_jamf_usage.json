@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_jamf_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jay Pandit",
+                "date": "2023-08-22",
+                "title": "JAMF MDM Execution",
+                "id": "be2e3a5c-9cc7-4d02-842a-68e9cb26ec49"
+            },
+            "rule_text": "title: JAMF MDM Execution\nid: be2e3a5c-9cc7-4d02-842a-68e9cb26ec49\nstatus: test\ndescription: 'Detects execution of the \"jamf\" binary to create user accounts and run\n  commands. For example, the binary can be abused by attackers on the system in order\n  to bypass security controls or remove application control polices.\n\n  '\nreferences:\n- https://github.com/MythicAgents/typhon/\n- https://www.zoocoup.org/casper/jamf_cheatsheet.pdf\n- https://docs.jamf.com/10.30.0/jamf-pro/administrator-guide/Components_Installed_on_Managed_Computers.html\nauthor: Jay Pandit\ndate: 2023-08-22\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /jamf\n    CommandLine|contains:\n    - createAccount\n    - manage\n    - removeFramework\n    - removeMdmProfile\n    - resetPassword\n    - setComputerName\n  condition: selection\nfalsepositives:\n- Legitimate use of the JAMF CLI tool by IT support and administrators\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_script_exec_from_compressed_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2023-02-15",
+                "title": "Manual Execution of Script Inside of a Compressed File",
+                "id": "95724fc1-a258-4674-97db-a30351981c5a"
+            },
+            "rule_text": "title: Manual Execution of Script Inside of a Compressed File\nid: 95724fc1-a258-4674-97db-a30351981c5a\nstatus: test\ndescription: \"This is a threat-hunting query to collect information related to the\\\n  \\ interactive execution of a script from inside a compressed file (zip/rar). Windows\\\n  \\ will automatically run the script using scripting interpreters such as wscript\\\n  \\ and cscript binaries.\\n\\nFrom the query below, the child process is the script\\\n  \\ interpreter that will execute the script. The script extension is also a set of\\\n  \\ standard extensions that Windows OS recognizes. Selections 1-3 contain three different\\\n  \\ execution scenarios.\\n    1. Compressed file opened using 7zip.\\n    2. Compressed\\\n  \\ file opened using WinRar.\\n    3. Compressed file opened using native windows\\\n  \\ File Explorer capabilities.\\n\\nWhen the malicious script is double-clicked, it\\\n  \\ will be extracted to the respected directories as signified by the CommandLine\\\n  \\ on each of the three Selections. It will then be executed using the relevant script\\\n  \\ interpreter.\\\"\\n\"\nreferences:\n- https://app.any.run/tasks/25970bb5-f864-4e9e-9e1b-cc8ff9e6386a\n- https://app.any.run/tasks/fa99cedc-9d2f-4115-a08e-291429ce3692\nauthor: '@kostastsale'\ndate: 2023-02-15\nmodified: 2024-08-13\ntags:\n- attack.execution\n- attack.t1059\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent_7zip:\n    ParentImage|endswith: \\7z*.exe\n    CommandLine|contains: \\AppData\\local\\temp\\7z*\\\n  selection_parent_winrar:\n    ParentImage|endswith: \\winrar.exe\n    CommandLine|contains: \\AppData\\local\\temp\\rar*\\\n  selection_parent_explorer:\n    ParentImage|endswith: \\explorer.exe\n    CommandLine|contains:\n    - \\AppData\\local\\temp\\*.rar\\\n    - \\AppData\\local\\temp\\*.zip\\\n  selection_child:\n    Image|endswith:\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n    CommandLine|endswith:\n    - .hta\n    - .js\n    - .jse\n    - .ps1\n    - .vbe\n    - .vbs\n    - .wsf\n    - .wsh\n  condition: 1 of selection_parent_* and selection_child\nfalsepositives:\n- Batch files may produce a lot of noise, as many applications appear to bundle them\n  as part of their installation process. You should baseline your environment and\n  generate a new query excluding the noisy and expected activity. Some false positives\n  may come up depending on your environment. All results should be investigated thoroughly\n  before filtering out results.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

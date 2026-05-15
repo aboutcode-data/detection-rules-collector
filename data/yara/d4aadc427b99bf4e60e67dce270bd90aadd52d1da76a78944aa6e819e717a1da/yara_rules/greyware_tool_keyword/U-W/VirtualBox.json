@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/U-W/VirtualBox.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirtualBox",
+                "tags": [],
+                "description": "Detection patterns for the tool 'VirtualBox' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "VirtualBox",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule VirtualBox\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'VirtualBox' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"VirtualBox\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\shostPath\\=\\\\\"c\\:\\\\\\\\\"\\swritable\\=\\\\\"true\\\\\"\\sautoMount\\=\\\\\"true\\\\\"/ nocase ascii wide\n\t\t$string2 = /\\ssharedfolder\\sadd\\s.{0,1000}\\s\\-hostpath\\sc\\:\\\\\\s\\-automount/ nocase ascii wide\n\t\t$string3 = /\\\\VboxHeadless\\.exe\\\\\"\\s\\-startvm\\s.{0,1000}\\s\\-v\\soff/ nocase ascii wide\n\t\t$string4 = /\\<SharedFolder\\sname\\=\\\\\".{0,1000}\\\\\"\\shostPath\\=\\\\\"C\\:\\\\\\\\\"\\swritable\\=\\\\\"true\\\\\"\\/\\>/ nocase ascii wide\n\t\t$string5 = \"setextradata global GUI/SuppressMessages \\\"all\\\"\" nocase ascii wide\n\t\t$string6 = \"setextradata global GUI/SuppressMessages all\" nocase ascii wide\n\t\t$string7 = /start\\s\\/min\\s\\\\\"C\\:\\\\Program\\sFiles\\\\Oracle\\\\VirtualBox\\\\VBoxManage\\.exe\\\\\"\\sstartvm\\s.{0,1000}\\s\\-type\\sheadless/ nocase ascii wide\n\t\t$string8 = /VboxHeadless\\.exe\\s\\-startvm\\s.{0,1000}\\s\\-v\\soff/ nocase ascii wide\n\t\t$string9 = /VBoxManage\\sstartvm\\s.{0,1000}\\s\\-\\-type\\sheadless/ nocase ascii wide\n\t\t$string10 = /VBoxManage.{0,1000}setextradata\\sglobal\\sGUI\\/SuppressMessages\\s/ nocase ascii wide\n\t\t$string11 = /VBoxManage\\.exe\\sstartvm\\s.{0,1000}\\s\\-\\-type\\sheadless/ nocase ascii wide\n\t\t$string12 = /VBoxManage\\.exe\\sstartvm\\s.{0,1000}\\s\\-v\\soff/ nocase ascii wide\n\t\t$string13 = /VBoxManage\\.exe\\\\\"\\sstartvm\\s.{0,1000}\\s\\-\\-type\\sheadless/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

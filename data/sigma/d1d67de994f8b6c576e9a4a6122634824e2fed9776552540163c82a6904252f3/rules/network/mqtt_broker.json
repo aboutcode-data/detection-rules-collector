@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/network/mqtt_broker.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2023-11-29",
+                "title": "Public MQTT Broker",
+                "id": "ca5fd1ad-b794-4e81-ad25-6be4cb4d116f"
+            },
+            "rule_text": "title: Public MQTT Broker\nid: ca5fd1ad-b794-4e81-ad25-6be4cb4d116f\ndescription: Public MQTT brokers are used as a C2 channel by WailingCrab malware\nreferences:\n- https://securityintelligence.com/x-force/wailingcrab-malware-misues-mqtt-messaging-protocol/\n- https://malpedia.caad.fkie.fraunhofer.de/details/win.wikiloader\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: '2023-11-29'\nmodified: '2023-11-29'\ntags:\n- attack.command_and_control\nlogsource:\n  category: firewall\ndetection:\n  selection_dns:\n    dest_record:\n    - broker.emqx.io\n    - emqx.public-broker.com\n  selection_fw:\n    dest_ip:\n    - 54.244.173.190\n    - 34.249.184.60\n    - 54.146.113.169\n    dest_port: 1883\n  condition: 1 of selection_*\nfalsepositives:\n- IOT devices and other legitimate uses of public MQTT brokers\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

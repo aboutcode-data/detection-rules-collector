@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_cmdline_special_characters.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton (fp)",
+                "date": "2020-10-15",
+                "title": "Potential PowerShell Command Line Obfuscation",
+                "id": "d7bcd677-645d-4691-a8d4-7a5602b780d1"
+            },
+            "rule_text": "title: Potential PowerShell Command Line Obfuscation\nid: d7bcd677-645d-4691-a8d4-7a5602b780d1\nstatus: test\ndescription: Detects the PowerShell command lines with special characters\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=64\nauthor: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton\n  (fp)\ndate: 2020-10-15\nmodified: 2024-04-15\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1027\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_re:\n  - CommandLine|re: \\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+.*\\+\n  - CommandLine|re: \\{.*\\{.*\\{.*\\{.*\\{.*\\{.*\\{.*\\{.*\\{.*\\{\n  - CommandLine|re: \\^.*\\^.*\\^.*\\^.*\\^\n  - CommandLine|re: '`.*`.*`.*`.*`'\n  filter_optional_amazonSSM:\n    ParentImage: C:\\Program Files\\Amazon\\SSM\\ssm-document-worker.exe\n  filter_optional_defender_atp:\n    CommandLine|contains:\n    - new EventSource(\"Microsoft.Windows.Sense.Client.Management\"\n    - public static extern bool InstallELAMCertificateInfo(SafeFileHandle handle);\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Amazon SSM Document Worker\n- Windows Defender ATP\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

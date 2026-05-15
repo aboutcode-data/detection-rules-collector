@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxdeployment_server_policy_block.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-01-11",
+                "title": "Deployment Of The AppX Package Was Blocked By The Policy",
+                "id": "e021bbb5-407f-41f5-9dc9-1864c45a7a51"
+            },
+            "rule_text": "title: Deployment Of The AppX Package Was Blocked By The Policy\nid: e021bbb5-407f-41f5-9dc9-1864c45a7a51\nstatus: test\ndescription: 'Detects an appx package deployment that was blocked by the local computer\n  policy.\n\n  The following events indicate that an AppX package deployment was blocked by a policy:\n\n  - Event ID 441: The package deployment operation is blocked by the \"Allow deployment\n  operations in special profiles\" policy\n\n  - Event ID 442: Deployments to non-system volumes are blocked by the \"Disable deployment\n  of Windows Store apps to non-system volumes\" policy.\"\n\n  - Event ID 453: Package blocked by a platform policy.\n\n  - Event ID 454: Package blocked by a platform policy.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/appxpkg/troubleshooting\n- https://github.com/nasbench/EVTX-ETW-Resources/blob/7a806a148b3d9d381193d4a80356016e6e8b1ee8/ETWEventsList/CSV/Windows11/22H2/W11_22H2_Pro_20220920_22621.382/Providers/Microsoft-Windows-AppXDeployment-Server.csv\nauthor: frack113\ndate: 2023-01-11\ntags:\n- attack.defense-impairment\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID:\n    - 441\n    - 442\n    - 453\n    - 454\n  condition: selection\nfalsepositives:\n- Unlikely, since this event notifies about blocked application deployment. Tune your\n  applocker rules to avoid blocking legitimate applications.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

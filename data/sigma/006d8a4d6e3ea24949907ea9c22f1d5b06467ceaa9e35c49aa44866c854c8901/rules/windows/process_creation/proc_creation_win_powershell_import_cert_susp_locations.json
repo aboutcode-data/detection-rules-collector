@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_import_cert_susp_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-09",
+                "title": "Root Certificate Installed From Susp Locations",
+                "id": "5f6a601c-2ecb-498b-9c33-660362323afa"
+            },
+            "rule_text": "title: Root Certificate Installed From Susp Locations\nid: 5f6a601c-2ecb-498b-9c33-660362323afa\nstatus: test\ndescription: Adversaries may install a root certificate on a compromised system to\n  avoid warnings when connecting to adversary controlled web servers.\nreferences:\n- https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/\n- https://learn.microsoft.com/en-us/powershell/module/pki/import-certificate?view=windowsserver2022-ps\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-09\nmodified: 2023-01-16\ntags:\n- attack.defense-impairment\n- attack.t1553.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - Import-Certificate\n    - ' -FilePath '\n    - Cert:\\LocalMachine\\Root\n    CommandLine|contains:\n    - \\AppData\\Local\\Temp\\\n    - :\\Windows\\TEMP\\\n    - \\Desktop\\\n    - \\Downloads\\\n    - \\Perflogs\\\n    - :\\Users\\Public\\\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

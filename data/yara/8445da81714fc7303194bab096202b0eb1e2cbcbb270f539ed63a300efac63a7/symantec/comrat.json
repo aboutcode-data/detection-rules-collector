@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/symantec/comrat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "comrat",
+                "tags": [],
+                "author": "Symantec",
+                "malware": "COMRAT",
+                "Reference": "https://www.symantec.com/content/en/us/enterprise/media/security_response/whitepapers/waterbug-attack-group.pdf"
+            },
+            "rule_text": "rule comrat\n{\n\tmeta:\n\t\tauthor = \"Symantec\"\n\t\tmalware = \"COMRAT\"\n\t\tReference = \"https://www.symantec.com/content/en/us/enterprise/media/security_response/whitepapers/waterbug-attack-group.pdf\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$b = {C645????}\n\t\t$c = {C685??FEFFFF??}\n\t\t$e = {89A8??00000068??00000056FFD78B}\n\t\t$f = {00004889????030000488B}\n\n\tcondition:\n\t\t($mz at 0 ) and ( ( #c > 200 and #b > 200 ) and ( #e > 15 or #f > 30 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

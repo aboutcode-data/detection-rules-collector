@@ -1,0 +1,32 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/infostealers.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "infostealer_xor_patterns",
+                "tags": [],
+                "author": "jeFF0Falltrades",
+                "hash": "d5d1d28270adc1588cf6be33a876587a3c689f6a51ea797eae6b64b5b15805b1",
+                "description": "The XOR and string patterns shown here appear to be unique to certain information-stealing malware families, namely LokiBot and Pony/Fareit. The XOR patterns were observed in a several loaders and payloads for LokiBot, but have also appeared (less frequently) in Pony/Fareit loaders and samples. The two accompanying rules below can be used to further classify the final payloads."
+            },
+            "rule_text": "rule infostealer_xor_patterns\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\t\thash = \"d5d1d28270adc1588cf6be33a876587a3c689f6a51ea797eae6b64b5b15805b1\"\n\t\tdescription = \"The XOR and string patterns shown here appear to be unique to certain information-stealing malware families, namely LokiBot and Pony/Fareit. The XOR patterns were observed in a several loaders and payloads for LokiBot, but have also appeared (less frequently) in Pony/Fareit loaders and samples. The two accompanying rules below can be used to further classify the final payloads.\"\n\n\tstrings:\n\t\t$hx_get_input = { ff 15 58 7f 47 00 a1 60 7f 47 00 2b c7 3d 43 01 00 00 }\n\t\t$hx_xor_1 = { 80 31 45 FF 45 FC 81 7D FC 07 5E 00 00 }\n\t\t$hx_xor_2 = { c8 51 44 c6 a7 4a cf 51 7f 75 55 05 }\n\t\t$hx_xor_3 = { 8d 14 01 83 e2 0f 8a 14 3a 30 10 40 }\n\t\t$hx_xor_4 = { 81 F1 54 AD 58 43 D1 E9 48 }\n\n\tcondition:\n\t\t$hx_xor_4 or 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "infostealer_loki",
+                "tags": []
+            },
+            "rule_text": "rule infostealer_loki\n{\n\tstrings:\n\t\t$str_builder = \"fuckav.ru\" nocase wide ascii\n\t\t$str_cyb_fox = \"%s\\\\8pecxstudios\\\\Cyberfox\\\\profiles.ini\" wide ascii\n\t\t$str_c2 = \"fre.php\" wide ascii\n\n\tcondition:\n\t\tany of them and infostealer_xor_patterns\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "infostealer_pony",
+                "tags": []
+            },
+            "rule_text": "rule infostealer_pony\n{\n\tstrings:\n\t\t$str_softx = \"Software\\\\SoftX.org\\\\FTPClient\\\\Sites\" wide ascii\n\t\t$str_ftp_plus = \"FTP++.Link\\\\shell\\\\open\\\\command\" wide ascii\n\t\t$str_c2 = \"gate.php\" wide ascii\n\n\tcondition:\n\t\tany of them and infostealer_xor_patterns\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

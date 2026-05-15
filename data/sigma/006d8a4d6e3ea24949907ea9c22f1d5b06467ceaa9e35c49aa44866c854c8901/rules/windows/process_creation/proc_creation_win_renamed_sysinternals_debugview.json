@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_sysinternals_debugview.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-05-28",
+                "title": "Renamed SysInternals DebugView Execution",
+                "id": "cd764533-2e07-40d6-a718-cfeec7f2da7f"
+            },
+            "rule_text": "title: Renamed SysInternals DebugView Execution\nid: cd764533-2e07-40d6-a718-cfeec7f2da7f\nstatus: test\ndescription: Detects suspicious renamed SysInternals DebugView execution\nreferences:\n- https://www.epicturla.com/blog/sysinturla\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-05-28\nmodified: 2023-02-14\ntags:\n- attack.resource-development\n- attack.t1588.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Product: Sysinternals DebugView\n  filter:\n    OriginalFileName: Dbgview.exe\n    Image|endswith: \\Dbgview.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

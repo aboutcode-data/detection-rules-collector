@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_dialer_initiated_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "CertainlyP",
+                "date": "2024-04-26",
+                "title": "Outbound Network Connection Initiated By Microsoft Dialer",
+                "id": "37e4024a-6c80-4d8f-b95d-2e7e94f3a8d1"
+            },
+            "rule_text": "title: Outbound Network Connection Initiated By Microsoft Dialer\nid: 37e4024a-6c80-4d8f-b95d-2e7e94f3a8d1\nstatus: test\ndescription: 'Detects outbound network connection initiated by Microsoft Dialer.\n\n  The Microsoft Dialer, also known as Phone Dialer, is a built-in utility application\n  included in various versions of the Microsoft Windows operating system. Its primary\n  function is to provide users with a graphical interface for managing phone calls\n  via a modem or a phone line connected to the computer.\n\n  This is an outdated process in the current conext of it''s usage and is a common\n  target for info stealers for process injection, and is used to make C2 connections,\n  common example is \"Rhadamanthys\"\n\n  '\nreferences:\n- https://tria.ge/240301-rk34sagf5x/behavioral2\n- https://app.any.run/tasks/6720b85b-9c53-4a12-b1dc-73052a78477d\n- https://research.checkpoint.com/2023/rhadamanthys-v0-5-0-a-deep-dive-into-the-stealers-components/\n- https://strontic.github.io/xcyclopedia/library/dialer.exe-0B69655F912619756C704A0BF716B61F.html\nauthor: CertainlyP\ndate: 2024-04-26\ntags:\n- attack.execution\n- attack.command-and-control\n- attack.t1071.001\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: :\\Windows\\System32\\dialer.exe\n    Initiated: 'true'\n  filter_main_local_ranges:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 169.254.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- In Modern Windows systems, unable to see legitimate usage of this process, However,\n  if an organization has legitimate purpose for this there can be false positives.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

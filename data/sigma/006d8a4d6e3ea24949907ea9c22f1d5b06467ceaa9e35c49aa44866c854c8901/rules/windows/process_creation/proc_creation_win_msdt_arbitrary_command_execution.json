@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msdt_arbitrary_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-05-29",
+                "title": "Potential Arbitrary Command Execution Using Msdt.EXE",
+                "id": "258fc8ce-8352-443a-9120-8a11e4857fa5"
+            },
+            "rule_text": "title: Potential Arbitrary Command Execution Using Msdt.EXE\nid: 258fc8ce-8352-443a-9120-8a11e4857fa5\nstatus: test\ndescription: Detects processes leveraging the \"ms-msdt\" handler or the \"msdt.exe\"\n  binary to execute arbitrary commands as seen in the follina (CVE-2022-30190) vulnerability\nreferences:\n- https://twitter.com/nao_sec/status/1530196847679401984\n- https://app.any.run/tasks/713f05d2-fe78-4b9d-a744-f7c133e3fafb/\n- https://twitter.com/_JohnHammond/status/1531672601067675648\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-05-29\nmodified: 2024-03-13\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\msdt.exe\n  - OriginalFileName: msdt.exe\n  selection_cmd_inline:\n    CommandLine|contains: IT_BrowseForFile=\n  selection_cmd_answerfile_flag:\n    CommandLine|contains: ' PCWDiagnostic'\n  selection_cmd_answerfile_param:\n    CommandLine|contains|windash: ' -af '\n  condition: selection_img and (selection_cmd_inline or all of selection_cmd_answerfile_*)\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2022-30190"
+            ]
+        }
+    ]
+}

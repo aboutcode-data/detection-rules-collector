@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_susp_parent_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, Harish Segar",
+                "date": "2020-03-20",
+                "title": "Suspicious PowerShell Parent Process",
+                "id": "754ed792-634f-40ae-b3bc-e0448d33f695"
+            },
+            "rule_text": "title: Suspicious PowerShell Parent Process\nid: 754ed792-634f-40ae-b3bc-e0448d33f695\nrelated:\n- id: 692f0bec-83ba-4d04-af7e-e884a96059b6\n  type: derived\nstatus: test\ndescription: Detects a suspicious or uncommon parent processes of PowerShell\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=26\nauthor: Teymur Kheirkhabarov, Harish Segar\ndate: 2020-03-20\nmodified: 2023-02-04\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n  - ParentImage|contains: tomcat\n  - ParentImage|endswith:\n    - \\amigo.exe\n    - \\browser.exe\n    - \\chrome.exe\n    - \\firefox.exe\n    - \\httpd.exe\n    - \\iexplore.exe\n    - \\jbosssvc.exe\n    - \\microsoftedge.exe\n    - \\microsoftedgecp.exe\n    - \\MicrosoftEdgeSH.exe\n    - \\mshta.exe\n    - \\nginx.exe\n    - \\outlook.exe\n    - \\php-cgi.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\safari.exe\n    - \\services.exe\n    - \\sqlagent.exe\n    - \\sqlserver.exe\n    - \\sqlservr.exe\n    - \\vivaldi.exe\n    - \\w3wp.exe\n  selection_powershell:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - CommandLine|contains:\n    - /c powershell\n    - /c pwsh\n  - Description: Windows PowerShell\n  - Product: PowerShell Core 6\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  condition: all of selection_*\nfalsepositives:\n- Other scripts\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/dragos/dragos_crashoverride_moduleStrings.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "dragos_crashoverride_moduleStrings",
+                "tags": [],
+                "description": "IEC-104 Interaction Module Program Strings",
+                "author": "Dragos Inc",
+                "reference": "https://troopers.de/downloads/troopers18/TR18_DM_Mind-The-Gap.pdf"
+            },
+            "rule_text": "rule dragos_crashoverride_moduleStrings\n{\n\tmeta:\n\t\tdescription = \"IEC-104 Interaction Module Program Strings\"\n\t\tauthor = \"Dragos Inc\"\n\t\treference = \"https://troopers.de/downloads/troopers18/TR18_DM_Mind-The-Gap.pdf\"\n\n\tstrings:\n\t\t$s1 = \"IEC-104 client: ip=%s; port=%s; ASDU=%u\" nocase wide ascii\n\t\t$s2 = \" MSTR ->> SLV\" nocase wide ascii\n\t\t$s3 = \" MSTR <<- SLV\" nocase wide ascii\n\t\t$s4 = \"Unknown APDU format !!!\" nocase wide ascii\n\t\t$s5 = \"iec104.log\" nocase wide ascii\n\n\tcondition:\n\t\tany of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

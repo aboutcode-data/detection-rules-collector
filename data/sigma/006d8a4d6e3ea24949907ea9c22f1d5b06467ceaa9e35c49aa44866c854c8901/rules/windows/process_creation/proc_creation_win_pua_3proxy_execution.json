@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_3proxy_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-09-13",
+                "title": "PUA - 3Proxy Execution",
+                "id": "f38a82d2-fba3-4781-b549-525efbec8506"
+            },
+            "rule_text": "title: PUA - 3Proxy Execution\nid: f38a82d2-fba3-4781-b549-525efbec8506\nstatus: test\ndescription: Detects the use of 3proxy, a tiny free proxy server\nreferences:\n- https://github.com/3proxy/3proxy\n- https://blog.talosintelligence.com/2022/09/lazarus-three-rats.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-09-13\nmodified: 2023-02-21\ntags:\n- attack.command-and-control\n- attack.t1572\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\3proxy.exe\n  selection_pe:\n    Description: 3proxy - tiny proxy server\n  selection_params:\n    CommandLine|contains: .exe -i127.0.0.1 -p\n  condition: 1 of selection_*\nfalsepositives:\n- Administrative activity\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

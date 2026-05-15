@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_get_localgroup_member_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-10",
+                "title": "Suspicious Reconnaissance Activity Using Get-LocalGroupMember Cmdlet",
+                "id": "c8a180d6-47a3-4345-a609-53f9c3d834fc"
+            },
+            "rule_text": "title: Suspicious Reconnaissance Activity Using Get-LocalGroupMember Cmdlet\nid: c8a180d6-47a3-4345-a609-53f9c3d834fc\nrelated:\n- id: cef24b90-dddc-4ae1-a09a-8764872f69fc\n  type: similar\nstatus: test\ndescription: Detects suspicious reconnaissance command line activity on Windows systems\n  using the PowerShell Get-LocalGroupMember Cmdlet\nreferences:\n- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-10\ntags:\n- attack.discovery\n- attack.t1087.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmdlet:\n    CommandLine|contains: 'Get-LocalGroupMember '\n  selection_group:\n    CommandLine|contains:\n    - domain admins\n    - ' administrator'\n    - ' administrateur'\n    - enterprise admins\n    - Exchange Trusted Subsystem\n    - Remote Desktop Users\n    - \"Utilisateurs du Bureau \\xE0 distance\"\n    - Usuarios de escritorio remoto\n  condition: all of selection_*\nfalsepositives:\n- Administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

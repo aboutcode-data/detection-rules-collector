@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_plugx_wsc_proxy_dll_search_order_hijacking.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "PlugX DLL Search Order Hijacking Using Avast wsc_proxy (RedCanary Threat Detection Report)",
+                "id": "c518ac74-2e2b-4197-84d7-ea5118c557eb"
+            },
+            "rule_text": "title: PlugX DLL Search Order Hijacking Using Avast wsc_proxy (RedCanary Threat Detection\n  Report)\nid: c518ac74-2e2b-4197-84d7-ea5118c557eb\nstatus: experimental\ndescription: \"Detects possible DLL Search Order hijacking using Avast antivirus wsc_proxy\\\n  \\ application. \\nThis technique is associated with PlugX. Part of the RedCanary\\\n  \\ 2023 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/raspberry-robin/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.s0013\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wsc_proxy.exe\n  filter:\n    Image|contains: \\program files\\\n  condition: selection and not filter\nfalsepositives:\n- Could be the result of an administrator installing the application in a custom path\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

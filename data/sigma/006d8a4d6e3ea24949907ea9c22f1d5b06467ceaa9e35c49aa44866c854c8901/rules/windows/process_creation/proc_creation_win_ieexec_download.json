@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ieexec_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-05-16",
+                "title": "File Download And Execution Via IEExec.EXE",
+                "id": "9801abb8-e297-4dbf-9fbd-57dde0e830ad"
+            },
+            "rule_text": "title: File Download And Execution Via IEExec.EXE\nid: 9801abb8-e297-4dbf-9fbd-57dde0e830ad\nstatus: test\ndescription: Detects execution of the IEExec utility to download and execute files\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Ieexec/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-05-16\nmodified: 2023-11-09\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\IEExec.exe\n  - OriginalFileName: IEExec.exe\n  selection_cli:\n    CommandLine|contains:\n    - http://\n    - https://\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

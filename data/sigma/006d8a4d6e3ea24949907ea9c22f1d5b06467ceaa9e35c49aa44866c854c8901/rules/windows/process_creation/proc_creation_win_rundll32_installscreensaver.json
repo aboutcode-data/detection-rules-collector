@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_installscreensaver.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @securepeacock, SCYTHE @scythe_io, TactiKoolSec",
+                "date": "2022-04-28",
+                "title": "Rundll32 InstallScreenSaver Execution",
+                "id": "15bd98ea-55f4-4d37-b09a-e7caa0fa2221"
+            },
+            "rule_text": "title: Rundll32 InstallScreenSaver Execution\nid: 15bd98ea-55f4-4d37-b09a-e7caa0fa2221\nstatus: test\ndescription: An attacker may execute an application as a SCR File using rundll32.exe\n  desk.cpl,InstallScreenSaver\nreferences:\n- https://lolbas-project.github.io/lolbas/Libraries/Desk/\n- https://github.com/redcanaryco/atomic-red-team/blob/0f229c0e42bfe7ca736a14023836d65baa941ed2/atomics/T1218.011/T1218.011.md#atomic-test-13---rundll32-with-deskcpl\nauthor: Christopher Peacock @securepeacock, SCYTHE @scythe_io, TactiKoolSec\ndate: 2022-04-28\nmodified: 2023-02-09\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains: InstallScreenSaver\n  condition: all of selection_*\nfalsepositives:\n- Legitimate installation of a new screensaver\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/registry/reg_xworm_module_storage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Leandro Ferreira",
+                "date": "2025-12-12",
+                "title": "Xworm Storage of Modules in registry",
+                "id": "2ce3df91-81c7-4327-92ef-dd748957dbcb"
+            },
+            "rule_text": "title: Xworm Storage of Modules in registry\nid: 2ce3df91-81c7-4327-92ef-dd748957dbcb\ndescription: Detects Xworm registry operations in relation to the storage of implant\n  plugins\nstatus: stable\nauthor: Leandro Ferreira\nreferences:\n- https://vx-underground.org/Builders/XWorm/XWorm%20V6.0\n- https://thehackernews.com/2025/10/xworm-60-returns-with-35-plugins-and.html\ndate: 2025-12-12\nmodified: 2025-12-12\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|re: (?i)Software\\\\[A-F0-9]{20}\\\\[A-F0-9]{64}$\n    Details: Binary Data\n  condition: selection\nfalsepositives:\n- Legitimate applications that so happen to make use of this pattern\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

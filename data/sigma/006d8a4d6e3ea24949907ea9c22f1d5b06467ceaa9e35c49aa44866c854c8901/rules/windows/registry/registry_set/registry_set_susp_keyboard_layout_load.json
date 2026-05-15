@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_susp_keyboard_layout_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-10-12",
+                "title": "Suspicious Keyboard Layout Load",
+                "id": "34aa0252-6039-40ff-951f-939fd6ce47d8"
+            },
+            "rule_text": "title: Suspicious Keyboard Layout Load\nid: 34aa0252-6039-40ff-951f-939fd6ce47d8\nstatus: test\ndescription: Detects the keyboard preload installation with a suspicious keyboard\n  layout, e.g. Chinese, Iranian or Vietnamese layout load in user session on systems\n  maintained by US staff only\nreferences:\n- https://renenyffenegger.ch/notes/Windows/registry/tree/HKEY_CURRENT_USER/Keyboard-Layout/Preload/index\n- https://github.com/SwiftOnSecurity/sysmon-config/pull/92/files\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-10-12\nmodified: 2023-08-17\ntags:\n- attack.resource-development\n- attack.t1588.002\nlogsource:\n  category: registry_set\n  product: windows\n  definition: 'Requirements: Sysmon config that monitors \\Keyboard Layout\\Preload\n    subkey of the HKLU hives - see https://github.com/SwiftOnSecurity/sysmon-config/pull/92/files'\ndetection:\n  selection_registry:\n    TargetObject|contains:\n    - \\Keyboard Layout\\Preload\\\n    - \\Keyboard Layout\\Substitutes\\\n    Details|contains:\n    - 00000429\n    - 00050429\n    - 0000042a\n  condition: selection_registry\nfalsepositives:\n- Administrators or users that actually use the selected keyboard layouts (heavily\n  depends on the organisation's user base)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

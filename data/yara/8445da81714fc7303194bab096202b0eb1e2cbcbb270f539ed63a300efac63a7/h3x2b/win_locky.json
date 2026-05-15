@@ -1,0 +1,41 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/h3x2b/win_locky.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "locky_panel__dbaccess",
+                "tags": [
+                    "malware"
+                ],
+                "description": "Identify locky/ransomware panel in php",
+                "author": "@h3x2b <tracker _AT h3x.eu>"
+            },
+            "rule_text": "rule locky_panel__dbaccess : malware\n{\n\tmeta:\n\t\tdescription = \"Identify locky/ransomware panel in php\"\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\n\tstrings:\n\t\t$s01 = \"userinfo\"\n\t\t$s02 = \"db_query_single\"\n\t\t$s03 = \"SELECT * FROM users WHERE id=?\"\n\t\t$s04 = \"SESSION['uid']\"\n\t\t$s05 = \"goto not_logged_in\"\n\t\t$s06 = \"SELECT id,pass,enabled FROM users WHERE name=?\"\n\t\t$s07 = \"count(id) as Total\"\n\t\t$s08 = \"count(NULLIF(completed,0)) as Completed\"\n\t\t$s09 = \"count(NULLIF(btc_payed,0)) as Paid\"\n\t\t$s10 = \"sum(btc_payed)\"\n\t\t$s11 = \"Amount BTC\"\n\t\t$s12 = \"SELECT affid as User\"\n\t\t$s13 = \"columns FROM clients GROUP BY affid\"\n\t\t$s14 = \"format_btc(strval(\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "locky_panel__botgeneration",
+                "tags": [
+                    "malware"
+                ],
+                "description": "Identify locky/ransomware builder",
+                "author": "@h3x2b <tracker _AT h3x.eu>"
+            },
+            "rule_text": "rule locky_panel__botgeneration : malware\n{\n\tmeta:\n\t\tdescription = \"Identify locky/ransomware builder\"\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\n\tstrings:\n\t\t$s01 = \"make_bot_exe\"\n\t\t$s02 = \"BOT_EXES_PATH\"\n\t\t$s03 = \"Locky_{*}.exe\"\n\t\t$s04 = \"Location:\"\n\t\t$s05 = \"BOT_EXES_URL\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "locky_panel__bitcoins",
+                "tags": [
+                    "malware"
+                ],
+                "description": "Identify locky/ransomware panel on the bitcoins handling",
+                "author": "@h3x2b <tracker _AT h3x.eu>"
+            },
+            "rule_text": "rule locky_panel__bitcoins : malware\n{\n\tmeta:\n\t\tdescription = \"Identify locky/ransomware panel on the bitcoins handling\"\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\n\tstrings:\n\t\t$s01 = \"registered\"\n\t\t$s02 = \"visited\"\n\t\t$s03 = \"ip\"\n\t\t$s04 = \"affid\"\n\t\t$s05 = \"completed\"\n\t\t$s06 = \"lang\"\n\t\t$s07 = \"is_server\"\n\t\t$s08 = \"corporate\"\n\t\t$s09 = \"os_ver\"\n\t\t$s10 = \"is_x64\"\n\t\t$s11 = \"btc_address\"\n\t\t$s12 = \"btc_needed\"\n\t\t$s13 = \"btc_payed\"\n\t\t$s14 = \"txfree\"\n\t\t$s15 = \"txid\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

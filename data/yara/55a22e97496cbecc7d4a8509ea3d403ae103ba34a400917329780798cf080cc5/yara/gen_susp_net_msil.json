@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_susp_net_msil.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_NET_Msil_Suspicious_Use_StrReverse",
+                "tags": [],
+                "description": "Detects mixed use of Microsoft.CSharp and VisualBasic to use StrReverse",
+                "author": "dr4k0nia, modified by Florian Roth",
+                "reference": "https://github.com/dr4k0nia/yara-rules",
+                "version": "1.1",
+                "date": "01/31/2023",
+                "modified": "02/22/2023",
+                "score": 70,
+                "hash": "02ce0980427dea835fc9d9eed025dd26672bf2c15f0b10486ff8107ce3950701",
+                "id": "830dec40-4412-59c1-8b4d-a237f14acd30"
+            },
+            "rule_text": "rule SUSP_NET_Msil_Suspicious_Use_StrReverse\n{\n\tmeta:\n\t\tdescription = \"Detects mixed use of Microsoft.CSharp and VisualBasic to use StrReverse\"\n\t\tauthor = \"dr4k0nia, modified by Florian Roth\"\n\t\treference = \"https://github.com/dr4k0nia/yara-rules\"\n\t\tversion = \"1.1\"\n\t\tdate = \"01/31/2023\"\n\t\tmodified = \"02/22/2023\"\n\t\tscore = 70\n\t\thash = \"02ce0980427dea835fc9d9eed025dd26672bf2c15f0b10486ff8107ce3950701\"\n\t\tid = \"830dec40-4412-59c1-8b4d-a237f14acd30\"\n\n\tstrings:\n\t\t$a1 = \", PublicKeyToken=\"\n\t\t$a2 = \".NETFramework,Version=\"\n\t\t$csharp = \"Microsoft.CSharp\"\n\t\t$vbnet = \"Microsoft.VisualBasic\"\n\t\t$strreverse = \"StrReverse\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 50MB and all of ( $a* ) and $csharp and $vbnet and $strreverse\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

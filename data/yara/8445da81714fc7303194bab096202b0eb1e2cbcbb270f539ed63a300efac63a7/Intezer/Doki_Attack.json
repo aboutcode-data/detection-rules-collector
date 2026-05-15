@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Intezer/Doki_Attack.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Doki_Attack",
+                "tags": [],
+                "copyright": "Intezer Labs",
+                "author": "Intezer Labs",
+                "reference": "https://www.intezer.com"
+            },
+            "rule_text": "rule Doki_Attack\n{\n\tmeta:\n\t\tcopyright = \"Intezer Labs\"\n\t\tauthor = \"Intezer Labs\"\n\t\treference = \"https://www.intezer.com\"\n\n\tstrings:\n\t\t$a1 = /curl --retry 3 -m 60 -o \\/tmp\\w{6}\\/tmp\\/tmp.{37}.*\\\\{3}\\\"http:\\/{2}.*\\.ngrok\\.io[\\s\\S]*\\\\{3}\\\";/ nocase\n\t\t$a2 = /rm -rf \\/tmp\\w{6}\\/etc\\/crontab;/ nocase\n\t\t$s1 = /echo \\\\{3}\\\"(\\*\\s){4}\\* root sh \\/tmp\\/tmp.*\\\\{3}\\\" \\\\{2}u003e\\/tmp\\w{6}\\/etc\\/cron.d\\/1m;/ nocase\n\t\t$s2 = /echo \\\\{3}\\\"(\\*\\s){4}\\* root sh \\/tmp\\/tmp\\w*\\\\{3}\\\" \\\\{2}u003e\\/tmp\\w{6}\\/etc\\/crontab;/ nocase\n\t\t$s3 = /chroot \\/tmp\\w{6} sh -c \\\\{3}\\\"cron \\|\\| crond/ nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

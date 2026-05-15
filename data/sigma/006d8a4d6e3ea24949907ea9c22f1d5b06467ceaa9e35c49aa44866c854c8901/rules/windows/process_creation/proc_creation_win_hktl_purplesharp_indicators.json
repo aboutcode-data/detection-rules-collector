@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_purplesharp_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-06-18",
+                "title": "HackTool - PurpleSharp Execution",
+                "id": "ff23ffbc-3378-435e-992f-0624dcf93ab4"
+            },
+            "rule_text": "title: HackTool - PurpleSharp Execution\nid: ff23ffbc-3378-435e-992f-0624dcf93ab4\nstatus: test\ndescription: Detects the execution of the PurpleSharp adversary simulation tool\nreferences:\n- https://github.com/mvelazc0/PurpleSharp\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-06-18\nmodified: 2023-02-05\ntags:\n- attack.t1587\n- attack.resource-development\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|contains: \\purplesharp\n  - OriginalFileName: PurpleSharp.exe\n  selection_cli:\n    CommandLine|contains:\n    - xyz123456.exe\n    - PurpleSharp\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

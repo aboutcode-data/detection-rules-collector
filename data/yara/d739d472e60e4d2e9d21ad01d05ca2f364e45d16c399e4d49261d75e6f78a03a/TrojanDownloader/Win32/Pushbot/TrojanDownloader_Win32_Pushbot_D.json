@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Pushbot/TrojanDownloader_Win32_Pushbot_D.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Pushbot_D",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Pushbot.D,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Pushbot_D\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Pushbot.D,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {43 00 3a 00 5c 00 41 00 6c 00 6c 00 20 00 46 00 69 00 6c 00 65 00 73 00 5c 00 [0-20] 2e 00 76 00 62 00 70 00 }\n\t\t$a_00_1 = {74 68 70 74 2f 3a 77 2f 77 77 6d 2e 73 79 61 70 65 63 63 2e 6d 6f 62 2f 6f 72 73 77 2f 65 72 62 77 6f 65 73 61 2e 70 73 }\n\t\t$a_00_2 = {74 68 70 74 2f 3a 39 2f 2e 33 37 31 2e 34 34 39 38 2e 2f 37 64 7e 6e 65 72 69 6c 75 2f }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_pdqdeploy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-22",
+                "title": "New PDQDeploy Service - Server Side",
+                "id": "ee9ca27c-9bd7-4cee-9b01-6e906be7cae3"
+            },
+            "rule_text": "title: New PDQDeploy Service - Server Side\nid: ee9ca27c-9bd7-4cee-9b01-6e906be7cae3\nstatus: test\ndescription: 'Detects a PDQDeploy service installation which indicates that PDQDeploy\n  was installed on the machines.\n\n  PDQDeploy can be abused by attackers to remotely install packages or execute commands\n  on target machines\n\n  '\nreferences:\n- https://documentation.pdq.com/PDQDeploy/13.0.3.0/index.html?windows-services.htm\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-22\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1543.003\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_root:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_service:\n  - ImagePath|contains: PDQDeployService.exe\n  - ServiceName:\n    - PDQDeploy\n    - PDQ Deploy\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of the tool\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

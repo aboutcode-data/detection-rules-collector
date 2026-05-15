@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Delfobfus/Trojan_Win32_Delfobfus_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Delfobfus_C",
+                "tags": [],
+                "description": "Trojan:Win32/Delfobfus.C,SIGNATURE_TYPE_PEHSTR_EXT,17 00 17 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Delfobfus_C\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Delfobfus.C,SIGNATURE_TYPE_PEHSTR_EXT,17 00 17 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {40 00 02 00 01 00 [0-20] e8 ?? ?? ff ff 84 c0 0f 84 ?? ?? 00 00 [0-10] a1 ?? ?? 40 00 50 a1 ?? ?? 40 00 50 ff 15 }\n\t\t$a_03_1 = {6a 04 68 00 30 00 00 a1 ?? ?? 40 00 8b 40 50 50 a1 ?? ?? 40 00 8b 40 34 50 a1 ?? ?? 40 00 50 ff 15 ?? ?? 40 00 a3 ?? ?? 40 00 68 ?? ?? 40 00 }\n\t\t$a_01_2 = {8b 07 8a 44 18 ff 34 1c 34 0d 8b f0 81 e6 ff 00 00 00 }\n\t\t$a_01_3 = {8b 55 f8 8b 4d fc 8b 09 8b 5d f8 8a 4c 19 ff 80 f1 0d 80 f1 1c 88 4c 10 ff }\n\t\t$a_01_4 = {83 7d f4 21 75 09 c7 45 f4 01 00 00 00 eb 09 83 7d f4 21 74 03 ff 45 f4 }\n\t\t$a_01_5 = {83 fd 21 75 07 bd 01 00 00 00 eb 06 83 fd 21 74 01 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 2 + ( #a_01_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 ) >= 23\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

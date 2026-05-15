@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/dns_query/dns_query_win_kerberos_coercion_via_dns_object_spoofing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-06-20",
+                "title": "Suspicious DNS Query Indicating Kerberos Coercion via DNS Object SPN Spoofing",
+                "id": "e7a21b5f-d8c4-4ae5-b8d9-93c5d3f28e1c"
+            },
+            "rule_text": "title: Suspicious DNS Query Indicating Kerberos Coercion via DNS Object SPN Spoofing\nid: e7a21b5f-d8c4-4ae5-b8d9-93c5d3f28e1c\nrelated:\n- id: b07e58cf-cacc-4135-8473-ccb2eba63dd2\n  type: similar\n- id: 5588576c-5898-4fac-bcdd-7475a60e8f43\n  type: similar\nstatus: experimental\ndescription: 'Detects DNS queries containing patterns associated with Kerberos coercion\n  attacks via DNS object spoofing.\n\n  The pattern \"1UWhRCAAAAA..BAAAA\" is a base64-encoded signature that corresponds\n  to a marshaled CREDENTIAL_TARGET_INFORMATION structure.\n\n  Attackers can use this technique to coerce authentication from victim systems to\n  attacker-controlled hosts.\n\n  It is one of the strong indicators of a Kerberos coercion attack, where adversaries\n  manipulate DNS records\n\n  to spoof Service Principal Names (SPNs) and redirect authentication requests like\n  CVE-2025-33073.\n\n  '\nreferences:\n- https://www.synacktiv.com/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025\n- https://googleprojectzero.blogspot.com/2021/10/using-kerberos-for-authentication-relay.html\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-06-20\ntags:\n- attack.collection\n- attack.credential-access\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1557.001\n- attack.t1187\nlogsource:\n  product: windows\n  category: dns_query\ndetection:\n  selection:\n    QueryName|contains|all:\n    - UWhRCA\n    - BAAAA\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2025-33073"
+            ]
+        }
+    ]
+}

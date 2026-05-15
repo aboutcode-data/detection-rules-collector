@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_invocation_specific.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-05",
+                "title": "Suspicious PowerShell Invocations - Specific - ProcessCreation",
+                "id": "536e2947-3729-478c-9903-745aaffe60d2"
+            },
+            "rule_text": "title: Suspicious PowerShell Invocations - Specific - ProcessCreation\nid: 536e2947-3729-478c-9903-745aaffe60d2\nrelated:\n- id: fce5f582-cc00-41e1-941a-c6fabf0fdb8c\n  type: obsolete\n- id: ae7fbf8e-f3cb-49fd-8db4-5f3bed522c71\n  type: similar\n- id: 8ff28fdd-e2fa-4dfa-aeda-ef3d61c62090\n  type: similar\nstatus: test\ndescription: Detects suspicious PowerShell invocation command parameters\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-05\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_convert_b64:\n    CommandLine|contains|all:\n    - -nop\n    - ' -w '\n    - hidden\n    - ' -c '\n    - '[Convert]::FromBase64String'\n  selection_iex:\n    CommandLine|contains|all:\n    - ' -w '\n    - hidden\n    - -noni\n    - -nop\n    - ' -c '\n    - iex\n    - New-Object\n  selection_enc:\n    CommandLine|contains|all:\n    - ' -w '\n    - hidden\n    - -ep\n    - bypass\n    - -Enc\n  selection_reg:\n    CommandLine|contains|all:\n    - powershell\n    - reg\n    - add\n    - \\software\\\n  selection_webclient:\n    CommandLine|contains|all:\n    - bypass\n    - -noprofile\n    - -windowstyle\n    - hidden\n    - new-object\n    - system.net.webclient\n    - .download\n  selection_iex_webclient:\n    CommandLine|contains|all:\n    - iex\n    - New-Object\n    - Net.WebClient\n    - .Download\n  filter_chocolatey:\n    CommandLine|contains:\n    - (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1\n    - Write-ChocolateyWarning\n  condition: 1 of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

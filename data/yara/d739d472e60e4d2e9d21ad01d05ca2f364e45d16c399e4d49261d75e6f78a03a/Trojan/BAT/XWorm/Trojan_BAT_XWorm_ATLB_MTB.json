@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/XWorm/Trojan_BAT_XWorm_ATLB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_XWorm_ATLB_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/XWorm.ATLB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,09 00 09 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_XWorm_ATLB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/XWorm.ATLB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,09 00 09 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {26 17 13 05 2b be 16 0a 11 06 1f 0a 93 11 06 1f 0a 93 59 13 05 2b ad 04 03 61 1f 0d 59 06 61 }\n\t\t$a_03_1 = {59 13 0c 38 ?? fe ff ff 02 28 ?? 00 00 0a 13 07 28 ?? 00 00 0a 11 06 74 ?? 00 00 01 11 07 74 ?? 00 00 1b 16 11 07 74 ?? 00 00 1b 8e 69 6f ?? 00 00 0a 6f ?? 00 00 0a 0d }\n\t\t$a_01_2 = {11 06 1f 66 93 20 99 15 00 00 59 13 05 2b 8d 18 2b f9 14 0b 11 06 1f 14 93 20 79 22 00 00 59 13 05 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 ) >= 9\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

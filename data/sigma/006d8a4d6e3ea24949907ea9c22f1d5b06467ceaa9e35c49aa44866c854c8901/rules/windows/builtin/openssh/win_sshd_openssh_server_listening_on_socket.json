@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/openssh/win_sshd_openssh_server_listening_on_socket.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "mdecrevoisier",
+                "date": "2022-10-25",
+                "title": "OpenSSH Server Listening On Socket",
+                "id": "3ce8e9a4-bc61-4c9b-8e69-d7e2492a8781"
+            },
+            "rule_text": "title: OpenSSH Server Listening On Socket\nid: 3ce8e9a4-bc61-4c9b-8e69-d7e2492a8781\nstatus: test\ndescription: Detects scenarios where an attacker enables the OpenSSH server and server\n  starts to listening on SSH socket.\nreferences:\n- https://github.com/mdecrevoisier/EVTX-to-MITRE-Attack/tree/master/TA0008-Lateral%20Movement/T1021.004-Remote%20Service%20SSH\n- https://winaero.com/enable-openssh-server-windows-10/\n- https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse\n- https://virtualizationreview.com/articles/2020/05/21/ssh-server-on-windows-10.aspx\n- https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16\nauthor: mdecrevoisier\ndate: 2022-10-25\ntags:\n- attack.lateral-movement\n- attack.t1021.004\nlogsource:\n  product: windows\n  service: openssh\ndetection:\n  selection:\n    EventID: 4\n    process: sshd\n    payload|startswith: 'Server listening on '\n  condition: selection\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

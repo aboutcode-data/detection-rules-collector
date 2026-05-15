@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_findstr_recon_pipe_output.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), frack113",
+                "date": "2023-07-06",
+                "title": "Recon Command Output Piped To Findstr.EXE",
+                "id": "ccb5742c-c248-4982-8c5c-5571b9275ad3"
+            },
+            "rule_text": "title: Recon Command Output Piped To Findstr.EXE\nid: ccb5742c-c248-4982-8c5c-5571b9275ad3\nrelated:\n- id: fe63010f-8823-4864-a96b-a7b4a0f7b929\n  type: derived\nstatus: test\ndescription: 'Detects the execution of a potential recon command where the results\n  are piped to \"findstr\". This is meant to trigger on inline calls of \"cmd.exe\" via\n  the \"/c\" or \"/k\" for example.\n\n  Attackers often time use this technique to extract specific information they require\n  in their reconnaissance phase.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/02cb591f75064ffe1e0df9ac3ed5972a2e491c97/atomics/T1057/T1057.md#atomic-test-6---discover-specific-process---tasklist\n- https://www.hhs.gov/sites/default/files/manage-engine-vulnerability-sector-alert-tlpclear.pdf\n- https://www.trendmicro.com/en_us/research/22/d/spring4shell-exploited-to-deploy-cryptocurrency-miners.html\nauthor: Nasreddine Bencherchali (Nextron Systems), frack113\ndate: 2023-07-06\nmodified: 2025-10-08\ntags:\n- attack.discovery\n- attack.t1057\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - ipconfig*|*find\n    - net*|*find\n    - netstat*|*find\n    - ping*|*find\n    - systeminfo*|*find\n    - tasklist*|*find\n    - whoami*|*find\n  filter_optional_xampp:\n    CommandLine|contains|all:\n    - cmd.exe /c TASKLIST /V |\n    - FIND /I\n    - \\xampp\\\n    - \\catalina_start.bat\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_findstr_recon_pipe_output/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

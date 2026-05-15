@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nick Hoffman/Check_Wine.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Check_Wine",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of Wine",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_Wine\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of Wine\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$wine = \"wine_get_unix_file_name\"\n\n\tcondition:\n\t\t$wine and pe.imports ( \"kernel32.dll\" , \"GetModuleHandleA\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

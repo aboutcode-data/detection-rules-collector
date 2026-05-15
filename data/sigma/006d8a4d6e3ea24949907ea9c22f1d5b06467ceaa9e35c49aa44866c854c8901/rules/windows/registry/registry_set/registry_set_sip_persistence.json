@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_sip_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Persistence Via New SIP Provider",
+                "id": "5a2b21ee-6aaa-4234-ac9d-59a59edf90a1"
+            },
+            "rule_text": "title: Persistence Via New SIP Provider\nid: 5a2b21ee-6aaa-4234-ac9d-59a59edf90a1\nstatus: test\ndescription: Detects when an attacker register a new SIP provider for persistence\n  and defense evasion\nreferences:\n- https://persistence-info.github.io/Data/codesigning.html\n- https://github.com/gtworek/PSBits/tree/master/SIP\n- https://specterops.io/assets/resources/SpecterOps_Subverting_Trust_in_Windows.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1553.003\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_root:\n    TargetObject|contains:\n    - \\SOFTWARE\\Microsoft\\Cryptography\\Providers\\\n    - \\SOFTWARE\\Microsoft\\Cryptography\\OID\\EncodingType\n    - \\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\Providers\\\n    - \\SOFTWARE\\WOW6432Node\\Microsoft\\Cryptography\\OID\\EncodingType\n  selection_dll:\n    TargetObject|contains:\n    - \\Dll\n    - \\$DLL\n  filter:\n    Details:\n    - WINTRUST.DLL\n    - mso.dll\n  filter_poqexec:\n    Image: C:\\Windows\\System32\\poqexec.exe\n    TargetObject|contains: \\CryptSIPDll\n    Details: C:\\Windows\\System32\\PsfSip.dll\n  condition: all of selection_* and not 1 of filter*\nfalsepositives:\n- Legitimate SIP being registered by the OS or different software.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

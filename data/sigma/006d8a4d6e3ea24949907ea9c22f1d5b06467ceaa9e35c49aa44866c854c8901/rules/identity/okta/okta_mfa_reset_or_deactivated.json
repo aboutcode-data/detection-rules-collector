@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/identity/okta/okta_mfa_reset_or_deactivated.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-09-21",
+                "title": "Okta MFA Reset or Deactivated",
+                "id": "50e068d7-1e6b-4054-87e5-0a592c40c7e0"
+            },
+            "rule_text": "title: Okta MFA Reset or Deactivated\nid: 50e068d7-1e6b-4054-87e5-0a592c40c7e0\nstatus: test\ndescription: Detects when an attempt at deactivating  or resetting MFA.\nreferences:\n- https://developer.okta.com/docs/reference/api/system-log/\n- https://developer.okta.com/docs/reference/api/event-types/\nauthor: Austin Songer @austinsonger\ndate: 2021-09-21\nmodified: 2026-04-27\ntags:\n- attack.persistence\n- attack.credential-access\n- attack.defense-impairment\n- attack.t1556.006\nlogsource:\n  product: okta\n  service: okta\ndetection:\n  selection:\n    eventType:\n    - user.mfa.factor.deactivate\n    - user.mfa.factor.reset_all\n  condition: selection\nfalsepositives:\n- If a MFA reset or deactivated was performed by a system administrator.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

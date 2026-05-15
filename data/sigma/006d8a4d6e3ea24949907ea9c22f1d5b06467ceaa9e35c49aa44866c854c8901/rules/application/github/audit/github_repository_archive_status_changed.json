@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_repository_archive_status_changed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Ivan Saakov",
+                "date": "2025-10-18",
+                "title": "GitHub Repository Archive Status Changed",
+                "id": "dca8991c-cb16-4128-abf8-6b11e5cd156f"
+            },
+            "rule_text": "title: GitHub Repository Archive Status Changed\nid: dca8991c-cb16-4128-abf8-6b11e5cd156f\nstatus: experimental\ndescription: 'Detects when a GitHub repository is archived or unarchived, which may\n  indicate unauthorized changes to repository status.\n\n  '\nreferences:\n- https://docs.github.com/en/repositories/archiving-a-github-repository/archiving-repositories\n- https://www.sentinelone.com/blog/exploiting-repos-6-ways-threat-actors-abuse-github-other-devops-platforms\n- https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/security-log-events\nauthor: Ivan Saakov\ndate: 2025-10-18\ntags:\n- attack.persistence\n- attack.impact\n- attack.defense-impairment\nlogsource:\n  product: github\n  service: audit\ndetection:\n  selection:\n    action:\n    - repo.archived\n    - repo.unarchived\n  condition: selection\nfalsepositives:\n- Archiving or unarchiving a repository is often legitimate. Investigate this action\n  to determine if it was authorized.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

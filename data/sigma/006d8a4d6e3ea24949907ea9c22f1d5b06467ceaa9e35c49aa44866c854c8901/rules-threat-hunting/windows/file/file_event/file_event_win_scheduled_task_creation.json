@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_event/file_event_win_scheduled_task_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Center for Threat Informed Defense (CTID) Summiting the Pyramid Team",
+                "date": "2023-09-27",
+                "title": "Scheduled Task Created - FileCreation",
+                "id": "a762e74f-4dce-477c-b023-4ed81df600f9"
+            },
+            "rule_text": "title: Scheduled Task Created - FileCreation\nid: a762e74f-4dce-477c-b023-4ed81df600f9\nstatus: test\ndescription: Detects the creation of a scheduled task via file creation.\nreferences:\n- https://center-for-threat-informed-defense.github.io/summiting-the-pyramid/analytics/task_scheduling/\n- https://posts.specterops.io/abstracting-scheduled-tasks-3b6451f6a1c5\nauthor: Center for Threat Informed Defense (CTID) Summiting the Pyramid Team\ndate: 2023-09-27\ntags:\n- attack.execution\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1053.005\n- attack.s0111\n- car.2013-08-001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|contains:\n    - :\\Windows\\System32\\Tasks\\\n    - :\\Windows\\SysWOW64\\Tasks\\\n    - :\\Windows\\Tasks\\\n  condition: selection\nfalsepositives:\n- Normal behaviour on Windows\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

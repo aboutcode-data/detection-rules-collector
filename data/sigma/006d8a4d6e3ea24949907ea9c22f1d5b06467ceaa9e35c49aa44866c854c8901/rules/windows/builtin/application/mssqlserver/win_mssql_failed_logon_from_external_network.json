@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/mssqlserver/win_mssql_failed_logon_from_external_network.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "j4son",
+                "date": "2023-10-11",
+                "title": "MSSQL Server Failed Logon From External Network",
+                "id": "ebfe73c2-5bc9-4ed9-aaa8-8b54b2b4777d"
+            },
+            "rule_text": "title: MSSQL Server Failed Logon From External Network\nid: ebfe73c2-5bc9-4ed9-aaa8-8b54b2b4777d\nrelated:\n- id: 218d2855-2bba-4f61-9c85-81d0ea63ac71\n  type: similar\nstatus: test\ndescription: Detects failed logon attempts from clients with external network IP to\n  an MSSQL server. This can be a sign of a bruteforce attack.\nreferences:\n- https://cybersecthreat.com/2020/07/08/enable-mssql-authentication-log-to-eventlog/\n- https://www.experts-exchange.com/questions/27800944/EventID-18456-Failed-to-open-the-explicitly-specified-database.html\nauthor: j4son\ndate: 2023-10-11\nmodified: 2025-05-28\ntags:\n- attack.credential-access\n- attack.t1110\nlogsource:\n  product: windows\n  service: application\n  definition: 'Requirements: Must enable MSSQL authentication.'\ndetection:\n  selection:\n    Provider_Name|contains: MSSQL\n    EventID: 18456\n  filter_main_local_ips:\n    Data|contains:\n    - 'CLIENT: 10.'\n    - 'CLIENT: 172.16.'\n    - 'CLIENT: 172.17.'\n    - 'CLIENT: 172.18.'\n    - 'CLIENT: 172.19.'\n    - 'CLIENT: 172.20.'\n    - 'CLIENT: 172.21.'\n    - 'CLIENT: 172.22.'\n    - 'CLIENT: 172.23.'\n    - 'CLIENT: 172.24.'\n    - 'CLIENT: 172.25.'\n    - 'CLIENT: 172.26.'\n    - 'CLIENT: 172.27.'\n    - 'CLIENT: 172.28.'\n    - 'CLIENT: 172.29.'\n    - 'CLIENT: 172.30.'\n    - 'CLIENT: 172.31.'\n    - 'CLIENT: 192.168.'\n    - 'CLIENT: 127.'\n    - 'CLIENT: 169.254.'\n    - 'CLIENT: <local machine>'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

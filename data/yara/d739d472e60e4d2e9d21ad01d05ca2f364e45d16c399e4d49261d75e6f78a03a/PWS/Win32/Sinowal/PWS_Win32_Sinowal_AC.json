@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Sinowal/PWS_Win32_Sinowal_AC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Sinowal_AC",
+                "tags": [],
+                "description": "PWS:Win32/Sinowal.AC,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Sinowal_AC\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Sinowal.AC,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 4d 0c 03 (8d ?? ?? ff ff 4d|?? 51 ff 55) }\n\t\t$a_03_1 = {8b 45 f4 33 d2 b9 ?? 00 00 00 f7 f1 89 45 f4 8b 55 0c 03 55 f4 8a 02 88 45 f3 [0-08] 8b 4d 08 03 4d f4 8a 55 f3 88 11 ff 75 fc 58 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

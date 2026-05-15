@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/identity/cisco_duo/cisco_duo_mfa_bypass_via_bypass_code.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Khalimonenkov",
+                "date": "2024-04-17",
+                "title": "Cisco Duo Successful MFA Authentication Via Bypass Code",
+                "id": "6f7e1c10-2dc9-4312-adb6-9574ff09a5c8"
+            },
+            "rule_text": "title: Cisco Duo Successful MFA Authentication Via Bypass Code\nid: 6f7e1c10-2dc9-4312-adb6-9574ff09a5c8\nstatus: test\ndescription: 'Detects when a successful MFA authentication occurs due to the use of\n  a bypass code.\n\n  A bypass code is a temporary passcode created by an administrator for a specific\n  user to access a Duo-protected application. These are generally used as \"backup\n  codes,\" so that enrolled users who are having problems with their mobile devices\n  (e.g., mobile service is disrupted, the device is lost or stolen, etc.) or who temporarily\n  can''t use their enrolled devices (on a plane without mobile data services) can\n  still access their Duo-protected systems.\n\n  '\nreferences:\n- https://duo.com/docs/adminapi#logs\n- https://help.duo.com/s/article/6327?language=en_US\nauthor: Nikita Khalimonenkov\ndate: 2024-04-17\ntags:\n- attack.credential-access\n- attack.initial-access\n- attack.stealth\nlogsource:\n  product: cisco\n  service: duo\ndetection:\n  selection:\n    event_type: authentication\n    reason: bypass_user\n  condition: selection\nfalsepositives:\n- Legitimate user that was assigned on purpose to a bypass group\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

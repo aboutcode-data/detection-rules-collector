@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_rasautou_dll_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Julia Fomina, oscd.community",
+                "date": "2020-10-09",
+                "title": "DLL Execution via Rasautou.exe",
+                "id": "cd3d1298-eb3b-476c-ac67-12847de55813"
+            },
+            "rule_text": "title: DLL Execution via Rasautou.exe\nid: cd3d1298-eb3b-476c-ac67-12847de55813\nstatus: test\ndescription: Detects using Rasautou.exe for loading arbitrary .DLL specified in -d\n  option and executes the export specified in -p.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Rasautou/\n- https://github.com/fireeye/DueDLLigence\n- https://www.fireeye.com/blog/threat-research/2019/10/staying-hidden-on-the-endpoint-evading-detection-with-shellcode.html\nauthor: Julia Fomina, oscd.community\ndate: 2020-10-09\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  product: windows\n  category: process_creation\n  definition: Since options '-d' and '-p' were removed in Windows 10 this rule is\n    relevant only for Windows before 10. And as Windows 7 doesn't log command line\n    in 4688 by default, to detect this attack you need Sysmon 1 configured or KB3004375\n    installed for command-line auditing (https://support.microsoft.com/en-au/help/3004375/microsoft-security-advisory-update-to-improve-windows-command-line-aud)\ndetection:\n  selection_img:\n  - Image|endswith: \\rasautou.exe\n  - OriginalFileName: rasdlui.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' -d '\n    - ' -p '\n  condition: all of selection*\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

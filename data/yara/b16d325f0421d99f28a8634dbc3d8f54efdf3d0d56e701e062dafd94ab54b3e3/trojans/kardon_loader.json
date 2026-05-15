@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/tjnel/yara_repo/blob/master/trojans/kardon_loader.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "kardon_loader",
+                "tags": [],
+                "author": "tjnel @reonfleek",
+                "date": "2017-06-10",
+                "description": "Yara signature for Kardon Loader",
+                "filetype": "exe",
+                "reference0": "https://asert.arbornetworks.com/kardon-loader-looks-for-beta-testers/",
+                "sha256_0": "fd0dfb173aff74429c6fed55608ee99a24e28f64ae600945e15bf5fce6406aee",
+                "sha256_1": "3c64d7dbef4b7e0dd81a5076172451334fe9669800c40c895567226f7cb7cdc7",
+                "sha256_2": "fd0dfb173aff74429c6fed55608ee99a24e28f64ae600945e15bf5fce6406aee"
+            },
+            "rule_text": "rule kardon_loader\n{\n\tmeta:\n\t\tauthor = \"tjnel @reonfleek\"\n\t\tdate = \"2017-06-10\"\n\t\tdescription = \"Yara signature for Kardon Loader\"\n\t\tfiletype = \"exe\"\n\t\treference0 = \"https://asert.arbornetworks.com/kardon-loader-looks-for-beta-testers/\"\n\t\tsha256_0 = \"fd0dfb173aff74429c6fed55608ee99a24e28f64ae600945e15bf5fce6406aee\"\n\t\tsha256_1 = \"3c64d7dbef4b7e0dd81a5076172451334fe9669800c40c895567226f7cb7cdc7\"\n\t\tsha256_2 = \"fd0dfb173aff74429c6fed55608ee99a24e28f64ae600945e15bf5fce6406aee\"\n\n\tstrings:\n\t\t$c0 = \"&op=%d&td=%s\" ascii\n\t\t$c1 = \"uni=1\" ascii\n\t\t$c2 = \"id=%s&os=%s&pv=%s&ip=%s&cn=%s&un=%s&ca=%s\" fullword ascii\n\t\t$a0 = \"KVMKVMKVM\" fullword ascii\n\t\t$a1 = \"VMwareVMware\" fullword ascii\n\t\t$a2 = \"VBoxVBoxVBox\" fullword ascii\n\t\t$a3 = \"avghook\" ascii\n\t\t$a4 = \"sbiedll.dll\" fullword ascii\n\t\t$s0 = \"\\\\Documents\\\\Programming\\\\KRDN\\\\CLIENT\" ascii\n\t\t$s1 = \"POST %s HTTP/1.1\" fullword ascii\n\t\t$s2 = \"/gate.php\" ascii\n\t\t$s3 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" fullword ascii\n\t\t$s4 = \"notask\" fullword ascii\n\t\t$s5 = \"%s\\\\%s.exe\" fullword ascii\n\t\t$s6 = \".rdata$zzzdbg\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and ( any of ( $c* ) ) and ( all of ( $a* ) ) and ( 3 of ( $s* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

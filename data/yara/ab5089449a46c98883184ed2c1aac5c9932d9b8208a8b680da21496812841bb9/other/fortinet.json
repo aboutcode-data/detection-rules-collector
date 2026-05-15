@@ -1,0 +1,44 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/fortinet.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_GETRdoor",
+                "tags": [],
+                "description": "ELF backdoor targeting FortiGate",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "9da731d152c57e90cc95bc58aa55c0873005a747fda0d45529e964bdbc9dc18c",
+                "created_date": "2025-11-14",
+                "updated_date": "2025-11-20"
+            },
+            "rule_text": "rule malware_GETRdoor\n{\n\tmeta:\n\t\tdescription = \"ELF backdoor targeting FortiGate\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"9da731d152c57e90cc95bc58aa55c0873005a747fda0d45529e964bdbc9dc18c\"\n\t\tcreated_date = \"2025-11-14\"\n\t\tupdated_date = \"2025-11-20\"\n\n\tstrings:\n\t\t$s1 = \"do_upload: file open failed\" ascii\n\t\t$s2 = \"/bin/snifferd\" ascii\n\t\t$s3 = \"tcp[(tcp[12]>>2):%d] = 0x%s\" ascii\n\t\t$s4 = {00 34 37 34 35 35 34 35 32 00}\n\t\t$s5 = \"diagnose debug crashlog clear\" ascii\n\t\t$s6 = {00 0A 30 78 30 30 30 30 00}\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_PELdoor",
+                "tags": [],
+                "description": "ELF backdoor",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "7991d64a23a6630453b5a68d4082e713d501082535e53b7e84d98b8ec7eee7a9",
+                "created_date": "2025-11-20",
+                "updated_date": "2025-11-20"
+            },
+            "rule_text": "rule malware_PELdoor\n{\n\tmeta:\n\t\tdescription = \"ELF backdoor\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"7991d64a23a6630453b5a68d4082e713d501082535e53b7e84d98b8ec7eee7a9\"\n\t\tcreated_date = \"2025-11-20\"\n\t\tupdated_date = \"2025-11-20\"\n\n\tstrings:\n\t\t$s1 = \"sxcdewqaz!@#\" ascii\n\t\t$s2 = \";7(Zu9YTsA7qQ#vw\" ascii\n\t\t$s3 = \"/var/run/miglogd000.pid\" ascii\n\t\t$s4 = \"/tmp/tmplog.tar\" ascii\n\t\t$s5 = {66 3D FB 20 74 ?? 48 8B 45 ?? 0F B7 40 ?? 0F B7 C0 89 C7 E8 ?? ?? ?? ?? 66 3D 1D 02}\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_SHADYMARY",
+                "tags": [],
+                "description": "SHADYMARY malware",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "1d347944b6cf8ecc54474149e9bcee0108919a293bed348a46228dca3d095618",
+                "created_date": "2025-11-20",
+                "updated_date": "2025-11-20"
+            },
+            "rule_text": "rule malware_SHADYMARY\n{\n\tmeta:\n\t\tdescription = \"SHADYMARY malware\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"1d347944b6cf8ecc54474149e9bcee0108919a293bed348a46228dca3d095618\"\n\t\tcreated_date = \"2025-11-20\"\n\t\tupdated_date = \"2025-11-20\"\n\n\tstrings:\n\t\t$s1 = \"/data2/libcrashpad.so\" ascii\n\t\t$s2 = \"/bin/smit\" ascii\n\t\t$s3 = \"injector return %d\" ascii\n\t\t$s4 = \"injector__call_syscall\" ascii\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and 2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

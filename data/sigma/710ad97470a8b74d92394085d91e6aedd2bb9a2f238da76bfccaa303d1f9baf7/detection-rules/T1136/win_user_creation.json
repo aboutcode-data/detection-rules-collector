@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1136/win_user_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Patrick Bareiss",
+                "date": null,
+                "title": "Detects local user creation",
+                "id": null
+            },
+            "rule_text": "title: Detects local user creation\ndescription: Detects local user creation on windows servers, which shouldn't happen\n  in an Active Directory environment. Apply this Sigma Use Case on your windows server\n  logs and not on your DC logs.\nstatus: experimental\ntags:\n- attack.persistence\n- attack.t1136\nreferences:\n- https://patrick-bareiss.com/detecting-local-user-creation-in-ad-with-sigma/\nauthor: Patrick Bareiss\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4720\n  condition: selection\nfields:\n- EventCode\n- AccountName\n- AccountDomain\nfalsepositives:\n- Domain Controller Logs\n- Local accounts managed by privileged account management tools\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

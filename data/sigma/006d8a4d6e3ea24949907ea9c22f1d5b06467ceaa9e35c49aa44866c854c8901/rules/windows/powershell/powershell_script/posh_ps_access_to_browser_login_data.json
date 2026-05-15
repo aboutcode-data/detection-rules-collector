@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_access_to_browser_login_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-30",
+                "title": "Access to Browser Login Data",
+                "id": "fc028194-969d-4122-8abe-0470d5b8f12f"
+            },
+            "rule_text": "title: Access to Browser Login Data\nid: fc028194-969d-4122-8abe-0470d5b8f12f\nrelated:\n- id: 98f4c75c-3089-44f3-b733-b327b9cd9c9d\n  type: obsolete\n- id: 47147b5b-9e17-4d76-b8d2-7bac24c5ce1b\n  type: similar\nstatus: test\ndescription: 'Adversaries may acquire credentials from web browsers by reading files\n  specific to the target browser.\n\n  Web browsers commonly save credentials such as website usernames and passwords so\n  that they do not need to be entered manually in the future.\n\n  Web browsers typically store the credentials in an encrypted format within a credential\n  store.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.003/T1555.003.md\nauthor: frack113\ndate: 2022-01-30\ntags:\n- attack.credential-access\n- attack.t1555.003\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmd:\n    ScriptBlockText|contains|all:\n    - Copy-Item\n    - -Destination\n  selection_path:\n    ScriptBlockText|contains:\n    - \\Opera Software\\Opera Stable\\Login Data\n    - \\Mozilla\\Firefox\\Profiles\n    - \\Microsoft\\Edge\\User Data\\Default\n    - \\Google\\Chrome\\User Data\\Default\\Login Data\n    - \\Google\\Chrome\\User Data\\Default\\Login Data For Account\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

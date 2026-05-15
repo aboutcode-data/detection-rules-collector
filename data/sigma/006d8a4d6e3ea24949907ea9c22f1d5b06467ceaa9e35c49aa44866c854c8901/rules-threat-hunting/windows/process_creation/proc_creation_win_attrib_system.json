@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_attrib_system.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-04",
+                "title": "Set Files as System Files Using Attrib.EXE",
+                "id": "bb19e94c-59ae-4c15-8c12-c563d23fe52b"
+            },
+            "rule_text": "title: Set Files as System Files Using Attrib.EXE\nid: bb19e94c-59ae-4c15-8c12-c563d23fe52b\nrelated:\n- id: efec536f-72e8-4656-8960-5e85d091345b\n  type: similar\nstatus: test\ndescription: Detects the execution of \"attrib\" with the \"+s\" flag to mark files as\n  system files\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.001/T1564.001.md#atomic-test-3---create-windows-system-file-with-attrib\n- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/attrib\n- https://unit42.paloaltonetworks.com/unit42-sure-ill-take-new-combojack-malware-alters-clipboards-steal-cryptocurrency/\nauthor: frack113\ndate: 2022-02-04\nmodified: 2023-03-14\ntags:\n- attack.stealth\n- attack.t1564.001\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\attrib.exe\n  - OriginalFileName: ATTRIB.EXE\n  selection_cli:\n    CommandLine|contains: ' +s '\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

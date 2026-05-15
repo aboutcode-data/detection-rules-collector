@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_access/file_access_win_susp_dpapi_master_key_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-17",
+                "title": "Access To Windows DPAPI Master Keys By Uncommon Applications",
+                "id": "46612ae6-86be-4802-bc07-39b59feb1309"
+            },
+            "rule_text": "title: Access To Windows DPAPI Master Keys By Uncommon Applications\nid: 46612ae6-86be-4802-bc07-39b59feb1309\nstatus: test\ndescription: 'Detects file access requests to the the Windows Data Protection API\n  Master keys by an uncommon application.\n\n  This can be a sign of credential stealing. Example case would be usage of mimikatz\n  \"dpapi::masterkey\" function\n\n  '\nreferences:\n- http://blog.harmj0y.net/redteaming/operational-guidance-for-offensive-user-dpapi-abuse/\n- https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/dpapi-extracting-passwords\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-17\nmodified: 2024-07-29\ntags:\n- attack.credential-access\n- attack.t1555.004\nlogsource:\n  category: file_access\n  product: windows\n  definition: 'Requirements: Microsoft-Windows-Kernel-File ETW provider'\ndetection:\n  selection:\n    FileName|contains:\n    - \\Microsoft\\Protect\\S-1-5-18\\\n    - \\Microsoft\\Protect\\S-1-5-21-\n  filter_system_folders:\n    Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n    - C:\\Windows\\system32\\\n    - C:\\Windows\\SysWOW64\\\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

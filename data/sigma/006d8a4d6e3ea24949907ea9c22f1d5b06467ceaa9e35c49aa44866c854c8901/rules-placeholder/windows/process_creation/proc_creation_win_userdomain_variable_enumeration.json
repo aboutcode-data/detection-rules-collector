@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/process_creation/proc_creation_win_userdomain_variable_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2023-02-09",
+                "title": "Userdomain Variable Enumeration",
+                "id": "43311e65-84d8-42a5-b3d4-c94d9b67038f"
+            },
+            "rule_text": "title: Userdomain Variable Enumeration\nid: 43311e65-84d8-42a5-b3d4-c94d9b67038f\nstatus: test\ndescription: Detects suspicious enumeration of the domain the user is associated with.\nreferences:\n- https://www.arxiv-vanity.com/papers/2008.04676/\n- https://thedfirreport.com/2022/11/14/bumblebee-zeros-in-on-meterpreter/\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2023-02-09\nmodified: 2024-08-01\ntags:\n- attack.discovery\n- attack.t1016\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains: 'echo '\n    CommandLine|contains|expand: '%userdomain%'\n  condition: selection\nfalsepositives:\n- Certain scripts or applications may leverage this.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

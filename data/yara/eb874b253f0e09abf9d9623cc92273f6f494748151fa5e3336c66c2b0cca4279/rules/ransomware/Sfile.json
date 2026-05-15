@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/ransomware/Sfile.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Sfile",
+                "tags": [],
+                "id": "64arpb3yJ0mZxamCG9jIVs",
+                "fingerprint": "7a2be690f14a9ea61917c2c31b4d44186295de7d8a1342f081ed9507a8ac46b0",
+                "version": "1.0",
+                "creation_date": "2020-09-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-03-10",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Sfile aka Escal ransomware.",
+                "category": "MALWARE",
+                "malware_type": "RANSOMWARE"
+            },
+            "rule_text": "rule Sfile\n{\n\tmeta:\n\t\tid = \"64arpb3yJ0mZxamCG9jIVs\"\n\t\tfingerprint = \"7a2be690f14a9ea61917c2c31b4d44186295de7d8a1342f081ed9507a8ac46b0\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-09-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-03-10\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Sfile aka Escal ransomware.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware_type = \"RANSOMWARE\"\n\n\tstrings:\n\t\t$pdb = \"D:\\\\code\\\\ransomware_win\\\\bin\\\\ransomware.pdb\"\n\t\t$ = \"%s SORTING time : %s\" ascii wide\n\t\t$ = \"%ws -> WorkModeDecryptFiles : %d of %d files decrypted +%d (%d MB)...\" ascii wide\n\t\t$ = \"%ws -> WorkModeEncryptFiles : %d of %d files encrypted +%d [bps : %d, size = %d MB] (%d skipped, ld = %d.%d.%d %d:%d:%d, lf = %ws)...\" ascii wide\n\t\t$ = \"%ws -> WorkModeEnded\" ascii wide\n\t\t$ = \"%ws -> WorkModeFindFiles : %d files / %d folders found (already (de?)crypted %d/%d) (lf = %ws)...\" ascii wide\n\t\t$ = \"%ws -> WorkModeSorting\" ascii wide\n\t\t$ = \"%ws ENCRYPTFILES count : %d (%d skipped), time : %s\" ascii wide\n\t\t$ = \"%ws FINDFILES RESULTS : dwDirectoriesCount = %d, dwFilesCount = %d MB = %d (FIND END)\" ascii wide\n\t\t$ = \"%ws FINDFILES time : %s\" ascii wide\n\t\t$ = \"DRIVE_FIXED : %ws\" ascii wide\n\t\t$ = \"EncryptDisk(%ws) DONE\" ascii wide\n\t\t$ = \"ScheduleRoutine() : gogogo\" ascii wide\n\t\t$ = \"ScheduleRoutine() : waiting for sacred time... Expecting %d hours, now id %d\" ascii wide\n\t\t$ = \"WARN! FileLength more then memory has %ws\" ascii wide\n\t\t$ = \"WaitForHours() : gogogo\" ascii wide\n\t\t$ = \"WaitForHours() : waiting for sacred time... Expecting %d hours, now id %d\" ascii wide\n\t\t$ = \"Your network has been penetrated.\" ascii wide\n\t\t$ = \"--kill-susp\" ascii wide\n\t\t$ = \"--enable-shares\" ascii wide\n\n\tcondition:\n\t\t$pdb or 3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

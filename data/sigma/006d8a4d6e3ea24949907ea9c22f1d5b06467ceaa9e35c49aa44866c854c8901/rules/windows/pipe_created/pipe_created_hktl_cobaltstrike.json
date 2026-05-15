@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/pipe_created/pipe_created_hktl_cobaltstrike.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Wojciech Lesicki",
+                "date": "2021-05-25",
+                "title": "CobaltStrike Named Pipe",
+                "id": "d5601f8c-b26f-4ab0-9035-69e11a8d4ad2"
+            },
+            "rule_text": "title: CobaltStrike Named Pipe\nid: d5601f8c-b26f-4ab0-9035-69e11a8d4ad2\nrelated:\n- id: 85adeb13-4fc9-4e68-8a4a-c7cb2c336eb7\n  type: similar\n- id: 0e7163d4-9e19-4fa7-9be6-000c61aad77a\n  type: similar\nstatus: test\ndescription: Detects the creation of a named pipe as used by CobaltStrike\nreferences:\n- https://twitter.com/d4rksystem/status/1357010969264873472\n- https://labs.f-secure.com/blog/detecting-cobalt-strike-default-modules-via-named-pipe-analysis/\n- https://github.com/SigmaHQ/sigma/issues/253\n- https://blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/\n- https://redcanary.com/threat-detection-report/threats/cobalt-strike/\nauthor: Florian Roth (Nextron Systems), Wojciech Lesicki\ndate: 2021-05-25\nmodified: 2022-10-31\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  product: windows\n  category: pipe_created\n  definition: Note that you have to configure logging for Named Pipe Events in Sysmon\n    config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon\n    configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth\n    verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,\n    https://github.com/olafhartong/sysmon-modular. How to test detection? You can\n    always use Cobalt Strike, but also you can check powershell script from this site\n    https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575\ndetection:\n  selection_MSSE:\n    PipeName|contains|all:\n    - \\MSSE-\n    - -server\n  selection_postex:\n    PipeName|startswith: \\postex_\n  selection_status:\n    PipeName|startswith: \\status_\n  selection_msagent:\n    PipeName|startswith: \\msagent_\n  selection_mojo:\n    PipeName|startswith: \\mojo_\n  selection_interprocess:\n    PipeName|startswith: \\interprocess_\n  selection_samr:\n    PipeName|startswith: \\samr_\n  selection_netlogon:\n    PipeName|startswith: \\netlogon_\n  selection_srvsvc:\n    PipeName|startswith: \\srvsvc_\n  selection_lsarpc:\n    PipeName|startswith: \\lsarpc_\n  selection_wkssvc:\n    PipeName|startswith: \\wkssvc_\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

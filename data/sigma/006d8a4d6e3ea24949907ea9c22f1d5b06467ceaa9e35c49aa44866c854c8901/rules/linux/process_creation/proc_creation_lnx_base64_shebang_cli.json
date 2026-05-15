@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_base64_shebang_cli.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-15",
+                "title": "Linux Base64 Encoded Shebang In CLI",
+                "id": "fe2f9663-41cb-47e2-b954-8a228f3b9dff"
+            },
+            "rule_text": "title: Linux Base64 Encoded Shebang In CLI\nid: fe2f9663-41cb-47e2-b954-8a228f3b9dff\nstatus: test\ndescription: Detects the presence of a base64 version of the shebang in the commandline,\n  which could indicate a malicious payload about to be decoded\nreferences:\n- https://www.trendmicro.com/pl_pl/research/20/i/the-evolution-of-malicious-shell-scripts.html\n- https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-15\ntags:\n- attack.stealth\n- attack.t1140\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains:\n    - IyEvYmluL2Jhc2\n    - IyEvYmluL2Rhc2\n    - IyEvYmluL3pza\n    - IyEvYmluL2Zpc2\n    - IyEvYmluL3No\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Mint/Trojan_Win64_Mint_AHB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Mint_AHB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Mint.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Mint_AHB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Mint.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {0f be 04 17 48 ff c2 03 c3 69 c8 01 01 00 00 8b d9 c1 eb 06 33 d9 49 3b d0 75 }\n\t\t$a_01_1 = {48 8b ca 49 8b c1 83 e1 07 48 2b c1 0f b6 00 41 30 04 10 48 ff c2 48 3b d7 72 }\n\t\t$a_01_2 = {48 8b c1 83 e0 07 42 0f b6 04 00 30 04 0a 48 ff c1 48 3b cf 72 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 5 + ( #a_01_2 & 1 ) * 5 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

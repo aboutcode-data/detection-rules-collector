@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/pipe_created/pipe_created_sysinternals_psexec_default_pipe_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-04",
+                "title": "PsExec Tool Execution From Suspicious Locations - PipeName",
+                "id": "41504465-5e3a-4a5b-a5b4-2a0baadd4463"
+            },
+            "rule_text": "title: PsExec Tool Execution From Suspicious Locations - PipeName\nid: 41504465-5e3a-4a5b-a5b4-2a0baadd4463\nrelated:\n- id: f3f3a972-f982-40ad-b63c-bca6afdfad7c\n  type: derived\nstatus: test\ndescription: Detects PsExec default pipe creation where the image executed is located\n  in a suspicious location. Which could indicate that the tool is being used in an\n  attack\nreferences:\n- https://www.jpcert.or.jp/english/pub/sr/ir_research.html\n- https://jpcertcc.github.io/ToolAnalysisResultSheet\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-04\nmodified: 2023-09-20\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.s0029\nlogsource:\n  category: pipe_created\n  product: windows\n  definition: Note that you have to configure logging for Named Pipe Events in Sysmon\n    config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon\n    configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth\n    verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,\n    https://github.com/olafhartong/sysmon-modular. How to test detection? You can\n    check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575\ndetection:\n  selection:\n    PipeName: \\PSEXESVC\n    Image|contains:\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n    - \\Desktop\\\n    - \\Downloads\\\n  condition: selection\nfalsepositives:\n- Rare legitimate use of psexec from the locations mentioned above. This will require\n  initial tuning based on your environment.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

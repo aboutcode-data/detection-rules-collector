@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/proxy_generic/proxy_susp_flash_download_loc.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-10-25",
+                "title": "Flash Player Update from Suspicious Location",
+                "id": "4922a5dd-6743-4fc2-8e81-144374280997"
+            },
+            "rule_text": "title: Flash Player Update from Suspicious Location\nid: 4922a5dd-6743-4fc2-8e81-144374280997\nstatus: test\ndescription: Detects a flashplayer update from an unofficial location\nreferences:\n- https://gist.github.com/roycewilliams/a723aaf8a6ac3ba4f817847610935cfb\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-10-25\nmodified: 2022-08-08\ntags:\n- attack.initial-access\n- attack.stealth\n- attack.t1189\n- attack.execution\n- attack.t1204.002\n- attack.t1036.005\nlogsource:\n  category: proxy\ndetection:\n  selection:\n  - c-uri|contains: /flash_install.php\n  - c-uri|endswith: /install_flash_player.exe\n  filter:\n    cs-host|endswith: .adobe.com\n  condition: selection and not filter\nfalsepositives:\n- Unknown flash download locations\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

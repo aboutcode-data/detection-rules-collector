@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Wewer/Trojan_Win32_Wewer_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Wewer_A",
+                "tags": [],
+                "description": "Trojan:Win32/Wewer.A,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Wewer_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Wewer.A,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {68 74 74 70 3a 2f 2f 77 65 72 6d 65 65 72 2e 63 6e 2f 77 65 72 6d 65 65 72 2f 72 65 70 6f 72 74 2e 70 68 70 3f 74 69 74 6c 65 3d }\n\t\t$a_01_1 = {40 74 61 73 6b 6b 69 6c 6c 20 2f 66 20 2f 69 6d 20 73 76 63 68 6f 73 74 2e 65 78 65 }\n\t\t$a_01_2 = {5c 76 69 70 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

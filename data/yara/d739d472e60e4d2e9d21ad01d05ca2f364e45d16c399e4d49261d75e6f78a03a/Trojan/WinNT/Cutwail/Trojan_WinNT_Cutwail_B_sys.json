@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/WinNT/Cutwail/Trojan_WinNT_Cutwail_B_sys.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_WinNT_Cutwail_B_sys",
+                "tags": [],
+                "description": "Trojan:WinNT/Cutwail.B!sys,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_WinNT_Cutwail_B_sys\n{\n\tmeta:\n\t\tdescription = \"Trojan:WinNT/Cutwail.B!sys,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {c6 45 ff 00 c6 45 fe 01 fa 0f 20 c0 89 45 f8 25 ff ff fe ff 0f 22 c0 33 d2 39 55 0c 76 3e 8b 45 }\n\t\t$a_01_1 = {6a 4d 8d 85 24 ff ff ff 50 e8 }\n\t\t$a_01_2 = {30 4d 0f 8a 4d 0f 88 0c 10 40 3b c6 72 e3 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

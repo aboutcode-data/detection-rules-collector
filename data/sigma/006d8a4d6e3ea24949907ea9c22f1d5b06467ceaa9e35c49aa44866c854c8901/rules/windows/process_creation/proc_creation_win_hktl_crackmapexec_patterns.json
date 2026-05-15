@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_crackmapexec_patterns.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-12",
+                "title": "HackTool - CrackMapExec Process Patterns",
+                "id": "f26307d8-14cd-47e3-a26b-4b4769f24af6"
+            },
+            "rule_text": "title: HackTool - CrackMapExec Process Patterns\nid: f26307d8-14cd-47e3-a26b-4b4769f24af6\nstatus: test\ndescription: Detects suspicious process patterns found in logs when CrackMapExec is\n  used\nreferences:\n- https://mpgn.gitbook.io/crackmapexec/smb-protocol/obtaining-credentials/dump-lsass\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-12\nmodified: 2023-02-13\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_lsass_dump1:\n    CommandLine|contains|all:\n    - 'tasklist /fi '\n    - Imagename eq lsass.exe\n    CommandLine|contains:\n    - 'cmd.exe /c '\n    - 'cmd.exe /r '\n    - 'cmd.exe /k '\n    - 'cmd /c '\n    - 'cmd /r '\n    - 'cmd /k '\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  selection_lsass_dump2:\n    CommandLine|contains|all:\n    - do rundll32.exe C:\\windows\\System32\\comsvcs.dll, MiniDump\n    - \\Windows\\Temp\\\n    - ' full'\n    - '%%B'\n  selection_procdump:\n    CommandLine|contains|all:\n    - tasklist /v /fo csv\n    - findstr /i \"lsass\"\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

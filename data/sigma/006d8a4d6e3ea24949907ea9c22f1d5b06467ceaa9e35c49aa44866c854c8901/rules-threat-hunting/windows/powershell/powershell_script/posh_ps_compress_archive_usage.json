@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_compress_archive_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2019-10-21",
+                "title": "Compress-Archive Cmdlet Execution",
+                "id": "6dc5d284-69ea-42cf-9311-fb1c3932a69a"
+            },
+            "rule_text": "title: Compress-Archive Cmdlet Execution\nid: 6dc5d284-69ea-42cf-9311-fb1c3932a69a\nstatus: test\ndescription: 'Detects PowerShell scripts that make use of the \"Compress-Archive\" cmdlet\n  in order to compress folders and files.\n\n  An adversary might compress data (e.g., sensitive documents) that is collected prior\n  to exfiltration in order to make it portable and minimize the amount of data sent\n  over the network.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1560/T1560.md\nauthor: Timur Zinniatullin, oscd.community\ndate: 2019-10-21\nmodified: 2023-12-15\ntags:\n- attack.exfiltration\n- attack.collection\n- attack.t1560\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains: Compress-Archive\n  condition: selection\nfalsepositives:\n- Likely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

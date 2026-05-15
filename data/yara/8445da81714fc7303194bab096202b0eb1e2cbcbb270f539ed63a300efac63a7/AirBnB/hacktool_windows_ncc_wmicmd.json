@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_windows_ncc_wmicmd.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_windows_ncc_wmicmd",
+                "tags": [],
+                "description": "Command shell wrapper for WMI",
+                "reference": "https://github.com/nccgroup/WMIcmd",
+                "author": "@mimeframe"
+            },
+            "rule_text": "rule hacktool_windows_ncc_wmicmd\n{\n\tmeta:\n\t\tdescription = \"Command shell wrapper for WMI\"\n\t\treference = \"https://github.com/nccgroup/WMIcmd\"\n\t\tauthor = \"@mimeframe\"\n\n\tstrings:\n\t\t$a1 = \"Need to specify a username, domain and password for non local connections\" wide ascii\n\t\t$a2 = \"WS-Management is running on the remote host\" wide ascii\n\t\t$a3 = \"firewall (if enabled) allows connections\" wide ascii\n\t\t$a4 = \"WARNING: Didn't see stdout output finished marker - output may be truncated\" wide ascii\n\t\t$a5 = \"Command sleep in milliseconds - increase if getting truncated output\" wide ascii\n\t\t$b1 = \"0x800706BA\" wide ascii\n\t\t$b2 = \"NTLMDOMAIN:\" wide ascii\n\t\t$b3 = \"cimv2\" wide ascii\n\n\tcondition:\n\t\tany of ( $a* ) or all of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

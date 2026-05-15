@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_Impacket/atexec/win_proc_creation_impacket_atexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2023/01/08",
+                "title": "Impacket AtExec Process Activity",
+                "id": "ceccdcd7-ab57-407c-bd8f-78b2427eb283"
+            },
+            "rule_text": "title: Impacket AtExec Process Activity\nid: ceccdcd7-ab57-407c-bd8f-78b2427eb283\nstatus: experimental\ndescription: Detect Atexec.py (Impacket) usage to send command output to attacker.\nreferences:\n- https://www.13cubed.com/downloads/impacket_exec_commands_cheat_sheet.pdf\n- https://www.hackingarticles.in/impacket-guide-smb-msrpc/\nauthor: Micah Babinski\ndate: 2023/01/08\ntags:\n- attack.s0357\n- attack.execution\n- attack.t1053\n- attack.t1053.002\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4688\n    NewProcessName|endswith: \\cmd.exe\n    CommandLine|contains|all|windash:\n    - cmd.exe\n    - /c\n    - 2>&1\n    CommandLine|re: ^.*Temp\\\\[A-Za-z]{8}\\.tmp.*$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

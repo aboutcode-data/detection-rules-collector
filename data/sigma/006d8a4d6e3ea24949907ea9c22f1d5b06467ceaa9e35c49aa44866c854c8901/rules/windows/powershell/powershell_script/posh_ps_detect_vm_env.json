@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_detect_vm_env.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Duc.Le-GTSC",
+                "date": "2021-08-03",
+                "title": "Powershell Detect Virtualization Environment",
+                "id": "d93129cd-1ee0-479f-bc03-ca6f129882e3"
+            },
+            "rule_text": "title: Powershell Detect Virtualization Environment\nid: d93129cd-1ee0-479f-bc03-ca6f129882e3\nstatus: test\ndescription: 'Adversaries may employ various system checks to detect and avoid virtualization\n  and analysis environments.\n\n  This may include changing behaviors based on the results of checks for the presence\n  of artifacts indicative of a virtual machine environment (VME) or sandbox\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1497.001/T1497.001.md\n- https://techgenix.com/malicious-powershell-scripts-evade-detection/\nauthor: frack113, Duc.Le-GTSC\ndate: 2021-08-03\nmodified: 2022-03-03\ntags:\n- attack.discovery\n- attack.stealth\n- attack.t1497.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_action:\n    ScriptBlockText|contains:\n    - Get-WmiObject\n    - gwmi\n  selection_module:\n    ScriptBlockText|contains:\n    - MSAcpi_ThermalZoneTemperature\n    - Win32_ComputerSystem\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

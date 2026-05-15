@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_browsers_chromium_headless_debugging.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-23",
+                "title": "Potential Data Stealing Via Chromium Headless Debugging",
+                "id": "3e8207c5-fcd2-4ea6-9418-15d45b4890e4"
+            },
+            "rule_text": "title: Potential Data Stealing Via Chromium Headless Debugging\nid: 3e8207c5-fcd2-4ea6-9418-15d45b4890e4\nrelated:\n- id: b3d34dc5-2efd-4ae3-845f-8ec14921f449\n  type: derived\nstatus: test\ndescription: Detects chromium based browsers starting in headless and debugging mode\n  and pointing to a user profile. This could be a sign of data stealing or remote\n  control\nreferences:\n- https://github.com/defaultnamehere/cookie_crimes/\n- https://mango.pdf.zone/stealing-chrome-cookies-without-a-password\n- https://embracethered.com/blog/posts/2020/cookie-crimes-on-mirosoft-edge/\n- https://embracethered.com/blog/posts/2020/chrome-spy-remote-control/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-23\ntags:\n- attack.credential-access\n- attack.collection\n- attack.stealth\n- attack.t1185\n- attack.t1564.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - --remote-debugging-\n    - --user-data-dir\n    - --headless\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,109 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/example.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AsciiExample",
+                "tags": []
+            },
+            "rule_text": "rule AsciiExample\n{\n\tstrings:\n\t\t$ascii_string = \"hello\"\n\n\tcondition:\n\t\t$ascii_string\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "UnicodeExample",
+                "tags": []
+            },
+            "rule_text": "rule UnicodeExample\n{\n\tstrings:\n\t\t$unicode_string = \"hello\" wide\n\n\tcondition:\n\t\t$unicode_string\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HexExample",
+                "tags": []
+            },
+            "rule_text": "rule HexExample\n{\n\tstrings:\n\t\t$hex_string1 = { 0123456789ABCDEF }\n\t\t$hex_string2 = { 0123456789abcdef }\n\t\t$hex_string3 = { 01 23 45 67 89 ab cd ef }\n\n\tcondition:\n\t\t$hex_string1 or $hex_string2 or $hex_string3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WildcardHexExample",
+                "tags": []
+            },
+            "rule_text": "rule WildcardHexExample\n{\n\tstrings:\n\t\t$hex_string1 = { 012345????ABCDEF }\n\t\t$hex_string2 = { 012345????abcdef }\n\t\t$hex_string3 = { 01 23 45 ?? ?? ab cd ef }\n\n\tcondition:\n\t\t$hex_string1 or $hex_string2 or $hex_string3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "OffsetExample",
+                "tags": []
+            },
+            "rule_text": "rule OffsetExample\n{\n\tstrings:\n\t\t$mz = \"MZ\"\n\n\tcondition:\n\t\t$mz at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RangeExample",
+                "tags": []
+            },
+            "rule_text": "rule RangeExample\n{\n\tstrings:\n\t\t$pe = \"PE\"\n\n\tcondition:\n\t\t$pe in ( 32 .. 100 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RelativeOffsetExample",
+                "tags": []
+            },
+            "rule_text": "rule RelativeOffsetExample\n{\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$pe = \"PE\"\n\n\tcondition:\n\t\t$mz at 0 and $pe in ( @mz [ 0 ] .. 0x200 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsPeFile",
+                "tags": []
+            },
+            "rule_text": "rule IsPeFile\n{\n\tstrings:\n\t\t$mz = \"MZ\"\n\n\tcondition:\n\t\t$mz at 0 and uint32( uint32( 0x3C ) ) == 0x4550\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EntryPointExample",
+                "tags": []
+            },
+            "rule_text": "rule EntryPointExample\n{\n\tstrings:\n\t\t$ep = { 55 8b ec }\n\n\tcondition:\n\t\t$ep at entrypoint\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ConditionsExample",
+                "tags": []
+            },
+            "rule_text": "rule ConditionsExample\n{\n\tstrings:\n\t\t$string1 = \"hello\"\n\t\t$string2 = \"hello\"\n\t\t$string3 = \"hello\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NumberStringsExample",
+                "tags": []
+            },
+            "rule_text": "rule NumberStringsExample\n{\n\tstrings:\n\t\t$hello = \"hello\"\n\n\tcondition:\n\t\t#hello>= 5\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RuleReference",
+                "tags": []
+            },
+            "rule_text": "rule RuleReference\n{\n\tstrings:\n\t\t$hello = \"hello\"\n\n\tcondition:\n\t\t$hello and IsPeFile\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GlobalRuleExample",
+                "tags": []
+            },
+            "rule_text": "global rule GlobalRuleExample\n{\n\tcondition:\n\t\tfilesize < 2MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

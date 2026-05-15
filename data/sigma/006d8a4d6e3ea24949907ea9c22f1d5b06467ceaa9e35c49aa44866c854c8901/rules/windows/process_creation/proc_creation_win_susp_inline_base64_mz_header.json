@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_inline_base64_mz_header.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-12",
+                "title": "Base64 MZ Header In CommandLine",
+                "id": "22e58743-4ac8-4a9f-bf19-00a0428d8c5f"
+            },
+            "rule_text": "title: Base64 MZ Header In CommandLine\nid: 22e58743-4ac8-4a9f-bf19-00a0428d8c5f\nstatus: test\ndescription: Detects encoded base64 MZ header in the commandline\nreferences:\n- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-12\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - TVqQAAMAAAAEAAAA\n    - TVpQAAIAAAAEAA8A\n    - TVqAAAEAAAAEABAA\n    - TVoAAAAAAAAAAAAA\n    - TVpTAQEAAAAEAAAA\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

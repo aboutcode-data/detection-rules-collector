@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_hellsing_implantstrings.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_hellsing_implantstrings",
+                "tags": [],
+                "version": "1.0",
+                "filetype": "PE",
+                "author": "Costin Raiu, Kaspersky Lab",
+                "copyright": "Kaspersky Lab",
+                "date": "2015-04-07",
+                "description": "detection for Hellsing implants"
+            },
+            "rule_text": "rule apt_hellsing_implantstrings\n{\n\tmeta:\n\t\tversion = \"1.0\"\n\t\tfiletype = \"PE\"\n\t\tauthor = \"Costin Raiu, Kaspersky Lab\"\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdate = \"2015-04-07\"\n\t\tdescription = \"detection for Hellsing implants\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = \"the file uploaded failed !\"\n\t\t$a2 = \"ping 127.0.0.1\"\n\t\t$b1 = \"the file downloaded failed !\"\n\t\t$b2 = \"common.asp\"\n\t\t$c = \"xweber_server.exe\"\n\t\t$d = \"action=\"\n\t\t$debugpath1 = \"d:\\\\Hellsing\\\\release\\\\msger\\\\\" nocase\n\t\t$debugpath2 = \"d:\\\\hellsing\\\\sys\\\\xrat\\\\\" nocase\n\t\t$debugpath3 = \"D:\\\\Hellsing\\\\release\\\\exe\\\\\" nocase\n\t\t$debugpath4 = \"d:\\\\hellsing\\\\sys\\\\xkat\\\\\" nocase\n\t\t$debugpath5 = \"e:\\\\Hellsing\\\\release\\\\clare\" nocase\n\t\t$debugpath6 = \"e:\\\\Hellsing\\\\release\\\\irene\\\\\" nocase\n\t\t$debugpath7 = \"d:\\\\hellsing\\\\sys\\\\irene\\\\\" nocase\n\t\t$e = \"msger_server.dll\"\n\t\t$f = \"ServiceMain\"\n\n\tcondition:\n\t\t($mz at 0 ) and ( all of ( $a* ) ) or ( all of ( $b* ) ) or ( $c and $d ) or ( any of ( $debugpath* ) ) or ( $e and $f ) and filesize < 500000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

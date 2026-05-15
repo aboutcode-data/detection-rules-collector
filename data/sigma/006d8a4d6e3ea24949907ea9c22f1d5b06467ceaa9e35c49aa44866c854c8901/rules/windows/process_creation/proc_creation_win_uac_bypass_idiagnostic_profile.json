@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_idiagnostic_profile.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-03",
+                "title": "UAC Bypass Using IDiagnostic Profile",
+                "id": "4cbef972-f347-4170-b62a-8253f6168e6d"
+            },
+            "rule_text": "title: UAC Bypass Using IDiagnostic Profile\nid: 4cbef972-f347-4170-b62a-8253f6168e6d\nstatus: test\ndescription: Detects the \"IDiagnosticProfileUAC\" UAC bypass technique\nreferences:\n- https://github.com/Wh04m1001/IDiagnosticProfileUAC\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-03\nmodified: 2024-12-01\ntags:\n- attack.execution\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\DllHost.exe\n    ParentCommandLine|contains: ' /Processid:{12C21EA7-2EB8-4B55-9249-AC243DA8C666}'\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

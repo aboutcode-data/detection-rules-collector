@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_lsass_unsigned_image_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, oscd.community",
+                "date": "2019-10-22",
+                "title": "Unsigned Image Loaded Into LSASS Process",
+                "id": "857c8db3-c89b-42fb-882b-f681c7cf4da2"
+            },
+            "rule_text": "title: Unsigned Image Loaded Into LSASS Process\nid: 857c8db3-c89b-42fb-882b-f681c7cf4da2\nstatus: test\ndescription: Loading unsigned image (DLL, EXE) into LSASS process\nreferences:\n- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment\nauthor: Teymur Kheirkhabarov, oscd.community\ndate: 2019-10-22\nmodified: 2021-11-27\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\lsass.exe\n    Signed: 'false'\n  condition: selection\nfalsepositives:\n- Valid user connecting using RDP\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/MetaStealer/metastealer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MetaStealer",
+                "tags": [],
+                "author": "RussianPanda",
+                "decription": "Detects the old version of MetaStealer 11-2023",
+                "date": "11/16/2023"
+            },
+            "rule_text": "import \"pe\"\n\nrule MetaStealer\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdecription = \"Detects the old version of MetaStealer 11-2023\"\n\t\tdate = \"11/16/2023\"\n\n\tstrings:\n\t\t$s1 = \"FileScannerRule\"\n\t\t$s2 = \"MSObject\"\n\t\t$s3 = \"MSValue\"\n\t\t$s4 = \"GetBrowsers\"\n\t\t$s5 = \"Biohazard\"\n\n\tcondition:\n\t\t4 of ( $s* ) and pe.imports ( \"mscoree.dll\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/adamburt/*nix_shellshock.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "shellshock_generic",
+                "tags": [],
+                "author": "Adam Burt"
+            },
+            "rule_text": "rule shellshock_generic\n{\n\tmeta:\n\t\tauthor = \"Adam Burt\"\n\n\tstrings:\n\t\t$starter = \"() { \"\n\t\t$alt1 = \"(a)=>\"\n\t\t$alt2 = \":; } ;\"\n\t\t$att1 = \"HOLD Flooding\"\n\t\t$att2 = \"JUNK Flooding\"\n\t\t$att4 = \"PONG!\"\n\t\t$att5 = \"/bin/busybox\"\n\t\t$att6 = \"SCANNER\"\n\n\tcondition:\n\t\t($starter and any of ( $alt* ) ) or ( all of ( $att* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

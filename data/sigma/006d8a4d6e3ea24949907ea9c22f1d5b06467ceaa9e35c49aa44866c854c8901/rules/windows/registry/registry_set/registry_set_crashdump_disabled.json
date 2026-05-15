@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_crashdump_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tobias Michalski (Nextron Systems)",
+                "date": "2022-02-24",
+                "title": "CrashControl CrashDump Disabled",
+                "id": "2ff692c2-4594-41ec-8fcb-46587de769e0"
+            },
+            "rule_text": "title: CrashControl CrashDump Disabled\nid: 2ff692c2-4594-41ec-8fcb-46587de769e0\nstatus: test\ndescription: Detects disabling the CrashDump per registry (as used by HermeticWiper)\nreferences:\n- https://www.sentinelone.com/labs/hermetic-wiper-ukraine-under-attack/\nauthor: Tobias Michalski (Nextron Systems)\ndate: 2022-02-24\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.stealth\n- attack.defense-impairment\n- attack.t1564\n- attack.t1112\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains: SYSTEM\\CurrentControlSet\\Control\\CrashControl\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Legitimate disabling of crashdumps\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

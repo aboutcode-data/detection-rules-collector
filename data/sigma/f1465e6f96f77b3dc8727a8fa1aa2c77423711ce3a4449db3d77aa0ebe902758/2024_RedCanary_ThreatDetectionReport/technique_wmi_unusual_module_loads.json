@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_wmi_unusual_module_loads.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Unusual Module Loads - WMI",
+                "id": "b62ec77f-8014-42be-9874-c155f9ce6fae"
+            },
+            "rule_text": "title: Unusual Module Loads - WMI\nid: b62ec77f-8014-42be-9874-c155f9ce6fae\nstatus: experimental\ndescription: \"By monitoring and detecting on module loads, you can catch a variety\\\n  \\ of different malicious \\nactivities, including defense evasion and credential\\\n  \\ theft. In cases where an adversary is \\nusing WMI for credential theft, consider\\\n  \\ looking for the execution of wmiprvse.exe (or its \\nchild processes) with unusual\\\n  \\ module loads like samlib.dll or vaultcli.dll. WMI is also a \\nuseful vehicle for\\\n  \\ bypassing application controls, and we commonly see adversaries\\u2014real and\\\n  \\ \\nsimulated\\u2013using a WMI bypass method called \\u201CSquibblyTwo.\\u201D The\\\n  \\ following pseudo-detection \\nanalytic is designed specifically to catch application\\\n  \\ control bypasses, but you can likely \\nadapt it to detect other threats by substituting\\\n  \\ in a different DLL or by removing the command. \\nPart of the RedCanary 2024 Threat\\\n  \\ Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains: 'format:'\n    ImageLoaded|contains:\n    - jscript.dll\n    - vbscript.dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

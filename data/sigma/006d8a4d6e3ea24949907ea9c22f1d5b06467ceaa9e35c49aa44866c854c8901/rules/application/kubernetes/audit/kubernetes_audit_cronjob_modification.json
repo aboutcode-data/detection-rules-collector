@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_cronjob_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "kelnage",
+                "date": "2024-07-11",
+                "title": "Kubernetes CronJob/Job Modification",
+                "id": "0c9b3bda-41a6-4442-9345-356ae86343dc"
+            },
+            "rule_text": "title: Kubernetes CronJob/Job Modification\nid: 0c9b3bda-41a6-4442-9345-356ae86343dc\nrelated:\n- id: cd3a808c-c7b7-4c50-a2f3-f4cfcd436435\n  type: similar\nstatus: test\ndescription: 'Detects when a Kubernetes CronJob or Job is created or modified.\n\n  A Kubernetes Job creates one or more pods to accomplish a specific task, and a CronJob\n  creates Jobs on a recurring schedule.\n\n  An adversary can take advantage of this Kubernetes object to schedule Jobs to run\n  containers that execute malicious code within a cluster, allowing them to achieve\n  persistence.\n\n  '\nreferences:\n- https://kubernetes.io/docs/reference/config-api/apiserver-audit.v1/\n- https://www.redhat.com/en/blog/protecting-kubernetes-against-mitre-attck-persistence#technique-33-kubernetes-cronjob\nauthor: kelnage\ndate: 2024-07-11\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\nlogsource:\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    objectRef.apiGroup: batch\n    objectRef.resource:\n    - cronjobs\n    - jobs\n    verb:\n    - create\n    - delete\n    - patch\n    - replace\n    - update\n  condition: selection\nfalsepositives:\n- Modifying a Kubernetes Job or CronJob may need to be done by a system administrator.\n- Automated processes may need to take these actions and may need to be filtered.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

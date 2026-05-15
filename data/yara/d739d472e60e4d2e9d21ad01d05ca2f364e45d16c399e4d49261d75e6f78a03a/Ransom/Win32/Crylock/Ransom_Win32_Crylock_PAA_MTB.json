@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Crylock/Ransom_Win32_Crylock_PAA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Crylock_PAA_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Crylock.PAA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Crylock_PAA_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Crylock.PAA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2f 2f 2f 45 4e 44 20 50 52 4f 43 45 53 53 45 53 20 57 48 49 54 45 20 4c 49 53 54 5c 5c 5c }\n\t\t$a_01_1 = {2f 2f 2f 45 4e 44 20 55 4e 45 4e 43 52 59 50 54 20 46 49 4c 45 53 20 4c 49 53 54 5c 5c 5c }\n\t\t$a_01_2 = {2f 63 20 22 70 69 6e 67 20 30 2e 30 2e 30 2e 30 26 64 65 6c 20 22 }\n\t\t$a_81_3 = {68 6f 77 5f 74 6f 5f 64 65 63 72 79 70 74 2e 68 74 61 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_81_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

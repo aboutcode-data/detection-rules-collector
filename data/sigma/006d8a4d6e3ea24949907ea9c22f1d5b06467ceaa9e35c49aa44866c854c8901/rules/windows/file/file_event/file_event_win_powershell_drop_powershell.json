@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_powershell_drop_powershell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-05-09",
+                "title": "PowerShell Script Dropped Via PowerShell.EXE",
+                "id": "576426ad-0131-4001-ae01-be175da0c108"
+            },
+            "rule_text": "title: PowerShell Script Dropped Via PowerShell.EXE\nid: 576426ad-0131-4001-ae01-be175da0c108\nstatus: test\ndescription: Detects PowerShell creating a PowerShell file (.ps1). While often times\n  this behavior is benign, sometimes it can be a sign of a dropper script trying to\n  achieve persistence.\nreferences:\n- https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution\nauthor: frack113\ndate: 2023-05-09\ntags:\n- attack.persistence\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    TargetFilename|endswith: .ps1\n  filter_main_psscriptpolicytest:\n    TargetFilename|contains: __PSScriptPolicyTest_\n  filter_main_appdata:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|contains: \\AppData\\Local\\Temp\\\n  filter_main_windows_temp:\n    TargetFilename|startswith: C:\\Windows\\Temp\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- False positives will differ depending on the environment and scripts used. Apply\n  additional filters accordingly.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

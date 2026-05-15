@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_download_iex.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-24",
+                "title": "PowerShell Download and Execution Cradles",
+                "id": "85b0b087-eddf-4a2b-b033-d771fa2b9775"
+            },
+            "rule_text": "title: PowerShell Download and Execution Cradles\nid: 85b0b087-eddf-4a2b-b033-d771fa2b9775\nstatus: test\ndescription: Detects PowerShell download and execution cradles.\nreferences:\n- https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/88e8eca34464a547c90d9140d70e9866dcbc6a12/Download-Cradles.cmd\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-24\nmodified: 2025-07-18\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_download:\n    CommandLine|contains:\n    - .DownloadString(\n    - .DownloadFile(\n    - 'Invoke-WebRequest '\n    - 'iwr '\n    - 'Invoke-RestMethod '\n    - 'irm '\n  selection_iex:\n    CommandLine|contains:\n    - ;iex $\n    - '| IEX'\n    - '|IEX '\n    - I`E`X\n    - I`EX\n    - IE`X\n    - 'iex '\n    - IEX (\n    - IEX(\n    - Invoke-Expression\n  condition: all of selection_*\nfalsepositives:\n- Some PowerShell installers were seen using similar combinations. Apply filters accordingly\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

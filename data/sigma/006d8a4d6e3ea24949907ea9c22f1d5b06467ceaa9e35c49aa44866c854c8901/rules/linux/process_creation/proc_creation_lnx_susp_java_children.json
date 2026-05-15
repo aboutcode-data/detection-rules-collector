@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_java_children.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-03",
+                "title": "Suspicious Java Children Processes",
+                "id": "d292e0af-9a18-420c-9525-ec0ac3936892"
+            },
+            "rule_text": "title: Suspicious Java Children Processes\nid: d292e0af-9a18-420c-9525-ec0ac3936892\nstatus: test\ndescription: Detects java process spawning suspicious children\nreferences:\n- https://www.tecmint.com/different-types-of-linux-shells/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-03\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    ParentImage|endswith: /java\n    CommandLine|contains:\n    - /bin/sh\n    - bash\n    - dash\n    - ksh\n    - zsh\n    - csh\n    - fish\n    - curl\n    - wget\n    - python\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_deviceguard_evasion.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_DeviceGuard_WDS_Evasion",
+                "tags": [],
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Detects WDS file used to circumvent Device Guard",
+                "score": 70,
+                "date": "2015-01-01",
+                "modified": "2023-01-06",
+                "reference": "http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html",
+                "id": "469b60d4-43d3-5a85-aa51-e453d8c858c0"
+            },
+            "rule_text": "rule SUSP_DeviceGuard_WDS_Evasion\n{\n\tmeta:\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Detects WDS file used to circumvent Device Guard\"\n\t\tscore = 70\n\t\tdate = \"2015-01-01\"\n\t\tmodified = \"2023-01-06\"\n\t\treference = \"http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html\"\n\t\tid = \"469b60d4-43d3-5a85-aa51-e453d8c858c0\"\n\n\tstrings:\n\t\t$s1 = \"r @$ip=@$t0\" ascii\n\t\t$s2 = \";eb @$t0+\" ascii\n\t\t$s3 = \".foreach /pS\" ascii\n\n\tcondition:\n\t\tfilesize < 50KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

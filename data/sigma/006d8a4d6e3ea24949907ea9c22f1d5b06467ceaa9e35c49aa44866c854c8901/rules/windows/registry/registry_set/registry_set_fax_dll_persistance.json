@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_fax_dll_persistance.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-07-17",
+                "title": "Change the Fax Dll",
+                "id": "9e3357ba-09d4-4fbd-a7c5-ad6386314513"
+            },
+            "rule_text": "title: Change the Fax Dll\nid: 9e3357ba-09d4-4fbd-a7c5-ad6386314513\nstatus: test\ndescription: Detect possible persistence using Fax DLL load when service restart\nreferences:\n- https://twitter.com/dottor_morte/status/1544652325570191361\n- https://raw.githubusercontent.com/RiccardoAncarani/talks/master/F-Secure/unorthodox-lateral-movement.pdf\nauthor: frack113\ndate: 2022-07-17\nmodified: 2022-12-30\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\Software\\Microsoft\\Fax\\Device Providers\\\n    - \\ImageName\n  filter:\n    Details: '%systemroot%\\system32\\fxst30.dll'\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

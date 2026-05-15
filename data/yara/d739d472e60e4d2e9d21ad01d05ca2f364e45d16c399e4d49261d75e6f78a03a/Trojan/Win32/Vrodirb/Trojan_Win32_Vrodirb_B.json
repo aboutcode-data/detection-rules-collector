@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Vrodirb/Trojan_Win32_Vrodirb_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Vrodirb_B",
+                "tags": [],
+                "description": "Trojan:Win32/Vrodirb.B,SIGNATURE_TYPE_PEHSTR_EXT,06 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Vrodirb_B\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Vrodirb.B,SIGNATURE_TYPE_PEHSTR_EXT,06 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 44 24 04 8b 54 24 08 f7 40 04 06 00 00 00 74 ?? 8b 4a 04 c7 42 04 ?? ?? 40 00 53 56 57 55 8b 6a 08 83 c1 05 e8 ?? ?? ff ff ff d1 }\n\t\t$a_02_1 = {2f 3f 44 6c 6c [0-04] 49 45 46 72 61 6d 65 }\n\t\t$a_02_2 = {42 52 5f 46 52 41 4d 45 [0-04] 58 41 64 64 72 42 61 72 }\n\t\t$a_02_3 = {43 3a 5c 4e [0-04] 5c 63 74 66 6d 6f 6e 2e 65 78 65 }\n\t\t$a_00_4 = {75 73 70 31 30 2e 64 6c 6c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

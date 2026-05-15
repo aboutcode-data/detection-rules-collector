@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/LummaStealer/Trojan_Win64_LummaStealer_YAK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_LummaStealer_YAK_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/LummaStealer.YAK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_LummaStealer_YAK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/LummaStealer.YAK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {3d ab 30 f1 93 0f 8e ?? ?? ?? ?? 3d 66 bd 2d 9a 0f 8e ?? ?? ?? ?? 3d 67 bd 2d 9a }\n\t\t$a_01_1 = {0f af c8 f6 c1 01 b8 25 f4 dd 44 b9 29 b0 01 38 }\n\t\t$a_01_2 = {48 8b 4d b8 0f b6 04 01 48 63 4d f0 48 8b 55 90 30 04 0a 8b 5d f0 83 c3 01 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 10 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

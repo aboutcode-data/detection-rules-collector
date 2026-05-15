@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/taskscheduler/win_taskscheduler_lolbin_execution_via_task_scheduler.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-05",
+                "title": "Scheduled Task Executed Uncommon LOLBIN",
+                "id": "f0767f15-0fb3-44b9-851e-e8d9a6d0005d"
+            },
+            "rule_text": "title: Scheduled Task Executed Uncommon LOLBIN\nid: f0767f15-0fb3-44b9-851e-e8d9a6d0005d\nstatus: test\ndescription: Detects the execution of Scheduled Tasks where the program being run\n  is located in a suspicious location or where it is an unusual program to be run\n  from a Scheduled Task\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-05\nmodified: 2023-02-07\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.005\nlogsource:\n  product: windows\n  service: taskscheduler\n  definition: 'Requirements: The \"Microsoft-Windows-TaskScheduler/Operational\" is\n    disabled by default and needs to be enabled in order for this detection to trigger'\ndetection:\n  selection:\n    EventID: 129\n    Path|endswith:\n    - \\calc.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\mspaint.exe\n    - \\notepad.exe\n    - \\regsvr32.exe\n    - \\wscript.exe\n  condition: selection\nfalsepositives:\n- False positives may occur with some of the selected binaries if you have tasks using\n  them (which could be very common in your environment). Exclude all the specific\n  trusted tasks before using this rule\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

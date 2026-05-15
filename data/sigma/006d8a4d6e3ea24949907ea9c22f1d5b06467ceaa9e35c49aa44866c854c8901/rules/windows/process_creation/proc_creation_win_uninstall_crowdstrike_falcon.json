@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uninstall_crowdstrike_falcon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-12",
+                "title": "Uninstall Crowdstrike Falcon Sensor",
+                "id": "f0f7be61-9cf5-43be-9836-99d6ef448a18"
+            },
+            "rule_text": "title: Uninstall Crowdstrike Falcon Sensor\nid: f0f7be61-9cf5-43be-9836-99d6ef448a18\nstatus: test\ndescription: Adversaries may disable security tools to avoid possible detection of\n  their tools and activities by uninstalling Crowdstrike Falcon\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md\nauthor: frack113\ndate: 2021-07-12\nmodified: 2023-03-09\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - \\WindowsSensor.exe\n    - ' /uninstall'\n    - ' /quiet'\n  condition: selection\nfalsepositives:\n- Administrator might leverage the same command line for debugging or other purposes.\n  However this action must be always investigated\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

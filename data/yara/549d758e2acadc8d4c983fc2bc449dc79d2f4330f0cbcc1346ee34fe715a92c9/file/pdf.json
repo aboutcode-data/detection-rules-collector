@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/Xumeiquer/yara-forensics/blob/master/file/pdf.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "pdf",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Jaume Martin"
+            },
+            "rule_text": "rule pdf : PDF\n{\n\tmeta:\n\t\tauthor = \"Jaume Martin\"\n\n\tstrings:\n\t\t$a = {25 50 44 46}\n\t\t$b = {0A 25 25 45 4F 46 (??|0A)}\n\t\t$c = {0D 0A 25 25 45 4F 46 0D 0A}\n\t\t$d = {0D 25 25 45 4F 46 0D}\n\n\tcondition:\n\t\t$a at 0 and for any of ( $b , $c , $d ) : ( @ > @a )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_public_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2022-04-06",
+                "title": "Execution of Powershell Script in Public Folder",
+                "id": "fb9d3ff7-7348-46ab-af8c-b55f5fbf39b4"
+            },
+            "rule_text": "title: Execution of Powershell Script in Public Folder\nid: fb9d3ff7-7348-46ab-af8c-b55f5fbf39b4\nstatus: test\ndescription: This rule detects execution of PowerShell scripts located in the \"C:\\Users\\Public\"\n  folder\nreferences:\n- https://www.mandiant.com/resources/evolution-of-fin7\nauthor: Max Altgelt (Nextron Systems)\ndate: 2022-04-06\nmodified: 2022-07-14\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    CommandLine|contains:\n    - -f C:\\Users\\Public\n    - -f \"C:\\Users\\Public\n    - -f %Public%\n    - -fi C:\\Users\\Public\n    - -fi \"C:\\Users\\Public\n    - -fi %Public%\n    - -fil C:\\Users\\Public\n    - -fil \"C:\\Users\\Public\n    - -fil %Public%\n    - -file C:\\Users\\Public\n    - -file \"C:\\Users\\Public\n    - -file %Public%\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

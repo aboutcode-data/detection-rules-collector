@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_invoke_obfuscation_via_use_mshta_services_security.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-09",
+                "title": "Invoke-Obfuscation Via Use MSHTA - Security",
+                "id": "9b8d9203-4e0f-4cd9-bb06-4cc4ea6d0e9a"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Use MSHTA - Security\nid: 9b8d9203-4e0f-4cd9-bb06-4cc4ea6d0e9a\nrelated:\n- id: 7e9c7999-0f9b-4d4a-a6ed-af6d553d4af4\n  type: derived\nstatus: test\ndescription: Detects Obfuscated Powershell via use MSHTA in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-09\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|contains|all:\n    - mshta\n    - vbscript:createobject\n    - .run\n    - window.close\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/thinblood.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Tool_SH_THINBLOOD_1",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "sha256": "1741dc0a491fcc8d078220ac9628152668d3370b92a8eae258e34ba28c6473b9",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Tool_SH_THINBLOOD_1\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tsha256 = \"1741dc0a491fcc8d078220ac9628152668d3370b92a8eae258e34ba28c6473b9\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$s1 = \"sed -i \\\"s/.\\\\x00[^\\\\x00]*$2[^\\\\x00]*\\\\x09.\\\\x00//g\"\n\t\t$s2 = \"sed -i \\\"s/\\\\\"\n\t\t$s3 = \"\\\\x00[^\\\\x00]*$2[^\\\\x00]*\\\\x09\\\\x\"\n\n\tcondition:\n\t\t( filesize < 2048 ) and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

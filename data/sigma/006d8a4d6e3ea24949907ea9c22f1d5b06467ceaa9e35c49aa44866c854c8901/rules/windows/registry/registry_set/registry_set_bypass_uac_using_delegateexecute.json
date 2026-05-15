@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_bypass_uac_using_delegateexecute.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-05",
+                "title": "Bypass UAC Using DelegateExecute",
+                "id": "46dd5308-4572-4d12-aa43-8938f0184d4f"
+            },
+            "rule_text": "title: Bypass UAC Using DelegateExecute\nid: 46dd5308-4572-4d12-aa43-8938f0184d4f\nstatus: test\ndescription: Bypasses User Account Control using a fileless method\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-iexecutecommand\n- https://devblogs.microsoft.com/oldnewthing/20100312-01/?p=14623\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-7---bypass-uac-using-sdclt-delegateexecute\nauthor: frack113\ndate: 2022-01-05\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\open\\command\\DelegateExecute\n    Details: (Empty)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_delegateexecute/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Bypass UAC using sdclt DelegateExecute\n  technique: T1548.002\n  atomic_guid: 3be891eb-4608-4173-87e8-78b494c029b7\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Jipe_/office_document_vba.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "office_document_vba",
+                "tags": [],
+                "description": "Office document with embedded VBA",
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "date": "2013-12-17",
+                "reference": "N/A"
+            },
+            "rule_text": "rule office_document_vba\n{\n\tmeta:\n\t\tdescription = \"Office document with embedded VBA\"\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdate = \"2013-12-17\"\n\t\treference = \"N/A\"\n\n\tstrings:\n\t\t$officemagic = { D0 CF 11 E0 A1 B1 1A E1 }\n\t\t$zipmagic = \"PK\"\n\t\t$97str1 = \"_VBA_PROJECT_CUR\" wide\n\t\t$97str2 = \"VBAProject\"\n\t\t$97str3 = { 41 74 74 72 69 62 75 74 00 65 20 56 42 5F }\n\t\t$xmlstr1 = \"vbaProject.bin\"\n\t\t$xmlstr2 = \"vbaData.xml\"\n\n\tcondition:\n\t\t($officemagic at 0 and any of ( $97str* ) ) or ( $zipmagic at 0 and any of ( $xmlstr* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

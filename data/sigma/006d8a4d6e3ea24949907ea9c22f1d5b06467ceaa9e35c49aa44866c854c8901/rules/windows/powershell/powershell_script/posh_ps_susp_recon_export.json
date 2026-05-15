@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_recon_export.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-30",
+                "title": "Recon Information for Export with PowerShell",
+                "id": "a9723fcc-881c-424c-8709-fd61442ab3c3"
+            },
+            "rule_text": "title: Recon Information for Export with PowerShell\nid: a9723fcc-881c-424c-8709-fd61442ab3c3\nstatus: test\ndescription: Once established within a system or network, an adversary may use automated\n  techniques for collecting internal data\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1119/T1119.md\nauthor: frack113\ndate: 2021-07-30\nmodified: 2022-12-25\ntags:\n- attack.collection\n- attack.t1119\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_action:\n    ScriptBlockText|contains:\n    - 'Get-Service '\n    - 'Get-ChildItem '\n    - 'Get-Process '\n  selection_redirect:\n    ScriptBlockText|contains: '> $env:TEMP\\'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

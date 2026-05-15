@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_koadic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "wagga, Jonhnathan Ribeiro, oscd.community",
+                "date": "2020-01-12",
+                "title": "HackTool - Koadic Execution",
+                "id": "5cddf373-ef00-4112-ad72-960ac29bac34"
+            },
+            "rule_text": "title: HackTool - Koadic Execution\nid: 5cddf373-ef00-4112-ad72-960ac29bac34\nstatus: test\ndescription: Detects command line parameters used by Koadic hack tool\nreferences:\n- https://unit42.paloaltonetworks.com/unit42-sofacy-groups-parallel-attacks/\n- https://github.com/offsecginger/koadic/blob/457f9a3ff394c989cdb4c599ab90eb34fb2c762c/data/stager/js/stdlib.js\n- https://blog.f-secure.com/hunting-for-koadic-a-com-based-rootkit/\nauthor: wagga, Jonhnathan Ribeiro, oscd.community\ndate: 2020-01-12\nmodified: 2023-02-11\ntags:\n- attack.execution\n- attack.t1059.003\n- attack.t1059.005\n- attack.t1059.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cli:\n    CommandLine|contains|all:\n    - /q\n    - /c\n    - chcp\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

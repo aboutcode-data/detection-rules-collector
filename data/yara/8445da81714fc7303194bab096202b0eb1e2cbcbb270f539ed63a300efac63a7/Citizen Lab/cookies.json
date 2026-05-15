@@ -1,0 +1,32 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/cookies.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CookiesStrings",
+                "tags": [
+                    "Cookies",
+                    "Family"
+                ],
+                "description": "Cookies Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule CookiesStrings : Cookies Family\n{\n\tmeta:\n\t\tdescription = \"Cookies Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$zip1 = \"ntdll.exePK\"\n\t\t$zip2 = \"AcroRd32.exePK\"\n\t\t$zip3 = \"Setup=ntdll.exe\\x0d\\x0aSilent=1\\x0d\\x0a\"\n\t\t$zip4 = \"Setup=%temp%\\\\AcroRd32.exe\\x0d\\x0a\"\n\t\t$exe1 = \"Leave GetCommand!\"\n\t\t$exe2 = \"perform exe success!\"\n\t\t$exe3 = \"perform exe failure!\"\n\t\t$exe4 = \"Entry SendCommandReq!\"\n\t\t$exe5 = \"Reqfile not exist!\"\n\t\t$exe6 = \"LeaveDealUpfile!\"\n\t\t$exe7 = \"Entry PostData!\"\n\t\t$exe8 = \"Leave PostFile!\"\n\t\t$exe9 = \"Entry PostFile!\"\n\t\t$exe10 = \"\\\\unknow.zip\" wide ascii\n\t\t$exe11 = \"the url no respon!\"\n\n\tcondition:\n\t\t(2 of ( $zip* ) ) or ( 2 of ( $exe* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Cookies",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Cookies",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "rule Cookies : Family\n{\n\tmeta:\n\t\tdescription = \"Cookies\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tcondition:\n\t\tCookiesStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

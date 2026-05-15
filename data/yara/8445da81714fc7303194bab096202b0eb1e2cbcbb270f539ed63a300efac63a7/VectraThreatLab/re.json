@@ -1,0 +1,753 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/VectraThreatLab/re.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "anti_dbg",
+                "tags": [],
+                "author": "x0r",
+                "description": "Checks if being debugged",
+                "version": "0.2"
+            },
+            "rule_text": "rule anti_dbg\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Checks if being debugged\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$d1 = \"Kernel32.dll\" nocase\n\t\t$c1 = \"CheckRemoteDebuggerPresent\"\n\t\t$c2 = \"IsDebuggerPresent\"\n\t\t$c3 = \"OutputDebugString\"\n\t\t$c4 = \"ContinueDebugEvent\"\n\t\t$c5 = \"DebugActiveProcess\"\n\n\tcondition:\n\t\t$d1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "anti_dbgtools",
+                "tags": [],
+                "author": "x0r",
+                "description": "Checks for the presence of known debug tools",
+                "version": "0.1"
+            },
+            "rule_text": "rule anti_dbgtools\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Checks for the presence of known debug tools\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"procexp.exe\" nocase\n\t\t$f2 = \"procmon.exe\" nocase\n\t\t$f3 = \"processmonitor.exe\" nocase\n\t\t$f4 = \"wireshark.exe\" nocase\n\t\t$f5 = \"fiddler.exe\" nocase\n\t\t$f6 = \"windbg.exe\" nocase\n\t\t$f7 = \"ollydbg.exe\" nocase\n\t\t$f8 = \"winhex.exe\" nocase\n\t\t$f9 = \"processhacker.exe\" nocase\n\t\t$f10 = \"hiew32.exe\" nocase\n\t\t$c11 = \"\\\\\\\\.\\\\NTICE\"\n\t\t$c12 = \"\\\\\\\\.\\\\SICE\"\n\t\t$c13 = \"\\\\\\\\.\\\\Syser\"\n\t\t$c14 = \"\\\\\\\\.\\\\SyserBoot\"\n\t\t$c15 = \"\\\\\\\\.\\\\SyserDbgMsg\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "av_sinkhole",
+                "tags": [],
+                "author": "x0r",
+                "description": "Check for known IP belonging to AV sinkhole",
+                "version": "0.1"
+            },
+            "rule_text": "rule av_sinkhole\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Check for known IP belonging to AV sinkhole\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"23.92.16.214\"\n\t\t$s2 = \"23.92.24.20\"\n\t\t$s3 = \"23.239.17.167\"\n\t\t$s4 = \"23.239.18.116\"\n\t\t$s5 = \"50.56.177.56\"\n\t\t$s6 = \"50.57.148.87\"\n\t\t$s7 = \"69.55.59.73\"\n\t\t$s8 = \"82.196.15.88\"\n\t\t$s9 = \"85.159.211.119\"\n\t\t$s10 = \"95.85.23.126\"\n\t\t$s11 = \"96.126.112.224\"\n\t\t$s12 = \"107.170.43.224\"\n\t\t$s13 = \"107.170.106.77\"\n\t\t$s14 = \"107.170.106.95\"\n\t\t$s15 = \"107.170.113.230\"\n\t\t$s16 = \"107.170.122.37\"\n\t\t$s17 = \"107.170.164.115\"\n\t\t$s18 = \"128.199.180.131\"\n\t\t$s19 = \"128.199.187.239\"\n\t\t$s20 = \"143.215.15.2\"\n\t\t$s21 = \"143.215.130.33\"\n\t\t$s22 = \"143.215.130.36\"\n\t\t$s23 = \"143.215.130.38\"\n\t\t$s24 = \"143.215.130.42\"\n\t\t$s25 = \"143.215.130.46\"\n\t\t$s26 = \"162.243.26.100\"\n\t\t$s27 = \"162.243.90.135\"\n\t\t$s28 = \"162.243.106.156\"\n\t\t$s29 = \"162.243.106.160\"\n\t\t$s30 = \"162.243.106.165\"\n\t\t$s31 = \"166.78.16.123\"\n\t\t$s32 = \"166.78.158.73\"\n\t\t$s33 = \"192.241.129.22\"\n\t\t$s34 = \"192.241.142.145\"\n\t\t$s35 = \"192.241.196.69\"\n\t\t$s36 = \"192.241.215.118\"\n\t\t$s37 = \"198.61.227.6\"\n\t\t$s38 = \"198.74.56.124\"\n\t\t$s39 = \"198.199.69.31\"\n\t\t$s40 = \"198.199.75.69\"\n\t\t$s41 = \"198.199.79.133\"\n\t\t$s42 = \"198.199.79.201\"\n\t\t$s43 = \"198.199.79.222\"\n\t\t$s44 = \"198.199.79.239\"\n\t\t$s45 = \"198.199.105.51\"\n\t\t$s46 = \"198.199.110.187\"\n\t\t$s47 = \"212.71.250.4\"\n\t\t$s48 = \"87.106.24.200\"\n\t\t$s49 = \"87.106.26.9\"\n\t\t$s50 = \"46.4.80.102\"\n\t\t$s51 = \"54.227.61.124\"\n\t\t$s52 = \"198.58.124.24\"\n\t\t$s53 = \"198.177.254.186\"\n\t\t$s54 = \"50.62.12.103\"\n\t\t$s55 = \"166.78.62.91\"\n\t\t$s56 = \"166.78.144.80\"\n\t\t$s57 = \"23.21.71.54\"\n\t\t$s58 = \"54.209.178.183\"\n\t\t$s59 = \"81.166.122.234\"\n\t\t$s60 = \"95.211.120.23\"\n\t\t$s61 = \"95.211.172.143\"\n\t\t$s62 = \"173.193.197.194\"\n\t\t$s63 = \"87.255.51.229\"\n\t\t$s64 = \"192.42.116.41\"\n\t\t$s65 = \"192.42.119.41\"\n\t\t$s66 = \"50.22.145.246\"\n\t\t$s67 = \"50.23.174.203\"\n\t\t$s68 = \"54.83.43.69\"\n\t\t$s69 = \"82.165.25.167\"\n\t\t$s70 = \"82.165.25.209\"\n\t\t$s71 = \"82.165.25.210\"\n\t\t$s72 = \"212.227.20.19\"\n\t\t$s73 = \"50.116.32.177\"\n\t\t$s74 = \"50.116.56.144\"\n\t\t$s75 = \"66.175.212.197\"\n\t\t$s76 = \"69.164.203.105\"\n\t\t$s77 = \"72.14.182.233\"\n\t\t$s78 = \"109.74.196.143\"\n\t\t$s79 = \"173.230.133.99\"\n\t\t$s80 = \"178.79.190.156\"\n\t\t$s81 = \"198.74.50.135\"\n\t\t$s82 = \"91.233.244.102\"\n\t\t$s83 = \"91.233.244.106\"\n\t\t$s84 = \"148.81.111.111\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_joesanbox",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for Joe Sandbox",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_joesanbox\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for Joe Sandbox\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\" nocase\n\t\t$c1 = \"RegQueryValue\"\n\t\t$s1 = \"55274-640-2673064-23950\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_anubis",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for Anubis",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_anubis\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for Anubis\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\" nocase\n\t\t$c1 = \"RegQueryValue\"\n\t\t$s1 = \"76487-337-8429955-22614\"\n\t\t$s2 = \"76487-640-1457236-23837\"\n\n\tcondition:\n\t\t$p1 and $c1 and 1 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_threatExpert",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for ThreatExpert",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_threatExpert\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for ThreatExpert\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"dbghelp.dll\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_sandboxie",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for Sandboxie",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_sandboxie\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for Sandboxie\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"SbieDLL.dll\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_cwsandbox",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for CWSandbox",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_cwsandbox\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for CWSandbox\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\" nocase\n\t\t$s1 = \"76487-644-3177037-23510\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antivm_virtualbox",
+                "tags": [],
+                "author": "x0r",
+                "description": "AntiVM checks for VirtualBox",
+                "version": "0.1"
+            },
+            "rule_text": "rule antivm_virtualbox\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"AntiVM checks for VirtualBox\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"VBoxService.exe\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antivm_vmware",
+                "tags": [],
+                "author": "x0r",
+                "description": "AntiVM checks for VMWare",
+                "version": "0.1"
+            },
+            "rule_text": "rule antivm_vmware\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"AntiVM checks for VMWare\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"vmware.exe\" nocase\n\t\t$s2 = \"vmware-authd.exe\" nocase\n\t\t$s3 = \"vmware-hostd.exe\" nocase\n\t\t$s4 = \"vmware-tray.exe\" nocase\n\t\t$s5 = \"vmware-vmx.exe\" nocase\n\t\t$s6 = \"vmnetdhcp.exe\" nocase\n\t\t$s7 = \"vpxclient.exe\" nocase\n\t\t$s8 = { b868584d56bb00000000b90a000000ba58560000ed }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antivm_bios",
+                "tags": [],
+                "author": "x0r",
+                "description": "AntiVM checks for Bios version",
+                "version": "0.2"
+            },
+            "rule_text": "rule antivm_bios\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"AntiVM checks for Bios version\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$p1 = \"HARDWARE\\\\DESCRIPTION\\\\System\" nocase\n\t\t$p2 = \"HARDWARE\\\\DESCRIPTION\\\\System\\\\BIOS\" nocase\n\t\t$c1 = \"RegQueryValue\"\n\t\t$r1 = \"SystemBiosVersion\"\n\t\t$r2 = \"VideoBiosVersion\"\n\t\t$r3 = \"SystemManufacturer\"\n\n\tcondition:\n\t\t1 of ( $p* ) and 1 of ( $c* ) and 1 of ( $r* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_antivirus",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable AntiVirus",
+                "version": "0.2"
+            },
+            "rule_text": "rule disable_antivirus\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable AntiVirus\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\Explorer\\\\DisallowRun\" nocase\n\t\t$p2 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Uninstall\\\\\" nocase\n\t\t$p3 = \"SOFTWARE\\\\Policies\\\\Microsoft\\\\Windows Defender\" nocase\n\t\t$c1 = \"RegSetValue\"\n\t\t$r1 = \"AntiVirusDisableNotify\"\n\t\t$r2 = \"DontReportInfectionInformation\"\n\t\t$r3 = \"DisableAntiSpyware\"\n\t\t$r4 = \"RunInvalidSignatures\"\n\t\t$r5 = \"AntiVirusOverride\"\n\t\t$r6 = \"CheckExeSignatures\"\n\t\t$f1 = \"blackd.exe\" nocase\n\t\t$f2 = \"blackice.exe\" nocase\n\t\t$f3 = \"lockdown.exe\" nocase\n\t\t$f4 = \"lockdown2000.exe\" nocase\n\t\t$f5 = \"taskkill.exe\" nocase\n\t\t$f6 = \"tskill.exe\" nocase\n\t\t$f7 = \"smc.exe\" nocase\n\t\t$f8 = \"sniffem.exe\" nocase\n\t\t$f9 = \"zapro.exe\" nocase\n\t\t$f10 = \"zlclient.exe\" nocase\n\t\t$f11 = \"zonealarm.exe\" nocase\n\n\tcondition:\n\t\t($c1 and $p1 and 1 of ( $f* ) ) or ( $c1 and $p2 ) or 1 of ( $r* ) or $p3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_uax",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable User Access Control",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_uax\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable User Access Control\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Security Center\" nocase\n\t\t$r1 = \"UACDisableNotify\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_firewall",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable Firewall",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_firewall\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable Firewall\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SYSTEM\\\\CurrentControlSet\\\\Services\\\\SharedAccess\\\\Parameters\\\\FirewallPolicy\" nocase\n\t\t$c1 = \"RegSetValue\"\n\t\t$r1 = \"FirewallPolicy\"\n\t\t$r2 = \"EnableFirewall\"\n\t\t$r3 = \"FirewallDisableNotify\"\n\t\t$s1 = \"netsh firewall add allowedprogram\"\n\n\tcondition:\n\t\t(1 of ( $p* ) and $c1 and 1 of ( $r* ) ) or $s1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_registry",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable Registry editor",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_registry\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable Registry editor\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\System\" nocase\n\t\t$c1 = \"RegSetValue\"\n\t\t$r1 = \"DisableRegistryTools\"\n\t\t$r2 = \"DisableRegedit\"\n\n\tcondition:\n\t\t1 of ( $p* ) and $c1 and 1 of ( $r* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_dep",
+                "tags": [],
+                "author": "x0r",
+                "description": "Bypass DEP",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_dep\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Bypass DEP\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"EnableExecuteProtectionSupport\"\n\t\t$c2 = \"NtSetInformationProcess\"\n\t\t$c3 = \"VirtualProctectEx\"\n\t\t$c4 = \"SetProcessDEPPolicy\"\n\t\t$c5 = \"ZwProtectVirtualMemory\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_taskmanager",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable Task Manager",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_taskmanager\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable Task Manager\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\System\" nocase\n\t\t$r1 = \"DisableTaskMgr\"\n\n\tcondition:\n\t\t1 of ( $p* ) and 1 of ( $r* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "inject_thread",
+                "tags": [],
+                "author": "x0r",
+                "description": "Code injection with CreateRemoteThread in a remote process",
+                "version": "0.1"
+            },
+            "rule_text": "rule inject_thread\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Code injection with CreateRemoteThread in a remote process\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"OpenProcess\"\n\t\t$c2 = \"VirtualAllocEx\"\n\t\t$c3 = \"NtWriteVirtualMemory\"\n\t\t$c4 = \"WriteProcessMemory\"\n\t\t$c5 = \"CreateRemoteThread\"\n\t\t$c6 = \"CreateThread\"\n\t\t$c7 = \"OpenProcess\"\n\n\tcondition:\n\t\t$c1 and $c2 and ( $c3 or $c4 ) and ( $c5 or $c6 or $c7 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "create_process",
+                "tags": [],
+                "author": "x0r",
+                "description": "Create a new process",
+                "version": "0.2"
+            },
+            "rule_text": "rule create_process\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Create a new process\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$f1 = \"Shell32.dll\" nocase\n\t\t$f2 = \"Kernel32.dll\" nocase\n\t\t$c1 = \"ShellExecute\"\n\t\t$c2 = \"WinExec\"\n\t\t$c3 = \"CreateProcess\"\n\t\t$c4 = \"CreateThread\"\n\n\tcondition:\n\t\t($f1 and $c1 ) or $f2 and ( $c2 or $c3 or $c4 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "persistence",
+                "tags": [],
+                "author": "x0r",
+                "description": "Install itself for autorun at Windows startup",
+                "version": "0.1"
+            },
+            "rule_text": "rule persistence\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Install itself for autorun at Windows startup\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" nocase\n\t\t$p2 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce\" nocase\n\t\t$p3 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunServices\" nocase\n\t\t$p4 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunServicesOnce\" nocase\n\t\t$p5 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\" nocase\n\t\t$p6 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\Explorer\\\\Run\" nocase\n\t\t$p7 = \"SOFTWARE\\\\Microsoft\\\\Active Setup\\\\Installed Components\\\\\" nocase\n\t\t$p8 = \"SOFTWARE\\\\Microsoft\\\\WindowsNT\\\\CurrentVersion\\\\Windows\" nocase\n\t\t$p9 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\SharedTaskScheduler\" nocase\n\t\t$p10 = \"comfile\\\\shell\\\\open\\\\command\" nocase\n\t\t$p11 = \"piffile\\\\shell\\\\open\\\\command\" nocase\n\t\t$p12 = \"exefile\\\\shell\\\\open\\\\command\" nocase\n\t\t$p13 = \"txtfile\\\\shell\\\\open\\\\command\" nocase\n\t\t$p14 = \"\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Image File Execution Options\"\n\t\t$f1 = \"win.ini\" nocase\n\t\t$f2 = \"system.ini\" nocase\n\t\t$f3 = \"Start Menu\\\\Programs\\\\Startup\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hijack_network",
+                "tags": [],
+                "author": "x0r",
+                "description": "Hijack network configuration",
+                "version": "0.1"
+            },
+            "rule_text": "rule hijack_network\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Hijack network configuration\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Classes\\\\PROTOCOLS\\\\Handler\" nocase\n\t\t$p2 = \"SOFTWARE\\\\Classes\\\\PROTOCOLS\\\\Filter\" nocase\n\t\t$p3 = \"Microsoft\\\\Windows\\\\CurrentVersion\\\\Internet Settings\\\\ProxyServer\" nocase\n\t\t$p4 = \"software\\\\microsoft\\\\windows\\\\currentversion\\\\internet settings\\\\proxyenable\" nocase\n\t\t$f1 = \"drivers\\\\etc\\\\hosts\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "create_service",
+                "tags": [],
+                "author": "x0r",
+                "description": "Create a windows service",
+                "version": "0.2"
+            },
+            "rule_text": "rule create_service\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Create a windows service\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$f1 = \"Advapi32.dll\" nocase\n\t\t$c1 = \"CreateService\"\n\t\t$c2 = \"ControlService\"\n\t\t$c3 = \"StartService\"\n\t\t$c4 = \"QueryServiceStatus\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "create_com_service",
+                "tags": [],
+                "author": "x0r",
+                "description": "Create a COM server",
+                "version": "0.1"
+            },
+            "rule_text": "rule create_com_service\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Create a COM server\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"DllCanUnloadNow\" nocase\n\t\t$c2 = \"DllGetClassObject\"\n\t\t$c3 = \"DllInstall\"\n\t\t$c4 = \"DllRegisterServer\"\n\t\t$c5 = \"DllUnregisterServer\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_udp_sock",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over UDP network",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_udp_sock\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over UDP network\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"Ws2_32.dll\" nocase\n\t\t$f2 = \"System.Net\" nocase\n\t\t$f3 = \"wsock32.dll\" nocase\n\t\t$c0 = \"WSAStartup\"\n\t\t$c1 = \"sendto\"\n\t\t$c2 = \"recvfrom\"\n\t\t$c3 = \"WSASendTo\"\n\t\t$c4 = \"WSARecvFrom\"\n\t\t$c5 = \"UdpClient\"\n\n\tcondition:\n\t\t(( $f1 or $f3 ) and 2 of ( $c* ) ) or ( $f2 and $c5 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_tcp_listen",
+                "tags": [],
+                "author": "x0r",
+                "description": "Listen for incoming communication",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_tcp_listen\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Listen for incoming communication\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"Ws2_32.dll\" nocase\n\t\t$f2 = \"Mswsock.dll\" nocase\n\t\t$f3 = \"System.Net\" nocase\n\t\t$f4 = \"wsock32.dll\" nocase\n\t\t$c1 = \"bind\"\n\t\t$c2 = \"accept\"\n\t\t$c3 = \"GetAcceptExSockaddrs\"\n\t\t$c4 = \"AcceptEx\"\n\t\t$c5 = \"WSAStartup\"\n\t\t$c6 = \"WSAAccept\"\n\t\t$c7 = \"WSASocket\"\n\t\t$c8 = \"TcpListener\"\n\t\t$c9 = \"AcceptTcpClient\"\n\t\t$c10 = \"listen\"\n\n\tcondition:\n\t\t1 of ( $f* ) and 2 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_dyndns",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications dyndns network",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_dyndns\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications dyndns network\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \".no-ip.org\"\n\t\t$s2 = \".publicvm.com\"\n\t\t$s3 = \".linkpc.net\"\n\t\t$s4 = \".dynu.com\"\n\t\t$s5 = \".dynu.net\"\n\t\t$s6 = \".afraid.org\"\n\t\t$s7 = \".chickenkiller.com\"\n\t\t$s8 = \".crabdance.com\"\n\t\t$s9 = \".ignorelist.com\"\n\t\t$s10 = \".jumpingcrab.com\"\n\t\t$s11 = \".moo.com\"\n\t\t$s12 = \".strangled.com\"\n\t\t$s13 = \".twillightparadox.com\"\n\t\t$s14 = \".us.to\"\n\t\t$s15 = \".strangled.net\"\n\t\t$s16 = \".info.tm\"\n\t\t$s17 = \".homenet.org\"\n\t\t$s18 = \".biz.tm\"\n\t\t$s19 = \".continent.kz\"\n\t\t$s20 = \".ax.lt\"\n\t\t$s21 = \".system-ns.com\"\n\t\t$s22 = \".adultdns.com\"\n\t\t$s23 = \".craftx.biz\"\n\t\t$s24 = \".ddns01.com\"\n\t\t$s25 = \".dns53.biz\"\n\t\t$s26 = \".dnsapi.info\"\n\t\t$s27 = \".dnsd.info\"\n\t\t$s28 = \".dnsdynamic.com\"\n\t\t$s29 = \".dnsdynamic.net\"\n\t\t$s30 = \".dnsget.org\"\n\t\t$s31 = \".fe100.net\"\n\t\t$s32 = \".flashserv.net\"\n\t\t$s33 = \".ftp21.net\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_toredo",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over Toredo network",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_toredo\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over Toredo network\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"FirewallAPI.dll\" nocase\n\t\t$p1 = \"\\\\CurrentControlSet\\\\Services\\\\Tcpip6\\\\Parameters\\\\Interfaces\\\\\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_smtp_dotNet",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications smtp",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_smtp_dotNet\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications smtp\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"System.Net.Mail\" nocase\n\t\t$p1 = \"SmtpClient\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_smtp_raw",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications smtp",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_smtp_raw\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications smtp\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"MAIL FROM:\" nocase\n\t\t$s2 = \"RCPT TO:\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_smtp_vb",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications smtp",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_smtp_vb\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications smtp\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"CDO.Message\" nocase\n\t\t$c2 = \"cdoSMTPServer\" nocase\n\t\t$c3 = \"cdoSendUsingMethod\" nocase\n\t\t$c4 = \"cdoex.dll\" nocase\n\t\t$c5 = \"/cdo/configuration/smtpserver\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_p2p_win",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over P2P network",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_p2p_win\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over P2P network\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"PeerCollabExportContact\"\n\t\t$c2 = \"PeerCollabGetApplicationRegistrationInfo\"\n\t\t$c3 = \"PeerCollabGetEndpointName\"\n\t\t$c4 = \"PeerCollabGetEventData\"\n\t\t$c5 = \"PeerCollabGetInvitationResponse\"\n\t\t$c6 = \"PeerCollabGetPresenceInfo\"\n\t\t$c7 = \"PeerCollabGetSigninOptions\"\n\t\t$c8 = \"PeerCollabInviteContact\"\n\t\t$c9 = \"PeerCollabInviteEndpoint\"\n\t\t$c10 = \"PeerCollabParseContact\"\n\t\t$c11 = \"PeerCollabQueryContactData\"\n\t\t$c12 = \"PeerCollabRefreshEndpointData\"\n\t\t$c13 = \"PeerCollabRegisterApplication\"\n\t\t$c14 = \"PeerCollabRegisterEvent\"\n\t\t$c15 = \"PeerCollabSetEndpointName\"\n\t\t$c16 = \"PeerCollabSetObject\"\n\t\t$c17 = \"PeerCollabSetPresenceInfo\"\n\t\t$c18 = \"PeerCollabSignout\"\n\t\t$c19 = \"PeerCollabUnregisterApplication\"\n\t\t$c20 = \"PeerCollabUpdateContact\"\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_tor",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over TOR network",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_tor\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over TOR network\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"tor\\\\hidden_service\\\\private_key\" nocase\n\t\t$p2 = \"tor\\\\hidden_service\\\\hostname\" nocase\n\t\t$p3 = \"tor\\\\lock\" nocase\n\t\t$p4 = \"tor\\\\state\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_irc",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over IRC network",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_irc\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over IRC network\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"NICK\"\n\t\t$s2 = \"PING\"\n\t\t$s3 = \"JOIN\"\n\t\t$s4 = \"USER\"\n\t\t$s5 = \"PRIVMSG\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_http",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over HTTP",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_http\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over HTTP\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"wininet.dll\" nocase\n\t\t$c1 = \"InternetConnect\"\n\t\t$c2 = \"InternetOpen\"\n\t\t$c3 = \"InternetOpenUrl\"\n\t\t$c4 = \"InternetReadFile\"\n\t\t$c5 = \"InternetWriteFile\"\n\t\t$c6 = \"HttpOpenRequest\"\n\t\t$c7 = \"HttpSendRequest\"\n\t\t$c8 = \"IdHTTPHeaderInfo\"\n\n\tcondition:\n\t\t$f1 and $c1 and ( $c2 or $c3 ) and ( $c4 or $c5 or $c6 or $c7 or $c8 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_dropper",
+                "tags": [],
+                "author": "x0r",
+                "description": "File downloader/dropper",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_dropper\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"File downloader/dropper\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"urlmon.dll\" nocase\n\t\t$c1 = \"URLDownloadToFile\"\n\t\t$c2 = \"URLDownloadToCacheFile\"\n\t\t$c3 = \"URLOpenStream\"\n\t\t$c4 = \"URLOpenPullStream\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_ftp",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over FTP",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_ftp\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over FTP\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"Wininet.dll\" nocase\n\t\t$c1 = \"FtpGetCurrentDirectory\"\n\t\t$c2 = \"FtpGetFile\"\n\t\t$c3 = \"FtpPutFile\"\n\t\t$c4 = \"FtpSetCurrentDirectory\"\n\t\t$c5 = \"FtpOpenFile\"\n\t\t$c6 = \"FtpGetFileSize\"\n\t\t$c7 = \"FtpDeleteFile\"\n\t\t$c8 = \"FtpCreateDirectory\"\n\t\t$c9 = \"FtpRemoveDirectory\"\n\t\t$c10 = \"FtpRenameFile\"\n\t\t$c11 = \"FtpDownload\"\n\t\t$c12 = \"FtpUpload\"\n\t\t$c13 = \"FtpGetDirectory\"\n\n\tcondition:\n\t\t$f1 and ( 4 of ( $c* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_tcp_socket",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over RAW socket",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_tcp_socket\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over RAW socket\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"Ws2_32.dll\" nocase\n\t\t$f2 = \"wsock32.dll\" nocase\n\t\t$c1 = \"WSASocket\"\n\t\t$c2 = \"socket\"\n\t\t$c3 = \"send\"\n\t\t$c4 = \"WSASend\"\n\t\t$c5 = \"WSAConnect\"\n\t\t$c6 = \"connect\"\n\t\t$c7 = \"WSAStartup\"\n\t\t$c8 = \"closesocket\"\n\t\t$c9 = \"WSACleanup\"\n\n\tcondition:\n\t\t1 of ( $f* ) and 2 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_dns",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications use DNS",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_dns\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications use DNS\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"System.Net\"\n\t\t$f2 = \"Ws2_32.dll\" nocase\n\t\t$f3 = \"Dnsapi.dll\" nocase\n\t\t$f4 = \"wsock32.dll\" nocase\n\t\t$c2 = \"GetHostEntry\"\n\t\t$c3 = \"getaddrinfo\"\n\t\t$c4 = \"gethostbyname\"\n\t\t$c5 = \"WSAAsyncGetHostByName\"\n\t\t$c6 = \"DnsQuery\"\n\n\tcondition:\n\t\t1 of ( $f* ) and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_ssl",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communications over SSL",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_ssl\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communications over SSL\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"ssleay32.dll\" nocase\n\t\t$f2 = \"libeay32.dll\" nocase\n\t\t$f3 = \"libssl32.dll\" nocase\n\t\t$c1 = \"IdSSLOpenSSL\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "network_dga",
+                "tags": [],
+                "author": "x0r",
+                "description": "Communication using dga",
+                "version": "0.1"
+            },
+            "rule_text": "rule network_dga\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Communication using dga\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$dll1 = \"Advapi32.dll\" nocase\n\t\t$dll2 = \"wininet.dll\" nocase\n\t\t$dll3 = \"Crypt32.dll\" nocase\n\t\t$time1 = \"SystemTimeToFileTime\"\n\t\t$time2 = \"GetSystemTime\"\n\t\t$time3 = \"GetSystemTimeAsFileTime\"\n\t\t$hash1 = \"CryptCreateHash\"\n\t\t$hash2 = \"CryptAcquireContext\"\n\t\t$hash3 = \"CryptHashData\"\n\t\t$net1 = \"InternetOpen\"\n\t\t$net2 = \"InternetOpenUrl\"\n\t\t$net3 = \"gethostbyname\"\n\t\t$net4 = \"getaddrinfo\"\n\n\tcondition:\n\t\tall of ( $dll* ) and 1 of ( $time* ) and 1 of ( $hash* ) and 1 of ( $net* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "bitcoin",
+                "tags": [],
+                "author": "x0r",
+                "description": "Perform crypto currency mining",
+                "version": "0.1"
+            },
+            "rule_text": "rule bitcoin\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Perform crypto currency mining\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"OpenCL.dll\" nocase\n\t\t$f2 = \"nvcuda.dll\" nocase\n\t\t$f3 = \"opengl32.dll\" nocase\n\t\t$s1 = \"cpuminer 2.2.2X-Mining-Extensions\"\n\t\t$s2 = \"cpuminer 2.2.3X-Mining-Extensions\"\n\t\t$s3 = \"Ufasoft bitcoin-miner/0.20\"\n\t\t$s4 = \"bitcoin\" nocase\n\t\t$s5 = \"stratum\" nocase\n\n\tcondition:\n\t\t1 of ( $f* ) and 1 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "certificate",
+                "tags": [],
+                "author": "x0r",
+                "description": "Inject certificate in store",
+                "version": "0.1"
+            },
+            "rule_text": "rule certificate\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Inject certificate in store\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"Crypt32.dll\" nocase\n\t\t$r1 = \"software\\\\microsoft\\\\systemcertificates\\\\spc\\\\certificates\" nocase\n\t\t$c1 = \"CertOpenSystemStore\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "escalate_priv",
+                "tags": [],
+                "author": "x0r",
+                "description": "Escalade priviledges",
+                "version": "0.1"
+            },
+            "rule_text": "rule escalate_priv\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Escalade priviledges\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$d1 = \"Advapi32.dll\" nocase\n\t\t$c1 = \"SeDebugPrivilege\"\n\t\t$c2 = \"AdjustTokenPrivileges\"\n\n\tcondition:\n\t\t1 of ( $d* ) and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "screenshot",
+                "tags": [],
+                "author": "x0r",
+                "description": "Take screenshot",
+                "version": "0.1"
+            },
+            "rule_text": "rule screenshot\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Take screenshot\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$d1 = \"Gdi32.dll\" nocase\n\t\t$d2 = \"User32.dll\" nocase\n\t\t$c1 = \"BitBlt\"\n\t\t$c2 = \"GetDC\"\n\n\tcondition:\n\t\t1 of ( $d* ) and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lookupip",
+                "tags": [],
+                "author": "x0r",
+                "description": "Lookup external IP",
+                "version": "0.1"
+            },
+            "rule_text": "rule lookupip\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Lookup external IP\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$n1 = \"checkip.dyndns.org\" nocase\n\t\t$n2 = \"whatismyip.org\" nocase\n\t\t$n3 = \"whatsmyipaddress.com\" nocase\n\t\t$n4 = \"getmyip.org\" nocase\n\t\t$n5 = \"getmyip.co.uk\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dyndns",
+                "tags": [],
+                "author": "x0r",
+                "description": "Dynamic DNS",
+                "version": "0.1"
+            },
+            "rule_text": "rule dyndns\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Dynamic DNS\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"SOFTWARE\\\\Vitalwerks\\\\DUC\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lookupgeo",
+                "tags": [],
+                "author": "x0r",
+                "description": "Lookup Geolocation",
+                "version": "0.1"
+            },
+            "rule_text": "rule lookupgeo\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Lookup Geolocation\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$n1 = \"j.maxmind.com\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "keylogger",
+                "tags": [],
+                "author": "x0r",
+                "description": "Run a keylogger",
+                "version": "0.1"
+            },
+            "rule_text": "rule keylogger\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Run a keylogger\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"User32.dll\" nocase\n\t\t$c1 = \"GetAsyncKeyState\"\n\t\t$c2 = \"GetKeyState\"\n\t\t$c3 = \"MapVirtualKey\"\n\t\t$c4 = \"GetKeyboardType\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cred_local",
+                "tags": [],
+                "author": "x0r",
+                "description": "Steal credential",
+                "version": "0.1"
+            },
+            "rule_text": "rule cred_local\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Steal credential\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"LsaEnumerateLogonSessions\"\n\t\t$c2 = \"SamIConnect\"\n\t\t$c3 = \"SamIGetPrivateData\"\n\t\t$c4 = \"SamQueryInformationUse\"\n\t\t$c5 = \"CredEnumerateA\"\n\t\t$c6 = \"CredEnumerateW\"\n\t\t$r1 = \"software\\\\microsoft\\\\internet account manager\" nocase\n\t\t$r2 = \"software\\\\microsoft\\\\identitycrl\\\\creds\" nocase\n\t\t$r3 = \"Security\\\\Policy\\\\Secrets\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "sniff_audio",
+                "tags": [],
+                "author": "x0r",
+                "description": "Record Audio",
+                "version": "0.1"
+            },
+            "rule_text": "rule sniff_audio\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Record Audio\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"winmm.dll\" nocase\n\t\t$c1 = \"waveInStart\"\n\t\t$c2 = \"waveInReset\"\n\t\t$c3 = \"waveInAddBuffer\"\n\t\t$c4 = \"waveInOpen\"\n\t\t$c5 = \"waveInClose\"\n\n\tcondition:\n\t\t$f1 and 2 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cred_ff",
+                "tags": [],
+                "author": "x0r",
+                "description": "Steal Firefox credential",
+                "version": "0.1"
+            },
+            "rule_text": "rule cred_ff\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Steal Firefox credential\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"signons.sqlite\"\n\t\t$f2 = \"signons3.txt\"\n\t\t$f3 = \"secmod.db\"\n\t\t$f4 = \"cert8.db\"\n\t\t$f5 = \"key3.db\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cred_vnc",
+                "tags": [],
+                "author": "x0r",
+                "description": "Steal VNC credential",
+                "version": "0.1"
+            },
+            "rule_text": "rule cred_vnc\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Steal VNC credential\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"VNCPassView\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cred_ie7",
+                "tags": [],
+                "author": "x0r",
+                "description": "Steal IE 7 credential",
+                "version": "0.1"
+            },
+            "rule_text": "rule cred_ie7\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Steal IE 7 credential\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"Crypt32.dll\" nocase\n\t\t$c1 = \"CryptUnprotectData\"\n\t\t$s1 = \"abe2869f-9b47-4cd9-a358-c22904dba7f7\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "sniff_lan",
+                "tags": [],
+                "author": "x0r",
+                "description": "Sniff Lan network traffic",
+                "version": "0.1"
+            },
+            "rule_text": "rule sniff_lan\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Sniff Lan network traffic\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"packet.dll\" nocase\n\t\t$f2 = \"npf.sys\" nocase\n\t\t$f3 = \"wpcap.dll\" nocase\n\t\t$f4 = \"winpcap.dll\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "migrate_apc",
+                "tags": [],
+                "author": "x0r",
+                "description": "APC queue tasks migration",
+                "version": "0.1"
+            },
+            "rule_text": "rule migrate_apc\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"APC queue tasks migration\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"OpenThread\"\n\t\t$c2 = \"QueueUserAPC\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "spreading_file",
+                "tags": [],
+                "author": "x0r",
+                "description": "Malware can spread east-west file",
+                "version": "0.1"
+            },
+            "rule_text": "rule spreading_file\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Malware can spread east-west file\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"autorun.inf\" nocase\n\t\t$f2 = \"desktop.ini\" nocase\n\t\t$f3 = \"desktop.lnk\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "spreading_share",
+                "tags": [],
+                "author": "x0r",
+                "description": "Malware can spread east-west using share drive",
+                "version": "0.1"
+            },
+            "rule_text": "rule spreading_share\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Malware can spread east-west using share drive\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"netapi32.dll\" nocase\n\t\t$c1 = \"NetShareGetInfo\"\n\t\t$c2 = \"NetShareEnum\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "rat_vnc",
+                "tags": [],
+                "author": "x0r",
+                "description": "Remote Administration toolkit VNC",
+                "version": "0.1"
+            },
+            "rule_text": "rule rat_vnc\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Remote Administration toolkit VNC\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"ultravnc.ini\" nocase\n\t\t$c2 = \"StartVNC\"\n\t\t$c3 = \"StopVNC\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "rat_rdp",
+                "tags": [],
+                "author": "x0r",
+                "description": "Remote Administration toolkit enable RDP",
+                "version": "0.1"
+            },
+            "rule_text": "rule rat_rdp\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Remote Administration toolkit enable RDP\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SYSTEM\\\\CurrentControlSet\\\\Control\\\\Terminal Server\" nocase\n\t\t$p2 = \"software\\\\microsoft\\\\windows nt\\\\currentversion\\\\terminal server\" nocase\n\t\t$p3 = \"SYSTEM\\\\CurrentControlSet\\\\Control\\\\Terminal Server\\\\WinStations\\\\RDP-Tcp\" nocase\n\t\t$r1 = \"EnableAdminTSRemote\"\n\t\t$c1 = \"net start termservice\"\n\t\t$c2 = \"sc config termservice start\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "rat_telnet",
+                "tags": [],
+                "author": "x0r",
+                "description": "Remote Administration toolkit enable Telnet",
+                "version": "0.1"
+            },
+            "rule_text": "rule rat_telnet\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Remote Administration toolkit enable Telnet\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$r1 = \"software\\\\microsoft\\\\telnetserver\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "rat_webcam",
+                "tags": [],
+                "author": "x0r",
+                "description": "Remote Administration toolkit using webcam",
+                "version": "0.1"
+            },
+            "rule_text": "rule rat_webcam\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Remote Administration toolkit using webcam\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"avicap32.dll\" nocase\n\t\t$c1 = \"capCreateCaptureWindow\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "check_patchlevel",
+                "tags": [],
+                "author": "x0r",
+                "description": "Check if hotfix are applied",
+                "version": "0.1"
+            },
+            "rule_text": "rule check_patchlevel\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Check if hotfix are applied\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Hotfix\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_mutex",
+                "tags": [],
+                "author": "x0r",
+                "description": "Create or check mutex",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_mutex\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Create or check mutex\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"CreateMutex\"\n\n\tcondition:\n\t\t1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_registry",
+                "tags": [],
+                "author": "x0r",
+                "description": "Affect system registries",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_registry\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Affect system registries\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"advapi32.dll\" nocase\n\t\t$c1 = \"RegQueryValueExA\"\n\t\t$c2 = \"RegOpenKeyExA\"\n\t\t$c3 = \"RegCloseKey\"\n\t\t$c4 = \"RegSetValueExA\"\n\t\t$c5 = \"RegCreateKeyA\"\n\t\t$c6 = \"RegCloseKey\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_token",
+                "tags": [],
+                "author": "x0r",
+                "description": "Affect system token",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_token\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Affect system token\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"advapi32.dll\" nocase\n\t\t$c1 = \"DuplicateTokenEx\"\n\t\t$c2 = \"AdjustTokenPrivileges\"\n\t\t$c3 = \"OpenProcessToken\"\n\t\t$c4 = \"LookupPrivilegeValueA\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_private_profile",
+                "tags": [],
+                "author": "x0r",
+                "description": "Affect private profile",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_private_profile\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Affect private profile\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"kernel32.dll\" nocase\n\t\t$c1 = \"GetPrivateProfileIntA\"\n\t\t$c2 = \"GetPrivateProfileStringA\"\n\t\t$c3 = \"WritePrivateProfileStringA\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_files_operation",
+                "tags": [],
+                "author": "x0r",
+                "description": "Affect private profile",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_files_operation\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Affect private profile\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"kernel32.dll\" nocase\n\t\t$c1 = \"WriteFile\"\n\t\t$c2 = \"SetFilePointer\"\n\t\t$c3 = \"WriteFile\"\n\t\t$c4 = \"ReadFile\"\n\t\t$c5 = \"DeleteFileA\"\n\t\t$c6 = \"CreateFileA\"\n\t\t$c7 = \"FindFirstFileA\"\n\t\t$c8 = \"MoveFileExA\"\n\t\t$c9 = \"FindClose\"\n\t\t$c10 = \"SetFileAttributesA\"\n\t\t$c11 = \"CopyFile\"\n\n\tcondition:\n\t\t$f1 and 3 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_hook",
+                "tags": [],
+                "author": "x0r",
+                "description": "Affect hook table",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_hook\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Affect hook table\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"user32.dll\" nocase\n\t\t$c1 = \"UnhookWindowsHookEx\"\n\t\t$c2 = \"SetWindowsHookExA\"\n\t\t$c3 = \"CallNextHookEx\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

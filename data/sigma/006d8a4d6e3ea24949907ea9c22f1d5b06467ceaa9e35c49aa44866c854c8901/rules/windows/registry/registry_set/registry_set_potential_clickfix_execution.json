@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_potential_clickfix_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-03-25",
+                "title": "Potential ClickFix Execution Pattern - Registry",
+                "id": "f5fe36cf-f1ec-4c23-903d-09a3110f6bbb"
+            },
+            "rule_text": "title: Potential ClickFix Execution Pattern - Registry\nid: f5fe36cf-f1ec-4c23-903d-09a3110f6bbb\nrelated:\n- id: d487ed4a-fd24-436d-a0b2-f4e95f7b2635\n  type: similar\nstatus: experimental\ndescription: 'Detects potential ClickFix malware execution patterns by monitoring\n  registry modifications in RunMRU keys containing HTTP/HTTPS links.\n\n  ClickFix is known to be distributed through phishing campaigns and uses techniques\n  like clipboard hijacking and fake CAPTCHA pages.\n\n  Through the fakecaptcha pages, the adversary tricks users into opening the Run dialog\n  box and pasting clipboard-hijacked content,\n\n  such as one-liners that execute remotely hosted malicious files or scripts.\n\n  '\nreferences:\n- https://github.com/JohnHammond/recaptcha-phish\n- https://www.zscaler.com/blogs/security-research/deepseek-lure-using-captchas-spread-malware\n- https://www.threatdown.com/blog/clipboard-hijacker-tries-to-install-a-trojan/\n- https://app.any.run/tasks/5c16b4db-4b36-4039-a0ed-9b09abff8be2\n- https://www.esentire.com/security-advisories/netsupport-rat-clickfix-distribution\n- https://medium.com/@boutnaru/the-windows-foreniscs-journey-run-mru-run-dialog-box-most-recently-used-57375a02d724\n- https://unit42.paloaltonetworks.com/preventing-clickfix-attack-vector/\n- https://medium.com/@poudelswachchhanda123/preventing-lnk-and-fakecaptcha-threats-a-system-hardening-approach-2f7b7ed2e493\n- https://www.scpx.com.au/2025/11/16/decades-old-finger-protocol-abused-in-clickfix-malware-attacks/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-03-25\nmodified: 2025-11-19\ntags:\n- attack.execution\n- attack.t1204.001\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_registry:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU\\\n  selection_details:\n    Details|contains:\n    - http://\n    - https://\n  selection_susp_pattern:\n  - Details|contains:\n    - account\n    - anti-bot\n    - botcheck\n    - captcha\n    - challenge\n    - confirmation\n    - fraud\n    - human\n    - identification\n    - identificator\n    - identity\n    - robot\n    - validation\n    - verification\n    - verify\n  - Details|contains:\n    - '%comspec%'\n    - bitsadmin\n    - certutil\n    - cmd\n    - cscript\n    - curl\n    - finger\n    - mshta\n    - powershell\n    - pwsh\n    - regsvr32\n    - rundll32\n    - schtasks\n    - wget\n    - wscript\n  condition: all of selection_*\nfalsepositives:\n- Legitimate applications using RunMRU with HTTP links\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

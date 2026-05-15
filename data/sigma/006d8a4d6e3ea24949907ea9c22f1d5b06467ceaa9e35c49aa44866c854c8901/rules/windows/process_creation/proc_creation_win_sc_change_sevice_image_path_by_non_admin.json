@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_change_sevice_image_path_by_non_admin.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov",
+                "date": "2019-10-26",
+                "title": "Possible Privilege Escalation via Weak Service Permissions",
+                "id": "d937b75f-a665-4480-88a5-2f20e9f9b22a"
+            },
+            "rule_text": "title: Possible Privilege Escalation via Weak Service Permissions\nid: d937b75f-a665-4480-88a5-2f20e9f9b22a\nstatus: test\ndescription: Detection of sc.exe utility spawning by user with Medium integrity level\n  to change service ImagePath or FailureCommand\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment\n- https://pentestlab.blog/2017/03/30/weak-service-permissions/\nauthor: Teymur Kheirkhabarov\ndate: 2019-10-26\nmodified: 2024-12-01\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  scbynonadmin:\n    Image|endswith: \\sc.exe\n    IntegrityLevel:\n    - Medium\n    - S-1-16-8192\n  selection_binpath:\n    CommandLine|contains|all:\n    - config\n    - binPath\n  selection_failure:\n    CommandLine|contains|all:\n    - failure\n    - command\n  condition: scbynonadmin and 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

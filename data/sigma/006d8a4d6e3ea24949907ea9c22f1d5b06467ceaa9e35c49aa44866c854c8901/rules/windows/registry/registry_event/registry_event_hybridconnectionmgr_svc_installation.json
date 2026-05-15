@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_hybridconnectionmgr_svc_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2021-04-12",
+                "title": "HybridConnectionManager Service Installation - Registry",
+                "id": "ac8866c7-ce44-46fd-8c17-b24acff96ca8"
+            },
+            "rule_text": "title: HybridConnectionManager Service Installation - Registry\nid: ac8866c7-ce44-46fd-8c17-b24acff96ca8\nstatus: test\ndescription: Detects the installation of the Azure Hybrid Connection Manager service\n  to allow remote code execution from Azure function.\nreferences:\n- https://twitter.com/Cyb3rWard0g/status/1381642789369286662\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2021-04-12\nmodified: 2022-11-27\ntags:\n- attack.resource-development\n- attack.t1608\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection1:\n    TargetObject|contains: \\Services\\HybridConnectionManager\n  selection2:\n    EventType: SetValue\n    Details|contains: Microsoft.HybridConnectionManager.Listener.exe\n  condition: selection1 or selection2\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

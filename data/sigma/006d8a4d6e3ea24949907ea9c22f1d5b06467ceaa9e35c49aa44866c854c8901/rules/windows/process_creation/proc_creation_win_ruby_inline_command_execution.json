@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ruby_inline_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-02",
+                "title": "Ruby Inline Command Execution",
+                "id": "20a5ffa1-3848-4584-b6f8-c7c7fd9f69c8"
+            },
+            "rule_text": "title: Ruby Inline Command Execution\nid: 20a5ffa1-3848-4584-b6f8-c7c7fd9f69c8\nstatus: test\ndescription: Detects execution of ruby using the \"-e\" flag. This is could be used\n  as a way to launch a reverse shell or execute live ruby code.\nreferences:\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\n- https://www.revshells.com/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\ruby.exe\n  - OriginalFileName: ruby.exe\n  selection_cli:\n    CommandLine|contains: ' -e'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

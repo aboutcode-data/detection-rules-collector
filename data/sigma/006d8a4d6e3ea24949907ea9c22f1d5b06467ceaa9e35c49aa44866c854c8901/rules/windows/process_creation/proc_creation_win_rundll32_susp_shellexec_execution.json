@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_susp_shellexec_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-01",
+                "title": "Suspicious Usage Of ShellExec_RunDLL",
+                "id": "d87bd452-6da1-456e-8155-7dc988157b7d"
+            },
+            "rule_text": "title: Suspicious Usage Of ShellExec_RunDLL\nid: d87bd452-6da1-456e-8155-7dc988157b7d\nrelated:\n- id: 36c5146c-d127-4f85-8e21-01bf62355d5a\n  type: obsolete\n- id: 8823e85d-31d8-473e-b7f4-92da070f0fc6\n  type: similar\nstatus: test\ndescription: Detects suspicious usage of the ShellExec_RunDLL function to launch other\n  commands as seen in the the raspberry-robin attack\nreferences:\n- https://redcanary.com/blog/raspberry-robin/\n- https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-01\nmodified: 2022-12-30\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_openasrundll:\n    CommandLine|contains: ShellExec_RunDLL\n  selection_suspcli:\n    CommandLine|contains:\n    - \\Desktop\\\n    - \\Temp\\\n    - \\Users\\Public\\\n    - comspec\n    - iex\n    - Invoke-\n    - msiexec\n    - odbcconf\n    - regsvr32\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

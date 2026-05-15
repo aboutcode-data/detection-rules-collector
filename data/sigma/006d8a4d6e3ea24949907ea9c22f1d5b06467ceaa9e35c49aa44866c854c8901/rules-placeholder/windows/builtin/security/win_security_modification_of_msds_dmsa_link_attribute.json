@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_modification_of_msds_dmsa_link_attribute.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-05-24",
+                "title": "msDS-ManagedAccountPrecededByLink Attribute Modified",
+                "id": "6c9eb492-e477-4df9-b0f4-571fc9db29cd"
+            },
+            "rule_text": "title: msDS-ManagedAccountPrecededByLink Attribute Modified\nid: 6c9eb492-e477-4df9-b0f4-571fc9db29cd\nrelated:\n- id: 9b111d8e-92e0-4153-88bc-daefc1333aba\n  type: similar\nstatus: experimental\ndescription: 'Detects modifications to the msDS-ManagedAccountPrecededByLink attribute,\n  which may indicate an attempted or successful abuse of the BaD-Successor msDS-DelegatedManagedServiceAccount\n  (DMSA) vulnerability.\n\n  The DMSA is a new object class introduced in Windows Server 2025 that allows administrators\n  to delegate the management of service accounts to other users or groups.\n\n  Changes to this attribute by suspicious accounts or outside of normal administrative\n  workflows are a strong signal of an attempted or successful abuse.\n\n  If it is indeed modified by an account that is not typically responsible for such\n  changes, it could indicate an attempt to exploit the BaD-Successor vulnerability\n  for privilege escalation within the Windows Server 2025 Active Directory environment.\n\n  '\nreferences:\n- https://www.akamai.com/blog/security-research/abusing-bad-successor-for-privilege-escalation-in-active-directory\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-05-24\ntags:\n- attack.privilege-escalation\n- attack.initial-access\n- attack.persistence\n- attack.stealth\n- attack.t1078.002\n- attack.t1098\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Policy : Account Management > Audit User Account\n    Management, Group Policy : Computer Configuration\\Windows Settings\\Security Settings\\Advanced\n    Audit Policy Configuration\\Audit Policies\\Account Management\\Audit User Account\n    Management, DS Access > Audit Directory Service Changes, Group Policy : Computer\n    Configuration\\Windows Settings\\Security Settings\\Advanced Audit Policy Configuration\\Audit\n    Policies\\DS Access\\Audit Directory Service Changes'\ndetection:\n  selection:\n    EventID: 5136\n    ObjectClass: msDS-DelegatedManagedServiceAccount\n    AttributeLDAPDisplayName: msDS-ManagedAccountPrecededByLink\n  filter_main_legitimate_accounts:\n  - SubjectAccountName: SYSTEM\n  - SubjectAccountName|expand: '%Administrators%'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

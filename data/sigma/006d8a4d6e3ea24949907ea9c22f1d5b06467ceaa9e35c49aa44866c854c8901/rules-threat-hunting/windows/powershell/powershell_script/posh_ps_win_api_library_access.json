@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_win_api_library_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-21",
+                "title": "WinAPI Function Calls Via PowerShell Scripts",
+                "id": "9f22ccd5-a435-453b-af96-bf99cbb594d4"
+            },
+            "rule_text": "title: WinAPI Function Calls Via PowerShell Scripts\nid: 9f22ccd5-a435-453b-af96-bf99cbb594d4\nrelated:\n- id: ba3f5c1b-6272-4119-9dbd-0bc8d21c2702\n  type: similar\n- id: 03d83090-8cba-44a0-b02f-0b756a050306\n  type: similar\n- id: 19d65a1c-8540-4140-8062-8eb00db0bba5\n  type: similar\nstatus: test\ndescription: Detects calls to WinAPI functions from PowerShell scripts. Attackers\n  can often leverage these APIs to avoid detection based on typical PowerShell function\n  calls. Use this rule as a basis to hunt for interesting scripts.\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: Nikita Nazarov, oscd.community, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-21\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.t1106\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - AddSecurityPackage\n    - AdjustTokenPrivileges\n    - CloseHandle\n    - CreateProcessWithToken\n    - CreateRemoteThread\n    - CreateThread\n    - CreateUserThread\n    - DangerousGetHandle\n    - DuplicateTokenEx\n    - EnumerateSecurityPackages\n    - FreeLibrary\n    - GetDelegateForFunctionPointer\n    - GetLogonSessionData\n    - GetModuleHandle\n    - GetProcAddress\n    - GetProcessHandle\n    - GetTokenInformation\n    - ImpersonateLoggedOnUser\n    - LoadLibrary\n    - memcpy\n    - MiniDumpWriteDump\n    - OpenDesktop\n    - OpenProcess\n    - OpenProcessToken\n    - OpenThreadToken\n    - OpenWindowStation\n    - QueueUserApc\n    - ReadProcessMemory\n    - RevertToSelf\n    - RtlCreateUserThread\n    - SetThreadToken\n    - VirtualAlloc\n    - VirtualFree\n    - VirtualProtect\n    - WaitForSingleObject\n    - WriteInt32\n    - WriteProcessMemory\n    - ZeroFreeGlobalAllocUnicode\n  condition: selection\nfalsepositives:\n- This rule is mainly used for hunting and will generate quite a lot of false positives\n  when applied in production. It's best combined with other fields such as the path\n  of execution, the parent process, etc.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

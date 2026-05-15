@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_dpapi_domain_backupkey_extraction.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-06-20",
+                "title": "DPAPI Domain Backup Key Extraction",
+                "id": "4ac1f50b-3bd0-4968-902d-868b4647937e"
+            },
+            "rule_text": "title: DPAPI Domain Backup Key Extraction\nid: 4ac1f50b-3bd0-4968-902d-868b4647937e\nstatus: test\ndescription: Detects tools extracting LSA secret DPAPI domain backup key from Domain\n  Controllers\nreferences:\n- https://threathunterplaybook.com/hunts/windows/190620-DomainDPAPIBackupKeyExtraction/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-06-20\nmodified: 2022-02-24\ntags:\n- attack.credential-access\n- attack.t1003.004\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4662\n    ObjectType: SecretObject\n    AccessMask: '0x2'\n    ObjectName|contains: BCKUPKEY\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

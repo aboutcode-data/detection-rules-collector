@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_procdump_evasion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-11",
+                "title": "Potential SysInternals ProcDump Evasion",
+                "id": "79b06761-465f-4f88-9ef2-150e24d3d737"
+            },
+            "rule_text": "title: Potential SysInternals ProcDump Evasion\nid: 79b06761-465f-4f88-9ef2-150e24d3d737\nstatus: test\ndescription: Detects uses of the SysInternals ProcDump utility in which ProcDump or\n  its output get renamed, or a dump file is moved or copied to a different name\nreferences:\n- https://twitter.com/mrd0x/status/1480785527901204481\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-11\nmodified: 2023-05-09\ntags:\n- attack.stealth\n- attack.t1036\n- attack.t1003.001\n- attack.credential-access\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains:\n    - copy procdump\n    - move procdump\n  selection_2:\n    CommandLine|contains|all:\n    - 'copy '\n    - '.dmp '\n    CommandLine|contains:\n    - 2.dmp\n    - lsass\n    - out.dmp\n  selection_3:\n    CommandLine|contains:\n    - copy lsass.exe_\n    - move lsass.exe_\n  condition: 1 of selection_*\nfalsepositives:\n- False positives are expected in cases in which ProcDump just gets copied to a different\n  directory without any renaming\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

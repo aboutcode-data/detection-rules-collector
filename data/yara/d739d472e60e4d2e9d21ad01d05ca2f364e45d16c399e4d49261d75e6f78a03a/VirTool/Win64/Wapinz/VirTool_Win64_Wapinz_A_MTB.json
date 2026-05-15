@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/Wapinz/VirTool_Win64_Wapinz_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_Wapinz_A_MTB",
+                "tags": [],
+                "description": "VirTool:Win64/Wapinz.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_Wapinz_A_MTB\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/Wapinz.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {44 8b 65 a8 48 8d ?? ?? ?? ?? ?? 48 8d ?? ?? ?? ?? ?? e8 f8 ?? ?? ?? 8b 55 a8 48 8d ?? ?? ?? ?? ?? e8 e9 ?? ?? ?? 48 8d ?? ?? ?? 48 8b ce ff 15 ?? ?? ?? ?? 85 c0 74 56 48 8b }\n\t\t$a_03_1 = {48 8b d3 48 8d ?? ?? ?? ?? ?? e8 98 ?? ?? ?? 48 8d ?? ?? ?? ?? ?? e8 8c ?? ?? ?? 48 ?? ?? ?? 48 89 44 24 20 41 b9 20 00 00 00 41 b8 b2 01 00 00 48 8b d3 48 8b 0f ff 15 ?? ?? ?? ?? 85 c0 75 }\n\t\t$a_03_2 = {48 8b 05 ca 4d 00 00 48 33 c4 48 89 85 f8 01 00 00 4c 8b e9 49 8b d0 48 8d ?? ?? ?? ?? ?? ff 15 ?? ?? ?? ?? 85 c0 0f 85 }\n\t\t$a_03_3 = {4c 89 74 24 20 41 b9 b2 01 00 00 4d 8b c5 48 8b 54 24 50 48 8b ce ff 15 ?? ?? ?? ?? 85 c0 75 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

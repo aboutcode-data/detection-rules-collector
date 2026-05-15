@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_qbot_mounted_drive_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "QBot Mounted Drive Execution (RedCanary Threat Detection Report)",
+                "id": "949afe0b-2d45-4999-be9c-fe4808b8a68b"
+            },
+            "rule_text": "title: QBot Mounted Drive Execution (RedCanary Threat Detection Report)\nid: 949afe0b-2d45-4999-be9c-fe4808b8a68b\nstatus: experimental\ndescription: Detects process creation from wscript or cscript interpreters with commands\n  occuring on mounted drive letters. Defenders should check whether these processes\n  have child processes. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/qbot/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.s0650\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\explorer.exe\n    Image|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n    CommandLine|re: '[d-z]:\\\\[^\\\\]+\\.(?:js|vbs|wsf)'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

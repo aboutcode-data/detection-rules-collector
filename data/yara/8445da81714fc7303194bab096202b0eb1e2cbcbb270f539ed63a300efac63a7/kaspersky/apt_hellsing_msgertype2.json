@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_hellsing_msgertype2.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_hellsing_msgertype2",
+                "tags": [],
+                "version": "1.0",
+                "filetype": "PE",
+                "author": "Costin Raiu, Kaspersky Lab",
+                "copyright": "Kaspersky Lab",
+                "date": "2015-04-07",
+                "description": "detection for Hellsing msger type 2 implants"
+            },
+            "rule_text": "rule apt_hellsing_msgertype2\n{\n\tmeta:\n\t\tversion = \"1.0\"\n\t\tfiletype = \"PE\"\n\t\tauthor = \"Costin Raiu, Kaspersky Lab\"\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdate = \"2015-04-07\"\n\t\tdescription = \"detection for Hellsing msger type 2 implants\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = \"%s\\\\system\\\\%d.txt\"\n\t\t$a2 = \"_msger\"\n\t\t$a3 = \"http://%s/lib/common.asp?action=user_login&uid=%s&lan=%s&host=%s&os=%s&proxy=%s\"\n\t\t$a4 = \"http://%s/data/%s.1000001000\"\n\t\t$a5 = \"/lib/common.asp?action=user_upload&file=\"\n\t\t$a6 = \"%02X-%02X-%02X-%02X-%02X-%02X\"\n\n\tcondition:\n\t\t($mz at 0 ) and ( 4 of ( $a* ) ) and filesize < 500000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

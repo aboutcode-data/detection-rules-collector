@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/HotelAlfa.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HotelAlfa",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "58dab205ecb1e0972027eb92f68cec6d208e5ab5.ex_"
+            },
+            "rule_text": "import \"pe\"\n\nrule HotelAlfa\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"58dab205ecb1e0972027eb92f68cec6d208e5ab5.ex_\"\n\n\tstrings:\n\t\t$resourceHTML = \"RSRC_HTML\"\n\t\t$rscsDecoderLoop = {\n\t\t\t8A [2] \n\t\t\t80 F1 ?? \n\t\t\t88 [2] \n\t\t\t8B [2] \n\t\t\t40 \n\t\t\t3B ??\n\t\t\t72 EF \n\t\t}\n\n\tcondition:\n\t\t$resourceHTML and $rscsDecoderLoop in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

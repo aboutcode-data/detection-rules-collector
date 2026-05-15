@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/Greenbug/proc_creation_win_apt_greenbug_may20.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-05-20",
+                "title": "Greenbug Espionage Group Indicators",
+                "id": "3711eee4-a808-4849-8a14-faf733da3612"
+            },
+            "rule_text": "title: Greenbug Espionage Group Indicators\nid: 3711eee4-a808-4849-8a14-faf733da3612\nstatus: test\ndescription: Detects tools and process executions used by Greenbug in their May 2020\n  campaign as reported by Symantec\nreferences:\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/greenbug-espionage-telco-south-asia\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-05-20\nmodified: 2023-03-09\ntags:\n- attack.stealth\n- attack.g0049\n- attack.execution\n- attack.t1059.001\n- attack.command-and-control\n- attack.t1105\n- attack.t1036.005\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith:\n    - :\\ProgramData\\adobe\\Adobe.exe\n    - :\\ProgramData\\oracle\\local.exe\n    - \\revshell.exe\n    - \\infopagesbackup\\ncat.exe\n    - :\\ProgramData\\comms\\comms.exe\n  selection_msf:\n    CommandLine|contains|all:\n    - -ExecutionPolicy Bypass -File\n    - \\msf.ps1\n  selection_ncat:\n    CommandLine|contains|all:\n    - infopagesbackup\n    - \\ncat\n    - -e cmd.exe\n  selection_powershell:\n    CommandLine|contains:\n    - system.Data.SqlClient.SqlDataAdapter($cmd); [void]$da.fill\n    - -nop -w hidden -c $k=new-object\n    - '[Net.CredentialCache]::DefaultCredentials;IEX '\n    - ' -nop -w hidden -c $m=new-object net.webclient;$m'\n    - -noninteractive -executionpolicy bypass whoami\n    - -noninteractive -executionpolicy bypass netstat -a\n  selection_other:\n    CommandLine|contains: L3NlcnZlcj1\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

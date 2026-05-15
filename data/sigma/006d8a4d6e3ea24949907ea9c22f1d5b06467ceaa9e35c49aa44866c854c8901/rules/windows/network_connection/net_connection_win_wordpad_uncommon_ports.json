@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_wordpad_uncommon_ports.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-07-12",
+                "title": "Suspicious Wordpad Outbound Connections",
+                "id": "786cdae8-fefb-4eb2-9227-04e34060db01"
+            },
+            "rule_text": "title: Suspicious Wordpad Outbound Connections\nid: 786cdae8-fefb-4eb2-9227-04e34060db01\nstatus: test\ndescription: 'Detects a network connection initiated by \"wordpad.exe\" over uncommon\n  destination ports.\n\n  This might indicate potential process injection activity from a beacon or similar\n  mechanisms.\n\n  '\nreferences:\n- https://blogs.blackberry.com/en/2023/07/romcom-targets-ukraine-nato-membership-talks-at-nato-summit\nauthor: X__Junior (Nextron Systems)\ndate: 2023-07-12\nmodified: 2023-12-15\ntags:\n- attack.command-and-control\n- attack.stealth\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith: \\wordpad.exe\n  filter_main_ports:\n    DestinationPort:\n    - 80\n    - 139\n    - 443\n    - 445\n    - 465\n    - 587\n    - 993\n    - 995\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Other ports can be used, apply additional filters accordingly\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

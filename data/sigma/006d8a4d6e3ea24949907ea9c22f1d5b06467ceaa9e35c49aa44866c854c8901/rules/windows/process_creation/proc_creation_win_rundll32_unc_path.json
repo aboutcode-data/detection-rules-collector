@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_unc_path.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-10",
+                "title": "Rundll32 UNC Path Execution",
+                "id": "5cdb711b-5740-4fb2-ba88-f7945027afac"
+            },
+            "rule_text": "title: Rundll32 UNC Path Execution\nid: 5cdb711b-5740-4fb2-ba88-f7945027afac\nstatus: test\ndescription: Detects rundll32 execution where the DLL is located on a remote location\n  (share)\nreferences:\n- https://www.cybereason.com/blog/rundll32-the-infamous-proxy-for-executing-malicious-code\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-10\ntags:\n- attack.execution\n- attack.lateral-movement\n- attack.stealth\n- attack.t1021.002\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  - CommandLine|contains: rundll32\n  selection_cli:\n    CommandLine|contains: ' \\\\\\\\'\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Petwosel/Trojan_Win64_Petwosel_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Petwosel_A",
+                "tags": [],
+                "description": "Trojan:Win64/Petwosel.A,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Petwosel_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Petwosel.A,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f1 d5 00 fa 4c 62 cc f4 0f 0b }\n\t\t$a_03_1 = {4d 5a 45 52 e8 00 00 00 00 59 48 83 e9 09 48 8b c1 48 05 ?? ?? ?? ?? ff d0 c3 }\n\t\t$a_03_2 = {4d 5a 45 52 e8 00 00 00 00 5b 48 83 eb 09 53 48 81 c3 ?? ?? ?? ?? ff d0 c3 }\n\t\t$a_03_3 = {4d 5a 45 52 e8 00 00 00 00 58 83 e8 09 50 05 ?? ?? ?? ?? ff d0 c3 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

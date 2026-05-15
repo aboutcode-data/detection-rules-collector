@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_schedule_type_system.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-31",
+                "title": "Suspicious Schtasks Schedule Type With High Privileges",
+                "id": "7a02e22e-b885-4404-b38b-1ddc7e65258a"
+            },
+            "rule_text": "title: Suspicious Schtasks Schedule Type With High Privileges\nid: 7a02e22e-b885-4404-b38b-1ddc7e65258a\nrelated:\n- id: 24c8392b-aa3c-46b7-a545-43f71657fe98\n  type: similar\nstatus: test\ndescription: Detects scheduled task creations or modification to be run with high\n  privileges on a suspicious schedule type\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-change\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-create\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-31\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.t1053.005\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\schtasks.exe\n  - OriginalFileName: schtasks.exe\n  selection_time:\n    CommandLine|contains:\n    - ' ONLOGON '\n    - ' ONSTART '\n    - ' ONCE '\n    - ' ONIDLE '\n  selection_privs:\n    CommandLine|contains:\n    - NT AUT\n    - ' SYSTEM'\n    - HIGHEST\n  condition: all of selection_*\nfalsepositives:\n- Some installers were seen using this method of creation unfortunately. Filter them\n  in your environment\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

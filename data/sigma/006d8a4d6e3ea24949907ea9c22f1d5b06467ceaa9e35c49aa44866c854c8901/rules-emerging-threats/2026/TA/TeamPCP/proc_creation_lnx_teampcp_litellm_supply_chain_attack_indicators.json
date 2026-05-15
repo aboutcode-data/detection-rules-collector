@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2026/TA/TeamPCP/proc_creation_lnx_teampcp_litellm_supply_chain_attack_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-03-30",
+                "title": "LiteLLM / TeamPCP Supply Chain Attack Indicators",
+                "id": "36603778-030c-43c4-8cbb-cd3c1d1a80c7"
+            },
+            "rule_text": "title: LiteLLM / TeamPCP Supply Chain Attack Indicators\nid: 36603778-030c-43c4-8cbb-cd3c1d1a80c7\nstatus: experimental\ndescription: 'Detects process executions related to the backdoored versions of LiteLLM\n  (v1.82.7 or v1.82.8).\n\n  In March 2026, a supply chain attack was discovered involving the popular open-source\n  LLM framework LiteLLM by Threat Actor TeamPCP.\n\n  The malicious package harvests every credential on the system, encrypts and exfiltrates\n  them, and installs a persistent C2 backdoor.\n\n  '\nreferences:\n- https://novasky.io/hunts/hunting-litellm-supply-chain\n- https://www.virustotal.com/gui/file/71e35aef03099cd1f2d6446734273025a163597de93912df321ef118bf135238/\n- https://huskyhacks.io/posts/litellm-cred-stealer/\n- https://www.wiz.io/blog/threes-a-crowd-teampcp-trojanizes-litellm-in-continuation-of-campaign\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-03-30\ntags:\n- attack.initial-access\n- attack.t1195.002\n- attack.collection\n- attack.t1560.001\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1543.002\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_pth_package:\n    Image|contains: /python3\n    CommandLine|contains|all:\n    - exec(base64.b64decode('aW1wb3J0\n    - kI2NF9TQ1JJUFQgPSAiYV\n  selection_tar:\n    Image|endswith: /tar\n    CommandLine|contains|all:\n    - tpcp.tar.gz\n    - payload.enc\n    - session.key.enc\n  selection_curl:\n    Image|endswith: /curl\n    CommandLine|contains|all:\n    - models.litellm.cloud\n    - 'X-Filename: tpcp.tar.gz'\n  selection_sysmon_service:\n    ParentImage|contains: /python3\n    CommandLine|contains|all:\n    - systemctl\n    - --user\n    - sysmon\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

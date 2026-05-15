@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_registry_export_of_thirdparty_creds.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-05-22",
+                "title": "Registry Export of Third-Party Credentials",
+                "id": "cc1abf27-78a3-4ac5-a51c-f3070b1d8e40"
+            },
+            "rule_text": "title: Registry Export of Third-Party Credentials\nid: cc1abf27-78a3-4ac5-a51c-f3070b1d8e40\nrelated:\n- id: 87a476dc-0079-4583-a985-dee7a20a03de\n  type: similar\nstatus: experimental\ndescription: 'Detects the use of reg.exe to export registry paths associated with\n  third-party credentials.\n\n  Credential stealers have been known to use this technique to extract sensitive information\n  from the registry.\n\n  '\nreferences:\n- https://www.virustotal.com/gui/file/fdc86a5b3d7df37a72c3272836f743747c47bfbc538f05af9ecf78547fa2e789/behavior\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-05-22\ntags:\n- attack.credential-access\n- attack.t1552.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_cli_save:\n    CommandLine|contains:\n    - save\n    - export\n  selection_cli_path:\n    CommandLine|contains:\n    - \\Software\\Aerofox\\Foxmail\\V3.1\n    - \\Software\\Aerofox\\FoxmailPreview\n    - \\Software\\DownloadManager\\Passwords\n    - \\Software\\FTPWare\\COREFTP\\Sites\n    - \\Software\\IncrediMail\\Identities\n    - \\Software\\Martin Prikryl\\WinSCP 2\\Sessions\n    - \\Software\\Mobatek\\MobaXterm\n    - \\Software\\OpenSSH\\Agent\\Keys\n    - \\Software\\OpenVPN-GUI\\configs\n    - \\Software\\ORL\\WinVNC3\\Password\n    - \\Software\\Qualcomm\\Eudora\\CommandLine\n    - \\Software\\RealVNC\\WinVNC4\n    - \\Software\\RimArts\\B2\\Settings\n    - \\Software\\SimonTatham\\PuTTY\\Sessions\n    - \\Software\\SimonTatham\\PuTTY\\SshHostKeys\n    - \\Software\\Sota\\FFFTP\n    - \\Software\\TightVNC\\Server\n    - \\Software\\WOW6432Node\\Radmin\\v3.0\\Server\\Parameters\\Radmin\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

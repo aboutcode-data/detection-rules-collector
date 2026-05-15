@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_addin_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NVISO",
+                "date": "2020-05-11",
+                "title": "Potential Persistence Via Microsoft Office Add-In",
+                "id": "8e1cb247-6cf6-42fa-b440-3f27d57e9936"
+            },
+            "rule_text": "title: Potential Persistence Via Microsoft Office Add-In\nid: 8e1cb247-6cf6-42fa-b440-3f27d57e9936\nstatus: test\ndescription: Detects potential persistence activity via startup add-ins that load\n  when Microsoft Office starts (.wll/.xll are simply .dll fit for Word or Excel).\nreferences:\n- Internal Research\n- https://labs.withsecure.com/publications/add-in-opportunities-for-office-persistence\n- https://github.com/redcanaryco/atomic-red-team/blob/4ae9580a1a8772db87a1b6cdb0d03e5af231e966/atomics/T1137.006/T1137.006.md\nauthor: NVISO\ndate: 2020-05-11\nmodified: 2023-02-08\ntags:\n- attack.persistence\n- attack.t1137.006\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_wlldropped:\n    TargetFilename|contains: \\Microsoft\\Word\\Startup\\\n    TargetFilename|endswith: .wll\n  selection_xlldropped:\n    TargetFilename|contains: \\Microsoft\\Excel\\Startup\\\n    TargetFilename|endswith: .xll\n  selection_xladropped:\n    TargetFilename|contains: Microsoft\\Excel\\XLSTART\\\n    TargetFilename|endswith: .xlam\n  selection_generic:\n    TargetFilename|contains: \\Microsoft\\Addins\\\n    TargetFilename|endswith:\n    - .xlam\n    - .xla\n    - .ppam\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate add-ins\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

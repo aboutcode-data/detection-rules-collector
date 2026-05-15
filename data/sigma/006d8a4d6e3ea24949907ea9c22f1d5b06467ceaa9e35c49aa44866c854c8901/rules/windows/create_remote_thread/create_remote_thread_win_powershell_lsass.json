@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/create_remote_thread/create_remote_thread_win_powershell_lsass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Natalia Shornikova",
+                "date": "2020-10-06",
+                "title": "Potential Credential Dumping Attempt Via PowerShell Remote Thread",
+                "id": "fb656378-f909-47c1-8747-278bf09f4f4f"
+            },
+            "rule_text": "title: Potential Credential Dumping Attempt Via PowerShell Remote Thread\nid: fb656378-f909-47c1-8747-278bf09f4f4f\nrelated:\n- id: 3f07b9d1-2082-4c56-9277-613a621983cc\n  type: obsolete\n- id: 0f920ebe-7aea-4c54-b202-9aa0c609cfe5\n  type: similar\nstatus: test\ndescription: Detects remote thread creation by PowerShell processes into \"lsass.exe\"\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: oscd.community, Natalia Shornikova\ndate: 2020-10-06\nmodified: 2022-12-18\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: create_remote_thread\ndetection:\n  selection:\n    SourceImage|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    TargetImage|endswith: \\lsass.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

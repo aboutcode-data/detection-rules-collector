@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Filecoder/Ransom_Win32_FileCoder_RHO_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_FileCoder_RHO_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/FileCoder.RHO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_FileCoder_RHO_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/FileCoder.RHO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {52 00 65 00 76 00 65 00 6e 00 67 00 65 00 }\n\t\t$a_00_1 = {4b 00 65 00 79 00 73 00 }\n\t\t$a_00_2 = {53 00 74 00 6f 00 6e 00 65 00 }\n\t\t$a_03_3 = {50 45 00 00 4c 01 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 0b 01 09 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 4e 18 }\n\t\t$a_03_4 = {b8 31 a2 00 00 01 85 f8 e3 ff ff 8b 85 f8 e3 ff ff 8a 04 08 8b 15 ?? ?? ?? ?? 88 04 0a a1 ?? ?? ?? ?? 3d ab 05 00 00 75 0a c7 05 ?? ?? ?? ?? b0 19 00 00 41 3b c8 72 bd }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 2 + ( #a_03_4 & 1 ) * 2 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

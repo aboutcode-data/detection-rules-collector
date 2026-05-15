@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/VBInject/VirTool_Win32_VBInject_QV.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_VBInject_QV",
+                "tags": [],
+                "description": "VirTool:Win32/VBInject.QV,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_VBInject_QV\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/VBInject.QV,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {58 59 59 59 90 09 06 00 c7 85 ?? ?? ff ff }\n\t\t$a_03_1 = {66 85 f6 7f ?? 66 81 c6 ff 00 0f ?? ?? 00 00 00 eb ee }\n\t\t$a_03_2 = {59 50 00 00 e8 ?? ?? ?? ff 90 09 06 00 c7 85 ?? ?? ff ff }\n\t\t$a_03_3 = {ff e8 00 00 00 90 09 09 00 6a 01 ?? ?? c7 85 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

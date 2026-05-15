@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/radialpulse.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Trojan_PL_RADIALPULSE_1",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "sha256": "d72daafedf41d484f7f9816f7f076a9249a6808f1899649b7daa22c0447bb37b",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Trojan_PL_RADIALPULSE_1\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tsha256 = \"d72daafedf41d484f7f9816f7f076a9249a6808f1899649b7daa22c0447bb37b\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$s1 = \"->getRealmInfo()->{name}\"\n\t\t$s2 = /open\\(\\*fd,[\\x09\\x20]{0,32}[\\x22\\x27]>>/\n\t\t$s3 = /syswrite\\(\\*fd,[\\x09\\x20]{0,32}[\\x22\\x27]realm=\\$/\n\t\t$s4 = /syswrite\\(\\*fd,[\\x09\\x20]{0,32}[\\x22\\x27]username=\\$/\n\t\t$s5 = /syswrite\\(\\*fd,[\\x09\\x20]{0,32}[\\x22\\x27]password=\\$/\n\n\tcondition:\n\t\t(@s1 [ 1 ] < @s2 [ 1 ] ) and ( @s2 [ 1 ] < @s3 [ 1 ] ) and $s4 and $s5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

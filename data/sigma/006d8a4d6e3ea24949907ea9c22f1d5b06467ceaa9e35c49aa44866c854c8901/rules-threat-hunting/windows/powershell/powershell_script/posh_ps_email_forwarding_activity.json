@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_email_forwarding_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Marco Pedrinazzi (@pedrinazziM) (InTheCyber)",
+                "date": "2026-03-01",
+                "title": "Mail Forwarding/Redirecting Activity Via ExchangePowerShell Cmdlet",
+                "id": "0c7686d5-c74e-4292-b224-2a08e956ebc4"
+            },
+            "rule_text": "title: Mail Forwarding/Redirecting Activity Via ExchangePowerShell Cmdlet\nid: 0c7686d5-c74e-4292-b224-2a08e956ebc4\nrelated:\n- id: c726e007-2cd0-4a55-abfb-79730fbedee5\n  type: similar\n- id: 15b7abbb-8b40-4d01-9ee2-b51994b1d474\n  type: obsolete\nstatus: experimental\ndescription: Detects email forwarding or redirecting activity via ExchangePowerShell\n  Cmdlet\nreferences:\n- https://redcanary.com/blog/email-forwarding-rules/\n- https://github.com/PwC-IR/Business-Email-Compromise-Guide/blob/fe29ce06aef842efe4eb448c26bbe822bf5b895d/PwC-Business_Email_Compromise-Guide.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems), Marco Pedrinazzi (@pedrinazziM)\n  (InTheCyber)\ndate: 2026-03-01\ntags:\n- attack.collection\n- attack.stealth\n- attack.t1114.003\n- attack.t1564.008\n- attack.exfiltration\n- attack.t1020\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_cmdlet:\n    ScriptBlockText|contains:\n    - New-InboxRule\n    - Set-InboxRule\n    - Set-Mailbox\n  selection_params:\n    ScriptBlockText|contains:\n    - ForwardAsAttachmentTo\n    - ForwardingAddress\n    - ForwardingSmtpAddress\n    - ForwardTo\n    - RedirectTo\n  condition: all of selection_*\nfalsepositives:\n- Legitimate mail forwarding rules created by users or administrators to forward email\n  to designated internal or external recipients for business or operational purposes.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

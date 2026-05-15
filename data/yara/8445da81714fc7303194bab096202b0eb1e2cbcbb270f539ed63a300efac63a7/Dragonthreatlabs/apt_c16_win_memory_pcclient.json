@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Dragonthreatlabs/apt_c16_win_memory_pcclient.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_c16_win_memory_pcclient",
+                "tags": [
+                    "Memory",
+                    "APT"
+                ],
+                "author": "@dragonthreatlab",
+                "md5": "ec532bbe9d0882d403473102e9724557",
+                "description": "File matching the md5 above tends to only live in memory, hence the lack of MZ header check.",
+                "date": "2015/01/11",
+                "reference": "http://blog.dragonthreatlabs.com/2015/01/dtl-12012015-01-hong-kong-swc-attack.html"
+            },
+            "rule_text": "rule apt_c16_win_memory_pcclient : Memory APT\n{\n\tmeta:\n\t\tauthor = \"@dragonthreatlab\"\n\t\tmd5 = \"ec532bbe9d0882d403473102e9724557\"\n\t\tdescription = \"File matching the md5 above tends to only live in memory, hence the lack of MZ header check.\"\n\t\tdate = \"2015/01/11\"\n\t\treference = \"http://blog.dragonthreatlabs.com/2015/01/dtl-12012015-01-hong-kong-swc-attack.html\"\n\n\tstrings:\n\t\t$str1 = \"Kill You\" ascii\n\t\t$str2 = \"%4d-%02d-%02d %02d:%02d:%02d\" ascii\n\t\t$str3 = \"%4.2f  KB\" ascii\n\t\t$encodefunc = {8A 08 32 CA 02 CA 88 08 40 4E 75 F4}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

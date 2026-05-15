@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_nslookup_domain_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-07",
+                "title": "Network Reconnaissance Activity",
+                "id": "e6313acd-208c-44fc-a0ff-db85d572e90e"
+            },
+            "rule_text": "title: Network Reconnaissance Activity\nid: e6313acd-208c-44fc-a0ff-db85d572e90e\nstatus: test\ndescription: Detects a set of suspicious network related commands often used in recon\n  stages\nreferences:\n- https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-07\ntags:\n- attack.discovery\n- attack.t1087\n- attack.t1082\n- car.2016-03-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - nslookup\n    - _ldap._tcp.dc._msdcs.\n  condition: selection\nfalsepositives:\n- False positives depend on scripts and administrative tools used in the monitored\n  environment\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/proofpoint/AVIDVIPER_APT_BACKDOOR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AVIDVIPER_APT_BACKDOOR",
+                "tags": [],
+                "author": "Proofpoint Staff",
+                "info": "avid viper update",
+                "reference": "https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-Back-Into-View"
+            },
+            "rule_text": "rule AVIDVIPER_APT_BACKDOOR\n{\n\tmeta:\n\t\tauthor = \"Proofpoint Staff\"\n\t\tinfo = \"avid viper update\"\n\t\treference = \"https://www.proofpoint.com/us/threat-insight/post/Operation-Arid-Viper-Slithers-Back-Into-View\"\n\n\tstrings:\n\t\t$s1 = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-/\"\n\t\t$s2 = \"SELECT * FROM Win32_DiskDrive\" wide ascii\n\t\t$s3 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" wide ascii\n\t\t$s4 = \"\\\\dd\\\\vctools\\\\vc7libs\\\\ship\\\\atlmfc\" wide ascii\n\n\tcondition:\n\t\t$s4 and 2 of ( $s1 , $s2 , $s3 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

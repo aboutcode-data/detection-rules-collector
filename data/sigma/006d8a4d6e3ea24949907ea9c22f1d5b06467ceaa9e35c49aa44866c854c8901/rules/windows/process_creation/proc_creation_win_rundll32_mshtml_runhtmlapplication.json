@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_mshtml_runhtmlapplication.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems),  Florian Roth (Nextron Systems), Josh Nickels, frack113, Zaw Min Htun (ZETA)",
+                "date": "2022-08-14",
+                "title": "Mshtml.DLL RunHTMLApplication Suspicious Usage",
+                "id": "4782eb5a-a513-4523-a0ac-f3082b26ac5c"
+            },
+            "rule_text": "title: Mshtml.DLL RunHTMLApplication Suspicious Usage\nid: 4782eb5a-a513-4523-a0ac-f3082b26ac5c\nrelated:\n- id: 9f06447a-a33a-4cbe-a94f-a3f43184a7a3\n  type: obsolete\n- id: 73fcad2e-ff14-4c38-b11d-4172c8ac86c7\n  type: obsolete\nstatus: test\ndescription: 'Detects execution of commands that leverage the \"mshtml.dll\" RunHTMLApplication\n  export to run arbitrary code via different protocol handlers (vbscript, javascript,\n  file, http...)\n\n  '\nreferences:\n- https://twitter.com/n1nj4sec/status/1421190238081277959\n- https://hyp3rlinx.altervista.org/advisories/MICROSOFT_WINDOWS_DEFENDER_TROJAN.WIN32.POWESSERE.G_MITIGATION_BYPASS_PART2.txt\n- http://hyp3rlinx.altervista.org/advisories/MICROSOFT_WINDOWS_DEFENDER_DETECTION_BYPASS.txt\nauthor: Nasreddine Bencherchali (Nextron Systems),  Florian Roth (Nextron Systems),\n  Josh Nickels, frack113, Zaw Min Htun (ZETA)\ndate: 2022-08-14\nmodified: 2024-02-23\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - \\..\\\n    - mshtml\n    CommandLine|contains:\n    - '#135'\n    - RunHTMLApplication\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

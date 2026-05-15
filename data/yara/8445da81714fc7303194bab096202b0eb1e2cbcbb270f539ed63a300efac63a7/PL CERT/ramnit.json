@@ -1,0 +1,38 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/PL CERT/ramnit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ramnit_general",
+                "tags": [],
+                "author": "nazywam",
+                "module": "ramnit",
+                "reference": "https://www.cert.pl/en/news/single/ramnit-in-depth-analysis/"
+            },
+            "rule_text": "rule ramnit_general\n{\n\tmeta:\n\t\tauthor = \"nazywam\"\n\t\tmodule = \"ramnit\"\n\t\treference = \"https://www.cert.pl/en/news/single/ramnit-in-depth-analysis/\"\n\n\tstrings:\n\t\t$guid = \"{%08X-%04X-%04X-%04X-%08X%04X}\"\n\t\t$md5_magic_1 = \"15Bn99gT\"\n\t\t$md5_magic_2 = \"1E4hNy1O\"\n\t\t$init_dga = { C7 ?? ?? ?? ?? ?? FF FF FF FF FF ?? ?? ?? ?? ?? FF ?? ?? ?? ?? ?? FF ?? ?? ?? ?? ?? E8 ?? ?? ?? ?? 0B C0 75 ?? }\n\t\t$xor_secret = { 8A ?? ?? 32 ?? 88 ?? 4? 4? E2 ?? }\n\t\t$init_function = { FF 35 [4] 68 [4] 68 [2] 00 00 68 [4] E8 [4] FF 35 [4] 68 [4] 68 [2] 00 00 68 [4] E8 [4] FF 35 [4] 68 [4] 68 [2] 00 00 68 [4] E8 [4] FF 35 [4] 68 [4] 68 [2] 00 00 68 [4] E8 }\n\t\t$dga_rand_int = { B9 1D F3 01 00 F7 F1 8B C8 B8 A7 41 00 00 }\n\t\t$cookies = \"\\\\cookies4.dat\"\n\t\t$s3 = \"pdatesDisableNotify\"\n\t\t$get_domains = { a3 [4] a1 [4] 80 3? 00 75 ?? c7 05 [4] ff ff ff ff ff 35 [4] ff 35 [4] ff 35 [4] e8 }\n\t\t$add_tld = { 55 8B EC  83 ?? ?? 57 C7 ?? ?? 00 00 00 00 B? ?? ?? ?? ?? 8B ?? ?? 3B ?? ?? 75 ?? 8B ?? }\n\t\t$get_port = { 90 68 [4] 68 [4] FF 35 [4] FF 35 [4] E8 [4] 83 }\n\n\tcondition:\n\t\t$init_dga and $init_function and 2 of ( $guid , $md5_magic_* , $cookies , $s3 ) and any of ( $get_port , $add_tld , $dga_rand_int , $get_domains , $xor_secret )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ramnit_dll",
+                "tags": [],
+                "author": "nazywam",
+                "module": "ramnit",
+                "reference": "https://www.cert.pl/en/news/single/ramnit-in-depth-analysis/"
+            },
+            "rule_text": "import \"pe\"\n\nrule ramnit_dll\n{\n\tmeta:\n\t\tauthor = \"nazywam\"\n\t\tmodule = \"ramnit\"\n\t\treference = \"https://www.cert.pl/en/news/single/ramnit-in-depth-analysis/\"\n\n\tcondition:\n\t\tpe.characteristics and pe.DLL and ramnit_general\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ramnit_injector",
+                "tags": [],
+                "author": "nazywam",
+                "module": "ramnit",
+                "reference": "https://www.cert.pl/en/news/single/ramnit-in-depth-analysis/"
+            },
+            "rule_text": "rule ramnit_injector\n{\n\tmeta:\n\t\tauthor = \"nazywam\"\n\t\tmodule = \"ramnit\"\n\t\treference = \"https://www.cert.pl/en/news/single/ramnit-in-depth-analysis/\"\n\n\tstrings:\n\t\t$unpack_dlls = { B8 [4] 50 E8 [4] A3 [4] 68 [4] 68 [4] FF [5] E8 [4] B8 [4] 50 E8 [4] A3 [4] 68 [4] 68 [4] FF [5] E8 }\n\n\tcondition:\n\t\t$unpack_dlls and ramnit_general\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

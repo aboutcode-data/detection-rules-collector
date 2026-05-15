@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_query_registry.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2019-10-21",
+                "title": "Potential Configuration And Service Reconnaissance Via Reg.EXE",
+                "id": "970007b7-ce32-49d0-a4a4-fbef016950bd"
+            },
+            "rule_text": "title: Potential Configuration And Service Reconnaissance Via Reg.EXE\nid: 970007b7-ce32-49d0-a4a4-fbef016950bd\nstatus: test\ndescription: Detects the usage of \"reg.exe\" in order to query reconnaissance information\n  from the registry. Adversaries may interact with the Windows registry to gather\n  information about credentials, the system, configuration, and installed software.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1012/T1012.md\nauthor: Timur Zinniatullin, oscd.community\ndate: 2019-10-21\nmodified: 2023-02-05\ntags:\n- attack.discovery\n- attack.t1012\n- attack.t1007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_flag:\n    CommandLine|contains: query\n  selection_key:\n    CommandLine|contains:\n    - currentVersion\\windows\n    - winlogon\\\n    - currentVersion\\shellServiceObjectDelayLoad\n    - currentVersion\\run\n    - currentVersion\\policies\\explorer\\run\n    - currentcontrolset\\services\n  condition: all of selection_*\nfalsepositives:\n- Discord\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

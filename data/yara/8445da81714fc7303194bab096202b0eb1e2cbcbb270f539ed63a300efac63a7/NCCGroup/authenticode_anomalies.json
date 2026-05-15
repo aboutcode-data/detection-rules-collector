@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/NCCGroup/authenticode_anomalies.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "research_pe_signed_outside_timestamp",
+                "tags": [],
+                "author": "David Cannings",
+                "description": "PE linker timestamp is outside the Authenticode validity period"
+            },
+            "rule_text": "import \"pe\"\n\nrule research_pe_signed_outside_timestamp\n{\n\tmeta:\n\t\tauthor = \"David Cannings\"\n\t\tdescription = \"PE linker timestamp is outside the Authenticode validity period\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\n\tcondition:\n\t\t$mz at 0 and pe.number_of_signatures > 0 and not for all i in ( 0 .. pe.number_of_signatures - 1 ) : ( pe.signatures [ i ] . valid_on ( pe.timestamp ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

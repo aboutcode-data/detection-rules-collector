@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Conpro/Trojan_Win32_Conpro_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Conpro_C",
+                "tags": [],
+                "description": "Trojan:Win32/Conpro.C,SIGNATURE_TYPE_PEHSTR_EXT,07 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Conpro_C\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Conpro.C,SIGNATURE_TYPE_PEHSTR_EXT,07 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 c0 9e 83 f8 16 0f 87 ?? ?? 00 00 33 c9 8a 88 ?? ?? ?? ?? ff 24 8d ?? ?? ?? ?? 8b 54 24 ?? 52 e8 }\n\t\t$a_00_1 = {62 3a 6d 3a 78 3a 75 3a }\n\t\t$a_00_2 = {43 4f 4e 4e 45 43 54 20 25 73 3a 25 64 20 48 54 54 50 2f 31 2e 30 }\n\t\t$a_00_3 = {72 63 78 2e 74 78 74 00 }\n\t\t$a_00_4 = {6e 6f 20 63 6f 6e 66 69 67 75 72 65 21 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 4 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

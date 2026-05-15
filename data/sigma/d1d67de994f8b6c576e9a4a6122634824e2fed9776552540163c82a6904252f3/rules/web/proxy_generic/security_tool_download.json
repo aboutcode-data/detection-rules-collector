@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/security_tool_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2022-09-02",
+                "title": "Security tool keyword in download",
+                "id": "a051ea7b-fe0e-4f29-8852-1d71e739e3fd"
+            },
+            "rule_text": "title: Security tool keyword in download\nid: a051ea7b-fe0e-4f29-8852-1d71e739e3fd\ndescription: Searches for security tool associated strings in requests for file downloads\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: '2022-09-02'\nmodified: '2023-10-31'\nlogsource:\n  category: proxy\ndetection:\n  selection1:\n  - c-uri|endswith:\n    - .exe\n    - .vbs\n    - .bat\n    - .rar\n    - .ps1\n    - .dll\n    - .zip\n    - .sh\n    - .tar.gz\n    - .tar\n    - .7z\n    - .psm\n    - .ps\n  - cs-host - 'codeload.github.com' - 'github.com' - 'objects.githubusercontent.com'\n  selection2:\n    c-uri|contains:\n    - AdFind\n    - BloodHound\n    - Empire\n    - PSRecon\n    - PowerSploit\n    - PowerTools\n    - PowerSharp\n    - PowerShellMafia\n    - Powershell-C2\n    - powerview\n    - PowerRemoteDesktop\n    - bypass\n    - Mimik\n    - Mimid\n    - Katz\n    - doggy\n    - powerkatz\n    - secretsdump\n    - impacket\n    - DonPAPI\n    - dpapi\n    - Empire\n    - Potato\n    - BeRoot\n    - UACME\n    - pupy\n    - Koadic\n    - Invoke-\n    - ldapdomaindump\n    - ldapsearch\n    - ldap_hashdump\n    - windapsearch\n    - ad-ldap-enum\n    - ldeep\n    - ntlmrelayx\n    - crackmapexec\n    - kerbrute\n    - ldd2\n    - ConPtyShell\n    - winPEAS\n    - linPEAS\n    - NihilistGuy\n    - Pwn\n    - Tater\n    - kscan\n    - lsass\n    - plink\n    - enum\n    - SharpHound\n    - Inveigh\n    - InternalMonologue\n    - Rubeus\n    - OffensivePipeline\n    - SystemNightmare\n    - CVE-\n    - shadow\n    - Seatbelt\n    - LockLess\n    - MultiRelay\n    - smbmap\n    - Bishop\n    - stager\n    - bacon\n    - beacon.exe\n    - beacon.dll\n    - Hound\n    - TSLSASecret\n    - psexec\n    - PowerShellTcp\n    - ClearLogs\n    - ADExplorer\n    - procdump\n    - puppy\n    - HTran\n    - nmap\n    - vuln\n    - recon\n    - snaffler\n  filter:\n  - c-uri|contains:\n    - pdfsharp\n    - GraphSharp\n    - restsharp\n    - CSIDXLite\n    - SharpSnmpLib\n    - screendumps\n    - tcpdump\n    - github.com/go-ldap\n    - /popwnd/\n    - /MobaXterm/slash/\n    - patchmypc-enum.dll\n    - /ldap/\n    - leappadexplorer\n    - /Microsoft.SqlServer.\n  - cs-host:\n    - beacon.scorecardresearch.com\n  condition: all of selection* and not filter\nfalsepositives:\n- Unknown\nlevel: low\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

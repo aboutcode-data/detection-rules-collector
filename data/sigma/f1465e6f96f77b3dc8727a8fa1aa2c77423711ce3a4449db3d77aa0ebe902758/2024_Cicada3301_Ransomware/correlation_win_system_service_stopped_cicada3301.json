@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_Cicada3301_Ransomware/correlation_win_system_service_stopped_cicada3301.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)",
+                "date": "2024-09-07",
+                "title": "Correlation - Mass Service Stoppage Associated with Cicada3301 Ransomware",
+                "id": "6039c5a5-d765-424c-b30d-cb391c9f76de"
+            },
+            "rule_text": "title: Correlation - Mass Service Stoppage Associated with Cicada3301 Ransomware\nid: 6039c5a5-d765-424c-b30d-cb391c9f76de\nstatus: experimental\ndescription: Detects repeated \"service entered the stopped state\" events, where numerous\n  services are stopped as documented in the 2024 Morphisec Cicada3301 ransomware report.\nreferences:\n- https://blog.morphisec.com/cicada3301-ransomware-threat-analysis\nauthor: Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)\ndate: 2024-09-07\ntags:\n- attack.impact\n- attack.t1489\ncorrelation:\n  type: event_count\n  rules:\n  - important_service_stopped\n  group-by:\n  - Computer\n  timespan: 10m\n  condition:\n    gte: 5\nlevel: medium\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)",
+                "date": "2024-09-07",
+                "title": "Single Service Stoppage Associated with Cicada3301 Ransomware",
+                "id": "ac3c528e-b4b5-4ea2-81bb-14385d104416"
+            },
+            "rule_text": "title: Single Service Stoppage Associated with Cicada3301 Ransomware\nname: important_service_stopped\nid: ac3c528e-b4b5-4ea2-81bb-14385d104416\nstatus: experimental\ndescription: Detects a single \"service entered the stopped state\" events, where numerous\n  services are stopped as documented in the 2024 Morphisec Cicada3301 ransomware report.\nauthor: Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)\ndate: 2024-09-07\ntags:\n- attack.impact\n- attack.t1489\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    EventID: 7036\n    Provider_Name: Service Control Manager\n    param1:\n    - mepocs\n    - PDVFSService\n    - GxFWD\n    - MVarmor64\n    - memtas\n    - BackupExecVSSProvider\n    - SAPService\n    - VSNAPVSS\n    - veeam\n    - BackupExecAgentAccelerator\n    - SAP\n    - AcrSch2Svc\n    - svc$\n    - BackupExecAgentBrowser\n    - SAP$\n    - DefWatch\n    - backup\n    - BackupExecDiveciMediaService\n    - SAPD$\n    - ccEvtMgr\n    - sql\n    - BackupExecJobEngine\n    - SAPHostControl\n    - ccSetMgr\n    - vss\n    - BackupExecManagerService\n    - SAPHostExec\n    - SavRoam\n    - msexchange\n    - BackupExecRPCService\n    - QBCFMonitorService\n    - RTVscan\n    - sql$\n    - GxBlr\n    - QBDBMgrN\n    - QBFCService\n    - mysql\n    - GxVss\n    - QBIDPService\n    - Intuit.QuickBooks.FCS\n    - mysql$\n    - GxCIMgr\n    - AcronisAgent\n    - zhudongfangyu\n    - sophos\n    - GxCIMgrS\n    - VeeamNFSSvc\n    - stc_raw_agent\n    - MSExchange\n    - GxCVD\n    - VeeamDeploymentService\n    - BackupExecManagementService\n    - MSExchange$\n    - GXMMM\n    - VeeamTransportSvc\n    - CASAD2DWebSvc\n    - WSBExchange\n    - GxVssHWProv\n    - MVArmor\n    - CAARCUpdateSvc\n    param2: stopped\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

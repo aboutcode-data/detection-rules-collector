@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/paloalto/webshell_chinachopper_oab.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_chinachopper_oab",
+                "tags": [],
+                "author": "Jeff White (Palo Alto Networks) @noottrak",
+                "reference": "https://unit42.paloaltonetworks.com/china-chopper-webshell/",
+                "date": "02MAR2021",
+                "hash01": "e8ea17cd1de6d3389c792cce8c0ff1927a6386f0ef32ab0b097763de1f86ffc8",
+                "hash02": "34f9944a85ffba58f3fa60c5dc32da1ce6743dae261e1820ef6c419808757112",
+                "hash03": "55fbfab29f9d2c26f81f1ff901af838110d7f76acc81f14b791a8903aa8b8425",
+                "hash04": "6e75bbcdd22ec9df1c7796e381a83f88e3ae82f5698c6b31b64d8f11e9cfd867"
+            },
+            "rule_text": "rule webshell_chinachopper_oab\n{\n\tmeta:\n\t\tauthor = \"Jeff White (Palo Alto Networks) @noottrak\"\n\t\treference = \"https://unit42.paloaltonetworks.com/china-chopper-webshell/\"\n\t\tdate = \"02MAR2021\"\n\t\thash01 = \"e8ea17cd1de6d3389c792cce8c0ff1927a6386f0ef32ab0b097763de1f86ffc8\"\n\t\thash02 = \"34f9944a85ffba58f3fa60c5dc32da1ce6743dae261e1820ef6c419808757112\"\n\t\thash03 = \"55fbfab29f9d2c26f81f1ff901af838110d7f76acc81f14b791a8903aa8b8425\"\n\t\thash04 = \"6e75bbcdd22ec9df1c7796e381a83f88e3ae82f5698c6b31b64d8f11e9cfd867\"\n\n\tstrings:\n\t\t$OAB01 = \"ExternalUrl\" ascii\n\t\t$OAB02 = \"InternalUrl\" ascii\n\t\t$OAB03 = \"ExchangeVersion\" ascii\n\t\t$OAB04 = \"WhenChangedUTC\" ascii\n\t\t$HTTP01 = \"http://f/\" ascii nocase\n\t\t$HTTP02 = \"http://g/\" ascii nocase\n\t\t$HTTP03 = \"http://p/\" ascii nocase\n\t\t$websh01 = \"<script language=\\\"JScript\\\"\" ascii nocase\n\t\t$websh02 = \"<script language=\\\"c#\\\"\" ascii nocase\n\t\t$websh03 = \"<script runat=\\\"server\\\"\" ascii nocase\n\t\t$cc01 = \"Request\" ascii nocase\n\t\t$cc02 = \"Page_Load\" ascii nocase\n\t\t$non = /http:\\/\\/[a-z]\\/[a-z0-9]+/\n\n\tcondition:\n\t\t( all of ( $OAB* ) and 1 of ( $HTTP* ) and 1 of ( $websh* ) and all of ( $cc* ) ) or ( all of ( $OAB* ) and $non )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

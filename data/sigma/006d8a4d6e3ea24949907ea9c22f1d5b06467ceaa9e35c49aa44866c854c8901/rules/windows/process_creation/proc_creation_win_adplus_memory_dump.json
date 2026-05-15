@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_adplus_memory_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-09",
+                "title": "Potential Adplus.EXE Abuse",
+                "id": "2f869d59-7f6a-4931-992c-cce556ff2d53"
+            },
+            "rule_text": "title: Potential Adplus.EXE Abuse\nid: 2f869d59-7f6a-4931-992c-cce556ff2d53\nstatus: test\ndescription: Detects execution of \"AdPlus.exe\", a binary that is part of the Windows\n  SDK that can be used as a LOLBIN in order to dump process memory and execute arbitrary\n  commands.\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Adplus/\n- https://twitter.com/nas_bench/status/1534916659676422152\n- https://twitter.com/nas_bench/status/1534915321856917506\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-09\nmodified: 2023-06-23\ntags:\n- attack.execution\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\adplus.exe\n  - OriginalFileName: Adplus.exe\n  selection_cli:\n    CommandLine|contains:\n    - ' -hang '\n    - ' -pn '\n    - ' -pmn '\n    - ' -p '\n    - ' -po '\n    - ' -c '\n    - ' -sc '\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage of Adplus for debugging purposes\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

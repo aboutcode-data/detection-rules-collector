@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/dns_query/dns_query_win_teamviewer_domain_query_by_uncommon_app.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-30",
+                "title": "TeamViewer Domain Query By Non-TeamViewer Application",
+                "id": "778ba9a8-45e4-4b80-8e3e-34a419f0b85e"
+            },
+            "rule_text": "title: TeamViewer Domain Query By Non-TeamViewer Application\nid: 778ba9a8-45e4-4b80-8e3e-34a419f0b85e\nstatus: test\ndescription: Detects DNS queries to a TeamViewer domain only resolved by a TeamViewer\n  client by an image that isn't named TeamViewer (sometimes used by threat actors\n  for obfuscation)\nreferences:\n- https://www.teamviewer.com/en-us/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-30\nmodified: 2023-09-18\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  category: dns_query\ndetection:\n  selection:\n    QueryName:\n    - taf.teamviewer.com\n    - udp.ping.teamviewer.com\n  filter_main_teamviewer:\n    Image|contains: TeamViewer\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown binary names of TeamViewer\n- Depending on the environment the rule might require some initial tuning before usage\n  to avoid FP with third party applications\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

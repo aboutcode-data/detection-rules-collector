@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_hunting_susp_rar.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_RAR_Single_Doc_File",
+                "tags": [],
+                "description": "Detects suspicious RAR files that contain nothing but a single .doc file",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2020-07-11",
+                "score": 40,
+                "id": "92dc3a5d-d12c-56d3-8531-25b3da1e1595"
+            },
+            "rule_text": "rule SUSP_RAR_Single_Doc_File\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious RAR files that contain nothing but a single .doc file\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2020-07-11\"\n\t\tscore = 40\n\t\tid = \"92dc3a5d-d12c-56d3-8531-25b3da1e1595\"\n\n\tstrings:\n\t\t$s1 = \".doc\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x6152 and filesize < 4000KB and $s1 at ( uint16( 5 ) + uint16( uint16( 5 ) + 5 ) + uint16( uint16( 5 ) + uint16( uint16( 5 ) + 5 ) + 5 ) - 9 ) and ( uint16( 5 ) + uint16( uint16( 5 ) + 5 ) + uint16( uint16( 5 ) + uint16( uint16( 5 ) + 5 ) + 5 ) + uint32( uint16( 5 ) + uint16( uint16( 5 ) + 5 ) + 7 ) > filesize - 8 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

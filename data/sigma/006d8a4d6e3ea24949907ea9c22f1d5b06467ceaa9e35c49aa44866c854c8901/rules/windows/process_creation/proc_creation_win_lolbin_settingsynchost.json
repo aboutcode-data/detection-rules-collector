@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_settingsynchost.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Anton Kutepov, oscd.community",
+                "date": "2020-02-05",
+                "title": "Using SettingSyncHost.exe as LOLBin",
+                "id": "b2ddd389-f676-4ac4-845a-e00781a48e5f"
+            },
+            "rule_text": "title: Using SettingSyncHost.exe as LOLBin\nid: b2ddd389-f676-4ac4-845a-e00781a48e5f\nstatus: test\ndescription: Detects using SettingSyncHost.exe to run hijacked binary\nreferences:\n- https://www.hexacorn.com/blog/2020/02/02/settingsynchost-exe-as-a-lolbin\nauthor: Anton Kutepov, oscd.community\ndate: 2020-02-05\nmodified: 2021-11-27\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  system_utility:\n    Image|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n  parent_is_settingsynchost:\n    ParentCommandLine|contains|all:\n    - cmd.exe /c\n    - RoamDiag.cmd\n    - -outputpath\n  condition: not system_utility and parent_is_settingsynchost\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

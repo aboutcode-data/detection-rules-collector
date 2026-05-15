@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Runner/Trojan_Win64_Runner_MK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Runner_MK_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Runner.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Runner_MK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Runner.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {41 b8 68 00 00 00 33 d2 48 8d 8d b0 39 00 00 ?? ?? ?? ?? ?? 90 90 41 b8 18 00 00 00 33 d2 48 8d 8d 38 3a }\n\t\t$a_01_1 = {48 8b 85 68 39 00 00 48 ff c0 4c 8d 85 50 19 00 00 48 8b d0 48 8b 8d 88 39 }\n\t\t$a_81_2 = {70 69 6e 67 20 2d 6e 20 31 31 20 31 32 37 2e 30 2e 30 2e 31 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 15 + ( #a_01_1 & 1 ) * 10 + ( #a_81_2 & 1 ) * 5 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

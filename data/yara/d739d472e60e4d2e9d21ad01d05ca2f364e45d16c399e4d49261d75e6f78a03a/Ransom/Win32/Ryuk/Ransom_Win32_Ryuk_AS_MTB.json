@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Ryuk/Ransom_Win32_Ryuk_AS_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Ryuk_AS_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Ryuk.AS!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Ryuk_AS_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Ryuk.AS!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b ff 8b 15 ?? ?? ?? ?? a1 ?? ?? ?? ?? 89 02 90 09 22 00 a1 ?? ?? ?? ?? 31 0d ?? ?? ?? ?? ?? ?? c7 05 ?? ?? ?? ?? ?? ?? ?? ?? a1 ?? ?? ?? ?? 01 05 }\n\t\t$a_00_1 = {4a 6f 68 6e 44 6f 65 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

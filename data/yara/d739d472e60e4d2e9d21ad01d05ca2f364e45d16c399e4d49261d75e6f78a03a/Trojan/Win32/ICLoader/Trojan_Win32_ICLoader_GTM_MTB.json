@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ICLoader/Trojan_Win32_ICLoader_GTM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ICLoader_GTM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/ICLoader.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ICLoader_GTM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ICLoader.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {00 c7 44 24 08 04 3a 5c 00 01 04 24 }\n\t\t$a_03_1 = {8d 00 01 8d ?? ?? ?? ?? ?? 00 83 ?? ?? ?? ?? 29 ca 00 01 8d 14 d6 c7 02 ?? ?? ?? ?? c7 42 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ICLoader_GTM_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/ICLoader.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ICLoader_GTM_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ICLoader.GTM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {55 8b ec 6a ff 68 ?? 57 4c 00 68 ?? f5 4b 00 64 a1 00 00 00 00 50 64 89 25 00 00 00 00 83 ec 58 53 56 57 89 65 ?? ff 15 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

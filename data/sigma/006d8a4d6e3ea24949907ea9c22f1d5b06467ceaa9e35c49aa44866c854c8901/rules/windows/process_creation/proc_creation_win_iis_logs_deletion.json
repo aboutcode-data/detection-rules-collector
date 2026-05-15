@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_iis_logs_deletion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-09-02",
+                "title": "IIS WebServer Log Deletion via CommandLine Utilities",
+                "id": "0649be4a-aeb0-45b0-b89e-7f1668f6d9c0"
+            },
+            "rule_text": "title: IIS WebServer Log Deletion via CommandLine Utilities\nid: 0649be4a-aeb0-45b0-b89e-7f1668f6d9c0\nrelated:\n- id: 3eb8c339-a765-48cc-a150-4364c04652bf\n  type: similar\nstatus: experimental\ndescription: 'Detects attempts to delete Internet Information Services (IIS) log files\n  via command line utilities, which is a common defense evasion technique used by\n  attackers to cover their tracks.\n\n  Threat actors often abuse vulnerabilities in web applications hosted on IIS servers\n  to gain initial access and later delete IIS logs to evade detection.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/iis/manage/provisioning-and-managing-iis/managing-iis-log-file-storage\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-09-02\ntags:\n- attack.stealth\n- attack.t1070\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\cmd.exe\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - cmd.exe\n    - powershell.exe\n    - powershell_ise.exe\n    - pwsh.dll\n  selection_cli_del:\n    CommandLine|contains:\n    - 'del '\n    - 'erase '\n    - 'rm '\n    - 'remove-item '\n    - 'rmdir '\n  selection_cli_iis_dir:\n    CommandLine|contains: \\inetpub\\logs\\\n  condition: all of selection_*\nfalsepositives:\n- Deletion of IIS logs that are older than a certain retention period as part of regular\n  maintenance activities.\n- Legitimate schedule tasks or scripts that clean up log files regularly.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_msds_dmsa_object_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-05-24",
+                "title": "New MsDS-DelegatedManagedServiceAccount (DMSA) Object Created",
+                "id": "e15bc294-ae2a-45ad-b7d6-637b33868bde"
+            },
+            "rule_text": "title: New MsDS-DelegatedManagedServiceAccount (DMSA) Object Created\nid: e15bc294-ae2a-45ad-b7d6-637b33868bde\nrelated:\n- id: 02122374-b74e-495c-b285-9e4da973f3d6\n  type: similar\n- id: 0ea8db81-2ff6-4525-9448-33bbe7effc13\n  type: similar\nstatus: experimental\ndescription: 'Detects the creation of new msDS-DelegatedManagedServiceAccount objects,\n  which could indicate potential abuse of privilege escalation vulnerabilities in\n  Windows Server 2025.\n\n  The msDS-DelegatedManagedServiceAccount (DMSA) is a new object class introduced\n  in Windows Server 2025 that allows administrators to delegate the management of\n  service accounts to other users or groups.\n\n  Attackers may exploit this feature to create unauthorized service accounts with\n  elevated privileges, leading to privilege escalation within the Active Directory\n  environment.\n\n  It is highly suspicious if an msDS-DelegatedManagedServiceAccount object is created\n  without proper authorization or in an unexpected context, such as by a non-administrative\n  user or outside of normal administrative workflows.\n\n  So, it''s a good idea to look out for accounts that are not typically responsible\n  for service account creation to detect potential abuse of this feature.\n\n  '\nreferences:\n- https://www.akamai.com/blog/security-research/abusing-dmsa-for-privilege-escalation-in-active-directory\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-05-24\ntags:\n- attack.privilege-escalation\n- attack.initial-access\n- attack.persistence\n- attack.stealth\n- attack.t1078.002\n- attack.t1098\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Policy : Account Management > Audit User Account\n    Management, Group Policy : Computer Configuration\\Windows Settings\\Security Settings\\Advanced\n    Audit Policy Configuration\\Audit Policies\\Account Management\\Audit User Account\n    Management, DS Access > Audit Directory Service Changes, Group Policy : Computer\n    Configuration\\Windows Settings\\Security Settings\\Advanced Audit Policy Configuration\\Audit\n    Policies\\DS Access\\Audit Directory Service Changes'\ndetection:\n  selection:\n    EventID: 5137\n    ObjectClass: msDS-DelegatedManagedServiceAccount\n  filter_main_legitimate_accounts:\n  - SubjectAccountName: SYSTEM\n  - SubjectAccountName|expand: '%Administrators%'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

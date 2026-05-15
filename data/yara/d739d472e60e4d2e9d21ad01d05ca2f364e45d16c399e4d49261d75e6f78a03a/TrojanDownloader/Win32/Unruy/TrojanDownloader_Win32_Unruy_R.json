@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Unruy/TrojanDownloader_Win32_Unruy_R.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Unruy_R",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Unruy.R,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Unruy_R\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Unruy.R,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {30 01 00 00 e8 ?? ?? 00 00 3b ?? 90 13 8d }\n\t\t$a_01_1 = {3d 00 28 00 00 72 }\n\t\t$a_03_2 = {3d ff 7f 00 00 89 [0-04] 75 ?? c7 [0-03] fe 7f 00 00 db }\n\t\t$a_03_3 = {83 f8 03 74 ?? (83 f8 01|3b c5) 8d [0-05] 75 ?? e8 ?? ?? 00 00 85 c0 75 ?? 8d [0-05] e8 ?? ?? 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

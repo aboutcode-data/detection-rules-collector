@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/pdf_on_suspicious_site.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Patrik Olson, Leandro Ferreira",
+                "date": "2023-12-05",
+                "title": "PDF Hosted on Suspicious Site",
+                "id": "767a5ac9-e137-40b8-b521-9027e45dffa9"
+            },
+            "rule_text": "title: PDF Hosted on Suspicious Site\nid: 767a5ac9-e137-40b8-b521-9027e45dffa9\ndescription: Phishing PDFs have been known to be hosted on these sites\nstatus: experimental\nauthor: NTT Security - Patrik Olson, Leandro Ferreira\ndate: '2023-12-05'\nmodified: '2024-01-30'\nreferences:\n- https://img1.wsimg[.]com/blobby/go/cdd4fda3-76f8-49d7-b169-5b2ae7b3e6b1/downloads/pekotuxaxutip.pdf\nlogsource:\n  category: proxy\ndetection:\n  selection_host:\n    cs-host|endswith:\n    - .wsimg.com\n    - .imimg.com\n  selection_extension:\n    c-uri|endswith:\n    - .pdf\n  condition: all of selection_*\nfalsepositives:\n- Legitimate PDFs hosted on GoDaddy sites\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

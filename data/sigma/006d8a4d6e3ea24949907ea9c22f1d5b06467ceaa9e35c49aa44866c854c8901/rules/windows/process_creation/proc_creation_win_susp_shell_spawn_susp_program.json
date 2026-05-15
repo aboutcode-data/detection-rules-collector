@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_shell_spawn_susp_program.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Tim Shelton",
+                "date": "2018-04-06",
+                "title": "Windows Shell/Scripting Processes Spawning Suspicious Programs",
+                "id": "3a6586ad-127a-4d3b-a677-1e6eacdf8fde"
+            },
+            "rule_text": "title: Windows Shell/Scripting Processes Spawning Suspicious Programs\nid: 3a6586ad-127a-4d3b-a677-1e6eacdf8fde\nstatus: test\ndescription: Detects suspicious child processes of a Windows shell and scripting processes\n  such as wscript, rundll32, powershell, mshta...etc.\nreferences:\n- https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html\nauthor: Florian Roth (Nextron Systems), Tim Shelton\ndate: 2018-04-06\nmodified: 2023-05-23\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.005\n- attack.t1059.001\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\rundll32.exe\n    - \\cscript.exe\n    - \\wscript.exe\n    - \\wmiprvse.exe\n    - \\regsvr32.exe\n    Image|endswith:\n    - \\schtasks.exe\n    - \\nslookup.exe\n    - \\certutil.exe\n    - \\bitsadmin.exe\n    - \\mshta.exe\n  filter_ccmcache:\n    CurrentDirectory|contains: \\ccmcache\\\n  filter_amazon:\n    ParentCommandLine|contains:\n    - \\Program Files\\Amazon\\WorkSpacesConfig\\Scripts\\setup-scheduledtask.ps1\n    - \\Program Files\\Amazon\\WorkSpacesConfig\\Scripts\\set-selfhealing.ps1\n    - \\Program Files\\Amazon\\WorkSpacesConfig\\Scripts\\check-workspacehealth.ps1\n    - \\nessus_\n  filter_nessus:\n    CommandLine|contains: \\nessus_\n  filter_sccm_install:\n    ParentImage|endswith: \\mshta.exe\n    Image|endswith: \\mshta.exe\n    ParentCommandLine|contains|all:\n    - C:\\MEM_Configmgr_\n    - \\splash.hta\n    - '{1E460BD7-F1C3-4B2E-88BF-4E770A288AF5}'\n    CommandLine|contains|all:\n    - C:\\MEM_Configmgr_\n    - \\SMSSETUP\\BIN\\\n    - \\autorun.hta\n    - '{1E460BD7-F1C3-4B2E-88BF-4E770A288AF5}'\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Administrative scripts\n- Microsoft SCCM\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

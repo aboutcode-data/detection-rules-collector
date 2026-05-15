@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_xterm_reverse_shell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@d4ns4n_",
+                "date": "2023-04-24",
+                "title": "Potential Xterm Reverse Shell",
+                "id": "4e25af4b-246d-44ea-8563-e42aacab006b"
+            },
+            "rule_text": "title: Potential Xterm Reverse Shell\nid: 4e25af4b-246d-44ea-8563-e42aacab006b\nstatus: test\ndescription: Detects usage of \"xterm\" as a potential reverse shell tunnel\nreferences:\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\n- https://www.revshells.com/\nauthor: '@d4ns4n_'\ndate: 2023-04-24\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|contains: xterm\n    CommandLine|contains: -display\n    CommandLine|endswith: :1\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/image.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "with_images",
+                "tags": [
+                    "mail"
+                ],
+                "author": "Antonio Sanchez <asanchez@hispasec.com>",
+                "reference": "http://laboratorio.blogs.hispasec.com/",
+                "description": "Rule to detect the presence of an or several images"
+            },
+            "rule_text": "rule with_images : mail\n{\n\tmeta:\n\t\tauthor = \"Antonio Sanchez <asanchez@hispasec.com>\"\n\t\treference = \"http://laboratorio.blogs.hispasec.com/\"\n\t\tdescription = \"Rule to detect the presence of an or several images\"\n\n\tstrings:\n\t\t$eml_01 = \"From:\"\n\t\t$eml_02 = \"To:\"\n\t\t$eml_03 = \"Subject:\"\n\t\t$img_a = \".jpg\" nocase\n\t\t$img_b = \".png\" nocase\n\t\t$img_c = \".bmp\" nocase\n\n\tcondition:\n\t\tall of ( $eml_* ) and any of ( $img_* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "without_images",
+                "tags": [
+                    "mail"
+                ],
+                "author": "Antonio Sanchez <asanchez@hispasec.com>",
+                "reference": "http://laboratorio.blogs.hispasec.com/",
+                "description": "Rule to detect the no presence of any image"
+            },
+            "rule_text": "rule without_images : mail\n{\n\tmeta:\n\t\tauthor = \"Antonio Sanchez <asanchez@hispasec.com>\"\n\t\treference = \"http://laboratorio.blogs.hispasec.com/\"\n\t\tdescription = \"Rule to detect the no presence of any image\"\n\n\tstrings:\n\t\t$eml_01 = \"From:\"\n\t\t$eml_02 = \"To:\"\n\t\t$eml_03 = \"Subject:\"\n\t\t$a = \".jpg\" nocase\n\t\t$b = \".png\" nocase\n\t\t$c = \".bmp\" nocase\n\n\tcondition:\n\t\tall of ( $eml_* ) and not $a and not $b and not $c\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

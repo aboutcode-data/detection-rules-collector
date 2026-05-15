@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/NSISInject/Trojan_Win32_NSISInject_GC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_NSISInject_GC_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/NSISInject.GC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_NSISInject_GC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/NSISInject.GC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {6a 04 68 00 30 00 00 68 00 65 cd 1d 8b f8 56 ff d7 }\n\t\t$a_03_1 = {c0 c8 03 32 86 ?? ?? ?? ?? 88 81 ?? ?? ?? ?? 8d 46 01 99 41 f7 fb 8b f2 81 f9 ?? ?? ?? ?? 72 90 09 06 00 8a 81 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

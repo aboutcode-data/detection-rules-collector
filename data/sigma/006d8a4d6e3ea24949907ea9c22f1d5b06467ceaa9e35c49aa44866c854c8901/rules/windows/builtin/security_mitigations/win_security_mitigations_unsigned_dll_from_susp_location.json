@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security_mitigations/win_security_mitigations_unsigned_dll_from_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-03",
+                "title": "Unsigned Binary Loaded From Suspicious Location",
+                "id": "8289bf8c-4aca-4f5a-9db3-dc3d7afe5c10"
+            },
+            "rule_text": "title: Unsigned Binary Loaded From Suspicious Location\nid: 8289bf8c-4aca-4f5a-9db3-dc3d7afe5c10\nstatus: test\ndescription: Detects Code Integrity (CI) engine blocking processes from loading unsigned\n  DLLs residing in suspicious locations\nreferences:\n- https://github.com/nasbench/EVTX-ETW-Resources/blob/45fd5be71a51aa518b1b36d4e1f36af498084e27/ETWEventsList/CSV/Windows11/21H2/W11_21H2_Pro_20220719_22000.795/Providers/Microsoft-Windows-Security-Mitigations.csv\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-03\nmodified: 2022-09-28\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  product: windows\n  service: security-mitigations\ndetection:\n  selection:\n    EventID:\n    - 11\n    - 12\n    ImageName|contains:\n    - \\Users\\Public\\\n    - \\PerfLogs\\\n    - \\Desktop\\\n    - \\Downloads\\\n    - \\AppData\\Local\\Temp\\\n    - C:\\Windows\\TEMP\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

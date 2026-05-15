@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Lazarus/image_load_apt_lazarus_side_load_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Thurein Oo, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-18",
+                "title": "Lazarus APT DLL Sideloading Activity",
+                "id": "24007168-a26b-4049-90d0-ce138e13a5cf"
+            },
+            "rule_text": "title: Lazarus APT DLL Sideloading Activity\nid: 24007168-a26b-4049-90d0-ce138e13a5cf\nstatus: test\ndescription: Detects sideloading of trojanized DLLs used in Lazarus APT campaign in\n  the case of a Spanish aerospace company\nreferences:\n- https://www.welivesecurity.com/en/eset-research/lazarus-luring-employees-trojanized-coding-challenges-case-spanish-aerospace-company/\n- https://www.bleepingcomputer.com/news/security/lazarus-hackers-breach-aerospace-firm-with-new-lightlesscan-malware/\nauthor: Thurein Oo, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\n- attack.g0032\n- detection.emerging-threats\nlogsource:\n  product: windows\n  category: image_load\ndetection:\n  selection_mscoree:\n    Image: C:\\ProgramShared\\PresentationHost.exe\n    ImageLoaded: :\\ProgramShared\\mscoree.dll\n  selection_colorui:\n    Image: C:\\ProgramData\\Adobe\\colorcpl.exe\n    ImageLoaded: C:\\ProgramData\\Adobe\\colorui.dll\n  selection_mapistub:\n    Image: C:\\ProgramData\\Oracle\\Java\\fixmapi.exe\n    ImageLoaded: C:\\ProgramData\\Oracle\\Java\\mapistub.dll\n  selection_hid:\n    Image: C:\\ProgramData\\Adobe\\ARM\\tabcal.exe\n    ImageLoaded: C:\\ProgramData\\Adobe\\ARM\\HID.dll\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_susp_mic_cam_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Den Iuzvyk",
+                "date": "2020-06-07",
+                "title": "Suspicious Camera and Microphone Access",
+                "id": "62120148-6b7a-42be-8b91-271c04e281a3"
+            },
+            "rule_text": "title: Suspicious Camera and Microphone Access\nid: 62120148-6b7a-42be-8b91-271c04e281a3\nstatus: test\ndescription: Detects Processes accessing the camera and microphone from suspicious\n  folder\nreferences:\n- https://medium.com/@7a616368/can-you-track-processes-accessing-the-camera-and-microphone-7e6885b37072\nauthor: Den Iuzvyk\ndate: 2020-06-07\nmodified: 2022-10-09\ntags:\n- attack.collection\n- attack.t1125\n- attack.t1123\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection_1:\n    TargetObject|contains|all:\n    - \\Software\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\\n    - \\NonPackaged\n  selection_2:\n    TargetObject|contains:\n    - microphone\n    - webcam\n  selection_3:\n    TargetObject|contains:\n    - :#Windows#Temp#\n    - :#$Recycle.bin#\n    - :#Temp#\n    - :#Users#Public#\n    - :#Users#Default#\n    - :#Users#Desktop#\n  condition: all of selection_*\nfalsepositives:\n- Unlikely, there could be conferencing software running from a Temp folder accessing\n  the devices\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_office_startup_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-02",
+                "title": "Potential Persistence Via Microsoft Office Startup Folder",
+                "id": "0e20c89d-2264-44ae-8238-aeeaba609ece"
+            },
+            "rule_text": "title: Potential Persistence Via Microsoft Office Startup Folder\nid: 0e20c89d-2264-44ae-8238-aeeaba609ece\nstatus: test\ndescription: Detects creation of Microsoft Office files inside of one of the default\n  startup folders in order to achieve persistence.\nreferences:\n- https://insight-jp.nttsecurity.com/post/102hojk/operation-restylink-apt-campaign-targeting-japanese-companies\n- https://learn.microsoft.com/en-us/office/troubleshoot/excel/use-startup-folders\nauthor: Max Altgelt (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-02\nmodified: 2023-06-22\ntags:\n- attack.persistence\n- attack.t1137\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_word_paths:\n  - TargetFilename|contains: \\Microsoft\\Word\\STARTUP\n  - TargetFilename|contains|all:\n    - \\Office\n    - \\Program Files\n    - \\STARTUP\n  selection_word_extension:\n    TargetFilename|endswith:\n    - .doc\n    - .docm\n    - .docx\n    - .dot\n    - .dotm\n    - .rtf\n  selection_excel_paths:\n  - TargetFilename|contains: \\Microsoft\\Excel\\XLSTART\n  - TargetFilename|contains|all:\n    - \\Office\n    - \\Program Files\n    - \\XLSTART\n  selection_excel_extension:\n    TargetFilename|endswith:\n    - .xls\n    - .xlsm\n    - .xlsx\n    - .xlt\n    - .xltm\n  filter_main_office:\n    Image|endswith:\n    - \\WINWORD.exe\n    - \\EXCEL.exe\n  condition: (all of selection_word_* or all of selection_excel_*) and not filter_main_office\nfalsepositives:\n- Loading a user environment from a backup or a domain controller\n- Synchronization of templates\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_ttdinject.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-05-16",
+                "title": "Use of TTDInject.exe",
+                "id": "b27077d6-23e6-45d2-81a0-e2b356eea5fd"
+            },
+            "rule_text": "title: Use of TTDInject.exe\nid: b27077d6-23e6-45d2-81a0-e2b356eea5fd\nstatus: test\ndescription: Detects the executiob of TTDInject.exe, which is used by Windows 10 v1809\n  and newer to debug time travel (underlying call of tttracer.exe)\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Ttdinject/\nauthor: frack113\ndate: 2022-05-16\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n  - Image|endswith: ttdinject.exe\n  - OriginalFileName: TTDInject.EXE\n  condition: selection\nfalsepositives:\n- Legitimate use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

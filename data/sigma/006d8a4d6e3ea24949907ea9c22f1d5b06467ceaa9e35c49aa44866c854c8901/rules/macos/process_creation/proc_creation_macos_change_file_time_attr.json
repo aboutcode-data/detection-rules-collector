@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_change_file_time_attr.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Igor Fits, Mikhail Larin, oscd.community",
+                "date": "2020-10-19",
+                "title": "File Time Attribute Change",
+                "id": "88c0f9d8-30a8-4120-bb6b-ebb54abcf2a0"
+            },
+            "rule_text": "title: File Time Attribute Change\nid: 88c0f9d8-30a8-4120-bb6b-ebb54abcf2a0\nstatus: test\ndescription: Detect file time attribute change to hide new or changes to existing\n  files\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.006/T1070.006.md\nauthor: Igor Fits, Mikhail Larin, oscd.community\ndate: 2020-10-19\nmodified: 2022-01-12\ntags:\n- attack.stealth\n- attack.t1070.006\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /touch\n    CommandLine|contains:\n    - -t\n    - -acmr\n    - -d\n    - -r\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

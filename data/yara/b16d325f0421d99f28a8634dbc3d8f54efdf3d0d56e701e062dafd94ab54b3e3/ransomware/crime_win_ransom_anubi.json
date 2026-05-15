@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/tjnel/yara_repo/blob/master/ransomware/crime_win_ransom_anubi.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "anubi",
+                "tags": [],
+                "author": "TJ Nelson (@REonFleek)",
+                "date": "2017-10-20",
+                "description": "Ransomware malware sample with the extension .anubi",
+                "filetype": "exe",
+                "reference0": "https://www.bleepingcomputer.com/news/security/new-anubi-ransomware-in-the-wild/",
+                "sha256_0": "3a047c557acde9adeb144508b367232a1043dd1e9c2230f8091a0323bf99ee7c"
+            },
+            "rule_text": "rule anubi\n{\n\tmeta:\n\t\tauthor = \"TJ Nelson (@REonFleek)\"\n\t\tdate = \"2017-10-20\"\n\t\tdescription = \"Ransomware malware sample with the extension .anubi\"\n\t\tfiletype = \"exe\"\n\t\treference0 = \"https://www.bleepingcomputer.com/news/security/new-anubi-ransomware-in-the-wild/\"\n\t\tsha256_0 = \"3a047c557acde9adeb144508b367232a1043dd1e9c2230f8091a0323bf99ee7c\"\n\n\tstrings:\n\t\t$av0 = \"/c \\\"wmic product where name=\\\"ESET NOD32 Antivirus\\\" call uninstall /nointeractive \\\"\"\n\t\t$av1 = \"/c \\\"wmic product where name=\\\"Kaspersky Anti-Virus\\\" call uninstall /nointeractive \\\"\"\n\t\t$av2 = \"/c \\\"wmic product where name=\\\"Kaspersky Internet Security\\\" call uninstall /nointeractive \\\"\"\n\t\t$av3 = \"/c \\\"wmic product where name=\\\"Avira Connect\\\" call uninstall /nointeractive \\\"\"\n\t\t$av4 = \"SOFTWARE\\\\Microsoft\\\\Windows Defender\\\\Reporting\"\n\t\t$cmd0 = \"Invmod of %d %% %d\"\n\t\t$cmd1 = \"Expected : %d\"\n\t\t$cmd2 = \"Result :\"\n\t\t$cmd3 = \"%08X%08X%c\"\n\t\t$anti0 = \"DisableAntiSpyware\"\n\t\t$anti1 = \"DisableRoutinelyTakingAction\"\n\t\t$anti2 = \"TaskbarNoNotification\"\n\t\t$anti3 = \"DisableNotificationCenter\"\n\t\t$ransom0 = \"Dele\"\n\t\t$ransom1 = \"te S\"\n\t\t$ransom2 = \"hado\"\n\t\t$ransom3 = \"ws /\"\n\t\t$ransom4 = \"All\"\n\t\t$ransom5 = \"/Qui\"\n\t\t$ransom6 = \"et &\"\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D ) and ( 2 of ( $av* ) ) and ( 3 of ( $cmd* ) ) and ( 3 of ( $anti* ) ) and ( 6 of ( $ransom* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

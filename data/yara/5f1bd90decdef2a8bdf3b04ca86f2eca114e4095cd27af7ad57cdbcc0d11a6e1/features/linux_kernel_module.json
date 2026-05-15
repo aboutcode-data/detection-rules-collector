@@ -1,0 +1,33 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/linux_kernel_module.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "linux_kernel_module",
+                "tags": [
+                    "info",
+                    "linux",
+                    "lkm"
+                ],
+                "author": "@h3x2b <tracker@h3x.eu>",
+                "description": "Detects LKM - Linux kernel module"
+            },
+            "rule_text": "rule linux_kernel_module : info linux lkm\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker@h3x.eu>\"\n\t\tdescription = \"Detects LKM - Linux kernel module\"\n\n\tstrings:\n\t\t$lkm_00 = \"addressable_init_module\"\n\t\t$lkm_01 = \"addressable_cleanup_module\"\n\t\t$lkm_02 = \"vermagic=\"\n\t\t$lkm_03 = \"retpoline=\"\n\t\t$lkm_04 = \"depends=\"\n\t\t$lkm_05 = \"name=\"\n\t\t$lkm_06 = \"license=\"\n\t\t$lkm_07 = \"author=\"\n\t\t$lkm_08 = \"description=\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7f454c46 and 5 of ( $lkm_* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "linux_kernel_module_embedded",
+                "tags": [
+                    "info",
+                    "linux",
+                    "lkm"
+                ],
+                "author": "@h3x2b <tracker@h3x.eu>",
+                "description": "Detects LKM - Linux kernel module embedded within the file which is not elf itself"
+            },
+            "rule_text": "rule linux_kernel_module_embedded : info linux lkm\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker@h3x.eu>\"\n\t\tdescription = \"Detects LKM - Linux kernel module embedded within the file which is not elf itself\"\n\n\tstrings:\n\t\t$lkm_00 = \"addressable_init_module\"\n\t\t$lkm_01 = \"addressable_cleanup_module\"\n\t\t$lkm_02 = \"vermagic=\"\n\t\t$lkm_03 = \"retpoline=\"\n\t\t$lkm_04 = \"depends=\"\n\t\t$lkm_05 = \"name=\"\n\t\t$lkm_06 = \"license=\"\n\t\t$lkm_07 = \"author=\"\n\t\t$lkm_08 = \"description=\"\n\n\tcondition:\n\t\tuint32be( 0 ) != 0x7f454c46 and 5 of ( $lkm_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_ingress_tools_transfer_certutil_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "CertUtil Downloading Malicious Binaries",
+                "id": "95d670e1-ce19-4269-b101-e12a1bce7c41"
+            },
+            "rule_text": "title: CertUtil Downloading Malicious Binaries\nid: 95d670e1-ce19-4269-b101-e12a1bce7c41\nstatus: experimental\ndescription: \"Adversaries often bypass security controls by using the Windows Certificate\\\n  \\ \\nUtility (certutil.exe) to download malicious code. In general, they leverage\\\n  \\ \\ncertutil.exe along with the -split command-line option. Part of the RedCanary\\\n  \\ \\n2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/ingress-tool-transfer/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.command_and_control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\certutil.exe\n    CommandLine|contains|all:\n    - urlcache\n    - split\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

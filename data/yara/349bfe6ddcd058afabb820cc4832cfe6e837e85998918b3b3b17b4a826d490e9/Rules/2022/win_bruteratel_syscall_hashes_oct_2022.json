@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/embee-research/Yara-detection-rules/blob/master/Rules/2022/win_bruteratel_syscall_hashes_oct_2022.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_bruteratel_syscall_hashes_oct_2022",
+                "tags": [],
+                "author": "Embee_Research @ Huntress",
+                "vendor": "Huntress",
+                "created": "2022/10/12",
+                "description": "Detection of Brute Ratel Badger via api hashes of Nt* functions. "
+            },
+            "rule_text": "rule win_bruteratel_syscall_hashes_oct_2022\n{\n\tmeta:\n\t\tauthor = \"Embee_Research @ Huntress\"\n\t\tvendor = \"Huntress\"\n\t\tcreated = \"2022/10/12\"\n\t\tdescription = \"Detection of Brute Ratel Badger via api hashes of Nt* functions. \"\n\n\tstrings:\n\t\t$hash1 = {89 4d 39 8c}\n\t\t$hash2 = {bd ca 3b d3}\n\t\t$hash3 = {b2 c1 06 ae}\n\t\t$hash4 = {74 eb 1d 4d}\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d or uint16( 0 ) == 0x00e8 ) and ( 2 of ( $hash* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

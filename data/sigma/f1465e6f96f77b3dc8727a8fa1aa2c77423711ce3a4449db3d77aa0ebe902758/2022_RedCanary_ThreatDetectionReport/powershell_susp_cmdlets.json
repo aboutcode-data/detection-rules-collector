@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/powershell_susp_cmdlets.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Suspicious Powershell Cmdlets",
+                "id": "b3dfac86-1056-4b6b-9c67-db4a10a9e812"
+            },
+            "rule_text": "title: Suspicious Powershell Cmdlets\nid: b3dfac86-1056-4b6b-9c67-db4a10a9e812\nstatus: experimental\ndescription: Looks for look for cmdlets, methods, and switches that may indicate malicious\n  activity. Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/powershell/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.execution\n- attack.t1059\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\powershell.exe\n    CommandLine|contains|windash:\n    - -nop\n    - -noni\n    - invoke-expression\n    - iex\n    - downloadstring\n    - downloadfile\n    - downloadata\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

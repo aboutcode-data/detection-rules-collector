@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dsacls_abuse_permissions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-20",
+                "title": "Potentially Over Permissive Permissions Granted Using Dsacls.EXE",
+                "id": "01c42d3c-242d-4655-85b2-34f1739632f7"
+            },
+            "rule_text": "title: Potentially Over Permissive Permissions Granted Using Dsacls.EXE\nid: 01c42d3c-242d-4655-85b2-34f1739632f7\nstatus: test\ndescription: Detects usage of Dsacls to grant over permissive permissions\nreferences:\n- https://ss64.com/nt/dsacls.html\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc771151(v=ws.11)\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-20\nmodified: 2023-02-04\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\dsacls.exe\n  - OriginalFileName: DSACLS.EXE\n  selection_flag:\n    CommandLine|contains: ' /G '\n  selection_permissions:\n    CommandLine|contains:\n    - GR\n    - GE\n    - GW\n    - GA\n    - WP\n    - WD\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrators granting over permissive permissions to users\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

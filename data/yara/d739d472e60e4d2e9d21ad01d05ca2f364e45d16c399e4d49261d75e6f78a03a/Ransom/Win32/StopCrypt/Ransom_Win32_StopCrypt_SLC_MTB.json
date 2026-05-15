@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/StopCrypt/Ransom_Win32_StopCrypt_SLC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_StopCrypt_SLC_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/StopCrypt.SLC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_StopCrypt_SLC_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/StopCrypt.SLC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b d6 d3 ea 89 54 24 ?? 8b 44 24 ?? 01 44 24 ?? 8b 44 24 ?? 33 44 24 ?? 89 3d ?? ?? ?? ?? 31 44 24 ?? 8b 44 24 ?? 29 44 24 }\n\t\t$a_03_1 = {c1 e8 05 89 44 24 ?? 8b 44 24 ?? 01 44 24 ?? c7 05 ?? ?? ?? ?? ee 3d ea f4 8b 44 24 ?? 31 44 24 ?? 8b 4c 24 ?? 31 4c 24 ?? 83 3d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,439 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/eset/sshdoor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ssh_client",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH client (ssh)",
+                "author": "Marc-Etienne M.Leveille",
+                "email": "leveille@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_client : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH client (ssh)\"\n\t\tauthor = \"Marc-Etienne M.Leveille\"\n\t\temail = \"leveille@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$usage = \"usage: ssh [\"\n\t\t$old_version = \"-L listen-port:host:port\"\n\n\tcondition:\n\t\t$usage or $old_version\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_daemon",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH daemon (sshd)",
+                "author": "Marc-Etienne M.Leveille",
+                "email": "leveille@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_daemon : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH daemon (sshd)\"\n\t\tauthor = \"Marc-Etienne M.Leveille\"\n\t\temail = \"leveille@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$usage = \"usage: sshd [\"\n\t\t$old_version = \"Listen on the specified port (default: 22)\"\n\n\tcondition:\n\t\t$usage or $old_version\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_add",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH add (ssh-add)",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_add : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH add (ssh-add)\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$usage = \"usage: %s [options] [file ...]\\n\"\n\t\t$log = \"Could not open a connection to your authentication agent.\\n\"\n\n\tcondition:\n\t\t$usage and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_agent",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH agent (ssh-agent)",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_agent : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH agent (ssh-agent)\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$usage = \"usage: %s [options] [command [arg ...]]\"\n\n\tcondition:\n\t\t$usage\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_askpass",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH daemon (sshd)",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_askpass : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH daemon (sshd)\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$pass = \"Enter your OpenSSH passphrase:\"\n\t\t$log = \"Could not grab %s. A malicious client may be eavesdropping on you\"\n\n\tcondition:\n\t\t$pass and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_keygen",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH keygen (ssh-keygen)",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_keygen : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH keygen (ssh-keygen)\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$pass = \"Enter new passphrase (empty for no passphrase):\"\n\t\t$log = \"revoking certificates by key ID requires specification of a CA key\"\n\n\tcondition:\n\t\t$pass and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_keyscan",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match the clean (or not) OpenSSH keyscan (ssh-keyscan)",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule ssh_keyscan : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match the clean (or not) OpenSSH keyscan (ssh-keyscan)\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$usage = \"usage: %s [-46Hv] [-f file] [-p port] [-T timeout] [-t type]\"\n\n\tcondition:\n\t\t$usage\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ssh_binary",
+                "tags": [
+                    "sshdoor"
+                ],
+                "description": "Signature to match any clean (or not) SSH binary",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com"
+            },
+            "rule_text": "private rule ssh_binary : sshdoor\n{\n\tmeta:\n\t\tdescription = \"Signature to match any clean (or not) SSH binary\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\n\tcondition:\n\t\tssh_client or ssh_daemon or ssh_add or ssh_askpass or ssh_keygen or ssh_keyscan\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "stack_string",
+                "tags": [],
+                "description": "Rule to detect use of string-stacking",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "private rule stack_string\n{\n\tmeta:\n\t\tdescription = \"Rule to detect use of string-stacking\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$bp = /(\\xC6\\x45.{2}){25}/\n\t\t$bp_dw = /(\\xC7\\x45.{5}){20}/\n\t\t$bp_off = /(\\xC6\\x85.{5}){25}/\n\t\t$sp = /(\\xC6\\x44\\x24.{2}){25}/\n\t\t$sp_off = /(\\xC6\\x84\\x24.{5}){25}/\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "abafar",
+                "tags": [],
+                "description": "Rule to detect Abafar family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule abafar\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Abafar family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log_c = \"%s:%s@%s\"\n\t\t$log_d = \"%s:%s from %s\"\n\n\tcondition:\n\t\tssh_binary and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "akiva",
+                "tags": [],
+                "description": "Rule to detect Akiva family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule akiva\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Akiva family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = /(To|From):\\s(%s\\s\\-\\s)?%s:%s\\n/\n\n\tcondition:\n\t\tssh_binary and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "alderaan",
+                "tags": [],
+                "description": "Rule to detect Alderaan family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule alderaan\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Alderaan family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = /login\\s(in|at):\\s(%s\\s)?%s:%s\\n/\n\n\tcondition:\n\t\tssh_binary and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ando",
+                "tags": [],
+                "description": "Rule to detect Ando family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule ando\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Ando family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"%s:%s\\n\"\n\t\t$s2 = \"HISTFILE\"\n\t\t$i = \"fopen64\"\n\t\t$m1 = \"cat \"\n\t\t$m2 = \"mail -s\"\n\n\tcondition:\n\t\tssh_binary and all of ( $s* ) and ( $i or all of ( $m* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "anoat",
+                "tags": [],
+                "description": "Rule to detect Anoat family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule anoat\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Anoat family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = \"%s at: %s | user: %s, pass: %s\\n\"\n\n\tcondition:\n\t\tssh_binary and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "atollon",
+                "tags": [],
+                "description": "Rule to detect Atollon family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule atollon\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Atollon family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$f1 = \"PEM_read_RSA_PUBKEY\"\n\t\t$f2 = \"RAND_add\"\n\t\t$log = \"%s:%s\"\n\t\t$rand = \"/dev/urandom\"\n\n\tcondition:\n\t\tssh_binary and stack_string and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "batuu",
+                "tags": [],
+                "description": "Rule to detect Batuu family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule batuu\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Batuu family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$args = \"ssh: ~(av[%d]: %s\\n)\"\n\t\t$log = \"readpass: %s\\n\"\n\n\tcondition:\n\t\tssh_binary and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "bespin",
+                "tags": [],
+                "description": "Rule to detect Bespin family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule bespin\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Bespin family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log1 = \"%Y-%m-%d %H:%M:%S\"\n\t\t$log2 = \"%s %s%s\"\n\t\t$log3 = \"[%s]\"\n\n\tcondition:\n\t\tssh_binary and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "bonadan",
+                "tags": [],
+                "description": "Rule to detect Bonadan family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule bonadan\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Bonadan family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"g_server\"\n\t\t$s2 = \"mine.sock\"\n\t\t$s3 = \"tspeed\"\n\t\t$e1 = \"6106#x=%d#%s#%s#speed=%s\"\n\t\t$e2 = \"usmars.mynetgear.com\"\n\t\t$e3 = \"user=%s#os=%s#eip=%s#cpu=%s#mem=%s\"\n\n\tcondition:\n\t\tssh_binary and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "borleias",
+                "tags": [],
+                "description": "Rule to detect Borleias family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule borleias\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Borleias family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = \"%Y-%m-%d %H:%M:%S [%s]\"\n\n\tcondition:\n\t\tssh_binary and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "chandrila",
+                "tags": [],
+                "description": "Rule to detect Chandrila family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule chandrila\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Chandrila family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = \"S%s %s:%s\"\n\t\t$magic = { 05 71 92 7D }\n\n\tcondition:\n\t\tssh_binary and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "coruscant",
+                "tags": [],
+                "description": "Rule to detect Coruscant family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule coruscant\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Coruscant family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"%s:%s@%s\\n\"\n\t\t$s2 = \"POST\"\n\t\t$s3 = \"HTTP/1.1\"\n\n\tcondition:\n\t\tssh_binary and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "crait",
+                "tags": [],
+                "description": "Signature to detect Crait family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule crait\n{\n\tmeta:\n\t\tdescription = \"Signature to detect Crait family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$i1 = \"flock\"\n\t\t$i2 = \"fchmod\"\n\t\t$i3 = \"sendto\"\n\n\tcondition:\n\t\tssh_binary and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "endor",
+                "tags": [],
+                "description": "Rule to detect Endor family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule endor\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Endor family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$u = \"user: %s\"\n\t\t$p = \"password: %s\"\n\n\tcondition:\n\t\tssh_binary and $u and $p in ( @u .. @u + 20 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "jakuu",
+                "tags": [],
+                "description": "Rule to detect Jakuu family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "notes": "Strings can be encrypted",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule jakuu\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Jakuu family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\tnotes = \"Strings can be encrypted\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$dec = /GET\\s\\/\\?(s|c)id=/\n\t\t$enc1 = \"getifaddrs\"\n\t\t$enc2 = \"usleep\"\n\t\t$ns = \"gethostbyname\"\n\t\t$log = \"%s:%s\"\n\t\t$rc4 = { A1 71 31 17 11 1A 22 27 55 00 66 A3 10 FE C2 10 22 32 6E 95 90 84 F9 11 73 62 95 5F 4D 3B DB DC }\n\n\tcondition:\n\t\tssh_binary and $log and $ns and ( $dec or all of ( $enc* ) or $rc4 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "kamino",
+                "tags": [],
+                "description": "Rule to detect Kamino family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule kamino\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Kamino family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"/var/log/wtmp\"\n\t\t$s2 = \"/var/log/secure\"\n\t\t$s3 = \"/var/log/auth.log\"\n\t\t$s4 = \"/var/log/messages\"\n\t\t$s5 = \"/var/log/audit/audit.log\"\n\t\t$s6 = \"/var/log/httpd-access.log\"\n\t\t$s7 = \"/var/log/httpd-error.log\"\n\t\t$s8 = \"/var/log/xferlog\"\n\t\t$i1 = \"BIO_f_base64\"\n\t\t$i2 = \"PEM_read_bio_RSA_PUBKEY\"\n\t\t$i3 = \"srand\"\n\t\t$i4 = \"gethostbyname\"\n\n\tcondition:\n\t\tssh_binary and 5 of ( $s* ) and 3 of ( $i* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "kessel",
+                "tags": [],
+                "description": "Rule to detect Kessel family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule kessel\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Kessel family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$rc4 = \"Xee5chu1Ohshasheed1u\"\n\t\t$s1 = \"ssh:%s:%s:%s:%s\"\n\t\t$s2 = \"sshkey:%s:%s:%s:%s:%s\"\n\t\t$s3 = \"sshd:%s:%s\"\n\t\t$i1 = \"spy_report\"\n\t\t$i2 = \"protoShellCMD\"\n\t\t$i3 = \"protoUploadFile\"\n\t\t$i4 = \"protoSendReport\"\n\t\t$i5 = \"tunRecvDNS\"\n\t\t$i6 = \"tunPackMSG\"\n\n\tcondition:\n\t\tssh_binary and ( 2 of ( $s* ) or 2 of ( $i* ) or $rc4 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mimban",
+                "tags": [],
+                "description": "Rule to detect Mimban family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule mimban\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Mimban family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"<|||%s|||%s|||%d|||>\"\n\t\t$s2 = />\\|\\|\\|%s\\|\\|\\|%s\\|\\|\\|\\d\\|\\|\\|%s\\|\\|\\|%s\\|\\|\\|%s\\|\\|\\|%s\\|\\|\\|</\n\t\t$s3 = \"-----BEGIN PUBLIC KEY-----\"\n\t\t$i1 = \"BIO_f_base64\"\n\t\t$i2 = \"PEM_read_bio_RSA_PUBKEY\"\n\t\t$i3 = \"gethostbyname\"\n\n\tcondition:\n\t\tssh_binary and 2 of ( $s* ) and 2 of ( $i* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ondaron",
+                "tags": [],
+                "description": "Rule to detect Ondaron family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule ondaron\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Ondaron family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$daemon = \"user:password --> %s:%s\\n\"\n\t\t$client = /user(,|:)(a,)?password@host \\-\\-> %s(,|:)(b,)?%s@%s\\n/\n\n\tcondition:\n\t\tssh_binary and ( $daemon or $client )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "polis_massa",
+                "tags": [],
+                "description": "Rule to detect Polis Massa family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule polis_massa\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Polis Massa family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = /\\b\\w+(:|\\s-+>)\\s%s(:%d)?\\s\\t(\\w+)?:\\s%s\\s\\t(\\w+)?:\\s%s/\n\n\tcondition:\n\t\tssh_binary and $log\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "quarren",
+                "tags": [],
+                "description": "Rule to detect Quarren family",
+                "author": "Hugo Porcher",
+                "email": "hugo.porcher@eset.com",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf",
+                "date": "2018-12-05",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule quarren\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Quarren family\"\n\t\tauthor = \"Hugo Porcher\"\n\t\temail = \"hugo.porcher@eset.com\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/12/ESET-The_Dark_Side_of_the_ForSSHe.pdf\"\n\t\tdate = \"2018-12-05\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$log = \"h: %s, u: %s, p: %s\\n\"\n\n\tcondition:\n\t\tssh_binary and $log\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

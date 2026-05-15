@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/RelineStealer/Trojan_Win32_RelineStealer_FU_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_RelineStealer_FU_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/RelineStealer.FU!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_RelineStealer_FU_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/RelineStealer.FU!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 95 64 fd ff ff 03 55 a4 89 95 ?? ?? ?? ?? 8b 85 ?? ?? ?? ?? 0f af 85 ?? ?? ?? ?? 89 85 ?? ?? ?? ?? 8b 8d ?? ?? ?? ?? 0f af 4d a8 89 4d b0 8b 95 ?? ?? ?? ?? 0f af 95 ?? ?? ?? ?? 89 55 94 8b 85 ?? ?? ?? ?? 3b 85 d0 fe ff ff }\n\t\t$a_02_1 = {8b 45 08 83 c0 61 89 85 ?? ?? ?? ?? 8b 4d 08 83 c1 09 89 8d ?? ?? ?? ?? 8b 55 08 83 c2 3f 89 95 ?? ?? ?? ?? 8b 85 ?? ?? ?? ?? 3b 85 10 ff ff ff }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

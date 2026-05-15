@@ -1,0 +1,36 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/carbon black/Plugx.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "bit9_ms15_093_plugx_dll_payload",
+                "tags": [
+                    "TLPWHITE"
+                ],
+                "author": "rnolen@bit9.com",
+                "date": "8.26.2015",
+                "description": "Find a specific plugx variant DLL payload",
+                "hash1": "20d88b0fa34d3d79629cb602f08a1145008a75215fe2c91a3b3171287adc4c3d"
+            },
+            "rule_text": "import \"pe\"\n\nrule bit9_ms15_093_plugx_dll_payload : TLPWHITE\n{\n\tmeta:\n\t\tauthor = \"rnolen@bit9.com\"\n\t\tdate = \"8.26.2015\"\n\t\tdescription = \"Find a specific plugx variant DLL payload\"\n\t\thash1 = \"20d88b0fa34d3d79629cb602f08a1145008a75215fe2c91a3b3171287adc4c3d\"\n\n\tstrings:\n\t\t$datfile = \"nvdisps_user.dat\"\n\t\t$dllfile = \"nvdisps.dll\"\n\t\t$mutex = \"nvdisps_event\"\n\n\tcondition:\n\t\t3 of ( $datfile , $dllfile , $mutex ) and pe.exports ( \"ShadowPlay\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "bit9_ms15_093_plugx_dropper",
+                "tags": [
+                    "TLPWHITE"
+                ],
+                "author": "rnolen@bit9.com",
+                "date": "8.26.2015",
+                "description": "Find a specific plugx variant dropper",
+                "hash1": "61900fb9841a4d6d14e990163ea575694e684beaf912f50989b0013a9634196f",
+                "hash2": "71b201a5a7dfdbe91c0a7783f845b71d066c62014b944f488de5aec6272f907c",
+                "hash3": "56ec1ccab98c1ed67a0095b7ec8e6b17b12da3e00d357274fa37ec63ec724c07",
+                "hash4": "c437465db42268332543fbf6fd6a560ca010f19e0fd56562fb83fb704824b371"
+            },
+            "rule_text": "rule bit9_ms15_093_plugx_dropper : TLPWHITE\n{\n\tmeta:\n\t\tauthor = \"rnolen@bit9.com\"\n\t\tdate = \"8.26.2015\"\n\t\tdescription = \"Find a specific plugx variant dropper\"\n\t\thash1 = \"61900fb9841a4d6d14e990163ea575694e684beaf912f50989b0013a9634196f\"\n\t\thash2 = \"71b201a5a7dfdbe91c0a7783f845b71d066c62014b944f488de5aec6272f907c\"\n\t\thash3 = \"56ec1ccab98c1ed67a0095b7ec8e6b17b12da3e00d357274fa37ec63ec724c07\"\n\t\thash4 = \"c437465db42268332543fbf6fd6a560ca010f19e0fd56562fb83fb704824b371\"\n\n\tstrings:\n\t\t$datfile = \"nvdisps_user.dat\"\n\t\t$dllfile = \"nvdisps.dll\"\n\t\t$rundll32 = \"Rundll32.exe\"\n\t\t$winhlp32 = \"\\\\winhlp32.exe\"\n\t\t$shellout = \"ShadowPlay 84\"\n\n\tcondition:\n\t\t5 of ( $datfile , $dllfile , $rundll32 , $winhlp32 , $shellout )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

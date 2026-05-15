@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/dropbox_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2022-08-08",
+                "title": "Dropbox hosted file download",
+                "id": "97c14fc0-ea20-4ef3-b740-0a4624276806"
+            },
+            "rule_text": "title: Dropbox hosted file download\nid: 97c14fc0-ea20-4ef3-b740-0a4624276806\ndescription: Dropbox is a filehosting service used to host files which can have a\n  malicious purpose\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: '2022-08-08'\nreferences:\n- https://unit42.paloaltonetworks.com/cloaked-ursa-online-storage-services-campaigns/\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-host:\n    - www.dropbox.com\n    - dl.dropbox.com\n    url|endswith:\n    - dl=1\n  filter:\n  - c-uri|endswith:\n    - .css\n    - .jpg\n    - .png\n  condition: selection and not filter\nfalsepositives:\n- Legitimate file downloads\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

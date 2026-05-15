@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/CoinMiner/Trojan_Win64_CoinMiner_LR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_CoinMiner_LR_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/CoinMiner.LR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_CoinMiner_LR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/CoinMiner.LR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_81_0 = {43 6f 72 76 75 73 4d 69 6e 65 72 2f 31 2e 30 }\n\t\t$a_81_1 = {63 6f 72 76 75 73 2e 65 78 65 }\n\t\t$a_01_2 = {48 8b c2 83 e0 3f 42 0f b6 44 00 10 41 30 04 11 48 ff c2 49 3b d2 }\n\n\tcondition:\n\t\t(( #a_81_0 & 1 ) * 1 + ( #a_81_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 10 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

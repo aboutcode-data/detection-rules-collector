@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/alienvault/KINS_dropper.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "KINS_dropper",
+                "tags": [],
+                "author": "AlienVault Labs aortega@alienvault.com",
+                "description": "Match protocol, process injects and windows exploit present in KINS dropper"
+            },
+            "rule_text": "rule KINS_dropper\n{\n\tmeta:\n\t\tauthor = \"AlienVault Labs aortega@alienvault.com\"\n\t\tdescription = \"Match protocol, process injects and windows exploit present in KINS dropper\"\n\n\tstrings:\n\t\t$n1 = \"tid=%d&ta=%s-%x\" fullword\n\t\t$n2 = \"fid=%d\" fullword\n\t\t$n3 = \"%[^.].%[^(](%[^)])\" fullword\n\t\t$i0 = \"%s [%s %d] 77 %s\"\n\t\t$i01 = \"Global\\\\%s%x\"\n\t\t$i1 = \"Inject::InjectProcessByName()\"\n\t\t$i2 = \"Inject::CopyImageToProcess()\"\n\t\t$i3 = \"Inject::InjectProcess()\"\n\t\t$i4 = \"Inject::InjectImageToProcess()\"\n\t\t$i5 = \"Drop::InjectStartThread()\"\n\t\t$uac1 = \"ExploitMS10_092\"\n\t\t$uac2 = \"\\\\globalroot\\\\systemroot\\\\system32\\\\tasks\\\\\" ascii wide\n\t\t$uac3 = \"<RunLevel>HighestAvailable</RunLevel>\" ascii wide\n\n\tcondition:\n\t\t2 of ( $n* ) and 2 of ( $i* ) and 2 of ( $uac* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

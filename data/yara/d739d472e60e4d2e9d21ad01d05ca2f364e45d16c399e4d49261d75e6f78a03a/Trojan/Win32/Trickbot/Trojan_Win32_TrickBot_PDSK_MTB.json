@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Trickbot/Trojan_Win32_TrickBot_PDSK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_TrickBot_PDSK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/TrickBot.PDSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_TrickBot_PDSK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/TrickBot.PDSK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 75 fc 09 10 a1 ?? ?? ?? ?? 8b 00 89 01 66 a1 ?? ?? ?? ?? 66 83 c0 fa 66 a3 90 09 0b 00 a1 ?? ?? ?? ?? 8b 0d }\n\t\t$a_00_1 = {8b 06 01 d8 8b 55 e4 30 10 43 8b 06 3b 58 f4 72 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_00_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

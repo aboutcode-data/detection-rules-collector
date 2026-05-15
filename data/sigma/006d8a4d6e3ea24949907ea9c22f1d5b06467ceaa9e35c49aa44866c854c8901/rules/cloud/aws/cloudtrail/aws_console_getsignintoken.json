@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_console_getsignintoken.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Chester Le Bron (@123Le_Bron)",
+                "date": "2024-02-26",
+                "title": "AWS Console GetSigninToken Potential Abuse",
+                "id": "f8103686-e3e8-46f3-be72-65f7fcb4aa53"
+            },
+            "rule_text": "title: AWS Console GetSigninToken Potential Abuse\nid: f8103686-e3e8-46f3-be72-65f7fcb4aa53\nstatus: test\ndescription: 'Detects potentially suspicious events involving \"GetSigninToken\".\n\n  An adversary using the \"aws_consoler\" tool can leverage this console API to create\n  temporary federated credential that help obfuscate which AWS credential is compromised\n  (the original access key) and enables the adversary to pivot from the AWS CLI to\n  console sessions without the need for MFA using the new access key issued in this\n  request.\n\n  '\nreferences:\n- https://github.com/NetSPI/aws_consoler\n- https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies/\nauthor: Chester Le Bron (@123Le_Bron)\ndate: 2024-02-26\ntags:\n- attack.lateral-movement\n- attack.t1021.007\n- attack.t1550.001\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: signin.amazonaws.com\n    eventName: GetSigninToken\n  filter_main_console_ua:\n    userAgent|contains: Jersey/${project.version}\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- GetSigninToken events will occur when using AWS SSO portal to login and will generate\n  false positives if you do not filter for the expected user agent(s), see filter.\n  Non-SSO configured roles would be abnormal and should be investigated.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

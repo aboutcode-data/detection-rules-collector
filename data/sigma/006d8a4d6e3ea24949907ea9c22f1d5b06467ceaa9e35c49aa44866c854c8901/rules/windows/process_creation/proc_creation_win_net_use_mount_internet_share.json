@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_net_use_mount_internet_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-21",
+                "title": "Windows Internet Hosted WebDav Share Mount Via Net.EXE",
+                "id": "7e6237fe-3ddb-438f-9381-9bf9de5af8d0"
+            },
+            "rule_text": "title: Windows Internet Hosted WebDav Share Mount Via Net.EXE\nid: 7e6237fe-3ddb-438f-9381-9bf9de5af8d0\nstatus: test\ndescription: Detects when an internet hosted webdav share is mounted using the \"net.exe\"\n  utility\nreferences:\n- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-21\nmodified: 2023-07-25\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' use '\n    - ' http'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

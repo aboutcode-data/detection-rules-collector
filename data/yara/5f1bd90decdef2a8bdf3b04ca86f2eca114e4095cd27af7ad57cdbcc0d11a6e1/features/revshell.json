@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/revshell.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_revshell",
+                "tags": [
+                    "feature",
+                    "networking",
+                    "windows"
+                ],
+                "description": "Imports Win reverse shell"
+            },
+            "rule_text": "import \"pe\"\n\nrule win_revshell : feature networking windows\n{\n\tmeta:\n\t\tdescription = \"Imports Win reverse shell\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and pe.imports ( \"wsock32.dll\" , \"WSAStartup\" ) and pe.imports ( \"wsock32.dll\" , \"WSASocketA\" ) and pe.imports ( \"wsock32.dll\" , \"connect\" ) and pe.imports ( \"kernel32.dll\" , \"CreateProcessA\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

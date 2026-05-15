@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-27",
+                "title": "Suspicious Process Access to LSASS with Dbgcore/Dbghelp DLLs",
+                "id": "9f5c1d59-33be-4e60-bcab-85d2f566effd"
+            },
+            "rule_text": "title: Suspicious Process Access to LSASS with Dbgcore/Dbghelp DLLs\nid: 9f5c1d59-33be-4e60-bcab-85d2f566effd\nrelated:\n- id: 416bc4a2-7217-4519-8dc7-c3271817f1d5\n  type: similar\nstatus: experimental\ndescription: 'Detects suspicious process access to LSASS.exe from processes located\n  in uncommon locations with dbgcore.dll or dbghelp.dll in the call trace.\n\n  These DLLs contain functions like MiniDumpWriteDump that can be abused for credential\n  dumping purposes. While modern tools like Mimikatz have moved to using ntdll.dll,\n\n  dbgcore.dll and dbghelp.dll are still used by basic credential dumping utilities\n  and legacy tools for LSASS memory access and process suspension techniques.\n\n  '\nreferences:\n- https://www.splunk.com/en_us/blog/security/you-bet-your-lsass-hunting-lsass-access.html\n- https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpwritedump\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-27\ntags:\n- attack.credential-access\n- attack.defense-impairment\n- attack.t1003.001\n- attack.t1685\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection_lsass_calltrace:\n    TargetImage|endswith: \\lsass.exe\n    CallTrace|contains:\n    - dbgcore.dll\n    - dbghelp.dll\n  selection_susp_location:\n    SourceImage|contains:\n    - :\\Perflogs\\\n    - :\\Temp\\\n    - :\\Users\\Public\\\n    - \\$Recycle.Bin\\\n    - \\AppData\\Roaming\\\n    - \\Contacts\\\n    - \\Desktop\\\n    - \\Documents\\\n    - \\Downloads\\\n    - \\Favorites\\\n    - \\Favourites\\\n    - \\inetpub\\wwwroot\\\n    - \\Music\\\n    - \\Pictures\\\n    - \\Start Menu\\Programs\\Startup\\\n    - \\Users\\Default\\\n    - \\Videos\\\n    - \\Windows\\Temp\\\n  condition: all of selection_*\nfalsepositives:\n- Possibly during software installation or update processes\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

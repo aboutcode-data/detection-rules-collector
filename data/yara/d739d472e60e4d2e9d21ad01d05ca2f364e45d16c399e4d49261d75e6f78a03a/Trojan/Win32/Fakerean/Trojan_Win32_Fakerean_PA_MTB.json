@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Fakerean/Trojan_Win32_Fakerean_PA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Fakerean_PA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Fakerean.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Fakerean_PA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Fakerean.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {89 cb 8d 3d ?? ?? ?? ?? 8b 00 8d 1d ?? ?? ?? ?? f7 df 81 f2 ?? ?? ?? ?? f7 d6 35 ?? ?? ?? ?? 50 f7 d2 87 f2 e9 }\n\t\t$a_02_1 = {8b 45 f8 f7 da 8d 35 ?? ?? ?? ?? 33 f8 bf ?? ?? ?? ?? c1 c9 ?? 8f 00 8d 15 ?? ?? ?? ?? 81 e1 ?? ?? ?? ?? 83 c0 04 81 e1 ?? ?? ?? ?? f7 d3 33 f2 33 cf 89 f1 e9 }\n\t\t$a_02_2 = {89 45 f8 f7 d6 81 d7 ?? ?? ?? ?? 8b d3 ff 4d f4 0f 85 ?? ?? ?? ?? e9 }\n\t\t$a_00_3 = {56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 2 + ( #a_02_1 & 1 ) * 2 + ( #a_02_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

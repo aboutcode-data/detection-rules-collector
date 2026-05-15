@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_gui_input_capture.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "remotephone, oscd.community",
+                "date": "2020-10-13",
+                "title": "GUI Input Capture - macOS",
+                "id": "60f1ce20-484e-41bd-85f4-ac4afec2c541"
+            },
+            "rule_text": "title: GUI Input Capture - macOS\nid: 60f1ce20-484e-41bd-85f4-ac4afec2c541\nstatus: test\ndescription: Detects attempts to use system dialog prompts to capture user credentials\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1056.002/T1056.002.md\n- https://scriptingosx.com/2018/08/user-interaction-from-bash-scripts/\nauthor: remotephone, oscd.community\ndate: 2020-10-13\nmodified: 2025-12-05\ntags:\n- attack.collection\n- attack.credential-access\n- attack.t1056.002\nlogsource:\n  product: macos\n  category: process_creation\ndetection:\n  selection_img:\n    Image|endswith: /osascript\n  selection_cli_1:\n    CommandLine|contains|all:\n    - -e\n    - display\n    - dialog\n    - answer\n  selection_cli_2:\n    CommandLine|contains:\n    - admin\n    - administrator\n    - authenticate\n    - authentication\n    - credentials\n    - pass\n    - password\n    - unlock\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration tools and activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

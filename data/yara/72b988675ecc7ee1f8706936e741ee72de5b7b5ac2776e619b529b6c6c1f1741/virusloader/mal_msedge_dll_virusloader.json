@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/virusloader/mal_msedge_dll_virusloader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "mal_msedge_dll_virusloader",
+                "tags": [],
+                "description": "Detects malicious msedge.dll file",
+                "author": "RussianPanda",
+                "reference": "https://blog.phylum.io/npm-package-found-delivering-sophisticated-rat/",
+                "date": "2024-01-19",
+                "hash": "ab2e3b07170ef1516af3af0d03388868"
+            },
+            "rule_text": "rule mal_msedge_dll_virusloader\n{\n\tmeta:\n\t\tdescription = \"Detects malicious msedge.dll file\"\n\t\tauthor = \"RussianPanda\"\n\t\treference = \"https://blog.phylum.io/npm-package-found-delivering-sophisticated-rat/\"\n\t\tdate = \"2024-01-19\"\n\t\thash = \"ab2e3b07170ef1516af3af0d03388868\"\n\n\tstrings:\n\t\t$s1 = {C6 85 ?? FE FF FF ?? C6}\n\t\t$s2 = {C7 85 ?? FD FF FF}\n\t\t$s3 = {BF 60 01 00 00 [18] 30 04 39 41}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of ( $s* ) and #s1 > 30 and #s2 > 30 and filesize < 300KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

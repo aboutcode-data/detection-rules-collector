@@ -1,0 +1,1914 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/codewatchorg/codewatchorg_index.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "zerox88_js2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "0x88 Exploit Kit Detection",
+                "hash0": "cad8b652338f5e3bc93069c8aa329301",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zerox88_js2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"0x88 Exploit Kit Detection\"\n\t\thash0 = \"cad8b652338f5e3bc93069c8aa329301\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"function gSH() {\"\n\t\t$string1 = \"200 HEIGHT\"\n\t\t$string2 = \"'sh.js'><\\\\/SCRIPT>\"\n\t\t$string3 = \" 2 - 26;\"\n\t\t$string4 = \"<IFRAME ID\"\n\t\t$string5 = \",100);\"\n\t\t$string6 = \"200></IFRAME>\"\n\t\t$string7 = \"setTimeout(\"\n\t\t$string8 = \"'about:blank' WIDTH\"\n\t\t$string9 = \"mf.document.write(\"\n\t\t$string10 = \"document.write(\"\n\t\t$string11 = \"Kasper \"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zerox88_js3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "0x88 Exploit Kit Detection",
+                "hash0": "9df0ac2fa92e602ec11bac53555e2d82",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zerox88_js3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"0x88 Exploit Kit Detection\"\n\t\thash0 = \"9df0ac2fa92e602ec11bac53555e2d82\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \" new ActiveXObject(szHTTP); \"\n\t\t$string1 = \" Csa2;\"\n\t\t$string2 = \"var ADO \"\n\t\t$string3 = \" new ActiveXObject(szOx88);\"\n\t\t$string4 = \" unescape(\"\n\t\t$string5 = \"/test.exe\"\n\t\t$string6 = \" szEtYij;\"\n\t\t$string7 = \"var HTTP \"\n\t\t$string8 = \"%41%44%4F%44%42%2E\"\n\t\t$string9 = \"%4D%65%64%69%61\"\n\t\t$string10 = \"var szSRjq\"\n\t\t$string11 = \"%43%3A%5C%5C%50%72%6F%67%72%61%6D\"\n\t\t$string12 = \"var METHOD \"\n\t\t$string13 = \"ADO.Mode \"\n\t\t$string14 = \"%61%79%65%72\"\n\t\t$string15 = \"%2E%58%4D%4C%48%54%54%50\"\n\t\t$string16 = \" 7 - 6; HTTP.Open(METHOD, szURL, i-3); \"\n\n\tcondition:\n\t\t16 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_ek_checkpoint",
+                "tags": [],
+                "description": "Angler EK Exploit Kit - Checkpoint Detection"
+            },
+            "rule_text": "rule angler_ek_checkpoint\n{\n\tmeta:\n\t\tdescription = \"Angler EK Exploit Kit - Checkpoint Detection\"\n\n\tstrings:\n\t\t$str1 = \"Jul 2039\" nocase\n\t\t$str2 = \"Jul 2040\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "AnglerEKredirector",
+                "tags": [],
+                "description": "Angler Exploit Kit Redirector",
+                "ref": "http://blog.xanda.org/2015/08/28/yara-rule-for-angler-ek-redirector-js/",
+                "author": "adnan.shukor@gmail.com",
+                "date": "08-July-2015",
+                "impact": "5",
+                "version": "1"
+            },
+            "rule_text": "rule AnglerEKredirector\n{\n\tmeta:\n\t\tdescription = \"Angler Exploit Kit Redirector\"\n\t\tref = \"http://blog.xanda.org/2015/08/28/yara-rule-for-angler-ek-redirector-js/\"\n\t\tauthor = \"adnan.shukor@gmail.com\"\n\t\tdate = \"08-July-2015\"\n\t\timpact = \"5\"\n\t\tversion = \"1\"\n\n\tstrings:\n\t\t$ekr1 = \"<script>var date = new Date(new Date().getTime() + 60*60*24*7*1000);\" fullword\n\t\t$ekr2 = \"document.cookie=\\\"PHP_SESSION_PHP=\"\n\t\t$ekr3 = \"path=/; expires=\\\"+date.toUTCString();</script>\" fullword\n\t\t$ekr4 = \"<iframe src=\" fullword\n\t\t$ekr5 = \"</iframe></div>\" fullword\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_flash",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "8081397c30b53119716c374dd58fc653",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_flash\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"8081397c30b53119716c374dd58fc653\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"(9OOSp\"\n\t\t$string1 = \"r$g@ 0'[A\"\n\t\t$string2 = \";R-1qTP\"\n\t\t$string3 = \"xwBtR4\"\n\t\t$string4 = \"YbVjxp\"\n\t\t$string5 = \"ddgXkF\"\n\t\t$string6 = \")n'URF\"\n\t\t$string7 = \"vAzq@W\"\n\t\t$string8 = \"rOkX$6m<\"\n\t\t$string9 = \"@@DB}q \"\n\t\t$string10 = \"TiKV'iV\"\n\t\t$string11 = \"538x;B\"\n\t\t$string12 = \"9pEM{d\"\n\t\t$string13 = \".SIy/O\"\n\t\t$string14 = \"ER<Gu,\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_flash2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "23812c5a1d33c9ce61b0882f860d79d6",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_flash2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"23812c5a1d33c9ce61b0882f860d79d6\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"4yOOUj\"\n\t\t$string1 = \"CSvI4e\"\n\t\t$string2 = \"'fwaEnkI\"\n\t\t$string3 = \"'y4m%X\"\n\t\t$string4 = \"eOc)a,\"\n\t\t$string5 = \"'0{Q5<\"\n\t\t$string6 = \"1BdX;P\"\n\t\t$string7 = \"D _J)C\"\n\t\t$string8 = \"-epZ.E\"\n\t\t$string9 = \"QpRkP.\"\n\t\t$string10 = \"<o/]atel\"\n\t\t$string11 = \"@B.,X<\"\n\t\t$string12 = \"5r[c)U\"\n\t\t$string13 = \"52R7F'\"\n\t\t$string14 = \"NZ[FV'P\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_flash4",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "dbb3f5e90c05602d92e5d6e12f8c1421",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_flash4\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"dbb3f5e90c05602d92e5d6e12f8c1421\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"_u;cwD;\"\n\t\t$string1 = \"lhNp74\"\n\t\t$string2 = \"Y0GQ%v\"\n\t\t$string3 = \"qjqCb,nx\"\n\t\t$string4 = \"vn{l{Wl\"\n\t\t$string5 = \"5j5jz5\"\n\t\t$string6 = \"a3EWwhM\"\n\t\t$string7 = \"hVJb/4Aut\"\n\t\t$string8 = \",lm4v,\"\n\t\t$string9 = \",6MekS\"\n\t\t$string10 = \"YM.mxzO\"\n\t\t$string11 = \";6 -$E\"\n\t\t$string12 = \"QA%: fy\"\n\t\t$string13 = \"<@{qvR\"\n\t\t$string14 = \"b9'$'6l\"\n\t\t$string15 = \",x:pQ@-\"\n\t\t$string16 = \"2Dyyr9\"\n\n\tcondition:\n\t\t16 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_flash5",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "9f809272e59ee9ecd71093035b31eec6",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_flash5\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"9f809272e59ee9ecd71093035b31eec6\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"0k%2{u\"\n\t\t$string1 = \"\\\\Pb@(R\"\n\t\t$string2 = \"ys)dVI\"\n\t\t$string3 = \"tk4_y[\"\n\t\t$string4 = \"LM2Grx\"\n\t\t$string5 = \"n}s5fb\"\n\t\t$string6 = \"jT Nx<hKO\"\n\t\t$string7 = \"5xL>>}\"\n\t\t$string8 = \"S%,1{b\"\n\t\t$string9 = \"C'3g7j\"\n\t\t$string10 = \"}gfoh]\"\n\t\t$string11 = \",KFVQb\"\n\t\t$string12 = \"LA;{Dx\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_flash_uncompressed",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "2543855d992b2f9a576f974c2630d851",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_flash_uncompressed\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"2543855d992b2f9a576f974c2630d851\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"DisplayObjectContainer\"\n\t\t$string1 = \"Xtime2\"\n\t\t$string2 = \"(HMRTQ\"\n\t\t$string3 = \"flash.events:EventDispatcher$flash.display:DisplayObjectContainer\"\n\t\t$string4 = \"_e_-___-__\"\n\t\t$string5 = \"ZviJbf\"\n\t\t$string6 = \"random-\"\n\t\t$string7 = \"_e_-_-_-_\"\n\t\t$string8 = \"_e_------\"\n\t\t$string9 = \"817677162\"\n\t\t$string10 = \"_e_-__-\"\n\t\t$string11 = \"-[vNnZZ\"\n\t\t$string12 = \"5:unpad: Invalid padding value. expected [\"\n\t\t$string13 = \"writeByte/\"\n\t\t$string14 = \"enumerateFonts\"\n\t\t$string15 = \"_e_---___\"\n\t\t$string16 = \"_e_-_-\"\n\t\t$string17 = \"f(fOJ4\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_html",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "afca949ab09c5583a2ea5b2006236666",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_html\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"afca949ab09c5583a2ea5b2006236666\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \" A9 3E AF D5 9AQ FA 14 BC F2 A0H EA 7FfJ A58 A3 B1 BD 85 DB F3 B4 B6 FB B2 B4 14 82 19 88 28 D0 EA 2\"\n\t\t$string1 = \" 2BS 25 26p 20 3F 81 0E D3 9C 84 C7 EC C3 C41M C48 D3 B5N 09 C2z 98 7B 09. DF 05 5EQ DF A3 B6 EE D5 \"\n\t\t$string2 = \"9 A1Fg A8 837 9A A9 0A 1D 40b02 A5U6 22o 16 DC 5D F5 F5 FA BE FB EDX F0 87 DB C9 7B D6 AC F6D 10 1AJ\"\n\t\t$string3 = \"24 AA 17 FB B0 96d DBN 05 EE F6 0F 24 D4 D0 C0 E4 96 03 A3 03 20/ 04 40 DB 8F 7FI A6 DC F5 09 0FWV 1\"\n\t\t$string4 = \"Fq B3 94 E3 3E EFw E6 AA9 3A 5B 9E2 D2 EC AF6 10c 83 0F DF BB FBx AF B4 1BV 5C DD F8 9BR 97v D0U 9EG\"\n\t\t$string5 = \"29 9B 01E C85 86 B0 09 EC E07 AFCY 19 E5 11 1C 92 E2 DA A9 5D 19P 3A BF AB D6 B3 3FZ B4 92 FF E1 27 \"\n\t\t$string6 = \"B A9 88 B8 F0 EBLd 8E 08 18 11P EE BFk 15 5BM D6 B7 CEh AF 9C 8F 04 89 88 5E F6 ED 13 8EN1p 86Vk BC \"\n\t\t$string7 = \"w F4 C8 16pV 22 0A BB EB 83 7D BC 89 B6 E06 8B 2A DC E6 7D CE. 0Dh 18 0A8 5E 60 0C BF A4 00M 00 E3 3\"\n\t\t$string8 = \"B7 C6 E3 8E DC 3BR 60L 94h D8 AA7k5s 0D 7Fb 8B 80P E0 1BP EBT B5 03zE D0o 2A B97 18 F39 7C 94 99 11 \"\n\t\t$string9 = \"kY 24 8E 3E 94 84 D2 00 1EB 16 A4 9C 28 24 C1B BB 22 7D 97c F5 BA AD C4 5C 23 5D 3D 5C A7d5 0C F6 EA\"\n\t\t$string10 = \"08 01 3A 15 3B E0 1A E2 89 5B A2 F4 ED 87O F9l A99 124 27 BF BB A1c 2BW 12Z 07 AA D9 81 B7 A6-5 E2 E\"\n\t\t$string11 = \" 16 BF A7 0E 00 16 BB 8FB CBn FC D8 9C C7 EA AC C2q 85n A96I D1 9B FC8 BDl B8 3Ajf 7B ADH FD 20 88 F\"\n\t\t$string12 = \"  ML    \"\n\t\t$string13 = \" AEJ 3B C7 BFy EF F07X D3 A0 1E B4q C4 BE 3A 10 E7 A0 FE D1Jhp 89 A0sj 1CW 08 D5 F7 C8 C6 D5I 81 D2 \"\n\t\t$string14 = \"B 24 90 ED CEP C8 C9 9B E5 25 09 C6B- 2B 3B C7 28 C9 C62 EB D3 D5 ED DE A8 7F A9mNs 87 12 82 03 A2 8\"\n\t\t$string15 = \"A 3A A2L DFa 18 11P 00 7F1 BBbY FA 5E 04 C4 5D 89 F3S DAN B5 CAi 8D 0A AC A8 0A ABI E6 1E 89 BB 07 D\"\n\t\t$string16 = \"C B5 FD 0B F9 0Ch CE 01 14 8Dp AF 24 E0 E3 D90 DD FF B0 07 2Ad 0B 7D B0 B2 D8 BD E6 A7 CE E1 E4 3E5 \"\n\t\t$string17 = \"19 0C 85 14r/ 8C F3 84 2B 8C CF 90 93 E2 F6zo C3 D40 A6 94 01 02Q 21G AB B9 CDx 9D FB 21 2C 10 C3 3C\"\n\t\t$string18 = \"FAV D7y A0 C7Ld4 01 22 EE B0 1EY FAB BA E0 01 24 15g C5 DA6 19 EEsl BF C7O 9F 8B E8 AF 93 F52 00 06 \"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_html2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "6c926bf25d1a8a80ab988c8a34c0102e",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_html2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"6c926bf25d1a8a80ab988c8a34c0102e\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"E 06 E7i 1E 91q 9C D0J 1D 9B 14 E7g 1D DD ECK 20c 40 C6 0C AFR5 3D 03 9Em EC 0CB C9 A9 DFw C9 ADP 5B\"\n\t\t$string1 = \"14Bc 5C 3Bp CB 2A 12 3D A56 AA 14 87 E3 81 8A 80h 27 1C 3A4 CE 12 AE FAy F0 8A 21 B8I AD 1E B9 2C D1\"\n\t\t$string2 = \"0J 95 83 CC 1C 95D CAD 1A EA F3 00 E9 DA_ F2 ED 3CM1 A0 01t 1B EE 2C B6AWKq BF CAY FE D8 F2 7C 96 92\"\n\t\t$string3 = \"A8MTCsn C9 DBu D3 10 A0 D4 AC A9 97 06Rn 01 DAK EFFN ADP AE 0E 8FJd 8F DA B6 25RO 18 2A 00 EA F9 8B \"\n\t\t$string4 = \"A3 EB C1 CE 1E C4ok C4 19 F2 A7 17 9FCoz B6- C6 25J BB 0B 8C1OZ E4 7B AEz F6 06A 5D C0 D7 E8 FF DB D\"\n\t\t$string5 = \" 07 DE A3 F8 B0 B3 20V A4 B2 C8 60 BD EEG 95 BB 04 1Ckw A4 80 E6 23 F02 FA 9C 9A 14F BDC 18 BE BD B4\"\n\t\t$string6 = \"7 D1 B9 9B AC 2AN BA D3 00 A9 1CJ3J C0V 8F 8E FC B6p9 00 E1 01 21j B3 27 FF C3 8E 2B 92 8B DEiUI C3 \"\n\t\t$string7 = \" 99 2C AF9 F9 3F5 A8 F0 1BU C8e/ 00Q B4 10 DD BC 9D 8A BF B2 17 8F BFd DB D1 B7 E66 21 96 86 1E B2 1\"\n\t\t$string8 = \"E86 DF9 22Tg E93 9Em 29 0A 5B B5m E2 DCIF D6 D2 F5B CF F7XkRv BE EA A6 C5 82p 5E B3 B4aD B9 3A E0 22\"\n\t\t$string9 = \" 7C 95.q D6f E8 1AE 17 82T 84 F1/O 82 C2q C7 FE 05C E4 E5W F5 0A E4l 12 3Brt 8A E0 E7 DDJ 1F 1F C4 A\"\n\t\t$string10 = \"4t 91iE BD 2C 95U E9 1C AE 5B 5B A3 9D B2 F9 0B B5 15S9 AB 9D 94 85 A6 F1 AF B6 FC CAt 91iE BD 2C 95\"\n\t\t$string11 = \"  </input>\"\n\t\t$string12 = \"2 D12 93 FD AB 0DKK AEN 40 DA 88 7B FA 3B 18 EE 09 92 ED AF A8b 07 002 0A A3S 04 29 F9 A3 EA BB E9 7\"\n\t\t$string13 = \"40 C6 0C AFR5E 15 07 EE CBg B3 C6 60G 92tFt D7E 7D F0 C4 A89 29 EC BA E1 D9 3D 23 F0 0B E0o 3E2c B3 \"\n\t\t$string14 = \"2 A3. A3 F1 D8 D4 A83K 9C AEu FF EA 02 F4 B8 A0 EE C9 7B 15 C1 07D 80 7C 10 864 96 E3 AA F8 99bgve D\"\n\t\t$string15 = \"C 7D DC 0A E9 0D A1k 85s 9D 24 8C D0k E1 7E 3AH E2 052 D8q 16 FC 96 0AR C0 EC 99K4 3F BE ED CC DBE A\"\n\t\t$string16 = \"40 DA 88 7B 9E 1A B3 FA DE 90U 5B BD6x 9A 0C 163 AB EA ED B4 B5 98 ADL B7 06 EE E5y B8 9B C9Q 00 E9 \"\n\t\t$string17 = \"F BF_ F9 AC 5B CC 0B1 7B 60 20c 40 C6 0C AFR5 0B C7D 09 9D E30 14 AC 027 B2 B9B A7 06 E3z DC- B2 60 \"\n\t\t$string18 = \"0 80 97Oi 8C 85 D2 1Bp CDv 11 05 D4 26 E7 FC 3DlO AE 96 D2 1B 89 7C 16H 11 86 D0 A6 B95 FC 01 C5 8E \"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "3de78737b728811af38ea780de5f5ed7",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"3de78737b728811af38ea780de5f5ed7\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"myftysbrth\"\n\t\t$string1 = \"classPK\"\n\t\t$string2 = \"8aoadN\"\n\t\t$string3 = \"j5/_<F\"\n\t\t$string4 = \"FXPreloader.class\"\n\t\t$string5 = \"V4w\\\\K,\"\n\t\t$string6 = \"W\\\\Vr2a\"\n\t\t$string7 = \"META-INF/MANIFEST.MF\"\n\t\t$string8 = \"Na8$NS\"\n\t\t$string9 = \"_YJjB'\"\n\n\tcondition:\n\t\t9 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "angler_js",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Angler Exploit Kit Detection",
+                "hash0": "482d6c24a824103f0bcd37fa59e19452",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule angler_js\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Angler Exploit Kit Detection\"\n\t\thash0 = \"482d6c24a824103f0bcd37fa59e19452\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"    2654435769,   Be\"\n\t\t$string1 = \"DFOMIqka \"\n\t\t$string2 = \",  Zydr$>>16\"\n\t\t$string3 = \"DFOMIqka( 'OPPj_phuPuiwzDFo')\"\n\t\t$string4 = \"U0BNJWZ9J0vM43TnlNZcWnZjZSelQZlb1HGTTllZTm19emc0dlsYF13GvhQJmTZmbVMxallMdhWW948YWi t    P  b50GW\"\n\t\t$string5 = \"    auSt;\"\n\t\t$string6 = \" eval    (NDbMFR \"\n\t\t$string7 = \"jWUwYDZhNVyMI2TzykEYjWk0MDM5MA%ZQ1TD1gEMzj         3  D       ',\"\n\t\t$string8 = \"('fE').substr    (2    ,    1 \"\n\t\t$string9 = \",  -1 \"\n\t\t$string10 = \"    )  );Zydr$  [ 1]\"\n\t\t$string11 = \" 11;PsKnARPQuNNZMP<9;PsKnARPQuNNZMP\"\n\t\t$string12 = \"new   Array  (2),  Ykz\"\n\t\t$string13 = \"<script> \"\n\t\t$string14 = \");    CYxin \"\n\t\t$string15 = \"Zydr$    [    1]\"\n\t\t$string16 = \"var tKTGVbw,auSt, vnEihY, gftiUIdV, XnHs, UGlMHG, KWlqCKLfCV;\"\n\t\t$string17 = \"reXKyQsob1reXKyQsob3 \"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole1_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "BlackHole1 Exploit Kit Detection",
+                "hash0": "724acccdcf01cf2323aa095e6ce59cae",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole1_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"BlackHole1 Exploit Kit Detection\"\n\t\thash0 = \"724acccdcf01cf2323aa095e6ce59cae\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"Created-By: 1.6.0_18 (Sun Microsystems Inc.)\"\n\t\t$string1 = \"workpack/decoder.classmQ]S\"\n\t\t$string2 = \"workpack/decoder.classPK\"\n\t\t$string3 = \"workpack/editor.classPK\"\n\t\t$string4 = \"xmleditor/GUI.classmO\"\n\t\t$string5 = \"xmleditor/GUI.classPK\"\n\t\t$string6 = \"xmleditor/peers.classPK\"\n\t\t$string7 = \"v(SiS]T\"\n\t\t$string8 = \",R3TiV\"\n\t\t$string9 = \"META-INF/MANIFEST.MFPK\"\n\t\t$string10 = \"xmleditor/PK\"\n\t\t$string11 = \"Z[Og8o\"\n\t\t$string12 = \"workpack/PK\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "bleedinglife2_adobe_2010_1297_exploit",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "BleedingLife2 Exploit Kit Detection",
+                "hash0": "8179a7f91965731daa16722bd95f0fcf",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule bleedinglife2_adobe_2010_1297_exploit\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"BleedingLife2 Exploit Kit Detection\"\n\t\thash0 = \"8179a7f91965731daa16722bd95f0fcf\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"getSharedStyle\"\n\t\t$string1 = \"currentCount\"\n\t\t$string2 = \"String\"\n\t\t$string3 = \"setSelection\"\n\t\t$string4 = \"BOTTOM\"\n\t\t$string5 = \"classToInstancesDict\"\n\t\t$string6 = \"buttonDown\"\n\t\t$string7 = \"focusRect\"\n\t\t$string8 = \"pill11\"\n\t\t$string9 = \"TEXT_INPUT\"\n\t\t$string10 = \"restrict\"\n\t\t$string11 = \"defaultButtonEnabled\"\n\t\t$string12 = \"copyStylesToChild\"\n\t\t$string13 = \" xmlns:xmpMM\"\n\t\t$string14 = \"_editable\"\n\t\t$string15 = \"classToDefaultStylesDict\"\n\t\t$string16 = \"IMEConversionMode\"\n\t\t$string17 = \"Scene 1\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "bleedinglife2_adobe_2010_2884_exploit",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "BleedingLife2 Exploit Kit Detection",
+                "hash0": "b22ac6bea520181947e7855cd317c9ac",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule bleedinglife2_adobe_2010_2884_exploit\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"BleedingLife2 Exploit Kit Detection\"\n\t\thash0 = \"b22ac6bea520181947e7855cd317c9ac\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"_autoRepeat\"\n\t\t$string1 = \"embedFonts\"\n\t\t$string2 = \"KeyboardEvent\"\n\t\t$string3 = \"instanceStyles\"\n\t\t$string4 = \"InvalidationType\"\n\t\t$string5 = \"autoRepeat\"\n\t\t$string6 = \"getScaleX\"\n\t\t$string7 = \"RadioButton_selectedDownIcon\"\n\t\t$string8 = \"configUI\"\n\t\t$string9 = \"deactivate\"\n\t\t$string10 = \"fl.controls:Button\"\n\t\t$string11 = \"_mouseStateLocked\"\n\t\t$string12 = \"fl.core.ComponentShim\"\n\t\t$string13 = \"toString\"\n\t\t$string14 = \"_group\"\n\t\t$string15 = \"addRadioButton\"\n\t\t$string16 = \"inCallLaterPhase\"\n\t\t$string17 = \"oldMouseState\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "bleedinglife2_jar2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "BleedingLife2 Exploit Kit Detection",
+                "hash0": "2bc0619f9a0c483f3fd6bce88148a7ab",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule bleedinglife2_jar2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"BleedingLife2 Exploit Kit Detection\"\n\t\thash0 = \"2bc0619f9a0c483f3fd6bce88148a7ab\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"META-INF/MANIFEST.MFPK\"\n\t\t$string1 = \"RequiredJavaComponent.classPK\"\n\t\t$string2 = \"META-INF/JAVA.SFm\"\n\t\t$string3 = \"RequiredJavaComponent.class\"\n\t\t$string4 = \"META-INF/MANIFEST.MF\"\n\t\t$string5 = \"META-INF/JAVA.DSAPK\"\n\t\t$string6 = \"META-INF/JAVA.SFPK\"\n\t\t$string7 = \"5EVTwkx\"\n\t\t$string8 = \"META-INF/JAVA.DSA3hb\"\n\t\t$string9 = \"y\\\\Dw -\"\n\n\tcondition:\n\t\t9 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "bleedinglife2_java_2010_0842_exploit",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "BleedingLife2 Exploit Kit Detection",
+                "hash0": "b14ee91a3da82f5acc78abd10078752e",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule bleedinglife2_java_2010_0842_exploit\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"BleedingLife2 Exploit Kit Detection\"\n\t\thash0 = \"b14ee91a3da82f5acc78abd10078752e\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"META-INF/MANIFEST.MFManifest-Version: 1.0\"\n\t\t$string1 = \"ToolsDemo.classPK\"\n\t\t$string2 = \"META-INF/services/javax.sound.midi.spi.MidiDeviceProvider5\"\n\t\t$string3 = \"Created-By: 1.6.0_22 (Sun Microsystems Inc.)\"\n\t\t$string4 = \"META-INF/PK\"\n\t\t$string5 = \"ToolsDemo.class\"\n\t\t$string6 = \"META-INF/services/PK\"\n\t\t$string7 = \"ToolsDemoSubClass.classPK\"\n\t\t$string8 = \"META-INF/MANIFEST.MFPK\"\n\t\t$string9 = \"ToolsDemoSubClass.classeN\"\n\n\tcondition:\n\t\t9 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "crimepack_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "CrimePack Exploit Kit Detection",
+                "hash0": "d48e70d538225bc1807842ac13a8e188",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule crimepack_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"CrimePack Exploit Kit Detection\"\n\t\thash0 = \"d48e70d538225bc1807842ac13a8e188\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"r.JM,IM\"\n\t\t$string1 = \"cpak/Crimepack$1.classPK\"\n\t\t$string2 = \"cpak/KAVS.classPK\"\n\t\t$string3 = \"cpak/KAVS.classmQ\"\n\t\t$string4 = \"cpak/Crimepack$1.classmP[O\"\n\t\t$string5 = \"META-INF/MANIFEST.MF\"\n\t\t$string6 = \"META-INF/MANIFEST.MFPK\"\n\n\tcondition:\n\t\t6 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "crimepack_jar3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "CrimePack Exploit Kit Detection",
+                "hash0": "40ed977adc009e1593afcb09d70888c4",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule crimepack_jar3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"CrimePack Exploit Kit Detection\"\n\t\thash0 = \"40ed977adc009e1593afcb09d70888c4\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"payload.serPK\"\n\t\t$string1 = \"vE/JD[j\"\n\t\t$string2 = \"payload.ser[\"\n\t\t$string3 = \"Exploit$2.classPK\"\n\t\t$string4 = \"Exploit$2.class\"\n\t\t$string5 = \"Ho((i/\"\n\t\t$string6 = \"META-INF/MANIFEST.MF\"\n\t\t$string7 = \"H5641Yk\"\n\t\t$string8 = \"Exploit$1.classPK\"\n\t\t$string9 = \"Payloader.classPK\"\n\t\t$string10 = \"%p6$MCS\"\n\t\t$string11 = \"Exploit$1$1.classPK\"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "cve_2013_0074",
+                "tags": [],
+                "author": "Kaspersky Lab",
+                "filetype": "Win32 EXE",
+                "date": "2015-07-23",
+                "version": "1.0"
+            },
+            "rule_text": "rule cve_2013_0074\n{\n\tmeta:\n\t\tauthor = \"Kaspersky Lab\"\n\t\tfiletype = \"Win32 EXE\"\n\t\tdate = \"2015-07-23\"\n\t\tversion = \"1.0\"\n\n\tstrings:\n\t\t$b2 = \"Can't find Payload() address\" ascii wide\n\t\t$b3 = \"/SilverApp1;component/App.xaml\" ascii wide\n\t\t$b4 = \"Can't allocate ums after buf[]\" ascii wide\n\t\t$b5 = \"------------ START ------------\"\n\n\tcondition:\n\t\t(( 2 of ( $b* ) ) )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "CVE_2013_0422",
+                "tags": [],
+                "description": "Java Applet JMX Remote Code Execution",
+                "cve": "CVE-2013-0422",
+                "ref": "http://pastebin.com/JVedyrCe",
+                "author": "adnan.shukor@gmail.com",
+                "date": "12-Jan-2013",
+                "version": "1",
+                "impact": 4,
+                "hide": false
+            },
+            "rule_text": "rule CVE_2013_0422\n{\n\tmeta:\n\t\tdescription = \"Java Applet JMX Remote Code Execution\"\n\t\tcve = \"CVE-2013-0422\"\n\t\tref = \"http://pastebin.com/JVedyrCe\"\n\t\tauthor = \"adnan.shukor@gmail.com\"\n\t\tdate = \"12-Jan-2013\"\n\t\tversion = \"1\"\n\t\timpact = 4\n\t\thide = false\n\n\tstrings:\n\t\t$0422_1 = \"com/sun/jmx/mbeanserver/JmxMBeanServer\" fullword\n\t\t$0422_2 = \"com/sun/jmx/mbeanserver/JmxMBeanServerBuilder\" fullword\n\t\t$0422_3 = \"com/sun/jmx/mbeanserver/MBeanInstantiator\" fullword\n\t\t$0422_4 = \"findClass\" fullword\n\t\t$0422_5 = \"publicLookup\" fullword\n\t\t$class = /sun\\.org\\.mozilla\\.javascript\\.internal\\.(Context|GeneratedClassLoader)/ fullword\n\n\tcondition:\n\t\t( all of ( $0422_* ) ) or ( all of them )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "eleonore_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Eleonore Exploit Kit Detection",
+                "hash0": "ad829f4315edf9c2611509f3720635d2",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule eleonore_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Eleonore Exploit Kit Detection\"\n\t\thash0 = \"ad829f4315edf9c2611509f3720635d2\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"r.JM,IM\"\n\t\t$string1 = \"dev/s/DyesyasZ.classPK\"\n\t\t$string2 = \"k4kjRv\"\n\t\t$string3 = \"dev/s/LoaderX.class}V[t\"\n\t\t$string4 = \"dev/s/PK\"\n\t\t$string5 = \"Hsz6%y\"\n\t\t$string6 = \"META-INF/MANIFEST.MF\"\n\t\t$string7 = \"dev/PK\"\n\t\t$string8 = \"dev/s/AdgredY.class\"\n\t\t$string9 = \"dev/s/DyesyasZ.class\"\n\t\t$string10 = \"dev/s/LoaderX.classPK\"\n\t\t$string11 = \"eS0L5d\"\n\t\t$string12 = \"8E{4ON\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "eleonore_jar2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Eleonore Exploit Kit Detection",
+                "hash0": "94e99de80c357d01e64abf7dc5bd0ebd",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule eleonore_jar2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Eleonore Exploit Kit Detection\"\n\t\thash0 = \"94e99de80c357d01e64abf7dc5bd0ebd\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"META-INF/MANIFEST.MFManifest-Version: 1.0\"\n\t\t$string1 = \"wPVvVyz\"\n\t\t$string2 = \"JavaFX.class\"\n\t\t$string3 = \"{%D@'\\\\\"\n\t\t$string4 = \"JavaFXColor.class\"\n\t\t$string5 = \"bWxEBI}Y\"\n\t\t$string6 = \"$(2}UoD\"\n\t\t$string7 = \"j%4muR\"\n\t\t$string8 = \"vqKBZi\"\n\t\t$string9 = \"l6gs8;\"\n\t\t$string10 = \"JavaFXTrueColor.classeSKo\"\n\t\t$string11 = \"ZyYQx \"\n\t\t$string12 = \"META-INF/\"\n\t\t$string13 = \"JavaFX.classPK\"\n\t\t$string14 = \";Ie8{A\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "eleonore_jar3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Eleonore Exploit Kit Detection",
+                "hash0": "f65f3b9b809ebf221e73502480ab6ea7",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule eleonore_jar3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Eleonore Exploit Kit Detection\"\n\t\thash0 = \"f65f3b9b809ebf221e73502480ab6ea7\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"16lNYF2V\"\n\t\t$string1 = \"META-INF/MANIFEST.MFPK\"\n\t\t$string2 = \"ghsdr/Jewredd.classPK\"\n\t\t$string3 = \"ghsdr/Gedsrdc.class\"\n\t\t$string4 = \"e[<n55\"\n\t\t$string5 = \"ghsdr/Gedsrdc.classPK\"\n\t\t$string6 = \"META-INF/\"\n\t\t$string7 = \"na}pyO\"\n\t\t$string8 = \"9A1.F\\\\\"\n\t\t$string9 = \"ghsdr/Kocer.class\"\n\t\t$string10 = \"MXGXO8\"\n\t\t$string11 = \"ghsdr/Kocer.classPK\"\n\t\t$string12 = \"ghsdr/Jewredd.class\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "eleonore_js",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Eleonore Exploit Kit Detection",
+                "hash0": "08f8488f1122f2388a0fd65976b9becd",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule eleonore_js\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Eleonore Exploit Kit Detection\"\n\t\thash0 = \"08f8488f1122f2388a0fd65976b9becd\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"var de\"\n\t\t$string1 = \"sdjk];\"\n\t\t$string2 = \"return dfshk;\"\n\t\t$string3 = \"function jkshdk(){\"\n\t\t$string4 = \"'val';\"\n\t\t$string5 = \"var sdjk\"\n\t\t$string6 = \"return fsdjkl;\"\n\t\t$string7 = \" window[d\"\n\t\t$string8 = \"var fsdjkl\"\n\t\t$string9 = \"function jklsdjfk() {\"\n\t\t$string10 = \"function rewiry(yiyr,fjkhd){\"\n\t\t$string11 = \" sdjd \"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "eleonore_js2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Eleonore Exploit Kit Detection",
+                "hash0": "2f5ace22e886972a8dccc6aa5deb1e79",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule eleonore_js2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Eleonore Exploit Kit Detection\"\n\t\thash0 = \"2f5ace22e886972a8dccc6aa5deb1e79\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"var dfshk \"\n\t\t$string1 = \"arrow_next_down\"\n\t\t$string2 = \"return eval('yiyr.replac'\"\n\t\t$string3 = \"arrow_next_over\"\n\t\t$string4 = \"arrow_prev_over\"\n\t\t$string5 = \"xcCSSWeekdayBlock\"\n\t\t$string6 = \"xcCSSHeadBlock\"\n\t\t$string7 = \"xcCSSDaySpecial\"\n\t\t$string8 = \"xcCSSDay\"\n\t\t$string9 = \" window[df \"\n\t\t$string10 = \"day_special\"\n\t\t$string11 = \"var df\"\n\t\t$string12 = \"function jklsdjfk() {\"\n\t\t$string13 = \" sdjd \"\n\t\t$string14 = \"'e(/kljf hdfk sdf/g,fjkhd);');\"\n\t\t$string15 = \"arrow_next\"\n\n\tcondition:\n\t\t15 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "eleonore_js3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Eleonore Exploit Kit Detection",
+                "hash0": "9dcb8cd8d4f418324f83d914ab4d4650",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule eleonore_js3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Eleonore Exploit Kit Detection\"\n\t\thash0 = \"9dcb8cd8d4f418324f83d914ab4d4650\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"@mozilla.org/file/directory_service;1\"\n\t\t$string1 = \"var exe \"\n\t\t$string2 = \"var file \"\n\t\t$string3 = \"foStream.write(data, data.length);\"\n\t\t$string4 = \"  var file_data \"\n\t\t$string5 = \"return \"\n\t\t$string6 = \" Components.classes[\"\n\t\t$string7 = \"url : \"\n\t\t$string8 = \"].createInstance(Components.interfaces.nsILocalFile);\"\n\t\t$string9 = \"  var bstream \"\n\t\t$string10 = \" bstream.readBytes(size); \"\n\t\t$string11 = \"@mozilla.org/supports-string;1\"\n\t\t$string12 = \"  var channel \"\n\t\t$string13 = \"tmp.exe\"\n\t\t$string14 = \"  if (channel instanceof Components.interfaces.nsIHttpChannel \"\n\t\t$string15 = \"@mozilla.org/network/io-service;1\"\n\t\t$string16 = \" bstream.available()) { \"\n\t\t$string17 = \"].getService(Components.interfaces.nsIIOService); \"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_htm",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "f76deec07a61b4276acc22beef41ea47",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_htm\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"f76deec07a61b4276acc22beef41ea47\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \">Hello, \"\n\t\t$string1 = \"http://www.clantemplates.com\"\n\t\t$string2 = \"this template was created by Bl1nk and is downloadable at <B>ClanTemplates.com<BR></B>Replace \"\n\t\t$string3 = \"></TD></TR></TABLE> \"\n\t\t$string4 = \"Image21\"\n\t\t$string5 = \"scrollbar etc.<BR><BR>Enjoy, Bl1nk</FONT></TD></TR></TABLE><BR></CENTER></TD></TR> \"\n\t\t$string6 = \"to this WarCraft Template\"\n\t\t$string7 = \" document.getElementById) x\"\n\t\t$string8 = \"    if (a[i].indexOf(\"\n\t\t$string9 = \"x.oSrc;\"\n\t\t$string10 = \"x.src; x.src\"\n\t\t$string11 = \"<HTML>\"\n\t\t$string12 = \"FFFFFF\"\n\t\t$string13 = \" CELLSPACING\"\n\t\t$string14 = \"images/layoutnormal_03.gif\"\n\t\t$string15 = \"<TR> <TD \"\n\t\t$string16 = \" CELLPADDING\"\n\n\tcondition:\n\t\t16 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_js",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "f234c11b5da9a782cb1e554f520a66cf",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_js\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"f234c11b5da9a782cb1e554f520a66cf\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"));ELI6Q3PZ\"\n\t\t$string1 = \"VGhNU2pWQmMyUXhPSFI2TTNCVGVEUXpSR3huYm1aeE5UaFhXRFI0ZFhCQVMxWkRNVGh0V0hZNFZVYzBXWFJpTVRoVFpFUklaVGxG\"\n\t\t$string2 = \"eFgweDNaek5YZDFkaWFtTlhZbDlmV2tGa09Va3pSMlEyT0dwSFFIQlZRblpEYzBKRWNFeGZOVmx6V0RSU1JEYzJjRlY0TVY5SFkw\"\n\t\t$string3 = \"TkhXa0ZrT1haNGRFSXhRM3BrTkRoVGMxZEJSMmcyT0dwNlkzSTJYM1pCYkZnMVVqQmpWMEZIYURZNGFucGpjalpmZGtGc1dERXpT\"\n\t\t$string4 = \"byKZKkpZU<<18\"\n\t\t$string5 = \");CUer0x\"\n\t\t$string6 = \"bzWRebpU3yE>>16\"\n\t\t$string7 = \"RUJEWlVvMGNsVTVNMEpNWDNaNGJVSkpPRUJrUlVwRVQwQlNaR2cyY0ZWSE5GbDBRVFZ5UjFnMk9HVldOWGhMYUdFelRIZG5NMWQz\"\n\t\t$string8 = \"WnZSVGxuT1ZSRkwwaFZSelZGUm5GRlJFVTBLVHQ0UWxKQ1drdzBiWEJ5WkhSdVBtdG9XVWd6TVVGSGFFeDVTMlk3ZUVKU1FscE1O\"\n\t\t$string9 = \"QmZjMGN4YjBCd1oyOXBURUJJZEhvMFdYcGtOamhFV1ZwU01GVlZZbXBpUUZKV1lqTXpWMDAwY0dSNlF6aE1SekZ5ZEc4ME9FeEtN\"\n\t\t$string10 = \"SCpMaWXOuME(\"\n\t\t$string11 = \"VjJKcVkxZGlYMTlhUVdRNVNUTkhaRFk0YWpsYWJsWkRNVGh0V0hZNFZVYzBXWFJ2Tm5CVmFEUlpWVmhDT0ZWV05YaDBRa1ZTUkUw\"\n\t\t$string12 = \"2;}else{Yuii37DWU\"\n\t\t$string13 = \"ELI6Q3PZ\"\n\t\t$string14 = \"ZUhNNVZYQlZlRFY0UUZnMk9HMVlORkpFYkRsNGMxbEpPRUJSTVY5SGNETllPRXB0YjBsaloySnhPVVZ3UkZWQVgzTllORGgwV0RS\"\n\t\t$string15 = \"S05GbE1lalk0Vm1ORmVEWnpXbEpXZDBWaU5ubzJjRlkzVjFsbFgwVmlURlpuYnpCUE5HNTBhRFpaVEZrMVFYTjZObkIwWTBVNE4x\"\n\t\t$string16 = \"Vm5CWFFVZG9OamhxZW1OeU5sOTJRV3hZTVROSlpEWTRVM294V1VSUFFFdFdZalE0WlVjeGNsSmtObmhBYURVNFZVZEFjRlZDZGtO\"\n\t\t$string17 = \"Yuii37DWU<<12\"\n\t\t$string18 = \";while(hdnR9eo3pZ6E3<ZZeD3LjJQ.length){eMImGB\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_js2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "f234c11b5da9a782cb1e554f520a66cf",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_js2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"f234c11b5da9a782cb1e554f520a66cf\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"(ELI6Q3PZ\"\n\t\t$string1 = \"SnJTbVJqV2tOa09VbGZSMHcwY0ZWZmRrRjBjRFY0Y3psVmNGVjROWGhBV0RZNGJWZzBVa1J4TjNCVlgwVmlhRjkyZURaS1NWOUhj\"\n\t\t$string2 = \"eFgweDNaek5YZDFkaWFtTlhZbDlmV2tGa09Va3pSMlEyT0dwSFFIQlZRblpEYzBKRWNFeGZOVmx6V0RSU1JEYzJjRlY0TVY5SFkw\"\n\t\t$string3 = \"VUpKUVdWS05ISlZjMXBTTUdWRlNFQmpaMjlrVDBCTFYzY3pZbGRpZG5oeldFUndkSE16YjB4M2JXSnFZMWRpZVY4ellreDNaMko1\"\n\t\t$string4 = \"((Yuii37DWU\"\n\t\t$string5 = \"YURVNFZXUlhjRlZDZGxsQVJ6UlNaRTlBUzFkM00ySlhiekU0ZEhnMWNrUjZZM0kyWDNaQmJGZ3hNMGxrTmpoVGVqRlpkSEUyV1dW\"\n\t\t$string6 = \"String.fromCharCode(ZZeD3LjJQ);}else if(QIyZsvvbEmVOpp\"\n\t\t$string7 = \"1);ELI6Q3PZ\"\n\t\t$string8 = \"));Yuii37DWU\"\n\t\t$string9 = \");CUer0x\"\n\t\t$string10 = \"T1ZaQ05IUkRTVGhqT1VWd1ZWOUpRMlZLZG5oNlQwQkxWM2N6WWxkQmRrRkFPVmR3VlRsYWJsWnNOWGhKT1ZkeFZWazFRbEU1UlZK\"\n\t\t$string11 = \"TlpkM2wxS3lzcExUUTRYU2s4UEhocFVqRk9jazA3SUdsbUtIaHBVakZPY2swcGV5QkdWek5NVnlzOVVrSklWVE0wVDJ0NlpTZzJP\"\n\t\t$string12 = \"String.fromCharCode(((eMImGB\"\n\t\t$string13 = \"RGRDUkV0WFV6VkJkRkV4WHpCalYwRkhhRFk0YW5wamNqWmZka0ZzV0RaSWExZzBXWEZDUlZsQVpEWkJOMEoyZUhwd1duSlRXVE5J\"\n\t\t$string14 = \"SCpMaWXOuME(mi1mm8bu87rL0W);eval(Pcii3iVk1AG);</script></body></html>\"\n\t\t$string15 = \"Yuii37DWU\"\n\t\t$string16 = \"Yuii37DWU<<12\"\n\t\t$string17 = \"eTVzWlc1bmRHZ3NJRWhWUnpWRlJuRkZSRVUwUFRFd01qUXNJR2hQVlZsRVJFVmxVaXdnZUVKU1FscE1ORzF3Y21SMGJpd2dSbGN6\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_js_flash",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "377431417b34de8592afecaea9aab95d",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_js_flash\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"377431417b34de8592afecaea9aab95d\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"document.appendChild(bdy);try{for (i\"\n\t\t$string1 = \"0; i<10; i\"\n\t\t$string2 = \"default\"\n\t\t$string3 = \"var m \"\n\t\t$string4 = \"/g, document.getElementById('divid').innerHTML));\"\n\t\t$string5 = \" n.substring(0,r/2);\"\n\t\t$string6 = \"document.getElementById('f').innerHTML\"\n\t\t$string7 = \"'atk' onclick\"\n\t\t$string8 = \"function MAKEHEAP()\"\n\t\t$string9 = \"document.createElement('div');\"\n\t\t$string10 = \"<button id\"\n\t\t$string11 = \"/g, document.getElementById('divid').innerHTML);\"\n\t\t$string12 = \"document.body.appendChild(gg);\"\n\t\t$string13 = \"var bdy \"\n\t\t$string14 = \"var gg\"\n\t\t$string15 = \" unescape(gg);while(n.length<r/2) { n\"\n\n\tcondition:\n\t\t15 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_js_java",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "7398e435e68a2fa31607518befef30fb",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_js_java\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"7398e435e68a2fa31607518befef30fb\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"I></XML><SPAN DATASRC\"\n\t\t$string1 = \"setTimeout('vparivatel()',8000);function vparivatel(){document.write('<iframe src\"\n\t\t$string2 = \"I DATAFLD\"\n\t\t$string3 = \" unescape(\"\n\t\t$string4 = \", 1);swf.setAttribute(\"\n\t\t$string5 = \"function XMLNEW(){var spray \"\n\t\t$string6 = \"vparivatel.php\"\n\t\t$string7 = \"6) ){if ( (lv\"\n\t\t$string8 = \"'WIN 9,0,16,0')\"\n\t\t$string9 = \"d:/Program Files/Outlook Express/WAB.EXE\"\n\t\t$string10 = \"<XML ID\"\n\t\t$string11 = \"new ActiveXObject(\"\n\t\t$string12 = \"'7.1.0') ){SHOWPDF('iepdf.php\"\n\t\t$string13 = \"function SWF(){try{sv\"\n\t\t$string14 = \"'WIN 9,0,28,0')\"\n\t\t$string15 = \"C DATAFORMATAS\"\n\t\t$string16 = \" shellcode;xmlcode \"\n\t\t$string17 = \"function SNAPSHOT(){var a\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_js_quicktime",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "6bfc7bb877e1a79be24bd9563c768ffd",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_js_quicktime\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"6bfc7bb877e1a79be24bd9563c768ffd\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"                setTimeout(\"\n\t\t$string1 = \"wnd.location\"\n\t\t$string2 = \"window;\"\n\t\t$string3 = \"        var pls \"\n\t\t$string4 = \"        mem_flag \"\n\t\t$string5 = \", 1500);} else{ PRyyt4O3wvgz(1);}\"\n\t\t$string6 = \"         } catch(e) { }\"\n\t\t$string7 = \" mem_flag) JP7RXLyEu();\"\n\t\t$string8 = \" 0x400000;\"\n\t\t$string9 = \"----------------------------------------------------------------------------------------------------\"\n\t\t$string10 = \"        heapBlocks \"\n\t\t$string11 = \"        return mm;\"\n\t\t$string12 = \"0x38);\"\n\t\t$string13 = \"        h();\"\n\t\t$string14 = \" getb(b,bSize);\"\n\t\t$string15 = \"getfile.php\"\n\n\tcondition:\n\t\t15 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "fragus_js_vml",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Fragus Exploit Kit Detection",
+                "hash0": "8ab72337c815e0505fcfbc97686c3562",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule fragus_js_vml\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Fragus Exploit Kit Detection\"\n\t\thash0 = \"8ab72337c815e0505fcfbc97686c3562\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \" 0x100000;\"\n\t\t$string1 = \"            var gg \"\n\t\t$string2 = \"/g, document.getElementById('divid').innerHTML));\"\n\t\t$string3 = \"                                var sss \"\n\t\t$string5 = \"                        document.body.appendChild(obj);\"\n\t\t$string6 = \"                                var hbs \"\n\t\t$string7 = \" shcode; }\"\n\t\t$string8 = \" '<div id\"\n\t\t$string9 = \" hbs - (shcode.length\"\n\t\t$string10 = \"){ m[i] \"\n\t\t$string11 = \" unescape(gg);\"\n\t\t$string12 = \"                                var z \"\n\t\t$string13 = \"                                var hb \"\n\t\t$string14 = \" Math.ceil('0'\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "generic_javascript_obfuscation",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-28",
+                "description": "JavaScript Obfuscation Detection",
+                "sample_filetype": "js-html"
+            },
+            "rule_text": "rule generic_javascript_obfuscation\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-28\"\n\t\tdescription = \"JavaScript Obfuscation Detection\"\n\t\tsample_filetype = \"js-html\"\n\n\tstrings:\n\t\t$string0 = /eval\\(([\\s]+)?(unescape|atob)\\(/ nocase\n\t\t$string1 = /var([\\s]+)?([a-zA-Z_$])+([a-zA-Z0-9_$]+)?([\\s]+)?=([\\s]+)?\\[([\\s]+)?\\\"\\\\x[0-9a-fA-F]+/ nocase\n\t\t$string2 = /var([\\s]+)?([a-zA-Z_$])+([a-zA-Z0-9_$]+)?([\\s]+)?=([\\s]+)?eval;/\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "BeEF_browser_hooked",
+                "tags": [],
+                "description": "Yara rule related to hook.js, BeEF Browser hooking capability",
+                "author": "Pasquale Stirparo",
+                "date": "2015-10-07",
+                "hash1": "587e611f49baf63097ad2421ad0299b7b8403169ec22456fb6286abf051228db"
+            },
+            "rule_text": "rule BeEF_browser_hooked\n{\n\tmeta:\n\t\tdescription = \"Yara rule related to hook.js, BeEF Browser hooking capability\"\n\t\tauthor = \"Pasquale Stirparo\"\n\t\tdate = \"2015-10-07\"\n\t\thash1 = \"587e611f49baf63097ad2421ad0299b7b8403169ec22456fb6286abf051228db\"\n\n\tstrings:\n\t\t$s0 = \"mitb.poisonAnchor\" wide ascii\n\t\t$s1 = \"this.request(this.httpproto\" wide ascii\n\t\t$s2 = \"beef.logger.get_dom_identifier\" wide ascii\n\t\t$s3 = \"return (!!window.opera\" wide ascii\n\t\t$s4 = \"history.pushState({ Be:\\\"EF\\\" }\" wide ascii\n\t\t$s5 = \"window.navigator.userAgent.match(/Opera\\\\/9\\\\.80.*Version\\\\/10\\\\./)\" wide ascii\n\t\t$s6 = \"window.navigator.userAgent.match(/Opera\\\\/9\\\\.80.*Version\\\\/11\\\\./)\" wide ascii\n\t\t$s7 = \"window.navigator.userAgent.match(/Avant TriCore/)\" wide ascii\n\t\t$s8 = \"window.navigator.userAgent.match(/Iceweasel\" wide ascii\n\t\t$s9 = \"mitb.sniff(\" wide ascii\n\t\t$s10 = \"Method XMLHttpRequest.open override\" wide ascii\n\t\t$s11 = \".browser.hasWebSocket\" wide ascii\n\t\t$s12 = \".mitb.poisonForm\" wide ascii\n\t\t$s13 = \"resolved=require.resolve(file,cwd||\" wide ascii\n\t\t$s14 = \"if (document.domain == domain.replace(/(\\\\r\\\\n|\\\\n|\\\\r)/gm\" wide ascii\n\t\t$s15 = \"beef.net.request\" wide ascii\n\t\t$s16 = \"uagent.search(engineOpera)\" wide ascii\n\t\t$s17 = \"mitb.sniff\" wide ascii\n\t\t$s18 = \"beef.logger.start\" wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "src_ptheft_command",
+                "tags": [],
+                "description": "Auto-generated rule - file command.js",
+                "author": "Pasquale Stirparo",
+                "reference": "not set",
+                "date": "2015-10-08",
+                "hash": "49c0e5400068924ff87729d9e1fece19acbfbd628d085f8df47b21519051b7f3"
+            },
+            "rule_text": "rule src_ptheft_command\n{\n\tmeta:\n\t\tdescription = \"Auto-generated rule - file command.js\"\n\t\tauthor = \"Pasquale Stirparo\"\n\t\treference = \"not set\"\n\t\tdate = \"2015-10-08\"\n\t\thash = \"49c0e5400068924ff87729d9e1fece19acbfbd628d085f8df47b21519051b7f3\"\n\n\tstrings:\n\t\t$s0 = \"var lilogo = 'http://content.linkedin.com/etc/designs/linkedin/katy/global/clientlibs/img/logo.png';\" fullword wide ascii\n\t\t$s1 = \"dark=document.getElementById('darkenScreenObject'); \" fullword wide ascii\n\t\t$s2 = \"beef.execute(function() {\" fullword wide ascii\n\t\t$s3 = \"var logo  = 'http://www.youtube.com/yt/brand/media/image/yt-brand-standard-logo-630px.png';\" fullword wide ascii\n\t\t$s4 = \"description.text('Enter your Apple ID e-mail address and password');\" fullword wide ascii\n\t\t$s5 = \"sneakydiv.innerHTML= '<div id=\\\"edge\\\" '+edgeborder+'><div id=\\\"window_container\\\" '+windowborder+ '><div id=\\\"title_bar\\\" ' +ti\" wide ascii\n\t\t$s6 = \"var logo  = 'https://www.yammer.com/favicon.ico';\" fullword wide ascii\n\t\t$s7 = \"beef.net.send('<%= @command_url %>', <%= @command_id %>, 'answer='+answer);\" fullword wide ascii\n\t\t$s8 = \"var title = 'Session Timed Out <img src=\\\"' + lilogo + '\\\" align=right height=20 width=70 alt=\\\"LinkedIn\\\">';\" fullword wide ascii\n\t\t$s9 = \"var title = 'Session Timed Out <img src=\\\"' + logo + '\\\" align=right height=20 width=70 alt=\\\"YouTube\\\">';\" fullword wide ascii\n\t\t$s10 = \"var title = 'Session Timed Out <img src=\\\"' + logo + '\\\" align=right height=24 width=24 alt=\\\"Yammer\\\">';\" fullword wide ascii\n\t\t$s11 = \"var logobox = 'style=\\\"border:4px #84ACDD solid;border-radius:7px;height:45px;width:45px;background:#ffffff\\\"';\" fullword wide ascii\n\t\t$s12 = \"sneakydiv.innerHTML= '<br><img src=\\\\''+imgr+'\\\\' width=\\\\'80px\\\\' height\\\\'80px\\\\' /><h2>Your session has timed out!</h2><p>For\" wide ascii\n\t\t$s13 = \"inner.append(title, description, user,password);\" fullword wide ascii\n\t\t$s14 = \"sneakydiv.innerHTML= '<div id=\\\"window_container\\\" '+windowborder+ '><div id=\\\"windowmain\\\" ' +windowmain+ '><div id=\\\"title_bar\" wide ascii\n\t\t$s15 = \"sneakydiv.innerHTML= '<div id=\\\"window_container\\\" '+windowborder+ '><div id=\\\"windowmain\\\" ' +windowmain+ '><div id=\\\"title_bar\" wide ascii\n\t\t$s16 = \"answer = document.getElementById('uname').value+':'+document.getElementById('pass').value;\" fullword wide ascii\n\t\t$s17 = \"password.keydown(function(event) {\" fullword wide ascii\n\n\tcondition:\n\t\t13 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "malicious_author",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 5
+            },
+            "rule_text": "rule malicious_author : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 5\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$reg0 = /Creator.?\\(yen vaw\\)/\n\t\t$reg1 = /Title.?\\(who cis\\)/\n\t\t$reg2 = /Author.?\\(ser pes\\)/\n\n\tcondition:\n\t\t$magic at 0 and all of ( $reg* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_version",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 3
+            },
+            "rule_text": "rule suspicious_version : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 3\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$ver = /%PDF-1.\\d{1}/\n\n\tcondition:\n\t\t$magic at 0 and not $ver\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_creation",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 2
+            },
+            "rule_text": "rule suspicious_creation : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$header = /%PDF-1\\.(3|4|6)/\n\t\t$create0 = /CreationDate \\(D:20101015142358\\)/\n\t\t$create1 = /CreationDate \\(2008312053854\\)/\n\n\tcondition:\n\t\t$magic at 0 and $header and 1 of ( $create* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_title",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 4
+            },
+            "rule_text": "rule suspicious_title : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 4\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$header = /%PDF-1\\.(3|4|6)/\n\t\t$title0 = \"who cis\"\n\t\t$title1 = \"P66N7FF\"\n\t\t$title2 = \"Fohcirya\"\n\n\tcondition:\n\t\t$magic at 0 and $header and 1 of ( $title* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_author",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 4
+            },
+            "rule_text": "rule suspicious_author : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 4\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$header = /%PDF-1\\.(3|4|6)/\n\t\t$author0 = \"Ubzg1QUbzuzgUbRjvcUb14RjUb1\"\n\t\t$author1 = \"ser pes\"\n\t\t$author2 = \"Miekiemoes\"\n\t\t$author3 = \"Nsarkolke\"\n\n\tcondition:\n\t\t$magic at 0 and $header and 1 of ( $author* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_producer",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 2
+            },
+            "rule_text": "rule suspicious_producer : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$header = /%PDF-1\\.(3|4|6)/\n\t\t$producer0 = /Producer \\(Scribus PDF Library/\n\t\t$producer1 = \"Notepad\"\n\n\tcondition:\n\t\t$magic at 0 and $header and 1 of ( $producer* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_creator",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 3
+            },
+            "rule_text": "rule suspicious_creator : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 3\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$header = /%PDF-1\\.(3|4|6)/\n\t\t$creator0 = \"yen vaw\"\n\t\t$creator1 = \"Scribus\"\n\t\t$creator2 = \"Viraciregavi\"\n\n\tcondition:\n\t\t$magic at 0 and $header and 1 of ( $creator* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "possible_exploit",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 3
+            },
+            "rule_text": "rule possible_exploit : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 3\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$attrib0 = /\\/JavaScript /\n\t\t$attrib3 = /\\/ASCIIHexDecode/\n\t\t$attrib4 = /\\/ASCII85Decode/\n\t\t$action0 = /\\/Action/\n\t\t$action1 = \"Array\"\n\t\t$cond0 = \"unescape\"\n\t\t$cond1 = \"String.fromCharCode\"\n\t\t$nop = \"%u9090%u9090\"\n\n\tcondition:\n\t\t$magic at 0 and ( 2 of ( $attrib* ) ) or ( $action0 and 1 of ( $cond* ) ) or ( $action1 and $cond0 and $nop )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_js",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 3
+            },
+            "rule_text": "rule suspicious_js : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 3\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$attrib0 = /\\/OpenAction /\n\t\t$attrib1 = /\\/JavaScript /\n\t\t$js0 = \"eval\"\n\t\t$js1 = \"Array\"\n\t\t$js2 = \"String.fromCharCode\"\n\n\tcondition:\n\t\t$magic at 0 and all of ( $attrib* ) and 2 of ( $js* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_launch_action",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "weight": 2
+            },
+            "rule_text": "rule suspicious_launch_action : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$attrib0 = /\\/Launch/\n\t\t$attrib1 = /\\/URL /\n\t\t$attrib2 = /\\/Action/\n\t\t$attrib3 = /\\/F /\n\n\tcondition:\n\t\t$magic at 0 and 3 of ( $attrib* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "suspicious_embed",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "ref": "https://feliam.wordpress.com/2010/01/13/generic-pdf-exploit-hider-embedpdf-py-and-goodbye-av-detection-012010/",
+                "weight": 2
+            },
+            "rule_text": "rule suspicious_embed : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tref = \"https://feliam.wordpress.com/2010/01/13/generic-pdf-exploit-hider-embedpdf-py-and-goodbye-av-detection-012010/\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$meth0 = /\\/Launch/\n\t\t$meth1 = /\\/GoTo(E|R)/\n\t\t$attrib0 = /\\/URL /\n\t\t$attrib1 = /\\/Action/\n\t\t$attrib2 = /\\/Filespec/\n\n\tcondition:\n\t\t$magic at 0 and 1 of ( $meth* ) and 2 of ( $attrib* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "invalid_XObject_js",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "description": "XObject's require v1.4+",
+                "ref": "https://blogs.adobe.com/ReferenceXObjects/",
+                "version": "0.1",
+                "weight": 2
+            },
+            "rule_text": "rule invalid_XObject_js : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tdescription = \"XObject's require v1.4+\"\n\t\tref = \"https://blogs.adobe.com/ReferenceXObjects/\"\n\t\tversion = \"0.1\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$ver = /%PDF-1\\.[4-9]/\n\t\t$attrib0 = /\\/XObject/\n\t\t$attrib1 = /\\/JavaScript/\n\n\tcondition:\n\t\t$magic at 0 and not $ver and all of ( $attrib* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "multiple_versions",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "description": "Written very generically and doesn't hold any weight - just something that might be useful to know about to help show incremental updates to the file being analyzed",
+                "weight": 0
+            },
+            "rule_text": "rule multiple_versions : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"Written very generically and doesn't hold any weight - just something that might be useful to know about to help show incremental updates to the file being analyzed\"\n\t\tweight = 0\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$s0 = \"trailer\"\n\t\t$s1 = \"%%EOF\"\n\n\tcondition:\n\t\t$magic at 0 and #s0 > 1 and #s1 > 1\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "js_wrong_version",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "description": "JavaScript was introduced in v1.3",
+                "ref": "http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf",
+                "version": "0.1",
+                "weight": 2
+            },
+            "rule_text": "rule js_wrong_version : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tdescription = \"JavaScript was introduced in v1.3\"\n\t\tref = \"http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf\"\n\t\tversion = \"0.1\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$js = /\\/JavaScript/\n\t\t$ver = /%PDF-1\\.[3-9]/\n\n\tcondition:\n\t\t$magic at 0 and $js and not $ver\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "JBIG2_wrong_version",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "description": "JBIG2 was introduced in v1.4",
+                "ref": "http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf",
+                "version": "0.1",
+                "weight": 1
+            },
+            "rule_text": "rule JBIG2_wrong_version : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tdescription = \"JBIG2 was introduced in v1.4\"\n\t\tref = \"http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf\"\n\t\tversion = \"0.1\"\n\t\tweight = 1\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$js = /\\/JBIG2Decode/\n\t\t$ver = /%PDF-1\\.[4-9]/\n\n\tcondition:\n\t\t$magic at 0 and $js and not $ver\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "FlateDecode_wrong_version",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "description": "Flate was introduced in v1.2",
+                "ref": "http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf",
+                "version": "0.1",
+                "weight": 1
+            },
+            "rule_text": "rule FlateDecode_wrong_version : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tdescription = \"Flate was introduced in v1.2\"\n\t\tref = \"http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf\"\n\t\tversion = \"0.1\"\n\t\tweight = 1\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$js = /\\/FlateDecode/\n\t\t$ver = /%PDF-1\\.[2-9]/\n\n\tcondition:\n\t\t$magic at 0 and $js and not $ver\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "embed_wrong_version",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "description": "EmbeddedFiles were introduced in v1.3",
+                "ref": "http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf",
+                "version": "0.1",
+                "weight": 1
+            },
+            "rule_text": "rule embed_wrong_version : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tdescription = \"EmbeddedFiles were introduced in v1.3\"\n\t\tref = \"http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/pdf_reference_1-7.pdf\"\n\t\tversion = \"0.1\"\n\t\tweight = 1\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$embed = /\\/EmbeddedFiles/\n\t\t$ver = /%PDF-1\\.[3-9]/\n\n\tcondition:\n\t\t$magic at 0 and $embed and not $ver\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "js_splitting",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "description": "These are commonly used to split up JS code",
+                "weight": 2
+            },
+            "rule_text": "rule js_splitting : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tdescription = \"These are commonly used to split up JS code\"\n\t\tweight = 2\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$js = /\\/JavaScript/\n\t\t$s0 = \"getAnnots\"\n\t\t$s1 = \"getPageNumWords\"\n\t\t$s2 = \"getPageNthWord\"\n\t\t$s3 = \"this.info\"\n\n\tcondition:\n\t\t$magic at 0 and $js and 1 of ( $s* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "BlackHole_v2",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "ref": "http://fortknoxnetworks.blogspot.no/2012/10/blackhhole-exploit-kit-v-20-url-pattern.html",
+                "weight": 3
+            },
+            "rule_text": "rule BlackHole_v2 : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tref = \"http://fortknoxnetworks.blogspot.no/2012/10/blackhhole-exploit-kit-v-20-url-pattern.html\"\n\t\tweight = 3\n\n\tstrings:\n\t\t$magic = { 25 50 44 46 }\n\t\t$content = \"Index[5 1 7 1 9 4 23 4 50\"\n\n\tcondition:\n\t\t$magic at 0 and $content\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "XDP_embedded_PDF",
+                "tags": [
+                    "PDF"
+                ],
+                "author": "Glenn Edwards (@hiddenillusion)",
+                "version": "0.1",
+                "ref": "http://blog.9bplus.com/av-bypass-for-malicious-pdfs-using-xdp",
+                "weight": 1
+            },
+            "rule_text": "rule XDP_embedded_PDF : PDF\n{\n\tmeta:\n\t\tauthor = \"Glenn Edwards (@hiddenillusion)\"\n\t\tversion = \"0.1\"\n\t\tref = \"http://blog.9bplus.com/av-bypass-for-malicious-pdfs-using-xdp\"\n\t\tweight = 1\n\n\tstrings:\n\t\t$s1 = \"<pdf xmlns=\"\n\t\t$s2 = \"<chunk>\"\n\t\t$s3 = \"</pdf>\"\n\t\t$header0 = \"%PDF\"\n\t\t$header1 = \"JVBERi0\"\n\n\tcondition:\n\t\tall of ( $s* ) and 1 of ( $header* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "FlashNewfunction",
+                "tags": [
+                    "decodedPDF"
+                ],
+                "ref": "http://blog.xanda.org/tag/jsunpack/",
+                "hide": true,
+                "impact": 5
+            },
+            "rule_text": "rule FlashNewfunction : decodedPDF\n{\n\tmeta:\n\t\tref = \"CVE-2010-1297\"\n\t\thide = true\n\t\timpact = 5\n\t\tref = \"http://blog.xanda.org/tag/jsunpack/\"\n\n\tstrings:\n\t\t$unescape = \"unescape\" fullword nocase\n\t\t$shellcode = /%u[A-Fa-f0-9]{4}/\n\t\t$shellcode5 = /(%u[A-Fa-f0-9]{4}){5}/\n\t\t$cve20101297 = /\\/Subtype ?\\/Flash/\n\n\tcondition:\n\t\t($unescape and $shellcode and $cve20101297 ) or ( $shellcode5 and $cve20101297 )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "8395f08f1371eb7b2a2e131b92037f9a",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"8395f08f1371eb7b2a2e131b92037f9a\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string1 = \"'></applet><body id\"\n\t\t$string2 = \"<applet mayscript\"\n\t\t$string3 = \"/gmi,String.fromCharCode(2\"\n\t\t$string4 = \"/gmi,' ').replace(/\"\n\t\t$string5 = \"pe;i;;.j1s->c\"\n\t\t$string6 = \"es4Det\"\n\t\t$string7 = \"<textarea>function\"\n\t\t$string8 = \".replace(/\"\n\t\t$string9 = \".jar' code\"\n\t\t$string10 = \";iFc;ft'b)h{s\"\n\n\tcondition:\n\t\t10 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html10",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "f5f8dceca74a50076070f2593e82ec43",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html10\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"f5f8dceca74a50076070f2593e82ec43\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"pae>crAeahoilL\"\n\t\t$string1 = \"D11C0002C0069733E60656F6462070D000402DFF200696E\"\n\t\t$string2 = \"nbte)bbn\"\n\t\t$string3 = \"v9o16,0')0B80002328203;)82F00223A216ifA160A262A462(a\"\n\t\t$string4 = \"0442DFD2E30EC80E42D2E00AC3F3D53C9CAEBFF7E1E805080B044057CB1C0EF7F263DC64E0CBE47C2A21E370EE4A\"\n\t\t$string5 = \";)npeits0e.uvr;][tvr\"\n\t\t$string6 = \"433EBE90242003E00C606D04036563435805000102000v020E656wa.i118,0',9F902F282620''C62022646660}{A780232A\"\n\t\t$string7 = \"350;var ysjzyq\"\n\t\t$string8 = \"aSmd'lm/t/im.}d.-Ljg,l-\"\n\t\t$string9 = \"0017687F6164706E6967060002008101'2176045ckb\"\n\t\t$string10 = \"63(dcma)nenn869\"\n\t\t$string11 = \"').replace(/\"\n\t\t$string12 = \"xd'c0lrls09sare\"\n\t\t$string13 = \"(]t.(7u(<p\"\n\t\t$string14 = \"d{et;bdBcriYtc:eayF20'F62;23C4AABA3B84FE21C2B0B066C0038B8353AF5C0B4DF8FF43E85FB6F05CEC4080236F3CDE6E\"\n\t\t$string15 = \"/var another;</textarea>\"\n\t\t$string16 = \"Fa527496C62eShHmar(bA,pPec\"\n\t\t$string17 = \"FaA244A676C,150e62A5B2B61,'2F\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html11",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "be8c81288f9650e205ed13f3167ce256",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html11\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"be8c81288f9650e205ed13f3167ce256\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"D'0009F0C6941617C43427A76080001000F47020C606volv99,0,6,\"\n\t\t$string1 = \"';)nWd\"\n\t\t$string2 = \"IW'eeCn)s.a9e;0CF300FF379011078E047873754163636960496270486264416455747D69737812060209011301010104D0\"\n\t\t$string3 = \"D8D51F5100019006D60667F2E056940170E01010747\"\n\t\t$string4 = \"515F2F436WemBh2A4560683aFanoi(utse.o1/f;pistelzi\"\n\t\t$string5 = \"/p(e/oah)FHw'aaarDsnwi-\"\n\t\t$string6 = \"COa506u%db10u%1057u%f850u%f500u%0683u%05a8u%0030u%0706u%d300u%585du%38d0u%0080u%5612u'u%A2DdF6u%1M:.\"\n\t\t$string7 = \"S(yt)Dj\"\n\t\t$string8 = \"FaA26285325,150e8292A6968,'2F\"\n\t\t$string9 = \"0200e{b<0:D>r5d4u%c005u%0028u%251eu%a095u%6028u%0028u%2500u%f7f7u%70d7u%2025u%9008u%08f8u%c607usu%37\"\n\t\t$string10 = \"(mEtlltopo{{e\"\n\t\t$string11 = \"aSmd'lm/t/im.}d.-Ljg,l-\"\n\t\t$string12 = \"r)C4snfapfuo}\"\n\t\t$string13 = \"').replace(/\"\n\t\t$string14 = \"A282A5ifA160F2628206(a\"\n\t\t$string15 = \"obn0cf\"\n\t\t$string16 = \"d(i'C)rtr.'pvif)iv1ilW)S((Ltl.)2,0,9;0se\"\n\t\t$string17 = \"E23s3003476B18703C179396D08B841BC554F11678F0FEB9505FB355E044F33A540F61743738327E32D97D070FA37D87s000\"\n\t\t$string18 = \"603742E545904575'294E20680,6F902E292A60''E6202A4E6468},e))tep\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "2fd263f5d988a92715f4146a0006cb31",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"2fd263f5d988a92715f4146a0006cb31\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"Pec.lilsD)E)i-gonP(mgge.eOmn\"\n\t\t$string1 = \"(trt;oo\"\n\t\t$string2 = \"aceeC:0h\"\n\t\t$string3 = \"Vubb.oec.n)a.\"\n\t\t$string4 = \"t;o{(bspd}ci:0OO[g(cfjdh}1sN}ntnrlt;0pwf{-\"\n\t\t$string5 = \"seierb)gMle(}ev;is{(b;ga\"\n\t\t$string6 = \"e)}ift\"\n\t\t$string7 = \"Dud{rt\"\n\t\t$string8 = \"blecroeely}diuFI-\"\n\t\t$string9 = \"ttec]tr\"\n\t\t$string10 = \"fSgcso\"\n\t\t$string11 = \"eig.t)eR{t}aeesbdtbl{1sr)m\"\n\t\t$string12 = \").}n,Raa.s\"\n\t\t$string13 = \"sLtfcb.nrf{Wiantscncad1ac)scb0eo]}Diuu(nar\"\n\t\t$string14 = \"dxc.,:tfr(ucxRn\"\n\t\t$string15 = \"eDnnforbyri(tbmns).[i.ee;dl(aNimp(l(h[u[ti;u)\"\n\t\t$string16 = \"}tn)i{ebr,_.ns(Nes,,gm(ar.t\"\n\t\t$string17 = \"l]it}N(pe3,iaaLds.)lqea:Ps00Hc;[{Euihlc)LiLI\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "d7cacbff6438d866998fc8bfee18102d",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"d7cacbff6438d866998fc8bfee18102d\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"mtfla/,)asaf)'}\"\n\t\t$string1 = \"72267E7C'A3035CFC415DFAAA834B208D8C230FD303E2EFFE386BE05960C588C6E85650746E690C39F706F97DC74349BA134\"\n\t\t$string2 = \"N'eiui7F6e617e00F145A002645E527BFF264842F877B2FFC1FE84BCC6A50F0305B5B0C36A019F53674FD4D3736C494BD5C2\"\n\t\t$string3 = \"lndl}})<>\"\n\t\t$string4 = \"otodc};b<0:D>r5d4u%c005u%0028u%251eu%a095u%6028u%0028u%2500u%f7f7u%70d7u%2025u%9008u%08f8u%c607usu%3\"\n\t\t$string5 = \"tuJaboaopb\"\n\t\t$string6 = \"a(vxf{p'tSowa.i,1NIWm(\"\n\t\t$string7 = \"2004et\"\n\t\t$string8 = \"2054sttE5356496478\"\n\t\t$string9 = \"yi%A%%A%%A%%A%Cvld3,5314,004,6211,931,,,011394617,983,1154,5,1,,1,1,13,08,4304,1\"\n\t\t$string10 = \"0ovel04ervEeieeem)h))B(ihsAE;u%04b8u%1c08u%0e50u%a000u%1010u%4000u%20afu%0006u%2478u%0020u%1065u%210\"\n\t\t$string11 = \"/gmi,String.fromCharCode(2\"\n\t\t$string12 = \"ncBcaocta.ye\"\n\t\t$string13 = \"0201010030004A033102090;na\"\n\t\t$string14 = \"66u%0(ec'h{iis%%A%%A%%A%%A%frS1,,8187,1,4,11,91516,,61,,10841,1,13,,,11248,01818849,23,,,,791meits0e\"\n\t\t$string15 = \"D11C0002C0069733E60656F6462070D000402DFF200696E\"\n\t\t$string16 = \"810p0y98\"\n\t\t$string17 = \"9,0,e'Fm692E583760\"\n\t\t$string18 = \"57784234633a)(u\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html4",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "61fde003211ac83c2884fbecefe1fc80",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html4\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"61fde003211ac83c2884fbecefe1fc80\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"/dr.php\"\n\t\t$string1 = \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n\t\t$string2 = \"launchjnlp\"\n\t\t$string3 = \"clsid:CAFEEFAC-DEC7-0000-0000-ABCDEFFEDCBA\"\n\t\t$string4 = \"urlmon.dll\"\n\t\t$string5 = \"<body>\"\n\t\t$string6 = \" docbase\"\n\t\t$string7 = \"</html>\"\n\t\t$string8 = \" classid\"\n\t\t$string9 = \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n\t\t$string10 = \"63AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n\t\t$string11 = \"</object>\"\n\t\t$string12 = \"application/x-java-applet\"\n\t\t$string13 = \"java_obj\"\n\n\tcondition:\n\t\t13 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html5",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "30afdca94d301905819e00a7458f4a4e",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html5\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"30afdca94d301905819e00a7458f4a4e\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"dtesu}\"\n\t\t$string1 = \"<textarea>function gvgsxoy(gwcqg1){return gwcqg1.replace(/\"\n\t\t$string2 = \"v}Ahnhxwet\"\n\t\t$string3 = \"0125C6BBA2B84F7A1D2940C04C8B7449A40EEB0D14C8003535C0042D75E05F0D7F3E0A7B4E33EB4D8D47119290FC\"\n\t\t$string4 = \"a2Fs2325223869e'Fm2873367130\"\n\t\t$string5 = \"m0000F0F6E66607C71646F6607000107FA61021F6060(aeWWIN\"\n\t\t$string6 = \")(r>hd1/dNasmd(fpas\"\n\t\t$string7 = \"9,0,e'Fm692E583760\"\n\t\t$string8 = \"5ud(dis\"\n\t\t$string9 = \"nacmambuntcmi\"\n\t\t$string10 = \"Fa078597467,1C0e674366871,'2F\"\n\t\t$string11 = \"Fa56F386A76,180e828592024,'2F\"\n\t\t$string12 = \"alA)(2avoyOi;ic)t6])teptp,an}tnv0i'fms<uic\"\n\t\t$string13 = \"iR'nandee\"\n\t\t$string14 = \"('0.aEa-9leal\"\n\t\t$string15 = \"bsD0seF\"\n\t\t$string16 = \"t.ck263/6F3a001CE7A2684067F98BEC18B738801EF1F7F7E49A088695050C000865FC38080FE23727E0E8DE9CB53E748472\"\n\n\tcondition:\n\t\t16 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html6",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "4aabb710cf04240d26c13dd2b0ccd6cc",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html6\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"4aabb710cf04240d26c13dd2b0ccd6cc\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"F4B6B2E67)A780A373A633;ast2316363677fa'es6F3635244\"\n\t\t$string1 = \"piia.a}rneecc.cnuoir\"\n\t\t$string2 = \"0448D5A54BE10A5DA628100AC3F3D53C9CAEBFF7E1E805080B044057CB1C0EF7F263DC64E0CBE47C2A21E55E9EA620000106\"\n\t\t$string3 = \"],enEn..o\"\n\t\t$string4 = \"o;1()sna\"\n\t\t$string5 = \"(eres(0.,\"\n\t\t$string6 = \"}fs2he}o.t\"\n\t\t$string7 = \"f'u>jisch3;)Ie)C'eO\"\n\t\t$string8 = \"refhiacei\"\n\t\t$string9 = \"0026632528(sCE7A2684067F98BEC1s00000F512Fm286631666\"\n\t\t$string10 = \"vev%80b4u%ee18u%28b8u%2617u%5c08u%0e50u%a000u%9006u%76efu%b1cbu%ba2fu%6850u%0524u%9720u%f70<}1msa950\"\n\t\t$string11 = \"pdu,xziien,ie\"\n\t\t$string12 = \"rr)l;.)vr.nbl\"\n\t\t$string13 = \"ii)ruccs)1e\"\n\t\t$string14 = \"F30476737930anD<tAhnhxwet\"\n\t\t$string15 = \")yf{(ee..erneef\"\n\t\t$string16 = \"ieiiXuMkCSwetEet\"\n\t\t$string17 = \"F308477E7A7itme\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html7",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "f0e1b391ec3ce515fd617648bec11681",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html7\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"f0e1b391ec3ce515fd617648bec11681\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"EBF0a0001B05D266503046C7A491A0C00044F0002035D0D0twl''WIN\"\n\t\t$string1 = \"ah80672528657\"\n\t\t$string2 = \"n);tctt)Eltc(Dj\"\n\t\t$string3 = \";cnt2<tEf\"\n\t\t$string4 = \"iwkne){bvfvgzg5\"\n\t\t$string5 = \"..'an{ea-Ect'8-huJ.)/l'/tCaaa}<Ct95l\"\n\t\t$string6 = \"'WIWhaFtF662F6577IseFe427347637\"\n\t\t$string7 = \"ddTh75e{\"\n\t\t$string8 = \"Ae'n,,9\"\n\t\t$string9 = \"%E7E3Vemtyi\"\n\t\t$string10 = \"cf'treran\"\n\t\t$string11 = \"ncBcaocta.ye\"\n\t\t$string12 = \")'0,p8k\"\n\t\t$string13 = \"0;{tc4F}c;eptdpduoCuuedPl80evD\"\n\t\t$string14 = \"iq,q,Nd(nccfr'Bearc'nBtpw\"\n\t\t$string15 = \";)npeits0e.uvhF$I'\"\n\t\t$string16 = \"nvasai0.-\"\n\t\t$string17 = \"lmzv'is'\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html8",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "1c19a863fc4f8b13c0c7eb5e231bc3d1",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html8\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"1c19a863fc4f8b13c0c7eb5e231bc3d1\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"0x5)).replace(/\"\n\t\t$string1 = \"%A%%A%%nc(,145,9,84037,1711,,4121,56,1,,0505,,651,,3,514101,01,29,7868,90\"\n\t\t$string2 = \"/gmi,String.fromCharCode(2\"\n\t\t$string3 = \"turt;oo)s\"\n\t\t$string4 = \"91;var jtdpar\"\n\t\t$string5 = \"R(,13,7,63,48140601,5057,,319,,6,1,1,2,,110,0,1011171,2319,,,,10vEAs)tfmneyeh%A%%A%%A%%A%s<u91,4693,\"\n\t\t$string6 = \"y%%A%%A%%A%%A.meo21117,7,1,,10,1,9,8,1,9,100,6,141003,74181,163,441114,43,207,,remc'ut\"\n\t\t$string7 = \"epjtjqe){jtdpar\"\n\t\t$string8 = \"/gmi,'\"\n\t\t$string9 = \"<font></font><body id\"\n\t\t$string10 = \" epjtjqe; fqczi > 0; fqczi--){for (bwjmgl7 \"\n\t\t$string11 = \"nbte)bb(egs%A%%A%%A%%A%%m\"\n\t\t$string12 = \"fvC9614165,,,1,1801151030,,0,,487641114,,1,141,914810036,,888,201te.)'etdc:ysaA%%A%%A%%A%%5sao,61,0,\"\n\t\t$string13 = \"(tiAmrd{/tnA%%A%%A%%A%%Aiin11,,1637,34191,626958314,11007,,61145,411,7,9,1821,,43,8311,26;d'ebt.dyvs\"\n\t\t$string14 = \"A%%A%%A%%Ao\"\n\t\t$string15 = \"hrksywd(cpkwisk4);/\"\n\t\t$string16 = \";</script>\"\n\n\tcondition:\n\t\t16 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_html9",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "742d012b9df0c27ed6ccf3b234db20db",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_html9\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"742d012b9df0c27ed6ccf3b234db20db\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"tute)bbr:\"\n\t\t$string1 = \"nfho(tghRx\"\n\t\t$string2 = \"()irfE/Rt..cOcC\"\n\t\t$string3 = \"NcEnevbf\"\n\t\t$string4 = \"63FB8B4296BBC290A0.'0000079'Fh20216B6A6arA;<\"\n\t\t$string5 = \"wHe(cLnyeyet(a.i,r.{..\"\n\t\t$string6 = \"tute)bbdfiiix'bcr\"\n\t\t$string7 = \"itifdf)d1L2f'asau%d004u%8e00u%0419u%a58du%2093u%ec10u%0050u%00d4u%4622u%bcd1u%b1ceu%5000u%f7f5u%5606\"\n\t\t$string8 = \"2F4693529783'82F076676C38'te\"\n\t\t$string9 = \"sm(teoeoi)cfh))pihnipeeeo}.,(.((\"\n\t\t$string10 = \"ao)ntavlll{))ynlcoix}hiN.il'tes1ad)bm;\"\n\t\t$string11 = \"i)}m0f(eClei(/te\"\n\t\t$string12 = \"}aetsc\"\n\t\t$string13 = \"irefnig.pT\"\n\t\t$string14 = \"a0mrIif/tbne,(wsk,\"\n\t\t$string15 = \"500F14B06000000630E6B72636F60632C6E711C6E762E646F147F44767F650A0804061901020009006B120005A2006L\"\n\t\t$string16 = \".hB.Csf)ddeSs\"\n\t\t$string17 = \"tnne,IPd4Le\"\n\t\t$string18 = \"hMdarc'nBtpw\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "a8a18219b02d30f44799415ff19c518e",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"a8a18219b02d30f44799415ff19c518e\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"r.JM,IM\"\n\t\t$string1 = \"qX$8$a\"\n\t\t$string2 = \"META-INF/services/javax.sound.midi.spi.MidiDeviceProvider5\"\n\t\t$string3 = \"a.classPK\"\n\t\t$string4 = \"6;\\\\Q]Q\"\n\t\t$string5 = \"h[s] X\"\n\t\t$string6 = \"ToolsDemoSubClass.classPK\"\n\t\t$string7 = \"a.class\"\n\t\t$string8 = \"META-INF/MANIFEST.MFPK\"\n\t\t$string9 = \"ToolsDemoSubClass.classeO\"\n\t\t$string10 = \"META-INF/services/javax.sound.midi.spi.MidiDeviceProviderPK\"\n\n\tcondition:\n\t\t10 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_jar2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "989c5b5eaddf48010e62343d7a4db6f4",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_jar2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"989c5b5eaddf48010e62343d7a4db6f4\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"a66d578f084.classeQ\"\n\t\t$string1 = \"a4cb9b1a8a5.class\"\n\t\t$string2 = \")szNu\\\\MutK\"\n\t\t$string3 = \"qCCwBU\"\n\t\t$string4 = \"META-INF/MANIFEST.MF\"\n\t\t$string5 = \"QR,GOX\"\n\t\t$string6 = \"ab5601d4848.classmT\"\n\t\t$string7 = \"a6a7a760c0e[\"\n\t\t$string8 = \"2ZUK[L\"\n\t\t$string9 = \"2VT(Au5\"\n\t\t$string10 = \"a6a7a760c0ePK\"\n\t\t$string11 = \"aa79d1019d8.class\"\n\t\t$string12 = \"aa79d1019d8.classPK\"\n\t\t$string13 = \"META-INF/MANIFEST.MFPK\"\n\t\t$string14 = \"ab5601d4848.classPK\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_jar3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "c5655c496949f8071e41ea9ac011cab2",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_jar3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"c5655c496949f8071e41ea9ac011cab2\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"'> >$>\"\n\t\t$string1 = \"bpac/PK\"\n\t\t$string2 = \"bpac/purok$1.classmP]K\"\n\t\t$string3 = \"bpac/KAVS.classmQ\"\n\t\t$string4 = \"'n n$n\"\n\t\t$string5 = \"bpac/purok$1.classPK\"\n\t\t$string6 = \"$.4aX,Gt<\"\n\t\t$string7 = \"bpac/KAVS.classPK\"\n\t\t$string8 = \"bpac/b.classPK\"\n\t\t$string9 = \"bpac/b.class\"\n\n\tcondition:\n\t\t9 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_pdf",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "16de68e66cab08d642a669bf377368da",
+                "hash1": "bab281fe0cf3a16a396550b15d9167d5",
+                "sample_filetype": "pdf",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_pdf\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"16de68e66cab08d642a669bf377368da\"\n\t\thash1 = \"bab281fe0cf3a16a396550b15d9167d5\"\n\t\tsample_filetype = \"pdf\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"0000000254 00000 n\"\n\t\t$string1 = \"0000000295 00000 n\"\n\t\t$string2 = \"trailer<</Root 1 0 R /Size 7>>\"\n\t\t$string3 = \"0000000000 65535 f\"\n\t\t$string4 = \"3 0 obj<</JavaScript 5 0 R >>endobj\"\n\t\t$string5 = \"0000000120 00000 n\"\n\t\t$string6 = \"%PDF-1.0\"\n\t\t$string7 = \"startxref\"\n\t\t$string8 = \"0000000068 00000 n\"\n\t\t$string9 = \"endobjxref\"\n\t\t$string10 = \")6 0 R ]>>endobj\"\n\t\t$string11 = \"0000000010 00000 n\"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_pdf2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "33cb6c67f58609aa853e80f718ab106a",
+                "sample_filetype": "pdf",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_pdf2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"33cb6c67f58609aa853e80f718ab106a\"\n\t\tsample_filetype = \"pdf\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"\\\\nQb<%\"\n\t\t$string1 = \"0000000254 00000 n\"\n\t\t$string2 = \":S3>v0$EF\"\n\t\t$string3 = \"trailer<</Root 1 0 R /Size 7>>\"\n\t\t$string4 = \"%PDF-1.0\"\n\t\t$string5 = \"0000000000 65535 f\"\n\t\t$string6 = \"endstream\"\n\t\t$string7 = \"0000000010 00000 n\"\n\t\t$string8 = \"6 0 obj<</JS 7 0 R/S/JavaScript>>endobj\"\n\t\t$string9 = \"3 0 obj<</JavaScript 5 0 R >>endobj\"\n\t\t$string10 = \"}pr2IE\"\n\t\t$string11 = \"0000000157 00000 n\"\n\t\t$string12 = \"1 0 obj<</Type/Catalog/Pages 2 0 R /Names 3 0 R >>endobj\"\n\t\t$string13 = \"5 0 obj<</Names[(\"\n\n\tcondition:\n\t\t13 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "phoenix_pdf3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Phoenix Exploit Kit Detection",
+                "hash0": "bab281fe0cf3a16a396550b15d9167d5",
+                "sample_filetype": "pdf",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule phoenix_pdf3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Phoenix Exploit Kit Detection\"\n\t\thash0 = \"bab281fe0cf3a16a396550b15d9167d5\"\n\t\tsample_filetype = \"pdf\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"trailer<</Root 1 0 R /Size 7>>\"\n\t\t$string1 = \"stream\"\n\t\t$string2 = \";_oI5z\"\n\t\t$string3 = \"0000000010 00000 n\"\n\t\t$string4 = \"3 0 obj<</JavaScript 5 0 R >>endobj\"\n\t\t$string5 = \"7 0 obj<</Filter[ /FlateDecode /ASCIIHexDecode /ASCII85Decode ]/Length 3324>>\"\n\t\t$string6 = \"endobjxref\"\n\t\t$string7 = \"L%}gE(\"\n\t\t$string8 = \"0000000157 00000 n\"\n\t\t$string9 = \"1 0 obj<</Type/Catalog/Pages 2 0 R /Names 3 0 R >>endobj\"\n\t\t$string10 = \"0000000120 00000 n\"\n\t\t$string11 = \"4 0 obj<</Type/Page/Parent 2 0 R /Contents 12 0 R>>endobj\"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "redkit_bin_basic",
+                "tags": [
+                    "exploit_kit"
+                ]
+            },
+            "rule_text": "rule redkit_bin_basic : exploit_kit\n{\n\tstrings:\n\t\t$str1 = /\\/\\d{2}.html\\s/\n\n\tcondition:\n\t\t$str1\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "sakura_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Sakura Exploit Kit Detection",
+                "hash0": "a566ba2e3f260c90e01366e8b0d724eb",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule sakura_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Sakura Exploit Kit Detection\"\n\t\thash0 = \"a566ba2e3f260c90e01366e8b0d724eb\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"Rotok.classPK\"\n\t\t$string1 = \"nnnolg\"\n\t\t$string2 = \"X$Z'\\\\4^=aEbIdUmiprsxt}v<\" wide\n\t\t$string3 = \"()Ljava/util/Set;\"\n\t\t$string4 = \"(Ljava/lang/String;)V\"\n\t\t$string5 = \"Ljava/lang/Exception;\"\n\t\t$string6 = \"oooy32\"\n\t\t$string7 = \"Too.java\"\n\t\t$string8 = \"bbfwkd\"\n\t\t$string9 = \"Ljava/lang/Process;\"\n\t\t$string10 = \"getParameter\"\n\t\t$string11 = \"length\"\n\t\t$string12 = \"Simio.java\"\n\t\t$string13 = \"Ljavax/swing/JList;\"\n\t\t$string14 = \"-(Ljava/lang/String;)Ljava/lang/StringBuilder;\"\n\t\t$string15 = \"Ljava/io/InputStream;\"\n\t\t$string16 = \"vfnnnrof.exnnnroe\"\n\t\t$string17 = \"Olsnnfw\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "sakura_jar2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Sakura Exploit Kit Detection",
+                "hash0": "d21b4e2056e5ef9f9432302f445bcbe1",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule sakura_jar2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Sakura Exploit Kit Detection\"\n\t\thash0 = \"d21b4e2056e5ef9f9432302f445bcbe1\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"getProperty\"\n\t\t$string1 = \"java/io/FileNotFoundException\"\n\t\t$string2 = \"LLolp;\"\n\t\t$string3 = \"cjhgreshhnuf \"\n\t\t$string4 = \"StackMapTable\"\n\t\t$string5 = \"onfwwa\"\n\t\t$string6 = \"(C)Ljava/lang/StringBuilder;\"\n\t\t$string7 = \"replace\"\n\t\t$string8 = \"LEsia$fffgss;\"\n\t\t$string9 = \"<clinit>\"\n\t\t$string10 = \"()Ljava/io/InputStream;\"\n\t\t$string11 = \"openConnection\"\n\t\t$string12 = \" gjhgreshhnijhgreshhrtSjhgreshhot.sjhgreshhihjhgreshht;)\"\n\t\t$string13 = \"Oi.class\"\n\t\t$string14 = \" rjhgreshhorjhgreshhre rajhgreshhv\"\n\t\t$string15 = \"java/lang/String\"\n\t\t$string16 = \"java/net/URL\"\n\t\t$string17 = \"Created-By: 1.7.0-b147 (Oracle Corporation)\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeus_js",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-26",
+                "description": "Zeus Exploit Kit Detection",
+                "hash0": "c87ac7a25168df49a64564afb04dc961",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeus_js\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-26\"\n\t\tdescription = \"Zeus Exploit Kit Detection\"\n\t\thash0 = \"c87ac7a25168df49a64564afb04dc961\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"var jsmLastMenu \"\n\t\t$string1 = \"position:absolute; z-index:99' \"\n\t\t$string2 = \" -1)jsmSetDisplayStyle('popupmenu' \"\n\t\t$string3 = \" '<tr><td><a href\"\n\t\t$string4 = \"  jsmLastMenu \"\n\t\t$string5 = \"  var ids \"\n\t\t$string6 = \"this.target\"\n\t\t$string7 = \" jsmPrevMenu, 'none');\"\n\t\t$string8 = \"  if(jsmPrevMenu \"\n\t\t$string9 = \")if(MenuData[i])\"\n\t\t$string10 = \" '<div style\"\n\t\t$string11 = \"popupmenu\"\n\t\t$string12 = \"  jsmSetDisplayStyle('popupmenu' \"\n\t\t$string13 = \"function jsmHideLastMenu()\"\n\t\t$string14 = \" MenuData.length; i\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_css",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "4944324bad3b020618444ee131dce3d0",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_css\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"4944324bad3b020618444ee131dce3d0\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"close-mail{right:130px \"\n\t\t$string1 = \"ccc;box-shadow:0 0 5px 1px \"\n\t\t$string2 = \"757575;border-bottom:1px solid \"\n\t\t$string3 = \"777;height:1.8em;line-height:1.9em;display:block;float:left;padding:1px 15px;margin:0;text-shadow:-1\"\n\t\t$string4 = \"C4C4C4;}\"\n\t\t$string5 = \"999;-webkit-box-shadow:0 0 3px \"\n\t\t$string6 = \"header div.service-links ul{display:inline;margin:10px 0 0;}\"\n\t\t$string7 = \"t div h2.title{padding:0;margin:0;}.box5-condition-news h2.pane-title{display:block;margin:0 0 9px;p\"\n\t\t$string8 = \"footer div.comp-info p{color:\"\n\t\t$string9 = \"pcmi-listing-center .full-page-listing{width:490px;}\"\n\t\t$string10 = \"pcmi-content-top .photo img,\"\n\t\t$string11 = \"333;}div.tfw-header a var{display:inline-block;margin:0;line-height:20px;height:20px;width:120px;bac\"\n\t\t$string12 = \"ay:none;text-decoration:none;outline:none;padding:4px;text-align:center;font-size:9px;color:\"\n\t\t$string13 = \"333;}body.page-videoplayer div\"\n\t\t$string14 = \"373737;position:relative;}body.node-type-video div\"\n\t\t$string15 = \"pcmi-content-sidebara,.page-error-page \"\n\t\t$string16 = \"fff;text-decoration:none;}\"\n\t\t$string17 = \"qtabs-list li a,\"\n\t\t$string18 = \"cdn2.dailyrx.com\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_css2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "e300d6a36b9bfc3389f64021e78b1503",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_css2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"e300d6a36b9bfc3389f64021e78b1503\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"er div.panel-hide{display:block;position:absolute;z-index:200;margin-top:-1.5em;}div.panel-pane div.\"\n\t\t$string1 = \"ve.gif) right center no-repeat;}div.ctools-ajaxing{float:left;width:18px;background:url(http://cdn3.\"\n\t\t$string2 = \"cdn2.dailyrx.com\"\n\t\t$string3 = \"efefef;margin:5px 0 5px 0;}\"\n\t\t$string4 = \"node{margin:0;padding:0;}div.panel-pane div.feed a{float:right;}\"\n\t\t$string5 = \":0 5px 0 0;float:left;}div.tweets-pulled-listing div.tweet-authorphoto img{max-height:40px;max-width\"\n\t\t$string6 = \"i a{color:\"\n\t\t$string7 = \":bold;}div.tweets-pulled-listing .tweet-time a{color:silver;}div.tweets-pulled-listing  div.tweet-di\"\n\t\t$string8 = \"div.panel-pane div.admin-links{font-size:xx-small;margin-right:1em;}div.panel-pane div.admin-links l\"\n\t\t$string9 = \"div.tweets-pulled-listing ul{list-style:none;}div.tweets-pulled-listing div.tweet-authorphoto{margin\"\n\t\t$string10 = \"FFFFDD none repeat scroll 0 0;border:1px solid \"\n\t\t$string11 = \"vider{clear:left;border-bottom:1px solid \"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_htm",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "0e7d72749b60c8f05d4ff40da7e0e937",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_htm\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"0e7d72749b60c8f05d4ff40da7e0e937\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"screen.height:\"\n\t\t$string1 = \"</script></head><body onload\"\n\t\t$string2 = \"Fx0ZAQRKXUVgbh0qNDRJVxYwGg4tGh8aHQoAVQQSNyo0NElXFjAaDi0NFQYESl1FBBNnTFoSPiBmADwnPTQxPSdKWUUEE2UcGR0z\"\n\t\t$string3 = \"0);-10<b\"\n\t\t$string4 = \"function fl(){var a\"\n\t\t$string5 = \"0);else if(navigator.mimeTypes\"\n\t\t$string6 = \");b.href\"\n\t\t$string7 = \"/presults.jsp\"\n\t\t$string8 = \"128.164.107.221\"\n\t\t$string9 = \")[0].clientWidth\"\n\t\t$string10 = \"presults.jsp\"\n\t\t$string11 = \":escape(c),e\"\n\t\t$string12 = \"navigator.plugins.length)navigator.plugins[\"\n\t\t$string13 = \"window;d\"\n\t\t$string14 = \"gr(),j\"\n\t\t$string15 = \"VIEWPORT\"\n\t\t$string16 = \"FQV2D0ZAH1VGDxgZVg9COwYCAwkcTzAcBxscBFoKAAMHUFVuWF5EVVYVdVtUR18bA1QdAU8HQjgeUFYeAEZ4SBEcEk1FTxsdUlVA\"\n\n\tcondition:\n\t\t16 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_js",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "a9f30483a197cfdc65b4a70b8eb738ab",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_js\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"a9f30483a197cfdc65b4a70b8eb738ab\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"Square ad tag  (tile\"\n\t\t$string1 = \"  adRandNum \"\n\t\t$string2 = \" cellspacing\"\n\t\t$string3 = \"\\\\n//-->\\\\n</script>\"\n\t\t$string4 = \"format\"\n\t\t$string5 = \"//-->' \"\n\t\t$string6 = \"2287974446\"\n\t\t$string7 = \"NoScrBeg \"\n\t\t$string8 = \"-- start adblade -->' \"\n\t\t$string9 = \"3427054556\"\n\t\t$string10 = \"        while (i >\"\n\t\t$string11 = \"return '<table width\"\n\t\t$string12 = \"</scr' \"\n\t\t$string13 = \" s.substring(0, i\"\n\t\t$string14 = \" /></a></noscript>' \"\n\t\t$string15 = \"    else { isEmail \"\n\t\t$string16 = \").submit();\"\n\t\t$string17 = \" border\"\n\t\t$string18 = \"pub-8301011321395982\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_js2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "b5fda04856b98c254d33548cc1c1216c",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_js2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"b5fda04856b98c254d33548cc1c1216c\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"ApiClientConfig\"\n\t\t$string1 = \"function/.test(pa.toString())\"\n\t\t$string2 = \"background-image:url(http:\\\\/\\\\/static.ak.fbcdn.net\\\\/rsrc.php\\\\/v2\\\\/y6\\\\/x\\\\/s816eWC-2sl.gif)}\"\n\t\t$string3 = \"Music.init\"\n\t\t$string4 = \"',header:'bool',recommendations:'bool',site:'hostname'},create_event_button:{},degrees:{href:'url'},\"\n\t\t$string5 = \"cca6477272fc5cb805f85a84f20fca1d\"\n\t\t$string6 = \"document.createElement('form');c.action\"\n\t\t$string7 = \"javascript:false\"\n\t\t$string8 = \"s.onMessage){j.error('An instance without whenReady or onMessage makes no sense');throw new Error('A\"\n\t\t$string9 = \"NaN;}else h\"\n\t\t$string10 = \"sprintf\"\n\t\t$string11 = \"window,j\"\n\t\t$string12 = \"o.getUserID(),da\"\n\t\t$string13 = \"FB.Runtime.getLoginStatus();if(b\"\n\t\t$string14 = \")');k.toString\"\n\t\t$string15 = \"rovide('XFBML.Send',{Dimensions:{width:80,height:25}});\"\n\t\t$string16 = \"{log:i};e.exports\"\n\t\t$string17 = \"a;FB.api('/fql','GET',f,function(g){if(g.error){ES5(ES5('Object','keys',false,b),'forEach',true,func\"\n\t\t$string18 = \"true;}}var ia\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_js3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "5f13fdfb53a3e60e93d7d1d7bbecff4f",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_js3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"5f13fdfb53a3e60e93d7d1d7bbecff4f\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"document.createDocumentFragment();img.src\"\n\t\t$string1 = \"typeOf(events)\"\n\t\t$string2 = \"var i,x,y,ARRcookies\"\n\t\t$string3 = \"callbacks.length;j<l;j\"\n\t\t$string4 = \"encodeURIComponent(value);if(options.domain)value\"\n\t\t$string5 = \"event,HG.components.get('windowEvent_'\"\n\t\t$string6 = \"'read'in Cookie){return Cookie.read(c_name);}\"\n\t\t$string7 = \"item;},get:function(name,def){return HG.components.exists(name)\"\n\t\t$string8 = \"){window.addEvent(windowEvents[i],function(){var callbacks\"\n\t\t$string9 = \"reunload:function(callback){HG.events.add('beforeunload',callback);},add:function(event,callback){HG\"\n\t\t$string10 = \"name){if(HG.components.exists(name)){delete HG.componentList[name];}}},util:{uuid:function(){return'\"\n\t\t$string11 = \"window.HG\"\n\t\t$string12 = \"x.replace(/\"\n\t\t$string13 = \"encodeURIComponent(this.attr[key]));}\"\n\t\t$string14 = \"options.domain;if(options.path)value\"\n\t\t$string15 = \"this.page_sid;this.attr.user_sid\"\n\n\tcondition:\n\t\t15 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "zeroaccess_js4",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "ZeroAccess Exploit Kit Detection",
+                "hash0": "268ae96254e423e9d670ebe172d1a444",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule zeroaccess_js4\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"ZeroAccess Exploit Kit Detection\"\n\t\thash0 = \"268ae96254e423e9d670ebe172d1a444\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \").join(\"\n\t\t$string1 = \"JSON.stringify:function(o){if(o\"\n\t\t$string2 = \"){try{var a\"\n\t\t$string3 = \");return $.jqotecache[i]\"\n\t\t$string4 = \"o.getUTCFullYear(),hours\"\n\t\t$string5 = \"seconds\"\n\t\t$string6 = \"')');};$.secureEvalJSON\"\n\t\t$string7 = \"isFinite(n);},secondsToTime:function(sec_numb){sec_numb\"\n\t\t$string8 = \"')');}else{throw new SyntaxError('Error parsing JSON, source is not valid.');}};$.quoteString\"\n\t\t$string9 = \"o[name];var ret\"\n\t\t$string10 = \"a[m].substr(2)\"\n\t\t$string11 = \");if(d){return true;}}}catch(e){return false;}}\"\n\t\t$string12 = \"a.length;m<k;m\"\n\t\t$string13 = \"if(parentClasses.length\"\n\t\t$string14 = \"o.getUTCHours(),minutes\"\n\t\t$string15 = \"$.jqote(e,d,t),$$\"\n\t\t$string16 = \"q.test(x)){e\"\n\t\t$string17 = \"{};HGWidget.creator\"\n\n\tcondition:\n\t\t17 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_css",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "9664a16c65782d56f02789e7d52359cd",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_css\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"9664a16c65782d56f02789e7d52359cd\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string1 = \"background:url('%%?a=img&img=countries.gif')\"\n\t\t$string2 = \"background:url('%%?a=img&img=exploit.gif')\"\n\t\t$string3 = \"background:url('%%?a=img&img=oses.gif')\"\n\t\t$string4 = \"background:url('%%?a=img&img=browsers.gif')\"\n\t\t$string5 = \"background:url('%%?a=img&img=edit.png')\"\n\t\t$string6 = \"background:url('%%?a=img&img=add.png')\"\n\t\t$string7 = \"background:url('%%?a=img&img=accept.png')\"\n\t\t$string8 = \"background:url('%%?a=img&img=del.png')\"\n\t\t$string9 = \"background:url('%%?a=img&img=stat.gif')\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "92e21e491a90e24083449fd906515684",
+                "hash1": "98b302a504a7ad0e3515ab6b96d623f9",
+                "hash2": "a91d885ef4c4a0d16c88b956db9c6f43",
+                "hash3": "d8336f7ae9b3a4db69317aea105f49be",
+                "hash4": "eba5daf0442dff5b249274c99552177b",
+                "hash5": "02d8e6daef5a4723621c25cfb766a23d",
+                "hash6": "dadf69ce2124283a59107708ffa9c900",
+                "hash7": "467199178ac940ca311896c7d116954f",
+                "hash8": "17ab5b85f2e1f2b5da436555ea94f859",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"92e21e491a90e24083449fd906515684\"\n\t\thash1 = \"98b302a504a7ad0e3515ab6b96d623f9\"\n\t\thash2 = \"a91d885ef4c4a0d16c88b956db9c6f43\"\n\t\thash3 = \"d8336f7ae9b3a4db69317aea105f49be\"\n\t\thash4 = \"eba5daf0442dff5b249274c99552177b\"\n\t\thash5 = \"02d8e6daef5a4723621c25cfb766a23d\"\n\t\thash6 = \"dadf69ce2124283a59107708ffa9c900\"\n\t\thash7 = \"467199178ac940ca311896c7d116954f\"\n\t\thash8 = \"17ab5b85f2e1f2b5da436555ea94f859\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \">links/</a></td><td align\"\n\t\t$string1 = \">684K</td><td>\"\n\t\t$string2 = \"> 36K</td><td>\"\n\t\t$string3 = \"move_logs.php\"\n\t\t$string4 = \"files/\"\n\t\t$string5 = \"cron_updatetor.php\"\n\t\t$string6 = \">12-Sep-2012 23:45  </td><td align\"\n\t\t$string7 = \">  - </td><td>\"\n\t\t$string8 = \"cron_check.php\"\n\t\t$string9 = \"-//W3C//DTD HTML 3.2 Final//EN\"\n\t\t$string10 = \"bhadmin.php\"\n\t\t$string11 = \">21-Sep-2012 15:25  </td><td align\"\n\t\t$string12 = \">data/</a></td><td align\"\n\t\t$string13 = \">3.3K</td><td>\"\n\t\t$string14 = \"cron_update.php\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm10",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "83704d531c9826727016fec285675eb1",
+                "hash1": "103ef0314607d28b3c54cd07e954cb25",
+                "hash2": "16c002dc45976caae259d7cabc95b2c3",
+                "hash3": "fd84d695ac3f2ebfb98d3255b3a4e1de",
+                "hash4": "c7b417a4d650c72efebc2c45eefbac2a",
+                "hash5": "c3c35e465e316a71abccca296ff6cd22",
+                "hash7": "10ce7956266bfd98fe310d7568bfc9d0",
+                "hash8": "60024caf40f4239d7e796916fb52dc8c",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm10\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"83704d531c9826727016fec285675eb1\"\n\t\thash1 = \"103ef0314607d28b3c54cd07e954cb25\"\n\t\thash2 = \"16c002dc45976caae259d7cabc95b2c3\"\n\t\thash3 = \"fd84d695ac3f2ebfb98d3255b3a4e1de\"\n\t\thash4 = \"c7b417a4d650c72efebc2c45eefbac2a\"\n\t\thash5 = \"c3c35e465e316a71abccca296ff6cd22\"\n\t\thash2 = \"16c002dc45976caae259d7cabc95b2c3\"\n\t\thash7 = \"10ce7956266bfd98fe310d7568bfc9d0\"\n\t\thash8 = \"60024caf40f4239d7e796916fb52dc8c\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"</body></html>\"\n\t\t$string1 = \"/icons/back.gif\"\n\t\t$string2 = \">373K</td><td>\"\n\t\t$string3 = \"/icons/unknown.gif\"\n\t\t$string4 = \">Last modified</a></th><th><a href\"\n\t\t$string5 = \"tmp.gz\"\n\t\t$string6 = \">tmp.gz</a></td><td align\"\n\t\t$string7 = \"nbsp;</td><td align\"\n\t\t$string8 = \"</table>\"\n\t\t$string9 = \">  - </td><td>\"\n\t\t$string10 = \">filefdc7aaf4a3</a></td><td align\"\n\t\t$string11 = \">19-Sep-2012 07:06  </td><td align\"\n\t\t$string12 = \"><img src\"\n\t\t$string13 = \"file3fa7bdd7dc\"\n\t\t$string14 = \"  <title>Index of /files</title>\"\n\t\t$string15 = \"0da49e042d\"\n\n\tcondition:\n\t\t15 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm11",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "e89b56df597688c489f06a0a6dd9efed",
+                "hash1": "06ba331ac5ae3cd1986c82cb1098029e",
+                "hash2": "a899dedb50ad81d9dbba660747828c7b",
+                "hash3": "7cbb58412554327fe8b643204a046e2b",
+                "hash7": "530d31a0c45b79c1ee0c5c678e242c02",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm11\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"e89b56df597688c489f06a0a6dd9efed\"\n\t\thash1 = \"06ba331ac5ae3cd1986c82cb1098029e\"\n\t\thash2 = \"a899dedb50ad81d9dbba660747828c7b\"\n\t\thash3 = \"7cbb58412554327fe8b643204a046e2b\"\n\t\thash2 = \"a899dedb50ad81d9dbba660747828c7b\"\n\t\thash0 = \"e89b56df597688c489f06a0a6dd9efed\"\n\t\thash2 = \"a899dedb50ad81d9dbba660747828c7b\"\n\t\thash7 = \"530d31a0c45b79c1ee0c5c678e242c02\"\n\t\thash2 = \"a899dedb50ad81d9dbba660747828c7b\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"></th><th><a href\"\n\t\t$string1 = \"/icons/back.gif\"\n\t\t$string2 = \">Description</a></th></tr><tr><th colspan\"\n\t\t$string3 = \"nbsp;</td><td align\"\n\t\t$string4 = \"nbsp;</td></tr>\"\n\t\t$string5 = \">  - </td><td>\"\n\t\t$string6 = \"-//W3C//DTD HTML 3.2 Final//EN\"\n\t\t$string7 = \"<h1>Index of /dummy</h1>\"\n\t\t$string8 = \">Size</a></th><th><a href\"\n\t\t$string9 = \" </head>\"\n\t\t$string10 = \"/icons/blank.gif\"\n\t\t$string11 = \"><hr></th></tr>\"\n\n\tcondition:\n\t\t11 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm12",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "0d3acb5285cfe071e30be051d2aaf28a",
+                "hash1": "6f27377115ba5fd59f007d2cb3f50b35",
+                "hash2": "f7ffe1fd1a57d337a04d3c777cddc065",
+                "hash3": "06997228f2769859ef5e4cd8a454d650",
+                "hash4": "11062eea9b7f2a2675c1e60047e8735c",
+                "hash7": "4ec720cfafabd1c9b1034bb82d368a30",
+                "hash8": "ecd7d11dc9bb6ee842e2a2dce56edc6f",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm12\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"0d3acb5285cfe071e30be051d2aaf28a\"\n\t\thash1 = \"6f27377115ba5fd59f007d2cb3f50b35\"\n\t\thash2 = \"f7ffe1fd1a57d337a04d3c777cddc065\"\n\t\thash3 = \"06997228f2769859ef5e4cd8a454d650\"\n\t\thash4 = \"11062eea9b7f2a2675c1e60047e8735c\"\n\t\thash0 = \"0d3acb5285cfe071e30be051d2aaf28a\"\n\t\thash2 = \"f7ffe1fd1a57d337a04d3c777cddc065\"\n\t\thash7 = \"4ec720cfafabd1c9b1034bb82d368a30\"\n\t\thash8 = \"ecd7d11dc9bb6ee842e2a2dce56edc6f\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"  <title>Index of /data</title>\"\n\t\t$string1 = \"<tr><th colspan\"\n\t\t$string2 = \"</body></html>\"\n\t\t$string3 = \"> 20K</td><td>\"\n\t\t$string4 = \"/icons/layout.gif\"\n\t\t$string5 = \" <body>\"\n\t\t$string6 = \">Name</a></th><th><a href\"\n\t\t$string7 = \"spn.jar\"\n\t\t$string8 = \"spn2.jar\"\n\t\t$string9 = \" <head>\"\n\t\t$string10 = \"-//W3C//DTD HTML 3.2 Final//EN\"\n\t\t$string11 = \"> 10K</td><td>\"\n\t\t$string12 = \">7.9K</td><td>\"\n\t\t$string13 = \">Size</a></th><th><a href\"\n\t\t$string14 = \"><hr></th></tr>\"\n\n\tcondition:\n\t\t14 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "018ef031bc68484587eafeefa66c7082",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"018ef031bc68484587eafeefa66c7082\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"/download.php\"\n\t\t$string1 = \"./files/fdc7aaf4a3 md5 is 3169969e91f5fe5446909bbab6e14d5d\"\n\t\t$string2 = \"321e774d81b2c3ae\"\n\t\t$string3 = \"/files/new00010/554-0002.exe md5 is 8a497cf4ffa8a173a7ac75f0de1f8d8b\"\n\t\t$string4 = \"./files/3fa7bdd7dc md5 is 8a497cf4ffa8a173a7ac75f0de1f8d8b\"\n\t\t$string5 = \"1603256636530120915 md5 is 425ebdfcf03045917d90878d264773d2\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm4",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "926429bf5fe1fbd531eb100fc6e53524",
+                "hash1": "7b6cdc67077fc3ca75a54dea0833afe3",
+                "hash2": "82f108d4e6f997f8fc4cc02aad02629a",
+                "hash3": "bd819c3714dffb5d4988d2f19d571918",
+                "hash4": "9bc9f925f60bd8a7b632ae3a6147cb9e",
+                "hash7": "386cb76d46b281778c8c54ac001d72dc",
+                "hash8": "0d95c666ea5d5c28fca5381bd54304b3",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm4\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"926429bf5fe1fbd531eb100fc6e53524\"\n\t\thash1 = \"7b6cdc67077fc3ca75a54dea0833afe3\"\n\t\thash2 = \"82f108d4e6f997f8fc4cc02aad02629a\"\n\t\thash3 = \"bd819c3714dffb5d4988d2f19d571918\"\n\t\thash4 = \"9bc9f925f60bd8a7b632ae3a6147cb9e\"\n\t\thash0 = \"926429bf5fe1fbd531eb100fc6e53524\"\n\t\thash2 = \"82f108d4e6f997f8fc4cc02aad02629a\"\n\t\thash7 = \"386cb76d46b281778c8c54ac001d72dc\"\n\t\thash8 = \"0d95c666ea5d5c28fca5381bd54304b3\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"words.dat\"\n\t\t$string1 = \"/icons/back.gif\"\n\t\t$string2 = \"data.dat\"\n\t\t$string3 = \"files.php\"\n\t\t$string4 = \"js.php\"\n\t\t$string5 = \"template.php\"\n\t\t$string6 = \"kcaptcha\"\n\t\t$string7 = \"/icons/blank.gif\"\n\t\t$string8 = \"java.dat\"\n\n\tcondition:\n\t\t8 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm5",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "fccb8f71663620a5a8b53dcfb396cfb5",
+                "hash1": "a09bcf1a1bdabe4e6e7e52e7f8898012",
+                "hash2": "40db66bf212dd953a169752ba9349c6a",
+                "hash3": "25a87e6da4baa57a9d6a2cdcb2d43249",
+                "hash4": "6f4c64a1293c03c9f881a4ef4e1491b3",
+                "hash7": "4bdfff8de0bb5ea2d623333a4a82c7f9",
+                "hash8": "b43b6a1897c2956c2a0c9407b74c4232",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm5\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"fccb8f71663620a5a8b53dcfb396cfb5\"\n\t\thash1 = \"a09bcf1a1bdabe4e6e7e52e7f8898012\"\n\t\thash2 = \"40db66bf212dd953a169752ba9349c6a\"\n\t\thash3 = \"25a87e6da4baa57a9d6a2cdcb2d43249\"\n\t\thash4 = \"6f4c64a1293c03c9f881a4ef4e1491b3\"\n\t\thash0 = \"fccb8f71663620a5a8b53dcfb396cfb5\"\n\t\thash2 = \"40db66bf212dd953a169752ba9349c6a\"\n\t\thash7 = \"4bdfff8de0bb5ea2d623333a4a82c7f9\"\n\t\thash8 = \"b43b6a1897c2956c2a0c9407b74c4232\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"ruleEdit.php\"\n\t\t$string1 = \"domains.php\"\n\t\t$string2 = \"menu.php\"\n\t\t$string3 = \"browsers_stat.php\"\n\t\t$string4 = \"Index of /library/templates\"\n\t\t$string5 = \"/icons/unknown.gif\"\n\t\t$string6 = \"browsers_bstat.php\"\n\t\t$string7 = \"oses_stat.php\"\n\t\t$string8 = \"exploits_bstat.php\"\n\t\t$string9 = \"block_config.php\"\n\t\t$string10 = \"threads_bstat.php\"\n\t\t$string11 = \"browsers_bstat.php\"\n\t\t$string12 = \"settings.php\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm6",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "a5f94d7bdeb88b57be67132473e48286",
+                "hash1": "2e72a317d07aa1603f8d138787a2c582",
+                "hash2": "9440d49e1ed0794c90547758ef6023f7",
+                "hash3": "58265fc893ed5a001e3a7c925441298c",
+                "hash7": "95c6462d0f21181c5003e2a74c8d3529",
+                "hash8": "9236e7f96207253b4684f3497bcd2b3d",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm6\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"a5f94d7bdeb88b57be67132473e48286\"\n\t\thash1 = \"2e72a317d07aa1603f8d138787a2c582\"\n\t\thash2 = \"9440d49e1ed0794c90547758ef6023f7\"\n\t\thash3 = \"58265fc893ed5a001e3a7c925441298c\"\n\t\thash2 = \"9440d49e1ed0794c90547758ef6023f7\"\n\t\thash0 = \"a5f94d7bdeb88b57be67132473e48286\"\n\t\thash2 = \"9440d49e1ed0794c90547758ef6023f7\"\n\t\thash7 = \"95c6462d0f21181c5003e2a74c8d3529\"\n\t\thash8 = \"9236e7f96207253b4684f3497bcd2b3d\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"uniq1.png\"\n\t\t$string1 = \"edit.png\"\n\t\t$string2 = \"left.gif\"\n\t\t$string3 = \"infin.png\"\n\t\t$string4 = \"outdent.gif\"\n\t\t$string5 = \"exploit.gif\"\n\t\t$string6 = \"sem_g.png\"\n\t\t$string7 = \"Index of /library/templates/img\"\n\t\t$string8 = \"uniq1.png\"\n\n\tcondition:\n\t\t8 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_htm8",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "3f47452c1e40f68160beff4bb2a3e5f4",
+                "hash1": "1e2ba0176787088e3580dfce0245bc16",
+                "hash2": "1c78d96bb8d8f8a71294bc1e6d374b0f",
+                "hash3": "f5e16a6cd2c2ac71289aaf1c087224ee",
+                "hash7": "6702efdee17e0cd6c29349978961d9fa",
+                "hash8": "287dca9469c8f7f0cb6e5bdd9e2055cd",
+                "sample_filetype": "js-html",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_htm8\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"3f47452c1e40f68160beff4bb2a3e5f4\"\n\t\thash1 = \"1e2ba0176787088e3580dfce0245bc16\"\n\t\thash2 = \"1c78d96bb8d8f8a71294bc1e6d374b0f\"\n\t\thash3 = \"f5e16a6cd2c2ac71289aaf1c087224ee\"\n\t\thash2 = \"1c78d96bb8d8f8a71294bc1e6d374b0f\"\n\t\thash0 = \"3f47452c1e40f68160beff4bb2a3e5f4\"\n\t\thash2 = \"1c78d96bb8d8f8a71294bc1e6d374b0f\"\n\t\thash7 = \"6702efdee17e0cd6c29349978961d9fa\"\n\t\thash8 = \"287dca9469c8f7f0cb6e5bdd9e2055cd\"\n\t\tsample_filetype = \"js-html\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \">Description</a></th></tr><tr><th colspan\"\n\t\t$string1 = \">Name</a></th><th><a href\"\n\t\t$string2 = \"main.js\"\n\t\t$string3 = \"datepicker.js\"\n\t\t$string4 = \"form.js\"\n\t\t$string5 = \"<address>Apache/2.2.15 (CentOS) Server at online-moo-viii.net Port 80</address>\"\n\t\t$string6 = \"wysiwyg.js\"\n\n\tcondition:\n\t\t6 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_jar",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "86946ec2d2031f2b456e804cac4ade6d",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_jar\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"86946ec2d2031f2b456e804cac4ade6d\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"k0/3;N\"\n\t\t$string1 = \"g:WlY0\"\n\t\t$string2 = \"(ww6Ou\"\n\t\t$string3 = \"SOUGX[\"\n\t\t$string4 = \"7X2ANb\"\n\t\t$string5 = \"r8L<;zYH)\"\n\t\t$string6 = \"fbeatbea/fbeatbee.classPK\"\n\t\t$string7 = \"fbeatbea/fbeatbec.class\"\n\t\t$string8 = \"fbeatbea/fbeatbef.class\"\n\t\t$string9 = \"fbeatbea/fbeatbef.classPK\"\n\t\t$string10 = \"fbeatbea/fbeatbea.class\"\n\t\t$string11 = \"fbeatbea/fbeatbeb.classPK\"\n\t\t$string12 = \"nOJh-2\"\n\t\t$string13 = \"[af:Fr\"\n\n\tcondition:\n\t\t13 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_jar2",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "add1d01ba06d08818ff6880de2ee74e8",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_jar2\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"add1d01ba06d08818ff6880de2ee74e8\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"6_O6d09\"\n\t\t$string1 = \"juqirvs.classPK\"\n\t\t$string2 = \"hw.classPK\"\n\t\t$string3 = \"a.classPK\"\n\t\t$string4 = \"w.classuS]w\"\n\t\t$string5 = \"w.classPK\"\n\t\t$string6 = \"YE}0vCZ\"\n\t\t$string7 = \"v)Q,Ff\"\n\t\t$string8 = \"%8H%t(\"\n\t\t$string9 = \"hw.class\"\n\t\t$string10 = \"a.classmV\"\n\t\t$string11 = \"2CniYFU\"\n\t\t$string12 = \"juqirvs.class\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_jar3",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "c7abd2142f121bd64e55f145d4b860fa",
+                "sample_filetype": "unknown",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_jar3\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"c7abd2142f121bd64e55f145d4b860fa\"\n\t\tsample_filetype = \"unknown\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"69/sj]]o\"\n\t\t$string1 = \"GJk5Nd\"\n\t\t$string2 = \"vcs.classu\"\n\t\t$string3 = \"T<EssB\"\n\t\t$string4 = \"1vmQmQ\"\n\t\t$string5 = \"Kf1Ewr\"\n\t\t$string6 = \"c$WuuuKKu5\"\n\t\t$string7 = \"m.classPK\"\n\t\t$string8 = \"chcyih.classPK\"\n\t\t$string9 = \"hw.class\"\n\t\t$string10 = \"f';;;;{\"\n\t\t$string11 = \"vcs.classPK\"\n\t\t$string12 = \"Vbhf_6\"\n\n\tcondition:\n\t\t12 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "blackhole2_pdf",
+                "tags": [],
+                "author": "Josh Berry",
+                "date": "2016-06-27",
+                "description": "BlackHole2 Exploit Kit Detection",
+                "hash0": "d1e2ff36a6c882b289d3b736d915a6cc",
+                "sample_filetype": "pdf",
+                "yaragenerator": "https://github.com/Xen0ph0n/YaraGenerator"
+            },
+            "rule_text": "rule blackhole2_pdf\n{\n\tmeta:\n\t\tauthor = \"Josh Berry\"\n\t\tdate = \"2016-06-27\"\n\t\tdescription = \"BlackHole2 Exploit Kit Detection\"\n\t\thash0 = \"d1e2ff36a6c882b289d3b736d915a6cc\"\n\t\tsample_filetype = \"pdf\"\n\t\tyaragenerator = \"https://github.com/Xen0ph0n/YaraGenerator\"\n\n\tstrings:\n\t\t$string0 = \"/StructTreeRoot 5 0 R/Type/Catalog>>\"\n\t\t$string1 = \"0000036095 00000 n\"\n\t\t$string2 = \"http://www.xfa.org/schema/xfa-locale-set/2.1/\"\n\t\t$string3 = \"subform[0].ImageField1[0])/Subtype/Widget/TU(Image Field)/Parent 22 0 R/F 4/P 8 0 R/T<FEFF0049006D00\"\n\t\t$string4 = \"0000000026 65535 f\"\n\t\t$string5 = \"0000029039 00000 n\"\n\t\t$string6 = \"0000029693 00000 n\"\n\t\t$string7 = \"%PDF-1.6\"\n\t\t$string8 = \"27 0 obj<</Subtype/Type0/DescendantFonts 28 0 R/BaseFont/KLGNYZ\"\n\t\t$string9 = \"0000034423 00000 n\"\n\t\t$string10 = \"0000000010 65535 f\"\n\t\t$string11 = \">stream\"\n\t\t$string12 = \"/Pages 2 0 R%/StructTreeRoot 5 0 R/Type/Catalog>>\"\n\t\t$string13 = \"19 0 obj<</Subtype/Type1C/Length 23094/Filter/FlateDecode>>stream\"\n\t\t$string14 = \"0000003653 00000 n\"\n\t\t$string15 = \"0000000023 65535 f\"\n\t\t$string16 = \"0000028250 00000 n\"\n\t\t$string17 = \"iceRGB>>>>/XStep 9.0/Type/Pattern/TilingType 2/YStep 9.0/BBox[0 0 9 9]>>stream\"\n\t\t$string18 = \"<</Root 1 0 R>>\"\n\n\tcondition:\n\t\t18 of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_find_kernel32_base_method_1",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_find_kernel32_base_method_1 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a1 = {64 8B (05|0D|15|1D|25|2D|35|3D) 30 00 00 00}\n\t\t$a2 = {64 A1 30 00 00 00}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_find_kernel32_base_method_2",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_find_kernel32_base_method_2 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {31 ?? ?? 30 64 8B ??}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #a ) : ( ( uint8( @a [ i ] + 1 ) >= 0xC0 ) and ( ( ( uint8( @a [ i ] + 1 ) & 0x38 ) >> 3 ) == ( uint8( @a [ i ] + 1 ) & 0x07 ) ) and ( ( uint8( @a [ i ] + 2 ) & 0xF8 ) == 0xA0 ) and ( uint8( @a [ i ] + 6 ) <= 0x3F ) and ( ( ( uint8( @a [ i ] + 6 ) & 0x38 ) >> 3 ) != ( uint8( @a [ i ] + 6 ) & 0x07 ) ) )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_find_kernel32_base_method_3",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_find_kernel32_base_method_3 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {68 30 00 00 00 (58|59|5A|5B|5C|5D|5E|5F) 64 8B ??}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #a ) : ( ( ( uint8( @a [ i ] + 5 ) & 0x07 ) == ( uint8( @a [ i ] + 8 ) & 0x07 ) ) and ( uint8( @a [ i ] + 8 ) <= 0x3F ) and ( ( ( uint8( @a [ i ] + 8 ) & 0x38 ) >> 3 ) != ( uint8( @a [ i ] + 8 ) & 0x07 ) ) )\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "mwi_document",
+                "tags": [
+                    "exploitdoc",
+                    "maldoc"
+                ],
+                "description": "MWI generated document",
+                "author": "@Ydklijnsma",
+                "source": "http://blog.0x3a.com/post/117760824504/analysis-of-a-microsoft-word-intruder-sample"
+            },
+            "rule_text": "rule mwi_document : exploitdoc maldoc\n{\n\tmeta:\n\t\tdescription = \"MWI generated document\"\n\t\tauthor = \"@Ydklijnsma\"\n\t\tsource = \"http://blog.0x3a.com/post/117760824504/analysis-of-a-microsoft-word-intruder-sample\"\n\n\tstrings:\n\t\t$field_creation_tag = \"{\\\\field{\\\\*\\\\fldinst { INCLUDEPICTURE\"\n\t\t$mwistat_url = \".php?id=\"\n\t\t$field_closing_tag = \"\\\\\\\\* MERGEFORMAT \\\\\\\\d}}{\\\\fldrslt}}\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2010-1297",
+                "CVE-2013-0074",
+                "CVE-2013-0422"
+            ]
+        }
+    ]
+}

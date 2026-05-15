@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_mimikatz_command_line.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, oscd.community, David ANDRE (additional keywords), Tim Shelton",
+                "date": "2019-10-22",
+                "title": "HackTool - Mimikatz Execution",
+                "id": "a642964e-bead-4bed-8910-1bb4d63e3b4d"
+            },
+            "rule_text": "title: HackTool - Mimikatz Execution\nid: a642964e-bead-4bed-8910-1bb4d63e3b4d\nstatus: test\ndescription: Detection well-known mimikatz command line arguments\nreferences:\n- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment\n- https://tools.thehacker.recipes/mimikatz/modules\nauthor: Teymur Kheirkhabarov, oscd.community, David ANDRE (additional keywords), Tim\n  Shelton\ndate: 2019-10-22\nmodified: 2023-02-21\ntags:\n- attack.credential-access\n- attack.t1003.001\n- attack.t1003.002\n- attack.t1003.004\n- attack.t1003.005\n- attack.t1003.006\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_tools_name:\n    CommandLine|contains:\n    - DumpCreds\n    - mimikatz\n  selection_function_names:\n    CommandLine|contains:\n    - ::aadcookie\n    - ::detours\n    - ::memssp\n    - ::mflt\n    - ::ncroutemon\n    - ::ngcsign\n    - ::printnightmare\n    - ::skeleton\n    - ::preshutdown\n    - ::mstsc\n    - ::multirdp\n  selection_module_names:\n    CommandLine|contains:\n    - 'rpc::'\n    - 'token::'\n    - 'crypto::'\n    - 'dpapi::'\n    - 'sekurlsa::'\n    - 'kerberos::'\n    - 'lsadump::'\n    - 'privilege::'\n    - 'process::'\n    - 'vault::'\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_xwizard_execution_non_default_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-09-20",
+                "title": "Xwizard.EXE Execution From Non-Default Location",
+                "id": "193d5ccd-6f59-40c6-b5b0-8e32d5ddd3d1"
+            },
+            "rule_text": "title: Xwizard.EXE Execution From Non-Default Location\nid: 193d5ccd-6f59-40c6-b5b0-8e32d5ddd3d1\nstatus: test\ndescription: 'Detects the execution of Xwizard tool from a non-default directory.\n\n  When executed from a non-default directory, this utility can be abused in order\n  to side load a custom version of \"xwizards.dll\".\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Xwizard/\n- http://www.hexacorn.com/blog/2017/07/31/the-wizard-of-x-oppa-plugx-style/\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-09-20\nmodified: 2024-08-15\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\xwizard.exe\n  - OriginalFileName: xwizard.exe\n  filter_main_legit_location:\n    Image|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Windows installed on non-C drive\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

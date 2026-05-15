@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_classic/posh_pc_delete_volume_shadow_copies.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "frack113",
+                "date": "2021-06-03",
+                "title": "Delete Volume Shadow Copies Via WMI With PowerShell",
+                "id": "87df9ee1-5416-453a-8a08-e8d4a51e9ce1"
+            },
+            "rule_text": "title: Delete Volume Shadow Copies Via WMI With PowerShell\nid: 87df9ee1-5416-453a-8a08-e8d4a51e9ce1\nstatus: stable\ndescription: Shadow Copies deletion using operating systems utilities via PowerShell\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md\n- https://www.fortinet.com/blog/threat-research/stomping-shadow-copies-a-second-look-into-deletion-methods\nauthor: frack113\ndate: 2021-06-03\nmodified: 2023-10-27\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  product: windows\n  category: ps_classic_start\ndetection:\n  selection:\n    Data|contains|all:\n    - Get-WmiObject\n    - Win32_ShadowCopy\n    Data|contains:\n    - Delete()\n    - Remove-WmiObject\n  condition: selection\nfalsepositives:\n- Legitimate Administrator deletes Shadow Copies using operating systems utilities\n  for legitimate reason\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

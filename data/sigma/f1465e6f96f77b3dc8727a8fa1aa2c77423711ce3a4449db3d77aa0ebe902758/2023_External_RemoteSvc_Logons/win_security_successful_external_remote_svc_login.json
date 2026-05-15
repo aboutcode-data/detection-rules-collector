@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_External_RemoteSvc_Logons/win_security_successful_external_remote_svc_login.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, @micahbabinski",
+                "date": "2023/01/19",
+                "title": "External Remote Service Logon from Public IP",
+                "id": "259a9cdf-c4dd-4fa2-b243-2269e5ab18a2"
+            },
+            "rule_text": "title: External Remote Service Logon from Public IP\nid: 259a9cdf-c4dd-4fa2-b243-2269e5ab18a2\nstatus: experimental\ndescription: Detects successful logon from public IP address via RDP, SMB, etc. This\n  can indicate a publicly-exposed RDP or SMB port.\nreferences:\n- https://www.inversecos.com/2020/04/successful-4624-anonymous-logons-to.html\n- https://twitter.com/Purp1eW0lf/status/1616144561965002752\nauthor: Micah Babinski, @micahbabinski\ndate: 2023/01/19\ntags:\n- attack.initial_access\n- attack.credential_access\n- attack.t1133\n- attack.t1078\n- attack.t1110\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    LogonType:\n    - 3\n    - 10\n  filter_username:\n    SubjectUserName: '-'\n  filter_src_ip:\n  - IpAddress|cidr: 10.0.0.0/8\n  - IpAddress|cidr: 172.16.0.0/12\n  - IpAddress|cidr: 192.168.0.0/16\n  - IpAddress|cidr: 224.0.0.0/4\n  - IpAddress|cidr: 127.0.0.0/8\n  condition: selection and not filter_username and not filter_src_ip\nfalsepositives:\n- Legitimate or intentional inbound connections from public IP addresses on RDP or\n  SMB ports.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

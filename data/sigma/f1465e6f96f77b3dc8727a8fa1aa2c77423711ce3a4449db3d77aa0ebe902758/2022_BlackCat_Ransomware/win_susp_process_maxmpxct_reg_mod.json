@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_BlackCat_Ransomware/win_susp_process_maxmpxct_reg_mod.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/04",
+                "title": "Suspicious Registry Modification of MaxMpxCt Parameters",
+                "id": "9fc5784b-50ab-4f0e-8044-5e15990d48a1"
+            },
+            "rule_text": "title: Suspicious Registry Modification of MaxMpxCt Parameters\nid: 9fc5784b-50ab-4f0e-8044-5e15990d48a1\nstatus: experimental\ndescription: Detects registry modifications to change MaxMpxCt settings. BlackCat\n  does this to increase the number of outstanding requests allowed, such as SMB requests\n  to distribute ransomware through an environment.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/06/13/the-many-lives-of-blackcat-ransomware/\nauthor: Micah Babinski\ndate: 2022/12/04\ntags:\n- attack.command_and_control\n- attack.defense_evasion\n- attack.t1105\n- attack.t1562\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - LanmanServer\n    - parameters\n    - MaxMpxCt\n    - '65535'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

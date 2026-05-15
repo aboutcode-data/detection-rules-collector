@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Redline/Trojan_Win32_Redline_GFP_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Redline_GFP_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Redline.GFP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Redline_GFP_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Redline.GFP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b c6 83 e0 03 8a 80 ?? ?? ?? ?? 32 04 37 88 45 d3 ba ?? ?? ?? ?? b9 ?? ?? ?? ?? e8 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? 59 0f b6 1c 37 }\n\t\t$a_03_1 = {8b c6 83 e0 03 8a 80 ?? ?? ?? ?? 32 04 33 88 45 d3 ba ?? ?? ?? ?? b9 ?? ?? ?? ?? e8 ?? ?? ?? ?? 51 8b c8 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

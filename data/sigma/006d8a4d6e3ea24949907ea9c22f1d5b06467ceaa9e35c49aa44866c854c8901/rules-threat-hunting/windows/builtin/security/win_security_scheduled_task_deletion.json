@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/builtin/security/win_security_scheduled_task_deletion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "David Strassegger, Tim Shelton",
+                "date": "2021-01-22",
+                "title": "Scheduled Task Deletion",
+                "id": "4f86b304-3e02-40e3-aa5d-e88a167c9617"
+            },
+            "rule_text": "title: Scheduled Task Deletion\nid: 4f86b304-3e02-40e3-aa5d-e88a167c9617\nstatus: test\ndescription: Detects scheduled task deletion events. Scheduled tasks are likely to\n  be deleted if not used for persistence. Malicious Software often creates tasks directly\n  under the root node e.g. \\TASKNAME\nreferences:\n- https://twitter.com/matthewdunwoody/status/1352356685982146562\n- https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4699\nauthor: David Strassegger, Tim Shelton\ndate: 2021-01-22\nmodified: 2023-01-20\ntags:\n- attack.execution\n- attack.privilege-escalation\n- attack.persistence\n- car.2013-08-001\n- attack.t1053.005\n- detection.threat-hunting\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: The Advanced Audit Policy setting Object Access > Audit\n    Other Object Access Events has to be configured to allow this detection. We also\n    recommend extracting the Command field from the embedded XML in the event data.'\ndetection:\n  selection:\n    EventID: 4699\n  filter_main_generic:\n    TaskName: \\Microsoft\\Windows\\RemovalTools\\MRT_ERROR_HB\n  filter_main_firefox:\n    TaskName|contains: '\\Mozilla\\Firefox Default Browser Agent '\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Software installation\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

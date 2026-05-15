@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_susp_runmru_space_character.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-04",
+                "title": "Suspicious Space Characters in RunMRU Registry Path - ClickFix",
+                "id": "7a1b4c5e-8f3d-4b9a-7c2e-1f4a5b8c6d9e"
+            },
+            "rule_text": "title: Suspicious Space Characters in RunMRU Registry Path - ClickFix\nid: 7a1b4c5e-8f3d-4b9a-7c2e-1f4a5b8c6d9e\nrelated:\n- id: 3ae9974a-eb09-4044-8e70-8980a50c12c8\n  type: similar\nstatus: experimental\ndescription: 'Detects the occurrence of numerous space characters in RunMRU registry\n  paths, which may indicate execution via phishing lures using clickfix techniques\n  to hide malicious commands in the Windows Run dialog box from naked eyes.\n\n  '\nreferences:\n- https://expel.com/blog/cache-smuggling-when-a-picture-isnt-a-thousand-words/\n- https://github.com/JohnHammond/recaptcha-phish\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-04\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1204.004\n- attack.t1027.010\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_key:\n    TargetObject|contains: \\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU\\\n    Details|contains: '#'\n  selection_space_variation:\n    Details|contains:\n    - \"\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\\u2000\"\n    - \"\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\\u2001\"\n    - \"\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\\u2002\"\n    - \"\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\\u2003\"\n    - \"\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\\u2004\"\n    - \"\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\\u2005\"\n    - \"\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\\u2006\"\n    - \"\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\\u2007\"\n    - \"\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\\u2008\"\n    - \"\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\\u2009\"\n    - \"\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\\u200A\"\n    - \"\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\"\n    - '            '\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

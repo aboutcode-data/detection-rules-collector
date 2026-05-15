@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/malc0de/gdocupload_apt1.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "gdocupload",
+                "tags": [
+                    "apt"
+                ]
+            },
+            "rule_text": "rule gdocupload : apt\n{\n\tstrings:\n\t\t$a = \"CONOUT$\"\n\t\t$b = \"length=%d,time=%fsec,speed=%fk\"\n\t\t$c = \"%s%s%s\"\n\t\t$d = \"http://docs.google.com/?auth=\"\n\t\t$e = \"x-fpp-command: 0\"\n\n\tcondition:\n\t\tfilesize < 300KB and ( 5 of ( $a , $b , $c , $d , $e ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

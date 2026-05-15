@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Vundo/Trojan_Win32_Vundo_PD.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Vundo_PD",
+                "tags": [],
+                "description": "Trojan:Win32/Vundo.PD,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Vundo_PD\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Vundo.PD,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {0f b6 00 2d 8b 00 00 00 85 c0 74 18 }\n\t\t$a_03_1 = {0f b6 40 01 8b 0d ?? ?? ?? ?? 0f b6 49 0e 2b c1 85 c0 ?? 0f }\n\t\t$a_03_2 = {33 c1 8b 0d ?? ?? ?? ?? 03 0d ?? ?? ?? ?? 88 01 e9 90 09 15 00 8a 00 a2 ?? ?? ?? ?? 0f b6 05 ?? ?? ?? ?? 0f b6 0d }\n\t\t$a_03_3 = {8a 00 32 05 ?? ?? ?? ?? 8b 0d ?? ?? ?? ?? 03 0d ?? ?? ?? ?? 88 01 a1 ?? ?? ?? ?? 25 f0 01 00 00 }\n\t\t$a_03_4 = {c6 86 08 00 00 00 56 a3 ?? ?? ?? ?? c6 86 09 00 00 00 69 }\n\t\t$a_03_5 = {0f b7 45 10 83 e8 68 0f 84 ?? ?? ?? ?? 48 74 0d }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

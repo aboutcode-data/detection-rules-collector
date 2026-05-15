@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_sc_query.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-06",
+                "title": "SC.EXE Query Execution",
+                "id": "57712d7a-679c-4a41-a913-87e7175ae429"
+            },
+            "rule_text": "title: SC.EXE Query Execution\nid: 57712d7a-679c-4a41-a913-87e7175ae429\nstatus: test\ndescription: Detects execution of \"sc.exe\" to query information about registered services\n  on the system\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1007/T1007.md#atomic-test-1---system-service-discovery\nauthor: frack113\ndate: 2021-12-06\nmodified: 2024-02-08\ntags:\n- attack.discovery\n- attack.t1007\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\sc.exe\n    OriginalFileName: sc.exe\n  selection_cli:\n    CommandLine|contains: ' query'\n  filter_optional_keybase:\n    CommandLine: sc query dokan1\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate query of a service by an administrator to get more information such as\n  the state or PID\n- Keybase process \"kbfsdokan.exe\" query the dokan1 service with the following commandline\n  \"sc query dokan1\"\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

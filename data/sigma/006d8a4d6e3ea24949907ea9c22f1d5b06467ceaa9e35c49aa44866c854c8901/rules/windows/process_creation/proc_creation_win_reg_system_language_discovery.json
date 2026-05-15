@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_system_language_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Marco Pedrinazzi (@pedrinazziM) (InTheCyber)",
+                "date": "2026-01-09",
+                "title": "System Language Discovery via Reg.Exe",
+                "id": "c43a5405-e8e1-4221-9ac9-dbe3fa14e886"
+            },
+            "rule_text": "title: System Language Discovery via Reg.Exe\nid: c43a5405-e8e1-4221-9ac9-dbe3fa14e886\nstatus: experimental\ndescription: 'Detects the usage of Reg.Exe to query system language settings.\n\n  Attackers may discover the system language to determine the geographic location\n  of victims, customize payloads for specific regions,\n\n  or avoid targeting certain locales to evade detection.\n\n  '\nreferences:\n- https://scythe.io/threat-thursday/threatthursday-darkside-ransomware\nauthor: Marco Pedrinazzi (@pedrinazziM) (InTheCyber)\ndate: 2026-01-09\ntags:\n- attack.discovery\n- attack.t1614.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - query\n    - Control\\Nls\\Language\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_reg_system_language_discovery/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Discover System Language by Registry Query\n  technique: T1614.001\n  atomic_guid: 631d4cf1-42c9-4209-8fe9-6bd4de9421be\n",
+            "vulnerabilities": []
+        }
+    ]
+}

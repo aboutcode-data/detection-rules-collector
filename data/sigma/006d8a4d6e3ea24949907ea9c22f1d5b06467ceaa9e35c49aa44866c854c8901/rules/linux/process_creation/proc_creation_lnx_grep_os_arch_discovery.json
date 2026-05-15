@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_grep_os_arch_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-06-02",
+                "title": "OS Architecture Discovery Via Grep",
+                "id": "d27ab432-2199-483f-a297-03633c05bae6"
+            },
+            "rule_text": "title: OS Architecture Discovery Via Grep\nid: d27ab432-2199-483f-a297-03633c05bae6\nstatus: test\ndescription: 'Detects the use of grep to identify information about the operating\n  system architecture. Often combined beforehand with the execution of \"uname\" or\n  \"cat /proc/cpuinfo\"\n\n  '\nreferences:\n- https://blogs.jpcert.or.jp/en/2023/05/gobrat.html\n- https://jstnk9.github.io/jstnk9/research/GobRAT-Malware/\n- https://www.virustotal.com/gui/file/60bcd645450e4c846238cf0e7226dc40c84c96eba99f6b2cffcd0ab4a391c8b3/detection\n- https://www.virustotal.com/gui/file/3e44c807a25a56f4068b5b8186eee5002eed6f26d665a8b791c472ad154585d1/detection\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-06-02\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_process:\n    Image|endswith: /grep\n  selection_architecture:\n    CommandLine|endswith:\n    - aarch64\n    - arm\n    - i386\n    - i686\n    - mips\n    - x86_64\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

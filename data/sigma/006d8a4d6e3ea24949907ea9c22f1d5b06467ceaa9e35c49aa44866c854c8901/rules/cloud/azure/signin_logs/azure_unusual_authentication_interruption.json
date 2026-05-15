@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/signin_logs/azure_unusual_authentication_interruption.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-11-26",
+                "title": "Azure Unusual Authentication Interruption",
+                "id": "8366030e-7216-476b-9927-271d79f13cf3"
+            },
+            "rule_text": "title: Azure Unusual Authentication Interruption\nid: 8366030e-7216-476b-9927-271d79f13cf3\nstatus: test\ndescription: Detects when there is a interruption in the authentication process.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-privileged-accounts\nauthor: Austin Songer @austinsonger\ndate: 2021-11-26\nmodified: 2022-12-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.stealth\n- attack.t1078\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection_50097:\n    ResultType: 50097\n    ResultDescription: Device authentication is required\n  selection_50155:\n    ResultType: 50155\n    ResultDescription: DeviceAuthenticationFailed\n  selection_50158:\n    ResultType: 50158\n    ResultDescription: ExternalSecurityChallenge - External security challenge was\n      not satisfied\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

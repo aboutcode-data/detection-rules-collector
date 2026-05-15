@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_wget_download_suspicious_directory.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-06-02",
+                "title": "Download File To Potentially Suspicious Directory Via Wget",
+                "id": "cf610c15-ed71-46e1-bdf8-2bd1a99de6c4"
+            },
+            "rule_text": "title: Download File To Potentially Suspicious Directory Via Wget\nid: cf610c15-ed71-46e1-bdf8-2bd1a99de6c4\nstatus: test\ndescription: Detects the use of wget to download content to a suspicious directory\nreferences:\n- https://blogs.jpcert.or.jp/en/2023/05/gobrat.html\n- https://jstnk9.github.io/jstnk9/research/GobRAT-Malware/\n- https://www.virustotal.com/gui/file/60bcd645450e4c846238cf0e7226dc40c84c96eba99f6b2cffcd0ab4a391c8b3/detection\n- https://www.virustotal.com/gui/file/3e44c807a25a56f4068b5b8186eee5002eed6f26d665a8b791c472ad154585d1/detection\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-06-02\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /wget\n  selection_output:\n  - CommandLine|re: \\s-O\\s\n  - CommandLine|contains: --output-document\n  selection_path:\n    CommandLine|contains: /tmp/\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

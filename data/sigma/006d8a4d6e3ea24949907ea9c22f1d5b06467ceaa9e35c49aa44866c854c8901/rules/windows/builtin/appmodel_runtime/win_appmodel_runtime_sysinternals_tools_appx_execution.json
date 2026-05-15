@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appmodel_runtime/win_appmodel_runtime_sysinternals_tools_appx_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-16",
+                "title": "Sysinternals Tools AppX Versions Execution",
+                "id": "d29a20b2-be4b-4827-81f2-3d8a59eab5fc"
+            },
+            "rule_text": "title: Sysinternals Tools AppX Versions Execution\nid: d29a20b2-be4b-4827-81f2-3d8a59eab5fc\nstatus: test\ndescription: 'Detects execution of Sysinternals tools via an AppX package.\n\n  Attackers could install the Sysinternals Suite to get access to tools such as psexec\n  and procdump to avoid detection based on System paths.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/microsoft-store\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-16\nmodified: 2023-09-12\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  product: windows\n  service: appmodel-runtime\ndetection:\n  selection:\n    EventID: 201\n    ImageName:\n    - procdump.exe\n    - psloglist.exe\n    - psexec.exe\n    - livekd.exe\n    - ADExplorer.exe\n  condition: selection\nfalsepositives:\n- Legitimate usage of sysinternals applications from the Windows Store will trigger\n  this. Apply exclusions as needed.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

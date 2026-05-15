@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Hupigon/Backdoor_Win32_Hupigon_DD.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Hupigon_DD",
+                "tags": [],
+                "description": "Backdoor:Win32/Hupigon.DD,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Hupigon_DD\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Hupigon.DD,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ba 01 00 00 00 8b 45 f8 8b 08 ff 51 48 8d 55 f8 a1 ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b 45 f8 e8 ?? ?? ?? ?? 33 c0 5a }\n\t\t$a_03_1 = {50 6a 00 e8 ?? ?? ?? ?? 80 7b 50 00 74 23 0f b7 05 ?? ?? ?? ?? 50 6a 00 6a 00 a1 ?? ?? ?? ?? e8 ?? ?? ?? ?? 50 68 ?? ?? ?? ?? 6a 00 e8 ?? ?? ?? ?? 33 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

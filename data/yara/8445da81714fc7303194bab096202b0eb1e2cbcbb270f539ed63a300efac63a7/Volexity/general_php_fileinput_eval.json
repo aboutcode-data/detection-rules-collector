@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/general_php_fileinput_eval.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "general_php_fileinput_eval",
+                "tags": [
+                    "Webshells",
+                    "General"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Look for PHP files which use file_get_contents and then shortly afterwards use an eval statement.",
+                "reference": "https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/",
+                "date": "2021-06-16",
+                "hash1": "1a34c43611ee310c16acc383c10a7b8b41578c19ee85716b14ac5adbf0a13bd5",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "memory_suitable": 0
+            },
+            "rule_text": "rule general_php_fileinput_eval : Webshells General\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Look for PHP files which use file_get_contents and then shortly afterwards use an eval statement.\"\n\t\treference = \"https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/\"\n\t\tdate = \"2021-06-16\"\n\t\thash1 = \"1a34c43611ee310c16acc383c10a7b8b41578c19ee85716b14ac5adbf0a13bd5\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\tmemory_suitable = 0\n\n\tstrings:\n\t\t$s1 = \"file_get_contents(\\\"php://input\\\");\"\n\t\t$s2 = \"eval(\"\n\n\tcondition:\n\t\t$s2 in ( @s1 [ 1 ] .. @s1 [ 1 ] + 512 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

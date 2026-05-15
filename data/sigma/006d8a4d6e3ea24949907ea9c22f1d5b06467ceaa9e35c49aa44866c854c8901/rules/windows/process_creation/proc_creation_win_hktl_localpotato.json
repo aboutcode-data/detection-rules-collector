@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_localpotato.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-14",
+                "title": "HackTool - LocalPotato Execution",
+                "id": "6bd75993-9888-4f91-9404-e1e4e4e34b77"
+            },
+            "rule_text": "title: HackTool - LocalPotato Execution\nid: 6bd75993-9888-4f91-9404-e1e4e4e34b77\nstatus: test\ndescription: Detects the execution of the LocalPotato POC based on basic PE metadata\n  information and default CLI examples\nreferences:\n- https://www.localpotato.com/localpotato_html/LocalPotato.html\n- https://github.com/decoder-it/LocalPotato\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-14\nmodified: 2024-11-23\ntags:\n- attack.privilege-escalation\n- cve.2023-21746\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\LocalPotato.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - .exe -i C:\\\n    - -o Windows\\\n  selection_hash_plain:\n    Hashes|contains:\n    - IMPHASH=E1742EE971D6549E8D4D81115F88F1FC\n    - IMPHASH=DD82066EFBA94D7556EF582F247C8BB5\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

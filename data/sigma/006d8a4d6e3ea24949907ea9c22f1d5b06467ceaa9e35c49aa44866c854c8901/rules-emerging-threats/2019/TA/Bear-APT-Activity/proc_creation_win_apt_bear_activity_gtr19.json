@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2019/TA/Bear-APT-Activity/proc_creation_win_apt_bear_activity_gtr19.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-02-21",
+                "title": "Potential Russian APT Credential Theft Activity",
+                "id": "b83f5166-9237-4b5e-9cd4-7b5d52f4d8ee"
+            },
+            "rule_text": "title: Potential Russian APT Credential Theft Activity\nid: b83f5166-9237-4b5e-9cd4-7b5d52f4d8ee\nstatus: stable\ndescription: Detects Russian group activity as described in Global Threat Report 2019\n  by Crowdstrike\nreferences:\n- https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-02-21\nmodified: 2023-03-08\ntags:\n- attack.credential-access\n- attack.t1552.001\n- attack.t1003.003\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_xcopy:\n    CommandLine|contains|all:\n    - xcopy /S /E /C /Q /H \\\\\\\\\n    - \\sysvol\\\n  selection_adexplorer:\n    CommandLine|contains|all:\n    - adexplorer -snapshot \"\" c:\\users\\\n    - \\downloads\\\n    - .snp\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

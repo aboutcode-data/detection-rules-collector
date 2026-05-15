@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/CeeInject/VirTool_Win32_CeeInject_ACB_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_CeeInject_ACB_bit",
+                "tags": [],
+                "description": "VirTool:Win32/CeeInject.ACB!bit,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_CeeInject_ACB_bit\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/CeeInject.ACB!bit,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 fc 40 89 45 fc 8b 45 fc 3b 45 0c 7d 1a 8b 45 08 03 45 fc 0f be 18 e8 ?? ?? ?? ?? 33 d8 8b 45 08 03 45 fc 88 18 }\n\t\t$a_03_1 = {d3 e8 89 45 ?? 83 65 ?? 00 81 f3 ?? ?? ?? ?? 81 45 ?? ?? ?? ?? ?? 8b 45 ?? 23 45 ?? 89 45 ?? 8b 45 ?? 5b }\n\t\t$a_03_2 = {eb 0d 8b 85 ?? ?? ?? ?? 40 89 85 ?? ?? ?? ?? 8b 85 ?? ?? ?? ?? 3b 05 ?? ?? ?? ?? 73 21 a1 ?? ?? ?? ?? 03 85 ?? ?? ?? ?? 8b 0d ?? ?? ?? ?? 03 8d ?? ?? ?? ?? 8a 89 ?? ?? ?? ?? 88 08 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

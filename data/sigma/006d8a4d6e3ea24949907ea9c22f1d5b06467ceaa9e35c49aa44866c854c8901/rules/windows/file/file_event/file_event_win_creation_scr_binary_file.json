@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_creation_scr_binary_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-29",
+                "title": "Suspicious Screensaver Binary File Creation",
+                "id": "97aa2e88-555c-450d-85a6-229bcd87efb8"
+            },
+            "rule_text": "title: Suspicious Screensaver Binary File Creation\nid: 97aa2e88-555c-450d-85a6-229bcd87efb8\nstatus: test\ndescription: 'Adversaries may establish persistence by executing malicious content\n  triggered by user inactivity.\n\n  Screensavers are programs that execute after a configurable time of user inactivity\n  and consist of Portable Executable (PE) files with a .scr file extension\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md\nauthor: frack113\ndate: 2021-12-29\nmodified: 2022-11-08\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.002\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith: .scr\n  filter_generic:\n    Image|endswith:\n    - \\Kindle.exe\n    - \\Bin\\ccSvcHst.exe\n  filter_tiworker:\n    Image|endswith: \\TiWorker.exe\n    TargetFilename|endswith: \\uwfservicingscr.scr\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

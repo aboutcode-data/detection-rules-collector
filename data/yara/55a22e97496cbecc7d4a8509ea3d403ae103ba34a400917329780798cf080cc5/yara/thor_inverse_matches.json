@@ -1,0 +1,424 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/thor_inverse_matches.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WINDOWS_UPDATE_BDC",
+                "tags": [],
+                "score": 0
+            },
+            "rule_text": "private rule WINDOWS_UPDATE_BDC\n{\n\tmeta:\n\t\tscore = 0\n\n\tcondition:\n\t\t( uint32be( 0 ) == 0x44434d01 and uint32be( 4 ) == 0x50413330 ) or ( uint32be( 0 ) == 0x44434401 and uint32be( 12 ) == 0x50413330 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "iexplore_ANOMALY",
+                "tags": [],
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal iexplore.exe - typical strings not found in file",
+                "date": "23/04/2014",
+                "score": 55,
+                "nodeepdive": 1,
+                "id": "ea436608-d191-5058-b844-025e48082edc"
+            },
+            "rule_text": "rule iexplore_ANOMALY\n{\n\tmeta:\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal iexplore.exe - typical strings not found in file\"\n\t\tdate = \"23/04/2014\"\n\t\tscore = 55\n\t\tnodeepdive = 1\n\t\tid = \"ea436608-d191-5058-b844-025e48082edc\"\n\n\tstrings:\n\t\t$win2003_win7_u1 = \"IEXPLORE.EXE\" wide nocase\n\t\t$win2003_win7_u2 = \"Internet Explorer\" wide fullword\n\t\t$win2003_win7_u3 = \"translation\" wide fullword nocase\n\t\t$win2003_win7_u4 = \"varfileinfo\" wide fullword nocase\n\n\tcondition:\n\t\tfilename== \"iexplore.exe\" and uint16( 0 ) == 0x5a4d and not filepath contains \"teamviewer\" and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC and filepath contains \"C:\\\\\" and not filepath contains \"Package_for_RollupFix\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "svchost_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal svchost.exe - typical strings not found in file",
+                "date": "23/04/2014",
+                "score": 55,
+                "id": "5630054d-9fa4-587f-ba78-cda4478f9cc1"
+            },
+            "rule_text": "rule svchost_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal svchost.exe - typical strings not found in file\"\n\t\tdate = \"23/04/2014\"\n\t\tscore = 55\n\t\tid = \"5630054d-9fa4-587f-ba78-cda4478f9cc1\"\n\n\tstrings:\n\t\t$win2003_win7_u1 = \"svchost.exe\" wide nocase\n\t\t$win2003_win7_u3 = \"coinitializesecurityparam\" wide fullword nocase\n\t\t$win2003_win7_u4 = \"servicedllunloadonstop\" wide fullword nocase\n\t\t$win2000 = \"Generic Host Process for Win32 Services\" wide fullword\n\t\t$win2012 = \"Host Process for Windows Services\" wide fullword\n\n\tcondition:\n\t\tfilename== \"svchost.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "explorer_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal explorer.exe - typical strings not found in file",
+                "date": "27/05/2014",
+                "score": 55,
+                "id": "ecadd78f-21a1-5a9f-8f3f-cb51e872805b"
+            },
+            "rule_text": "rule explorer_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal explorer.exe - typical strings not found in file\"\n\t\tdate = \"27/05/2014\"\n\t\tscore = 55\n\t\tid = \"ecadd78f-21a1-5a9f-8f3f-cb51e872805b\"\n\n\tstrings:\n\t\t$s1 = \"EXPLORER.EXE\" wide fullword\n\t\t$s2 = \"Windows Explorer\" wide fullword\n\n\tcondition:\n\t\tfilename== \"explorer.exe\" and uint16( 0 ) == 0x5a4d and not filepath contains \"teamviewer\" and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "sethc_ANOMALY",
+                "tags": [],
+                "description": "Sethc.exe has been replaced - Indicates Remote Access Hack RDP",
+                "author": "F. Roth",
+                "reference": "http://www.emc.com/collateral/white-papers/h12756-wp-shell-crew.pdf",
+                "date": "2014/01/23",
+                "score": 70,
+                "id": "9dfbab4e-3dc8-5246-a051-1618f2ca5f39"
+            },
+            "rule_text": "rule sethc_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Sethc.exe has been replaced - Indicates Remote Access Hack RDP\"\n\t\tauthor = \"F. Roth\"\n\t\treference = \"http://www.emc.com/collateral/white-papers/h12756-wp-shell-crew.pdf\"\n\t\tdate = \"2014/01/23\"\n\t\tscore = 70\n\t\tid = \"9dfbab4e-3dc8-5246-a051-1618f2ca5f39\"\n\n\tstrings:\n\t\t$s1 = \"stickykeys\" fullword nocase\n\t\t$s2 = \"stickykeys\" wide nocase\n\t\t$s3 = \"Control_RunDLL access.cpl\" wide fullword\n\t\t$s4 = \"SETHC.EXE\" wide fullword\n\n\tcondition:\n\t\tfilename== \"sethc.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Utilman_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal utilman.exe - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 70,
+                "id": "98daff9b-1600-56b3-87ff-637deaa6808c"
+            },
+            "rule_text": "rule Utilman_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal utilman.exe - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 70\n\t\tid = \"98daff9b-1600-56b3-87ff-637deaa6808c\"\n\n\tstrings:\n\t\t$win7 = \"utilman.exe\" wide fullword\n\t\t$win2000 = \"Start with Utility Manager\" fullword wide\n\t\t$win2012 = \"utilman2.exe\" fullword wide\n\n\tcondition:\n\t\t(filename == \"utilman.exe\" or filename == \"Utilman.exe\" ) and uint16( 0 ) == 0x5a4d and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "osk_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal osk.exe (On Screen Keyboard) - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55,
+                "id": "6b78b001-f863-5a24-a9d1-ee5e8305766b"
+            },
+            "rule_text": "rule osk_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal osk.exe (On Screen Keyboard) - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\t\tid = \"6b78b001-f863-5a24-a9d1-ee5e8305766b\"\n\n\tstrings:\n\t\t$s1 = \"Accessibility On-Screen Keyboard\" wide fullword\n\t\t$s2 = \"\\\\oskmenu\" wide fullword\n\t\t$s3 = \"&About On-Screen Keyboard...\" wide fullword\n\t\t$s4 = \"Software\\\\Microsoft\\\\Osk\" wide\n\n\tcondition:\n\t\tfilename== \"osk.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "magnify_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal magnify.exe (Magnifier) - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55,
+                "id": "db75201e-81a3-5f82-bf6f-ba155bfbcf81"
+            },
+            "rule_text": "rule magnify_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal magnify.exe (Magnifier) - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\t\tid = \"db75201e-81a3-5f82-bf6f-ba155bfbcf81\"\n\n\tstrings:\n\t\t$win7 = \"Microsoft Screen Magnifier\" wide fullword\n\t\t$win2000 = \"Microsoft Magnifier\" wide fullword\n\t\t$winxp = \"Software\\\\Microsoft\\\\Magnify\" wide\n\n\tcondition:\n\t\tfilename== \"magnify.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "narrator_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal narrator.exe - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55,
+                "id": "a51f1916-f89a-58a9-b65c-91bf99575b80"
+            },
+            "rule_text": "rule narrator_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal narrator.exe - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\t\tid = \"a51f1916-f89a-58a9-b65c-91bf99575b80\"\n\n\tstrings:\n\t\t$win7 = \"Microsoft-Windows-Narrator\" wide fullword\n\t\t$win2000 = \"&About Narrator...\" wide fullword\n\t\t$win2012 = \"Screen Reader\" wide fullword\n\t\t$winxp = \"Software\\\\Microsoft\\\\Narrator\"\n\t\t$winxp_en = \"SOFTWARE\\\\Microsoft\\\\Speech\\\\Voices\" wide\n\n\tcondition:\n\t\tfilename== \"narrator.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "notepad_ANOMALY",
+                "tags": [],
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "description": "Abnormal notepad.exe - typical strings not found in file",
+                "date": "01/06/2014",
+                "score": 55,
+                "id": "16ddcd9e-ab6f-593e-80e0-a90399cbc3df"
+            },
+            "rule_text": "rule notepad_ANOMALY\n{\n\tmeta:\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdescription = \"Abnormal notepad.exe - typical strings not found in file\"\n\t\tdate = \"01/06/2014\"\n\t\tscore = 55\n\t\tid = \"16ddcd9e-ab6f-593e-80e0-a90399cbc3df\"\n\n\tstrings:\n\t\t$win7 = \"HELP_ENTRY_ID_NOTEPAD_HELP\" wide fullword\n\t\t$win2000 = \"Do you want to create a new file?\" wide fullword\n\t\t$win2003 = \"Do you want to save the changes?\" wide\n\t\t$winxp = \"Software\\\\Microsoft\\\\Notepad\" wide\n\t\t$winxp_de = \"Software\\\\Microsoft\\\\Notepad\" wide\n\n\tcondition:\n\t\tfilename== \"notepad.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $win* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "csrss_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file csrss.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "17542707a3d9fa13c569450fd978272ef7070a77",
+                "id": "bbd2841a-ec72-5eb4-b34a-5ecbf9c5b517"
+            },
+            "rule_text": "rule csrss_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file csrss.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"17542707a3d9fa13c569450fd978272ef7070a77\"\n\t\tid = \"bbd2841a-ec72-5eb4-b34a-5ecbf9c5b517\"\n\n\tstrings:\n\t\t$s1 = \"Client Server Runtime Process\" fullword wide\n\t\t$s4 = \"name=\\\"Microsoft.Windows.CSRSS\\\"\" fullword ascii\n\t\t$s5 = \"CSRSRV.dll\" fullword ascii\n\t\t$s6 = \"CsrServerInitialization\" fullword ascii\n\n\tcondition:\n\t\tfilename== \"csrss.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "conhost_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file conhost.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "1bd846aa22b1d63a1f900f6d08d8bfa8082ae4db",
+                "id": "9803fa1b-bcaf-5451-831b-fc0dc9d711f2"
+            },
+            "rule_text": "rule conhost_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file conhost.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"1bd846aa22b1d63a1f900f6d08d8bfa8082ae4db\"\n\t\tid = \"9803fa1b-bcaf-5451-831b-fc0dc9d711f2\"\n\n\tstrings:\n\t\t$s2 = \"Console Window Host\" fullword wide\n\n\tcondition:\n\t\tfilename== \"conhost.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "wininit_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file wininit.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "2de5c051c0d7d8bcc14b1ca46be8ab9756f29320",
+                "id": "a251984f-c667-55ec-8cc3-3888e80ddf1e"
+            },
+            "rule_text": "rule wininit_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file wininit.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"2de5c051c0d7d8bcc14b1ca46be8ab9756f29320\"\n\t\tid = \"a251984f-c667-55ec-8cc3-3888e80ddf1e\"\n\n\tstrings:\n\t\t$s1 = \"Windows Start-Up Application\" fullword wide\n\n\tcondition:\n\t\tfilename== \"wininit.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "winlogon_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file winlogon.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "af210c8748d77c2ff93966299d4cd49a8c722ef6",
+                "id": "ee424459-8048-52b8-ba97-4d09265a881f"
+            },
+            "rule_text": "rule winlogon_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file winlogon.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"af210c8748d77c2ff93966299d4cd49a8c722ef6\"\n\t\tid = \"ee424459-8048-52b8-ba97-4d09265a881f\"\n\n\tstrings:\n\t\t$s1 = \"AuthzAccessCheck failed\" fullword\n\t\t$s2 = \"Windows Logon Application\" fullword wide\n\n\tcondition:\n\t\tfilename== \"winlogon.exe\" and not 1 of ( $s* ) and uint16( 0 ) == 0x5a4d and not WINDOWS_UPDATE_BDC and not filepath contains \"Malwarebytes\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SndVol_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file SndVol.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "e057c90b675a6da19596b0ac458c25d7440b7869",
+                "id": "0c4d705f-4b24-55f9-bcf4-3f65eea0b7af"
+            },
+            "rule_text": "rule SndVol_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file SndVol.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"e057c90b675a6da19596b0ac458c25d7440b7869\"\n\t\tid = \"0c4d705f-4b24-55f9-bcf4-3f65eea0b7af\"\n\n\tstrings:\n\t\t$s1 = \"Volume Control Applet\" fullword wide\n\n\tcondition:\n\t\tfilename== \"sndvol.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "doskey_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file doskey.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "f2d1995325df0f3ca6e7b11648aa368b7e8f1c7f",
+                "id": "be9c239a-2918-5330-bbd0-33cc17067f70"
+            },
+            "rule_text": "rule doskey_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file doskey.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"f2d1995325df0f3ca6e7b11648aa368b7e8f1c7f\"\n\t\tid = \"be9c239a-2918-5330-bbd0-33cc17067f70\"\n\n\tstrings:\n\t\t$s3 = \"Keyboard History Utility\" fullword wide\n\n\tcondition:\n\t\tfilename== \"doskey.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lsass_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file lsass.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "hash": "04abf92ac7571a25606edfd49dca1041c41bef21",
+                "id": "0c0f6129-3e01-56d3-b297-cee231567759"
+            },
+            "rule_text": "rule lsass_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file lsass.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\thash = \"04abf92ac7571a25606edfd49dca1041c41bef21\"\n\t\tid = \"0c0f6129-3e01-56d3-b297-cee231567759\"\n\n\tstrings:\n\t\t$s1 = \"LSA Shell\" fullword wide\n\t\t$s2 = \"<description>Local Security Authority Process</description>\" fullword ascii\n\t\t$s3 = \"Local Security Authority Process\" fullword wide\n\t\t$s4 = \"LsapInitLsa\" fullword\n\n\tcondition:\n\t\tfilename== \"lsass.exe\" and uint16( 0 ) == 0x5a4d and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "taskmgr_ANOMALY",
+                "tags": [],
+                "description": "Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file taskmgr.exe",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "not set",
+                "date": "2015/03/16",
+                "nodeepdive": 1,
+                "hash": "e8b4d84a28e5ea17272416ec45726964fdf25883",
+                "id": "e1c3a150-6e7e-5ead-a338-0bac6f43185d"
+            },
+            "rule_text": "rule taskmgr_ANOMALY\n{\n\tmeta:\n\t\tdescription = \"Anomaly rule looking for certain strings in a system file (maybe false positive on certain systems) - file taskmgr.exe\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"not set\"\n\t\tdate = \"2015/03/16\"\n\t\tnodeepdive = 1\n\t\thash = \"e8b4d84a28e5ea17272416ec45726964fdf25883\"\n\t\tid = \"e1c3a150-6e7e-5ead-a338-0bac6f43185d\"\n\n\tstrings:\n\t\t$s0 = \"Windows Task Manager\" fullword wide\n\t\t$s1 = \"taskmgr.chm\" fullword\n\t\t$s2 = \"TmEndTaskHandler::\" ascii\n\t\t$s3 = \"CM_Request_Eject_PC\"\n\t\t$s4 = \"NTShell Taskman Startup Mutex\" fullword wide\n\n\tcondition:\n\t\t(filename == \"taskmgr.exe\" or filename == \"Taskmgr.exe\" ) and not 1 of ( $s* ) and not WINDOWS_UPDATE_BDC and uint16( 0 ) == 0x5a4d and filepath contains \"C:\\\\\" and not filepath contains \"Package_for_RollupFix\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_PsExec",
+                "tags": [],
+                "description": "Looks like a cloaked PsExec. This may be APT group activity.",
+                "date": "2014-07-18",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "score": 60,
+                "id": "e389bb76-0d1d-5e0e-9f79-a3117c919da3"
+            },
+            "rule_text": "rule APT_Cloaked_PsExec\n{\n\tmeta:\n\t\tdescription = \"Looks like a cloaked PsExec. This may be APT group activity.\"\n\t\tdate = \"2014-07-18\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tscore = 60\n\t\tid = \"e389bb76-0d1d-5e0e-9f79-a3117c919da3\"\n\n\tstrings:\n\t\t$s0 = \"psexesvc.exe\" wide fullword\n\t\t$s1 = \"Sysinternals PsExec\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $s0 and $s1 and not filename matches /(psexec.exe|PSEXESVC.EXE|PsExec64.exe)$/is and not filepath matches /RECYCLE.BIN\\\\S-1/\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_SuperScan",
+                "tags": [],
+                "description": "Looks like a cloaked SuperScan Port Scanner. This may be APT group activity.",
+                "date": "2014-07-18",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "score": 50,
+                "id": "96027f7d-822c-5c5e-acd9-cde8289c6b50"
+            },
+            "rule_text": "rule APT_Cloaked_SuperScan\n{\n\tmeta:\n\t\tdescription = \"Looks like a cloaked SuperScan Port Scanner. This may be APT group activity.\"\n\t\tdate = \"2014-07-18\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tscore = 50\n\t\tid = \"96027f7d-822c-5c5e-acd9-cde8289c6b50\"\n\n\tstrings:\n\t\t$s0 = \"SuperScan4.exe\" wide fullword\n\t\t$s1 = \"Foundstone Inc.\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $s0 and $s1 and not filename contains \"superscan\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_ScanLine",
+                "tags": [],
+                "description": "Looks like a cloaked ScanLine Port Scanner. This may be APT group activity.",
+                "date": "2014-07-18",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "score": 50,
+                "id": "78041dc0-491b-5a44-a125-3ad72b266cf8"
+            },
+            "rule_text": "rule APT_Cloaked_ScanLine\n{\n\tmeta:\n\t\tdescription = \"Looks like a cloaked ScanLine Port Scanner. This may be APT group activity.\"\n\t\tdate = \"2014-07-18\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tscore = 50\n\t\tid = \"78041dc0-491b-5a44-a125-3ad72b266cf8\"\n\n\tstrings:\n\t\t$s0 = \"ScanLine\" wide fullword\n\t\t$s1 = \"Command line port scanner\" wide fullword\n\t\t$s2 = \"sl.exe\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $s0 and $s1 and $s2 and not filename == \"sl.exe\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_Renamed_Dot1Xtray",
+                "tags": [],
+                "description": "Detects a legitimate renamed dot1ctray.exe, which is often used by PlugX for DLL side-loading",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2018-11-15",
+                "hash1": "f9ebf6aeb3f0fb0c29bd8f3d652476cd1fe8bd9a0c11cb15c43de33bbce0bf68",
+                "id": "3685a79e-7dd6-5221-b58a-6ec1c61030cc"
+            },
+            "rule_text": "rule SUSP_Renamed_Dot1Xtray\n{\n\tmeta:\n\t\tdescription = \"Detects a legitimate renamed dot1ctray.exe, which is often used by PlugX for DLL side-loading\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2018-11-15\"\n\t\thash1 = \"f9ebf6aeb3f0fb0c29bd8f3d652476cd1fe8bd9a0c11cb15c43de33bbce0bf68\"\n\t\tid = \"3685a79e-7dd6-5221-b58a-6ec1c61030cc\"\n\n\tstrings:\n\t\t$a1 = \"\\\\Symantec_Network_Access_Control\\\\\" ascii\n\t\t$a2 = \"\\\\dot1xtray.pdb\" ascii\n\t\t$a3 = \"DOT1X_NAMED_PIPE_CONNECT\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 300KB and all of them and not filename matches /dot1xtray.exe/i and not filepath matches /Recycle.Bin/i\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_Cloaked_CERTUTIL",
+                "tags": [],
+                "description": "Detects a renamed certutil.exe utility that is often used to decode encoded payloads",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2018-09-14",
+                "modified": "2022-06-27",
+                "id": "13943cda-6bb1-5c6c-8e55-e8d4bba1ffef"
+            },
+            "rule_text": "rule APT_Cloaked_CERTUTIL\n{\n\tmeta:\n\t\tdescription = \"Detects a renamed certutil.exe utility that is often used to decode encoded payloads\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2018-09-14\"\n\t\tmodified = \"2022-06-27\"\n\t\tid = \"13943cda-6bb1-5c6c-8e55-e8d4bba1ffef\"\n\n\tstrings:\n\t\t$s1 = \"-------- CERT_CHAIN_CONTEXT --------\" fullword ascii\n\t\t$s5 = \"certutil.pdb\" fullword ascii\n\t\t$s3 = \"Password Token\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them and not filename contains \"certutil\" and not filename contains \"CertUtil\" and not filename contains \"Certutil\" and not filepath contains \"\\\\Bromium\\\\\"\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT_SUSP_Solarwinds_Orion_Config_Anomaly_Dec20",
+                "tags": [],
+                "description": "Detects a suspicious renamed Afind.exe as used by different attackers",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/iisresetme/status/1339546337390587905?s=12",
+                "date": "2020-12-15",
+                "score": 70,
+                "nodeepdive": 1,
+                "id": "440a3eb9-b573-53ea-ab26-c44d9cf62401"
+            },
+            "rule_text": "rule APT_SUSP_Solarwinds_Orion_Config_Anomaly_Dec20\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious renamed Afind.exe as used by different attackers\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/iisresetme/status/1339546337390587905?s=12\"\n\t\tdate = \"2020-12-15\"\n\t\tscore = 70\n\t\tnodeepdive = 1\n\t\tid = \"440a3eb9-b573-53ea-ab26-c44d9cf62401\"\n\n\tstrings:\n\t\t$s1 = \"ReportWatcher\" fullword wide ascii\n\t\t$fp1 = \"ReportStatus\" fullword wide ascii\n\n\tcondition:\n\t\tfilename== \"SolarWindows.Orion.Core.BusinessLayer.dll.config\" and $s1 and not $fp1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PAExec_Cloaked",
+                "tags": [],
+                "description": "Detects a renamed remote access tool PAEXec (like PsExec)",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "http://researchcenter.paloaltonetworks.com/2017/03/unit42-shamoon-2-delivering-disttrack/",
+                "date": "2017-03-27",
+                "score": 70,
+                "hash1": "01a461ad68d11b5b5096f45eb54df9ba62c5af413fa9eb544eacb598373a26bc",
+                "id": "fad8417b-bbdb-5a4e-8324-660e27cb39f8"
+            },
+            "rule_text": "rule PAExec_Cloaked\n{\n\tmeta:\n\t\tdescription = \"Detects a renamed remote access tool PAEXec (like PsExec)\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"http://researchcenter.paloaltonetworks.com/2017/03/unit42-shamoon-2-delivering-disttrack/\"\n\t\tdate = \"2017-03-27\"\n\t\tscore = 70\n\t\thash1 = \"01a461ad68d11b5b5096f45eb54df9ba62c5af413fa9eb544eacb598373a26bc\"\n\t\tid = \"fad8417b-bbdb-5a4e-8324-660e27cb39f8\"\n\n\tstrings:\n\t\t$x1 = \"Ex: -rlo C:\\\\Temp\\\\PAExec.log\" fullword ascii\n\t\t$x2 = \"Can't enumProcesses - Failed to get token for Local System.\" fullword wide\n\t\t$x3 = \"PAExec %s - Execute Programs Remotely\" fullword wide\n\t\t$x4 = \"\\\\\\\\%s\\\\pipe\\\\PAExecIn%s%u\" fullword wide\n\t\t$x5 = \"\\\\\\\\.\\\\pipe\\\\PAExecIn%s%u\" fullword wide\n\t\t$x6 = \"%%SystemRoot%%\\\\%s.exe\" fullword wide\n\t\t$x7 = \"in replacement for PsExec, so the command-line usage is identical, with \" fullword ascii\n\t\t$x8 = \"\\\\\\\\%s\\\\ADMIN$\\\\PAExec_Move%u.dat\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 600KB and 1 of ( $x* ) ) and not filename == \"paexec.exe\" and not filename == \"PAExec.exe\" and not filename == \"PAEXEC.EXE\" and not filename matches /Install/ and not filename matches /uninstall/\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_VULN_DRV_PROCEXP152_May23",
+                "tags": [],
+                "description": "Detects vulnerable process explorer driver (original file name: PROCEXP152.SYS), often used by attackers to elevate privileges (false positives are possible in cases in which old versions of process explorer are still present on the system)",
+                "author": "Florian Roth",
+                "reference": "https://news.sophos.com/en-us/2023/04/19/aukill-edr-killer-malware-abuses-process-explorer-driver/",
+                "date": "2023-05-05",
+                "modified": "2023-07-28",
+                "score": 50,
+                "hash1": "cdfbe62ef515546f1728189260d0bdf77167063b6dbb77f1db6ed8b61145a2bc",
+                "id": "748eb390-f320-5045-bed2-24ae70471f43"
+            },
+            "rule_text": "rule SUSP_VULN_DRV_PROCEXP152_May23\n{\n\tmeta:\n\t\tdescription = \"Detects vulnerable process explorer driver (original file name: PROCEXP152.SYS), often used by attackers to elevate privileges (false positives are possible in cases in which old versions of process explorer are still present on the system)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://news.sophos.com/en-us/2023/04/19/aukill-edr-killer-malware-abuses-process-explorer-driver/\"\n\t\tdate = \"2023-05-05\"\n\t\tmodified = \"2023-07-28\"\n\t\tscore = 50\n\t\thash1 = \"cdfbe62ef515546f1728189260d0bdf77167063b6dbb77f1db6ed8b61145a2bc\"\n\t\tid = \"748eb390-f320-5045-bed2-24ae70471f43\"\n\n\tstrings:\n\t\t$a1 = \"\\\\ProcExpDriver.pdb\" ascii\n\t\t$a2 = \"\\\\Device\\\\PROCEXP152\" wide fullword\n\t\t$a3 = \"procexp.Sys\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_VULN_DRV_PROCEXP152_Renamed_May23",
+                "tags": [],
+                "description": "Detects vulnerable process explorer driver (original file name: PROCEXP152.SYS) that has been renamed (often used by attackers to elevate privileges)",
+                "author": "Florian Roth",
+                "reference": "https://news.sophos.com/en-us/2023/04/19/aukill-edr-killer-malware-abuses-process-explorer-driver/",
+                "date": "2023-05-05",
+                "score": 70,
+                "hash1": "cdfbe62ef515546f1728189260d0bdf77167063b6dbb77f1db6ed8b61145a2bc",
+                "id": "af2ec5d5-3453-5d35-8d19-4f37c61fabce"
+            },
+            "rule_text": "rule SUSP_VULN_DRV_PROCEXP152_Renamed_May23\n{\n\tmeta:\n\t\tdescription = \"Detects vulnerable process explorer driver (original file name: PROCEXP152.SYS) that has been renamed (often used by attackers to elevate privileges)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://news.sophos.com/en-us/2023/04/19/aukill-edr-killer-malware-abuses-process-explorer-driver/\"\n\t\tdate = \"2023-05-05\"\n\t\tscore = 70\n\t\thash1 = \"cdfbe62ef515546f1728189260d0bdf77167063b6dbb77f1db6ed8b61145a2bc\"\n\t\tid = \"af2ec5d5-3453-5d35-8d19-4f37c61fabce\"\n\n\tstrings:\n\t\t$a1 = \"\\\\ProcExpDriver.pdb\" ascii\n\t\t$a2 = \"\\\\Device\\\\PROCEXP152\" wide fullword\n\t\t$a3 = \"procexp.Sys\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and all of them and not filename matches /PROCEXP152\\.SYS/i\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_ANOMALY_Teams_Binary_Nov23",
+                "tags": [
+                    "FILE"
+                ],
+                "description": "Detects a suspicious binary with the name teams.exe, update.exe or squirrel.exe in the AppData folder of Microsoft Teams that is unsigned or signed by a different CA",
+                "author": "Florian Roth",
+                "score": 60,
+                "reference": "https://twitter.com/steve_noel/status/1722698479636476325/photo/1",
+                "date": "2023-11-11",
+                "modified": "2024-12-03",
+                "id": "60557ed1-ac16-5e3b-b105-157dc34f6ad7"
+            },
+            "rule_text": "import \"pe\"\n\nrule SUSP_ANOMALY_Teams_Binary_Nov23 : FILE\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious binary with the name teams.exe, update.exe or squirrel.exe in the AppData folder of Microsoft Teams that is unsigned or signed by a different CA\"\n\t\tauthor = \"Florian Roth\"\n\t\tscore = 60\n\t\treference = \"https://twitter.com/steve_noel/status/1722698479636476325/photo/1\"\n\t\tdate = \"2023-11-11\"\n\t\tmodified = \"2024-12-03\"\n\t\tid = \"60557ed1-ac16-5e3b-b105-157dc34f6ad7\"\n\n\tstrings:\n\t\t$a1 = \"Microsoft Code Signing PCA\" ascii\n\n\tcondition:\n\t\t(filename iequals \"teams.exe\" or filename iequals \"update.exe\" or filename iequals \"squirrel.exe\" ) and filepath icontains \"\\\\AppData\\\\Local\\\\Microsoft\\\\Teams\" and pe.number_of_signatures == 0 and not $a1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SAM_Hive_Backup",
+                "tags": [],
+                "description": "Detects a SAM hive backup file - SAM is the Security Account Manager - contains password hashes",
+                "author": "Florian Roth",
+                "reference": "https://www.ired.team/offensive-security/credential-access-and-credential-dumping/dumping-hashes-from-sam-registry",
+                "score": 60,
+                "nodeepdive": 1,
+                "date": "2015-03-31",
+                "modified": "2023-12-12",
+                "id": "31fb6c0c-966d-5002-bf8c-4129964c81ff"
+            },
+            "rule_text": "rule SAM_Hive_Backup\n{\n\tmeta:\n\t\tdescription = \"Detects a SAM hive backup file - SAM is the Security Account Manager - contains password hashes\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.ired.team/offensive-security/credential-access-and-credential-dumping/dumping-hashes-from-sam-registry\"\n\t\tscore = 60\n\t\tnodeepdive = 1\n\t\tdate = \"2015-03-31\"\n\t\tmodified = \"2023-12-12\"\n\t\tid = \"31fb6c0c-966d-5002-bf8c-4129964c81ff\"\n\n\tstrings:\n\t\t$s1 = \"\\\\SystemRoot\\\\System32\\\\Config\\\\SAM\" wide\n\n\tcondition:\n\t\tuint32( 0 ) == 0x66676572 and $s1 in ( 0 .. 200 ) and not filepath contains \"\\\\System32\\\\Config\" and not filepath contains \"\\\\System32\\\\config\" and not filepath contains \"System Volume Information\" and not filepath contains \"\\\\config\\\\RegBack\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

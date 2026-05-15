@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_bpf_kprob_tracing_enabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-25",
+                "title": "Enable BPF Kprobes Tracing",
+                "id": "7692f583-bd30-4008-8615-75dab3f08a99"
+            },
+            "rule_text": "title: Enable BPF Kprobes Tracing\nid: 7692f583-bd30-4008-8615-75dab3f08a99\nstatus: test\ndescription: Detects common command used to enable bpf kprobes tracing\nreferences:\n- https://embracethered.com/blog/posts/2021/offensive-bpf-bpftrace/\n- https://bpftrace.org/\n- https://www.kernel.org/doc/html/v5.0/trace/kprobetrace.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-25\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - echo 1 >\n    - /sys/kernel/debug/tracing/events/kprobes/\n    CommandLine|contains:\n    - /myprobe/enable\n    - /myretprobe/enable\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

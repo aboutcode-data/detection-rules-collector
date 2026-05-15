@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2021/TA/SOURGUM/proc_creation_win_apt_sourgrum.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "MSTIC, FPT.EagleEye",
+                "date": "2021-06-15",
+                "title": "SOURGUM Actor Behaviours",
+                "id": "7ba08e95-1e0b-40cd-9db5-b980555e42fd"
+            },
+            "rule_text": "title: SOURGUM Actor Behaviours\nid: 7ba08e95-1e0b-40cd-9db5-b980555e42fd\nstatus: test\ndescription: Suspicious behaviours related to an actor tracked by Microsoft as SOURGUM\nreferences:\n- https://www.virustotal.com/gui/file/c299063e3eae8ddc15839767e83b9808fd43418dc5a1af7e4f44b97ba53fbd3d/detection\n- https://github.com/Azure/Azure-Sentinel/blob/43e9be273dca321295190bfc4902858e009d4a35/Detections/MultipleDataSources/SOURGUM_IOC.yaml\n- https://www.microsoft.com/security/blog/2021/07/15/protecting-customers-from-a-private-sector-offensive-actor-using-0-day-exploits-and-devilstongue-malware/\nauthor: MSTIC, FPT.EagleEye\ndate: 2021-06-15\nmodified: 2022-10-09\ntags:\n- attack.t1546\n- attack.t1546.015\n- attack.persistence\n- attack.privilege-escalation\n- detection.emerging-threats\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    Image|contains:\n    - windows\\system32\\Physmem.sys\n    - Windows\\system32\\ime\\SHARED\\WimBootConfigurations.ini\n    - Windows\\system32\\ime\\IMEJP\\WimBootConfigurations.ini\n    - Windows\\system32\\ime\\IMETC\\WimBootConfigurations.ini\n  registry_image:\n    Image|contains:\n    - windows\\system32\\filepath2\n    - windows\\system32\\ime\n    CommandLine|contains: reg add\n  registry_key:\n    CommandLine|contains:\n    - HKEY_LOCAL_MACHINE\\software\\classes\\clsid\\{7c857801-7381-11cf-884d-00aa004b2e24}\\inprocserver32\n    - HKEY_LOCAL_MACHINE\\software\\classes\\clsid\\{cf4cc405-e2c5-4ddd-b3ce-5e7582d8c9fa}\\inprocserver32\n  condition: selection or all of registry_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

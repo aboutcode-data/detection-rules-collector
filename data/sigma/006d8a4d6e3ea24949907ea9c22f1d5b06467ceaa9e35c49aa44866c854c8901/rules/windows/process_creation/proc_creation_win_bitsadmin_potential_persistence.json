@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bitsadmin_potential_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman",
+                "date": "2020-10-29",
+                "title": "Monitoring For Persistence Via BITS",
+                "id": "b9cbbc17-d00d-4e3d-a827-b06d03d2380d"
+            },
+            "rule_text": "title: Monitoring For Persistence Via BITS\nid: b9cbbc17-d00d-4e3d-a827-b06d03d2380d\nstatus: test\ndescription: 'BITS will allow you to schedule a command to execute after a successful\n  download to notify you that the job is finished.\n\n  When the job runs on the system the command specified in the BITS job will be executed.\n\n  This can be abused by actors to create a backdoor within the system and for persistence.\n\n  It will be chained in a BITS job to schedule the download of malware/additional\n  binaries and execute the program after being downloaded.\n\n  '\nreferences:\n- https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html\n- http://0xthem.blogspot.com/2014/03/t-emporal-persistence-with-and-schtasks.html\n- https://isc.sans.edu/diary/Wipe+the+drive+Stealthy+Malware+Persistence+Mechanism+-+Part+1/15394\nauthor: Sreeman\ndate: 2020-10-29\nmodified: 2024-01-25\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\bitsadmin.exe\n  - OriginalFileName: bitsadmin.exe\n  selection_cli_notify_1:\n    CommandLine|contains: /SetNotifyCmdLine\n  selection_cli_notify_2:\n    CommandLine|contains:\n    - '%COMSPEC%'\n    - cmd.exe\n    - regsvr32.exe\n  selection_cli_add_1:\n    CommandLine|contains: /Addfile\n  selection_cli_add_2:\n    CommandLine|contains:\n    - 'http:'\n    - 'https:'\n    - 'ftp:'\n    - 'ftps:'\n  condition: selection_img and (all of selection_cli_notify_* or all of selection_cli_add_*)\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

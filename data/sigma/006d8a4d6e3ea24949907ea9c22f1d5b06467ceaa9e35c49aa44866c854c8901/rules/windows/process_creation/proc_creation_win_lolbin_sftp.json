@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_sftp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-10",
+                "title": "Use Of The SFTP.EXE Binary As A LOLBIN",
+                "id": "a85ffc3a-e8fd-4040-93bf-78aff284d801"
+            },
+            "rule_text": "title: Use Of The SFTP.EXE Binary As A LOLBIN\nid: a85ffc3a-e8fd-4040-93bf-78aff284d801\nstatus: test\ndescription: Detects the usage of the \"sftp.exe\" binary as a LOLBIN by abusing the\n  \"-D\" flag\nreferences:\n- https://github.com/LOLBAS-Project/LOLBAS/pull/264\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-10\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\sftp.exe\n    CommandLine|contains:\n    - ' -D ..'\n    - ' -D C:\\'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

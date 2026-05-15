@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_mysqld_uncommon_file_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseph Kamau",
+                "date": "2024-05-27",
+                "title": "Uncommon File Creation By Mysql Daemon Process",
+                "id": "c61daa90-3c1e-4f18-af62-8f288b5c9aaf"
+            },
+            "rule_text": "title: Uncommon File Creation By Mysql Daemon Process\nid: c61daa90-3c1e-4f18-af62-8f288b5c9aaf\nstatus: test\ndescription: 'Detects the creation of files with scripting or executable extensions\n  by Mysql daemon.\n\n  Which could be an indicator of \"User Defined Functions\" abuse to download malware.\n\n  '\nreferences:\n- https://asec.ahnlab.com/en/58878/\n- https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/honeypot-recon-mysql-malware-infection-via-user-defined-functions-udf/\nauthor: Joseph Kamau\ndate: 2024-05-27\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith:\n    - \\mysqld.exe\n    - \\mysqld-nt.exe\n    TargetFilename|endswith:\n    - .bat\n    - .dat\n    - .dll\n    - .exe\n    - .ps1\n    - .psm1\n    - .vbe\n    - .vbs\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

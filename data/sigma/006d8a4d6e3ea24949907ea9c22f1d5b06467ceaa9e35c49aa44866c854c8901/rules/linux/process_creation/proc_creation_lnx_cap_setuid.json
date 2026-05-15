@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_cap_setuid.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Luc Génaux",
+                "date": "2026-01-24",
+                "title": "Linux Setuid Capability Set on a Binary via Setcap Utility",
+                "id": "ed447910-bc30-4575-a598-3a2e49516a7a"
+            },
+            "rule_text": "title: Linux Setuid Capability Set on a Binary via Setcap Utility\nid: ed447910-bc30-4575-a598-3a2e49516a7a\nstatus: experimental\ndescription: 'Detects the use of the ''setcap'' utility to set the ''setuid'' capability\n  (cap_setuid) on a binary file.\n\n  This capability allows a non privileged process to make arbitrary manipulations\n  of user IDs (UIDs), including setting its current UID to a value that would otherwise\n  be restricted (i.e. UID 0, the root user).\n\n  This behavior can be used by adversaries to backdoor a binary in order to escalate\n  privileges again in the future if needed.\n\n  '\nreferences:\n- https://man7.org/linux/man-pages/man8/setcap.8.html\n- https://dfir.ch/posts/linux_capabilities/\n- https://juggernaut-sec.com/capabilities/#cap_setuid\nauthor: \"Luc G\\xE9naux\"\ndate: 2026-01-24\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1548\n- attack.t1554\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith: /setcap\n    CommandLine|contains: cap_setuid\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

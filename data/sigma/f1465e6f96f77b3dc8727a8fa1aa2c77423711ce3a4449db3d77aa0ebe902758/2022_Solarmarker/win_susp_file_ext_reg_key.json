@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_Solarmarker/win_susp_file_ext_reg_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/09",
+                "title": "Solarmarker File Extension Registry Key Set",
+                "id": "57c4dca5-51cd-4cff-b835-d7eebe8e92f6"
+            },
+            "rule_text": "title: Solarmarker File Extension Registry Key Set\nid: 57c4dca5-51cd-4cff-b835-d7eebe8e92f6\nrelated:\n- id: 7530b96f-ad8e-431d-a04d-ac85cc461fdc\n  type: similar\nstatus: experimental\ndescription: Detects creation of suspicious file extension registry key. This extension\n  is then registered with a custom file type (see Detail component of detection below)\n  with a malicious powershell payload specified.\nreferences:\n- https://news.sophos.com/en-us/2022/02/01/solarmarker-campaign-used-novel-registry-changes-to-establish-persistence/\n- https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-solarmarker\n- https://www.elastic.co/security-labs/going-coast-to-coast-climbing-the-pyramid-with-the-deimos-implant\nauthor: Micah Babinski\ndate: 2022/11/09\ntags:\n- attack.defense_evasion\n- attack.t1202\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\powershell.exe\n    EventType: SetValue\n    TargetObject|re: ^.*\\\\.([a-zA-Z]){13,18}$\n    Detail|re: ^.*([a-z]){18,22}$\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

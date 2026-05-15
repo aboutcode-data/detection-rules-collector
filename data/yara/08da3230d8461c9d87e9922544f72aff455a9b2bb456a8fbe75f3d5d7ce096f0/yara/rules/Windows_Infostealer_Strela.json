@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Infostealer_Strela.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Infostealer_Strela_0dc3e4a1",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "0dc3e4a1-13ac-4461-aac9-896f9e30d84b",
+                "fingerprint": "76ba0b9c5e892afc335d101dfc30355b6d704f2d723a81ddbae1cf2026ea85a4",
+                "creation_date": "2024-03-25",
+                "last_modified": "2024-09-30",
+                "threat_name": "Windows.Infostealer.Strela",
+                "reference_sample": "e6991b12e86629b38e178fef129dfda1d454391ffbb236703f8c026d6d55b9a1",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Infostealer_Strela_0dc3e4a1\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"0dc3e4a1-13ac-4461-aac9-896f9e30d84b\"\n\t\tfingerprint = \"76ba0b9c5e892afc335d101dfc30355b6d704f2d723a81ddbae1cf2026ea85a4\"\n\t\tcreation_date = \"2024-03-25\"\n\t\tlast_modified = \"2024-09-30\"\n\t\tthreat_name = \"Windows.Infostealer.Strela\"\n\t\treference_sample = \"e6991b12e86629b38e178fef129dfda1d454391ffbb236703f8c026d6d55b9a1\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$s1 = \"strela\" fullword\n\t\t$s2 = \"/server.php\" fullword\n\t\t$s3 = \"/out.php\" fullword\n\t\t$s4 = \"%s%s\\\\key4.db\" fullword\n\t\t$s5 = \"%s%s\\\\logins.json\" fullword\n\t\t$s6 = \"%s,%s,%s\\n\" fullword\n\t\t$old_pdb = \"Projects\\\\StrelaDLLCompile\\\\Release\\\\StrelaDLLCompile.pdb\" fullword\n\n\tcondition:\n\t\t3 of ( $s* ) or $old_pdb\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

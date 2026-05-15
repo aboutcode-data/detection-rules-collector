@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/msiinstaller/win_software_atera_rmm_agent_install.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2021-09-01",
+                "title": "Atera Agent Installation",
+                "id": "87261fb2-69d0-42fe-b9de-88c6b5f65a43"
+            },
+            "rule_text": "title: Atera Agent Installation\nid: 87261fb2-69d0-42fe-b9de-88c6b5f65a43\nstatus: test\ndescription: Detects successful installation of Atera Remote Monitoring & Management\n  (RMM) agent as recently found to be used by Conti operators\nreferences:\n- https://www.advintel.io/post/secret-backdoor-behind-conti-ransomware-operation-introducing-atera-agent\nauthor: Bhabesh Raj\ndate: 2021-09-01\nmodified: 2022-12-25\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  service: application\n  product: windows\ndetection:\n  selection:\n    EventID: 1033\n    Provider_Name: MsiInstaller\n    Message|contains: AteraAgent\n  condition: selection\nfalsepositives:\n- Legitimate Atera agent installation\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

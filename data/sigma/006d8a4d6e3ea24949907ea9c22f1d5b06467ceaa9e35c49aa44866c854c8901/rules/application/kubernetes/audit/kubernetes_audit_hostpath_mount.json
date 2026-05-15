@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/kubernetes/audit/kubernetes_audit_hostpath_mount.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Leo Tsaousis (@laripping)",
+                "date": "2024-03-26",
+                "title": "Container With A hostPath Mount Created",
+                "id": "402b955c-8fe0-4a8c-b635-622b4ac5f902"
+            },
+            "rule_text": "title: Container With A hostPath Mount Created\nid: 402b955c-8fe0-4a8c-b635-622b4ac5f902\nstatus: test\ndescription: 'Detects creation of a container with a hostPath mount.\n\n  A hostPath volume mounts a directory or a file from the node to the container.\n\n  Attackers who have permissions to create a new pod in the cluster may create one\n  with a writable hostPath volume and chroot to escape to the underlying node.\n\n  '\nreferences:\n- https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Writable%20hostPath%20mount/\n- https://blog.appsecco.com/kubernetes-namespace-breakout-using-insecure-host-path-volume-part-1-b382f2a6e216\nauthor: Leo Tsaousis (@laripping)\ndate: 2024-03-26\ntags:\n- attack.t1611\n- attack.privilege-escalation\nlogsource:\n  category: application\n  product: kubernetes\n  service: audit\ndetection:\n  selection:\n    verb: create\n    objectRef.resource: pods\n    hostPath: '*'\n  condition: selection\nfalsepositives:\n- The DaemonSet controller creates pods with hostPath volumes within the kube-system\n  namespace.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

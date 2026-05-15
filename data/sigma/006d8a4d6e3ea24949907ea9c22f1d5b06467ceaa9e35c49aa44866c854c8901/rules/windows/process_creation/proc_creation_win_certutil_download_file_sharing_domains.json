@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_certutil_download_file_sharing_domains.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-15",
+                "title": "Suspicious File Downloaded From File-Sharing Website Via Certutil.EXE",
+                "id": "42a5f1e7-9603-4f6d-97ae-3f37d130d794"
+            },
+            "rule_text": "title: Suspicious File Downloaded From File-Sharing Website Via Certutil.EXE\nid: 42a5f1e7-9603-4f6d-97ae-3f37d130d794\nrelated:\n- id: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b\n  type: similar\n- id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829\n  type: similar\nstatus: test\ndescription: Detects the execution of certutil with certain flags that allow the utility\n  to download files from file-sharing websites.\nreferences:\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/certutil\n- https://forensicitguy.github.io/agenttesla-vba-certutil-download/\n- https://news.sophos.com/en-us/2021/04/13/compromised-exchange-server-hosting-cryptojacker-targeting-other-exchange-servers/\n- https://twitter.com/egre55/status/1087685529016193025\n- https://lolbas-project.github.io/lolbas/Binaries/Certutil/\n- https://www.microsoft.com/en-us/security/blog/2024/01/17/new-ttps-observed-in-mint-sandstorm-campaign-targeting-high-profile-individuals-at-universities-and-research-orgs/\n- https://www.hexacorn.com/blog/2020/08/23/certutil-one-more-gui-lolbin\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-02-15\nmodified: 2025-12-10\ntags:\n- attack.stealth\n- attack.t1027\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\certutil.exe\n  - OriginalFileName: CertUtil.exe\n  selection_flags:\n    CommandLine|contains:\n    - 'urlcache '\n    - 'verifyctl '\n    - 'URL '\n  selection_http:\n    CommandLine|contains:\n    - .githubusercontent.com\n    - anonfiles.com\n    - cdn.discordapp.com\n    - ddns.net\n    - dl.dropboxusercontent.com\n    - ghostbin.co\n    - github.com\n    - glitch.me\n    - gofile.io\n    - hastebin.com\n    - mediafire.com\n    - mega.nz\n    - onrender.com\n    - pages.dev\n    - paste.ee\n    - pastebin.com\n    - pastebin.pl\n    - pastetext.net\n    - privatlab.com\n    - privatlab.net\n    - send.exploit.in\n    - sendspace.com\n    - storage.googleapis.com\n    - storjshare.io\n    - supabase.co\n    - temp.sh\n    - transfer.sh\n    - trycloudflare.com\n    - ufile.io\n    - w3spaces.com\n    - workers.dev\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_certutil_download_file_sharing_domains/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

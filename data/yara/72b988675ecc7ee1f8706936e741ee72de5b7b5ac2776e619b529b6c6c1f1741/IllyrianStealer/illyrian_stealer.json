@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/IllyrianStealer/illyrian_stealer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IllyrianStealer",
+                "tags": [],
+                "author": "RussianPanda",
+                "decription": "Detects Illyrian Stealer",
+                "date": "1/8/2024",
+                "hash": "fae0aed6173804e8c22027cbb0c121eedd927f16ea7e2b23662dbe6e016980e8"
+            },
+            "rule_text": "import \"pe\"\n\nrule IllyrianStealer\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdecription = \"Detects Illyrian Stealer\"\n\t\tdate = \"1/8/2024\"\n\t\thash = \"fae0aed6173804e8c22027cbb0c121eedd927f16ea7e2b23662dbe6e016980e8\"\n\n\tstrings:\n\t\t$s1 = \"get_TotalPhysicalMemory\"\n\t\t$s2 = \"\\\\b(bitcoincash)[a-zA-HJ-NP-Z0-9]{36,54}\\\\b\" wide\n\t\t$s3 = \"[Crypto]\" wide\n\t\t$s4 = \"|Black|\" wide\n\n\tcondition:\n\t\tall of ( $s* ) and filesize < 50KB and pe.imports ( \"mscoree.dll\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

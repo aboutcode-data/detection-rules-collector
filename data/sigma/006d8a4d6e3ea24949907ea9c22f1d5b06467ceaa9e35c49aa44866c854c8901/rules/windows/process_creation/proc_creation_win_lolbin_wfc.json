@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_wfc.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2022-06-01",
+                "title": "Use of Wfc.exe",
+                "id": "49be8799-7b4d-4fda-ad23-cafbefdebbc5"
+            },
+            "rule_text": "title: Use of Wfc.exe\nid: 49be8799-7b4d-4fda-ad23-cafbefdebbc5\nstatus: test\ndescription: The Workflow Command-line Compiler can be used for AWL bypass and is\n  listed in Microsoft's recommended block rules.\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wfc/\n- https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/applications-that-can-bypass-wdac\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2022-06-01\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\wfc.exe\n  - OriginalFileName: wfc.exe\n  condition: selection\nfalsepositives:\n- Legitimate use by a software developer\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

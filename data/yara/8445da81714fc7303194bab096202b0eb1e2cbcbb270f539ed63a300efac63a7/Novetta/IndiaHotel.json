@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/IndiaHotel.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IndiaHotel",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "8a4fc5007faf85e07710dca705108df9fd6252fe3d57dfade314120d72f6d83f"
+            },
+            "rule_text": "import \"pe\"\n\nrule IndiaHotel\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"8a4fc5007faf85e07710dca705108df9fd6252fe3d57dfade314120d72f6d83f\"\n\n\tstrings:\n\t\t$fileExtractorArraySetup = {\n\t\t\t6A 0A \n\t\t\t8D [5-6]\n\t\t\t68 10 02 00 00 \n\t\t\t50 \n\t\t\tE8\n\t\t}\n\n\tcondition:\n\t\t$fileExtractorArraySetup in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

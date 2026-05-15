@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/network/mega_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-02-16",
+                "title": "MEGA Exfiltration",
+                "id": "af71437b-430e-4aad-bbf8-b787c426dc7d"
+            },
+            "rule_text": "title: MEGA Exfiltration\nid: af71437b-430e-4aad-bbf8-b787c426dc7d\ndescription: Large upload towards MEGA, may indicate exfiltration of data\nreferences:\n- https://arista.my.site.com/AristaCommunity/s/article/Forensic-Investigation-of-the-MEGAcmd-Client#Comm_Kna_ka02I000000brf8QAA_92\nstatus: stable\nauthor: NTT Security - Patrik Olson\ndate: '2024-02-16'\nmodified: '2024-03-04'\nlogsource:\n  category: firewall\ndetection:\n  selection_mega:\n  - dest_ip:\n    - 2a0b:e40:1:*\n    - 2a0b:e41:1:*\n    - 2a0b:e42:1:*\n    - 2a0b:e43:1:*\n    - 2a0b:e44:1:*\n    - 2a0b:e45:1:*\n    - 2a09:a380:*\n    - 31.216.145.*\n    - 31.216.148.*\n    - 69.30.89.*\n    - 89.44.168.*\n    - 94.24.36.*\n    - 94.24.37.*\n    - 103.99.35.*\n    - 162.208.16.*\n    - 185.206.24.*\n    - 185.206.25.*\n    - 185.206.26.*\n    - 185.206.27.*\n    - 2001:67c:1998:*\n    - 2001:678:25c:*\n    - 2001:df1:e7c0:*\n    - 66.181.163.241\n    - 122.56.56.205\n    - 122.56.56.207\n    - 2403:9800:c020::13\n    - 2403:9800:c020::14\n    - 2405:5700:1:381::4\n  - dest_host|endswith: userstorage.mega.co.nz\n  - app_name:\n    - Mega\n    - mega-base\n  selection_large_upload:\n    bytes_out|gt: 10000000\n  condition: all of selection_*\nfalsepositives:\n- Non-sensitive file sharing\nlevel: high\ntags:\n- attack.exfiltration\n- attack.t1567\n",
+            "vulnerabilities": []
+        }
+    ]
+}

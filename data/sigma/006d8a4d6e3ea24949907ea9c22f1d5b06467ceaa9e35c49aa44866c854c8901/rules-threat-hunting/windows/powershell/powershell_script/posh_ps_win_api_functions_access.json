@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_win_api_functions_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-21",
+                "title": "WinAPI Library Calls Via PowerShell Scripts",
+                "id": "19d65a1c-8540-4140-8062-8eb00db0bba5"
+            },
+            "rule_text": "title: WinAPI Library Calls Via PowerShell Scripts\nid: 19d65a1c-8540-4140-8062-8eb00db0bba5\nrelated:\n- id: ba3f5c1b-6272-4119-9dbd-0bc8d21c2702\n  type: similar\n- id: 03d83090-8cba-44a0-b02f-0b756a050306\n  type: similar\n- id: 9f22ccd5-a435-453b-af96-bf99cbb594d4\n  type: similar\nstatus: test\ndescription: Detects calls to WinAPI libraries from PowerShell scripts. Attackers\n  can often leverage these APIs to avoid detection based on typical PowerShell function\n  calls. Use this rule as a basis to hunt for interesting scripts.\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: Nikita Nazarov, oscd.community, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-21\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.t1106\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Advapi32.dll\n    - kernel32.dll\n    - KernelBase.dll\n    - ntdll.dll\n    - secur32.dll\n    - user32.dll\n  condition: selection\nfalsepositives:\n- Carbon PowerShell Module (https://github.com/webmd-health-services/Carbon)\n- Chocolatey scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

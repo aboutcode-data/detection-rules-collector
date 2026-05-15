@@ -1,0 +1,13 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/patrickrolsen/LNK_files.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malicious_LNK_files",
+                "tags": []
+            },
+            "rule_text": "rule malicious_LNK_files\n{\n\tstrings:\n\t\t$magic = {4C 00 00 00 01 14 02 00}\n\t\t$s1 = \"\\\\RECYCLER\\\\\" wide\n\t\t$s2 = \"%temp%\" wide\n\t\t$s3 = \"%systemroot%\\\\system32\\\\cmd.exe\" wide\n\t\t$s5 = \"svchost.exe\" wide\n\t\t$s6 = \"lsass.exe\" wide\n\t\t$s7 = \"csrss.exe\" wide\n\t\t$s8 = \"winlogon.exe\" wide\n\t\t$s10 = \"%appdata%\" wide\n\t\t$s11 = \"%programdata%\" wide\n\t\t$s12 = \"%localappdata%\" wide\n\t\t$s13 = \".cpl\" wide\n\n\tcondition:\n\t\t($magic at 0 ) and any of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

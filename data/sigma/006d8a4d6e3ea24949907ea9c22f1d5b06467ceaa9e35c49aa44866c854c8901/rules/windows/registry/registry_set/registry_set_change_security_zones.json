@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_change_security_zones.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-22",
+                "title": "IE Change Domain Zone",
+                "id": "45e112d0-7759-4c2a-aa36-9f8fb79d3393"
+            },
+            "rule_text": "title: IE Change Domain Zone\nid: 45e112d0-7759-4c2a-aa36-9f8fb79d3393\nrelated:\n- id: d88d0ab2-e696-4d40-a2ed-9790064e66b3\n  type: derived\nstatus: test\ndescription: Hides the file extension through modification of the registry\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-4---add-domain-to-trusted-sites-zone\n- https://learn.microsoft.com/en-us/troubleshoot/developer/browsers/security-privacy/ie-security-zones-registry-entries\nauthor: frack113\ndate: 2022-01-22\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.t1137\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_domains:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\ZoneMap\\Domains\\\n  filter:\n    Details:\n    - DWORD (0x00000000)\n    - DWORD (0x00000001)\n    - (Empty)\n  condition: selection_domains and not filter\nfalsepositives:\n- Administrative scripts\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Add Domain to Trusted Sites Zone\n  technique: T1112\n  atomic_guid: cf447677-5a4e-4937-a82c-e47d254afd57\n",
+            "vulnerabilities": []
+        }
+    ]
+}

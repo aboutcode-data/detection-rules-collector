@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_delete_services.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-01",
+                "title": "Service Registry Key Deleted Via Reg.EXE",
+                "id": "05b2aa93-1210-42c8-8d9a-2fcc13b284f5"
+            },
+            "rule_text": "title: Service Registry Key Deleted Via Reg.EXE\nid: 05b2aa93-1210-42c8-8d9a-2fcc13b284f5\nstatus: test\ndescription: Detects execution of \"reg.exe\" commands with the \"delete\" flag on services\n  registry key. Often used by attacker to remove AV software services\nreferences:\n- https://www.virustotal.com/gui/file/2bcd5702a7565952c44075ac6fb946c7780526640d1264f692c7664c02c68465\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-01\nmodified: 2023-02-04\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: reg.exe\n  - OriginalFileName: reg.exe\n  selection_delete:\n    CommandLine|contains: ' delete '\n  selection_key:\n    CommandLine|contains: \\SYSTEM\\CurrentControlSet\\services\\\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

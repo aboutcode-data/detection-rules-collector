@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_susp_service_installation_folder_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "pH-T (Nextron Systems)",
+                "date": "2022-03-18",
+                "title": "Service Installation with Suspicious Folder Pattern",
+                "id": "1b2ae822-6fe1-43ba-aa7c-d1a3b3d1d5f2"
+            },
+            "rule_text": "title: Service Installation with Suspicious Folder Pattern\nid: 1b2ae822-6fe1-43ba-aa7c-d1a3b3d1d5f2\nstatus: test\ndescription: Detects service installation with suspicious folder patterns\nreferences:\n- Internal Research\nauthor: pH-T (Nextron Systems)\ndate: 2022-03-18\nmodified: 2022-03-24\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- car.2013-09-005\n- attack.t1543.003\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n  selection_img_paths:\n  - ImagePath|re: ^[Cc]:\\\\[Pp]rogram[Dd]ata\\\\.{1,9}\\.exe\n  - ImagePath|re: ^[Cc]:\\\\.{1,9}\\.exe\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

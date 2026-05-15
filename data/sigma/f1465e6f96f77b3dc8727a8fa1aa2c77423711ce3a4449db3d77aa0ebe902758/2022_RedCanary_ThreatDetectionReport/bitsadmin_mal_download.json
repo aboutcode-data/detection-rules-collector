@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/bitsadmin_mal_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "BITSAdmin Downloading Malicious Binaries",
+                "id": "c7568c9e-f6c6-4cb7-a3c0-da356aef51d8"
+            },
+            "rule_text": "title: BITSAdmin Downloading Malicious Binaries\nid: c7568c9e-f6c6-4cb7-a3c0-da356aef51d8\nstatus: experimental\ndescription: Detects usage of BITSAdmin to download malicious code. Inspired by the\n  2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/ingress-tool-transfer/\n- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1105/T1105.md#atomic-test-9---windows---bitsadmin-bits-download\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.command_and_control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\bitsadmin.exe\n    CommandLine|contains:\n    - download\n    - transfer\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

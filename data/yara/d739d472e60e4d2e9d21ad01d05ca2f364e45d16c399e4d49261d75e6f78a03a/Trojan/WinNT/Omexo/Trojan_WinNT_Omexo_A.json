@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/WinNT/Omexo/Trojan_WinNT_Omexo_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_WinNT_Omexo_A",
+                "tags": [],
+                "description": "Trojan:WinNT/Omexo.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_WinNT_Omexo_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:WinNT/Omexo.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {80 3e b8 75 05 8b 46 01 eb 03 83 c8 ff }\n\t\t$a_01_1 = {b9 90 90 90 00 03 ce 0f c9 8b 74 24 10 f0 0f c7 0e }\n\t\t$a_01_2 = {c7 03 50 55 54 41 }\n\t\t$a_01_3 = {74 0a 8d 72 34 b9 02 00 00 00 f3 a5 89 d7 68 90 7d 33 50 e8 6a 00 00 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 3 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

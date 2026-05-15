@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_hktl_hivenightmare_file_exports.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-07-23",
+                "title": "HackTool - Typical HiveNightmare SAM File Export",
+                "id": "6ea858a8-ba71-4a12-b2cc-5d83312404c7"
+            },
+            "rule_text": "title: HackTool - Typical HiveNightmare SAM File Export\nid: 6ea858a8-ba71-4a12-b2cc-5d83312404c7\nstatus: test\ndescription: Detects files written by the different tools that exploit HiveNightmare\nreferences:\n- https://github.com/GossiTheDog/HiveNightmare\n- https://github.com/FireFart/hivenightmare/\n- https://github.com/WiredPulse/Invoke-HiveNightmare\n- https://twitter.com/cube0x0/status/1418920190759378944\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-07-23\nmodified: 2024-06-27\ntags:\n- attack.credential-access\n- attack.t1552.001\n- cve.2021-36934\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n  - TargetFilename|contains:\n    - \\hive_sam_\n    - \\SAM-2021-\n    - \\SAM-2022-\n    - \\SAM-2023-\n    - \\SAM-haxx\n    - \\Sam.save\n  - TargetFilename: C:\\windows\\temp\\sam\n  condition: selection\nfalsepositives:\n- Files that accidentally contain these strings\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

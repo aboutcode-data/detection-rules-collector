@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_netsh_help_dll_persistence_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-11-28",
+                "title": "New Netsh Helper DLL Registered From A Suspicious Location",
+                "id": "e7b18879-676e-4a0e-ae18-27039185a8e7"
+            },
+            "rule_text": "title: New Netsh Helper DLL Registered From A Suspicious Location\nid: e7b18879-676e-4a0e-ae18-27039185a8e7\nrelated:\n- id: 56321594-9087-49d9-bf10-524fe8479452\n  type: similar\n- id: c90362e0-2df3-4e61-94fe-b37615814cb1\n  type: similar\nstatus: test\ndescription: 'Detects changes to the Netsh registry key to add a new DLL value that\n  is located on a suspicious location. This change might be an indication of a potential\n  persistence attempt by adding a malicious Netsh helper\n\n  '\nreferences:\n- https://www.ired.team/offensive-security/persistence/t1128-netsh-helper-dll\n- https://pentestlab.blog/2019/10/29/persistence-netsh-helper-dll/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-11-28\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.007\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_target:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\NetSh\n  selection_folders_1:\n    Details|contains:\n    - :\\Perflogs\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n    - \\Temporary Internet\n  selection_folders_2:\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Favorites\\\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Favourites\\\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Contacts\\\n  - Details|contains|all:\n    - :\\Users\\\n    - \\Pictures\\\n  condition: selection_target and 1 of selection_folders_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

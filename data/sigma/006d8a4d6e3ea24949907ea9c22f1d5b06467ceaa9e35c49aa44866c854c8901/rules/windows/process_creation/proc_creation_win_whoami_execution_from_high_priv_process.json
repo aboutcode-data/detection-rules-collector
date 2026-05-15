@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_whoami_execution_from_high_priv_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Teymur Kheirkhabarov",
+                "date": "2022-01-28",
+                "title": "Whoami.EXE Execution From Privileged Process",
+                "id": "79ce34ca-af29-4d0e-b832-fc1b377020db"
+            },
+            "rule_text": "title: Whoami.EXE Execution From Privileged Process\nid: 79ce34ca-af29-4d0e-b832-fc1b377020db\nrelated:\n- id: 80167ada-7a12-41ed-b8e9-aa47195c66a1\n  type: obsolete\nstatus: test\ndescription: Detects the execution of \"whoami.exe\" by privileged accounts that are\n  often abused by threat actors\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment\n- https://web.archive.org/web/20221019044836/https://nsudo.m2team.org/en-us/\nauthor: Florian Roth (Nextron Systems), Teymur Kheirkhabarov\ndate: 2022-01-28\nmodified: 2023-12-04\ntags:\n- attack.privilege-escalation\n- attack.discovery\n- attack.t1033\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: whoami.exe\n  - Image|endswith: \\whoami.exe\n  selection_user:\n    User|contains:\n    - AUTHORI\n    - AUTORI\n    - TrustedInstaller\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

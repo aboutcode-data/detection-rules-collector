@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_eventconsumer_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-06-25",
+                "title": "New ActiveScriptEventConsumer Created Via Wmic.EXE",
+                "id": "ebef4391-1a81-4761-a40a-1db446c0e625"
+            },
+            "rule_text": "title: New ActiveScriptEventConsumer Created Via Wmic.EXE\nid: ebef4391-1a81-4761-a40a-1db446c0e625\nstatus: test\ndescription: Detects WMIC executions in which an event consumer gets created. This\n  could be used to establish persistence\nreferences:\n- https://twitter.com/johnlatwc/status/1408062131321270282?s=12\n- https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/wp-windows-management-instrumentation.pdf\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-06-25\nmodified: 2023-02-14\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - ActiveScriptEventConsumer\n    - ' CREATE '\n  condition: selection\nfalsepositives:\n- Legitimate software creating script event consumers\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

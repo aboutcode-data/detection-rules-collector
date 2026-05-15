@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/PureCrypter/purecrypter_core.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PureCrypter_Core",
+                "tags": [],
+                "author": "RussianPanda",
+                "date": "2024-01-09",
+                "reference": "https://www.zscaler.com/blogs/security-research/technical-analysis-purecrypter",
+                "description": "Detects PureCrypter Core payload",
+                "hash": "e4faa7d7a098414449abffb210fd874798207ee9d27643c8088676ff429b56b7"
+            },
+            "rule_text": "import \"dotnet\"\n\nrule PureCrypter_Core\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2024-01-09\"\n\t\treference = \"https://www.zscaler.com/blogs/security-research/technical-analysis-purecrypter\"\n\t\tdescription = \"Detects PureCrypter Core payload\"\n\t\thash = \"e4faa7d7a098414449abffb210fd874798207ee9d27643c8088676ff429b56b7\"\n\n\tstrings:\n\t\t$s1 = {47 5A 69 70 53 74 72 65 61 6D}\n\t\t$s2 = {41 73 73 65 6D 62 6C 79 4C 6F 61 64 65 72 00 43 6F 73 74 75 72 61}\n\t\t$s3 = {44 65 66 6C 61 74 65 53 74 72 65 61 6D}\n\t\t$cnct = {72 ?? ?? 00 70 28 FB 00 00 0A 72 ?? ?? 00 70 28 ?? 00 00 0A}\n\t\t$nr1 = {7B 00 31 00 31 00 31 00 31 00 31 00 2D 00 32 00 32 00 32 00 32 00 32 00 2D 00 34 00 30 00 30 00 30 00 31 00 2D 00 30 00 30 00 30 00 30 00 31 00 7D}\n\t\t$nr2 = {7B 00 31 00 31 00 31 00 31 00 31 00 2D 00 32 00 32 00 32 00 32 00 32 00 2D 00 34 00 30 00 30 00 30 00 31 00 2D 00 30 00 30 00 30 00 30 00 32 00 7D}\n\t\t$nr3 = {7B 00 31 00 31 00 31 00 31 00 31 00 2D 00 32 00 32 00 32 00 32 00 32 00 2D 00 32 00 30 00 30 00 30 00 31 00 2D 00 30 00 30 00 30 00 30 00 32 00 7D}\n\t\t$nr4 = {7B 00 31 00 31 00 31 00 31 00 31 00 2D 00 32 00 32 00 32 00 32 00 32 00 2D 00 32 00 30 00 30 00 30 00 31 00 2D 00 30 00 30 00 30 00 30 00 31 00 7D}\n\n\tcondition:\n\t\tfilesize < 5MB and all of ( $s* ) and dotnet.number_of_resources > 4 and dotnet.number_of_resources < 6 and 2 of ( $nr* ) and dotnet.assembly_refs [ 1 ] . name contains \"protobuf-net\" and #cnct > 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

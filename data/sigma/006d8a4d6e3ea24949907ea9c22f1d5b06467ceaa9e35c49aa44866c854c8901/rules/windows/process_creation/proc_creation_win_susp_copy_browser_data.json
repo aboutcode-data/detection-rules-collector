@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_copy_browser_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-23",
+                "title": "Potential Browser Data Stealing",
+                "id": "47147b5b-9e17-4d76-b8d2-7bac24c5ce1b"
+            },
+            "rule_text": "title: Potential Browser Data Stealing\nid: 47147b5b-9e17-4d76-b8d2-7bac24c5ce1b\nrelated:\n- id: fc028194-969d-4122-8abe-0470d5b8f12f\n  type: derived\nstatus: test\ndescription: 'Adversaries may acquire credentials from web browsers by reading files\n  specific to the target browser.\n\n  Web browsers commonly save credentials such as website usernames and passwords so\n  that they do not need to be entered manually in the future.\n\n  Web browsers typically store the credentials in an encrypted format within a credential\n  store.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.003/T1555.003.md\n- https://www.cisa.gov/sites/default/files/2024-04/aa24-109a-stopransomware-akira-ransomware_2.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-23\nmodified: 2025-03-19\ntags:\n- attack.credential-access\n- attack.t1555.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd:\n  - CommandLine|contains:\n    - copy-item\n    - 'copy '\n    - 'cpi '\n    - ' cp '\n    - 'move '\n    - move-item\n    - ' mi '\n    - ' mv '\n  - Image|endswith:\n    - \\esentutl.exe\n    - \\xcopy.exe\n    - \\robocopy.exe\n  - OriginalFileName:\n    - esentutl.exe\n    - XCOPY.EXE\n    - robocopy.exe\n  selection_path:\n    CommandLine|contains:\n    - \\Amigo\\User Data\n    - \\BraveSoftware\\Brave-Browser\\User Data\n    - \\CentBrowser\\User Data\n    - \\Chromium\\User Data\n    - \\CocCoc\\Browser\\User Data\n    - \\Comodo\\Dragon\\User Data\n    - \\Elements Browser\\User Data\n    - \\Epic Privacy Browser\\User Data\n    - \\Google\\Chrome Beta\\User Data\n    - \\Google\\Chrome SxS\\User Data\n    - \\Google\\Chrome\\User Data\\\n    - \\Kometa\\User Data\n    - \\Maxthon5\\Users\n    - \\Microsoft\\Edge\\User Data\n    - \\Mozilla\\Firefox\\Profiles\n    - \\Nichrome\\User Data\n    - \\Opera Software\\Opera GX Stable\\\n    - \\Opera Software\\Opera Neon\\User Data\n    - \\Opera Software\\Opera Stable\\\n    - \\Orbitum\\User Data\n    - \\QIP Surf\\User Data\n    - \\Sputnik\\User Data\n    - \\Torch\\User Data\n    - \\uCozMedia\\Uran\\User Data\n    - \\Vivaldi\\User Data\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

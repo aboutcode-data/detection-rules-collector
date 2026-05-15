@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/RomeoBravo.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RomeoBravo",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "95314a7af76ec36cfba1a02b67c2b81526a04e3b2f9b8fb9b383ffcbcc5a3d9b"
+            },
+            "rule_text": "import \"pe\"\n\nrule RomeoBravo\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"95314a7af76ec36cfba1a02b67c2b81526a04e3b2f9b8fb9b383ffcbcc5a3d9b\"\n\n\tstrings:\n\t\t$a = {\n\t\t\tE8 [4] \n\t\t\t83 C4 10 \n\t\t\t85 C0 \n\t\t\t74 ?? \n\t\t\tB? 02 00 00 00 \n\t\t\t5? \n\t\t\t83 C4 18 \n\t\t\tC3 \n\t\t\t6A 78 \n\t\t\t6A 01 \n\t\t\t8D [3]\n\t\t\t6A 0C \n\t\t\t5? \n\t\t\t5? \n\t\t\tE8 [4]\n\t\t\t83 C4 14 \n\t\t\t85 C0 \n\t\t\t74 ?? \n\t\t\tB8 02 00 00 00 \n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

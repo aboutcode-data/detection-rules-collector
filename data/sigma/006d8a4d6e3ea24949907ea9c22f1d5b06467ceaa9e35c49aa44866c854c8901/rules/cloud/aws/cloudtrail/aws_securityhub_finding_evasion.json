@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_securityhub_finding_evasion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Sittikorn S",
+                "date": "2021-06-28",
+                "title": "AWS SecurityHub Findings Evasion",
+                "id": "a607e1fe-74bf-4440-a3ec-b059b9103157"
+            },
+            "rule_text": "title: AWS SecurityHub Findings Evasion\nid: a607e1fe-74bf-4440-a3ec-b059b9103157\nstatus: stable\ndescription: Detects the modification of the findings on SecurityHub.\nreferences:\n- https://docs.aws.amazon.com/cli/latest/reference/securityhub/\nauthor: Sittikorn S\ndate: 2021-06-28\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: securityhub.amazonaws.com\n    eventName:\n    - BatchUpdateFindings\n    - DeleteInsight\n    - UpdateFindings\n    - UpdateInsight\n  condition: selection\nfalsepositives:\n- System or Network administrator behaviors\n- DEV, UAT, SAT environment. You should apply this rule with PROD environment only.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

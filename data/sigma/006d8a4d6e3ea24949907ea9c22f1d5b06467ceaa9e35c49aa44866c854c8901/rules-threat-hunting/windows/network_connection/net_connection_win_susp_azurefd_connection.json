@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_susp_azurefd_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Isaac Dunham",
+                "date": "2024-11-07",
+                "title": "Potentially Suspicious Azure Front Door Connection",
+                "id": "8cb4d14e-776e-43c2-8fb9-91e7fcea32b4"
+            },
+            "rule_text": "title: Potentially Suspicious Azure Front Door Connection\nid: 8cb4d14e-776e-43c2-8fb9-91e7fcea32b4\nstatus: test\ndescription: 'Detects connections with Azure Front Door (known legitimate service\n  that can be leveraged for C2)\n\n  that fall outside of known benign behavioral baseline (not using common apps or\n  common azurefd.net endpoints)\n\n  '\nreferences:\n- https://lots-project.com/site/2a2e617a75726566642e6e6574\n- https://medium.com/r3d-buck3t/red-teaming-in-cloud-leverage-azure-frontdoor-cdn-for-c2-redirectors-79dd9ca98178\n- https://www.fortalicesolutions.com/posts/hiding-behind-the-front-door-with-azure-domain-fronting\nauthor: Isaac Dunham\ndate: 2024-11-07\ntags:\n- attack.command-and-control\n- attack.t1102.002\n- attack.t1090.004\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    DestinationHostname|contains: azurefd.net\n  filter_main_web_browsers:\n    Image|endswith:\n    - brave.exe\n    - chrome.exe\n    - chromium.exe\n    - firefox.exe\n    - msedge.exe\n    - msedgewebview2.exe\n    - opera.exe\n    - vivaldi.exe\n  filter_main_common_talkers:\n    Image|endswith: searchapp.exe\n  filter_main_known_benign_domains:\n    DestinationHostname|contains:\n    - afdxtest.z01.azurefd.net\n    - fp-afd.azurefd.net\n    - fp-afdx-bpdee4gtg6frejfd.z01.azurefd.net\n    - roxy.azurefd.net\n    - powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net\n    - storage-explorer-publishing-feapcgfgbzc2cjek.b01.azurefd.net\n    - graph.azurefd.net\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Results are not inherently suspicious, but should be investigated during threat\n  hunting for potential cloud C2.\n- Organization-specific Azure Front Door endpoints\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

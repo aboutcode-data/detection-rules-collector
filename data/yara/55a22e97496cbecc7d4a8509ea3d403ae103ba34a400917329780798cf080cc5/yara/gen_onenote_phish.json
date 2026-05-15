@@ -1,0 +1,62 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_onenote_phish.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_Email_Suspicious_OneNote_Attachment_Jan23_1",
+                "tags": [],
+                "description": "Detects suspicious OneNote attachment that embeds suspicious payload, e.g. an executable (FPs possible if the PE is attached separately)",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2023-01-27",
+                "score": 65,
+                "id": "492b74c2-3b81-5dff-9244-8528565338c6"
+            },
+            "rule_text": "rule SUSP_Email_Suspicious_OneNote_Attachment_Jan23_1\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious OneNote attachment that embeds suspicious payload, e.g. an executable (FPs possible if the PE is attached separately)\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2023-01-27\"\n\t\tscore = 65\n\t\tid = \"492b74c2-3b81-5dff-9244-8528565338c6\"\n\n\tstrings:\n\t\t$ge1 = \"5xbjvWUmEUWkxI1NC3qer\"\n\t\t$ge2 = \"cW471lJhFFpMSNTQt6nq\"\n\t\t$ge3 = \"nFuO9ZSYRRaTEjU0Lep6s\"\n\t\t$sp1 = \"VGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1vZG\"\n\t\t$sp2 = \"RoaXMgcHJvZ3JhbSBjYW5ub3QgYmUgcnVuIGluIERPUyBtb2Rl\"\n\t\t$sp3 = \"UaGlzIHByb2dyYW0gY2Fubm90IGJlIHJ1biBpbiBET1MgbW9kZ\"\n\t\t$sp4 = \"VGhpcyBwcm9ncmFtIG11c3QgYmUgcnVuIHVuZGVy\"\n\t\t$sp5 = \"RoaXMgcHJvZ3JhbSBtdXN0IGJlIHJ1biB1bmRlc\"\n\t\t$sp6 = \"UaGlzIHByb2dyYW0gbXVzdCBiZSBydW4gdW5kZX\"\n\t\t$se1 = \"QGVjaG8gb2Zm\"\n\t\t$se2 = \"BlY2hvIG9mZ\"\n\t\t$se3 = \"AZWNobyBvZm\"\n\t\t$se4 = \"PEhUQTpBUFBMSUNBVElPTi\"\n\t\t$se5 = \"xIVEE6QVBQTElDQVRJT04g\"\n\t\t$se6 = \"8SFRBOkFQUExJQ0FUSU9OI\"\n\t\t$se7 = \"TAAAAAEUAg\"\n\t\t$se8 = \"wAAAABFAIA\"\n\t\t$se9 = \"MAAAAARQCA\"\n\n\tcondition:\n\t\tfilesize < 5MB and 1 of ( $ge* ) and 1 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_Email_Suspicious_OneNote_Attachment_Jan23_2",
+                "tags": [],
+                "description": "Detects suspicious OneNote attachment that has a file name often used in phishing attacks",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2023-01-27",
+                "score": 65,
+                "id": "f8c58c73-2404-5ce6-8e8f-99b0dad84ad0"
+            },
+            "rule_text": "rule SUSP_Email_Suspicious_OneNote_Attachment_Jan23_2\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious OneNote attachment that has a file name often used in phishing attacks\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2023-01-27\"\n\t\tscore = 65\n\t\tid = \"f8c58c73-2404-5ce6-8e8f-99b0dad84ad0\"\n\n\tstrings:\n\t\t$hc1 = { 2E 6F 6E 65 22 0D 0A 0D 0A 35 46 4A 63 65 }\n\t\t$x01 = \" attachment; filename=\\\"Invoice\" nocase\n\t\t$x02 = \" attachment; filename=\\\"ORDER\" nocase\n\t\t$x03 = \" attachment; filename=\\\"PURCHASE\" nocase\n\t\t$x04 = \" attachment; filename=\\\"SHIP\" nocase\n\n\tcondition:\n\t\tfilesize < 5MB and $hc1 and 1 of ( $x* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_OneNote_Embedded_FileDataStoreObject_Type_Jan23_1",
+                "tags": [],
+                "description": "Detects suspicious embedded file types in OneNote files",
+                "author": "Florian Roth",
+                "reference": "https://blog.didierstevens.com/",
+                "date": "2023-01-27",
+                "modified": "2023-02-27",
+                "score": 65,
+                "id": "b8ea8c7b-052f-5a97-9577-99903462ea84"
+            },
+            "rule_text": "rule SUSP_OneNote_Embedded_FileDataStoreObject_Type_Jan23_1\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious embedded file types in OneNote files\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://blog.didierstevens.com/\"\n\t\tdate = \"2023-01-27\"\n\t\tmodified = \"2023-02-27\"\n\t\tscore = 65\n\t\tid = \"b8ea8c7b-052f-5a97-9577-99903462ea84\"\n\n\tstrings:\n\t\t$x1 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac \n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? 4d 5a }\n\t\t$x2 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac \n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [0-4] 40 65 63 68 6f }\n\t\t$x3 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac \n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [0-4] 40 45 43 48 4f }\n\t\t$x4 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac \n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [0-4] 4F 6E 20 45 }\n\t\t$x5 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac \n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [0-4] 6F 6E 20 65 }\n\t\t$x6 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac\n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? 4c 00 00 00 }\n\t\t$x7 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac\n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? 49 54 53 46 }\n\t\t$x8 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac\n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [6-200] 3C 68 74 61 3A }\n\t\t$x9 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac\n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [6-200] 3C 48 54 41 3A }\n\t\t$x10 = { e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac\n              ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??\n              ?? ?? ?? ?? [6-200] 3C 6A 6F 62 20 }\n\n\tcondition:\n\t\tfilesize < 10MB and 1 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_OneNote_Embedded_FileDataStoreObject_Type_Jan23_2",
+                "tags": [],
+                "description": "Detects suspicious embedded file types in OneNote files",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://blog.didierstevens.com/",
+                "date": "2023-01-27",
+                "score": 65,
+                "id": "0664d202-ab4c-57b6-91ee-ea21ac08909e"
+            },
+            "rule_text": "rule SUSP_OneNote_Embedded_FileDataStoreObject_Type_Jan23_2\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious embedded file types in OneNote files\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://blog.didierstevens.com/\"\n\t\tdate = \"2023-01-27\"\n\t\tscore = 65\n\t\tid = \"0664d202-ab4c-57b6-91ee-ea21ac08909e\"\n\n\tstrings:\n\t\t$a1 = { 00 e7 16 e3 bd 65 26 11 45 a4 c4 8d 4d 0b 7a 9e ac }\n\t\t$s1 = \"<HTA:APPLICATION \"\n\n\tcondition:\n\t\tfilesize < 5MB and $a1 and 1 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

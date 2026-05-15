@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Lace-Tempest/proc_creation_win_apt_lace_tempest_loader_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-11-09",
+                "title": "Lace Tempest Malware Loader Execution",
+                "id": "745ea50b-9673-4ba7-9426-cb45cf4a8e6d"
+            },
+            "rule_text": "title: Lace Tempest Malware Loader Execution\nid: 745ea50b-9673-4ba7-9426-cb45cf4a8e6d\nstatus: test\ndescription: Detects execution of a specific binary based on filename and hash used\n  by Lace Tempest to load additional malware as reported by SysAid Team\nreferences:\n- https://www.sysaid.com/blog/service-desk/on-premise-software-security-vulnerability-notification\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-11-09\ntags:\n- attack.execution\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: :\\Program Files\\SysAidServer\\tomcat\\webapps\\usersfiles\\user.exe\n  selection_hash:\n    Hashes|contains: SHA256=B5ACF14CDAC40BE590318DEE95425D0746E85B1B7B1CBD14DA66F21F2522BF4D\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

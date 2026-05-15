@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_reg_loader.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-18",
+                "title": "Scheduled Task Executing Payload from Registry",
+                "id": "86588b36-c6d3-465f-9cee-8f9093e07798"
+            },
+            "rule_text": "title: Scheduled Task Executing Payload from Registry\nid: 86588b36-c6d3-465f-9cee-8f9093e07798\nrelated:\n- id: c4eeeeae-89f4-43a7-8b48-8d1bdfa66c78\n  type: derived\nstatus: test\ndescription: Detects the creation of a schtasks that potentially executes a payload\n  stored in the Windows Registry using PowerShell.\nreferences:\n- https://thedfirreport.com/2022/02/21/qbot-and-zerologon-lead-to-full-domain-compromise/\nauthor: X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-18\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.005\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\schtasks.exe\n  - OriginalFileName: schtasks.exe\n  selection_cli_create:\n    CommandLine|contains: /Create\n  selection_cli_get:\n    CommandLine|contains:\n    - Get-ItemProperty\n    - ' gp '\n  selection_cli_hive:\n    CommandLine|contains:\n    - 'HKCU:'\n    - 'HKLM:'\n    - 'registry::'\n    - HKEY_\n  filter_main_encoding:\n    CommandLine|contains:\n    - FromBase64String\n    - encodedcommand\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

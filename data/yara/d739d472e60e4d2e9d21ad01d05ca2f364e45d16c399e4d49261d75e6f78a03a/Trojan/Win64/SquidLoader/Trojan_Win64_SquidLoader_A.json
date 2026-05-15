@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/SquidLoader/Trojan_Win64_SquidLoader_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_SquidLoader_A",
+                "tags": [],
+                "description": "Trojan:Win64/SquidLoader.A,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 07 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_SquidLoader_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/SquidLoader.A,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {5b 2d 5d 56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 20 66 61 69 6c 65 64 3a }\n\t\t$a_01_1 = {5b 2d 5d 56 69 72 74 75 61 6c 41 6c 6c 6f 63 20 66 61 69 6c 65 64 3a }\n\t\t$a_01_2 = {5b 2d 5d 43 72 65 61 74 65 46 69 62 65 72 20 66 61 69 6c 65 64 3a }\n\t\t$a_03_3 = {30 0c 06 0f ?? ?? ?? ?? 30 4c 06 01 0f ?? ?? ?? ?? 30 4c 06 02 0f }\n\t\t$a_03_4 = {30 ca 41 88 17 ?? ?? ?? ?? ?? ?? 00 41 0f b6 4f 01 0f ?? ?? ?? ?? ?? ?? 00 30 ca 41 88 57 01 }\n\t\t$a_01_5 = {48 b8 31 64 32 33 65 38 00 00 }\n\t\t$a_01_6 = {ba 50 14 0b 00 41 b9 42 4f 08 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 + ( #a_01_6 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

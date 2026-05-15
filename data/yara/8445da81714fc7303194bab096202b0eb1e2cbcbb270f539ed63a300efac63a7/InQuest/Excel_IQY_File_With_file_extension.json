@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/Excel_IQY_File_With_file_extension.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IQY_File_With_Pivot_Extension_URL",
+                "tags": [],
+                "Author": "InQuest Labs",
+                "Reference": "http://blog.inquest.net/blog/2018/08/23/hunting-iqy-files-with-yara/",
+                "Description": "Detect Excel IQY files with URLs that contain commonly used malicious file extensions that may act as a pivot to a secondary stage.",
+                "Severity": "9"
+            },
+            "rule_text": "rule IQY_File_With_Pivot_Extension_URL\n{\n\tmeta:\n\t\tAuthor = \"InQuest Labs\"\n\t\tReference = \"http://blog.inquest.net/blog/2018/08/23/hunting-iqy-files-with-yara/\"\n\t\tDescription = \"Detect Excel IQY files with URLs that contain commonly used malicious file extensions that may act as a pivot to a secondary stage.\"\n\t\tSeverity = \"9\"\n\n\tstrings:\n\t\t$web = /^[ \\t]*WEB[ \\t]*(\\x0A|\\x0D\\x0A)/ nocase\n\t\t$url = /https?:\\/\\/[\\w\\.\\/]+\\.(scr|exe|hta|vbs|ps1|bat|dat|rar|zip|ace)/ nocase\n\n\tcondition:\n\t\t$web at 0 and $url\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

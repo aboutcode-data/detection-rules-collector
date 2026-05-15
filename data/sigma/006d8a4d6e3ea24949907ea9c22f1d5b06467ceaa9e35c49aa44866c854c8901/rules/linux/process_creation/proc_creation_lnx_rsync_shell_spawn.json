@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_rsync_shell_spawn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Florian Roth",
+                "date": "2025-01-18",
+                "title": "Suspicious Invocation of Shell via Rsync",
+                "id": "297241f3-8108-4b3a-8c15-2dda9f844594"
+            },
+            "rule_text": "title: Suspicious Invocation of Shell via Rsync\nid: 297241f3-8108-4b3a-8c15-2dda9f844594\nstatus: experimental\ndescription: 'Detects the execution of a shell as sub process of \"rsync\" without the\n  expected command line flag \"-e\" being used, which could be an indication of exploitation\n  as described in CVE-2024-12084. This behavior is commonly associated with attempts\n  to execute arbitrary commands or escalate privileges, potentially leading to unauthorized\n  access or further exploitation.\n\n  '\nreferences:\n- https://sysdig.com/blog/detecting-and-mitigating-cve-2024-12084-rsync-remote-code-execution/\n- https://gist.github.com/Neo23x0/a20436375a1e26524931dd8ea1a3af10\nauthor: Florian Roth\ndate: 2025-01-18\ntags:\n- attack.execution\n- attack.t1059\n- attack.t1203\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    ParentImage|endswith:\n    - /rsync\n    - /rsyncd\n    Image|endswith:\n    - /ash\n    - /bash\n    - /csh\n    - /dash\n    - /ksh\n    - /sh\n    - /tcsh\n    - /zsh\n  filter_main_expected:\n    CommandLine|contains: ' -e '\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2024-12084"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/file_event/file_event_lnx_triple_cross_rootkit_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-05",
+                "title": "Triple Cross eBPF Rootkit Default Persistence",
+                "id": "1a2ea919-d11d-4d1e-8535-06cda13be20f"
+            },
+            "rule_text": "title: Triple Cross eBPF Rootkit Default Persistence\nid: 1a2ea919-d11d-4d1e-8535-06cda13be20f\nstatus: test\ndescription: Detects the creation of \"ebpfbackdoor\" files in both \"cron.d\" and \"sudoers.d\"\n  directories. Which both are related to the TripleCross persistence method\nreferences:\n- https://github.com/h3xduck/TripleCross/blob/12629558b8b0a27a5488a0b98f1ea7042e76f8ab/apps/deployer.sh\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-05\nmodified: 2022-12-31\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.003\nlogsource:\n  product: linux\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith: ebpfbackdoor\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

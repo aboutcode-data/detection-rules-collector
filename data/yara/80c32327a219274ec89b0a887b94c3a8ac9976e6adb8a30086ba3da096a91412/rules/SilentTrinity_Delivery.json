@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/SilentTrinity_Delivery.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SilentTrinity_Delivery_Document",
+                "tags": [],
+                "Description": "Attempts to detect SilentTrinity delivery documents",
+                "Author": "Adam M. Swanda",
+                "Website": "https://www.deadbits.org",
+                "Repo": "https://github.com/deadbits/yara-rules",
+                "Date": "2019-07-19",
+                "Reference": "https://countercept.com/blog/hunting-for-silenttrinity/"
+            },
+            "rule_text": "rule SilentTrinity_Delivery_Document\n{\n\tmeta:\n\t\tDescription = \"Attempts to detect SilentTrinity delivery documents\"\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tWebsite = \"https://www.deadbits.org\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\t\tDate = \"2019-07-19\"\n\t\tReference = \"https://countercept.com/blog/hunting-for-silenttrinity/\"\n\n\tstrings:\n\t\t$s0 = \"VBE7.DLL\" fullword ascii\n\t\t$s1 = \"TargetPivotTable\" fullword ascii\n\t\t$s2 = \"DocumentUserPassword\" fullword wide\n\t\t$s3 = \"DocumentOwnerPassword\" fullword wide\n\t\t$s4 = \"Scripting.FileSystemObject\" fullword wide\n\t\t$s5 = \"MSXML2.ServerXMLHTTP\" fullword wide\n\t\t$s6 = \"Win32_ProcessStartup \" fullword ascii\n\t\t$s7 = \"Step 3: Start looping through all worksheets\" fullword ascii\n\t\t$s8 = \"Step 2: Start looping through all worksheets\" fullword ascii\n\t\t$s9 = \"Stringer\" fullword wide\n\t\t$s10 = \"-decode -f\" fullword wide\n\t\t$s11 = \"2. Da biste pogledali dokument, molimo kliknite \\\"OMOGU\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0xcfd0 and filesize < 200KB and ( 8 of ( $s* ) or all of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

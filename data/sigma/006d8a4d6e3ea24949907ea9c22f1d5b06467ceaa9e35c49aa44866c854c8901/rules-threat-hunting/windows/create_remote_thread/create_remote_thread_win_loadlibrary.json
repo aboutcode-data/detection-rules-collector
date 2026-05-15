@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_loadlibrary.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez @Cyb3rWard0g",
+                "date": "2019-08-11",
+                "title": "CreateRemoteThread API and LoadLibrary",
+                "id": "052ec6f6-1adc-41e6-907a-f1c813478bee"
+            },
+            "rule_text": "title: CreateRemoteThread API and LoadLibrary\nid: 052ec6f6-1adc-41e6-907a-f1c813478bee\nstatus: test\ndescription: Detects potential use of CreateRemoteThread api and LoadLibrary function\n  to inject DLL into a process\nreferences:\n- https://threathunterplaybook.com/hunts/windows/180719-DLLProcessInjectionCreateRemoteThread/notebook.html\nauthor: Roberto Rodriguez @Cyb3rWard0g\ndate: 2019-08-11\nmodified: 2024-01-22\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055.001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: create_remote_thread\ndetection:\n  selection:\n    StartModule|endswith: \\kernel32.dll\n    StartFunction: LoadLibraryA\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

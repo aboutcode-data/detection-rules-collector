@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/Email_generic_phishing.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Email_Generic_Phishing",
+                "tags": [
+                    "email"
+                ],
+                "Author": "Tyler <@InfoSecTyler>",
+                "Description": "Generic rule to identify phishing emails"
+            },
+            "rule_text": "rule Email_Generic_Phishing : email\n{\n\tmeta:\n\t\tAuthor = \"Tyler <@InfoSecTyler>\"\n\t\tDescription = \"Generic rule to identify phishing emails\"\n\n\tstrings:\n\t\t$eml_1 = \"From:\"\n\t\t$eml_2 = \"To:\"\n\t\t$eml_3 = \"Subject:\"\n\t\t$greeting_1 = \"Hello sir/madam\" nocase\n\t\t$greeting_2 = \"Attention\" nocase\n\t\t$greeting_3 = \"Dear user\" nocase\n\t\t$greeting_4 = \"Account holder\" nocase\n\t\t$url_1 = \"Click\" nocase\n\t\t$url_2 = \"Confirm\" nocase\n\t\t$url_3 = \"Verify\" nocase\n\t\t$url_4 = \"Here\" nocase\n\t\t$url_5 = \"Now\" nocase\n\t\t$url_6 = \"Change password\" nocase\n\t\t$lie_1 = \"Unauthorized\" nocase\n\t\t$lie_2 = \"Expired\" nocase\n\t\t$lie_3 = \"Deleted\" nocase\n\t\t$lie_4 = \"Suspended\" nocase\n\t\t$lie_5 = \"Revoked\" nocase\n\t\t$lie_6 = \"Unable\" nocase\n\n\tcondition:\n\t\tall of ( $eml* ) and any of ( $greeting* ) and any of ( $url* ) and any of ( $lie* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

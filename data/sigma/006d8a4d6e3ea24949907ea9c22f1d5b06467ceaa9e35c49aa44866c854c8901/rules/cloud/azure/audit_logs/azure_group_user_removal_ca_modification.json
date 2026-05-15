@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_group_user_removal_ca_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Thomas Detzner '@tdetzner'",
+                "date": "2022-08-04",
+                "title": "User Removed From Group With CA Policy Modification Access",
+                "id": "665e2d43-70dc-4ccc-9d27-026c9dd7ed9c"
+            },
+            "rule_text": "title: User Removed From Group With CA Policy Modification Access\nid: 665e2d43-70dc-4ccc-9d27-026c9dd7ed9c\nstatus: test\ndescription: Monitor and alert on group membership removal of groups that have CA\n  policy modification access\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-infrastructure#conditional-access\nauthor: Mark Morowczynski '@markmorow', Thomas Detzner '@tdetzner'\ndate: 2022-08-04\ntags:\n- attack.privilege-escalation\n- attack.credential-access\n- attack.persistence\n- attack.defense-impairment\n- attack.t1548\n- attack.t1556\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message: Remove member from group\n  condition: selection\nfalsepositives:\n- User removed from the group is approved\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

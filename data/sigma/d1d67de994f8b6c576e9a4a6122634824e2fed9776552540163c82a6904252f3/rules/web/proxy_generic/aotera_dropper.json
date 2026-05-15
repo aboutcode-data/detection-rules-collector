@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/aotera_dropper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Kim Bokholm, Amata Anantaprayoon",
+                "date": "2026-01-14",
+                "title": "Aotera_Dropper",
+                "id": "b8c8f53a-9520-4289-a6ce-a725c1567b35"
+            },
+            "rule_text": "title: Aotera_Dropper\nid: b8c8f53a-9520-4289-a6ce-a725c1567b35\ndescription: 'New Dropper (Oct 2025). The malware appears to use the open-source project\n  Donut to load a 2nd stage payload into memory. Detects requests to specific URI\n  patterns observed in campaign telemetry.\n\n  '\nstatus: experimental\nauthor: Kim Bokholm, Amata Anantaprayoon\ndate: 2026-01-14\nmodified: 2026-01-14\nlogsource:\n  category: proxy\ndetection:\n  selection_uri_initial_infection:\n    uri_path|re: ^/new/log/[0-9a-fA-F]{8}/(?:success/\\d{10}|startLoader/\\d{10}|startCrypt)$\n  selection_uri_2ndstage:\n    uri_path|re: ^/n(?:front|back)\\.php$\n  condition: selection_uri_initial_infection or selection_uri_2ndstage\nfalsepositives:\n- Web application endpoints that legitimately use matching paths\nlevel: high\ntags:\n- attack.command_and_control\nreferences:\n- https://www.joesandbox.com/analysis/1795404/1/html#HTTP_Packets\n",
+            "vulnerabilities": []
+        }
+    ]
+}

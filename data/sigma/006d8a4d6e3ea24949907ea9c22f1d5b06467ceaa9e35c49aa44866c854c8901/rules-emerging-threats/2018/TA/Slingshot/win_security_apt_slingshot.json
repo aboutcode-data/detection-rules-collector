@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2018/TA/Slingshot/win_security_apt_slingshot.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Bartlomiej Czyz (@bczyz1)",
+                "date": "2019-03-04",
+                "title": "Defrag Deactivation - Security",
+                "id": "c5a178bf-9cfb-4340-b584-e4df39b6a3e7"
+            },
+            "rule_text": "title: Defrag Deactivation - Security\nid: c5a178bf-9cfb-4340-b584-e4df39b6a3e7\nrelated:\n- id: 958d81aa-8566-4cea-a565-59ccd4df27b0\n  type: derived\nstatus: test\ndescription: Detects the deactivation and disabling of the Scheduled defragmentation\n  task as seen by Slingshot APT group\nreferences:\n- https://securelist.com/apt-slingshot/84312/\nauthor: Florian Roth (Nextron Systems), Bartlomiej Czyz (@bczyz1)\ndate: 2019-03-04\nmodified: 2022-11-27\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053\n- attack.s0111\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Policy : Audit Other Object Access Events > Success'\ndetection:\n  selection:\n    EventID: 4701\n    TaskName: \\Microsoft\\Windows\\Defrag\\ScheduledDefrag\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

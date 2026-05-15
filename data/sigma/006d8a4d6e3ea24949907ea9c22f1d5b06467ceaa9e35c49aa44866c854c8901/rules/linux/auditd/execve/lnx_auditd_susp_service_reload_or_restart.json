@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_susp_service_reload_or_restart.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jakob Weinzettl, oscd.community, CheraghiMilad",
+                "date": "2019-09-23",
+                "title": "Service Reload or Start - Linux",
+                "id": "2625cc59-0634-40d0-821e-cb67382a3dd7"
+            },
+            "rule_text": "title: Service Reload or Start - Linux\nid: 2625cc59-0634-40d0-821e-cb67382a3dd7\nstatus: test\ndescription: Detects the start, reload or restart of a service.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.002/T1543.002.md\nauthor: Jakob Weinzettl, oscd.community, CheraghiMilad\ndate: 2019-09-23\nmodified: 2025-03-03\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1543.002\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0|contains:\n    - systemctl\n    - service\n    a1|contains:\n    - reload\n    - start\n  condition: selection\nfalsepositives:\n- Installation of legitimate service.\n- Legitimate reconfiguration of service.\n- Command line contains daemon-reload.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

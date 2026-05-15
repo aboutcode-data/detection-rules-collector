@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Neoreblamy/Trojan_Win32_Neoreblamy_CG_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Neoreblamy_CG_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Neoreblamy.CG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Neoreblamy_CG_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Neoreblamy.CG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 08 23 45 0c 89 85 ?? ?? ff ff 8b 45 08 23 45 0c 89 85 }\n\t\t$a_01_1 = {2b c8 03 4d }\n\t\t$a_01_2 = {ff ff 2b 85 }\n\t\t$a_01_3 = {ff ff 89 85 }\n\t\t$a_01_4 = {ff ff 8b 85 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Drixed/Backdoor_Win32_Drixed_M.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Drixed_M",
+                "tags": [],
+                "description": "Backdoor:Win32/Drixed.M,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 05 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Drixed_M\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Drixed.M,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 5c d6 10 8b 6c d6 14 33 d8 89 5c 24 10 33 ef 89 7c 24 04 89 6c 24 14 8b e9 89 04 24 }\n\t\t$a_01_1 = {8b 44 cf 10 8b 7c cf 14 33 44 24 0c 33 7c 24 08 89 04 24 33 c0 89 7c 24 04 0f b7 3c 44 }\n\t\t$a_01_2 = {68 00 80 00 00 6a 00 ff b0 1c 04 00 00 68 34 12 00 00 ff b0 20 07 00 00 ff e2 }\n\t\t$a_01_3 = {74 0b 41 be 45 84 00 00 e9 a4 00 00 00 b9 96 69 00 00 41 be 45 84 00 00 49 8b 97 18 04 00 00 }\n\t\t$a_01_4 = {8b 4c 24 04 8b 3c 24 8b 5c 24 2c 8b 74 d3 14 8b 44 d3 10 33 f1 89 74 24 14 33 c7 89 3c 24 89 44 24 10 8b c5 8b 6c 24 0c 8b 4c 24 08 8b 74 24 34 8b 7c 24 30 0f b7 5c 44 10 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 4 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 4 + ( #a_01_3 & 1 ) * 4 + ( #a_01_4 & 1 ) * 1 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Razy/Trojan_Win32_Razy_V_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Razy_V_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Razy.V!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Razy_V_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Razy.V!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8d 4a 03 32 8a ?? ?? ?? ?? 32 cb 88 8a ?? ?? ?? ?? 42 83 fa ?? 7c e9 }\n\t\t$a_02_1 = {8d 41 03 32 81 ?? ?? ?? ?? 32 c2 88 81 ?? ?? ?? ?? 41 83 f9 ?? 7c e9 }\n\t\t$a_02_2 = {8d 41 03 32 c2 30 81 ?? ?? ?? ?? 41 83 f9 ?? 7c ef }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

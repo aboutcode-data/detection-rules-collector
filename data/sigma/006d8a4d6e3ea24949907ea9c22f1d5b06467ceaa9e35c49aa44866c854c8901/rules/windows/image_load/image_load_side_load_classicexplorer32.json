@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_classicexplorer32.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-13",
+                "title": "Potential DLL Sideloading Via ClassicExplorer32.dll",
+                "id": "caa02837-f659-466f-bca6-48bde2826ab4"
+            },
+            "rule_text": "title: Potential DLL Sideloading Via ClassicExplorer32.dll\nid: caa02837-f659-466f-bca6-48bde2826ab4\nstatus: test\ndescription: Detects potential DLL sideloading using ClassicExplorer32.dll from the\n  Classic Shell software\nreferences:\n- https://blogs.blackberry.com/en/2022/12/mustang-panda-uses-the-russian-ukrainian-war-to-attack-europe-and-asia-pacific-targets\n- https://app.any.run/tasks/6d8cabb0-dcda-44b6-8050-28d6ce281687/\nauthor: frack113\ndate: 2022-12-13\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection_classicexplorer:\n    ImageLoaded|endswith: \\ClassicExplorer32.dll\n  filter_classicexplorer:\n    ImageLoaded|startswith: C:\\Program Files\\Classic Shell\\\n  condition: selection_classicexplorer and not filter_classicexplorer\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vscode_tunnel_renamed_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-28",
+                "title": "Renamed Visual Studio Code Tunnel Execution",
+                "id": "2cf29f11-e356-4f61-98c0-1bdb9393d6da"
+            },
+            "rule_text": "title: Renamed Visual Studio Code Tunnel Execution\nid: 2cf29f11-e356-4f61-98c0-1bdb9393d6da\nstatus: test\ndescription: Detects renamed Visual Studio Code tunnel execution. Attackers can abuse\n  this functionality to establish a C2 channel\nreferences:\n- https://ipfyx.fr/post/visual-studio-code-tunnel/\n- https://badoption.eu/blog/2023/01/31/code_c2.html\n- https://code.visualstudio.com/docs/remote/tunnels\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-28\nmodified: 2025-10-29\ntags:\n- attack.command-and-control\n- attack.t1071.001\n- attack.t1219\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_image_only_tunnel:\n    OriginalFileName: null\n    CommandLine|endswith: .exe tunnel\n  selection_image_tunnel_args:\n    CommandLine|contains|all:\n    - .exe tunnel\n    - --accept-server-license-terms\n  selection_image_tunnel_service:\n    CommandLine|contains|all:\n    - 'tunnel '\n    - service\n    - internal-run\n    - tunnel-service.log\n  selection_parent_tunnel:\n    ParentCommandLine|endswith: ' tunnel'\n    Image|endswith: \\cmd.exe\n    CommandLine|contains|all:\n    - '/d /c '\n    - \\servers\\Stable-\n    - code-server.cmd\n  filter_main_parent_code:\n    ParentImage|endswith:\n    - \\code-tunnel.exe\n    - \\code.exe\n  filter_main_image_code:\n    Image|endswith:\n    - \\code-tunnel.exe\n    - \\code.exe\n  condition: (1 of selection_image_* and not 1 of filter_main_image_*) or (selection_parent_tunnel\n    and not 1 of filter_main_parent_*)\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_iptables_flush_ufw.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2023-01-18",
+                "title": "Flush Iptables Ufw Chain",
+                "id": "3be619f4-d9ec-4ea8-a173-18fdd01996ab"
+            },
+            "rule_text": "title: Flush Iptables Ufw Chain\nid: 3be619f4-d9ec-4ea8-a173-18fdd01996ab\nstatus: test\ndescription: Detect use of iptables to flush all firewall rules, tables and chains\n  and allow all network traffic\nreferences:\n- https://blogs.blackberry.com/\n- https://www.cyberciti.biz/tips/linux-iptables-how-to-flush-all-rules.html\n- https://twitter.com/Joseliyo_Jstnk/status/1620131033474822144\nauthor: Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2023-01-18\ntags:\n- attack.defense-impairment\n- attack.t1686\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_img:\n    Image|endswith:\n    - /iptables\n    - /xtables-legacy-multi\n    - /iptables-legacy-multi\n    - /ip6tables\n    - /ip6tables-legacy-multi\n  selection_params:\n    CommandLine|contains:\n    - -F\n    - -Z\n    - -X\n  selection_ufw:\n    CommandLine|contains:\n    - ufw-logging-deny\n    - ufw-logging-allow\n    - ufw6-logging-deny\n    - ufw6-logging-allow\n  condition: all of selection_*\nfalsepositives:\n- Network administrators\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/file_event/file_event_lnx_susp_cron_file_created.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC",
+                "date": "2021-10-15",
+                "title": "New Cron File Created",
+                "id": "6c4e2f43-d94d-4ead-b64d-97e53fa2bd05"
+            },
+            "rule_text": "title: New Cron File Created\nid: 6c4e2f43-d94d-4ead-b64d-97e53fa2bd05\nstatus: experimental\ndescription: 'Detects the creation of cron files in Cron directories, which could\n  indicate potential persistence mechanisms being established by an attacker.\n\n  Note that not all cron file creations are malicious - legitimate system administration\n  activities and software installations may also create cron files.\n\n  This detection should be investigated in context, considering factors such as the\n  user creating the file, the timing of creation, and the contents of the cron job.\n\n  Focus investigation on unexpected cron files created by non-administrative users\n  or during suspicious timeframes.\n\n  Additionally, it is recommended to review the contents of the newly created cron\n  files to assess their intent.\n\n  Furthermore, it is suggested to baseline normal cron file creation and apply additional\n  filters to reduce false positives based on the specific environment.\n\n  '\nreferences:\n- https://github.com/microsoft/MSTIC-Sysmon/blob/f1477c0512b0747c1455283069c21faec758e29d/linux/configs/attack-based/persistence/T1053.003_Cron_Activity.xml\n- https://pberba.github.io/security/2022/01/30/linux-threat-hunting-for-persistence-systemd-timers-cron/\n- https://www.elastic.co/security-labs/primer-on-persistence-mechanisms\n- https://snehbavarva.medium.com/privilege-escalation-techniques-series-linux-cron-jobs-a5b797b424b4\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC\ndate: 2021-10-15\nmodified: 2026-04-28\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053.003\nlogsource:\n  product: linux\n  category: file_event\ndetection:\n  selection_cron_dirs:\n    TargetFilename|startswith:\n    - /etc/cron.d/\n    - /etc/cron.daily/\n    - /etc/cron.hourly/\n    - /etc/cron.monthly/\n    - /etc/cron.weekly/\n    - /var/spool/cron/crontabs/\n    - /var/spool/cron/root\n  selection_cron_special_files:\n    TargetFilename|contains:\n    - /etc/cron.allow\n    - /etc/cron.deny\n    - /etc/crontab\n  filter_optional_legit_cron:\n    TargetFilename:\n    - /etc/cron.daily/apt\n    - /etc/cron.daily/dpkg\n    - /etc/cron.daily/passwd\n    - /etc/crontabs/root\n  condition: 1 of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate administrative tasks, package managers, containers, configuration management\n  tools, cloud agents, or system maintenance operations might cause false positives.\n  Apply baselining before deployment.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

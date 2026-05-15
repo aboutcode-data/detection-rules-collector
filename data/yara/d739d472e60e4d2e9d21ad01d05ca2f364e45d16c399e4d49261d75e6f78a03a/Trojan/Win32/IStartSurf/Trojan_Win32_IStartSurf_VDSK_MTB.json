@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/IStartSurf/Trojan_Win32_IStartSurf_VDSK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_IStartSurf_VDSK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/IStartSurf.VDSK!MTB,SIGNATURE_TYPE_PEHSTR,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_IStartSurf_VDSK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/IStartSurf.VDSK!MTB,SIGNATURE_TYPE_PEHSTR,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 45 08 88 4d 0f 8a 04 02 32 c1 8b 4d 18 88 04 0e 8b 45 bc }\n\t\t$a_01_1 = {89 45 e8 89 7d f8 03 c0 83 f1 3a 8b 45 cc 40 89 7d d4 89 45 cc 3b 45 10 0f 82 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_browser_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-04-05",
+                "title": "Suspicious Browser Child Process - MacOS",
+                "id": "0250638a-2b28-4541-86fc-ea4c558fa0c6"
+            },
+            "rule_text": "title: Suspicious Browser Child Process - MacOS\nid: 0250638a-2b28-4541-86fc-ea4c558fa0c6\nstatus: test\ndescription: Detects suspicious child processes spawned from browsers. This could\n  be a result of a potential web browser exploitation.\nreferences:\n- https://fr.slideshare.net/codeblue_jp/cb19-recent-apt-attack-on-crypto-exchange-employees-by-heungsoo-kang\n- https://github.com/elastic/detection-rules/blob/4312d8c9583be524578a14fe6295c3370b9a9307/rules/macos/execution_initial_access_suspicious_browser_childproc.toml\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-04-05\ntags:\n- attack.initial-access\n- attack.execution\n- attack.t1189\n- attack.t1203\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    ParentImage|contains:\n    - com.apple.WebKit.WebContent\n    - firefox\n    - Google Chrome Helper\n    - Google Chrome\n    - Microsoft Edge\n    - Opera\n    - Safari\n    - Tor Browser\n    Image|endswith:\n    - /bash\n    - /curl\n    - /dash\n    - /ksh\n    - /osascript\n    - /perl\n    - /php\n    - /pwsh\n    - /python\n    - /sh\n    - /tcsh\n    - /wget\n    - /zsh\n  filter_main_generic:\n    CommandLine|contains: --defaults-torrc\n  filter_main_ms_autoupdate:\n    CommandLine|contains: /Library/Application Support/Microsoft/MAU*/Microsoft AutoUpdate.app/Contents/MacOS/msupdate\n  filter_main_chrome:\n    ParentImage|contains:\n    - Google Chrome Helper\n    - Google Chrome\n    CommandLine|contains:\n    - /Volumes/Google Chrome/Google Chrome.app/Contents/Frameworks/*/Resources/install.sh\n    - /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/*/Resources/keystone_promote_preflight.sh\n    - /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/*/Resources/keystone_promote_postflight.sh\n  filter_main_ms_edge:\n    ParentImage|contains: Microsoft Edge\n    CommandLine|contains:\n    - IOPlatformExpertDevice\n    - hw.model\n  filter_main_chromerecovery:\n    ParentImage|contains:\n    - Google Chrome Helper\n    - Google Chrome\n    CommandLine|contains|all:\n    - /Users/\n    - /Library/Application Support/Google/Chrome/recovery/\n    - /ChromeRecovery\n  filter_optional_null:\n    CommandLine: null\n  filter_optional_empty:\n    CommandLine: ''\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate browser install, update and recovery scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

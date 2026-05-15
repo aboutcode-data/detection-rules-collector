@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Cado Security/Powershell_Downloader_POWERGAP.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Powershell_Downloader_POWERGAP",
+                "tags": [],
+                "description": "Detects POWERGAP downloader used against Ukrainian ICS",
+                "reference": "https://github.com/cado-security/DFIR_Resources_Industroyer2",
+                "author": "mmuir@cadosecurity.com",
+                "date": "2022-04-12",
+                "license": "Apache License 2.0"
+            },
+            "rule_text": "rule Powershell_Downloader_POWERGAP\n{\n\tmeta:\n\t\tdescription = \"Detects POWERGAP downloader used against Ukrainian ICS\"\n\t\treference = \"https://github.com/cado-security/DFIR_Resources_Industroyer2\"\n\t\tauthor = \"mmuir@cadosecurity.com\"\n\t\tdate = \"2022-04-12\"\n\t\tlicense = \"Apache License 2.0\"\n\n\tstrings:\n\t\t$a = \"Start-work\" ascii\n\t\t$b = \"$GpoGuid\" ascii\n\t\t$c = \"$SourceFile\" ascii\n\t\t$d = \"$DestinationFile\" ascii\n\t\t$e = \"$appName\" ascii\n\t\t$f = \"LDAP://ROOTDSE\" ascii\n\t\t$g = \"GPT.INI\" ascii\n\t\t$h = \"Get-WmiObject\" ascii\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/MalGamy/YARA_Rules/blob/master/lumma_stealer.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "detect_Lumma_stealer",
+                "tags": [
+                    "Lumma"
+                ],
+                "description": "detect_Lumma_stealer",
+                "author": "@malgamy12",
+                "date": "2022-11-3",
+                "license": "DRL 1.1",
+                "hunting": "https://www.hybrid-analysis.com/sample/f18d0cd673fd0bd3b071987b53b5f97391a56f6e4f0c309a6c1cee6160f671c0",
+                "hash1": "19b937654065f5ee8baee95026f6ea7466ee2322",
+                "hash2": "987f93e6fa93c0daa0ef2cf4a781ca53a02b65fe",
+                "hash3": "70517a53551269d68b969a9328842cea2e1f975c",
+                "hash4": "9b7b72c653d07a611ce49457c73ee56ed4c4756e",
+                "hash5": "4992ebda2b069281c924288122f76556ceb5ae02",
+                "hash6": "5c67078819246f45ff37d6db81328be12f8fc192",
+                "hash7": "87fe98a00e1c3ed433e7ba6a6eedee49eb7a9cf9"
+            },
+            "rule_text": "rule detect_Lumma_stealer : Lumma\n{\n\tmeta:\n\t\tdescription = \"detect_Lumma_stealer\"\n\t\tauthor = \"@malgamy12\"\n\t\tdate = \"2022-11-3\"\n\t\tlicense = \"DRL 1.1\"\n\t\thunting = \"https://www.hybrid-analysis.com/sample/f18d0cd673fd0bd3b071987b53b5f97391a56f6e4f0c309a6c1cee6160f671c0\"\n\t\thash1 = \"19b937654065f5ee8baee95026f6ea7466ee2322\"\n\t\thash2 = \"987f93e6fa93c0daa0ef2cf4a781ca53a02b65fe\"\n\t\thash3 = \"70517a53551269d68b969a9328842cea2e1f975c\"\n\t\thash4 = \"9b7b72c653d07a611ce49457c73ee56ed4c4756e\"\n\t\thash5 = \"4992ebda2b069281c924288122f76556ceb5ae02\"\n\t\thash6 = \"5c67078819246f45ff37d6db81328be12f8fc192\"\n\t\thash7 = \"87fe98a00e1c3ed433e7ba6a6eedee49eb7a9cf9\"\n\n\tstrings:\n\t\t$m1 = \"LummaC\\\\Release\\\\LummaC.pdb\" ascii fullword\n\t\t$s1 = \"Cookies.txt\" ascii\n\t\t$s2 = \"Autofills.txt\" ascii\n\t\t$s3 = \"ProgramData\\\\config.txt\" ascii\n\t\t$s4 = \"ProgramData\\\\softokn3.dll\" ascii\n\t\t$s5 = \"ProgramData\\\\winrarupd.zip\" ascii\n\t\t$chunk_1 = {C1 E8 ?? 33 C6 69 C8 ?? ?? ?? ?? 5F 5E 8B C1 C1 E8 ??}\n\n\tcondition:\n\t\t$m1 or ( 4 of ( $s* ) and $chunk_1 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

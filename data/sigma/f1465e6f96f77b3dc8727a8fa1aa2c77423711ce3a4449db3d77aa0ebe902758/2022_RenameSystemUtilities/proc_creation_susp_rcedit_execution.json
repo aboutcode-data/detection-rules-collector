@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RenameSystemUtilities/proc_creation_susp_rcedit_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/11",
+                "title": "Suspicious Use of Rcedit Utility to Alter Executable Metadata",
+                "id": "0c92f2e6-f08f-4b73-9216-ecb0ca634689"
+            },
+            "rule_text": "title: Suspicious Use of Rcedit Utility to Alter Executable Metadata\nid: 0c92f2e6-f08f-4b73-9216-ecb0ca634689\nstatus: experimental\ndescription: Detects the suspicious use of rcedit to potentially alter executable\n  PE metadata properties, which could conceal efforts to rename system utilities for\n  defense evasion.\nreferences:\n- https://security.stackexchange.com/questions/210843/is-it-possible-to-change-original-filename-of-an-exe\n- https://www.virustotal.com/gui/file/02e8e8c5d430d8b768980f517b62d7792d690982b9ba0f7e04163cbc1a6e7915\n- https://github.com/electron/rcedit\nauthor: Micah Babinski\ndate: 2022/12/11\ntags:\n- attack.defense_evasion\n- attack.t1036.003\n- attack.t1036\n- attack.t1027.005\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    Image|endswith:\n    - \\rcedit-x64.exe\n    - \\rcedit-x86.exe\n    CommandLine|contains: --set-resource-string\n  selection2:\n    CommandLine|contains:\n    - OriginalFileName\n    - CompanyName\n    - FileDescription\n    - ProductName\n    - ProductVersion\n    - LegalCopyright\n  condition: selection1 and selection2\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_ad_account_created_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', MikeDuddington, '@dudders1', Tim Shelton",
+                "date": "2022-08-11",
+                "title": "Account Created And Deleted Within A Close Time Frame",
+                "id": "6f583da0-3a90-4566-a4ed-83c09fe18bbf"
+            },
+            "rule_text": "title: Account Created And Deleted Within A Close Time Frame\nid: 6f583da0-3a90-4566-a4ed-83c09fe18bbf\nstatus: test\ndescription: Detects when an account was created and deleted in a short period of\n  time.\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-user-accounts#short-lived-accounts\nauthor: Mark Morowczynski '@markmorow', MikeDuddington, '@dudders1', Tim Shelton\ndate: 2022-08-11\nmodified: 2022-08-18\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.initial-access\n- attack.stealth\n- attack.t1078\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message:\n    - Add user\n    - Delete user\n    Status: Success\n  condition: selection\nfalsepositives:\n- Legit administrative action\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

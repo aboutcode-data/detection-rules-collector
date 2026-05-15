@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zbot/Trojan_Win32_Zbot_SIBG_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zbot_SIBG_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Zbot.SIBG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0b 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zbot_SIBG_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zbot.SIBG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0b 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {62 75 64 68 61 2e 65 78 65 }\n\t\t$a_80_1 = {6b 69 6c 66 2e 65 78 65 }\n\t\t$a_02_2 = {8b 16 31 c2 8b 5d ?? 29 da 29 c3 c1 c8 ?? 89 45 ?? 89 5d 90 1b 00 89 16 83 c6 ?? e2 e5 }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 1 + ( #a_80_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 10 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_svchost_termserv_proc_spawn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-05-22",
+                "title": "Terminal Service Process Spawn",
+                "id": "1012f107-b8f1-4271-af30-5aed2de89b39"
+            },
+            "rule_text": "title: Terminal Service Process Spawn\nid: 1012f107-b8f1-4271-af30-5aed2de89b39\nstatus: test\ndescription: Detects a process spawned by the terminal service server process (this\n  could be an indicator for an exploitation of CVE-2019-0708)\nreferences:\n- https://securingtomorrow.mcafee.com/other-blogs/mcafee-labs/rdp-stands-for-really-do-patch-understanding-the-wormable-rdp-vulnerability-cve-2019-0708/\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-05-22\nmodified: 2023-01-25\ntags:\n- attack.initial-access\n- attack.t1190\n- attack.lateral-movement\n- attack.t1210\n- car.2013-07-002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentCommandLine|contains|all:\n    - \\svchost.exe\n    - termsvcs\n  filter_img:\n    Image|endswith:\n    - \\rdpclip.exe\n    - :\\Windows\\System32\\csrss.exe\n    - :\\Windows\\System32\\wininit.exe\n    - :\\Windows\\System32\\winlogon.exe\n  filter_null:\n    Image: null\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2019-0708"
+            ]
+        }
+    ]
+}

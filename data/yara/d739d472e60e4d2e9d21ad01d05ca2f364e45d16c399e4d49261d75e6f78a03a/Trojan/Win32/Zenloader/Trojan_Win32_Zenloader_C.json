@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zenloader/Trojan_Win32_Zenloader_C.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zenloader_C",
+                "tags": [],
+                "description": "Trojan:Win32/Zenloader.C,SIGNATURE_TYPE_CMDHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zenloader_C\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zenloader.C,SIGNATURE_TYPE_CMDHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {72 00 75 00 6e 00 64 00 6c 00 6c 00 33 00 32 00 }\n\t\t$a_00_1 = {2c 00 70 00 6c 00 61 00 74 00 66 00 6f 00 72 00 6d 00 63 00 6c 00 69 00 65 00 6e 00 74 00 6d 00 61 00 69 00 6e 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zenloader_C_2",
+                "tags": [],
+                "description": "Trojan:Win32/Zenloader.C,SIGNATURE_TYPE_PEHSTR,1e 00 1e 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zenloader_C_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zenloader.C,SIGNATURE_TYPE_PEHSTR,1e 00 1e 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {70 6c 61 74 66 6f 72 6d 63 6c 69 65 6e 74 6d 61 69 6e }\n\t\t$a_01_1 = {72 75 6e 6d 6f 64 75 6c 65 }\n\t\t$a_01_2 = {23 35 30 30 38 23 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

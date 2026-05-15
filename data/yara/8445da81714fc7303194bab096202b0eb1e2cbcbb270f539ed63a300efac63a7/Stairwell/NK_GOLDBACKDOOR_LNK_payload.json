@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Stairwell/NK_GOLDBACKDOOR_LNK_payload.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NK_GOLDBACKDOOR_LNK_payload",
+                "tags": [],
+                "author": "Silas Cutler (silas@Stairwell.com)",
+                "description": "Detection for obfuscated Powershell contained in LNK file that deploys GOLDBACKDOOR",
+                "reference": "https://stairwell.com/news/threat-research-the-ink-stained-trail-of-goldbackdoor/",
+                "version": "0.1"
+            },
+            "rule_text": "rule NK_GOLDBACKDOOR_LNK_payload\n{\n\tmeta:\n\t\tauthor = \"Silas Cutler (silas@Stairwell.com)\"\n\t\tdescription = \"Detection for obfuscated Powershell contained in LNK file that deploys GOLDBACKDOOR\"\n\t\treference = \"https://stairwell.com/news/threat-research-the-ink-stained-trail-of-goldbackdoor/\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$ = \"WriteByte($x0, $h-1, ($xmpw4[$h] -bxor $xmpw4[0]\" ascii wide nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

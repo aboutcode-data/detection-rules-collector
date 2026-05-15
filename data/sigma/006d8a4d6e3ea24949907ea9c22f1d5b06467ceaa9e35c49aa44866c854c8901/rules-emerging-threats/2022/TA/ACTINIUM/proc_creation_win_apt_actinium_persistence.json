@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2022/TA/ACTINIUM/proc_creation_win_apt_actinium_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades)",
+                "date": "2022-02-07",
+                "title": "Potential ACTINIUM Persistence Activity",
+                "id": "e1118a8f-82f5-44b3-bb6b-8a284e5df602"
+            },
+            "rule_text": "title: Potential ACTINIUM Persistence Activity\nid: e1118a8f-82f5-44b3-bb6b-8a284e5df602\nstatus: test\ndescription: Detects specific process parameters as used by ACTINIUM scheduled task\n  persistence creation.\nreferences:\n- https://www.microsoft.com/security/blog/2022/02/04/actinium-targets-ukrainian-organizations\nauthor: Andreas Hunkeler (@Karneades)\ndate: 2022-02-07\nmodified: 2023-03-18\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1053\n- attack.t1053.005\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - schtasks\n    - create\n    - wscript\n    - ' /e:vbscript'\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

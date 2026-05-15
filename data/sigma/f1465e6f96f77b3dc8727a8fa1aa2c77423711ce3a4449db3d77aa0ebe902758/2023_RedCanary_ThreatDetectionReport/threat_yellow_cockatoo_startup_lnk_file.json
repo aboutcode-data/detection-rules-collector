@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_yellow_cockatoo_startup_lnk_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Yellow Cockatoo Powershell Startup Folder Persistence (RedCanary Threat Detection Report)",
+                "id": "874acb07-02f7-4c9f-8069-e0659c6d3fad"
+            },
+            "rule_text": "title: Yellow Cockatoo Powershell Startup Folder Persistence (RedCanary Threat Detection\n  Report)\nid: 874acb07-02f7-4c9f-8069-e0659c6d3fad\nstatus: experimental\ndescription: 'Detects .lnk files created by Powershell in the startup folder. Associated\n  with (but not unique to)\n\n  Yellow Cockatoo, AKA Solarmarker/Jupyter Stealer. Part of the RedCanary 2023 Threat\n  Detection Report.\n\n  '\nreferences:\n- https://redcanary.com/threat-detection-report/threats/yellow-cockatoo/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.initial_access\n- attack.defense_evasion\n- attack.t1566\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\powershell.exe\n  selection_filepath:\n    TargetFilename|contains: start menu\\programs\\startup\n  selection_file_ext:\n    TargetFilename|endswith: .lnk\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

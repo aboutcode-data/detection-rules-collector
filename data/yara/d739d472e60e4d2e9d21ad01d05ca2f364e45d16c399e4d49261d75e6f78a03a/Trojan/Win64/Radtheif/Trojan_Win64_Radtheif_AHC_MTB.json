@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Radtheif/Trojan_Win64_Radtheif_AHC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Radtheif_AHC_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Radtheif.AHC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Radtheif_AHC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Radtheif.AHC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {89 fa 48 89 f7 49 89 ca 0f b6 b4 24 46 01 00 00 4c 89 c9 4c 8b 8c 24 f0 1c 00 00 }\n\t\t$a_01_1 = {48 c1 c1 11 41 bb ef be ad de 4c 31 d9 41 bc be ba fe ca 49 0f af cc ba ed fe ce fa }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 30 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

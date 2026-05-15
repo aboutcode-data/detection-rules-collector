@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/trojan_golang_pantegana.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_golang_pantegana",
+                "tags": [
+                    "Commodity"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Detects PANTEGANA, a Golang backdoor used by a range of threat actors due to its public availability.",
+                "date": "2022-03-30",
+                "hash1": "8297c99391aae918f154077c61ea94a99c7a339166e7981d9912b7fdc2e0d4f0",
+                "reference": "https://github.com/elleven11/pantegana",
+                "reference2": "https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt",
+                "memory_suitable": 1
+            },
+            "rule_text": "rule trojan_golang_pantegana : Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Detects PANTEGANA, a Golang backdoor used by a range of threat actors due to its public availability.\"\n\t\tdate = \"2022-03-30\"\n\t\thash1 = \"8297c99391aae918f154077c61ea94a99c7a339166e7981d9912b7fdc2e0d4f0\"\n\t\treference = \"https://github.com/elleven11/pantegana\"\n\t\treference2 = \"https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\t\tmemory_suitable = 1\n\n\tstrings:\n\t\t$s1 = \"RunFingerprinter\" ascii\n\t\t$s2 = \"SendSysInfo\" ascii\n\t\t$s3 = \"ExecAndGetOutput\" ascii\n\t\t$s4 = \"RequestCommand\" ascii\n\t\t$s5 = \"bindataRead\" ascii\n\t\t$s6 = \"RunClient\" ascii\n\t\t$magic = \"github.com/elleven11/pantegana\" ascii\n\n\tcondition:\n\t\t5 of ( $s* ) or $magic\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

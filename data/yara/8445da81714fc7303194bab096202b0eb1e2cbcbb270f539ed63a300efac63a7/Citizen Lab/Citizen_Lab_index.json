@@ -1,0 +1,1941 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/Citizen_Lab_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT3102Code",
+                "tags": [
+                    "APT3102",
+                    "Family"
+                ],
+                "description": "3102 code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT3102Code : APT3102 Family\n{\n\tmeta:\n\t\tdescription = \"3102 code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$setupthread = { B9 02 07 00 00 BE ?? ?? ?? ?? 8B F8 6A 00 F3 A5 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT3102Strings",
+                "tags": [
+                    "APT3102",
+                    "Family"
+                ],
+                "description": "3102 Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT3102Strings : APT3102 Family\n{\n\tmeta:\n\t\tdescription = \"3102 Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"rundll32_exec.dll\\x00Update\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT3102",
+                "tags": [
+                    "Family"
+                ],
+                "description": "3102",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule APT3102 : Family\n{\n\tmeta:\n\t\tdescription = \"3102\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tAPT3102Code or APT3102Strings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT9002Code",
+                "tags": [
+                    "APT9002",
+                    "Family"
+                ],
+                "description": "9002 code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT9002Code : APT9002 Family\n{\n\tmeta:\n\t\tdescription = \"9002 code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = { B9 7A 21 00 00 BE ?? ?? ?? ?? 8B F8 ?? ?? ?? F3 A5 }\n\t\t$ = { 8A 14 3E 8A 1C 01 32 DA 88 1C 01 8B 54 3E 04 40 3B C2 72 EC }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT9002Strings",
+                "tags": [
+                    "APT9002",
+                    "Family"
+                ],
+                "description": "9002 Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule APT9002Strings : APT9002 Family\n{\n\tmeta:\n\t\tdescription = \"9002 Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"POST http://%ls:%d/%x HTTP/1.1\"\n\t\t$ = \"%%TEMP%%\\\\%s_p.ax\" wide ascii\n\t\t$ = \"%TEMP%\\\\uid.ax\" wide ascii\n\t\t$ = \"%%TEMP%%\\\\%s.ax\" wide ascii\n\t\t$ = \"sysinfo\\x00sysbin01\"\n\t\t$ = \"\\\\FlashUpdate.exe\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "APT9002",
+                "tags": [
+                    "Family"
+                ],
+                "description": "9002",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule APT9002 : Family\n{\n\tmeta:\n\t\tdescription = \"9002\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tAPT9002Code or APT9002Strings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BangatCode",
+                "tags": [
+                    "Bangat",
+                    "Family"
+                ],
+                "description": "Bangat code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule BangatCode : Bangat Family\n{\n\tmeta:\n\t\tdescription = \"Bangat code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$ = { FE 4D ?? 8D 4? ?? 50 5? FF }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BangatStrings",
+                "tags": [
+                    "Bangat",
+                    "Family"
+                ],
+                "description": "Bangat Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule BangatStrings : Bangat Family\n{\n\tmeta:\n\t\tdescription = \"Bangat Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$lib1 = \"DreatePipe\"\n\t\t$lib2 = \"HetSystemDirectoryA\"\n\t\t$lib3 = \"SeleaseMutex\"\n\t\t$lib4 = \"DloseWindowStation\"\n\t\t$lib5 = \"DontrolService\"\n\t\t$file = \"~hhC2F~.tmp\"\n\t\t$mc = \"~_MC_3~\"\n\n\tcondition:\n\t\tall of ( $lib* ) or $file or $mc\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Bangat",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Bangat",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "rule Bangat : Family\n{\n\tmeta:\n\t\tdescription = \"Bangat\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tcondition:\n\t\tBangatCode or BangatStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dubseven_file_set",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for service files loading UP007"
+            },
+            "rule_text": "rule dubseven_file_set\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for service files loading UP007\"\n\n\tstrings:\n\t\t$file1 = \"\\\\Microsoft\\\\Internet Explorer\\\\conhost.exe\"\n\t\t$file2 = \"\\\\Microsoft\\\\Internet Explorer\\\\dll2.xor\"\n\t\t$file3 = \"\\\\Microsoft\\\\Internet Explorer\\\\HOOK.DLL\"\n\t\t$file4 = \"\\\\Microsoft\\\\Internet Explorer\\\\main.dll\"\n\t\t$file5 = \"\\\\Microsoft\\\\Internet Explorer\\\\nvsvc.exe\"\n\t\t$file6 = \"\\\\Microsoft\\\\Internet Explorer\\\\SBieDll.dll\"\n\t\t$file7 = \"\\\\Microsoft\\\\Internet Explorer\\\\mon\"\n\t\t$file8 = \"\\\\Microsoft\\\\Internet Explorer\\\\runas.exe\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and 3 of ( $file* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dubseven_dropper_registry_checks",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for registry keys checked for by the dropper"
+            },
+            "rule_text": "rule dubseven_dropper_registry_checks\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for registry keys checked for by the dropper\"\n\n\tstrings:\n\t\t$reg1 = \"SOFTWARE\\\\360Safe\\\\Liveup\"\n\t\t$reg2 = \"Software\\\\360safe\"\n\t\t$reg3 = \"SOFTWARE\\\\kingsoft\\\\Antivirus\"\n\t\t$reg4 = \"SOFTWARE\\\\Avira\\\\Avira Destop\"\n\t\t$reg5 = \"SOFTWARE\\\\rising\\\\RAV\"\n\t\t$reg6 = \"SOFTWARE\\\\JiangMin\"\n\t\t$reg7 = \"SOFTWARE\\\\Micropoint\\\\Anti-Attack\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and all of ( $reg* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dubseven_dropper_dialog_remains",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for related dialog remnants. How rude."
+            },
+            "rule_text": "rule dubseven_dropper_dialog_remains\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for related dialog remnants. How rude.\"\n\n\tstrings:\n\t\t$dia1 = \"fuckMessageBox 1.0\" wide\n\t\t$dia2 = \"Rundll 1.0\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "maindll_mutex",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Matches on the maindll mutex"
+            },
+            "rule_text": "rule maindll_mutex\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Matches on the maindll mutex\"\n\n\tstrings:\n\t\t$mutex = \"h31415927tttt\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $mutex\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SLServer_dialog_remains",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for related dialog remnants."
+            },
+            "rule_text": "rule SLServer_dialog_remains\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for related dialog remnants.\"\n\n\tstrings:\n\t\t$slserver = \"SLServer\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $slserver\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SLServer_mutex",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for the mutex."
+            },
+            "rule_text": "rule SLServer_mutex\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for the mutex.\"\n\n\tstrings:\n\t\t$mutex = \"M&GX^DSF&DA@F\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $mutex\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SLServer_command_and_control",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for the C2 server."
+            },
+            "rule_text": "rule SLServer_command_and_control\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for the C2 server.\"\n\n\tstrings:\n\t\t$c2 = \"safetyssl.security-centers.com\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $c2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SLServer_campaign_code",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for the related campaign code."
+            },
+            "rule_text": "rule SLServer_campaign_code\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for the related campaign code.\"\n\n\tstrings:\n\t\t$campaign = \"wthkdoc0106\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $campaign\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SLServer_unknown_string",
+                "tags": [],
+                "author": "Matt Brooks, @cmatthewbrooks",
+                "desc": "Searches for a unique string."
+            },
+            "rule_text": "rule SLServer_unknown_string\n{\n\tmeta:\n\t\tauthor = \"Matt Brooks, @cmatthewbrooks\"\n\t\tdesc = \"Searches for a unique string.\"\n\n\tstrings:\n\t\t$string = \"test-b7fa835a39\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and $string\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BoousetCode",
+                "tags": [
+                    "Boouset",
+                    "Family"
+                ],
+                "description": "Boouset code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule BoousetCode : Boouset Family\n{\n\tmeta:\n\t\tdescription = \"Boouset code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$boousetdat = { C6 ?? ?? ?? ?? 00 62 C6 ?? ?? ?? ?? 00 6F C6 ?? ?? ?? ?? 00 6F C6 ?? ?? ?? ?? 00 75 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BoousetStrings",
+                "tags": [
+                    "Boouset",
+                    "Family"
+                ],
+                "description": "Boouset Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule BoousetStrings : Boouset Family\n{\n\tmeta:\n\t\tdescription = \"Boouset Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$4 = \"\\\\~Z8314.tmp\"\n\t\t$5 = \"hulee midimap\" wide ascii\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Boouset",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Boouset",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "rule Boouset : Family\n{\n\tmeta:\n\t\tdescription = \"Boouset\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tcondition:\n\t\tBoousetCode or BoousetStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ComfooCode",
+                "tags": [
+                    "Comfoo",
+                    "Family"
+                ],
+                "description": "Comfoo code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule ComfooCode : Comfoo Family\n{\n\tmeta:\n\t\tdescription = \"Comfoo code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$resource = { 6A 6C 6A 59 55 E8 01 FA FF FF }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ComfooStrings",
+                "tags": [
+                    "Comfoo",
+                    "Family"
+                ],
+                "description": "Comfoo Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule ComfooStrings : Comfoo Family\n{\n\tmeta:\n\t\tdescription = \"Comfoo Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$ = \"fefj90\"\n\t\t$ = \"iamwaitingforu653890\"\n\t\t$ = \"watchevent29021803\"\n\t\t$ = \"THIS324NEWGAME\"\n\t\t$ = \"ms0ert.temp\"\n\t\t$ = \"\\\\mstemp.temp\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Comfoo",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Comfoo",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "rule Comfoo : Family\n{\n\tmeta:\n\t\tdescription = \"Comfoo\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tcondition:\n\t\tComfooCode or ComfooStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CookiesStrings",
+                "tags": [
+                    "Cookies",
+                    "Family"
+                ],
+                "description": "Cookies Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule CookiesStrings : Cookies Family\n{\n\tmeta:\n\t\tdescription = \"Cookies Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$zip1 = \"ntdll.exePK\"\n\t\t$zip2 = \"AcroRd32.exePK\"\n\t\t$zip3 = \"Setup=ntdll.exe\\x0d\\x0aSilent=1\\x0d\\x0a\"\n\t\t$zip4 = \"Setup=%temp%\\\\AcroRd32.exe\\x0d\\x0a\"\n\t\t$exe1 = \"Leave GetCommand!\"\n\t\t$exe2 = \"perform exe success!\"\n\t\t$exe3 = \"perform exe failure!\"\n\t\t$exe4 = \"Entry SendCommandReq!\"\n\t\t$exe5 = \"Reqfile not exist!\"\n\t\t$exe6 = \"LeaveDealUpfile!\"\n\t\t$exe7 = \"Entry PostData!\"\n\t\t$exe8 = \"Leave PostFile!\"\n\t\t$exe9 = \"Entry PostFile!\"\n\t\t$exe10 = \"\\\\unknow.zip\" wide ascii\n\t\t$exe11 = \"the url no respon!\"\n\n\tcondition:\n\t\t(2 of ( $zip* ) ) or ( 2 of ( $exe* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Cookies",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Cookies",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "rule Cookies : Family\n{\n\tmeta:\n\t\tdescription = \"Cookies\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tcondition:\n\t\tCookiesStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cxpidCode",
+                "tags": [
+                    "cxpid",
+                    "Family"
+                ],
+                "description": "cxpid code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule cxpidCode : cxpid Family\n{\n\tmeta:\n\t\tdescription = \"cxpid code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$entryjunk = { 55 8B EC B9 38 04 00 00 6A 00 6A 00 49 75 F9 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cxpidStrings",
+                "tags": [
+                    "cxpid",
+                    "Family"
+                ],
+                "description": "cxpid Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule cxpidStrings : cxpid Family\n{\n\tmeta:\n\t\tdescription = \"cxpid Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$ = \"/cxpid/submit.php?SessionID=\"\n\t\t$ = \"/cxgid/\"\n\t\t$ = \"E21BC52BEA2FEF26D005CF\"\n\t\t$ = \"E21BC52BEA39E435C40CD8\"\n\t\t$ = \"                   -,L-,O+,Q-,R-,Y-,S-\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "cxpid",
+                "tags": [
+                    "Family"
+                ],
+                "description": "cxpid",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "rule cxpid : Family\n{\n\tmeta:\n\t\tdescription = \"cxpid\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tcondition:\n\t\tcxpidCode or cxpidStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EnfalCode",
+                "tags": [
+                    "Enfal",
+                    "Family"
+                ],
+                "description": "Enfal code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule EnfalCode : Enfal Family\n{\n\tmeta:\n\t\tdescription = \"Enfal code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$decrypt = { B0 20 2A C3 00 04 33 56 43 FF D7 3B D8 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EnfalStrings",
+                "tags": [
+                    "Enfal",
+                    "Family"
+                ],
+                "description": "Enfal Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule EnfalStrings : Enfal Family\n{\n\tmeta:\n\t\tdescription = \"Enfal Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$ = \"D:\\\\work\\\\\\xe6\\xba\\x90\\xe5\\x93\\xa5\\xe5\\x85\\x8d\\xe6\\x9d\\x80\\\\tmp\\\\Release\\\\ServiceDll.pdb\"\n\t\t$ = \"e:\\\\programs\\\\LuridDownLoader\"\n\t\t$ = \"LuridDownloader for Falcon\"\n\t\t$ = \"DllServiceTrojan\"\n\t\t$ = \"\\\\k\\\\\\xe6\\xa1\\x8c\\xe8\\x9d\\xa2\\\\\"\n\t\t$ = \"EtenFalcon\\xef\\xbc\\x88\\xe4\\xbf\\xae\\xe6\\x94\\xb9\\xef\\xbc\\x89\"\n\t\t$ = \"Madonna\\x00Jesus\"\n\t\t$ = \"/iupw82/netstate\"\n\t\t$ = \"fuckNodAgain\"\n\t\t$ = \"iloudermao\"\n\t\t$ = \"Crpq2.cgi\"\n\t\t$ = \"Clnpp5.cgi\"\n\t\t$ = \"Dqpq3ll.cgi\"\n\t\t$ = \"dieosn83.cgi\"\n\t\t$ = \"Rwpq1.cgi\"\n\t\t$ = \"/Ccmwhite\"\n\t\t$ = \"/Cmwhite\"\n\t\t$ = \"/Crpwhite\"\n\t\t$ = \"/Dfwhite\"\n\t\t$ = \"/Query.txt\"\n\t\t$ = \"/Ufwhite\"\n\t\t$ = \"/cgl-bin/Clnpp5.cgi\"\n\t\t$ = \"/cgl-bin/Crpq2.cgi\"\n\t\t$ = \"/cgl-bin/Dwpq3ll.cgi\"\n\t\t$ = \"/cgl-bin/Owpq4.cgi\"\n\t\t$ = \"/cgl-bin/Rwpq1.cgi\"\n\t\t$ = \"/trandocs/mm/\"\n\t\t$ = \"/trandocs/netstat\"\n\t\t$ = \"NFal.exe\"\n\t\t$ = \"LINLINVMAN\"\n\t\t$ = \"7NFP4R9W\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Enfal",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Enfal",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "rule Enfal : Family\n{\n\tmeta:\n\t\tdescription = \"Enfal\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tcondition:\n\t\tEnfalCode or EnfalStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EzcobStrings",
+                "tags": [
+                    "Ezcob",
+                    "Family"
+                ],
+                "description": "Ezcob Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule EzcobStrings : Ezcob Family\n{\n\tmeta:\n\t\tdescription = \"Ezcob Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$ = \"\\x12F\\x12F\\x129\\x12E\\x12A\\x12E\\x12B\\x12A\\x12-\\x127\\x127\\x128\\x123\\x12\"\n\t\t$ = \"\\x121\\x12D\\x128\\x123\\x12B\\x122\\x12E\\x128\\x12-\\x12B\\x122\\x123\\x12D\\x12\"\n\t\t$ = \"Ezcob\" wide ascii\n\t\t$ = \"l\\x12i\\x12u\\x122\\x120\\x121\\x123\\x120\\x124\\x121\\x126\"\n\t\t$ = \"20110113144935\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Ezcob",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Ezcob",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "rule Ezcob : Family\n{\n\tmeta:\n\t\tdescription = \"Ezcob\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tcondition:\n\t\tEzcobStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HTMLVariant",
+                "tags": [
+                    "FakeM",
+                    "Family",
+                    "HTML",
+                    "Variant"
+                ],
+                "description": "Identifier for html variant of FAKEM",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-05-20"
+            },
+            "rule_text": "private rule HTMLVariant : FakeM Family HTML Variant\n{\n\tmeta:\n\t\tdescription = \"Identifier for html variant of FAKEM\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-05-20\"\n\n\tstrings:\n\t\t$s1 = { 8B 55 08 B9 00 50 00 00 8D 3D ?? ?? ?? 00 8B F7 AD 33 C2 AB 83 E9 04 85 C9 75 F5 }\n\t\t$s2 = { C6 45 F? (3?|4?) }\n\n\tcondition:\n\t\t$s1 and #s2 == 16\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FakeM",
+                "tags": [
+                    "Family"
+                ],
+                "description": "FakeM",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-07-03"
+            },
+            "rule_text": "rule FakeM : Family\n{\n\tmeta:\n\t\tdescription = \"FakeM\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-07-03\"\n\n\tcondition:\n\t\tHTMLVariant\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FAKEMhtml",
+                "tags": [
+                    "Variant"
+                ],
+                "description": "Rule for just the HTML Variant",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-07-10"
+            },
+            "rule_text": "rule FAKEMhtml : Variant\n{\n\tmeta:\n\t\tdescription = \"Rule for just the HTML Variant\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-07-10\"\n\n\tcondition:\n\t\tHTMLVariant\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FavoriteCode",
+                "tags": [
+                    "Favorite",
+                    "Family"
+                ],
+                "description": "Favorite code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule FavoriteCode : Favorite Family\n{\n\tmeta:\n\t\tdescription = \"Favorite code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$ = { C6 45 ?? 3B C6 45 ?? 27 C6 45 ?? 34 C6 45 ?? 75 C6 45 ?? 6B C6 45 ?? 6C C6 45 ?? 3B C6 45 ?? 2F }\n\t\t$ = { C6 45 ?? 6F C6 45 ?? 73 C6 45 ?? 73 C6 45 ?? 76 C6 45 ?? 63 C6 45 ?? 65 C6 45 ?? 78 C6 45 ?? 65 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "FavoriteStrings",
+                "tags": [
+                    "Favorite",
+                    "Family"
+                ],
+                "description": "Favorite Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule FavoriteStrings : Favorite Family\n{\n\tmeta:\n\t\tdescription = \"Favorite Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$string1 = \"!QAZ4rfv\"\n\t\t$file1 = \"msupdater.exe\"\n\t\t$file2 = \"FAVORITES.DAT\"\n\n\tcondition:\n\t\tany of ( $string* ) or all of ( $file* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Favorite",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Favorite",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "rule Favorite : Family\n{\n\tmeta:\n\t\tdescription = \"Favorite\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tcondition:\n\t\tFavoriteCode or FavoriteStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsRTF",
+                "tags": [
+                    "RTF"
+                ],
+                "description": "Identifier for RTF files",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-05"
+            },
+            "rule_text": "private rule IsRTF : RTF\n{\n\tmeta:\n\t\tdescription = \"Identifier for RTF files\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-05\"\n\n\tstrings:\n\t\t$magic = /^\\s*{\\\\rt/\n\n\tcondition:\n\t\t$magic\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsOLE",
+                "tags": [
+                    "OLE"
+                ],
+                "description": "Identifier for OLE files",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-06"
+            },
+            "rule_text": "private rule IsOLE : OLE\n{\n\tmeta:\n\t\tdescription = \"Identifier for OLE files\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-06\"\n\n\tstrings:\n\t\t$magic = {d0 cf 11 e0 a1 b1 1a e1}\n\n\tcondition:\n\t\t$magic at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IsPE",
+                "tags": [
+                    "PE"
+                ],
+                "description": "Identifier for PE files",
+                "last_modified": "2014-07-11"
+            },
+            "rule_text": "private rule IsPE : PE\n{\n\tmeta:\n\t\tdescription = \"Identifier for PE files\"\n\t\tlast_modified = \"2014-07-11\"\n\n\tstrings:\n\t\t$magic = { 5a 4d }\n\n\tcondition:\n\t\t$magic at 0 and uint32( uint32( 0x3C ) ) == 0x00004550\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GlassesCode",
+                "tags": [
+                    "Glasses",
+                    "Family"
+                ],
+                "description": "Glasses code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-22"
+            },
+            "rule_text": "private rule GlassesCode : Glasses Family\n{\n\tmeta:\n\t\tdescription = \"Glasses code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-22\"\n\n\tstrings:\n\t\t$ = { B8 AB AA AA AA F7 E1 D1 EA 8D 04 52 2B C8 }\n\t\t$ = { B8 56 55 55 55 F7 E9 8B 4C 24 1C 8B C2 C1 E8 1F 03 D0 49 3B CA }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GlassesStrings",
+                "tags": [
+                    "Glasses",
+                    "Family"
+                ],
+                "description": "Strings used by Glasses",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-22"
+            },
+            "rule_text": "private rule GlassesStrings : Glasses Family\n{\n\tmeta:\n\t\tdescription = \"Strings used by Glasses\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-22\"\n\n\tstrings:\n\t\t$ = \"thequickbrownfxjmpsvalzydg\"\n\t\t$ = \"Mozilla/4.0 (compatible; Windows NT 5.1; MSIE 7.0; Trident/4.0; %s.%s)\"\n\t\t$ = \"\\\" target=\\\"NewRef\\\"></a>\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Glasses",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Glasses family",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-22"
+            },
+            "rule_text": "rule Glasses : Family\n{\n\tmeta:\n\t\tdescription = \"Glasses family\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-22\"\n\n\tcondition:\n\t\tGlassesCode or GlassesStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "iexpl0reCode",
+                "tags": [
+                    "iexpl0ree",
+                    "Family"
+                ],
+                "description": "iexpl0re code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-21"
+            },
+            "rule_text": "private rule iexpl0reCode : iexpl0ree Family\n{\n\tmeta:\n\t\tdescription = \"iexpl0re code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-21\"\n\n\tstrings:\n\t\t$ = { 47 83 FF 64 0F 8C 6D FF FF FF 33 C0 5F 5E 5B C9 C3 }\n\t\t$ = { 80 74 0D A4 44 41 3B C8 7C F6 68 04 01 00 00 }\n\t\t$ = { 8A C1 B2 07 F6 EA 30 04 31 41 3B 4D 10 7C F1 }\n\t\t$ = { 47 83 FF 64 0F 8C 79 FF FF FF 33 C0 5F 5E 5B C9 C3 }\n\t\t$ = { 68 88 00 00 00 68 90 06 00 00 68 ?? ?? ?? ?? 89 3? E8 }\n\t\t$ = { BB 88 00 00 00 53 68 90 06 00 00 68 ?? ?? ?? ?? 89 3? E8 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "iexpl0reStrings",
+                "tags": [
+                    "iexpl0re",
+                    "Family"
+                ],
+                "description": "Strings used by iexpl0re",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-21"
+            },
+            "rule_text": "private rule iexpl0reStrings : iexpl0re Family\n{\n\tmeta:\n\t\tdescription = \"Strings used by iexpl0re\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-21\"\n\n\tstrings:\n\t\t$ = \"%USERPROFILE%\\\\IEXPL0RE.EXE\"\n\t\t$ = \"\\\"<770j ((\"\n\t\t$ = \"\\\\Users\\\\%s\\\\AppData\\\\Roaming\\\\Microsoft\\\\Windows\\\\Start Menu\\\\Programs\\\\Startup\\\\IEXPL0RE.LNK\"\n\t\t$ = \"\\\\Documents and Settings\\\\%s\\\\Application Data\\\\Microsoft\\\\Internet Explorer\\\\IEXPL0RE.EXE\"\n\t\t$ = \"LoaderV5.dll\"\n\t\t$ = \"POST /index%0.9d.asp HTTP/1.1\"\n\t\t$ = \"GET /search?n=%0.9d&\"\n\t\t$ = \"DUDE_AM_I_SHARP-3.14159265358979x6.626176\"\n\t\t$ = \"WHO_A_R_E_YOU?2.99792458x1.25663706143592\"\n\t\t$ = \"BASTARD_&&_BITCHES_%0.8x\"\n\t\t$ = \"c:\\\\bbb\\\\eee.txt\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "iexpl0re",
+                "tags": [
+                    "Family"
+                ],
+                "description": "iexpl0re family",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-21"
+            },
+            "rule_text": "rule iexpl0re : Family\n{\n\tmeta:\n\t\tdescription = \"iexpl0re family\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-21\"\n\n\tcondition:\n\t\tiexpl0reCode or iexpl0reStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IMulerCode",
+                "tags": [
+                    "IMuler",
+                    "Family"
+                ],
+                "description": "IMuler code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-16"
+            },
+            "rule_text": "private rule IMulerCode : IMuler Family\n{\n\tmeta:\n\t\tdescription = \"IMuler code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-16\"\n\n\tstrings:\n\t\t$L4_tmpSpotlight = { C7 ?? 2F 74 6D 70 C7 ?? 04 2F 53 70 6F }\n\t\t$L4_TMPAAABBB = { C7 ?? ?? ?? ?? ?? 54 4D 50 41 C7 ?? ?? ?? ?? ?? 41 41 42 42 }\n\t\t$L4_FILEAGENTVer = { C7 ?? 46 49 4C 45 C7 ?? 04 41 47 45 4E }\n\t\t$L4_TMP0M34JDF8 = { C7 ?? ?? ?? ?? ?? 54 4D 50 30 C7 ?? ?? ?? ?? ?? 4D 33 34 4A }\n\t\t$L4_tmpmdworker = { C7 ?? 2F 74 6D 70 C7 ?? 04 2F 2E 6D 64 }\n\n\tcondition:\n\t\tany of ( $L4* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IMulerStrings",
+                "tags": [
+                    "IMuler",
+                    "Family"
+                ],
+                "description": "IMuler Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-16"
+            },
+            "rule_text": "private rule IMulerStrings : IMuler Family\n{\n\tmeta:\n\t\tdescription = \"IMuler Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-16\"\n\n\tstrings:\n\t\t$ = \"/cgi-mac/\"\n\t\t$ = \"xnocz1\"\n\t\t$ = \"checkvir.plist\"\n\t\t$ = \"/Users/apple/Documents/mac back\"\n\t\t$ = \"iMuler2\"\n\t\t$ = \"/Users/imac/Desktop/macback/\"\n\t\t$ = \"xntaskz.gz\"\n\t\t$ = \"2wmsetstatus.cgi\"\n\t\t$ = \"launch-0rp.dat\"\n\t\t$ = \"2wmupload.cgi\"\n\t\t$ = \"xntmpz\"\n\t\t$ = \"2wmrecvdata.cgi\"\n\t\t$ = \"xnorz6\"\n\t\t$ = \"2wmdelfile.cgi\"\n\t\t$ = \"/LanchAgents/checkvir\"\n\t\t$ = \"0PERA:%s\"\n\t\t$ = \"/tmp/Spotlight\"\n\t\t$ = \"/tmp/launch-ICS000\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IMuler",
+                "tags": [
+                    "Family"
+                ],
+                "description": "IMuler",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-16"
+            },
+            "rule_text": "rule IMuler : Family\n{\n\tmeta:\n\t\tdescription = \"IMuler\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-16\"\n\n\tcondition:\n\t\tIMulerCode or IMulerStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Insta11Code",
+                "tags": [
+                    "Insta11",
+                    "Family"
+                ],
+                "description": "Insta11 code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule Insta11Code : Insta11 Family\n{\n\tmeta:\n\t\tdescription = \"Insta11 code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$jumpandpush = { E9 00 00 00 00 68 23 04 00 00 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Insta11Strings",
+                "tags": [
+                    "Insta11",
+                    "Family"
+                ],
+                "description": "Insta11 Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "private rule Insta11Strings : Insta11 Family\n{\n\tmeta:\n\t\tdescription = \"Insta11 Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tstrings:\n\t\t$ = \"XTALKER7\"\n\t\t$ = \"Insta11 Microsoft\" wide ascii\n\t\t$ = \"wudMessage\"\n\t\t$ = \"ECD4FC4D-521C-11D0-B792-00A0C90312E1\"\n\t\t$ = \"B12AE898-D056-4378-A844-6D393FE37956\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Insta11",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Insta11",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-23"
+            },
+            "rule_text": "rule Insta11 : Family\n{\n\tmeta:\n\t\tdescription = \"Insta11\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-23\"\n\n\tcondition:\n\t\tInsta11Code or Insta11Strings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LuckyCatCode",
+                "tags": [
+                    "LuckyCat",
+                    "Family"
+                ],
+                "description": "LuckyCat code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule LuckyCatCode : LuckyCat Family\n{\n\tmeta:\n\t\tdescription = \"LuckyCat code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$xordecrypt = { BF 0F 00 00 00 F7 F7 ?? ?? ?? ?? 32 14 39 80 F2 7B }\n\t\t$dll = { C6 ?? ?? ?? 64 C6 ?? ?? ?? 6C C6 ?? ?? ?? 6C }\n\t\t$commonletters = { B? 63 B? 61 B? 73 B? 65 }\n\n\tcondition:\n\t\t$xordecrypt or ( $dll and $commonletters )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LuckyCatStrings",
+                "tags": [
+                    "LuckyCat",
+                    "Family"
+                ],
+                "description": "LuckyCat Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule LuckyCatStrings : LuckyCat Family\n{\n\tmeta:\n\t\tdescription = \"LuckyCat Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$xorencrypted = { 77 76 75 7B 7A 79 78 7F 7E 7D 7C 73 72 71 70 }\n\t\t$tempvbs = \"%s\\\\~temp.vbs\"\n\t\t$countphp = \"count.php\\x00\"\n\t\t$trojanname = /WMILINK=.\\*TrojanName=/\n\t\t$tmpfile = \"d0908076343423d3456.tmp\"\n\t\t$dirfile = \"cmd /c dir /s /a C:\\\\\\\\ >'+tmpfolder+'\\\\\\\\C.tmp\"\n\t\t$ipandmac = \"objIP.DNSHostName+'_'+objIP.MACAddress.split(':').join('')+'_'+addinf+'@')\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LuckyCat",
+                "tags": [
+                    "Family"
+                ],
+                "description": "LuckyCat",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "rule LuckyCat : Family\n{\n\tmeta:\n\t\tdescription = \"LuckyCat\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tcondition:\n\t\tLuckyCatCode or LuckyCatStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LURK0Header",
+                "tags": [
+                    "Family",
+                    "LURK0"
+                ],
+                "description": "5 char code for LURK0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule LURK0Header : Family LURK0\n{\n\tmeta:\n\t\tdescription = \"5 char code for LURK0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = { C6 [5] 4C C6 [5] 55 C6 [5] 52 C6 [5] 4B C6 [5] 30 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CCTV0Header",
+                "tags": [
+                    "Family",
+                    "CCTV0"
+                ],
+                "description": "5 char code for LURK0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule CCTV0Header : Family CCTV0\n{\n\tmeta:\n\t\tdescription = \"5 char code for LURK0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = { C6 [5] 43 C6 [5] 43 C6 [5] 54 C6 [5] 56 C6 [5] 30 }\n\t\t$ = { B0 43 88 [3] 88 [3] C6 [3] 54 C6 [3] 56 [0-12] (B0 30 | C6 [3] 30) }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SharedStrings",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Internal names found in LURK0/CCTV0 samples",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "private rule SharedStrings : Family\n{\n\tmeta:\n\t\tdescription = \"Internal names found in LURK0/CCTV0 samples\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tstrings:\n\t\t$i1 = \"Butterfly.dll\"\n\t\t$i2 = /\\\\BT[0-9.]+\\\\ButterFlyDLL\\\\/\n\t\t$i3 = \"ETClientDLL\"\n\t\t$d1 = \"\\\\DbxUpdateET\\\\\" wide\n\t\t$d2 = \"\\\\DbxUpdateBT\\\\\" wide\n\t\t$d3 = \"\\\\DbxUpdate\\\\\" wide\n\t\t$mc1 = \"\\\\Micet\\\\\"\n\t\t$n1 = \"IconCacheEt.dat\" wide\n\t\t$n2 = \"IconConfigEt.dat\" wide\n\t\t$m1 = \"\\x00\\x00ERXXXXXXX\\x00\\x00\" wide\n\t\t$m2 = \"\\x00\\x00111\\x00\\x00\" wide\n\t\t$m3 = \"\\x00\\x00ETUN\\x00\\x00\" wide\n\t\t$m4 = \"\\x00\\x00ER\\x00\\x00\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LURK0",
+                "tags": [
+                    "Family",
+                    "LURK0"
+                ],
+                "description": "rule for lurk0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "rule LURK0 : Family LURK0\n{\n\tmeta:\n\t\tdescription = \"rule for lurk0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tcondition:\n\t\tLURK0Header and SharedStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CCTV0",
+                "tags": [
+                    "Family",
+                    "CCTV0"
+                ],
+                "description": "rule for cctv0",
+                "author": "Katie Kleemola",
+                "last_updated": "07-22-2014"
+            },
+            "rule_text": "rule CCTV0 : Family CCTV0\n{\n\tmeta:\n\t\tdescription = \"rule for cctv0\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-22-2014\"\n\n\tcondition:\n\t\tCCTV0Header and SharedStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MacControlCode",
+                "tags": [
+                    "MacControl",
+                    "Family"
+                ],
+                "description": "MacControl code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-17"
+            },
+            "rule_text": "private rule MacControlCode : MacControl Family\n{\n\tmeta:\n\t\tdescription = \"MacControl code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-17\"\n\n\tstrings:\n\t\t$L4_Accept = { C7 ?? 41 63 63 65 C7 ?? 04 70 74 3A 20 }\n\t\t$L4_AcceptLang = { C7 ?? 41 63 63 65 C7 ?? 04 70 74 2D 4C }\n\t\t$L4_Pragma = { C7 ?? 50 72 61 67 C7 ?? 04 6D 61 3A 20 }\n\t\t$L4_Connection = { C7 ?? 43 6F 6E 6E C7 ?? 04 65 63 74 69 }\n\t\t$GEThgif = { C7 ?? 47 45 54 20 C7 ?? 04 2F 68 2E 67 }\n\n\tcondition:\n\t\tall of ( $L4* ) or $GEThgif\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MacControlStrings",
+                "tags": [
+                    "MacControl",
+                    "Family"
+                ],
+                "description": "MacControl Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-17"
+            },
+            "rule_text": "private rule MacControlStrings : MacControl Family\n{\n\tmeta:\n\t\tdescription = \"MacControl Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-17\"\n\n\tstrings:\n\t\t$ = \"HTTPHeadGet\"\n\t\t$ = \"/Library/launched\"\n\t\t$ = \"My connect error with no ip!\"\n\t\t$ = \"Send File is Failed\"\n\t\t$ = \"****************************You Have got it!****************************\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MacControl",
+                "tags": [
+                    "Family"
+                ],
+                "description": "MacControl",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-16"
+            },
+            "rule_text": "rule MacControl : Family\n{\n\tmeta:\n\t\tdescription = \"MacControl\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-16\"\n\n\tcondition:\n\t\tMacControlCode or MacControlStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MirageStrings",
+                "tags": [
+                    "Mirage",
+                    "Family"
+                ],
+                "description": "Mirage Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule MirageStrings : Mirage Family\n{\n\tmeta:\n\t\tdescription = \"Mirage Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"Neo,welcome to the desert of real.\" wide ascii\n\t\t$ = \"/result?hl=en&id=%s\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Mirage",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Mirage",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule Mirage : Family\n{\n\tmeta:\n\t\tdescription = \"Mirage\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tMirageStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MongalCode",
+                "tags": [
+                    "Mongal",
+                    "Family"
+                ],
+                "description": "Mongal code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-15"
+            },
+            "rule_text": "private rule MongalCode : Mongal Family\n{\n\tmeta:\n\t\tdescription = \"Mongal code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-15\"\n\n\tstrings:\n\t\t$ = { 8B C8 B8 D3 4D 62 10 F7 E1 C1 EA 06 2B D6 83 FA 05 76 EB }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MongalStrings",
+                "tags": [
+                    "Mongal",
+                    "Family"
+                ],
+                "description": "Mongal Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-15"
+            },
+            "rule_text": "private rule MongalStrings : Mongal Family\n{\n\tmeta:\n\t\tdescription = \"Mongal Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-15\"\n\n\tstrings:\n\t\t$ = \"NSCortr.dll\"\n\t\t$ = \"NSCortr1.dll\"\n\t\t$ = \"Sina.exe\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Mongal",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Mongal",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-15"
+            },
+            "rule_text": "rule Mongal : Family\n{\n\tmeta:\n\t\tdescription = \"Mongal\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-15\"\n\n\tcondition:\n\t\tMongalCode or MongalStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MsAttackerStage2",
+                "tags": [
+                    "MsAttacker",
+                    "Family"
+                ],
+                "description": "Identifying strings for MsAttacker stage 2",
+                "last_modified": "2015-03-12"
+            },
+            "rule_text": "private rule MsAttackerStage2 : MsAttacker Family\n{\n\tmeta:\n\t\tdescription = \"Identifying strings for MsAttacker stage 2\"\n\t\tlast_modified = \"2015-03-12\"\n\n\tstrings:\n\t\t$ = \"MiniJS.dll\"\n\t\t$ = \"%s \\\"rundll32.exe %s RealService %s\\\" /f\"\n\t\t$ = \"reg delete HKCU\\\\SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run /v \\\"Start Pages\\\" /f\"\n\t\t$ = \"3111431114311121270018000127001808012700180\"\n\t\t$ = \"Global\\\\MSAttacker %d\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MsAttackerStage1",
+                "tags": [
+                    "MsAttacker",
+                    "Family"
+                ],
+                "description": "Identifying strings for MsAttacker stage 1",
+                "last_modified": "2015-03-12"
+            },
+            "rule_text": "private rule MsAttackerStage1 : MsAttacker Family\n{\n\tmeta:\n\t\tdescription = \"Identifying strings for MsAttacker stage 1\"\n\t\tlast_modified = \"2015-03-12\"\n\n\tstrings:\n\t\t$ = \"http://122.10.117.152/download/ms/CryptBase.32.cab\"\n\t\t$ = \"http://122.10.117.152/download/ms/CryptBase.64.cab\"\n\t\t$ = \"http://122.10.117.152/download/ms/MiniJS.dll\"\n\t\t$ = \"MiniJS.dll\"\n\t\t$ = \"%s;new Downloader('%s', '%s').Fire();\"\n\t\t$ = \"rundll32.exe %s RealService %s\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MsAttacker",
+                "tags": [
+                    "MsAttacker",
+                    "Family"
+                ]
+            },
+            "rule_text": "rule MsAttacker : MsAttacker Family\n{\n\tcondition:\n\t\tMsAttackerStage1 or MsAttackerStage2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NaikonCode",
+                "tags": [
+                    "Naikon",
+                    "Family"
+                ],
+                "description": "Naikon code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule NaikonCode : Naikon Family\n{\n\tmeta:\n\t\tdescription = \"Naikon code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = { 0F AF C1 C1 E0 1F }\n\t\t$ = { 35 5A 01 00 00}\n\t\t$ = { 81 C2 7F 14 06 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NaikonStrings",
+                "tags": [
+                    "Naikon",
+                    "Family"
+                ],
+                "description": "Naikon Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule NaikonStrings : Naikon Family\n{\n\tmeta:\n\t\tdescription = \"Naikon Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"NOKIAN95/WEB\"\n\t\t$ = \"/tag=info&id=15\"\n\t\t$ = \"skg(3)=&3.2d_u1\"\n\t\t$ = \"\\\\Temp\\\\iExplorer.exe\"\n\t\t$ = \"\\\\Temp\\\\\\\"TSG\\\"\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Naikon",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Naikon",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule Naikon : Family\n{\n\tmeta:\n\t\tdescription = \"Naikon\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tNaikonCode or NaikonStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "nAspyUpdateCode",
+                "tags": [
+                    "nAspyUpdate",
+                    "Family"
+                ],
+                "description": "nAspyUpdate code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-14"
+            },
+            "rule_text": "private rule nAspyUpdateCode : nAspyUpdate Family\n{\n\tmeta:\n\t\tdescription = \"nAspyUpdate code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-14\"\n\n\tstrings:\n\t\t$ = { 8A 54 24 14 8A 01 32 C2 02 C2 88 01 41 4E 75 F4 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "nAspyUpdateStrings",
+                "tags": [
+                    "nAspyUpdate",
+                    "Family"
+                ],
+                "description": "nAspyUpdate Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-14"
+            },
+            "rule_text": "private rule nAspyUpdateStrings : nAspyUpdate Family\n{\n\tmeta:\n\t\tdescription = \"nAspyUpdate Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-14\"\n\n\tstrings:\n\t\t$ = \"\\\\httpclient.txt\"\n\t\t$ = \"password <=14\"\n\t\t$ = \"/%ldn.txt\"\n\t\t$ = \"Kill You\\x00\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "nAspyUpdate",
+                "tags": [
+                    "Family"
+                ],
+                "description": "nAspyUpdate",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-14"
+            },
+            "rule_text": "rule nAspyUpdate : Family\n{\n\tmeta:\n\t\tdescription = \"nAspyUpdate\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-14\"\n\n\tcondition:\n\t\tnAspyUpdateCode or nAspyUpdateStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetTravExports",
+                "tags": [
+                    "NetTraveler",
+                    "Family"
+                ],
+                "description": "Export names for dll component",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-05-20"
+            },
+            "rule_text": "private rule NetTravExports : NetTraveler Family\n{\n\tmeta:\n\t\tdescription = \"Export names for dll component\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-05-20\"\n\n\tstrings:\n\t\t$ = \"?InjectDll@@YAHPAUHWND__@@K@Z\"\n\t\t$ = \"?UnmapDll@@YAHXZ\"\n\t\t$ = \"?g_bSubclassed@@3HA\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetTravStrings",
+                "tags": [
+                    "NetTraveler",
+                    "Family"
+                ],
+                "description": "Identifiers for NetTraveler DLL",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-05-20"
+            },
+            "rule_text": "private rule NetTravStrings : NetTraveler Family\n{\n\tmeta:\n\t\tdescription = \"Identifiers for NetTraveler DLL\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-05-20\"\n\n\tstrings:\n\t\t$ = \"?action=updated&hostid=\"\n\t\t$ = \"travlerbackinfo\"\n\t\t$ = \"?action=getcmd&hostid=\"\n\t\t$ = \"%s?action=gotcmd&hostid=\"\n\t\t$ = \"%s?hostid=%s&hostname=%s&hostip=%s&filename=%s&filestart=%u&filetext=\"\n\t\t$ = \"\\x00Method1 Fail!!!!!\\x00\"\n\t\t$ = \"\\x00Method3 Fail!!!!!\\x00\"\n\t\t$ = \"\\x00method currect:\\x00\"\n\t\t$ = /\\x00\\x00[\\w\\-]+ is Running!\\x00\\x00/\n\t\t$ = \"\\x00OtherTwo\\x00\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetpassStrings",
+                "tags": [
+                    "NetPass",
+                    "Variant"
+                ],
+                "description": "Identifiers for netpass variant",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-05-29"
+            },
+            "rule_text": "private rule NetpassStrings : NetPass Variant\n{\n\tmeta:\n\t\tdescription = \"Identifiers for netpass variant\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-05-29\"\n\n\tstrings:\n\t\t$exif1 = \"Device Protect ApplicatioN\" wide\n\t\t$exif2 = \"beep.sys\" wide\n\t\t$exif3 = \"BEEP Driver\" wide\n\t\t$string1 = \"\\x00NetPass Update\\x00\"\n\t\t$string2 = \"\\x00%s:DOWNLOAD\\x00\"\n\t\t$string3 = \"\\x00%s:UPDATE\\x00\"\n\t\t$string4 = \"\\x00%s:uNINSTALL\\x00\"\n\n\tcondition:\n\t\tall of ( $exif* ) or any of ( $string* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetTraveler",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Nettravelr",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-07-08"
+            },
+            "rule_text": "rule NetTraveler : Family\n{\n\tmeta:\n\t\tdescription = \"Nettravelr\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-07-08\"\n\n\tcondition:\n\t\tNetTravExports or NetTravStrings or NetpassStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NetPass",
+                "tags": [
+                    "Variant"
+                ],
+                "description": "netpass variant",
+                "author": "Katie Kleemola",
+                "last_updated": "2014-07-08"
+            },
+            "rule_text": "rule NetPass : Variant\n{\n\tmeta:\n\t\tdescription = \"netpass variant\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"2014-07-08\"\n\n\tcondition:\n\t\tNetpassStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NSFreeCode",
+                "tags": [
+                    "NSFree",
+                    "Family"
+                ],
+                "description": "NSFree code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule NSFreeCode : NSFree Family\n{\n\tmeta:\n\t\tdescription = \"NSFree code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$ = { 53 56 57 66 81 38 4D 5A }\n\t\t$ = { 90 90 90 90 81 3F 50 45 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NSFreeStrings",
+                "tags": [
+                    "NSFree",
+                    "Family"
+                ],
+                "description": "NSFree Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule NSFreeStrings : NSFree Family\n{\n\tmeta:\n\t\tdescription = \"NSFree Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$ = \"\\\\MicNS\\\\\" nocase\n\t\t$ = \"NSFreeDll\" wide ascii\n\t\t$ = { 0c 30 31 2b 78 28 2a 37 3f 2a 39 35 78 3b 39 36 36 37 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NSFree",
+                "tags": [
+                    "Family"
+                ],
+                "description": "NSFree",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "rule NSFree : Family\n{\n\tmeta:\n\t\tdescription = \"NSFree\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tcondition:\n\t\tNSFreeCode or NSFreeStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "OLEAuthor",
+                "tags": [
+                    "Author",
+                    "OLEMetadata"
+                ],
+                "description": "Identifier for known OLE document authors",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-07"
+            },
+            "rule_text": "rule OLEAuthor : Author OLEMetadata\n{\n\tmeta:\n\t\tdescription = \"Identifier for known OLE document authors\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-07\"\n\n\tstrings:\n\t\t$1 = \"\\x00111\\x00\\x1e\"\n\t\t$2 = \"\\x0011\\x00\\x1e\"\n\t\t$3 = \"\\x00123\\x00\\x1e\"\n\t\t$4 = \"\\x002chu\\x00\\x1e\"\n\t\t$5 = \"\\x007513A3DEA183474\\x00\\x1e\"\n\t\t$6 = \"\\x00abc\\x00\\x1e\"\n\t\t$7 = \"\\x00Administrator\\x00\\x1e\"\n\t\t$8 = \"\\x00admin\\x00\\x1e\"\n\t\t$9 = \"\\x00Aggarwal, Aakash\\x00\\x1e\"\n\t\t$10 = \"\\x00beat\\x00\\x1e\"\n\t\t$11 = \"\\x00Ben\\x00\\x1e\"\n\t\t$12 = \"\\x00bf\\x00\\x1e\"\n\t\t$13 = \"\\x00Booksway\\x00\\x1e\"\n\t\t$14 = \"\\x00Bosh\\x00\\x1e\"\n\t\t$15 = \"\\x00captain\\x00\\x1e\"\n\t\t$16 = \"\\x00CC2\\x00\\x1e\"\n\t\t$17 = \"\\x00cyano\\x00\\x1e\"\n\t\t$18 = \"\\x00Dinesh\\x00\\x1e\"\n\t\t$19 = \"\\x00Dolker\\x00\\x1e\"\n\t\t$20 = \"\\x00Drokpa\\x00\\x1e\"\n\t\t$21 = \"\\x00Findo\\x00\\x1e\"\n\t\t$22 = \"\\x00FLORINE DATESSEN\\x00\\x1e\"\n\t\t$23 = \"\\x00funghain\\x00\\x1e\"\n\t\t$24 = \"\\x00HealthDeptt-01\\x00\\x1e\"\n\t\t$25 = \"\\x00hy9901a\\x00\\x1e\"\n\t\t$26 = \"\\x00IBM User\\x00\\x1e\"\n\t\t$27 = \"\\x00IBM\\x00\\x1e\"\n\t\t$28 = \"\\x00Igny\\x00\\x1e\"\n\t\t$29 = \"\\x00IITK\\x00\\x1e\"\n\t\t$30 = \"\\x00I. K\\x00\\x1e\"\n\t\t$31 = \"\\x00Jamal Al-Masraf\\x00\\x1e\"\n\t\t$32 = \"\\x00Joyce Havinga\\x00\\x1e\"\n\t\t$33 = \"\\x00kalume\\x00\\x1e\"\n\t\t$34 = \"\\x00Karma\\x00\\x1e\"\n\t\t$35 = \"\\x00karmayeshi\\x00\\x1e\"\n\t\t$36 = \"\\x00KChase\\x00\\x1e\"\n\t\t$37 = \"\\x00ken\\x00\\x1e\"\n\t\t$38 = \"\\x00khenrab\\x00\\x1e\"\n\t\t$39 = \"\\x00Kunga Tashi\\x00\\x1e\"\n\t\t$40 = \"\\x00Lenovo User\\x00\\x1e\"\n\t\t$41 = \"\\x00Lenovo\\x00\\x1e\"\n\t\t$42 = \"\\x00lenovo\\x00\\x1e\"\n\t\t$43 = \"\\x00Lharisang\\x00\\x1e\"\n\t\t$44 = \"\\x00Luitgard Hammerer\\x00\\x1e\"\n\t\t$45 = \"\\x00MC SYSTEM\\x00\\x1e\"\n\t\t$46 = \"\\x00mpzhang\\x00\\x1e\"\n\t\t$47 = \"\\x00neuroking\\x00\\x1e\"\n\t\t$48 = \"\\x00Ngawang Gelek\\x00\\x1e\"\n\t\t$49 = \"\\x00niu2\\x00\\x1e\"\n\t\t$50 = \"\\x00Owner\\x00\\x1e\"\n\t\t$51 = \"\\x00pema tashi\\x00\\x1e\"\n\t\t$52 = \"\\x00pepe\\x00\\x1e\"\n\t\t$53 = \"\\x00perhat64\\x00\\x1e\"\n\t\t$54 = \"\\x00Remote\\x00\\x1e\"\n\t\t$55 = \"\\x00ResuR\\x00\\x1e\"\n\t\t$56 = \"\\x00roy\\x00\\x1e\"\n\t\t$57 = \"\\x00Samphel\\x00\\x1e\"\n\t\t$58 = \"\\x00sard\\x00\\x1e\"\n\t\t$59 = \"\\x00shirley\\x00\\x1e\"\n\t\t$60 = \"\\x00shungqar\\x00\\x1e\"\n\t\t$61 = \"\\x00Sofia Olsson\\x00\\x1e\"\n\t\t$62 = \"\\x00Sonam Dolkar\\x00\\x1e\"\n\t\t$63 = \"\\x00Son Huynh Hong\\x00\\x1e\"\n\t\t$64 = \"\\x00system\\x00\\x1e\"\n\t\t$65 = \"\\x00teguete\\x00\\x1e\"\n\t\t$66 = \"\\x00tensangmo\\x00\\x1e\"\n\t\t$67 = \"\\x00tenzin1959\\x00\\x1e\"\n\t\t$68 = \"\\x00Tenzin\\x00\\x1e\"\n\t\t$69 = \"\\x00Tran Duy Linh\\x00\\x1e\"\n\t\t$70 = \"\\x00Traudl\\x00\\x1e\"\n\t\t$71 = \"\\x00Tsedup\\x00\\x1e\"\n\t\t$72 = \"\\x00Tsering Tamding\\x00\\x1e\"\n\t\t$73 = \"\\x00unknown\\x00\\x1e\"\n\t\t$74 = \"\\x00USER\\x00\\x1e\"\n\t\t$75 = \"\\x00User\\x00\\x1e\"\n\t\t$76 = \"\\x00user\\x00\\x1e\"\n\t\t$77 = \"\\x00votoystein\\x00\\x1e\"\n\t\t$78 = \"\\x00walkinnet\\x00\\x1e\"\n\t\t$79 = \"\\x00World Uyghur Congress\\x00\\x1e\"\n\t\t$80 = \"\\x00www\\x00\\x1e\"\n\t\t$85 = \"\\x00\\xf4_y\\xb7\\x80\\x05\\x9e\\xbf\\x00\\x1e\"\n\t\t$86 = \"\\x00xp\\x00\\x1e\"\n\t\t$87 = \"\\x00YCanPDF\\x00\\x1e\"\n\t\t$88 = \"\\x00y\\x00\\x1e\"\n\t\t$89 = \"\\x00zsh\\x00\\x1e\"\n\n\tcondition:\n\t\tIsOLE and ( any of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "OLETitle",
+                "tags": [
+                    "Title",
+                    "OLEMetadata"
+                ],
+                "description": "Identifier for known OLE document titles",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-07"
+            },
+            "rule_text": "rule OLETitle : Title OLEMetadata\n{\n\tmeta:\n\t\tdescription = \"Identifier for known OLE document titles\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-07\"\n\n\tstrings:\n\t\t$1 = \"\\x0001:00\\x00\\x1e\"\n\t\t$2 = \"\\x00    23-Aprel  chushidin keyin saet bir yirim,Xitayning 3 neper paylaqchisi seriqbuya yezida oy arilap yurup paylaqchiliq qiliwatqanda bir oyge toplann\\xcaghan bir gurup uyghur yashlarni korgen we ularning yenida pichaq we tam teshidighan eswablarni korup gum\\x00\\x1e\"\n\t\t$3 = \"\\x0046-120603   fice W648\\x00\\x1e\"\n\t\t$4 = \"\\x0054-120602   15s\\xb7K\\x0c]\\xb7\\x00\\x1e\"\n\t\t$5 = \"\\x005-Iyul Urumchi Qirghinchiliqi heqide qisqiche Dokilat \\x00\\x1e\"\n\t\t$6 = \"\\x00April 20-21, 2013\\x00\\x1e\"\n\t\t$7 = \"\\x00asdfasdfasdf\\x00\\x1e\"\n\t\t$8 = \"\\x00Bamako, le 04 d\\x00\\x1e\"\n\t\t$9 = \"\\x00Best\\x00\\x1e\"\n\t\t$10 = \"\\x00Dear All,\\x00\\x1e\"\n\t\t$11 = \"\\x00Dear President and Executive Members,\\x00\\x1e\"\n\t\t$12 = \"\\x00Full list of self-immolations in Tibet\\x00\\x1e\"\n\t\t$13 = \"\\x00Help stop the destruction of my home, Lhasa, Tibet\\x00\\x1e\"\n\t\t$14 = \"\\x00HHDL'visit in European\\x00\\x1e\"\n\t\t$15 = \"\\x00II) Overview & Analysis:\\x00\\x1e\"\n\t\t$16 = \"\\x00Institute for Defence Studies and Analyses\\x00\\x1e\"\n\t\t$17 = \"\\x00IPT  APPLICATION FORM\\x00\\x1e\"\n\t\t$18 = \"\\x00Jharkhand supports Indian Parliamentary resolution on Tibet crisis\\x00\\x1e\"\n\t\t$19 = \"\\x00Lieutenant General KENOSE BARRY PHILLIPE,\\x00\\x1e\"\n\t\t$20 = \"\\x00OPERATIONAL MANUAL:\\x00\\x1e\"\n\t\t$21 = \"\\x00PART 2 - Overview and Analysis\\x00\\x1e\"\n\t\t$22 = \"\\x00PowerPoint Presentation\\x00\\x1e\"\n\t\t$23 = \"\\x00Progress Chart: 15\\x00\\x1e\"\n\t\t$24 = \"\\x00Progress Chart:\\x00\\x1e\"\n\t\t$25 = \"\\x00Progress Chart\\x00\\x1e\"\n\t\t$26 = \"\\x00RC\\x00\\x1e\"\n\t\t$27 = \"\\x00(RESENDING)\\x00\\x1e\"\n\t\t$28 = \"\\x00Talking Points EU-China Human Rights Dialogue June 2011\\x00\\x1e\"\n\t\t$29 = \"\\x00TANC Community Center\\x00\\x1e\"\n\t\t$30 = \"\\x00The Charg\\x00\\x1e\"\n\t\t$31 = \"\\x00The following schedule of plans has been finalized for the purpose of holding the Second Special General Meeting of Tibetans being organized jointly by the Tibetan Parliament-in-Exile and the Kashag headed by the Kalon Tripa in accordance with the provis\\x00\\x1e\"\n\t\t$32 = \"\\x00The Tibet Museum Project\\x00\\x1e\"\n\t\t$33 = \"\\x00Tibetan Community in Switzerland & Liechtenstein, Binzstrasse 15, CH-8045 Zurich, Switzerland \\x00\\x1e\"\n\t\t$34 = \"\\x00TSERING BHUTI\\x00\\x1e\"\n\t\t$35 = \"\\x00Tsering Bhuti\\x00\\x1e\"\n\t\t$37 = \"\\x00#\\x00\\x1e\"\n\t\t$38 = \"\\x00\\x8d\\x00\\x1e\"\n\t\t$39 = \"\\x00\\x8d\\x9a\\x06\\xb7\\x00\\x1e\"\n\t\t$40 = \"\\x00\\xc8\\xf8!\\xb7\\x00\\x1e\"\n\t\t$41 = \"\\x00Yes, I would like to raise this point: how many more young Tibetan lives are to be sacrificed in these awful self immolations before China is likely to change its Tibet policies in favour of Tibetan autonomy\\x00\\x1e\"\n\n\tcondition:\n\t\tIsOLE and ( any of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "OLELastSavedBy",
+                "tags": [
+                    "LastSavedBy",
+                    "OLEMetadata"
+                ],
+                "description": "Identifier for known OLE document Last Saved By field",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-07"
+            },
+            "rule_text": "rule OLELastSavedBy : LastSavedBy OLEMetadata\n{\n\tmeta:\n\t\tdescription = \"Identifier for known OLE document Last Saved By field\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-07\"\n\n\tstrings:\n\t\t$1 = \"\\x00111\\x00\\x1e\"\n\t\t$2 = \"\\x0011\\x00\\x1e\"\n\t\t$3 = \"\\x00123\\x00\\x1e\"\n\t\t$4 = \"\\x00Administrator\\x00\\x1e\"\n\t\t$5 = \"\\x00Admin\\x00\\x1e\"\n\t\t$6 = \"\\x00Alex\\x00\\x1e\"\n\t\t$7 = \"\\x00Audit\\x00\\x1e\"\n\t\t$8 = \"\\x00A\\x00\\x1e\"\n\t\t$9 = \"\\x00beat\\x00\\x1e\"\n\t\t$10 = \"\\x00Ben\\x00\\x1e\"\n\t\t$11 = \"\\x00bf\\x00\\x1e\"\n\t\t$12 = \"\\x00Booksway\\x00\\x1e\"\n\t\t$13 = \"\\x00Bosh\\x00\\x1e\"\n\t\t$14 = \"\\x00captain\\x00\\x1e\"\n\t\t$15 = \"\\x00CL_nelson\\x00\\x1e\"\n\t\t$16 = \"\\x00Core\\x00\\x1e\"\n\t\t$17 = \"\\x00cyano\\x00\\x1e\"\n\t\t$18 = \"\\x00dainzin\\x00\\x1e\"\n\t\t$19 = \"\\x00Dolker\\x00\\x1e\"\n\t\t$20 = \"\\x00Findo\\x00\\x1e\"\n\t\t$21 = \"\\x00FLORINE DATESSEN\\x00\\x1e\"\n\t\t$22 = \"\\x00funghain\\x00\\x1e\"\n\t\t$23 = \"\\x00HP\\x00\\x1e\"\n\t\t$24 = \"\\x00hy9901a\\x00\\x1e\"\n\t\t$25 = \"\\x00IBM User\\x00\\x1e\"\n\t\t$26 = \"\\x00IBM\\x00\\x1e\"\n\t\t$27 = \"\\x00Igny\\x00\\x1e\"\n\t\t$28 = \"\\x00I. K\\x00\\x1e\"\n\t\t$29 = \"\\x00ITCO\\x00\\x1e\"\n\t\t$30 = \"\\x00jds\\x00\\x1e\"\n\t\t$31 = \"\\x00Joyce Havinga\\x00\\x1e\"\n\t\t$32 = \"\\x00karmayeshi\\x00\\x1e\"\n\t\t$33 = \"\\x00ken\\x00\\x1e\"\n\t\t$34 = \"\\x00khenrab\\x00\\x1e\"\n\t\t$35 = \"\\x00Kunga Tashi\\x00\\x1e\"\n\t\t$37 = \"\\x00Lenovo User\\x00\\x1e\"\n\t\t$38 = \"\\x00Lenovo\\x00\\x1e\"\n\t\t$39 = \"\\x00lenovo\\x00\\x1e\"\n\t\t$40 = \"\\x00Lharisang\\x00\\x1e\"\n\t\t$41 = \"\\x00Lhundup Damcho\\x00\\x1e\"\n\t\t$42 = \"\\x00MC SYSTEM\\x00\\x1e\"\n\t\t$43 = \"\\x00mm\\x00\\x1e\"\n\t\t$44 = \"\\x00mpzhang\\x00\\x1e\"\n\t\t$45 = \"\\x00neuroking\\x00\\x1e\"\n\t\t$46 = \"\\x00niu2\\x00\\x1e\"\n\t\t$47 = \"\\x00Normal.d\\x00\\x1e\"\n\t\t$48 = \"\\x00Normal.w\\x00\\x1e\"\n\t\t$49 = \"\\x00Normal\\x00\\x1e\"\n\t\t$50 = \"\\x00one\\x00\\x1e\"\n\t\t$51 = \"\\x00Owner\\x00\\x1e\"\n\t\t$52 = \"\\x00pema tashi\\x00\\x1e\"\n\t\t$53 = \"\\x00pepe\\x00\\x1e\"\n\t\t$54 = \"\\x00PhiDiem\\x00\\x1e\"\n\t\t$55 = \"\\x00ResuR\\x00\\x1e\"\n\t\t$56 = \"\\x00roy\\x00\\x1e\"\n\t\t$57 = \"\\x00Samphel\\x00\\x1e\"\n\t\t$58 = \"\\x00system\\x00\\x1e\"\n\t\t$59 = \"\\x00TCC Dhasa1\\x00\\x1e\"\n\t\t$60 = \"\\x00tensangmo\\x00\\x1e\"\n\t\t$61 = \"\\x00Tenzin\\x00\\x1e\"\n\t\t$62 = \"\\x00test\\x00\\x1e\"\n\t\t$63 = \"\\x00Tibet Ever\\x00\\x1e\"\n\t\t$64 = \"\\x00Tran Duy Linh\\x00\\x1e\"\n\t\t$65 = \"\\x00Traudl\\x00\\x1e\"\n\t\t$66 = \"\\x00unknown\\x00\\x1e\"\n\t\t$67 = \"\\x00User\\x00\\x1e\"\n\t\t$68 = \"\\x00user\\x00\\x1e\"\n\t\t$69 = \"\\x00USR\\x00\\x1e\"\n\t\t$70 = \"\\x00walkinnet\\x00\\x1e\"\n\t\t$71 = \"\\x00WIN7\\x00\\x1e\"\n\t\t$72 = \"\\x00www\\x00\\x1e\"\n\t\t$77 = \"\\x00y\\x00\\x1e\"\n\n\tcondition:\n\t\tIsOLE and ( any of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "OlyxCode",
+                "tags": [
+                    "Olyx",
+                    "Family"
+                ],
+                "description": "Olyx code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule OlyxCode : Olyx Family\n{\n\tmeta:\n\t\tdescription = \"Olyx code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$six = { C7 40 04 36 36 36 36 C7 40 08 36 36 36 36 }\n\t\t$slash = { C7 40 04 5C 5C 5C 5C C7 40 08 5C 5C 5C 5C }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "OlyxStrings",
+                "tags": [
+                    "Olyx",
+                    "Family"
+                ],
+                "description": "Olyx Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule OlyxStrings : Olyx Family\n{\n\tmeta:\n\t\tdescription = \"Olyx Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$ = \"/Applications/Automator.app/Contents/MacOS/DockLight\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Olyx",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Olyx",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "rule Olyx : Family\n{\n\tmeta:\n\t\tdescription = \"Olyx\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tcondition:\n\t\tOlyxCode or OlyxStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "XYPayload",
+                "tags": [
+                    "Payload"
+                ],
+                "description": "Identifier for payloads using XXXXYYYY/YYYYXXXX markers",
+                "author": "Seth Hardy",
+                "last_modified": "2014-05-05"
+            },
+            "rule_text": "rule XYPayload : Payload\n{\n\tmeta:\n\t\tdescription = \"Identifier for payloads using XXXXYYYY/YYYYXXXX markers\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-05-05\"\n\n\tstrings:\n\t\t$start_marker = \"XXXXYYYY\"\n\t\t$end_marker = \"YYYYXXXX\"\n\n\tcondition:\n\t\t$start_marker and $end_marker\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PlugXBootLDRCode",
+                "tags": [
+                    "PlugX",
+                    "Family"
+                ],
+                "description": "PlugX boot.ldr code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-12"
+            },
+            "rule_text": "private rule PlugXBootLDRCode : PlugX Family\n{\n\tmeta:\n\t\tdescription = \"PlugX boot.ldr code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-12\"\n\n\tstrings:\n\t\t$GetProcAdd = { 80 38 47 75 36 80 78 01 65 75 30 80 78 02 74 75 2A 80 78 03 50 }\n\t\t$L4_LoadLibraryA = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 4C 6F 61 64 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 4C 69 62 72 }\n\t\t$L4_VirtualAlloc = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 56 69 72 74 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 75 61 6C 41 }\n\t\t$L4_VirtualFree = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 56 69 72 74 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 75 61 6C 46 }\n\t\t$L4_ExitThread = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 45 78 69 74 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 54 68 72 65 }\n\t\t$L4_ntdll = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 6E 74 64 6C 66 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) C6 00 }\n\t\t$L4_RtlDecompressBuffer = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 52 74 6C 44 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 65 63 6F 6D }\n\t\t$L4_memcpy = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 6D 65 6D 63 66 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 70 79 }\n\n\tcondition:\n\t\t$GetProcAdd or ( all of ( $L4_* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PlugXStrings",
+                "tags": [
+                    "PlugX",
+                    "Family"
+                ],
+                "description": "PlugX Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-12"
+            },
+            "rule_text": "private rule PlugXStrings : PlugX Family\n{\n\tmeta:\n\t\tdescription = \"PlugX Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-12\"\n\n\tstrings:\n\t\t$BootLDR = \"boot.ldr\" wide ascii\n\t\t$Dwork = \"d:\\\\work\" nocase\n\t\t$Plug25 = \"plug2.5\"\n\t\t$Plug30 = \"Plug3.0\"\n\t\t$Shell6 = \"Shell6\"\n\n\tcondition:\n\t\t$BootLDR or ( $Dwork and ( $Plug25 or $Plug30 or $Shell6 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PlugX",
+                "tags": [
+                    "Family"
+                ],
+                "description": "PlugX",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-12"
+            },
+            "rule_text": "rule PlugX : Family\n{\n\tmeta:\n\t\tdescription = \"PlugX\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-12\"\n\n\tcondition:\n\t\tPlugXBootLDRCode or PlugXStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PubSabCode",
+                "tags": [
+                    "PubSab",
+                    "Family"
+                ],
+                "description": "PubSab code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule PubSabCode : PubSab Family\n{\n\tmeta:\n\t\tdescription = \"PubSab code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$decrypt = { 6B 45 E4 37 89 CA 29 C2 89 55 E4 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PubSabStrings",
+                "tags": [
+                    "PubSab",
+                    "Family"
+                ],
+                "description": "PubSab Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "private rule PubSabStrings : PubSab Family\n{\n\tmeta:\n\t\tdescription = \"PubSab Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tstrings:\n\t\t$ = \"_deamon_init\"\n\t\t$ = \"com.apple.PubSabAgent\"\n\t\t$ = \"/tmp/screen.jpeg\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PubSab",
+                "tags": [
+                    "Family"
+                ],
+                "description": "PubSab",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-19"
+            },
+            "rule_text": "rule PubSab : Family\n{\n\tmeta:\n\t\tdescription = \"PubSab\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-19\"\n\n\tcondition:\n\t\tPubSabCode or PubSabStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "QuarianCode",
+                "tags": [
+                    "Quarian",
+                    "Family"
+                ],
+                "description": "Quarian code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "private rule QuarianCode : Quarian Family\n{\n\tmeta:\n\t\tdescription = \"Quarian code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tstrings:\n\t\t$ = { C1 E? 04 8B ?? F? C1 E? 05 33 C? }\n\t\t$ = { C1 EF 05 C1 E3 04 33 FB }\n\t\t$ = { 33 D8 81 EE 47 86 C8 61 }\n\t\t$ = { FF 45 E8 81 45 EC CC 00 00 00 E9 95 FE FF FF }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "QuarianStrings",
+                "tags": [
+                    "Quarian",
+                    "Family"
+                ],
+                "description": "Quarian Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "private rule QuarianStrings : Quarian Family\n{\n\tmeta:\n\t\tdescription = \"Quarian Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tstrings:\n\t\t$ = \"s061779s061750\"\n\t\t$ = \"[OnUpLoadFile]\"\n\t\t$ = \"[OnDownLoadFile]\"\n\t\t$ = \"[FileTransfer]\"\n\t\t$ = \"---- Not connect the Manager, so start UnInstall ----\"\n\t\t$ = \"------- Enter CompressDownLoadDir ---------\"\n\t\t$ = \"------- Enter DownLoadDirectory ---------\"\n\t\t$ = \"[HandleAdditionalData]\"\n\t\t$ = \"[mswsocket.dll]\"\n\t\t$ = \"msupdate.dll........Enter ThreadCmd!\"\n\t\t$ = \"ok1-1\"\n\t\t$ = \"msupdate_tmp.dll\"\n\t\t$ = \"replace Rpcss.dll successfully!\"\n\t\t$ = \"f:\\\\loadhiddendriver-mdl\\\\objfre_win7_x86\\\\i386\\\\intelnat.pdb\"\n\t\t$ = \"\\\\drivercashe\\\\\" wide ascii\n\t\t$ = \"\\\\microsoft\\\\windwos\\\\\" wide ascii\n\t\t$ = \"\\\\DosDevices\\\\LOADHIDDENDRIVER\" wide ascii\n\t\t$ = \"\\\\Device\\\\LOADHIDDENDRIVER\" wide ascii\n\t\t$ = \"Global\\\\state_maping\" wide ascii\n\t\t$ = \"E:\\\\Code\\\\2.0\\\\2.0_multi-port\\\\2.0\\\\ServerInstall_New-2010-0913_sp3\\\\msupdataDll\\\\Release\\\\msupdate_tmp.pdb\"\n\t\t$ = \"Global\\\\unInstall_event_1554_Ower\" wide ascii\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Quarian",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Quarian",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "rule Quarian : Family\n{\n\tmeta:\n\t\tdescription = \"Quarian\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tcondition:\n\t\tQuarianCode or QuarianStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RegSubDatCode",
+                "tags": [
+                    "RegSubDat",
+                    "Family"
+                ],
+                "description": "RegSubDat code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-14"
+            },
+            "rule_text": "private rule RegSubDatCode : RegSubDat Family\n{\n\tmeta:\n\t\tdescription = \"RegSubDat code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-14\"\n\n\tstrings:\n\t\t$ = { 80 34 3? 99 40 (3D FB 65 00 00 | 3B C6) 7? F? }\n\t\t$ = { 68 FF FF 7F 00 5? }\n\t\t$ = { 68 FF 7F 00 00 5? }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RegSubDatStrings",
+                "tags": [
+                    "RegSubDat",
+                    "Family"
+                ],
+                "description": "RegSubDat Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-14"
+            },
+            "rule_text": "private rule RegSubDatStrings : RegSubDat Family\n{\n\tmeta:\n\t\tdescription = \"RegSubDat Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-14\"\n\n\tstrings:\n\t\t$avg1 = \"Button\"\n\t\t$avg2 = \"Allow\"\n\t\t$avg3 = \"Identity Protection\"\n\t\t$avg4 = \"Allow for all\"\n\t\t$avg5 = \"AVG Firewall Asks For Confirmation\"\n\t\t$mutex = \"0x1A7B4C9F\"\n\n\tcondition:\n\t\tall of ( $avg* ) or $mutex\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RegSubDat",
+                "tags": [
+                    "Family"
+                ],
+                "description": "RegSubDat",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-14"
+            },
+            "rule_text": "rule RegSubDat : Family\n{\n\tmeta:\n\t\tdescription = \"RegSubDat\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-14\"\n\n\tcondition:\n\t\tRegSubDatCode or RegSubDatStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RSharedStrings",
+                "tags": [
+                    "Surtr",
+                    "Family"
+                ],
+                "description": "identifiers for remote and gmremote",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule RSharedStrings : Surtr Family\n{\n\tmeta:\n\t\tdescription = \"identifiers for remote and gmremote\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = \"nView_DiskLoydb\" wide\n\t\t$ = \"nView_KeyLoydb\" wide\n\t\t$ = \"nView_skins\" wide\n\t\t$ = \"UsbLoydb\" wide\n\t\t$ = \"%sBurn%s\" wide\n\t\t$ = \"soul\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RemoteStrings",
+                "tags": [
+                    "Remote",
+                    "Variant",
+                    "Surtr",
+                    "Family"
+                ],
+                "description": "indicators for remote.dll - surtr stage 2",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule RemoteStrings : Remote Variant Surtr Family\n{\n\tmeta:\n\t\tdescription = \"indicators for remote.dll - surtr stage 2\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = \"\\x00Remote.dll\\x00\"\n\t\t$ = \"\\x00CGm_PlugBase::\"\n\t\t$ = \"\\x00ServiceMain\\x00_K_H_K_UH\\x00\"\n\t\t$ = \"\\x00_Remote_\\x00\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GmRemoteStrings",
+                "tags": [
+                    "GmRemote",
+                    "Variant",
+                    "Family",
+                    "Surtr"
+                ],
+                "description": "identifiers for gmremote: surtr stage 2",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule GmRemoteStrings : GmRemote Variant Family Surtr\n{\n\tmeta:\n\t\tdescription = \"identifiers for gmremote: surtr stage 2\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = \"\\x00x86_GmRemote.dll\\x00\"\n\t\t$ = \"\\x00D:\\\\Project\\\\GTProject\\\\Public\\\\List\\\\ListManager.cpp\\x00\"\n\t\t$ = \"\\x00GmShutPoint\\x00\"\n\t\t$ = \"\\x00GmRecvPoint\\x00\"\n\t\t$ = \"\\x00GmInitPoint\\x00\"\n\t\t$ = \"\\x00GmVerPoint\\x00\"\n\t\t$ = \"\\x00GmNumPoint\\x00\"\n\t\t$ = \"_Gt_Remote_\" wide\n\t\t$ = \"%sBurn\\\\workdll.tmp\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GmRemote",
+                "tags": [
+                    "Family",
+                    "Surtr",
+                    "Variant",
+                    "GmRemote"
+                ],
+                "description": "identifier for gmremote",
+                "author": "Katie Kleemola",
+                "last_updated": "07-25-2014"
+            },
+            "rule_text": "rule GmRemote : Family Surtr Variant GmRemote\n{\n\tmeta:\n\t\tdescription = \"identifier for gmremote\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-25-2014\"\n\n\tcondition:\n\t\tRSharedStrings and GmRemoteStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Remote",
+                "tags": [
+                    "Family",
+                    "Surtr",
+                    "Variant",
+                    "Remote"
+                ],
+                "description": "identifier for remote",
+                "author": "Katie Kleemola",
+                "last_updated": "07-25-2014"
+            },
+            "rule_text": "rule Remote : Family Surtr Variant Remote\n{\n\tmeta:\n\t\tdescription = \"identifier for remote\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-25-2014\"\n\n\tcondition:\n\t\tRSharedStrings and RemoteStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RookieCode",
+                "tags": [
+                    "Rookie",
+                    "Family"
+                ],
+                "description": "Rookie code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule RookieCode : Rookie Family\n{\n\tmeta:\n\t\tdescription = \"Rookie code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = { C6 ?? ?? ?? 41 C6 ?? ?? ?? 75 [4] C6 ?? ?? ?? 6F C6 ?? ?? ?? 43 C6 ?? ?? ?? 6F C6 ?? ?? ?? 6E C6 ?? ?? ?? 66 }\n\t\t$ = { C6 ?? ?? ?? 50 [4] C6 ?? ?? ?? 6F C6 ?? ?? ?? 78 C6 ?? ?? ?? 79 C6 ?? ?? ?? 45 C6 ?? ?? ?? 6E C6 ?? ?? ?? 61 }\n\t\t$ = { 8B 1D 10 A1 40 00 [18] FF D3 8A 16 32 D0 88 16 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RookieStrings",
+                "tags": [
+                    "Rookie",
+                    "Family"
+                ],
+                "description": "Rookie Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule RookieStrings : Rookie Family\n{\n\tmeta:\n\t\tdescription = \"Rookie Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"RookIE/1.0\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Rookie",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Rookie",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule Rookie : Family\n{\n\tmeta:\n\t\tdescription = \"Rookie\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tRookieCode or RookieStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RooterCode",
+                "tags": [
+                    "Rooter",
+                    "Family"
+                ],
+                "description": "Rooter code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule RooterCode : Rooter Family\n{\n\tmeta:\n\t\tdescription = \"Rooter code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$ = { 80 B0 ?? ?? ?? ?? 30 40 3D 00 50 00 00 7C F1 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RooterStrings",
+                "tags": [
+                    "Rooter",
+                    "Family"
+                ],
+                "description": "Rooter Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule RooterStrings : Rooter Family\n{\n\tmeta:\n\t\tdescription = \"Rooter Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$group1 = \"seed\\x00\"\n\t\t$group2 = \"prot\\x00\"\n\t\t$group3 = \"ownin\\x00\"\n\t\t$group4 = \"feed0\\x00\"\n\t\t$group5 = \"nown\\x00\"\n\n\tcondition:\n\t\t3 of ( $group* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Rooter",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Rooter",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "rule Rooter : Family\n{\n\tmeta:\n\t\tdescription = \"Rooter\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tcondition:\n\t\tRooterCode or RooterStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SafeNetCode",
+                "tags": [
+                    "SafeNet",
+                    "Family"
+                ],
+                "description": "SafeNet code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-16"
+            },
+            "rule_text": "private rule SafeNetCode : SafeNet Family\n{\n\tmeta:\n\t\tdescription = \"SafeNet code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-16\"\n\n\tstrings:\n\t\t$ = { 83 C7 14 81 FF F8 D0 40 00 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SafeNetStrings",
+                "tags": [
+                    "SafeNet",
+                    "Family"
+                ],
+                "description": "Strings used by SafeNet",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-16"
+            },
+            "rule_text": "private rule SafeNetStrings : SafeNet Family\n{\n\tmeta:\n\t\tdescription = \"Strings used by SafeNet\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-16\"\n\n\tstrings:\n\t\t$ = \"6dNfg8Upn5fBzGgj8licQHblQvLnUY19z5zcNKNFdsDhUzuI8otEsBODrzFCqCKr\"\n\t\t$ = \"/safe/record.php\"\n\t\t$ = \"_Rm.bat\" wide ascii\n\t\t$ = \"try\\x0d\\x0a\\x09\\x09\\x09\\x09  del %s\" wide ascii\n\t\t$ = \"Ext.org\" wide ascii\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SafeNet",
+                "tags": [
+                    "Family"
+                ],
+                "description": "SafeNet family"
+            },
+            "rule_text": "rule SafeNet : Family\n{\n\tmeta:\n\t\tdescription = \"SafeNet family\"\n\n\tcondition:\n\t\tSafeNetCode or SafeNetStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ScarhiknCode",
+                "tags": [
+                    "Scarhikn",
+                    "Family"
+                ],
+                "description": "Scarhikn code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule ScarhiknCode : Scarhikn Family\n{\n\tmeta:\n\t\tdescription = \"Scarhikn code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = { 8B 06 8A 8B ?? ?? ?? ?? 30 0C 38 03 C7 55 43 E8 ?? ?? ?? ?? 3B D8 59 72 E7 }\n\t\t$ = { 8B 02 8A 8D ?? ?? ?? ?? 30 0C 30 03 C6 8B FB 83 C9 FF 33 C0 45 F2 AE F7 D1 49 3B E9 72 E2 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ScarhiknStrings",
+                "tags": [
+                    "Scarhikn",
+                    "Family"
+                ],
+                "description": "Scarhikn Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "private rule ScarhiknStrings : Scarhikn Family\n{\n\tmeta:\n\t\tdescription = \"Scarhikn Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tstrings:\n\t\t$ = \"9887___skej3sd\"\n\t\t$ = \"haha123\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Scarhikn",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Scarhikn",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-25"
+            },
+            "rule_text": "rule Scarhikn : Family\n{\n\tmeta:\n\t\tdescription = \"Scarhikn\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-25\"\n\n\tcondition:\n\t\tScarhiknCode or ScarhiknStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SurtrCode",
+                "tags": [
+                    "Surtr",
+                    "Family"
+                ],
+                "author": "Katie Kleemola",
+                "description": "Code features for Surtr Stage1",
+                "last_updated": "2014-07-16"
+            },
+            "rule_text": "private rule SurtrCode : Surtr Family\n{\n\tmeta:\n\t\tauthor = \"Katie Kleemola\"\n\t\tdescription = \"Code features for Surtr Stage1\"\n\t\tlast_updated = \"2014-07-16\"\n\n\tstrings:\n\t\t$ = { 8A ?? ?? 84 ?? ?? 74 ?? 3C 01 74 ?? 34 01 88 41 3B ?? 72 ?? }\n\t\t$ = { C6 [3] 42 C6 [3] 75 C6 [3] 72 C6 [3] 6E C6 [3] 5C }\n\t\t$ = { C6 [3] 5F C6 [3] 46 C6 [3] 69 C6 [3] 72 C6 [3] 65 C6 [3] 2E C6 [3] 64 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SurtrStrings",
+                "tags": [
+                    "Surtr",
+                    "Family"
+                ],
+                "author": "Katie Kleemola",
+                "description": "Strings for Surtr",
+                "last_updated": "2014-07-16"
+            },
+            "rule_text": "private rule SurtrStrings : Surtr Family\n{\n\tmeta:\n\t\tauthor = \"Katie Kleemola\"\n\t\tdescription = \"Strings for Surtr\"\n\t\tlast_updated = \"2014-07-16\"\n\n\tstrings:\n\t\t$ = \"\\x00soul\\x00\"\n\t\t$ = \"\\x00InstallDll.dll\\x00\"\n\t\t$ = \"\\x00_One.dll\\x00\"\n\t\t$ = \"_Fra.dll\"\n\t\t$ = \"CrtRunTime.log\"\n\t\t$ = \"Prod.t\"\n\t\t$ = \"Proe.t\"\n\t\t$ = \"Burn\\\\\"\n\t\t$ = \"LiveUpdata_Mem\\\\\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Surtr",
+                "tags": [
+                    "Family"
+                ],
+                "author": "Katie Kleemola",
+                "description": "Rule for Surtr Stage One",
+                "last_updated": "2014-07-16"
+            },
+            "rule_text": "rule Surtr : Family\n{\n\tmeta:\n\t\tauthor = \"Katie Kleemola\"\n\t\tdescription = \"Rule for Surtr Stage One\"\n\t\tlast_updated = \"2014-07-16\"\n\n\tcondition:\n\t\tSurtrStrings or SurtrCode\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "T5000Strings",
+                "tags": [
+                    "T5000",
+                    "Family"
+                ],
+                "description": "T5000 Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-26"
+            },
+            "rule_text": "private rule T5000Strings : T5000 Family\n{\n\tmeta:\n\t\tdescription = \"T5000 Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-26\"\n\n\tstrings:\n\t\t$ = \"_tmpR.vbs\"\n\t\t$ = \"_tmpg.vbs\"\n\t\t$ = \"Dtl.dat\" wide ascii\n\t\t$ = \"3C6FB3CA-69B1-454f-8B2F-BD157762810E\"\n\t\t$ = \"EED5CA6C-9958-4611-B7A7-1238F2E1B17E\"\n\t\t$ = \"8A8FF8AD-D1DE-4cef-B87C-82627677662E\"\n\t\t$ = \"43EE34A9-9063-4d2c-AACD-F5C62B849089\"\n\t\t$ = \"A8859547-C62D-4e8b-A82D-BE1479C684C9\"\n\t\t$ = \"A59CF429-D0DD-4207-88A1-04090680F714\"\n\t\t$ = \"utd_CE31\" wide ascii\n\t\t$ = \"f:\\\\Project\\\\T5000\\\\Src\\\\Target\\\\1 KjetDll.pdb\"\n\t\t$ = \"l:\\\\MyProject\\\\Vc 7.1\\\\T5000\\\\T5000Ver1.28\\\\Target\\\\4 CaptureDLL.pdb\"\n\t\t$ = \"f:\\\\Project\\\\T5000\\\\Src\\\\Target\\\\4 CaptureDLL.pdb\"\n\t\t$ = \"E:\\\\VS2010\\\\xPlat2\\\\Release\\\\InstRes32.pdb\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "T5000",
+                "tags": [
+                    "Family"
+                ],
+                "description": "T5000",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-26"
+            },
+            "rule_text": "rule T5000 : Family\n{\n\tmeta:\n\t\tdescription = \"T5000\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-26\"\n\n\tcondition:\n\t\tT5000Strings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "VidgrabCode",
+                "tags": [
+                    "Vidgrab",
+                    "Family"
+                ],
+                "description": "Vidgrab code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule VidgrabCode : Vidgrab Family\n{\n\tmeta:\n\t\tdescription = \"Vidgrab code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$divbyzero = { B8 02 00 00 00 48 48 BA 02 00 00 00 83 F2 02 F7 F0 }\n\t\t$xorloop = { 03 C1 80 30 (66 | 58) 41 }\n\t\t$junk = { 8B 4? ?? 8B 4? ?? 03 45 08 52 5A }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "VidgrabStrings",
+                "tags": [
+                    "Vidgrab",
+                    "Family"
+                ],
+                "description": "Vidgrab Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "private rule VidgrabStrings : Vidgrab Family\n{\n\tmeta:\n\t\tdescription = \"Vidgrab Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tstrings:\n\t\t$ = \"IDI_ICON5\" wide ascii\n\t\t$ = \"starter.exe\"\n\t\t$ = \"wmifw.exe\"\n\t\t$ = \"Software\\\\rar\"\n\t\t$ = \"tmp092.tmp\"\n\t\t$ = \"temp1.exe\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Vidgrab",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Vidgrab",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-20"
+            },
+            "rule_text": "rule Vidgrab : Family\n{\n\tmeta:\n\t\tdescription = \"Vidgrab\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-20\"\n\n\tcondition:\n\t\tVidgrabCode or VidgrabStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WarpCode",
+                "tags": [
+                    "Warp",
+                    "Family"
+                ],
+                "description": "Warp code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule WarpCode : Warp Family\n{\n\tmeta:\n\t\tdescription = \"Warp code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$ = { 80 38 2B 75 03 C6 00 2D 80 38 2F 75 03 C6 00 5F }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WarpStrings",
+                "tags": [
+                    "Warp",
+                    "Family"
+                ],
+                "description": "Warp Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "private rule WarpStrings : Warp Family\n{\n\tmeta:\n\t\tdescription = \"Warp Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tstrings:\n\t\t$ = \"/2011/n325423.shtml?\"\n\t\t$ = \"wyle\"\n\t\t$ = \"\\\\~ISUN32.EXE\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Warp",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Warp",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-10"
+            },
+            "rule_text": "rule Warp : Family\n{\n\tmeta:\n\t\tdescription = \"Warp\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-10\"\n\n\tcondition:\n\t\tWarpCode or WarpStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WimmieShellcode",
+                "tags": [
+                    "Wimmie",
+                    "Family"
+                ],
+                "description": "Wimmie code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-17"
+            },
+            "rule_text": "private rule WimmieShellcode : Wimmie Family\n{\n\tmeta:\n\t\tdescription = \"Wimmie code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-17\"\n\n\tstrings:\n\t\t$ = { 49 30 24 39 83 F9 00 77 F7 8D 3D 4D 10 40 00 B9 0C 03 00 00 }\n\t\t$xordecrypt = {B9 B4 1D 00 00 [8] 49 30 24 39 83 F9 00 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WimmieStrings",
+                "tags": [
+                    "Wimmie",
+                    "Family"
+                ],
+                "description": "Strings used by Wimmie",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-17"
+            },
+            "rule_text": "private rule WimmieStrings : Wimmie Family\n{\n\tmeta:\n\t\tdescription = \"Strings used by Wimmie\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-17\"\n\n\tstrings:\n\t\t$ = \"\\x00ScriptMan\"\n\t\t$ = \"C:\\\\WINDOWS\\\\system32\\\\sysprep\\\\cryptbase.dll\" wide ascii\n\t\t$ = \"ProbeScriptFint\" wide ascii\n\t\t$ = \"ProbeScriptKids\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Wimmie",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Wimmie family",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-17"
+            },
+            "rule_text": "rule Wimmie : Family\n{\n\tmeta:\n\t\tdescription = \"Wimmie family\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-17\"\n\n\tcondition:\n\t\tWimmieShellcode or WimmieStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "XtremeRATCode",
+                "tags": [
+                    "XtremeRAT",
+                    "Family"
+                ],
+                "description": "XtremeRAT code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "private rule XtremeRATCode : XtremeRAT Family\n{\n\tmeta:\n\t\tdescription = \"XtremeRAT code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tstrings:\n\t\t$ = { E8 ?? ?? ?? ?? DD D8 }\n\t\t$ = { C6 85 ?? ?? ?? ?? 4D C6 85 ?? ?? ?? ?? 70 C6 85 ?? ?? ?? ?? 64 C6 85 ?? ?? ?? ?? 62 C6 85 ?? ?? ?? ?? 6D }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "XtremeRATStrings",
+                "tags": [
+                    "XtremeRAT",
+                    "Family"
+                ],
+                "description": "XtremeRAT Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "private rule XtremeRATStrings : XtremeRAT Family\n{\n\tmeta:\n\t\tdescription = \"XtremeRAT Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tstrings:\n\t\t$ = \"dqsaazere\"\n\t\t$ = \"-GCCLIBCYGMING-EH-TDM1-SJLJ-GTHR-MINGW32\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "XtremeRAT",
+                "tags": [
+                    "Family"
+                ],
+                "description": "XtremeRAT",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-09"
+            },
+            "rule_text": "rule XtremeRAT : Family\n{\n\tmeta:\n\t\tdescription = \"XtremeRAT\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-09\"\n\n\tcondition:\n\t\tXtremeRATCode or XtremeRATStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "YayihCode",
+                "tags": [
+                    "Yayih",
+                    "Family"
+                ],
+                "description": "Yayih code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-11"
+            },
+            "rule_text": "rule YayihCode : Yayih Family\n{\n\tmeta:\n\t\tdescription = \"Yayih code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-11\"\n\n\tstrings:\n\t\t$ = { 80 04 08 7A 03 C1 8B 45 FC 80 34 08 19 03 C1 41 3B 0A 7C E9 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "YayihStrings",
+                "tags": [
+                    "Yayih",
+                    "Family"
+                ],
+                "description": "Yayih Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-11"
+            },
+            "rule_text": "rule YayihStrings : Yayih Family\n{\n\tmeta:\n\t\tdescription = \"Yayih Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-11\"\n\n\tstrings:\n\t\t$ = \"/bbs/info.asp\"\n\t\t$ = \"\\\\msinfo.exe\"\n\t\t$ = \"%s\\\\%srcs.pdf\"\n\t\t$ = \"\\\\aumLib.ini\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Yayih",
+                "tags": [
+                    "Family"
+                ],
+                "description": "Yayih",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-11"
+            },
+            "rule_text": "rule Yayih : Family\n{\n\tmeta:\n\t\tdescription = \"Yayih\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-11\"\n\n\tcondition:\n\t\tYayihCode or YayihStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

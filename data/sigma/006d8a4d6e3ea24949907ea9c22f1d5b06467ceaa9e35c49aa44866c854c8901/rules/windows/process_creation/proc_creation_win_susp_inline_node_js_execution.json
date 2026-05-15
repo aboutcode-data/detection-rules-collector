@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_inline_node_js_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Microsoft (idea), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-04-21",
+                "title": "Potentially Suspicious Inline JavaScript Execution via NodeJS Binary",
+                "id": "8537c866-072e-460d-bfff-aaf39cbd73d3"
+            },
+            "rule_text": "title: Potentially Suspicious Inline JavaScript Execution via NodeJS Binary\nid: 8537c866-072e-460d-bfff-aaf39cbd73d3\nstatus: experimental\ndescription: Detects potentially suspicious inline JavaScript execution using Node.js\n  with specific keywords in the command line.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2025/04/15/threat-actors-misuse-node-js-to-deliver-malware-and-other-malicious-payloads/\nauthor: Microsoft (idea), Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-04-21\ntags:\n- attack.execution\n- attack.t1059.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\node.exe\n  - OriginalFileName: node.exe\n  - Product: Node.js\n  selection_cmd:\n    CommandLine|contains|all:\n    - http\n    - execSync\n    - spawn\n    - fs\n    - path\n    - zlib\n  condition: all of selection_*\nfalsepositives:\n- Legitimate scripts using Node.js with these modules\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

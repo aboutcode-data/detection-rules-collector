@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/veiltransfer_exfiltration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Andreas Foureaux",
+                "date": "2025-07-28",
+                "title": "Data Exfiltration using Veiltransfer",
+                "id": "8c0ab44f-1178-4f41-a573-50a114724959"
+            },
+            "rule_text": "title: Data Exfiltration using Veiltransfer\nid: 8c0ab44f-1178-4f41-a573-50a114724959\nstatus: test\ndescription: Detects veiltransfer execution even if the binary has had its name changed\nreferences:\n- https://github.com/infosecn1nja/VeilTransfer\nauthor: NTT Security - Andreas Foureaux\ndate: 2025-07-28\ntags:\n- attack.exfiltration\nlogsource:\n  product: endpoint\ndetection:\n  selection_os_windows:\n    eventcategory: process_creation\n  selection_os_linux:\n    src_os: linux\n  selection_command:\n    command|contains|all:\n    - transfer\n    - localPath\n  selection_binary:\n    image|endswith: veiltransfer.exe\n  condition: 1 of selection_os* and (selection_command or selection_binary)\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

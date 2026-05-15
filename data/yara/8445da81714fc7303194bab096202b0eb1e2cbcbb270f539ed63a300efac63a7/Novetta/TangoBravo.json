@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/TangoBravo.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TangoBravo",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "2aa9cd3a2db2bd9dbe5ee36d9a5fc42b50beca806f9d644f387d5a680a580896"
+            },
+            "rule_text": "import \"pe\"\n\nrule TangoBravo\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"2aa9cd3a2db2bd9dbe5ee36d9a5fc42b50beca806f9d644f387d5a680a580896\"\n\n\tstrings:\n\t\t$targetDomainCheck = {\n\t\t\t5? \n\t\t\t5? \n\t\t\tFF ?? \n\t\t\t83 C4 08 \n\t\t\t85 C0 \n\t\t\t75 ?? \n\t\t\t8? ?? 08 01 00 00 \n\t\t\t8? ?? 08 01 00 00 \n\t\t\t4? \n\t\t\t8B ?? \n\t\t\t84 ?? \n\t\t\t75  \n\t\t}\n\n\tcondition:\n\t\t$targetDomainCheck in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

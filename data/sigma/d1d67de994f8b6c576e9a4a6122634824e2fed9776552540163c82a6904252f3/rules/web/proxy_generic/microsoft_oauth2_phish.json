@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/microsoft_oauth2_phish.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2025-04-23",
+                "title": "Microsoft Oauth2 Phish",
+                "id": "663def8a-9dbf-49be-89a2-c85b8ea6e0fc"
+            },
+            "rule_text": "title: Microsoft Oauth2 Phish\nid: 663def8a-9dbf-49be-89a2-c85b8ea6e0fc\ndescription: 'Attempts to identify a suspicious scope or redirect_uri in\n\n  oauth2 authentication flows.'\nreferences:\n- https://www.volexity.com/blog/2025/04/22/phishing-for-codes-russian-threat-actors-target-microsoft-365-oauth-workflows/\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2025-04-23\nlogsource:\n  category: proxy\ndetection:\n  selection_base:\n    cs-host|cased: login.microsoftonline.com\n    cs-uri-stem|contains|cased|all:\n    - oauth2\n    - authorize\n    cs-uri-query|contains|all:\n    - login_hint=\n    - redirect_uri=\n  selection_suspicious_scope:\n    cs-uri-query|contains:\n    - graph.microsoft.com/.default&\n    - graph.microsoft.com%2F.default&\n    - graph.microsoft.com&\n  selection_suspicious_redirect_uri:\n    cs-uri-query|contains:\n    - vscode-redirect.azurewebsites.net\n    - insiders.vscode.dev\n  condition: selection_base and 1 of selection_suspicious_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

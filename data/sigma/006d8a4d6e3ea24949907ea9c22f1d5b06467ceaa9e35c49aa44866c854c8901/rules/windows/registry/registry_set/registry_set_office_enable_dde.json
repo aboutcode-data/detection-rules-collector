@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_office_enable_dde.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-26",
+                "title": "Enable Microsoft Dynamic Data Exchange",
+                "id": "63647769-326d-4dde-a419-b925cc0caf42"
+            },
+            "rule_text": "title: Enable Microsoft Dynamic Data Exchange\nid: 63647769-326d-4dde-a419-b925cc0caf42\nstatus: test\ndescription: Enable Dynamic Data Exchange protocol (DDE) in all supported editions\n  of Microsoft Word or Excel.\nreferences:\n- https://msrc.microsoft.com/update-guide/vulnerability/ADV170021\nauthor: frack113\ndate: 2022-02-26\nmodified: 2023-08-17\ntags:\n- attack.execution\n- attack.t1559.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_word:\n    TargetObject|endswith: \\Word\\Security\\AllowDDE\n    Details:\n    - DWORD (0x00000001)\n    - DWORD (0x00000002)\n  selection_excel:\n    TargetObject|endswith:\n    - \\Excel\\Security\\DisableDDEServerLaunch\n    - \\Excel\\Security\\DisableDDEServerLookup\n    Details: DWORD (0x00000000)\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

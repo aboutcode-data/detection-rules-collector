@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/network/cobaltstrike_dns.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2022-08-04",
+                "title": "CobaltStrike DNS communication",
+                "id": "7d485001-d8d4-4218-b146-11279cedd398"
+            },
+            "rule_text": "title: CobaltStrike DNS communication\nid: 7d485001-d8d4-4218-b146-11279cedd398\ndescription: Detects DNS traffic towards domain in format as specified in malleable\n  profile and reference tools.\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: '2022-08-04'\nreferences:\n- https://github.com/threatexpress/malleable-c2/blob/master/jquery-c2.4.3.profile#L205\n- https://github.com/bluscreenofjeff/Malleable-C2-Randomizer/blob/master/Sample%20Lists/dns_stager_subhost.txt\n- https://trial.cobaltstrike.com/help-malleable-c2\nlogsource:\n  category: dns_query\ndetection:\n  selection1:\n    QueryName|startswith:\n    - .wwwds.\n    - doc-stg-prepend\n    - doc-stg-sh.\n    - a.bc.\n    - b.1a.\n    - c.4a.\n    - d.tx.\n    - e.md\n    - f.po.\n    - doc.bc.\n    - doc.1a.\n    - doc.4a.\n    - doc.tx.\n    - doc.md.\n    - doc.po.\n    - aaa.stage.\n  selection2:\n    QueryName|contains:\n    - .123456.\n  condition: selection1 or selection2\nfalsepositives:\n- Potentially legitimate domains\n- External scanning hosts looking for C2 servers\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Qakbot/Trojan_Win32_Qakbot_RF_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Qakbot_RF_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Qakbot.RF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Qakbot_RF_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Qakbot.RF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {31 02 6a 00 e8 ?? ?? ?? ?? 83 c0 04 01 05 ?? ?? ?? ?? 6a 00 e8 ?? ?? ?? ?? 29 05 ?? ?? ?? ?? 83 05 ?? ?? ?? ?? 04 }\n\t\t$a_03_1 = {2d 00 10 00 00 a3 ?? ?? ?? ?? 83 ?? ?? ?? ?? ?? 04 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Qakbot_RF_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Qakbot.RF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Qakbot_RF_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Qakbot.RF!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {31 02 6a 00 e8 ?? ?? ?? ?? 8b d8 83 c3 04 [0-28] 2b d8 01 5d ?? 83 05 ?? ?? ?? ?? 04 8b 45 ?? 3b 05 ?? ?? ?? ?? 72 ?? a1 ?? ?? ?? ?? 03 05 ?? ?? ?? ?? 2d 00 10 00 00 83 c0 04 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

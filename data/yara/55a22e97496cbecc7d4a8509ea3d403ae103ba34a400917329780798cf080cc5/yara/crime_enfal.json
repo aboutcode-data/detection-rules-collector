@@ -1,0 +1,40 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_enfal.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_Enfal_Nov22",
+                "tags": [],
+                "old_rule_name": "Enfal_Malware",
+                "description": "Detects a certain type of Enfal Malware",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://malpedia.caad.fkie.fraunhofer.de/details/win.enfal",
+                "date": "2015-02-10",
+                "modified": "2023-01-06",
+                "hash2": "bf433f4264fa3f15f320b35e773e18ebfe94465d864d3f4b2a963c3e5efd39c2",
+                "score": 75,
+                "id": "9dcba14e-2175-5da0-8629-5b952c213f6c"
+            },
+            "rule_text": "rule MAL_Enfal_Nov22\n{\n\tmeta:\n\t\told_rule_name = \"Enfal_Malware\"\n\t\tdescription = \"Detects a certain type of Enfal Malware\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://malpedia.caad.fkie.fraunhofer.de/details/win.enfal\"\n\t\tdate = \"2015-02-10\"\n\t\tmodified = \"2023-01-06\"\n\t\thash2 = \"42fa6241ab94c73c7ab386d600fae70da505d752daab2e61819a0142b531078a\"\n\t\thash2 = \"bf433f4264fa3f15f320b35e773e18ebfe94465d864d3f4b2a963c3e5efd39c2\"\n\t\tscore = 75\n\t\tid = \"9dcba14e-2175-5da0-8629-5b952c213f6c\"\n\n\tstrings:\n\t\t$xop1 = { 00 00 83 c9 ff 33 c0 f2 ae f7 d1 49 b8 ff 8f 01 00 2b c1 }\n\t\t$s1 = \"POWERPNT.exe\" fullword ascii\n\t\t$s2 = \"%APPDATA%\\\\Microsoft\\\\Windows\\\\\" ascii\n\t\t$s3 = \"%HOMEPATH%\" fullword ascii\n\t\t$s4 = \"Server2008\" fullword ascii\n\t\t$s5 = \"%ComSpec%\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and ( 1 of ( $x* ) or 3 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Enfal_Malware_Backdoor",
+                "tags": [],
+                "description": "Generic Rule to detect the Enfal Malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2015/02/10",
+                "super_rule": 1,
+                "hash0": "6d484daba3927fc0744b1bbd7981a56ebef95790",
+                "hash1": "d4071272cc1bf944e3867db299b3f5dce126f82b",
+                "hash2": "6c7c8b804cc76e2c208c6e3b6453cb134d01fa41",
+                "score": 60,
+                "id": "4631888c-e1e2-5969-a312-0f0011cd605c"
+            },
+            "rule_text": "rule Enfal_Malware_Backdoor\n{\n\tmeta:\n\t\tdescription = \"Generic Rule to detect the Enfal Malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdate = \"2015/02/10\"\n\t\tsuper_rule = 1\n\t\thash0 = \"6d484daba3927fc0744b1bbd7981a56ebef95790\"\n\t\thash1 = \"d4071272cc1bf944e3867db299b3f5dce126f82b\"\n\t\thash2 = \"6c7c8b804cc76e2c208c6e3b6453cb134d01fa41\"\n\t\tscore = 60\n\t\tid = \"4631888c-e1e2-5969-a312-0f0011cd605c\"\n\n\tstrings:\n\t\t$x1 = \"Micorsoft Corportation\" fullword wide\n\t\t$x2 = \"IM Monnitor Service\" fullword wide\n\t\t$s1 = \"imemonsvc.dll\" fullword wide\n\t\t$s2 = \"iphlpsvc.tmp\" fullword\n\t\t$z1 = \"urlmon\" fullword\n\t\t$z2 = \"Registered trademarks and service marks are the property of their respec\" wide\n\t\t$z3 = \"XpsUnregisterServer\" fullword\n\t\t$z4 = \"XpsRegisterServer\" fullword\n\t\t$z5 = \"{53A4988C-F91F-4054-9076-220AC5EC03F3}\" fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( 1 of ( $x* ) or ( all of ( $s* ) and all of ( $z* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/secureworks/Mirage_APT_Backdoor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Mirage_APT_Backdoor",
+                "tags": [
+                    "APT",
+                    "Mirage",
+                    "Backdoor",
+                    "Rat",
+                    "MirageRat"
+                ],
+                "author": "Silas Cutler (SCutler@SecureWorks.com)",
+                "version": "1.0",
+                "description": "Malware related to APT campaign",
+                "type": "APT Trojan / RAT / Backdoor",
+                "reference": "https://www.secureworks.com/research/the-mirage-campaign"
+            },
+            "rule_text": "rule Mirage_APT_Backdoor : APT Mirage Backdoor Rat MirageRat\n{\n\tmeta:\n\t\tauthor = \"Silas Cutler (SCutler@SecureWorks.com)\"\n\t\tversion = \"1.0\"\n\t\tdescription = \"Malware related to APT campaign\"\n\t\ttype = \"APT Trojan / RAT / Backdoor\"\n\t\treference = \"https://www.secureworks.com/research/the-mirage-campaign\"\n\n\tstrings:\n\t\t$a1 = \"welcome to the desert of the real\"\n\t\t$a2 = \"Mirage\"\n\t\t$b = \"Encoding: gzip\"\n\t\t$c = /\\/[A-Za-z]*\\?hl=en/\n\n\tcondition:\n\t\t(( $a1 or $a2 ) or $b ) and $c\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Stairwell/TTP_Mutation_StackPush_Windows_DLLs.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TTP_Mutation_StackPush_Windows_DLLs",
+                "tags": [],
+                "author": "Stairwell",
+                "description": "Searching for PE files with mutations of odd, rare, or interesting string equities. Here we look for strings from common PE strings, DLLs and functions in pseudo stack strings form, where the string pushed onto the stack 4 bytes at a time using PUSH 0x68, appearing in reverse four byte chunk order, where the PUSH which shows up as an ASCII letter h.",
+                "reference": "https://stairwell.com/news/threat-research-detection-research-labeled-malware-corpus-yara-testing/"
+            },
+            "rule_text": "rule TTP_Mutation_StackPush_Windows_DLLs\n{\n\tmeta:\n\t\tauthor = \"Stairwell\"\n\t\tdescription = \"Searching for PE files with mutations of odd, rare, or interesting string equities. Here we look for strings from common PE strings, DLLs and functions in pseudo stack strings form, where the string pushed onto the stack 4 bytes at a time using PUSH 0x68, appearing in reverse four byte chunk order, where the PUSH which shows up as an ASCII letter h.\"\n\t\treference = \"https://stairwell.com/news/threat-research-detection-research-labeled-malware-corpus-yara-testing/\"\n\n\tstrings:\n\t\t$a0_kernel32dll = \"h.dllhel32hkern\" ascii nocase\n\t\t$a1_ws2_32dll = \"hllh32.dhws2_\" ascii nocase\n\t\t$a2_msvcrtdll = \"hllhrt.dhmsvc\" ascii nocase\n\t\t$a3_KernelBasedll = \"hllhse.dhelBahKern\" ascii nocase\n\t\t$a4_advapi32dll = \"h.dllhpi32hadva\" ascii nocase\n\t\t$a5_advapires32dll = \"hdllhs32.hpirehadva\" ascii nocase\n\t\t$a6_gdi32dll = \"hlh2.dlhgdi3\" ascii nocase\n\t\t$a7_gdiplusdll = \"hdllhlus.hgdip\" ascii nocase\n\t\t$a8_win32ksys = \"hysh2k.shwin3\" ascii nocase\n\t\t$a9_user32dll = \"hllh32.dhuser\" ascii nocase\n\t\t$a10_comctl32dll = \"h.dllhtl32hcomc\" ascii nocase\n\t\t$a11_commdlgdll = \"hdllhdlg.hcomm\" ascii nocase\n\t\t$a12_comdlg32dll = \"h.dllhlg32hcomd\" ascii nocase\n\t\t$a13_commctrldll = \"h.dllhctrlhcomm\" ascii nocase\n\t\t$a14_shelldll = \"hlhl.dlhshel\" ascii nocase\n\t\t$a15_shell32dll = \"hdllhl32.hshel\" ascii nocase\n\t\t$a16_shlwapidll = \"hdllhapi.hshlw\" ascii nocase\n\t\t$a17_netapi32dll = \"h.dllhpi32hneta\" ascii nocase\n\t\t$a18_shdocvwdll = \"hdllhcvw.hshdo\" ascii nocase\n\t\t$a19_mshtmldll = \"hllhml.dhmsht\" ascii nocase\n\t\t$a20_urlmondll = \"hllhon.dhurlm\" ascii nocase\n\t\t$a21_iphlpapidll = \"h.dllhpapihiphl\" ascii nocase\n\t\t$a22_httpapidll = \"hdllhapi.hhttp\" ascii nocase\n\t\t$a23_msvbvm60dll = \"h.dllhvm60hmsvb\" ascii nocase\n\t\t$a24_shfolderdll = \"h.dllhlderhshfo\" ascii nocase\n\t\t$a25_OLE32DLL = \"hLh2.DLhOLE3\" ascii nocase\n\t\t$a26_wininetdll = \"hdllhnet.hwini\" ascii nocase\n\t\t$a27_wsock32dll = \"hdllhk32.hwsoc\" ascii nocase\n\n\tcondition:\n\t\tfilesize < 15MB and uint16be( 0 ) == 0x4d5a and 1 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

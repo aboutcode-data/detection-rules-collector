@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/registry/reg_fake_pem_cert.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-08-19",
+                "title": "Fake PEM Certificate Written to Registry",
+                "id": "e2ee1c85-642f-44ed-94f3-c45c8ada1e47"
+            },
+            "rule_text": "title: Fake PEM Certificate Written to Registry\nid: e2ee1c85-642f-44ed-94f3-c45c8ada1e47\ndescription: Some malware stores base64 payloads in the registry disguised as PEM\n  certificates, so they can be decoded with certutil.exe. A valid PEM certificate\n  should start with MII... Decode the base64 payload and/or investigate why this key\n  was created.\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2024-08-19\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection_pem:\n    Details|startswith: '-----BEGIN CERTIFICATE-----'\n  filter_valid_pem:\n    Details|contains|cased: MII\n  condition: selection_pem and not filter_valid_pem\nfalsepositives:\n- Unknown\nlevel: medium\ntags:\n- attack.defense-evasion\n",
+            "vulnerabilities": []
+        }
+    ]
+}

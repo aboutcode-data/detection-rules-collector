@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/identity/okta/okta_fastpass_phishing_detection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2023-05-07",
+                "title": "Okta FastPass Phishing Detection",
+                "id": "ee39a9f7-5a79-4b0a-9815-d36b3cf28d3e"
+            },
+            "rule_text": "title: Okta FastPass Phishing Detection\nid: ee39a9f7-5a79-4b0a-9815-d36b3cf28d3e\nstatus: test\ndescription: Detects when Okta FastPass prevents a known phishing site.\nreferences:\n- https://sec.okta.com/fastpassphishingdetection\n- https://developer.okta.com/docs/reference/api/system-log/\n- https://developer.okta.com/docs/reference/api/event-types/\nauthor: Austin Songer @austinsonger\ndate: 2023-05-07\nmodified: 2026-04-27\ntags:\n- attack.initial-access\n- attack.t1566\nlogsource:\n  product: okta\n  service: okta\ndetection:\n  selection:\n    outcome.reason: FastPass declined phishing attempt\n    outcome.result: FAILURE\n    eventType: user.authentication.auth_via_mfa\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

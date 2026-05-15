@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_remote.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christopher Peacock @SecurePeacock, SCYTHE @scythe_io",
+                "date": "2022-06-02",
+                "title": "Use of Remote.exe",
+                "id": "4eddc365-79b4-43ff-a9d7-99422dc34b93"
+            },
+            "rule_text": "title: Use of Remote.exe\nid: 4eddc365-79b4-43ff-a9d7-99422dc34b93\nstatus: test\ndescription: Remote.exe is part of WinDbg in the Windows SDK and can be used for AWL\n  bypass and running remote files.\nreferences:\n- https://blog.thecybersecuritytutor.com/Exeuction-AWL-Bypass-Remote-exe-LOLBin/\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Remote/\nauthor: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io\ndate: 2022-06-02\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\remote.exe\n  - OriginalFileName: remote.exe\n  condition: selection\nfalsepositives:\n- Approved installs of Windows SDK with Debugging Tools for Windows (WinDbg).\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

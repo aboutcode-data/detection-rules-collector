@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_Hive_Ransomware/win_susp_wevtutil_hive.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/22",
+                "title": "Event Log Manipulation Using Wevtutil",
+                "id": "4d71069b-dda7-4df7-b835-1f23dd212615"
+            },
+            "rule_text": "title: Event Log Manipulation Using Wevtutil\nid: 4d71069b-dda7-4df7-b835-1f23dd212615\nstatus: experimental\ndescription: Detects the use of wevtutil to clear or otherwise manipulate Windows\n  event logs.\nreferences:\n- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a\nauthor: Micah Babinski\ndate: 2022/11/22\ntags:\n- attack.defense_evasion\n- attack.t1070\n- attack.g0092\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_exe:\n    Image|endswith: \\wevtutil.exe\n  selection_clear:\n    CommandLine|contains:\n    - ' cl '\n    - clear-log\n  selection_set:\n    CommandLine|contains:\n    - ' sl '\n    - set-log\n  selection_set_flags:\n    CommandLine|contains|windash:\n    - /e:false\n    - '/ms:'\n  condition: selection_exe and (selection_clear or (selection_set and selection_set_flags))\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

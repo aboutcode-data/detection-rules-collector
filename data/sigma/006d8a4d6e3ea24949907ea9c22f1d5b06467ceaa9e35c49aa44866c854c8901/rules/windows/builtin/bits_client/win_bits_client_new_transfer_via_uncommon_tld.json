@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/bits_client/win_bits_client_new_transfer_via_uncommon_tld.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-10",
+                "title": "BITS Transfer Job With Uncommon Or Suspicious Remote TLD",
+                "id": "6d44fb93-e7d2-475c-9d3d-54c9c1e33427"
+            },
+            "rule_text": "title: BITS Transfer Job With Uncommon Or Suspicious Remote TLD\nid: 6d44fb93-e7d2-475c-9d3d-54c9c1e33427\nstatus: test\ndescription: Detects a suspicious download using the BITS client from a FQDN that\n  is unusual. Adversaries may abuse BITS jobs to persistently execute or clean up\n  after malicious payloads.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md\n- https://twitter.com/malmoeb/status/1535142803075960832\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-10\nmodified: 2025-02-28\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\nlogsource:\n  product: windows\n  service: bits-client\ndetection:\n  selection:\n    EventID: 16403\n  filter_main_generic:\n    RemoteName|contains:\n    - .azureedge.net/\n    - .com/\n    - .sfx.ms/\n    - download.mozilla.org/\n    - cdn.onenote.net/\n    - cdn.office.net/\n    - tscdn.m365.static.microsoft/\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- This rule doesn't exclude other known TLDs such as \".org\" or \".net\". It's recommended\n  to apply additional filters for software and scripts that leverage the BITS service\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

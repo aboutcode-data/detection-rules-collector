@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_curl_wget_exec_tmp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Aayush Gupta",
+                "date": "2025-06-17",
+                "title": "Suspicious Download and Execute Pattern via Curl/Wget",
+                "id": "a2d9e2f3-0f43-4c7a-bcd9-9acfc0d723aa"
+            },
+            "rule_text": "title: Suspicious Download and Execute Pattern via Curl/Wget\nid: a2d9e2f3-0f43-4c7a-bcd9-9acfc0d723aa\nstatus: experimental\ndescription: 'Detects suspicious use of command-line tools such as curl or wget to\n  download remote\n\n  content - particularly scripts - into temporary directories (e.g., /dev/shm, /tmp),\n  followed by\n\n  immediate execution, indicating potential malicious activity. This pattern is commonly\n  used\n\n  by malicious scripts, stagers, or downloaders in fileless or multi-stage Linux attacks.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/wget/\n- https://gtfobins.github.io/gtfobins/curl/\nauthor: Aayush Gupta\ndate: 2025-06-17\ntags:\n- attack.execution\n- attack.t1059.004\n- attack.t1203\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_downloader:\n    CommandLine|contains:\n    - /curl\n    - /wget\n  selection_tmp:\n    CommandLine|contains:\n    - /tmp/\n    - /dev/shm/\n  selection_executor:\n    CommandLine|contains: sh -c\n  condition: all of selection_*\nfalsepositives:\n- System update scripts using temporary files\n- Installer scripts or automated provisioning tools\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

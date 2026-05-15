@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/microsoft_windows_dhcp_server/win_system_susp_dhcp_config_failed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Dimitrios Slamaris, @atc_project (fix)",
+                "date": "2017-05-15",
+                "title": "DHCP Server Error Failed Loading the CallOut DLL",
+                "id": "75edd3fd-7146-48e5-9848-3013d7f0282c"
+            },
+            "rule_text": "title: DHCP Server Error Failed Loading the CallOut DLL\nid: 75edd3fd-7146-48e5-9848-3013d7f0282c\nstatus: test\ndescription: This rule detects a DHCP server error in which a specified Callout DLL\n  (in registry) could not be loaded\nreferences:\n- https://blog.3or.de/mimilib-dhcp-server-callout-dll-injection.html\n- https://technet.microsoft.com/en-us/library/cc726884(v=ws.10).aspx\n- https://msdn.microsoft.com/de-de/library/windows/desktop/aa363389(v=vs.85).aspx\nauthor: Dimitrios Slamaris, @atc_project (fix)\ndate: 2017-05-15\nmodified: 2022-12-25\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    EventID:\n    - 1031\n    - 1032\n    - 1034\n    Provider_Name: Microsoft-Windows-DHCP-Server\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_suspicious_applet_behaviour.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r), Red Canary (Idea)",
+                "date": "2023-04-03",
+                "title": "Osacompile Execution By Potentially Suspicious Applet/Osascript",
+                "id": "a753a6af-3126-426d-8bd0-26ebbcb92254"
+            },
+            "rule_text": "title: Osacompile Execution By Potentially Suspicious Applet/Osascript\nid: a753a6af-3126-426d-8bd0-26ebbcb92254\nstatus: test\ndescription: Detects potential suspicious applet or osascript executing \"osacompile\".\nreferences:\n- https://redcanary.com/blog/mac-application-bundles/\nauthor: Sohan G (D4rkCiph3r), Red Canary (Idea)\ndate: 2023-04-03\ntags:\n- attack.execution\n- attack.t1059.002\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    ParentImage|endswith:\n    - /applet\n    - /osascript\n    CommandLine|contains: osacompile\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

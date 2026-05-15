@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/HP_Security/js_RATDispenser.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "js_RATDispenser",
+                "tags": [
+                    "downloader"
+                ],
+                "description": "JavaScript downloader resp. dropper delivering various RATs",
+                "reference": "https://threatresearch.ext.hp.com/javascript-malware-dispensing-rats-into-the-wild/",
+                "author": "HP Threat Research @HPSecurity",
+                "filetype": "JavaScript",
+                "maltype": "Downloader",
+                "date": "2021-05-27"
+            },
+            "rule_text": "rule js_RATDispenser : downloader\n{\n\tmeta:\n\t\tdescription = \"JavaScript downloader resp. dropper delivering various RATs\"\n\t\treference = \"https://threatresearch.ext.hp.com/javascript-malware-dispensing-rats-into-the-wild/\"\n\t\tauthor = \"HP Threat Research @HPSecurity\"\n\t\tfiletype = \"JavaScript\"\n\t\tmaltype = \"Downloader\"\n\t\tdate = \"2021-05-27\"\n\n\tstrings:\n\t\t$a = /{(\\d)}/\n\t\t$c1 = \"/{(\\\\d+)}/g\"\n\t\t$c2 = \"eval\"\n\t\t$c3 = \"prototype\"\n\t\t$d1 = \"\\\\x61\\\\x64\\\\x6F\\\\x64\\\\x62\\\\x2E\"\n\t\t$d2 = \"\\\\x43\\\\x68\\\\x61\\\\x72\\\\x53\\\\x65\\\\x74\"\n\t\t$d3 = \"\\\\x54\\\\x79\\\\x70\\\\x65\"\n\t\t$e1 = \"adodb.\"\n\t\t$e2 = \"CharSet\"\n\t\t$e3 = \"Type\"\n\t\t$f1 = \"arguments\"\n\t\t$f2 = \"this.replace\"\n\n\tcondition:\n\t\t#a> 50 and all of ( $c* ) and ( any of ( $d* ) or any of ( $e* ) ) and all of ( $f* ) and filesize < 2MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

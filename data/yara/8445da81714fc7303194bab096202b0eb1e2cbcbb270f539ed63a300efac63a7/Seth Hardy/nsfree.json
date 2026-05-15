@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/nsfree.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NSFreeCode",
+                "tags": [
+                    "NSFree",
+                    "Family"
+                ],
+                "description": "NSFree code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule NSFreeCode : NSFree Family\n{\n\tmeta:\n\t\tdescription = \"NSFree code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$ = { 53 56 57 66 81 38 4D 5A }\n\t\t$ = { 90 90 90 90 81 3F 50 45 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NSFreeStrings",
+                "tags": [
+                    "NSFree",
+                    "Family"
+                ],
+                "description": "NSFree Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "private rule NSFreeStrings : NSFree Family\n{\n\tmeta:\n\t\tdescription = \"NSFree Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tstrings:\n\t\t$ = \"\\\\MicNS\\\\\" nocase\n\t\t$ = \"NSFreeDll\" wide ascii\n\t\t$ = { 0c 30 31 2b 78 28 2a 37 3f 2a 39 35 78 3b 39 36 36 37 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "NSFree",
+                "tags": [
+                    "Family"
+                ],
+                "description": "NSFree",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-24"
+            },
+            "rule_text": "rule NSFree : Family\n{\n\tmeta:\n\t\tdescription = \"NSFree\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-24\"\n\n\tcondition:\n\t\tNSFreeCode or NSFreeStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

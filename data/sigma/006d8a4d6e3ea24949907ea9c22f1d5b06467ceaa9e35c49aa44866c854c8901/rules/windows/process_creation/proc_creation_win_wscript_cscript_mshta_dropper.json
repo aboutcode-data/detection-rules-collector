@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wscript_cscript_mshta_dropper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Margaritis Dimitrios (idea), Florian Roth (Nextron Systems), oscd.community, Nasreddine Bencherchali (Nextron Systems), Dave Johnson",
+                "date": "2019-01-16",
+                "title": "Potential Dropper Script Execution Via WScript/CScript/MSHTA",
+                "id": "cea72823-df4d-4567-950c-0b579eaf0846"
+            },
+            "rule_text": "title: Potential Dropper Script Execution Via WScript/CScript/MSHTA\nid: cea72823-df4d-4567-950c-0b579eaf0846\nrelated:\n- id: 1e33157c-53b1-41ad-bbcc-780b80b58288\n  type: similar\nstatus: test\ndescription: Detects wscript/cscript/mshta executions of scripts located in user directories\nreferences:\n- https://thedfirreport.com/2023/10/30/netsupport-intrusion-results-in-domain-compromise/\n- https://redcanary.com/blog/gootloader/\n- https://www.microsoft.com/en-us/security/blog/2025/03/06/malvertising-campaign-leads-to-info-stealers-hosted-on-github/\nauthor: Margaritis Dimitrios (idea), Florian Roth (Nextron Systems), oscd.community,\n  Nasreddine Bencherchali (Nextron Systems), Dave Johnson\ndate: 2019-01-16\nmodified: 2026-02-17\ntags:\n- attack.execution\n- attack.t1059.005\n- attack.t1059.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_exec:\n    Image|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n    - \\mshta.exe\n  selection_paths:\n    CommandLine|contains:\n    - :\\Perflogs\\\n    - :\\Temp\\\n    - :\\Tmp\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppData\\Local\\Temp\\\n    - \\AppData\\Roaming\\Temp\\\n    - \\Start Menu\\Programs\\Startup\\\n    - \\Temporary Internet\n    - \\Windows\\Temp\n    - '%LocalAppData%\\Temp\\'\n    - '%TEMP%'\n    - '%TMP%'\n  selection_ext:\n    CommandLine|contains:\n    - .hta\n    - .js\n    - .jse\n    - .vba\n    - .vbe\n    - .vbs\n    - .wsf\n    - .wsh\n  condition: all of selection_*\nfalsepositives:\n- Some installers might generate a similar behavior. An initial baseline is required\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

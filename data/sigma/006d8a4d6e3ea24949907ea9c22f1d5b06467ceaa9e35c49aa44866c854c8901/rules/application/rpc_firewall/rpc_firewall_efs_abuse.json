@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_efs_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "Remote Encrypting File System Abuse",
+                "id": "5f92fff9-82e2-48eb-8fc1-8b133556a551"
+            },
+            "rule_text": "title: Remote Encrypting File System Abuse\nid: 5f92fff9-82e2-48eb-8fc1-8b133556a551\nstatus: test\ndescription: Detects remote RPC calls to possibly abuse remote encryption service\n  via MS-EFSR\nreferences:\n- https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-36942\n- https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/ddd4608fe8684fcf2fcf9b48c5f0b3c28097f8a3/documents/MS-EFSR.md\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.lateral-movement\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes with\n    \"audit:true action:block uuid:df1941c5-fe89-4e79-bf10-463657acf44d or c681d488-d850-11d0-8c52-00c04fd90f7e'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid:\n    - df1941c5-fe89-4e79-bf10-463657acf44d\n    - c681d488-d850-11d0-8c52-00c04fd90f7e\n  condition: selection\nfalsepositives:\n- Legitimate usage of remote file encryption\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2021-36942"
+            ]
+        }
+    ]
+}

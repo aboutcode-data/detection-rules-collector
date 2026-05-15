@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/gcleaner.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Robin Hellsten",
+                "date": "2021-10-20",
+                "title": "Gcleaner malware distribution site",
+                "id": "276a572d-1250-4781-b8fe-2552fd610004"
+            },
+            "rule_text": "title: Gcleaner malware distribution site\nid: 276a572d-1250-4781-b8fe-2552fd610004\ndescription: Fake \"cleaning\" software seen distributing malware, such as ficker stealer\nstatus: stable\nauthor: NTT Security - Robin Hellsten\ndate: '2021-10-20'\nmodified: '2022-03-17'\nreferences:\n- https://medium.com/csis-techblog/gcleaner-garbage-provider-since-2019-2708e7c87a8a\nlogsource:\n  category: proxy\ndetection:\n  binary:\n    c-uri|endswith:\n    - .exe\n    - .dll\n  query:\n    c-uri-query|contains:\n    - pub=\n  domain:\n    cs-host|contains|all:\n    - cleaner\n    - g\n    cs-method: GET\n  condition: (query or binary) and domain\nfalsepositives:\n- No known cases of false positives\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

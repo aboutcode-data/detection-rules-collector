@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/WinNT/Rootkitdrv/VirTool_WinNT_Rootkitdrv_KX.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_WinNT_Rootkitdrv_KX",
+                "tags": [],
+                "description": "VirTool:WinNT/Rootkitdrv.KX,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule VirTool_WinNT_Rootkitdrv_KX\n{\n\tmeta:\n\t\tdescription = \"VirTool:WinNT/Rootkitdrv.KX,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 7d 24 01 74 ?? 83 7d 24 02 74 ?? 83 7d 24 26 74 ?? 83 7d 24 03 74 ?? 83 7d 24 25 74 ?? 83 7d 24 0c 0f 85 }\n\t\t$a_03_1 = {83 39 00 74 ?? 8b 55 ?? 8b 45 0c 03 02 89 45 0c eb 07 c7 45 0c 00 00 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_network_utilities_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alejandro Ortuno, oscd.community, Georg Lauenstein (sure[secure])",
+                "date": "2020-10-21",
+                "title": "Linux Network Service Scanning Tools Execution",
+                "id": "3e102cd9-a70d-4a7a-9508-403963092f31"
+            },
+            "rule_text": "title: Linux Network Service Scanning Tools Execution\nid: 3e102cd9-a70d-4a7a-9508-403963092f31\nstatus: test\ndescription: Detects execution of network scanning and reconnaisance tools. These\n  tools can be used for the enumeration of local or remote network services for example.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1046/T1046.md\n- https://github.com/projectdiscovery/naabu\n- https://github.com/Tib3rius/AutoRecon\nauthor: Alejandro Ortuno, oscd.community, Georg Lauenstein (sure[secure])\ndate: 2020-10-21\nmodified: 2024-09-19\ntags:\n- attack.discovery\n- attack.t1046\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_netcat:\n    Image|endswith:\n    - /nc\n    - /ncat\n    - /netcat\n    - /socat\n  selection_network_scanning_tools:\n    Image|endswith:\n    - /autorecon\n    - /hping\n    - /hping2\n    - /hping3\n    - /naabu\n    - /nmap\n    - /nping\n    - /telnet\n    - /zenmap\n  filter_main_netcat_listen_flag:\n    CommandLine|contains:\n    - ' --listen '\n    - ' -l '\n  condition: (selection_netcat and not filter_main_netcat_listen_flag) or selection_network_scanning_tools\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

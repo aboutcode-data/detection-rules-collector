@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_screenconnect_webshell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jason Rathbun (Blackpoint Cyber)",
+                "date": "2024-02-26",
+                "title": "Remote Access Tool - ScreenConnect Server Web Shell Execution",
+                "id": "b19146a3-25d4-41b4-928b-1e2a92641b1b"
+            },
+            "rule_text": "title: Remote Access Tool - ScreenConnect Server Web Shell Execution\nid: b19146a3-25d4-41b4-928b-1e2a92641b1b\nstatus: test\ndescription: Detects potential web shell execution from the ScreenConnect server process.\nreferences:\n- https://blackpointcyber.com/resources/blog/breaking-through-the-screen/\n- https://www.connectwise.com/company/trust/security-bulletins/connectwise-screenconnect-23.9.8\nauthor: Jason Rathbun (Blackpoint Cyber)\ndate: 2024-02-26\ntags:\n- attack.initial-access\n- attack.t1190\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|endswith: \\ScreenConnect.Service.exe\n    Image|endswith:\n    - \\cmd.exe\n    - \\csc.exe\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

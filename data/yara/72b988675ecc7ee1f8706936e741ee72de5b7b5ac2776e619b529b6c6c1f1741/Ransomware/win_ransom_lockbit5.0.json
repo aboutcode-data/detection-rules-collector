@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/Ransomware/win_ransom_lockbit5.0.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_ransom_Lockbit5",
+                "tags": [],
+                "author": "RussianPanda",
+                "description": "Detects LockBit 5.0",
+                "date": "9/15/2025",
+                "hash": "7ea5afbc166c4e23498aa9747be81ceaf8dad90b8daa07a6e4644dc7c2277b82"
+            },
+            "rule_text": "rule win_ransom_Lockbit5\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdescription = \"Detects LockBit 5.0\"\n\t\tdate = \"9/15/2025\"\n\t\thash = \"7ea5afbc166c4e23498aa9747be81ceaf8dad90b8daa07a6e4644dc7c2277b82\"\n\n\tstrings:\n\t\t$s1 = {C6 41 0F 00 0F B6 ?? 33 ?? 89}\n\t\t$s2 = {0F B6 ?? 0F C1 ?? 18 31}\n\t\t$s3 = {83 ?? 02 83 ?? 0F D0 84 ?? ?? 00 00 00}\n\n\tcondition:\n\t\tall of ( $s* ) and uint16( 0 ) == 0x5A4D and filesize < 1MB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

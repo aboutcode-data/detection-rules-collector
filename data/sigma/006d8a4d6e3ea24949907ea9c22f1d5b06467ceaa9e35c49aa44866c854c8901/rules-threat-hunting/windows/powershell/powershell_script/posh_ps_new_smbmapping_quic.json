@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_new_smbmapping_quic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2023-07-21",
+                "title": "SMB over QUIC Via PowerShell Script",
+                "id": "6df07c3b-8456-4f8b-87bb-fe31ec964cae"
+            },
+            "rule_text": "title: SMB over QUIC Via PowerShell Script\nid: 6df07c3b-8456-4f8b-87bb-fe31ec964cae\nrelated:\n- id: 2238d337-42fb-4971-9a68-63570f2aede4\n  type: similar\nstatus: test\ndescription: Detects the mounting of Windows SMB shares over QUIC, which can be an\n  unexpected event in some enterprise environments\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/74438b0237d141ee9c99747976447dc884cb1a39/atomics/T1570/T1570.md\n- https://learn.microsoft.com/en-us/powershell/module/smbshare/new-smbmapping?view=windowsserver2022-ps\n- https://www.trustedsec.com/blog/making-smb-accessible-with-ntlmquic/\nauthor: frack113\ndate: 2023-07-21\ntags:\n- attack.lateral-movement\n- attack.t1570\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - New-SmbMapping\n    - -TransportType QUIC\n  condition: selection\nfalsepositives:\n- Due to the nature of the script block, the matching of the string could sometimes\n  result in a false positive. Use this rule to hunt for potential malicious or suspicious\n  scripts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_msdeploy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Beyu Denis, oscd.community",
+                "date": "2020-10-18",
+                "title": "Execute Files with Msdeploy.exe",
+                "id": "646bc99f-6682-4b47-a73a-17b1b64c9d34"
+            },
+            "rule_text": "title: Execute Files with Msdeploy.exe\nid: 646bc99f-6682-4b47-a73a-17b1b64c9d34\nstatus: test\ndescription: Detects file execution using the msdeploy.exe lolbin\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Msdeploy/\n- https://twitter.com/pabraeken/status/995837734379032576\n- https://twitter.com/pabraeken/status/999090532839313408\nauthor: Beyu Denis, oscd.community\ndate: 2020-10-18\nmodified: 2021-11-27\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - verb:sync\n    - -source:RunCommand\n    - -dest:runCommand\n    Image|endswith: \\msdeploy.exe\n  condition: selection\nfalsepositives:\n- System administrator Usage\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

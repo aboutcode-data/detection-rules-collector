@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_ditsnap.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Furkan Caliskan (@caliskanfurkan_)",
+                "date": "2020-07-04",
+                "title": "PUA - DIT Snapshot Viewer",
+                "id": "d3b70aad-097e-409c-9df2-450f80dc476b"
+            },
+            "rule_text": "title: PUA - DIT Snapshot Viewer\nid: d3b70aad-097e-409c-9df2-450f80dc476b\nstatus: test\ndescription: Detects the use of Ditsnap tool, an inspection tool for Active Directory\n  database, ntds.dit.\nreferences:\n- https://thedfirreport.com/2020/06/21/snatch-ransomware/\n- https://web.archive.org/web/20201124182207/https://github.com/yosqueoy/ditsnap\nauthor: Furkan Caliskan (@caliskanfurkan_)\ndate: 2020-07-04\nmodified: 2023-02-21\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\ditsnap.exe\n  - CommandLine|contains: ditsnap.exe\n  condition: selection\nfalsepositives:\n- Legitimate admin usage\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

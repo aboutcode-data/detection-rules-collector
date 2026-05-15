@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/BumbleBee/Trojan_Win64_BumbleBee_AA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_BumbleBee_AA",
+                "tags": [],
+                "description": "Trojan:Win64/BumbleBee.AA,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_BumbleBee_AA\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/BumbleBee.AA,SIGNATURE_TYPE_PEHSTR_EXT,15 00 15 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f1 d5 00 fa 4c 62 cc f4 0f 0b }\n\t\t$a_03_1 = {b8 01 00 00 00 87 05 ?? ?? ?? ?? 83 f8 01 74 f0 48 83 3d ?? ?? ?? ?? 00 }\n\t\t$a_01_2 = {33 c9 ba 58 02 00 00 41 b8 00 30 00 00 44 8d 49 04 ff 15 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 10 ) >= 21\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

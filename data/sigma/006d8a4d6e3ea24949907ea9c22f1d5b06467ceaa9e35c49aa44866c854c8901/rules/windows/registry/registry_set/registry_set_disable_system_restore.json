@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disable_system_restore.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-04-04",
+                "title": "Registry Disable System Restore",
+                "id": "5de03871-5d46-4539-a82d-3aa992a69a83"
+            },
+            "rule_text": "title: Registry Disable System Restore\nid: 5de03871-5d46-4539-a82d-3aa992a69a83\nrelated:\n- id: 7c06ab9b-b1d2-4ba9-b06e-09491ded20d9\n  type: similar\nstatus: test\ndescription: Detects the modification of the registry to disable a system restore\n  on the computer\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-9---disable-system-restore-through-registry\nauthor: frack113\ndate: 2022-04-04\nmodified: 2023-08-17\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\Policies\\Microsoft\\Windows NT\\SystemRestore\n    - \\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore\n    TargetObject|endswith:\n    - DisableConfig\n    - DisableSR\n    Details: DWORD (0x00000001)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_disable_system_restore/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Disable System Restore Through Registry\n  technique: T1490\n  atomic_guid: 66e647d1-8741-4e43-b7c1-334760c2047f\n",
+            "vulnerabilities": []
+        }
+    ]
+}

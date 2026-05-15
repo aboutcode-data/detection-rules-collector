@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/PL CERT/cryptomix_packer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "cryptomix_packer",
+                "tags": [],
+                "author": "msm",
+                "reference": "https://www.cert.pl/en/news/single/technical-analysis-of-cryptomixcryptfile2-ransomware/"
+            },
+            "rule_text": "rule cryptomix_packer\n{\n\tmeta:\n\t\tauthor = \"msm\"\n\t\treference = \"https://www.cert.pl/en/news/single/technical-analysis-of-cryptomixcryptfile2-ransomware/\"\n\n\tstrings:\n\t\t$old_real_main = {8B [5] 8B [5] 03 ?? 89 ?? FC FF 55 FC}\n\t\t$old_crypto_ops = {83 ?? 1F 83 ?? 60}\n\t\t$old_crypto_xor = {8A 90 [4] 30 14 0E}\n\t\t$new_crypto_ops = {03 85 [4] 88 10 EB ??}\n\t\t$new_crypto_xor = {A1 [4] 89 45 ??}\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

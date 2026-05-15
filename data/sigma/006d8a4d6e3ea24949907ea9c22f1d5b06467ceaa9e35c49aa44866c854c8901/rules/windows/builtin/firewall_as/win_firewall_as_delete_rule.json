@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/firewall_as/win_firewall_as_delete_rule.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-19",
+                "title": "A Rule Has Been Deleted From The Windows Firewall Exception List",
+                "id": "c187c075-bb3e-4c62-b4fa-beae0ffc211f"
+            },
+            "rule_text": "title: A Rule Has Been Deleted From The Windows Firewall Exception List\nid: c187c075-bb3e-4c62-b4fa-beae0ffc211f\nstatus: test\ndescription: Detects when a single rules or all of the rules have been deleted from\n  the Windows Defender Firewall\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)\nauthor: frack113\ndate: 2022-02-19\nmodified: 2024-08-29\ntags:\n- attack.defense-impairment\n- attack.t1686.003\nlogsource:\n  product: windows\n  service: firewall-as\ndetection:\n  selection:\n    EventID:\n    - 2006\n    - 2052\n  filter_main_generic:\n    ModifyingApplication|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n    - C:\\Windows\\WinSxS\\\n  filter_main_svchost:\n    ModifyingApplication: C:\\Windows\\System32\\svchost.exe\n  filter_optional_msmpeng:\n    ModifyingApplication|startswith: C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\\n    ModifyingApplication|endswith: \\MsMpEng.exe\n  filter_main_null:\n    ModifyingApplication: null\n  filter_main_empty:\n    ModifyingApplication: ''\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_certoc_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-05-16",
+                "title": "File Download via CertOC.EXE",
+                "id": "70ad0861-d1fe-491c-a45f-fa48148a300d"
+            },
+            "rule_text": "title: File Download via CertOC.EXE\nid: 70ad0861-d1fe-491c-a45f-fa48148a300d\nrelated:\n- id: b86f6dea-0b2f-41f5-bdcc-a057bd19cd6a\n  type: similar\nstatus: test\ndescription: Detects when a user downloads a file by using CertOC.exe\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Certoc/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-05-16\nmodified: 2023-10-18\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\certoc.exe\n  - OriginalFileName: CertOC.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - -GetCACAPS\n    - http\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_winget_add_insecure_custom_source.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-17",
+                "title": "Add Insecure Download Source To Winget",
+                "id": "81a0ecb5-0a41-4ba1-b2ba-c944eb92bfa2"
+            },
+            "rule_text": "title: Add Insecure Download Source To Winget\nid: 81a0ecb5-0a41-4ba1-b2ba-c944eb92bfa2\nrelated:\n- id: 05ebafc8-7aa2-4bcd-a269-2aec93f9e842\n  type: similar\n- id: c15a46a0-07d4-4c87-b4b6-89207835a83b\n  type: similar\nstatus: test\ndescription: 'Detects usage of winget to add a new insecure (http) download source.\n\n  Winget will not allow the addition of insecure sources, hence this could indicate\n  potential suspicious activity (or typos)\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/package-manager/winget/source\n- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-17\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\winget.exe\n  - OriginalFileName: winget.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - 'source '\n    - 'add '\n    - http://\n  condition: all of selection_*\nfalsepositives:\n- False positives might occur if the users are unaware of such control checks\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

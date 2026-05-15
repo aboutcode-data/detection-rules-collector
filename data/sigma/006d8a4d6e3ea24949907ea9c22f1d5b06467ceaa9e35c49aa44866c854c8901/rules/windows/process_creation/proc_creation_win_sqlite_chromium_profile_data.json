@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sqlite_chromium_profile_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "TropChaud",
+                "date": "2022-12-19",
+                "title": "SQLite Chromium Profile Data DB Access",
+                "id": "24c77512-782b-448a-8950-eddb0785fc71"
+            },
+            "rule_text": "title: SQLite Chromium Profile Data DB Access\nid: 24c77512-782b-448a-8950-eddb0785fc71\nstatus: test\ndescription: Detect usage of the \"sqlite\" binary to query databases in Chromium-based\n  browsers for potential data stealing.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/84d9edaaaa2c5511144521b0e4af726d1c7276ce/atomics/T1539/T1539.md#atomic-test-2---steal-chrome-cookies-windows\n- https://blog.cyble.com/2022/04/21/prynt-stealer-a-new-info-stealer-performing-clipper-and-keylogger-activities/\nauthor: TropChaud\ndate: 2022-12-19\nmodified: 2023-01-19\ntags:\n- attack.credential-access\n- attack.t1539\n- attack.t1555.003\n- attack.collection\n- attack.t1005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sql:\n  - Product: SQLite\n  - Image|endswith:\n    - \\sqlite.exe\n    - \\sqlite3.exe\n  selection_chromium:\n    CommandLine|contains:\n    - \\User Data\\\n    - \\Opera Software\\\n    - \\ChromiumViewer\\\n  selection_data:\n    CommandLine|contains:\n    - Login Data\n    - Cookies\n    - Web Data\n    - History\n    - Bookmarks\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

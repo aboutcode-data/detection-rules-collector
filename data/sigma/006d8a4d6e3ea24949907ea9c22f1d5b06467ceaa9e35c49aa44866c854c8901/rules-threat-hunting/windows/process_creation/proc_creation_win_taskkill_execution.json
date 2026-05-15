@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_taskkill_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, MalGamy (Nextron Systems), Nasreddine Bencherchali",
+                "date": "2021-12-26",
+                "title": "Process Terminated Via Taskkill",
+                "id": "86085955-ea48-42a2-9dd3-85d4c36b167d"
+            },
+            "rule_text": "title: Process Terminated Via Taskkill\nid: 86085955-ea48-42a2-9dd3-85d4c36b167d\nstatus: test\ndescription: 'Detects execution of \"taskkill.exe\" in order to stop a service or a\n  process. Look for suspicious parents executing this command in order to hunt for\n  potential malicious activity.\n\n  Attackers might leverage this in order to conduct data destruction or data encrypted\n  for impact on the data stores of services like Exchange and SQL Server.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1489/T1489.md#atomic-test-3---windows---stop-service-by-killing-process\n- https://unit42.paloaltonetworks.com/snipbot-romcom-malware-variant/\nauthor: frack113, MalGamy (Nextron Systems), Nasreddine Bencherchali\ndate: 2021-12-26\nmodified: 2024-10-06\ntags:\n- attack.impact\n- attack.t1489\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\taskkill.exe\n  - OriginalFileName: taskkill.exe\n  selection_cli_force:\n  - CommandLine|contains|windash: ' /f '\n  - CommandLine|endswith|windash: ' /f'\n  selection_cli_filter_process:\n    CommandLine|contains|windash:\n    - ' /im '\n    - ' /pid '\n  filter_main_installers:\n    ParentImage|contains:\n    - \\AppData\\Local\\Temp\\\n    - :\\Windows\\Temp\n    ParentImage|endswith: .tmp\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Expected FP with some processes using this techniques to terminate one of their\n  processes during installations and updates\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

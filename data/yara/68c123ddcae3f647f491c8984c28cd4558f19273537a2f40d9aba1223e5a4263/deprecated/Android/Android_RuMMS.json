@@ -1,0 +1,30 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_RuMMS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Android_RuMMS",
+                "tags": [],
+                "author": "reverseShell - https://twitter.com/JReyCastro",
+                "date": "2016/04/02",
+                "description": "This rule try to detects Android.Banking.RuMMS",
+                "sample": "13569bc8343e2355048a4bccbe92a362dde3f534c89acff306c800003d1d10c6 ",
+                "source": "https://www.fireeye.com/blog/threat-research/2016/04/rumms-android-malware.html"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_RuMMS\n{\n\tmeta:\n\t\tauthor = \"reverseShell - https://twitter.com/JReyCastro\"\n\t\tdate = \"2016/04/02\"\n\t\tdescription = \"This rule try to detects Android.Banking.RuMMS\"\n\t\tsample = \"13569bc8343e2355048a4bccbe92a362dde3f534c89acff306c800003d1d10c6 \"\n\t\tsource = \"https://www.fireeye.com/blog/threat-research/2016/04/rumms-android-malware.html\"\n\n\tcondition:\n\t\tandroguard.package_name( \"org.starsizew\" ) or androguard.package_name ( \"com.tvone.untoenynh\" ) or androguard.package_name ( \"org.zxformat\" ) and androguard.permission ( /android.permission.RECEIVE_SMS/ ) and androguard.permission ( /android.permission.RECEIVE_BOOT_COMPLETED/ )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Android_RuMMS_0",
+                "tags": [],
+                "author": "Jacob Soo Lead Re",
+                "date": "19-May-2016",
+                "description": "This rule try to detects Android.Banking.RuMMS",
+                "source": "https://www.fireeye.com/blog/threat-research/2016/04/rumms-android-malware.html"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_RuMMS_0\n{\n\tmeta:\n\t\tauthor = \"Jacob Soo Lead Re\"\n\t\tdate = \"19-May-2016\"\n\t\tdescription = \"This rule try to detects Android.Banking.RuMMS\"\n\t\tsource = \"https://www.fireeye.com/blog/threat-research/2016/04/rumms-android-malware.html\"\n\n\tcondition:\n\t\t(androguard.service ( /\\.Tb/ ) and androguard.service ( /\\.Ad/ ) and androguard.receiver ( /\\.Ac/ ) and androguard.receiver ( /\\.Ma/ ) ) or ( androguard.url ( /http\\:\\/\\/37\\.1\\.207/ ) and androguard.url ( /\\/api\\/\\?id\\=7/ ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

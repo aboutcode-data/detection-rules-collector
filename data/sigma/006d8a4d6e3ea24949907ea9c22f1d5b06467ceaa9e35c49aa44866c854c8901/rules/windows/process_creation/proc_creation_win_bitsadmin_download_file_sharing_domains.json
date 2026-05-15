@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bitsadmin_download_file_sharing_domains.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-28",
+                "title": "Suspicious Download From File-Sharing Website Via Bitsadmin",
+                "id": "8518ed3d-f7c9-4601-a26c-f361a4256a0c"
+            },
+            "rule_text": "title: Suspicious Download From File-Sharing Website Via Bitsadmin\nid: 8518ed3d-f7c9-4601-a26c-f361a4256a0c\nstatus: test\ndescription: Detects usage of bitsadmin downloading a file from a suspicious domain\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\n- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker\n- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a\n- https://www.microsoft.com/en-us/security/blog/2024/01/17/new-ttps-observed-in-mint-sandstorm-campaign-targeting-high-profile-individuals-at-universities-and-research-orgs/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-28\nmodified: 2025-12-10\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\n- attack.s0190\n- attack.t1036.003\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bitsadmin.exe\n  - OriginalFileName: bitsadmin.exe\n  selection_flags:\n    CommandLine|contains:\n    - ' /transfer '\n    - ' /create '\n    - ' /addfile '\n  selection_domain:\n    CommandLine|contains:\n    - .githubusercontent.com\n    - anonfiles.com\n    - cdn.discordapp.com\n    - ddns.net\n    - dl.dropboxusercontent.com\n    - ghostbin.co\n    - github.com\n    - glitch.me\n    - gofile.io\n    - hastebin.com\n    - mediafire.com\n    - mega.nz\n    - onrender.com\n    - pages.dev\n    - paste.ee\n    - pastebin.com\n    - pastebin.pl\n    - pastetext.net\n    - privatlab.com\n    - privatlab.net\n    - send.exploit.in\n    - sendspace.com\n    - storage.googleapis.com\n    - storjshare.io\n    - supabase.co\n    - temp.sh\n    - transfer.sh\n    - trycloudflare.com\n    - ufile.io\n    - w3spaces.com\n    - workers.dev\n  condition: all of selection_*\nfalsepositives:\n- Some legitimate apps use this, but limited.\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_file_sharing_domains/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Windows - BITSAdmin BITS Download\n  technique: T1105\n  atomic_guid: a1921cd3-9a2d-47d5-a891-f1d0f2a7a31b\n",
+            "vulnerabilities": []
+        }
+    ]
+}

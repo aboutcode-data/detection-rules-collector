@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/symantec/Karagany.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Karagany",
+                "tags": [],
+                "alias": "Dreamloader",
+                "Author": "Symantec",
+                "Reference": "https://www.symantec.com/content/en/us/enterprise/media/security_response/whitepapers/Dragonfly_Threat_Against_Western_Energy_Suppliers.pdf"
+            },
+            "rule_text": "rule Trojan_Karagany\n{\n\tmeta:\n\t\talias = \"Dreamloader\"\n\t\tAuthor = \"Symantec\"\n\t\tReference = \"https://www.symantec.com/content/en/us/enterprise/media/security_response/whitepapers/Dragonfly_Threat_Against_Western_Energy_Suppliers.pdf\"\n\n\tstrings:\n\t\t$s1 = \"neosphere\" wide ascii\n\t\t$s2 = \"10000000000051200\" wide ascii\n\t\t$v1 = \"&fichier\" wide ascii\n\t\t$v2 = \"&identifiant\" wide ascii\n\t\t$c1 = \"xmonstart\" wide ascii\n\t\t$c2 = \"xmonstop\" wide ascii\n\t\t$c3 = \"xgetfile\" wide ascii\n\t\t$c4 = \"downadminexec\" wide ascii\n\t\t$c5 = \"xdiex\" wide ascii\n\t\t$c6 = \"xrebootx\" wide ascii\n\n\tcondition:\n\t\tisPE and ( ( $s1 and $s2 ) or ( $v1 and $v2 ) or ( any of ( $c* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

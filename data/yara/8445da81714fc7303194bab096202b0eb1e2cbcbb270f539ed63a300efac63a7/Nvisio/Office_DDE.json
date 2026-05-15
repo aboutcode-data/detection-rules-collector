@@ -1,0 +1,41 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nvisio/Office_DDE.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Office_DDEAUTO_field",
+                "tags": [],
+                "reference": "https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/"
+            },
+            "rule_text": "rule Office_DDEAUTO_field\n{\n\tmeta:\n\t\treference = \"https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/\"\n\n\tstrings:\n\t\t$a = /<w:fldChar\\s+?w:fldCharType=\"begin\"\\/>.+?\\b[Dd][Dd][Ee][Aa][Uu][Tt][Oo]\\b.+?<w:fldChar\\s+?w:fldCharType=\"end\"\\/>/\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Office_DDE_field",
+                "tags": [],
+                "reference": "https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/"
+            },
+            "rule_text": "rule Office_DDE_field\n{\n\tmeta:\n\t\treference = \"https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/\"\n\n\tstrings:\n\t\t$a = /<w:fldChar\\s+?w:fldCharType=\"begin\"\\/>.+?\\b[Dd][Dd][Ee]\\b.+?<w:fldChar\\s+?w:fldCharType=\"end\"\\/>/\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Office_OLE_DDEAUTO",
+                "tags": [],
+                "reference": "https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/"
+            },
+            "rule_text": "rule Office_OLE_DDEAUTO\n{\n\tmeta:\n\t\treference = \"https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/\"\n\n\tstrings:\n\t\t$a = /\\x13\\s*DDEAUTO\\b[^\\x14]+/ nocase\n\n\tcondition:\n\t\tuint32be( 0 ) == 0xD0CF11E0 and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Office_OLE_DDE",
+                "tags": [],
+                "reference": "https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/"
+            },
+            "rule_text": "rule Office_OLE_DDE\n{\n\tmeta:\n\t\treference = \"https://blog.nviso.be/2017/10/11/detecting-dde-in-ms-office-documents/\"\n\n\tstrings:\n\t\t$a = /\\x13\\s*DDE\\b[^\\x14]+/ nocase\n\n\tcondition:\n\t\tuint32be( 0 ) == 0xD0CF11E0 and $a\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

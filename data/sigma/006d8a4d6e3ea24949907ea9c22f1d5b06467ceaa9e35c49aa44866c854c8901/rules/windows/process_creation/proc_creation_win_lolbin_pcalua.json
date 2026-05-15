@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_pcalua.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community",
+                "date": "2022-06-14",
+                "title": "Use of Pcalua For Execution",
+                "id": "0955e4e1-c281-4fb9-9ee1-5ee7b4b754d2"
+            },
+            "rule_text": "title: Use of Pcalua For Execution\nid: 0955e4e1-c281-4fb9-9ee1-5ee7b4b754d2\nrelated:\n- id: fa47597e-90e9-41cd-ab72-c3b74cfb0d02\n  type: obsolete\nstatus: test\ndescription: Detects execition of commands and binaries from the context of The program\n  compatibility assistant (Pcalua.exe). This can be used as a LOLBIN in order to bypass\n  application whitelisting.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Pcalua/\n- https://pentestlab.blog/2020/07/06/indirect-command-execution/\nauthor: Nasreddine Bencherchali (Nextron Systems), E.M. Anhaus (originally from Atomic\n  Blue Detections, Endgame), oscd.community\ndate: 2022-06-14\nmodified: 2023-01-04\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\pcalua.exe\n    CommandLine|contains: ' -a'\n  condition: selection\nfalsepositives:\n- Legitimate use by a via a batch script or by an administrator.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

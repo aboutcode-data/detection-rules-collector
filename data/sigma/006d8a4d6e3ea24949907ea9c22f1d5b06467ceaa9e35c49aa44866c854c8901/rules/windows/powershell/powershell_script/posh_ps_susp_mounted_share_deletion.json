@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_mounted_share_deletion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, @redcanary, Zach Stanford @svch0st",
+                "date": "2020-10-08",
+                "title": "PowerShell Deleted Mounted Share",
+                "id": "66a4d409-451b-4151-94f4-a55d559c49b0"
+            },
+            "rule_text": "title: PowerShell Deleted Mounted Share\nid: 66a4d409-451b-4151-94f4-a55d559c49b0\nstatus: test\ndescription: Detects when when a mounted share is removed. Adversaries may remove\n  share connections that are no longer useful in order to clean up traces of their\n  operation\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.005/T1070.005.md\nauthor: oscd.community, @redcanary, Zach Stanford @svch0st\ndate: 2020-10-08\nmodified: 2025-10-07\ntags:\n- attack.stealth\n- attack.t1070.005\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Remove-SmbShare\n    - Remove-FileShare\n  filter_main_module_load:\n    ScriptBlockText|contains|all:\n    - FileShare.cdxml\n    - Microsoft.PowerShell.Core\\Export-ModuleMember\n    - ROOT/Microsoft/Windows/Storage/MSFT_FileShare\n    - ObjectModelWrapper\n    - Cmdletization.MethodParameter\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Administrators or Power users may remove their shares via cmd line\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

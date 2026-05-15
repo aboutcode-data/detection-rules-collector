@@ -1,0 +1,34 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/wiper.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "wiper",
+                "tags": [],
+                "description": "Wiper malware deployed in late 2014 skywiper attacks"
+            },
+            "rule_text": "rule wiper\n{\n\tmeta:\n\t\tdescription = \"Wiper malware deployed in late 2014 skywiper attacks\"\n\n\tstrings:\n\t\t$decryption_main_loop = {8bcbe8????????8a143e32d088143e463bf57cec5f}\n\t\t$context_init_loop1 = { 8b790c8b411033f78971088bf033f789710c8b710833c64b89411075e3 }\n\t\t$context_init_loop2 = { 8b510c8b41100bf28971088bf00bf289710c8b71080bc64f89411075e3 }\n\t\t$MZ = \"MZ\"\n\n\tcondition:\n\t\t$MZ at 0 and 2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "wiper_payload_dropper",
+                "tags": [],
+                "description": "Wiper implant",
+                "filename": "iissvr.exe"
+            },
+            "rule_text": "rule wiper_payload_dropper\n{\n\tmeta:\n\t\tdescription = \"Wiper implant\"\n\t\tfilename = \"iissvr.exe\"\n\n\tstrings:\n\t\t$MZ = \"MZ\"\n\t\t$html = {485454502F312E3120323030204F4B0D0A436F6E74656E742D4C656E6774683A2025640D0A436F6E74656E742D547970653A20746578742F68746D6C0D0A4163636570742D52616E6765733A2062797465730D0A5365727665723A204D6963726F736F66742D4949532F362E300D0A0D0A000000525352435F48544D4C00}\n\t\t$wav = {485454502F312E3120323030204F4B0D0A436F6E74656E742D4C656E6774683A2025640D0A436F6E74656E742D547970653A20696D6167652F6A7065670D0A4163636570742D52616E6765733A2062797465730D0A5365727665723A204D6963726F736F66742D4949532F362E300D0A0D0A0000525352435F4A504700}\n\t\t$jpg = {485454502F312E3120323030204F4B0D0A436F6E74656E742D4C656E6774683A2025640D0A436F6E74656E742D547970653A20617564696F2F7761760D0A4163636570742D52616E6765733A2062797465730D0A5365727665723A204D6963726F736F66742D4949532F362E300D0A0D0A000000525352435F57415600}\n\n\tcondition:\n\t\t$MZ at 0 and ( $html or $wav or $jpg )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "wiper_payload_dropper2",
+                "tags": [],
+                "description": "Wiper implant",
+                "filename": "ams.exe"
+            },
+            "rule_text": "rule wiper_payload_dropper2\n{\n\tmeta:\n\t\tdescription = \"Wiper implant\"\n\t\tfilename = \"ams.exe\"\n\n\tstrings:\n\t\t$MZ = \"MZ\"\n\t\t$process_hacker_ascii = {5c4465766963655c4b50726f636573734861636b657232}\n\t\t$process_hacker_unicode = {5c004400650076006900630065005c004b00500072006f0063006500730073004800610063006b006500720032000000}\n\t\t$mcshield_string = {53595354454d5c43757272656e74436f6e74726f6c5365745c73657276696365735c4d63536869656c6400}\n\n\tcondition:\n\t\t$MZ at 0 and ( $process_hacker_ascii or $process_hacker_unicode ) and $mcshield_string\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/extortion_email.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "extortion_email",
+                "tags": [],
+                "author": "milann shrestha <Twitter - @x0verhaul>",
+                "description": "Detects the possible extortion scam on the basis of subjects and keywords",
+                "data": "12th May 2020"
+            },
+            "rule_text": "rule extortion_email\n{\n\tmeta:\n\t\tauthor = \"milann shrestha <Twitter - @x0verhaul>\"\n\t\tdescription = \"Detects the possible extortion scam on the basis of subjects and keywords\"\n\t\tdata = \"12th May 2020\"\n\n\tstrings:\n\t\t$eml1 = \"From:\"\n\t\t$eml2 = \"To:\"\n\t\t$eml3 = \"Subject:\"\n\t\t$sub1 = \"Hackers know password from your account.\"\n\t\t$sub2 = \"Security Alert. Your accounts were hacked by a criminal group.\"\n\t\t$sub3 = \"Your account was under attack! Change your credentials!\"\n\t\t$sub4 = \"The decision to suspend your account. Waiting for payment\"\n\t\t$sub5 = \"Fraudsters know your old passwords. Access data must be changed.\"\n\t\t$sub6 = \"Your account has been hacked! You need to unlock it.\"\n\t\t$sub7 = \"Be sure to read this message! Your personal data is threatened!\"\n\t\t$sub8 = \"Password must be changed now.\"\n\t\t$key1 = \"BTC\" nocase\n\t\t$key2 = \"Wallet\" nocase\n\t\t$key3 = \"Bitcoin\" nocase\n\t\t$key4 = \"hours\" nocase\n\t\t$key5 = \"payment\" nocase\n\t\t$key6 = \"malware\" nocase\n\t\t$key = \"bitcoin address\" nocase\n\t\t$key7 = \"access\" nocase\n\t\t$key8 = \"virus\" nocase\n\n\tcondition:\n\t\tall of ( $eml* ) and any of ( $sub* ) and any of ( $key* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

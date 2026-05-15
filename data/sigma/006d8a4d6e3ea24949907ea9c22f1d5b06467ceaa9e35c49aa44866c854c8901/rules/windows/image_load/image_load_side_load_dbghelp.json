@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_dbghelp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)",
+                "date": "2022-10-25",
+                "title": "Potential DLL Sideloading Of DBGHELP.DLL",
+                "id": "6414b5cd-b19d-447e-bb5e-9f03940b5784"
+            },
+            "rule_text": "title: Potential DLL Sideloading Of DBGHELP.DLL\nid: 6414b5cd-b19d-447e-bb5e-9f03940b5784\nstatus: test\ndescription: Detects potential DLL sideloading of \"dbghelp.dll\"\nreferences:\n- https://hijacklibs.net/\nauthor: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)\ndate: 2022-10-25\nmodified: 2025-10-07\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\dbghelp.dll\n  filter_main_generic:\n    ImageLoaded|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n    - C:\\Windows\\SoftwareDistribution\\\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SystemTemp\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n  filter_optional_anaconda:\n    ImageLoaded|endswith:\n    - \\Anaconda3\\Lib\\site-packages\\vtrace\\platforms\\windll\\amd64\\dbghelp.dll\n    - \\Anaconda3\\Lib\\site-packages\\vtrace\\platforms\\windll\\i386\\dbghelp.dll\n  filter_optional_epicgames:\n    ImageLoaded|endswith:\n    - \\Epic Games\\Launcher\\Engine\\Binaries\\ThirdParty\\DbgHelp\\dbghelp.dll\n    - \\Epic Games\\MagicLegends\\x86\\dbghelp.dll\n  filter_optional_opera:\n    ImageLoaded|contains: opera\\Opera Installer Temp\\opera_package\n    ImageLoaded|endswith: \\assistant\\dbghelp.dll\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate applications loading their own versions of the DLL mentioned in this\n  rule\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

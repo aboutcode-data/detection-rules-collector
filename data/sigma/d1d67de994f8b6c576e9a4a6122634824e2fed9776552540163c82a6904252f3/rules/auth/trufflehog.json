@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/auth/trufflehog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Patrik Olson",
+                "date": "2024-09-13",
+                "title": "Trufflehog Validating Leaked Credentials",
+                "id": "f4eebef3-0598-4b6e-858f-5e6555cf439d"
+            },
+            "rule_text": "title: Trufflehog Validating Leaked Credentials\nid: f4eebef3-0598-4b6e-858f-5e6555cf439d\ndescription: Trufflehog is a software that can scan for leaked credentials and validate\n  them against the respective service\nreferences:\n- https://github.com/trufflesecurity/trufflehog\n- https://github.com/trufflesecurity/trufflehog/blob/7fa397ecf89b47027507c55cd97a1d11273fe944/pkg/sources/s3/s3.go#L169\n- https://github.com/trufflesecurity/trufflehog/blob/7fa397ecf89b47027507c55cd97a1d11273fe944/pkg/common/http.go#L94\nstatus: stable\nauthor: Patrik Olson\ndate: '2024-09-13'\nmodified: '2024-09-13'\nlogsource:\n  category: auth\ndetection:\n  selection:\n  - http_user_agent|contains: TruffleHog\n  - user_role|contains: trufflehog\n  condition: selection\nfalsepositives:\n- Unknown\ntags:\n- attack.credential-access\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

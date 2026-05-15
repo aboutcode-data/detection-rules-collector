@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_cor_profiler.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-30",
+                "title": "Registry-Free Process Scope COR_PROFILER",
+                "id": "23590215-4702-4a70-8805-8dc9e58314a2"
+            },
+            "rule_text": "title: Registry-Free Process Scope COR_PROFILER\nid: 23590215-4702-4a70-8805-8dc9e58314a2\nstatus: test\ndescription: 'Adversaries may leverage the COR_PROFILER environment variable to hijack\n  the execution flow of programs that load the .NET CLR.\n\n  The COR_PROFILER is a .NET Framework feature which allows developers to specify\n  an unmanaged (or external of .NET) profiling DLL to be loaded into each .NET process\n  that loads the Common Language Runtime (CLR).\n\n  These profiliers are designed to monitor, troubleshoot, and debug managed code executed\n  by the .NET CLR.\n\n  (Citation: Microsoft Profiling Mar 2017)\n\n  (Citation: Microsoft COR_PROFILER Feb 2013)\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.012/T1574.012.md#atomic-test-3---registry-free-process-scope-cor_profiler\nauthor: frack113\ndate: 2021-12-30\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.012\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - $env:COR_ENABLE_PROFILING\n    - $env:COR_PROFILER\n    - $env:COR_PROFILER_PATH\n  condition: selection\nfalsepositives:\n- Legitimate administrative script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

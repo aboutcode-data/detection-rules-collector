@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2021/TA/UNC2546/web_unc2546_dewmode_php_webshell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-02-22",
+                "title": "DEWMODE Webshell Access",
+                "id": "fdf96c90-42d5-4406-8a9c-14a2c9a016b5"
+            },
+            "rule_text": "title: DEWMODE Webshell Access\nid: fdf96c90-42d5-4406-8a9c-14a2c9a016b5\nstatus: test\ndescription: Detects access to DEWMODE webshell as described in FIREEYE report\nreferences:\n- https://www.mandiant.com/resources/blog/accellion-fta-exploited-for-data-theft-and-extortion\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-02-22\nmodified: 2023-01-02\ntags:\n- attack.persistence\n- attack.t1505.003\n- detection.emerging-threats\nlogsource:\n  category: webserver\ndetection:\n  selection1:\n    cs-uri-query|contains|all:\n    - ?dwn=\n    - '&fn='\n    - .html?\n  selection2:\n    cs-uri-query|contains|all:\n    - '&dwn='\n    - ?fn=\n    - .html?\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

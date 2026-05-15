@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_group.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-12",
+                "title": "Local Groups Reconnaissance Via Wmic.EXE",
+                "id": "164eda96-11b2-430b-85ff-6a265c15bf32"
+            },
+            "rule_text": "title: Local Groups Reconnaissance Via Wmic.EXE\nid: 164eda96-11b2-430b-85ff-6a265c15bf32\nstatus: test\ndescription: 'Detects the execution of \"wmic\" with the \"group\" flag.\n\n  Adversaries may attempt to find local system groups and permission settings.\n\n  The knowledge of local system permission groups can help adversaries determine which\n  groups exist and which users belong to a particular group.\n\n  Adversaries may use this information to determine which users have elevated permissions,\n  such as the users found within the local administrators group.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.001/T1069.001.md\nauthor: frack113\ndate: 2021-12-12\nmodified: 2023-02-14\ntags:\n- attack.discovery\n- attack.t1069.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\wmic.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains: ' group'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

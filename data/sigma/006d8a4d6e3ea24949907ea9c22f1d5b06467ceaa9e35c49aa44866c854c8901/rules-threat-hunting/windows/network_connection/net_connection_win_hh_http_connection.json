@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_hh_http_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-05",
+                "title": "HH.EXE Initiated HTTP Network Connection",
+                "id": "468a8cea-2920-4909-a593-0cbe1d96674a"
+            },
+            "rule_text": "title: HH.EXE Initiated HTTP Network Connection\nid: 468a8cea-2920-4909-a593-0cbe1d96674a\nrelated:\n- id: f57c58b3-ee69-4ef5-9041-455bf39aaa89\n  type: derived\nstatus: test\ndescription: 'Detects a network connection initiated by the \"hh.exe\" process to HTTP\n  destination ports, which could indicate the execution/download of remotely hosted\n  .chm files.\n\n  '\nreferences:\n- https://www.splunk.com/en_us/blog/security/follina-for-protocol-handlers.html\n- https://github.com/redcanaryco/atomic-red-team/blob/1cf4dd51f83dcb0ebe6ade902d6157ad2dbc6ac8/atomics/T1218.001/T1218.001.md\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-05\ntags:\n- attack.stealth\n- attack.t1218.001\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\hh.exe\n    Initiated: 'true'\n    DestinationPort:\n    - 80\n    - 443\n  condition: selection\nfalsepositives:\n- False positive is expected from launching \"hh.exe\" for the first time on a machine\n  in a while or simply from help files containing reference to external sources. Best\n  correlate this with process creation and file events.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_vpc_flow_logs_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Ivan Saakov",
+                "date": "2025-10-19",
+                "title": "AWS VPC Flow Logs Deleted",
+                "id": "e386b9b5-af12-450e-afff-761730fb8a98"
+            },
+            "rule_text": "title: AWS VPC Flow Logs Deleted\nid: e386b9b5-af12-450e-afff-761730fb8a98\nstatus: experimental\ndescription: 'Detects the deletion of one or more VPC Flow Logs in AWS Elastic Compute\n  Cloud (EC2) through the DeleteFlowLogs API call.\n\n  Adversaries may delete flow logs to evade detection or remove evidence of network\n  activity, hindering forensic investigations and visibility into malicious operations.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteFlowLogs.html\n- https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/delete-flow-logs.html\n- https://www.elastic.co/docs/reference/security/prebuilt-rules/rules/integrations/aws/defense_evasion_ec2_flow_log_deletion\nauthor: Ivan Saakov\ndate: 2025-10-19\ntags:\n- attack.stealth\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection_event_name:\n    eventName: DeleteFlowLogs\n  selection_status_success:\n    errorCode: Success\n  selection_status_null:\n    errorCode: null\n  condition: selection_event_name and 1 of selection_status_*\nfalsepositives:\n- During maintenance operations or testing, authorized administrators may delete VPC\n  Flow Logs as part of routine network management or cleanup activities.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

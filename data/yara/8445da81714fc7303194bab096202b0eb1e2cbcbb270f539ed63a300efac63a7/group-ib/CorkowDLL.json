@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/group-ib/CorkowDLL.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CorkowDLL",
+                "tags": [],
+                "description": "Rule to detect the Corkow DLL files",
+                "reference": "www.group-ib.ru/brochures/Group-IB-Corkow-Report-EN.pdf"
+            },
+            "rule_text": "rule CorkowDLL\n{\n\tmeta:\n\t\tdescription = \"Rule to detect the Corkow DLL files\"\n\t\treference = \"www.group-ib.ru/brochures/Group-IB-Corkow-Report-EN.pdf\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$binary1 = {60 [0-8] 9C [0-8] BB ?? ?? ?? ?? [0-8] 81 EB ?? ?? ?? ?? [0-8] E8 ?? 00 00 00 [0-8] 58 [0-8] 2B C3}\n\t\t$binary2 = {(FF 75 ?? | 53) FF 75 10 FF 75 0C FF 75 08 E8 ?? ?? ?? ?? [3-9] C9 C2 0C 00}\n\t\t$export1 = \"Control_RunDLL\"\n\t\t$export2 = \"ServiceMain\"\n\t\t$export3 = \"DllGetClassObject\"\n\n\tcondition:\n\t\t($mz at 0 ) and ( $binary1 and $binary2 ) and any of ( $export* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

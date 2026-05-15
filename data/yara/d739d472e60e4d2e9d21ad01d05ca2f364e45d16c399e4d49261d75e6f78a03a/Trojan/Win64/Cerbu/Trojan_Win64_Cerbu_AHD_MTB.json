@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Cerbu/Trojan_Win64_Cerbu_AHD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Cerbu_AHD_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Cerbu.AHD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Cerbu_AHD_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Cerbu.AHD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,32 00 32 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {44 0f b7 7e ?? 0f b7 09 49 83 c7 ?? 4c 03 fe 8b 76 ?? 4c 03 f9 4a 8d 04 3e }\n\t\t$a_01_1 = {49 6e 73 74 61 6c 6c 69 6e 67 20 75 70 64 61 74 65 20 31 20 6f 66 20 31 2e 2e 2e }\n\t\t$a_01_2 = {25 73 5f 25 30 34 58 2e 65 78 65 }\n\t\t$a_01_3 = {73 63 68 74 61 73 6b 73 20 2f 43 72 65 61 74 65 20 2f 53 43 20 4f 4e 4c 4f 47 4f 4e 20 2f 54 4e 20 22 25 73 22 20 2f 54 52 20 22 25 73 22 20 2f 46 20 2f 52 4c 20 48 49 47 48 45 53 54 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 30 + ( #a_01_2 & 1 ) * 10 + ( #a_01_3 & 1 ) * 40 ) >= 50\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

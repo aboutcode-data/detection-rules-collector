@@ -1,0 +1,37 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/log_teamviewer_keyboard_layouts.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LOG_TeamViewer_Connect_Chinese_Keyboard_Layout",
+                "tags": [],
+                "description": "Detects a suspicious TeamViewer log entry stating that the remote systems had a Chinese keyboard layout",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-10-12",
+                "modified": "2020-12-16",
+                "score": 60,
+                "limit": "Logscan",
+                "reference": "https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-input-locales-for-windows-language-packs",
+                "id": "f901818b-5150-540f-b645-686c12784a38"
+            },
+            "rule_text": "rule LOG_TeamViewer_Connect_Chinese_Keyboard_Layout\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious TeamViewer log entry stating that the remote systems had a Chinese keyboard layout\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdate = \"2019-10-12\"\n\t\tmodified = \"2020-12-16\"\n\t\tscore = 60\n\t\tlimit = \"Logscan\"\n\t\treference = \"https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-input-locales-for-windows-language-packs\"\n\t\tid = \"f901818b-5150-540f-b645-686c12784a38\"\n\n\tstrings:\n\t\t$x1 = \"Changing keyboard layout to: 0804\" ascii\n\t\t$x2 = \"Changing keyboard layout to: 042a\"\n\t\t$fp1 = \"Changing keyboard layout to: 08040804\" ascii\n\t\t$fp2 = \"Changing keyboard layout to: 042a042a\" ascii\n\n\tcondition:\n\t\t(#x1 + #x2 ) > ( #fp1 + #fp2 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LOG_TeamViewer_Connect_Russian_Keyboard_Layout",
+                "tags": [],
+                "description": "Detects a suspicious TeamViewer log entry stating that the remote systems had a Russian keyboard layout",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-10-12",
+                "modified": "2022-12-07",
+                "score": 60,
+                "limit": "Logscan",
+                "reference": "https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-input-locales-for-windows-language-packs",
+                "id": "360a1cca-2a64-5fd8-bcde-f49e1b17281e"
+            },
+            "rule_text": "rule LOG_TeamViewer_Connect_Russian_Keyboard_Layout\n{\n\tmeta:\n\t\tdescription = \"Detects a suspicious TeamViewer log entry stating that the remote systems had a Russian keyboard layout\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\tdate = \"2019-10-12\"\n\t\tmodified = \"2022-12-07\"\n\t\tscore = 60\n\t\tlimit = \"Logscan\"\n\t\treference = \"https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-input-locales-for-windows-language-packs\"\n\t\tid = \"360a1cca-2a64-5fd8-bcde-f49e1b17281e\"\n\n\tstrings:\n\t\t$x1 = \"Changing keyboard layout to: 0419\" ascii\n\t\t$fp1 = \"Changing keyboard layout to: 04190419\" ascii\n\n\tcondition:\n\t\t#x1> #fp1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

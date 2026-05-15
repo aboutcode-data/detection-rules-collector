@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/Email_PHP_Mailer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Email_Generic_PHP_Mailer_Script",
+                "tags": [],
+                "Description": "Generic rule to identify potential emails sent from hacktool mailer scripts",
+                "Author": "Xylitol <xylitol@temari.fr>",
+                "date": "2020-05-11"
+            },
+            "rule_text": "rule Email_Generic_PHP_Mailer_Script\n{\n\tmeta:\n\t\tDescription = \"Generic rule to identify potential emails sent from hacktool mailer scripts\"\n\t\tAuthor = \"Xylitol <xylitol@temari.fr>\"\n\t\tdate = \"2020-05-11\"\n\n\tstrings:\n\t\t$donotwant1 = { FE ED FA CE }\n\t\t$donotwant2 = { FE ED FA CF }\n\t\t$donotwant3 = { CE FA ED FE }\n\t\t$donotwant4 = { CE FA ED FE }\n\t\t$donotwant5 = { 4D 5A 50 00 02 }\n\t\t$donotwant6 = { 53 75 62 6A 65 63 74 3A 20 25 73 }\n\t\t$legit1 = \"(https://github.com/PHPMailer/PHPMailer)\"\n\t\t$legit2 = \"(phpmailer.sourceforge.net)\"\n\t\t$legit3 = \"X-Mailer: PHPMailer\"\n\t\t$legit4 = \"SimpleMailInvoker.php\"\n\t\t$legit5 = \"X-Mailer: SMF\"\n\t\t$legit6 = \"X-Mailer: phpBB3\"\n\t\t$legit7 = \"X-Mailer: PHP/Xooit\"\n\t\t$legit8 = \"X-Mailer: vBulletin\"\n\t\t$legit9 = \"X-Mailer: MediaWiki mailer\"\n\t\t$legit10 = \"X-Mailer: Drupal\"\n\t\t$legit11 = \"X-Mailer: osCommerce Mailer\"\n\t\t$legit12 = \"abuse@mailjet.com\"\n\t\t$legit13 = \"class.foxycart.transaction.php\"\n\t\t$legit14 = \"User-Agent: Roundcube Webmail\"\n\t\t$legit15 = \"User-Agent: SquirrelMail\"\n\t\t$legit16 = \"X-Source: /opt/cpanel/\"\n\t\t$legit17 = { 58 2D 50 48 50 2D 4F 72 69 67 69 6E 61 74 69 6E 67 2D 53 63 72 69 70 74 3A 20 [1-6] 3A 70 6F 73 74 2E 70 68 70 28 [1-6] 29 }\n\t\t$legit18 = { 58 2D 50 48 50 2D 53 63 72 69 70 74 3A 20 [3-30] 2F 70 6F 73 74 2E 70 68 70 20 66 6F 72 20 }\n\t\t$eml1 = \"From:\"\n\t\t$eml2 = \"To:\"\n\t\t$eml3 = \"Subject:\"\n\t\t$mailer1 = /X-PHP-Originating-Script: ([\\w\\.]+(.*\\.php))?/\n\t\t$mailer2 = /X-PHP-Script: ([\\w\\.\\/]+\\/(.*\\.php))?/\n\t\t$mailer3 = /X-PHP-Filename: (\\/[\\w]+\\/(.*\\.php))?/\n\n\tcondition:\n\t\tnot any of ( $donotwant* ) and not any of ( $legit* ) and all of ( $eml* ) and 2 of ( $mailer* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

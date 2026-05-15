@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hh_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Maxim Pavlunin",
+                "date": "2020-04-01",
+                "title": "Suspicious HH.EXE Execution",
+                "id": "e8a95b5e-c891-46e2-b33a-93937d3abc31"
+            },
+            "rule_text": "title: Suspicious HH.EXE Execution\nid: e8a95b5e-c891-46e2-b33a-93937d3abc31\nstatus: test\ndescription: Detects a suspicious execution of a Microsoft HTML Help (HH.exe)\nreferences:\n- https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/chm-badness-delivers-a-banking-trojan/\n- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-27939090904026cc396b0b629c8e4314acd6f5dac40a676edbc87f4567b47eb7\n- https://www.ptsecurity.com/ww-en/analytics/pt-esc-threat-intelligence/higaisa-or-winnti-apt-41-backdoors-old-and-new/\n- https://www.zscaler.com/blogs/security-research/unintentional-leak-glimpse-attack-vectors-apt37\nauthor: Maxim Pavlunin\ndate: 2020-04-01\nmodified: 2023-04-12\ntags:\n- attack.execution\n- attack.initial-access\n- attack.stealth\n- attack.t1047\n- attack.t1059.001\n- attack.t1059.003\n- attack.t1059.005\n- attack.t1059.007\n- attack.t1218\n- attack.t1218.001\n- attack.t1218.010\n- attack.t1218.011\n- attack.t1566\n- attack.t1566.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: HH.exe\n  - Image|endswith: \\hh.exe\n  selection_paths:\n    CommandLine|contains:\n    - .application\n    - \\AppData\\Local\\Temp\\\n    - \\Content.Outlook\\\n    - \\Downloads\\\n    - \\Users\\Public\\\n    - \\Windows\\Temp\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Formbook/Trojan_Win32_Formbook_PA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Formbook_PA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Formbook.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,17 00 17 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Formbook_PA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Formbook.PA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,17 00 17 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {33 d2 8b c1 f7 f3 8b 45 a0 41 8a 54 15 f4 30 54 01 ff 3b 4c 37 fc 72 e8 }\n\t\t$a_02_1 = {50 6a 00 ff 15 ?? ?? ?? ?? 8b f8 57 6a 00 ff 15 ?? ?? ?? ?? 57 6a 00 8b f0 ff 15 ?? ?? ?? ?? 50 ff 15 }\n\t\t$a_00_2 = {4c 6f 61 64 52 65 73 6f 75 72 63 65 }\n\t\t$a_00_3 = {4c 6f 63 6b 52 65 73 6f 75 72 63 65 }\n\t\t$a_00_4 = {56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 23\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

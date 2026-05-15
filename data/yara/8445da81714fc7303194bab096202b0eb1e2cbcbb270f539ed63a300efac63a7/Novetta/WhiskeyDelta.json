@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/WhiskeyDelta.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WhiskeyDelta",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group  trig@novetta.com",
+                "Source": "41badf10ef6f469dd1c3be201aba809f9c42f86ad77d7f83bc3895bfa289c635"
+            },
+            "rule_text": "import \"pe\"\n\nrule WhiskeyDelta\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group  trig@novetta.com\"\n\t\tSource = \"41badf10ef6f469dd1c3be201aba809f9c42f86ad77d7f83bc3895bfa289c635\"\n\n\tstrings:\n\t\t$decryption = {\n\t\t\tF3 A5 \n\t\t\t8B 7C 24 30 \n\t\t\t85 FF \n\t\t\t7E ?? \n\t\t\t8B 74 24 2C \n\t\t\t8A 44 24 08 \n\t\t\t53 \n\t\t\t8A 4C 24 21 \n\t\t\t8A 5C 24 2B \n\t\t\t32 C1 \n\t\t\t8A 0C 32 \n\t\t\t32 C3 \n\t\t\t32 C8 \n\t\t\t88 0C 32 \n\t\t\tB9 1E 00 00 00 \n\t\t\t8A 5C 0C 0C \n\t\t\t88 5C 0C 0D \n\t\t\t49 \n\t\t\t83 F9 FF \n\t\t\t7F ?? \n\t\t\t42 \n\t\t}\n\t\t$s1 = \"=====IsFile=====\" wide\n\t\t$s2 = \"=====4M=====\" wide\n\t\t$s3 = \"=====IsBackup=====\" wide\n\n\tcondition:\n\t\t2 of ( $s* ) or $decryption in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bitsadmin_download_direct_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-28",
+                "title": "Suspicious Download From Direct IP Via Bitsadmin",
+                "id": "99c840f2-2012-46fd-9141-c761987550ef"
+            },
+            "rule_text": "title: Suspicious Download From Direct IP Via Bitsadmin\nid: 99c840f2-2012-46fd-9141-c761987550ef\nrelated:\n- id: 90f138c1-f578-4ac3-8c49-eecfd847c8b7\n  type: similar\nstatus: test\ndescription: Detects usage of bitsadmin downloading a file using an URL that contains\n  an IP\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\n- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/\n- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-28\nmodified: 2023-02-15\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\n- attack.s0190\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bitsadmin.exe\n  - OriginalFileName: bitsadmin.exe\n  selection_flags:\n    CommandLine|contains:\n    - ' /transfer '\n    - ' /create '\n    - ' /addfile '\n  selection_extension:\n    CommandLine|contains:\n    - ://1\n    - ://2\n    - ://3\n    - ://4\n    - ://5\n    - ://6\n    - ://7\n    - ://8\n    - ://9\n  filter_seven_zip:\n    CommandLine|contains: ://7-\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_direct_ip/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_windows_rdp_cmd_delivery.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_windows_rdp_cmd_delivery",
+                "tags": [],
+                "description": "Delivers a text payload via RDP (rubber ducky)",
+                "reference": "https://github.com/nopernik/mytools/blob/master/rdp-cmd-delivery.sh",
+                "author": "@fusionrace"
+            },
+            "rule_text": "rule hacktool_windows_rdp_cmd_delivery\n{\n\tmeta:\n\t\tdescription = \"Delivers a text payload via RDP (rubber ducky)\"\n\t\treference = \"https://github.com/nopernik/mytools/blob/master/rdp-cmd-delivery.sh\"\n\t\tauthor = \"@fusionrace\"\n\n\tstrings:\n\t\t$s1 = \"Usage: rdp-cmd-delivery.sh OPTIONS\" ascii wide\n\t\t$s2 = \"[--tofile 'c:\\\\test.txt' local.ps1 #will copy contents of local.ps1 to c:\\\\test.txt\" ascii wide\n\t\t$s3 = \"-cmdfile local.bat                #will execute everything from local.bat\" ascii wide\n\t\t$s4 = \"To deliver powershell payload, use '--cmdfile script.ps1' but inside powershell console\" ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

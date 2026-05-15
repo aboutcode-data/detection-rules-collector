@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Khalesi/Trojan_Win32_Khalesi_SX_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Khalesi_SX_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Khalesi.SX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Khalesi_SX_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Khalesi.SX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {e0 b2 91 00 6c 02 00 00 00 00 ba 00 4e ef 02 00 60 4c b8 00 c0 cf }\n\t\t$a_01_1 = {48 83 ec 28 48 8d 0d a5 e8 2b 00 48 8b 05 9e e8 2b 00 4c 8b 40 08 48 89 ca e8 52 90 00 00 48 8b }\n\t\t$a_01_2 = {9e f7 6d 7b 37 b6 a5 9f 73 8a 6b 0b 93 09 dd 36 a2 6b 21 3d 2c db a5 b5 04 67 8e fb 64 d5 57 ff }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 4 + ( #a_01_2 & 1 ) * 4 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

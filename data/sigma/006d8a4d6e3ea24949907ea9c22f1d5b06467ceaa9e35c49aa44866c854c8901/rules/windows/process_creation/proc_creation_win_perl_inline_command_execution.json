@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_perl_inline_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-02",
+                "title": "Perl Inline Command Execution",
+                "id": "f426547a-e0f7-441a-b63e-854ac5bdf54d"
+            },
+            "rule_text": "title: Perl Inline Command Execution\nid: f426547a-e0f7-441a-b63e-854ac5bdf54d\nstatus: test\ndescription: Detects execution of perl using the \"-e\"/\"-E\" flags. This is could be\n  used as a way to launch a reverse shell or execute live perl code.\nreferences:\n- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet\n- https://www.revshells.com/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\perl.exe\n  - OriginalFileName: perl.exe\n  selection_cli:\n    CommandLine|contains: ' -e'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

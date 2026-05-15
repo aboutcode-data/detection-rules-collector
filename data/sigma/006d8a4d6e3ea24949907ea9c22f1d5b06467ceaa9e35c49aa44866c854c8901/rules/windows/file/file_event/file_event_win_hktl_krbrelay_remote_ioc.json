@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_hktl_krbrelay_remote_ioc.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-06-27",
+                "title": "HackTool - RemoteKrbRelay SMB Relay Secrets Dump Module Indicators",
+                "id": "3ab79e90-9fab-4cdf-a7b2-6522bc742adb"
+            },
+            "rule_text": "title: HackTool - RemoteKrbRelay SMB Relay Secrets Dump Module Indicators\nid: 3ab79e90-9fab-4cdf-a7b2-6522bc742adb\nstatus: test\ndescription: Detects the creation of file with specific names used by RemoteKrbRelay\n  SMB Relay attack module.\nreferences:\n- https://github.com/CICADA8-Research/RemoteKrbRelay/blob/19ec76ba7aa50c2722b23359bc4541c0a9b2611c/Exploit/RemoteKrbRelay/Relay/Attacks/RemoteRegistry.cs#L31-L40\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-06-27\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - :\\windows\\temp\\sam.tmp\n    - :\\windows\\temp\\sec.tmp\n    - :\\windows\\temp\\sys.tmp\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

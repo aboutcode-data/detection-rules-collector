@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Lace-Tempest/posh_ps_apt_lace_tempest_eraser_script.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-11-09",
+                "title": "Lace Tempest PowerShell Evidence Eraser",
+                "id": "b377ddab-502d-4519-9e8c-5590033d2d70"
+            },
+            "rule_text": "title: Lace Tempest PowerShell Evidence Eraser\nid: b377ddab-502d-4519-9e8c-5590033d2d70\nstatus: test\ndescription: 'Detects a PowerShell script used by Lace Tempest APT to erase evidence\n  from victim servers by exploiting CVE-2023-47246 as reported by SysAid Team\n\n  '\nreferences:\n- https://www.sysaid.com/blog/service-desk/on-premise-software-security-vulnerability-notification\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-11-09\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.emerging-threats\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - cleanLL\n    - usersfiles.war\n    - Remove-Item -Path \"$tomcat_dir\n    - SysAidServer\n    - 'sleep '\n    - while(1)\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2023-47246"
+            ]
+        }
+    ]
+}

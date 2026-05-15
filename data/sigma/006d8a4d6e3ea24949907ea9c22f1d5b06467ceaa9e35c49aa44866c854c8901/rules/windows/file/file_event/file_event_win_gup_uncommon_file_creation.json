@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_gup_uncommon_file_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-02-03",
+                "title": "Uncommon File Created by Notepad++ Updater Gup.EXE",
+                "id": "3b8f4c92-6a51-4d7e-9c3a-8e2d1f5a7b09"
+            },
+            "rule_text": "title: Uncommon File Created by Notepad++ Updater Gup.EXE\nid: 3b8f4c92-6a51-4d7e-9c3a-8e2d1f5a7b09\nstatus: experimental\ndescription: 'Detects when the Notepad++ updater (gup.exe) creates files in suspicious\n  or uncommon locations.\n\n  This could indicate potential exploitation of the updater component to deliver unwanted\n  malware or unwarranted files.\n\n  '\nreferences:\n- https://notepad-plus-plus.org/news/v889-released/\n- https://www.heise.de/en/news/Notepad-updater-installed-malware-11109726.html\n- https://www.rapid7.com/blog/post/tr-chrysalis-backdoor-dive-into-lotus-blossoms-toolkit/\n- https://www.validin.com/blog/exploring_notepad_plus_plus_network_indicators/\n- https://securelist.com/notepad-supply-chain-attack/118708/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-02-03\nmodified: 2026-03-16\ntags:\n- attack.collection\n- attack.credential-access\n- attack.t1195.002\n- attack.initial-access\n- attack.t1557\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\gup.exe\n  filter_main_legit_paths:\n    TargetFilename|startswith:\n    - C:\\Program Files\\Notepad++\\\n    - C:\\Program Files (x86)\\Notepad++\\\n  filter_main_temp_update_installer:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|contains|all:\n    - \\AppData\\Local\\Temp\\\n    - npp.\n    - .Installer.\n    - .exe\n  filter_main_temp_generic_zip:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|contains|all:\n    - \\AppData\\Local\\Temp\\\n    - .zip\n  filter_main_recycle_bin:\n    TargetFilename|startswith: C:\\$Recycle.Bin\\S-1-5-21\n  filter_main_plugins:\n  - TargetFilename|contains:\n    - \\plugins\\JsonTools\\testfiles\\\n    - \\Notepad++\\plugins\\ComparePlugin\\\n  - TargetFilename|contains|all:\n    - npp.\n    - .portable.\n    - \\plugins\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Custom or portable Notepad++ installations in non-standard directories.\n- Legitimate update processes creating temporary files in unexpected locations.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_nmap_zenmap.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-10",
+                "title": "PUA - Nmap/Zenmap Execution",
+                "id": "f6ecd1cf-19b8-4488-97f6-00f0924991a3"
+            },
+            "rule_text": "title: PUA - Nmap/Zenmap Execution\nid: f6ecd1cf-19b8-4488-97f6-00f0924991a3\nstatus: test\ndescription: Detects usage of namp/zenmap. Adversaries may attempt to get a listing\n  of services running on remote hosts, including those that may be vulnerable to remote\n  software exploitation\nreferences:\n- https://nmap.org/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1046/T1046.md#atomic-test-3---port-scan-nmap-for-windows\nauthor: frack113\ndate: 2021-12-10\nmodified: 2023-12-11\ntags:\n- attack.discovery\n- attack.t1046\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith:\n    - \\nmap.exe\n    - \\zennmap.exe\n  - OriginalFileName:\n    - nmap.exe\n    - zennmap.exe\n  condition: selection\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_Banker_Acecard.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Banker_Acecard",
+                "tags": [],
+                "author": "https://twitter.com/SadFud75",
+                "more_information": "https://threats.kaspersky.com/en/threat/Trojan-Banker.AndroidOS.Acecard/",
+                "samples_sha1": "ad9fff7fd019cf2a2684db650ea542fdeaaeaebb 53cca0a642d2f120dea289d4c7bd0d644a121252"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Banker_Acecard\n{\n\tmeta:\n\t\tauthor = \"https://twitter.com/SadFud75\"\n\t\tmore_information = \"https://threats.kaspersky.com/en/threat/Trojan-Banker.AndroidOS.Acecard/\"\n\t\tsamples_sha1 = \"ad9fff7fd019cf2a2684db650ea542fdeaaeaebb 53cca0a642d2f120dea289d4c7bd0d644a121252\"\n\n\tstrings:\n\t\t$str_1 = \"Cardholder name\"\n\t\t$str_2 = \"instagram.php\"\n\n\tcondition:\n\t\t(( androguard.package_name ( \"starter.fl\" ) and androguard.service ( \"starter.CosmetiqFlServicesCallHeadlessSmsSendService\" ) ) or androguard.package_name ( \"cosmetiq.fl\" ) or all of ( $str_* ) ) and androguard.permissions_number > 19\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/Nitrogen/nitrogen_python311.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "nitrogen_python311_rule",
+                "tags": [],
+                "author": "RussianPanda",
+                "reference": "https://www.esentire.com/blog/persistent-connection-established-nitrogen-campaign-leverages-dll-side-loading-technique-for-c2-communication",
+                "description": "Detects side-loaded Python311 DLL for the new Nitrogen campaign 10-23-2023",
+                "date": "10/24/2023"
+            },
+            "rule_text": "import \"pe\"\n\nrule nitrogen_python311_rule\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\treference = \"https://www.esentire.com/blog/persistent-connection-established-nitrogen-campaign-leverages-dll-side-loading-technique-for-c2-communication\"\n\t\tdescription = \"Detects side-loaded Python311 DLL for the new Nitrogen campaign 10-23-2023\"\n\t\tdate = \"10/24/2023\"\n\n\tstrings:\n\t\t$s1 = { 68 62 6F 6B 62 69 30 2F }\n\t\t$s2 = { 48 B8 ?? ?? ?? ?? ?? ?? ?? 00 48 89 44 24 5C }\n\t\t$s3 = { 48 8B 05 ?? ?? 09 00}\n\n\tcondition:\n\t\tall of ( $s * ) and uint16( 0 ) == 0x5A4D and pe.exports ( \"nop\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_dns_zone_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-08",
+                "title": "Azure DNS Zone Modified or Deleted",
+                "id": "af6925b0-8826-47f1-9324-337507a0babd"
+            },
+            "rule_text": "title: Azure DNS Zone Modified or Deleted\nid: af6925b0-8826-47f1-9324-337507a0babd\nstatus: test\ndescription: Identifies when DNS zone is modified or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\nauthor: Austin Songer @austinsonger\ndate: 2021-08-08\nmodified: 2022-08-23\ntags:\n- attack.impact\n- attack.t1565.001\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName|startswith: MICROSOFT.NETWORK/DNSZONES\n    operationName|endswith:\n    - /WRITE\n    - /DELETE\n  condition: selection\nfalsepositives:\n- DNS zone modified and deleted may be performed by a system administrator. Verify\n  whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- DNS zone modification from unfamiliar users should be investigated. If known behavior\n  is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

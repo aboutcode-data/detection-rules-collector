@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_clipboard_collection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pawel Mazur",
+                "date": "2021-09-24",
+                "title": "Clipboard Collection with Xclip Tool - Auditd",
+                "id": "214e7e6c-f21b-47ff-bb6f-551b2d143fcf"
+            },
+            "rule_text": "title: Clipboard Collection with Xclip Tool - Auditd\nid: 214e7e6c-f21b-47ff-bb6f-551b2d143fcf\nstatus: test\ndescription: 'Detects attempts to collect data stored in the clipboard from users\n  with the usage of xclip tool.\n\n  Xclip has to be installed.\n\n  Highly recommended using rule on servers, due to high usage of clipboard utilities\n  on user workstations.\n\n  '\nreferences:\n- https://linux.die.net/man/1/xclip\n- https://www.cyberciti.biz/faq/xclip-linux-insert-files-command-output-intoclipboard/\nauthor: Pawel Mazur\ndate: 2021-09-24\nmodified: 2022-11-26\ntags:\n- attack.collection\n- attack.t1115\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0: xclip\n    a1:\n    - -selection\n    - -sel\n    a2:\n    - clipboard\n    - clip\n    a3: -o\n  condition: selection\nfalsepositives:\n- Legitimate usage of xclip tools\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

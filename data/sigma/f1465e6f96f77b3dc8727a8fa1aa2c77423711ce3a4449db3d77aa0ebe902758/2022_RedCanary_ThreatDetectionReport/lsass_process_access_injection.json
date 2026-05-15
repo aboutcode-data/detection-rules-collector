@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/lsass_process_access_injection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Abnormal LSASS Process Access and Injection",
+                "id": "23fac7e9-3c44-4b76-891b-72c4d44e1964"
+            },
+            "rule_text": "title: Abnormal LSASS Process Access and Injection\nid: 23fac7e9-3c44-4b76-891b-72c4d44e1964\nstatus: experimental\ndescription: Detects obviously suspicious cross-process events targetting lsass.exe.\n  Inspired by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/lsass-memory/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.credential_access\n- attack.t1003.001\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    SourceImage|endswith:\n    - \\powershell.exe\n    - \\taskmgr.exe\n    - \\rundll32.exe\n    - \\procdump.exe\n    - \\procexp.exe\n    TargetImage|endswith: \\lsass.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

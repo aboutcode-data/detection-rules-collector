@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1090/win_netsh_fw_add.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Markus Neis, Patrick Bareiss",
+                "date": "2019/01/29",
+                "title": "Netsh Firewall Rule Added",
+                "id": null
+            },
+            "rule_text": "title: Netsh Firewall Rule Added\ndescription: Allow Incoming Connections by Port or Application on Windows Firewall\nreferences:\n- https://attack.mitre.org/software/S0246/ (Lazarus HARDRAIN)\n- https://www.operationblockbuster.com/wp-content/uploads/2016/02/Operation-Blockbuster-RAT-and-Staging-Report.pdf\ndate: 2019/01/29\ntags:\n- attack.lateral_movement\n- attack.command_and_control\n- attack.t1090\nstatus: experimental\nauthor: Markus Neis, Patrick Bareiss\nlogsource:\n  product: windows\n  service: sysmon\ndetection:\n  selection:\n    CommandLine:\n    - '*netsh* firewall add*'\n    - '*netsh* advfirewall* add*'\n  condition: selection\nfalsepositives:\n- Legitimate administration\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

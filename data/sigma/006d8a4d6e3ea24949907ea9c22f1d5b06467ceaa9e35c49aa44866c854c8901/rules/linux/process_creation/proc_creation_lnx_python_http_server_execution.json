@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_python_http_server_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Mohamed LAKRI",
+                "date": "2025-10-17",
+                "title": "Python WebServer Execution - Linux",
+                "id": "3f0f5957-04f8-4792-ad89-192b0303bde6"
+            },
+            "rule_text": "title: Python WebServer Execution - Linux\nid: 3f0f5957-04f8-4792-ad89-192b0303bde6\nstatus: experimental\ndescription: 'Detects the execution of Python web servers via command line interface\n  (CLI).\n\n  After gaining access to target systems, adversaries may use Python''s built-in HTTP\n  server modules to quickly establish a web server without requiring additional software.\n\n  This technique is commonly used in post-exploitation scenarios as it provides a\n  simple method for transferring files between the compromised host and attacker-controlled\n  systems.\n\n  '\nreferences:\n- https://www.atomicredteam.io/atomic-red-team/atomics/T1048.003#atomic-test-8---python3-httpserver\n- https://docs.python.org/3/library/http.server.html\n- https://docs.python.org/2/library/simplehttpserver.html\nauthor: Mohamed LAKRI\ndate: 2025-10-17\ntags:\n- attack.exfiltration\n- attack.t1048.003\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith:\n    - /python\n    - /python2\n    - /python3\n  - Image|contains:\n    - /python2.\n    - /python3.\n  selection_module:\n    CommandLine|contains:\n    - http.server\n    - SimpleHTTPServer\n  condition: all of selection_*\nfalsepositives:\n- Testing or development activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

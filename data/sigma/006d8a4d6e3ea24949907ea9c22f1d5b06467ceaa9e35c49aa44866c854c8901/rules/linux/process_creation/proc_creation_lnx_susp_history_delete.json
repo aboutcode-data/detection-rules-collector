@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_history_delete.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-20",
+                "title": "History File Deletion",
+                "id": "1182f3b3-e716-4efa-99ab-d2685d04360f"
+            },
+            "rule_text": "title: History File Deletion\nid: 1182f3b3-e716-4efa-99ab-d2685d04360f\nstatus: test\ndescription: Detects events in which a history file gets deleted, e.g. the ~/bash_history\n  to remove traces of malicious activity\nreferences:\n- https://github.com/sleventyeleven/linuxprivchecker/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.003/T1552.003.md\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-20\nmodified: 2022-09-15\ntags:\n- attack.impact\n- attack.t1565.001\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith:\n    - /rm\n    - /unlink\n    - /shred\n  selection_history:\n  - CommandLine|contains:\n    - /.bash_history\n    - /.zsh_history\n  - CommandLine|endswith:\n    - _history\n    - .history\n    - zhistory\n  condition: all of selection*\nfalsepositives:\n- Legitimate administration activities\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_esxcli_system_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Cedric Maurugeon",
+                "date": "2023-09-04",
+                "title": "ESXi System Information Discovery Via ESXCLI",
+                "id": "e80273e1-9faf-40bc-bd85-dbaff104c4e9"
+            },
+            "rule_text": "title: ESXi System Information Discovery Via ESXCLI\nid: e80273e1-9faf-40bc-bd85-dbaff104c4e9\nstatus: test\ndescription: Detects execution of the \"esxcli\" command with the \"system\" flag in order\n  to retrieve information about the different component of the system. Such as accounts,\n  modules, NTP, etc.\nreferences:\n- https://www.crowdstrike.com/blog/hypervisor-jackpotting-ecrime-actors-increase-targeting-of-esxi-servers/\n- https://developer.broadcom.com/xapis/esxcli-command-reference/7.0.0/namespace/esxcli_system.html\nauthor: Cedric Maurugeon\ndate: 2023-09-04\ntags:\n- attack.discovery\n- attack.execution\n- attack.t1033\n- attack.t1007\n- attack.t1059.012\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /esxcli\n    CommandLine|contains: system\n  selection_cli:\n    CommandLine|contains:\n    - ' get'\n    - ' list'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

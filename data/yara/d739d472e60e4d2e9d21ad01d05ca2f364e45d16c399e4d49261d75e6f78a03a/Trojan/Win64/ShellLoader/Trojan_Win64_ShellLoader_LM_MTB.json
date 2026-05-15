@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/ShellLoader/Trojan_Win64_ShellLoader_LM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_ShellLoader_LM_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/ShellLoader.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_ShellLoader_LM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/ShellLoader.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {80 f3 34 88 18 48 8d 40 01 0f b6 18 84 db }\n\t\t$a_01_1 = {90 b3 67 c7 45 97 67 5b 52 40 c7 45 9b 43 55 46 51 c7 45 9f 68 68 70 51 c7 45 a3 51 44 67 51 66 c7 45 a7 46 00 44 8b cf }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

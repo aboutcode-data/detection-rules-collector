@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_atm_xfsadm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ATM_Malware_XFSADM",
+                "tags": [],
+                "description": "Detects ATM Malware XFSADM",
+                "author": "Frank Boldewin (@r3c0nst), modified by Florian Roth",
+                "reference": "https://twitter.com/r3c0nst/status/1149043362244308992",
+                "date": "2019-06-21",
+                "hash1": "2740bd2b7aa0eaa8de2135dd710eb669d4c4c91d29eefbf54f1b81165ad2da4d",
+                "id": "7bd7e194-1cf1-5d12-809b-25aaf7f62ca3"
+            },
+            "rule_text": "rule ATM_Malware_XFSADM\n{\n\tmeta:\n\t\tdescription = \"Detects ATM Malware XFSADM\"\n\t\tauthor = \"Frank Boldewin (@r3c0nst), modified by Florian Roth\"\n\t\treference = \"https://twitter.com/r3c0nst/status/1149043362244308992\"\n\t\tdate = \"2019-06-21\"\n\t\thash1 = \"2740bd2b7aa0eaa8de2135dd710eb669d4c4c91d29eefbf54f1b81165ad2da4d\"\n\t\tid = \"7bd7e194-1cf1-5d12-809b-25aaf7f62ca3\"\n\n\tstrings:\n\t\t$Code1 = {68 88 13 00 00 FF 35 ?? ?? ?? ?? 68 CF 00 00 00 50 FF 15}\n\t\t$Code2 = {68 98 01 00 00 50 FF 15}\n\t\t$Mutex = \"myXFSADM\" wide\n\t\t$MSXFSDIR = \"C:\\\\Windows\\\\System32\\\\msxfs.dll\" ascii\n\t\t$XFSCommand1 = \"WfsExecute\" ascii\n\t\t$XFSCommand2 = \"WfsGetInfo\" ascii\n\t\t$PDB = \"C:\\\\Work64\\\\ADM\\\\XFS\\\\Release\\\\XFS.pdb\" ascii\n\t\t$WindowName = \"XFS ADM\" wide\n\t\t$FindWindow = \"ADM rec\" wide\n\t\t$LogFile = \"xfs.log\" ascii\n\t\t$TmpFile = \"~pipe.tmp\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and filesize < 500KB and ( 4 of them or $PDB )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

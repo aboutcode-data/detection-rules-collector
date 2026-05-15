@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_special_accounts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), frack113",
+                "date": "2022-07-12",
+                "title": "Hiding User Account Via SpecialAccounts Registry Key",
+                "id": "f8aebc67-a56d-4ec9-9fbe-7b0e8b7b4efd"
+            },
+            "rule_text": "title: Hiding User Account Via SpecialAccounts Registry Key\nid: f8aebc67-a56d-4ec9-9fbe-7b0e8b7b4efd\nrelated:\n- id: 8a58209c-7ae6-4027-afb0-307a78e4589a\n  type: obsolete\n- id: 9ec9fb1b-e059-4489-9642-f270c207923d\n  type: similar\nstatus: test\ndescription: Detects modifications to the registry key \"HKLM\\Software\\Microsoft\\Windows\n  NT\\CurrentVersion\\Winlogon\\SpecialAccounts\\Userlist\" where the value is set to \"0\"\n  in order to hide user account from being listed on the logon screen.\nreferences:\n- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1564.002/T1564.002.md#atomic-test-3---create-hidden-user-in-registry\nauthor: Nasreddine Bencherchali (Nextron Systems), frack113\ndate: 2022-07-12\nmodified: 2023-01-26\ntags:\n- attack.stealth\n- attack.t1564.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\SpecialAccounts\\UserList\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_special_accounts/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Create Hidden User in Registry\n  technique: T1564.002\n  atomic_guid: 173126b7-afe4-45eb-8680-fa9f6400431c\n",
+            "vulnerabilities": []
+        }
+    ]
+}

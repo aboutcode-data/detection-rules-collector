@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Afcore/TrojanDropper_Win32_Afcore_D.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Afcore_D",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Afcore.D,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Afcore_D\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Afcore.D,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {b8 00 00 00 80 50 50 56 56 68 00 00 df 00 57 57 56 }\n\t\t$a_02_1 = {b8 00 00 00 80 50 50 56 56 68 00 00 df 00 68 ?? ?? ?? 00 68 ?? ?? ?? 00 56 ff 15 }\n\t\t$a_02_2 = {b8 00 00 00 80 50 50 56 56 68 00 00 df 00 ff ?? ?? ff ?? ?? 56 ff 15 }\n\t\t$a_02_3 = {83 ec 40 48 74 ?? 48 74 ?? 83 e8 0d 74 ?? 2d f1 03 00 00 74 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 10 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_react2shell_campaigns_dec25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_ZinFoq_Dec25",
+                "tags": [],
+                "description": "Detects ZinFoq Go-based Linux post-exploitation implant (interactive shell + file ops/exfil) seen in React2Shell intrusions",
+                "author": "RussianPanda",
+                "date": "2025-12-08",
+                "score": 85,
+                "reference": "https://www.huntress.com/blog/peerblight-linux-backdoor-exploits-react2shell",
+                "hash": "0f0f9c339fcc267ec3d560c7168c56f607232cbeb158cb02a0818720a54e72ce"
+            },
+            "rule_text": "rule MAL_ZinFoq_Dec25\n{\n\tmeta:\n\t\tdescription = \"Detects ZinFoq Go-based Linux post-exploitation implant (interactive shell + file ops/exfil) seen in React2Shell intrusions\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2025-12-08\"\n\t\tscore = 85\n\t\treference = \"https://www.huntress.com/blog/peerblight-linux-backdoor-exploits-react2shell\"\n\t\thash = \"0f0f9c339fcc267ec3d560c7168c56f607232cbeb158cb02a0818720a54e72ce\"\n\n\tstrings:\n\t\t$s1 = \"_FlAg_UuId;;;;;;\"\n\t\t$s2 = \"interactive_shell\"\n\t\t$s3 = \"explorer_download\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HKTL_CowTunnel_Dec25",
+                "tags": [],
+                "description": "Detects CowTunnel Linux reverse-proxy tunnel (NSS wrapper + FRP client) used for outbound access/pivoting in React2Shell activity",
+                "author": "RussianPanda",
+                "date": "2025-12-08",
+                "score": 85,
+                "reference": "https://www.huntress.com/blog/peerblight-linux-backdoor-exploits-react2shell",
+                "hash": "776850a1e6d6915e9bf35aa83554616129acd94e3a3f6673bd6ddaec530f4273"
+            },
+            "rule_text": "rule HKTL_CowTunnel_Dec25\n{\n\tmeta:\n\t\tdescription = \"Detects CowTunnel Linux reverse-proxy tunnel (NSS wrapper + FRP client) used for outbound access/pivoting in React2Shell activity\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2025-12-08\"\n\t\tscore = 85\n\t\treference = \"https://www.huntress.com/blog/peerblight-linux-backdoor-exploits-react2shell\"\n\t\thash = \"776850a1e6d6915e9bf35aa83554616129acd94e3a3f6673bd6ddaec530f4273\"\n\n\tstrings:\n\t\t$s1 = \"cannot create proxy service, it should not happenned!\"\n\t\t$s2 = \"[nss] encrypt_data\"\n\t\t$s3 = \"[nss] decrypt_data\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_PeerBlight_Dec25",
+                "tags": [],
+                "description": "Detects PeerBlight Linux backdoor with systemd persistence artifacts and user-mode masquerading strings, linked to React2Shell exploitation",
+                "author": "RussianPanda",
+                "date": "2025-12-07",
+                "score": 85,
+                "reference": "https://www.huntress.com/blog/peerblight-linux-backdoor-exploits-react2shell",
+                "hash": "a605a70d031577c83c093803d11ec7c1e29d2ad530f8e95d9a729c3818c7050d"
+            },
+            "rule_text": "rule MAL_PeerBlight_Dec25\n{\n\tmeta:\n\t\tdescription = \"Detects PeerBlight Linux backdoor with systemd persistence artifacts and user-mode masquerading strings, linked to React2Shell exploitation\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2025-12-07\"\n\t\tscore = 85\n\t\treference = \"https://www.huntress.com/blog/peerblight-linux-backdoor-exploits-react2shell\"\n\t\thash = \"a605a70d031577c83c093803d11ec7c1e29d2ad530f8e95d9a729c3818c7050d\"\n\n\tstrings:\n\t\t$s1 = \"/bin/systemd-daemon\"\n\t\t$s2 = \"/lib/systemd/system/systemd-agent.service\"\n\t\t$s3 = \"group\"\n\t\t$s4 = \"tag\"\n\t\t$s5 = \"arch\"\n\t\t$s6 = \"softirq\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and 5 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1060/sysmon_susp_run_key_img_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Florian Roth, Markus Neis",
+                "date": "2018/25/08",
+                "title": "New RUN Key Pointing to Suspicious Folder",
+                "id": null
+            },
+            "rule_text": "title: New RUN Key Pointing to Suspicious Folder\nstatus: experimental\ndescription: Detects suspicious new RUN key element pointing to an executable in a\n  suspicious folder\nreferences:\n- https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html\nauthor: Florian Roth, Markus Neis\ntags:\n- attack.persistence\n- attack.t1060\ndate: 2018/25/08\nlogsource:\n  product: windows\n  service: sysmon\ndetection:\n  selection:\n    EventID: 13\n    TargetObject:\n    - '*\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\\\*'\n    - '*\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce\\\\*'\n    Details:\n    - C:\\Windows\\Temp\\\\*\n    - '*\\AppData\\\\*'\n    - C:\\$Recycle.bin\\\\*\n    - C:\\Temp\\\\*\n    - C:\\Users\\Public\\\\*\n    - C:\\Users\\Default\\\\*\n    - C:\\Users\\Desktop\\\\*\n  condition: selection\nfields:\n- Image\n- TargetObject\n- Details\nfalsepositives:\n- Software with rare behaviour\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

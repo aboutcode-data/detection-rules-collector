@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/VBInject/VirTool_Win32_VBInject_AER.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_VBInject_AER",
+                "tags": [],
+                "description": "VirTool:Win32/VBInject.AER,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 06 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_VBInject_AER\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/VBInject.AER,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {40 31 c1 81 f9 89 d8 89 d8 75 }\n\t\t$a_01_1 = {40 31 c1 81 f9 89 d9 89 d9 75 }\n\t\t$a_01_2 = {43 43 83 c3 02 81 7c 1d fc 4e 4e 4e 4e }\n\t\t$a_01_3 = {43 83 c3 03 81 7c 1d fc 4c 4c 4c 4c 75 }\n\t\t$a_01_4 = {43 83 c3 03 81 7c 1d fc 91 91 91 91 75 }\n\t\t$a_01_5 = {43 83 c3 03 81 7c 1d fc 92 92 92 92 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 2 + ( #a_01_4 & 1 ) * 2 + ( #a_01_5 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

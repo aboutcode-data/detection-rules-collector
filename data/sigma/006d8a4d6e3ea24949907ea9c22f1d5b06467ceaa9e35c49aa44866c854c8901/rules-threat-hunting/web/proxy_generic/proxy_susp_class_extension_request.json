@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/web/proxy_generic/proxy_susp_class_extension_request.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades)",
+                "date": "2021-12-21",
+                "title": ".Class Extension URI Ending Request",
+                "id": "53c15703-b04c-42bb-9055-1937ddfb3392"
+            },
+            "rule_text": "title: .Class Extension URI Ending Request\nid: 53c15703-b04c-42bb-9055-1937ddfb3392\nstatus: test\ndescription: 'Detects requests to URI ending with the \".class\" extension in proxy\n  logs.\n\n  This could rules can be used to hunt for potential downloads of Java classes as\n  seen for example in Log4shell exploitation attacks against Log4j.\n\n  '\nreferences:\n- https://web.archive.org/web/20231230220738/https://www.lunasec.io/docs/blog/log4j-zero-day/\nauthor: Andreas Hunkeler (@Karneades)\ndate: 2021-12-21\nmodified: 2024-02-26\ntags:\n- attack.initial-access\n- detection.threat-hunting\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri|endswith: .class\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

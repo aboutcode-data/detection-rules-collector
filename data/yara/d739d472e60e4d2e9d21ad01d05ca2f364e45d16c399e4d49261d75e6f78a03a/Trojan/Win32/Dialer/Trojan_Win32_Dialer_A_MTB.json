@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Dialer/Trojan_Win32_Dialer_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Dialer_A_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Dialer.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Dialer_A_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Dialer.A!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b c2 03 c0 8d 44 c1 ?? 8b 1e 89 18 89 06 42 83 fa }\n\t\t$a_01_1 = {74 68 69 6e 64 69 61 6c 65 72 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

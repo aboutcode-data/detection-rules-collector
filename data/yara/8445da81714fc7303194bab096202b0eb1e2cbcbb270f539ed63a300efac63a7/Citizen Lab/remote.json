@@ -1,0 +1,83 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/remote.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RSharedStrings",
+                "tags": [
+                    "Surtr",
+                    "Family"
+                ],
+                "description": "identifiers for remote and gmremote",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule RSharedStrings : Surtr Family\n{\n\tmeta:\n\t\tdescription = \"identifiers for remote and gmremote\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = \"nView_DiskLoydb\" wide\n\t\t$ = \"nView_KeyLoydb\" wide\n\t\t$ = \"nView_skins\" wide\n\t\t$ = \"UsbLoydb\" wide\n\t\t$ = \"%sBurn%s\" wide\n\t\t$ = \"soul\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RemoteStrings",
+                "tags": [
+                    "Remote",
+                    "Variant",
+                    "Surtr",
+                    "Family"
+                ],
+                "description": "indicators for remote.dll - surtr stage 2",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule RemoteStrings : Remote Variant Surtr Family\n{\n\tmeta:\n\t\tdescription = \"indicators for remote.dll - surtr stage 2\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = \"\\x00Remote.dll\\x00\"\n\t\t$ = \"\\x00CGm_PlugBase::\"\n\t\t$ = \"\\x00ServiceMain\\x00_K_H_K_UH\\x00\"\n\t\t$ = \"\\x00_Remote_\\x00\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GmRemoteStrings",
+                "tags": [
+                    "GmRemote",
+                    "Variant",
+                    "Family",
+                    "Surtr"
+                ],
+                "description": "identifiers for gmremote: surtr stage 2",
+                "author": "Katie Kleemola",
+                "last_updated": "07-21-2014"
+            },
+            "rule_text": "private rule GmRemoteStrings : GmRemote Variant Family Surtr\n{\n\tmeta:\n\t\tdescription = \"identifiers for gmremote: surtr stage 2\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-21-2014\"\n\n\tstrings:\n\t\t$ = \"\\x00x86_GmRemote.dll\\x00\"\n\t\t$ = \"\\x00D:\\\\Project\\\\GTProject\\\\Public\\\\List\\\\ListManager.cpp\\x00\"\n\t\t$ = \"\\x00GmShutPoint\\x00\"\n\t\t$ = \"\\x00GmRecvPoint\\x00\"\n\t\t$ = \"\\x00GmInitPoint\\x00\"\n\t\t$ = \"\\x00GmVerPoint\\x00\"\n\t\t$ = \"\\x00GmNumPoint\\x00\"\n\t\t$ = \"_Gt_Remote_\" wide\n\t\t$ = \"%sBurn\\\\workdll.tmp\" wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GmRemote",
+                "tags": [
+                    "Family",
+                    "Surtr",
+                    "Variant",
+                    "GmRemote"
+                ],
+                "description": "identifier for gmremote",
+                "author": "Katie Kleemola",
+                "last_updated": "07-25-2014"
+            },
+            "rule_text": "rule GmRemote : Family Surtr Variant GmRemote\n{\n\tmeta:\n\t\tdescription = \"identifier for gmremote\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-25-2014\"\n\n\tcondition:\n\t\tRSharedStrings and GmRemoteStrings\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Remote",
+                "tags": [
+                    "Family",
+                    "Surtr",
+                    "Variant",
+                    "Remote"
+                ],
+                "description": "identifier for remote",
+                "author": "Katie Kleemola",
+                "last_updated": "07-25-2014"
+            },
+            "rule_text": "rule Remote : Family Surtr Variant Remote\n{\n\tmeta:\n\t\tdescription = \"identifier for remote\"\n\t\tauthor = \"Katie Kleemola\"\n\t\tlast_updated = \"07-25-2014\"\n\n\tcondition:\n\t\tRSharedStrings and RemoteStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

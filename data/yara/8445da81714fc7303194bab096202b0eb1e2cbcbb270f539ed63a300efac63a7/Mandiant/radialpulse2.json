@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/radialpulse2.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Trojan_PL_RADIALPULSE_2",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "md5": "4a2a7cbc1c8855199a27a7a7b51d0117",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Trojan_PL_RADIALPULSE_2\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tmd5 = \"4a2a7cbc1c8855199a27a7a7b51d0117\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$s1 = \"open(*fd,\"\n\t\t$s2 = \"syswrite(*fd,\"\n\t\t$s3 = \"close(*fd);\"\n\t\t$s4 = /open\\(\\*fd,[\\x09\\x20]{0,32}[\\x22\\x27]>>\\/tmp\\/[\\w.]{1,128}[\\x22\\x27]\\);[\\x09\\x20]{0,32}syswrite\\(\\*fd,[\\x09\\x20]{0,32}/\n\t\t$s5 = /syswrite\\(\\*fd,[\\x09\\x20]{0,32}[\\x22\\x27][\\w]{1,128}=\\$\\w{1,128} ?[\\x22\\x27],[\\x09\\x20]{0,32}5000\\)/\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_env_shell_invocation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Shell Invocation via Env Command - Linux",
+                "id": "bed978f8-7f3a-432b-82c5-9286a9b3031a"
+            },
+            "rule_text": "title: Shell Invocation via Env Command - Linux\nid: bed978f8-7f3a-432b-82c5-9286a9b3031a\nstatus: test\ndescription: 'Detects the use of the env command to invoke a shell. This may indicate\n  an attempt to bypass restricted environments, escalate privileges, or execute arbitrary\n  commands.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/env/#shell\n- https://www.elastic.co/guide/en/security/current/linux-restricted-shell-breakout-via-linux-binary-s.html\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\nmodified: 2026-01-08\ntags:\n- attack.execution\n- attack.t1059.004\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /env\n    CommandLine|contains:\n    - /bin/bash\n    - /bin/dash\n    - /bin/fish\n    - /bin/sh\n    - /bin/zsh\n  condition: selection\nfalsepositives:\n- Github operations such as ghe-backup\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

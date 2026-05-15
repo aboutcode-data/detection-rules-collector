@@ -1,0 +1,42 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Citizen Lab/msattacker.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MsAttackerStage2",
+                "tags": [
+                    "MsAttacker",
+                    "Family"
+                ],
+                "description": "Identifying strings for MsAttacker stage 2",
+                "last_modified": "2015-03-12"
+            },
+            "rule_text": "private rule MsAttackerStage2 : MsAttacker Family\n{\n\tmeta:\n\t\tdescription = \"Identifying strings for MsAttacker stage 2\"\n\t\tlast_modified = \"2015-03-12\"\n\n\tstrings:\n\t\t$ = \"MiniJS.dll\"\n\t\t$ = \"%s \\\"rundll32.exe %s RealService %s\\\" /f\"\n\t\t$ = \"reg delete HKCU\\\\SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run /v \\\"Start Pages\\\" /f\"\n\t\t$ = \"3111431114311121270018000127001808012700180\"\n\t\t$ = \"Global\\\\MSAttacker %d\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MsAttackerStage1",
+                "tags": [
+                    "MsAttacker",
+                    "Family"
+                ],
+                "description": "Identifying strings for MsAttacker stage 1",
+                "last_modified": "2015-03-12"
+            },
+            "rule_text": "private rule MsAttackerStage1 : MsAttacker Family\n{\n\tmeta:\n\t\tdescription = \"Identifying strings for MsAttacker stage 1\"\n\t\tlast_modified = \"2015-03-12\"\n\n\tstrings:\n\t\t$ = \"http://122.10.117.152/download/ms/CryptBase.32.cab\"\n\t\t$ = \"http://122.10.117.152/download/ms/CryptBase.64.cab\"\n\t\t$ = \"http://122.10.117.152/download/ms/MiniJS.dll\"\n\t\t$ = \"MiniJS.dll\"\n\t\t$ = \"%s;new Downloader('%s', '%s').Fire();\"\n\t\t$ = \"rundll32.exe %s RealService %s\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MsAttacker",
+                "tags": [
+                    "MsAttacker",
+                    "Family"
+                ]
+            },
+            "rule_text": "rule MsAttacker : MsAttacker Family\n{\n\tcondition:\n\t\tMsAttackerStage1 or MsAttackerStage2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

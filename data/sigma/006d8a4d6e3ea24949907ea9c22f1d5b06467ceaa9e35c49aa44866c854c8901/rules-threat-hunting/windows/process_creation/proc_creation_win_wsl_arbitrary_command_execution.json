@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_wsl_arbitrary_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Zach Stanford @svch0st, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2020-10-05",
+                "title": "Arbitrary Command Execution Using WSL",
+                "id": "dec44ca7-61ad-493c-bfd7-8819c5faa09b"
+            },
+            "rule_text": "title: Arbitrary Command Execution Using WSL\nid: dec44ca7-61ad-493c-bfd7-8819c5faa09b\nrelated:\n- id: 2267fe65-0681-42ad-9a6d-46553d3f3480\n  type: similar\nstatus: test\ndescription: 'Detects potential abuse of Windows Subsystem for Linux (WSL) binary\n  as a Living of the Land binary in order to execute arbitrary Linux or Windows commands.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wsl/\n- https://twitter.com/nas_bench/status/1535431474429808642\nauthor: oscd.community, Zach Stanford @svch0st, Nasreddine Bencherchali (Nextron Systems)\ndate: 2020-10-05\nmodified: 2023-04-12\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\n- attack.t1202\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wsl.exe\n  - OriginalFileName: wsl.exe\n  selection_cli:\n    CommandLine|contains:\n    - ' -e '\n    - ' --exec'\n    - ' --system'\n    - ' --shell-type '\n    - ' /mnt/c'\n    - ' --user root'\n    - ' -u root'\n    - --debug-shell\n  filter_main_kill:\n    ParentImage|endswith: \\cmd.exe\n    CommandLine|contains|all:\n    - ' -d '\n    - ' -e kill '\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Automation and orchestration scripts may use this method to execute scripts etc.\n- Legitimate use by Windows to kill processes opened via WSL (example VsCode WSL server)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

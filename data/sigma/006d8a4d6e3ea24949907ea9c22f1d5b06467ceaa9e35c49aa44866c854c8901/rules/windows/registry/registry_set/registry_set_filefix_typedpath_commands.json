@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_filefix_typedpath_commands.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Alfie Champion (delivr.to), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-07-05",
+                "title": "FileFix - Command Evidence in TypedPaths",
+                "id": "4fee3d51-8069-4a4c-a0f7-924fcaff2c70"
+            },
+            "rule_text": "title: FileFix - Command Evidence in TypedPaths\nid: 4fee3d51-8069-4a4c-a0f7-924fcaff2c70\nrelated:\n- id: 4be03877-d5b6-4520-85c9-a5911c0a656c\n  type: similar\nstatus: experimental\ndescription: 'Detects commonly-used chained commands and strings in the most recent\n  ''url'' value of the ''TypedPaths'' key, which could be indicative of a user being\n  targeted by the FileFix technique.\n\n  '\nreferences:\n- https://x.com/russianpanda9xx/status/1940831134759506029\n- https://mrd0x.com/filefix-clickfix-alternative/\n- https://www.scpx.com.au/2025/11/16/decades-old-finger-protocol-abused-in-clickfix-malware-attacks/\nauthor: Alfie Champion (delivr.to), Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-07-05\nmodified: 2025-11-19\ntags:\n- attack.execution\n- attack.t1204.004\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_base:\n    TargetObject|endswith: \\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\TypedPaths\\url1\n    Details|contains|all:\n    - '#'\n    - http\n  selection_cmd:\n  - Details|contains:\n    - account\n    - anti-bot\n    - botcheck\n    - captcha\n    - challenge\n    - confirmation\n    - fraud\n    - human\n    - identification\n    - identificator\n    - identity\n    - robot\n    - validation\n    - verification\n    - verify\n  - Details|contains:\n    - '%comspec%'\n    - bitsadmin\n    - certutil\n    - cmd\n    - cscript\n    - curl\n    - finger\n    - mshta\n    - powershell\n    - pwsh\n    - regsvr32\n    - rundll32\n    - schtasks\n    - wget\n    - wscript\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

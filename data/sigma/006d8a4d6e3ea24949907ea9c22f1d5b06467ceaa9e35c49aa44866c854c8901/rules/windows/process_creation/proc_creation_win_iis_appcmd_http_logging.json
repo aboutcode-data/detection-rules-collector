@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_iis_appcmd_http_logging.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-09",
+                "title": "Disable Windows IIS HTTP Logging",
+                "id": "e4ed6030-ffe5-4e6a-8a8a-ab3c1ab9d94e"
+            },
+            "rule_text": "title: Disable Windows IIS HTTP Logging\nid: e4ed6030-ffe5-4e6a-8a8a-ab3c1ab9d94e\nstatus: test\ndescription: Disables HTTP logging on a Windows IIS web server as seen by Threat Group\n  3390 (Bronze Union)\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.002/T1562.002.md#atomic-test-1---disable-windows-iis-http-logging\nauthor: frack113\ndate: 2022-01-09\nmodified: 2023-01-22\ntags:\n- attack.defense-impairment\n- attack.t1685.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\appcmd.exe\n  - OriginalFileName: appcmd.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - set\n    - config\n    - section:httplogging\n    - dontLog:true\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

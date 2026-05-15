@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_imewdbld.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-22",
+                "title": "Network Connection Initiated By IMEWDBLD.EXE",
+                "id": "8d7e392e-9b28-49e1-831d-5949c6281228"
+            },
+            "rule_text": "title: Network Connection Initiated By IMEWDBLD.EXE\nid: 8d7e392e-9b28-49e1-831d-5949c6281228\nrelated:\n- id: 863218bd-c7d0-4c52-80cd-0a96c09f54af\n  type: derived\nstatus: test\ndescription: 'Detects a network connection initiated by IMEWDBLD.EXE. This might indicate\n  potential abuse of the utility as a LOLBIN in order to download arbitrary files\n  or additional payloads.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1105/T1105.md#atomic-test-10---windows---powershell-download\n- https://lolbas-project.github.io/lolbas/Binaries/IMEWDBLD/\nauthor: frack113\ndate: 2022-01-22\nmodified: 2023-11-09\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith: \\IMEWDBLD.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

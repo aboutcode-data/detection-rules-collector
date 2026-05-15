@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vscode_tunnel_service_install.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-25",
+                "title": "Visual Studio Code Tunnel Service Installation",
+                "id": "30bf1789-379d-4fdc-900f-55cd0a90a801"
+            },
+            "rule_text": "title: Visual Studio Code Tunnel Service Installation\nid: 30bf1789-379d-4fdc-900f-55cd0a90a801\nstatus: test\ndescription: Detects the installation of VsCode tunnel (code-tunnel) as a service.\nreferences:\n- https://ipfyx.fr/post/visual-studio-code-tunnel/\n- https://badoption.eu/blog/2023/01/31/code_c2.html\n- https://code.visualstudio.com/docs/remote/tunnels\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-25\ntags:\n- attack.command-and-control\n- attack.t1071.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - 'tunnel '\n    - service\n    - internal-run\n    - tunnel-service.log\n  condition: selection\nfalsepositives:\n- Legitimate installation of code-tunnel as a service\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

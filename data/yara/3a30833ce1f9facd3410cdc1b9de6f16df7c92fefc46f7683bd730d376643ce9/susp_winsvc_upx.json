@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/sbousseaden/YaraHunts/blob/master/susp_winsvc_upx.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "susp_winsvc_upx",
+                "tags": [],
+                "description": "broad hunt for any PE exporting ServiceMain API and upx packed",
+                "author": "SBousseaden",
+                "date": "2019-01-28"
+            },
+            "rule_text": "import \"pe\"\n\nrule susp_winsvc_upx\n{\n\tmeta:\n\t\tdescription = \"broad hunt for any PE exporting ServiceMain API and upx packed\"\n\t\tauthor = \"SBousseaden\"\n\t\tdate = \"2019-01-28\"\n\n\tstrings:\n\t\t$upx1 = {55505830000000}\n\t\t$upx2 = {55505831000000}\n\t\t$upx_sig = \"UPX!\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $upx1 in ( 0 .. 1024 ) and $upx2 in ( 0 .. 1024 ) and $upx_sig in ( 0 .. 1024 ) and pe.exports ( \"ServiceMain\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

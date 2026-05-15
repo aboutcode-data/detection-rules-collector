@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_download_patterns.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), oscd.community, Jonhnathan Ribeiro",
+                "date": "2019-01-16",
+                "title": "PowerShell Download Pattern",
+                "id": "3b6ab547-8ec2-4991-b9d2-2b06702a48d7"
+            },
+            "rule_text": "title: PowerShell Download Pattern\nid: 3b6ab547-8ec2-4991-b9d2-2b06702a48d7\nrelated:\n- id: e6c54d94-498c-4562-a37c-b469d8e9a275\n  type: derived\n- id: 8f70ac5f-1f6f-4f8e-b454-db19561216c5\n  type: obsolete\nstatus: test\ndescription: Detects a Powershell process that contains download commands in its command\n  line string\nreferences:\n- https://blog.redteam.pl/2020/06/black-kingdom-ransomware.html\n- https://lab52.io/blog/winter-vivern-all-summer/\n- https://hatching.io/blog/powershell-analysis/\nauthor: Florian Roth (Nextron Systems), oscd.community, Jonhnathan Ribeiro\ndate: 2019-01-16\nmodified: 2025-10-20\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell_ISE.EXE\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli:\n    CommandLine|contains|all:\n    - new-object\n    - net.webclient).\n    - download\n    CommandLine|contains:\n    - string(\n    - file(\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

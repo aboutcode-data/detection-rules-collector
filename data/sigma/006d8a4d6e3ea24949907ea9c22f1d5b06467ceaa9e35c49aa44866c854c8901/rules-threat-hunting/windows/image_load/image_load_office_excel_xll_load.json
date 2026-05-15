@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/image_load/image_load_office_excel_xll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-12",
+                "title": "Microsoft Excel Add-In Loaded",
+                "id": "c5f4b5cb-4c25-4249-ba91-aa03626e3185"
+            },
+            "rule_text": "title: Microsoft Excel Add-In Loaded\nid: c5f4b5cb-4c25-4249-ba91-aa03626e3185\nstatus: test\ndescription: Detects Microsoft Excel loading an Add-In (.xll) file\nreferences:\n- https://www.mandiant.com/resources/blog/lnk-between-browsers\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-12\ntags:\n- attack.execution\n- attack.t1204.002\n- detection.threat-hunting\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\excel.exe\n    ImageLoaded|endswith: .xll\n  condition: selection\nfalsepositives:\n- The rules is only looking for \".xll\" loads. So some false positives are expected\n  with legitimate and allowed XLLs\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

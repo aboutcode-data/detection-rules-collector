@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/dns_client/win_dns_client_anonymfiles_com.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-16",
+                "title": "DNS Query for Anonfiles.com Domain - DNS Client",
+                "id": "29f171d7-aa47-42c7-9c7b-3c87938164d9"
+            },
+            "rule_text": "title: DNS Query for Anonfiles.com Domain - DNS Client\nid: 29f171d7-aa47-42c7-9c7b-3c87938164d9\nrelated:\n- id: 065cceea-77ec-4030-9052-fc0affea7110\n  type: similar\nstatus: test\ndescription: Detects DNS queries for anonfiles.com, which is an anonymous file upload\n  platform often used for malicious purposes\nreferences:\n- https://www.trendmicro.com/vinfo/us/security/news/ransomware-spotlight/ransomware-spotlight-blackbyte\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-16\ntags:\n- attack.exfiltration\n- attack.t1567.002\nlogsource:\n  product: windows\n  service: dns-client\n  definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event\n    Log must be enabled/collected in order to receive the events.'\ndetection:\n  selection:\n    EventID: 3008\n    QueryName|contains: .anonfiles.com\n  condition: selection\nfalsepositives:\n- Rare legitimate access to anonfiles.com\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

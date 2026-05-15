@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_impacket_smbexec_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Impacket SMBexec.py Execution (RedCanary Threat Detection Report)",
+                "id": "671651fd-62e1-48d7-b5e0-81b1746ec0dd"
+            },
+            "rule_text": "title: Impacket SMBexec.py Execution (RedCanary Threat Detection Report)\nid: 671651fd-62e1-48d7-b5e0-81b1746ec0dd\nstatus: experimental\ndescription: Detects execution from Impacket's smbexec.py. Part of the RedCanary 2023\n  Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/threats/impacket/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.s0357\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\services.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|re: '(?i)cmd.exe \\/Q \\/c echo cd \\^> \\\\\\\\127.0.0.1\\\\[a-zA-Z]{1,}\\$\\\\__output\n      2\\^>\\^&1 > .* & '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

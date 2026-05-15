@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_susp_initaited_public_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2024-05-31",
+                "title": "Network Connection Initiated From Users\\Public Folder",
+                "id": "bcb03938-9f8b-487d-8d86-e480691e1d71"
+            },
+            "rule_text": "title: Network Connection Initiated From Users\\Public Folder\nid: bcb03938-9f8b-487d-8d86-e480691e1d71\nrelated:\n- id: 7b434893-c57d-4f41-908d-6a17bf1ae98f\n  type: derived\nstatus: test\ndescription: 'Detects a network connection initiated from a process located in the\n  \"C:\\Users\\Public\" folder.\n\n  Attacker are known to drop their malicious payloads and malware in this directory\n  as its writable by everyone.\n\n  Use this rule to hunt for potential suspicious or uncommon activity in your environement.\n\n  '\nreferences:\n- https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo\nauthor: Florian Roth (Nextron Systems)\ndate: 2024-05-31\ntags:\n- attack.command-and-control\n- attack.t1105\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|contains: :\\Users\\Public\\\n  filter_optional_ibm:\n    Image|contains: :\\Users\\Public\\IBM\\ClientSolutions\\Start_Programs\\\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Likely from legitimate third party application that execute from the \"Public\" directory.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

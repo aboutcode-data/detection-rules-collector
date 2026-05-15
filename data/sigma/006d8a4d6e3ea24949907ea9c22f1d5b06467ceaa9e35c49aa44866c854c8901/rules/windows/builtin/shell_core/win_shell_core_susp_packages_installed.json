@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/shell_core/win_shell_core_susp_packages_installed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-14",
+                "title": "Suspicious Application Installed",
+                "id": "83c161b6-ca67-4f33-8ad0-644a0737cf07"
+            },
+            "rule_text": "title: Suspicious Application Installed\nid: 83c161b6-ca67-4f33-8ad0-644a0737cf07\nstatus: test\ndescription: Detects suspicious application installed by looking at the added shortcut\n  to the app resolver cache\nreferences:\n- https://nasbench.medium.com/finding-forensic-goodness-in-obscure-windows-event-logs-60e978ea45a3\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-14\ntags:\n- attack.execution\nlogsource:\n  product: windows\n  service: shell-core\ndetection:\n  selection_name:\n    EventID: 28115\n    Name|contains:\n    - Zenmap\n    - AnyDesk\n    - wireshark\n    - openvpn\n  selection_packageid:\n    EventID: 28115\n    AppID|contains:\n    - zenmap.exe\n    - prokzult ad\n    - wireshark\n    - openvpn\n  condition: 1 of selection_*\nfalsepositives:\n- Packages or applications being legitimately used by users or administrators\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

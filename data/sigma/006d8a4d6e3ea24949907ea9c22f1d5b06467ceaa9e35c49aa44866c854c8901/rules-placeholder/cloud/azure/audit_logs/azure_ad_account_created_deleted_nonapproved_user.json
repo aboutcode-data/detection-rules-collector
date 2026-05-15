@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/cloud/azure/audit_logs/azure_ad_account_created_deleted_nonapproved_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', MikeDuddington, '@dudders1'",
+                "date": "2022-08-11",
+                "title": "Account Created And Deleted By Non Approved Users",
+                "id": "c98184ba-4a27-4e10-b7b7-da48e71f4d25"
+            },
+            "rule_text": "title: Account Created And Deleted By Non Approved Users\nid: c98184ba-4a27-4e10-b7b7-da48e71f4d25\nstatus: test\ndescription: Detects accounts that are created or deleted by non-approved users.\nreferences:\n- https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/security-operations-user-accounts#short-lived-accounts\nauthor: Mark Morowczynski '@markmorow', MikeDuddington, '@dudders1'\ndate: 2022-08-11\nmodified: 2023-12-15\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message:\n    - Add user\n    - Delete user\n    Status: Sucess\n  valid_admin:\n    Initiatied.By|expand: '%ApprovedUserUpn%'\n  condition: selection and not valid_admin\nfalsepositives:\n- Legit administrative action\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/powershell_renamed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/03",
+                "title": "Unexpected Internal Process Name",
+                "id": "a01d910a-d31d-4d1f-98ce-3dedd301a605"
+            },
+            "rule_text": "title: Unexpected Internal Process Name\nid: a01d910a-d31d-4d1f-98ce-3dedd301a605\nstatus: experimental\ndescription: Looks for the execution of powershell renamed as Notepad.exe. Inspired\n  by the 2022 Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rename-system-utilities/\nauthor: Micah Babinski\ndate: 2022/11/03\ntags:\n- attack.defense_evasion\n- attack.t1036\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Description|startswith:\n    - Windows Powershell\n    - pwsh\n    Image|endswith: \\notepad.exe\n    OriginalFileName: powershell.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

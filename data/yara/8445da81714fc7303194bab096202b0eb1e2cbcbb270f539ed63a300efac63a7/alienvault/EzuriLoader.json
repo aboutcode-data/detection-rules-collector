@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/alienvault/EzuriLoader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EzuriLoader",
+                "tags": [
+                    "LinuxMalware"
+                ],
+                "author": "AT&T Alien Labs",
+                "type": "malware",
+                "description": "Detects Ezuri Golang loader.",
+                "copyright": "AT&T Cybersecurity 2020",
+                "reference": "283e0172063d1a23c20c6bca1ed0d2bb",
+                "report": "https://cybersecurity.att.com/blogs/labs-research/malware-using-new-ezuri-memory-loader"
+            },
+            "rule_text": "rule EzuriLoader : LinuxMalware\n{\n\tmeta:\n\t\tauthor = \"AT&T Alien Labs\"\n\t\ttype = \"malware\"\n\t\tdescription = \"Detects Ezuri Golang loader.\"\n\t\tcopyright = \"AT&T Cybersecurity 2020\"\n\t\treference = \"283e0172063d1a23c20c6bca1ed0d2bb\"\n\t\treport = \"https://cybersecurity.att.com/blogs/labs-research/malware-using-new-ezuri-memory-loader\"\n\n\tstrings:\n\t\t$a1 = \"ezuri/stub/main.go\"\n\t\t$a2 = \"main.runFromMemory\"\n\t\t$a3 = \"main.aesDec\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and filesize < 20MB and all of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

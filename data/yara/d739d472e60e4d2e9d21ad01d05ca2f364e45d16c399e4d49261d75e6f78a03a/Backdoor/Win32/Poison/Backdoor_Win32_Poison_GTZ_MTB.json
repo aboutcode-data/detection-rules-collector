@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Poison/Backdoor_Win32_Poison_GTZ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Poison_GTZ_MTB",
+                "tags": [],
+                "description": "Backdoor:Win32/Poison.GTZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Poison_GTZ_MTB\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Poison.GTZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6d 31 00 0d ?? ?? ?? ?? 53 53 59 33 32 00 19 01 00 }\n\t\t$a_80_1 = {73 76 63 68 6f 63 74 2e 65 78 65 }\n\t\t$a_80_2 = {74 61 73 6b 6b 69 6c 6c 20 2f 66 20 2f 69 6d 20 20 73 76 63 68 6f 63 74 }\n\t\t$a_80_3 = {6b 33 79 6c 6f 67 67 65 72 2e 74 78 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_80_1 & 1 ) * 1 + ( #a_80_2 & 1 ) * 1 + ( #a_80_3 & 1 ) * 1 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

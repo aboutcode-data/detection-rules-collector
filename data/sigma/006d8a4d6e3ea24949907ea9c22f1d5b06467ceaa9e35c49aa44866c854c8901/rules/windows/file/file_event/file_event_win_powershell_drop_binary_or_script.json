@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_powershell_drop_binary_or_script.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-17",
+                "title": "Potential Binary Or Script Dropper Via PowerShell",
+                "id": "7047d730-036f-4f40-b9d8-1c63e36d5e62"
+            },
+            "rule_text": "title: Potential Binary Or Script Dropper Via PowerShell\nid: 7047d730-036f-4f40-b9d8-1c63e36d5e62\nstatus: test\ndescription: Detects PowerShell creating a binary executable or a script file.\nreferences:\n- https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-17\nmodified: 2025-07-04\ntags:\n- attack.persistence\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\powershell_ise.exe\n    - \\pwsh.exe\n    TargetFilename|endswith:\n    - .bat\n    - .chm\n    - .cmd\n    - .com\n    - .dll\n    - .exe\n    - .hta\n    - .jar\n    - .js\n    - .ocx\n    - .scr\n    - .sys\n    - .vbe\n    - .vbs\n    - .wsf\n  filter_main_user_temp:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|contains: \\AppData\\Local\\Temp\\\n    TargetFilename|endswith:\n    - .dll\n    - .exe\n  filter_main_other_temp:\n    TargetFilename|startswith:\n    - C:\\Windows\\Temp\\\n    - C:\\Windows\\SystemTemp\\\n    TargetFilename|endswith:\n    - .dll\n    - .exe\n  filter_main_powershell_module:\n    TargetFilename|startswith: C:\\Users\\\n    TargetFilename|contains: \\WindowsPowerShell\\Modules\\\n    TargetFilename|endswith: .dll\n  filter_main_nuget:\n    TargetFilename|startswith: C:\\Program Files\\PackageManagement\\ProviderAssemblies\\nuget\\\n    TargetFilename|endswith: \\Microsoft.PackageManagement.NuGetProvider.dll\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- False positives will differ depending on the environment and scripts used. Apply\n  additional filters accordingly.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_signal_sensitive_config_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Andreas Braathen (mnemonic.io)",
+                "date": "2025-10-19",
+                "title": "File Access Of Signal Desktop Sensitive Data",
+                "id": "5d6c375a-18ae-4952-b4f6-8b803f6c8555"
+            },
+            "rule_text": "title: File Access Of Signal Desktop Sensitive Data\nid: 5d6c375a-18ae-4952-b4f6-8b803f6c8555\nstatus: experimental\ndescription: 'Detects access to Signal Desktop''s sensitive data files: db.sqlite\n  and config.json.\n\n  The db.sqlite file in Signal Desktop stores all locally saved messages in an encrypted\n  SQLite database, while the config.json contains the decryption key needed to access\n  that data.\n\n  Since the key is stored in plain text, a threat actor who gains access to both files\n  can decrypt and read sensitive messages without needing the users credentials.\n\n  Currently the rule only covers the default Signal installation path in AppData\\Roaming.\n  Signal Portable installations may use different paths based on user configuration.\n  Additional paths can be added to the selection as needed.\n\n  '\nreferences:\n- https://cloud.google.com/blog/topics/threat-intelligence/russia-targeting-signal-messenger/\n- https://vmois.dev/query-signal-desktop-messages-sqlite/\nauthor: Andreas Braathen (mnemonic.io)\ndate: 2025-10-19\ntags:\n- attack.credential-access\n- attack.t1003\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: System Access Control List (SACL) policy with attributes\n    List folder/read data on Objects'\ndetection:\n  selection:\n    EventID: 4663\n    ObjectType: File\n    ObjectName|contains: \\AppData\\Roaming\\Signal\\\n    ObjectName|endswith:\n    - \\config.json\n    - \\db.sqlite\n  filter_main_signal:\n    ProcessName|endswith:\n    - \\signal-portable.exe\n    - \\signal.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely, but possible from AV or backup software accessing the files.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

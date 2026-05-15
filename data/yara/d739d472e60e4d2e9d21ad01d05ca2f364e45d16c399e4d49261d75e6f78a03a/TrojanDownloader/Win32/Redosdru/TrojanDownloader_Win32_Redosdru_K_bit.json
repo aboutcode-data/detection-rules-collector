@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Redosdru/TrojanDownloader_Win32_Redosdru_K_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Redosdru_K_bit",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Redosdru.K!bit,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Redosdru_K_bit\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Redosdru.K!bit,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b f8 83 ff ff 0f 84 ?? ?? 00 00 8d 55 ?? 52 c6 45 ?? 53 c6 45 ?? 53 c6 45 ?? 53 c6 45 ?? 53 c6 45 ?? 53 c6 45 ?? 53 c6 45 ?? 00 c6 45 ?? 56 c6 45 ?? 49 c6 45 ?? 44 c6 45 ?? 3a c6 45 ?? 32 c6 45 ?? 30 c6 45 ?? 31 }\n\t\t$a_03_1 = {85 f6 74 74 8d 4d ?? 51 c6 45 ?? 43 c6 45 ?? 61 c6 45 ?? 6f c6 45 ?? 33 c6 45 ?? 36 c6 45 ?? 30 [0-20] c6 45 ?? 44 c6 45 ?? 6c c6 45 ?? 6c c6 45 ?? 46 c6 45 ?? 75 c6 45 ?? 55 c6 45 ?? 70 c6 45 ?? 67 c6 45 ?? 72 c6 45 ?? 61 c6 45 ?? 64 c6 45 ?? 72 c6 45 ?? 73 c6 45 ?? 00 }\n\t\t$a_01_2 = {8a 47 01 c1 e6 06 3c 3d 8b de 75 65 8b 44 24 10 83 c0 01 83 f8 03 89 44 24 10 7d 0b 8b d3 c1 fa 10 88 55 00 83 c5 01 83 f8 02 7d 0b 8b cb c1 f9 08 88 4d 00 83 c5 01 }\n\t\t$a_01_3 = {43 3a 5c 50 72 6f 67 72 61 6d 20 46 69 6c 65 73 5c 41 70 70 50 61 74 63 68 5c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

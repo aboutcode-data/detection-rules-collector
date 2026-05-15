@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_codecov_hack.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_SH_CodeCov_Hack_Apr21_1",
+                "tags": [],
+                "description": "Detects manipulated Codecov bash uploader tool that has been manipulated by an unknown actor during March / April 2021",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://about.codecov.io/security-update/",
+                "date": "2021-04-16",
+                "id": "b5fb74c4-073e-53af-a207-1672e63c9a64"
+            },
+            "rule_text": "rule APT_SH_CodeCov_Hack_Apr21_1\n{\n\tmeta:\n\t\tdescription = \"Detects manipulated Codecov bash uploader tool that has been manipulated by an unknown actor during March / April 2021\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://about.codecov.io/security-update/\"\n\t\tdate = \"2021-04-16\"\n\t\tid = \"b5fb74c4-073e-53af-a207-1672e63c9a64\"\n\n\tstrings:\n\t\t$a1 = \"Global report uploading tool for Codecov\"\n\t\t$s1 = \"curl -sm 0.5 -d\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x2123 and filesize < 70KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

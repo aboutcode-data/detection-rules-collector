@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/qakbot_pikabot.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Robin Hellsten, Patrik Olson, Amata Anantaprayoon",
+                "date": "2023-05-23",
+                "title": "Qakbot/Pikabot Payload Download",
+                "id": "295c3545-5461-4067-9676-1eb137d8c601"
+            },
+            "rule_text": "title: Qakbot/Pikabot Payload Download\nid: 295c3545-5461-4067-9676-1eb137d8c601\nstatus: test\ndescription: Request towards url matching Qakbot/Pikabot payload pattern. Typically\n  leads to download of .zip file containing a .js or .msi payload\nreferences:\n- https://malpedia.caad.fkie.fraunhofer.de/details/win.pikabot\n- https://github.com/pr0xylife/Qakbot/blob/main/Qakbot_bmw01_25.01.2024.txt\nauthor: NTT Security - Robin Hellsten, Patrik Olson, Amata Anantaprayoon\ndate: '2023-05-23'\nmodified: '2024-01-26'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri|re: ^/[a-z]{2,8}/$\n    c-uri-query|re: ^(1|[0-9]{4,8})/{0,}$\n  filter:\n  - c-uri: ''\n  - c-uri-query: ''\n  - action: B\n  condition: selection and not filter\nfalsepositives:\n- Legit urls not downloading files\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

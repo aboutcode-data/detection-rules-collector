@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_susp_ldap_dataexchange.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "xknow @xknow_infosec",
+                "date": "2019-03-24",
+                "title": "Suspicious LDAP-Attributes Used",
+                "id": "d00a9a72-2c09-4459-ad03-5e0a23351e36"
+            },
+            "rule_text": "title: Suspicious LDAP-Attributes Used\nid: d00a9a72-2c09-4459-ad03-5e0a23351e36\nstatus: test\ndescription: Detects the usage of particular AttributeLDAPDisplayNames, which are\n  known for data exchange via LDAP by the tool LDAPFragger and are additionally not\n  commonly used in companies.\nreferences:\n- https://medium.com/@ivecodoe/detecting-ldapfragger-a-newly-released-cobalt-strike-beacon-using-ldap-for-c2-communication-c274a7f00961\n- https://blog.fox-it.com/2020/03/19/ldapfragger-command-and-control-over-ldap-attributes/\n- https://github.com/fox-it/LDAPFragger\nauthor: xknow @xknow_infosec\ndate: 2019-03-24\nmodified: 2022-10-05\ntags:\n- attack.t1001.003\n- attack.command-and-control\nlogsource:\n  product: windows\n  service: security\n  definition: The \"Audit Directory Service Changes\" logging policy must be configured\n    in order to receive events. Audit events are generated only for objects with configured\n    system access control lists (SACLs). Audit events are generated only for objects\n    with configured system access control lists (SACLs) and only when accessed in\n    a manner that matches their SACL settings. This policy covers the following events\n    ids - 5136, 5137, 5138, 5139, 5141. Note that the default policy does not cover\n    User objects. For that a custom AuditRule need to be setup (See https://github.com/OTRF/Set-AuditRule)\ndetection:\n  selection:\n    EventID: 5136\n    AttributeValue|contains: '*'\n    AttributeLDAPDisplayName:\n    - primaryInternationalISDNNumber\n    - otherFacsimileTelephoneNumber\n    - primaryTelexNumber\n  condition: selection\nfalsepositives:\n- Companies, who may use these default LDAP-Attributes for personal information\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

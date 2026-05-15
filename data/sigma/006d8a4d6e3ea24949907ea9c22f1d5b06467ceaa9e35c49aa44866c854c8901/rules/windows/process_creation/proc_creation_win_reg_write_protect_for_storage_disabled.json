@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_write_protect_for_storage_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman",
+                "date": "2021-06-11",
+                "title": "Write Protect For Storage Disabled",
+                "id": "75f7a0e2-7154-4c4d-9eae-5cdb4e0a5c13"
+            },
+            "rule_text": "title: Write Protect For Storage Disabled\nid: 75f7a0e2-7154-4c4d-9eae-5cdb4e0a5c13\nstatus: test\ndescription: 'Detects applications trying to modify the registry in order to disable\n  any write-protect property for storage devices.\n\n  This could be a precursor to a ransomware attack and has been an observed technique\n  used by cypherpunk group.\n\n  '\nreferences:\n- https://www.manageengine.com/products/desktop-central/os-imaging-deployment/media-is-write-protected.html\nauthor: Sreeman\ndate: 2021-06-11\nmodified: 2024-01-18\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - \\System\\CurrentControlSet\\Control\n    - Write Protection\n    - '0'\n    - storage\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

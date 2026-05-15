@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_iis_appcmd_susp_module_install.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-12-11",
+                "title": "IIS Native-Code Module Command Line Installation",
+                "id": "9465ddf4-f9e4-4ebd-8d98-702df3a93239"
+            },
+            "rule_text": "title: IIS Native-Code Module Command Line Installation\nid: 9465ddf4-f9e4-4ebd-8d98-702df3a93239\nstatus: test\ndescription: Detects suspicious IIS native-code module installations via command line\nreferences:\n- https://researchcenter.paloaltonetworks.com/2018/01/unit42-oilrig-uses-rgdoor-iis-backdoor-targets-middle-east/\n- https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-12-11\nmodified: 2024-03-13\ntags:\n- attack.persistence\n- attack.t1505.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\appcmd.exe\n  - OriginalFileName: appcmd.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - install\n    - module\n    CommandLine|contains|windash: '-name:'\n  filter_iis_setup:\n    ParentImage: C:\\Windows\\System32\\inetsrv\\iissetup.exe\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Unknown as it may vary from organisation to organisation how admins use to install\n  IIS modules\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

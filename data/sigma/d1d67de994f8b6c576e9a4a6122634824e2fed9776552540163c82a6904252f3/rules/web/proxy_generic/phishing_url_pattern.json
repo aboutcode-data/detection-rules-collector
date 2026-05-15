@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/phishing_url_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-09-17",
+                "title": "Potential Phishing Url",
+                "id": "122f0cc8-9af8-462f-ae8c-5edcb70e5f95"
+            },
+            "rule_text": "title: Potential Phishing Url\nid: 122f0cc8-9af8-462f-ae8c-5edcb70e5f95\ndescription: Potential phishing site based on URL pattern\nreferences:\n- https://unit42.paloaltonetworks.com/rare-phishing-page-delivery-header-refresh/\n- https://ublockorigin.pages.dev/filters/badware.min.txt\n- https://www.virustotal.com/gui/domain/domain.parkages.click/relations\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2024-09-17\nlogsource:\n  category: proxy\ndetection:\n  selection_1:\n    cs-host|endswith:\n    - .ru\n    - .su\n    - .com\n    cs-host|re: ^[a-z0-9]{3,}\\.[a-z0-9]{4,11}\\.(ru|su|com)$\n    cs-uri-stem|re: ^/[a-zA-Z0-9]{35,}$\n    cs-uri-query|re: ^[a-zA-Z0-9]{25,}$\n  selection_2:\n    cs-uri-stem:\n    - /connectivity.html\n    cs-uri-query|contains: '@'\n  condition: 1 of selection_*\nfalsepositives:\n- Very possible; investigate url to confirm\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

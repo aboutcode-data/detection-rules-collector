@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/builtin/appxdeployment_server/win_appxpackaging_server_successful_package_installation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Michael Haag, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-03",
+                "title": "Successful MSIX/AppX Package Installation",
+                "id": "289dfa9e-e378-4a56-a9d4-7ed5ee218029"
+            },
+            "rule_text": "title: Successful MSIX/AppX Package Installation\nid: 289dfa9e-e378-4a56-a9d4-7ed5ee218029\nstatus: experimental\ndescription: 'Detects successful MSIX/AppX package installations on Windows systems\n  by monitoring EventID 854 in the Microsoft-Windows-AppXDeployment-Server/Operational\n  log.\n\n  While most installations are legitimate, this can help identify unauthorized or\n  suspicious package installations.\n\n  It is crucial to monitor such events as threat actors may exploit MSIX/AppX packages\n  to deliver and execute malicious payloads.\n\n  '\nreferences:\n- https://www.splunk.com/en_us/blog/security/msix-weaponization-threat-detection-splunk.html\nauthor: Michael Haag, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-03\ntags:\n- attack.execution\n- attack.t1204.002\n- detection.threat-hunting\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID: 854\n  condition: selection\nfalsepositives:\n- Legitimate MSIX/AppX package installations\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wscript_cscript_uncommon_extension_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-15",
+                "title": "Cscript/Wscript Uncommon Script Extension Execution",
+                "id": "99b7460d-c9f1-40d7-a316-1f36f61d52ee"
+            },
+            "rule_text": "title: Cscript/Wscript Uncommon Script Extension Execution\nid: 99b7460d-c9f1-40d7-a316-1f36f61d52ee\nstatus: test\ndescription: Detects Wscript/Cscript executing a file with an uncommon (i.e. non-script)\n  extension\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-15\nmodified: 2023-06-19\ntags:\n- attack.execution\n- attack.t1059.005\n- attack.t1059.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName:\n    - wscript.exe\n    - cscript.exe\n  - Image|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n  selection_extension:\n    CommandLine|contains:\n    - .csv\n    - .dat\n    - .doc\n    - .gif\n    - .jpeg\n    - .jpg\n    - .png\n    - .ppt\n    - .txt\n    - .xls\n    - .xml\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

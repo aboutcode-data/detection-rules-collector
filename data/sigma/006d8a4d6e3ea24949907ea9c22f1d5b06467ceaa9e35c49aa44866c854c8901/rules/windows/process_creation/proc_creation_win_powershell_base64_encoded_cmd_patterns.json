@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_base64_encoded_cmd_patterns.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-05-24",
+                "title": "Suspicious PowerShell Encoded Command Patterns",
+                "id": "b9d9cc83-380b-4ba3-8d8f-60c0e7e2930c"
+            },
+            "rule_text": "title: Suspicious PowerShell Encoded Command Patterns\nid: b9d9cc83-380b-4ba3-8d8f-60c0e7e2930c\nstatus: test\ndescription: Detects PowerShell command line patterns in combincation with encoded\n  commands that often appear in malware infection chains\nreferences:\n- https://app.any.run/tasks/b9040c63-c140-479b-ad59-f1bb56ce7a97/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-05-24\nmodified: 2023-01-05\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.Exe\n    - pwsh.dll\n  selection_flags:\n    CommandLine|contains:\n    - ' -e '\n    - ' -en '\n    - ' -enc '\n    - ' -enco'\n  selection_encoded:\n    CommandLine|contains:\n    - ' JAB'\n    - ' SUVYI'\n    - ' SQBFAFgA'\n    - ' aWV4I'\n    - ' IAB'\n    - ' PAA'\n    - ' aQBlAHgA'\n  filter_gcworker:\n    ParentImage|contains:\n    - C:\\Packages\\Plugins\\Microsoft.GuestConfiguration.ConfigurationforWindows\\\n    - \\gc_worker.exe\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Other tools that work with encoded scripts in the command line instead of script\n  files\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

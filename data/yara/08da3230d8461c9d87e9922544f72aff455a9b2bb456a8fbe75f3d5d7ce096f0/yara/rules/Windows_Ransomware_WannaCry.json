@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Ransomware_WannaCry.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Ransomware_WannaCry_d9855102",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "d9855102-56dc-4e4c-9599-82fa52922b95",
+                "fingerprint": "f96f2f0eb3cdf6e882adcad06ad10e375412dec99687b3d38d4dbe9bdde52db5",
+                "creation_date": "2022-08-29",
+                "last_modified": "2022-09-29",
+                "threat_name": "Windows.Ransomware.WannaCry",
+                "reference_sample": "0b7878babbaf7c63d808f3ce32c7306cb785fdfb1ceb73be07fb48fdd091fdfb",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Ransomware_WannaCry_d9855102\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"d9855102-56dc-4e4c-9599-82fa52922b95\"\n\t\tfingerprint = \"f96f2f0eb3cdf6e882adcad06ad10e375412dec99687b3d38d4dbe9bdde52db5\"\n\t\tcreation_date = \"2022-08-29\"\n\t\tlast_modified = \"2022-09-29\"\n\t\tthreat_name = \"Windows.Ransomware.WannaCry\"\n\t\treference_sample = \"0b7878babbaf7c63d808f3ce32c7306cb785fdfb1ceb73be07fb48fdd091fdfb\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"@WanaDecryptor@.exe\" wide fullword\n\t\t$a2 = \".WNCRY\" wide fullword\n\t\t$a3 = \"$%d worth of bitcoin\" fullword\n\t\t$a4 = \"%d%d.bat\" fullword\n\t\t$a5 = \"This folder protects against ransomware. Modifying it will reduce protection\" wide fullword\n\t\t$b1 = { 53 55 56 57 FF 15 D0 70 00 10 8B E8 A1 8C DD 00 10 85 C0 75 6A 68 B8 0B 00 00 FF 15 70 70 00 10 }\n\t\t$b2 = { A1 90 DD 00 10 53 56 57 85 C0 75 3E 8B 1D 60 71 00 10 8B 3D 70 70 00 10 6A 00 FF D3 83 C4 04 A3 }\n\t\t$b3 = { 56 8B 74 24 08 57 8B 3D 70 70 00 10 56 E8 2E FF FF FF 83 C4 04 A3 8C DD 00 10 85 C0 75 09 68 88 }\n\n\tcondition:\n\t\t5 of ( $a* ) or 1 of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

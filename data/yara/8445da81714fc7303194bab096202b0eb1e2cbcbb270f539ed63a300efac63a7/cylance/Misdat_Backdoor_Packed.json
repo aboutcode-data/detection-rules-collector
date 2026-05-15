@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/cylance/Misdat_Backdoor_Packed.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Misdat_Backdoor_Packed",
+                "tags": [],
+                "author": "Cylance SPEAR Team",
+                "note": "Probably Prone to False Positive"
+            },
+            "rule_text": "rule Misdat_Backdoor_Packed\n{\n\tmeta:\n\t\tauthor = \"Cylance SPEAR Team\"\n\t\tnote = \"Probably Prone to False Positive\"\n\n\tstrings:\n\t\t$upx = {33 2E 30 33 00 55 50 58 21}\n\t\t$send = {00 00 00 73 65 6E 64 00 00 00}\n\t\t$delphi_sec_pe = {50 45 00 00 4C 01 03 00 19 5E 42 2A}\n\t\t$shellexec = {00 00 00 53 68 65 6C 6C 45 78 65 63 75 74 65 57 00 00 00}\n\n\tcondition:\n\t\tfilesize < 100KB and $upx and $send and $delphi_sec_pe and $shellexec\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

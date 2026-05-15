@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Zbot/PWS_Win32_Zbot_LS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Zbot_LS",
+                "tags": [],
+                "description": "PWS:Win32/Zbot.LS,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Zbot_LS\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Zbot.LS,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {eb 00 83 44 24 ?? 01 c1 6c 24 ?? 02 c1 6c 24 ?? 02 c1 6c 24 ?? 02 c1 6c 24 ?? 02 83 44 24 ?? 01 83 7c 24 ?? 04 75 10 c7 44 24 ?? ?? ?? ?? ?? c7 44 24 ?? 00 00 00 00 ?? ?? ?? ?? ?? 39 ?? 24 ?? [0-06] ff 44 24 ?? 81 7c 24 ?? 33 23 00 00 0f 86 ?? ff ff ff 8b e5 5d eb 00 33 c9 }\n\t\t$a_02_1 = {eb 00 83 44 24 0a 01 c1 6c 24 04 02 c1 6c 24 04 02 c1 6c 24 04 02 c1 6c 24 04 02 83 04 24 01 83 3c 24 04 75 0f c7 44 24 04 ?? ?? ?? ?? c7 04 24 00 00 00 00 ba ?? ?? ?? ?? 39 54 24 0a 0f 82 7a ff ff ff ff 44 24 14 81 7c 24 14 33 23 00 00 0f 86 78 ff ff ff 8b ?? ?? eb 00 33 c9 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

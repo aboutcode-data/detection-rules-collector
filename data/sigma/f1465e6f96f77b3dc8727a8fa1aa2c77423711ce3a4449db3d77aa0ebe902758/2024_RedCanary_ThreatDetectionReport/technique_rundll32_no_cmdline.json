@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_rundll32_no_cmdline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Rundll32 Without a Command Line",
+                "id": "0fab2f9d-0c38-4392-802f-09e4f4fef0ed"
+            },
+            "rule_text": "title: Rundll32 Without a Command Line\nid: 0fab2f9d-0c38-4392-802f-09e4f4fef0ed\nstatus: experimental\ndescription: \"Rundll32 does not normally execute without corresponding command-line\\\n  \\ \\narguments and while spawning a child process. Given this, you may want \\nto\\\n  \\ alert on the execution of processes that appear to be rundll32.exe \\nwithout any\\\n  \\ command-line arguments , especially when they spawn child \\nprocesses or make\\\n  \\ network connections. Part of the RedCanary 2024 \\nThreat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.defense_evasion\n- attack.t1218\n- attack.t1218.011\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\rundll32.exe\n    ParentCommandLine: null\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

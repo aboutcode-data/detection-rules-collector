@@ -1,0 +1,45 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/generic/AutoIT.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AutoIT_Compiled",
+                "tags": [],
+                "id": "1HD8y9jsBZi1HDN82XCpZx",
+                "fingerprint": "7d7623207492860e4196e8c8a493b874bb3042c83f19e61e1d958e79a09bc8f8",
+                "version": "1.0",
+                "creation_date": "2020-09-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2023-12-28",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies compiled AutoIT script (as EXE). This rule by itself does NOT necessarily mean the detected file is malicious.",
+                "category": "INFO"
+            },
+            "rule_text": "rule AutoIT_Compiled\n{\n\tmeta:\n\t\tid = \"1HD8y9jsBZi1HDN82XCpZx\"\n\t\tfingerprint = \"7d7623207492860e4196e8c8a493b874bb3042c83f19e61e1d958e79a09bc8f8\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-09-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2023-12-28\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies compiled AutoIT script (as EXE). This rule by itself does NOT necessarily mean the detected file is malicious.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"#OnAutoItStartRegister\" ascii wide\n\t\t$ = \"#pragma compile\" ascii wide\n\t\t$ = \"/AutoIt3ExecuteLine\" ascii wide\n\t\t$ = \"/AutoIt3ExecuteScript\" ascii wide\n\t\t$ = \"/AutoIt3OutputDebug\" ascii wide\n\t\t$ = \">>>AUTOIT NO CMDEXECUTE<<<\" ascii wide\n\t\t$ = \">>>AUTOIT SCRIPT<<<\" ascii wide\n\t\t$ = \"This is a third-party compiled AutoIt script.\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "AutoIT_Script",
+                "tags": [],
+                "id": "vpilwARgwZCuMLJPuubYB",
+                "fingerprint": "87dfe76f69bd344860faf3dc46f16b56a2c86a0a3f3763edf8f51860346a16c2",
+                "version": "1.0",
+                "creation_date": "2020-09-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-04-16",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies AutoIT script.  This rule by itself does NOT necessarily mean the detected file is malicious.",
+                "category": "INFO"
+            },
+            "rule_text": "rule AutoIT_Script\n{\n\tmeta:\n\t\tid = \"vpilwARgwZCuMLJPuubYB\"\n\t\tfingerprint = \"87dfe76f69bd344860faf3dc46f16b56a2c86a0a3f3763edf8f51860346a16c2\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-09-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-04-16\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies AutoIT script.  This rule by itself does NOT necessarily mean the detected file is malicious.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$ = \"#OnAutoItStartRegister\" ascii wide\n\t\t$ = \"#pragma compile\" ascii wide\n\t\t$ = \"/AutoIt3ExecuteLine\" ascii wide\n\t\t$ = \"/AutoIt3ExecuteScript\" ascii wide\n\t\t$ = \"/AutoIt3OutputDebug\" ascii wide\n\t\t$ = \">>>AUTOIT NO CMDEXECUTE<<<\" ascii wide\n\t\t$ = \">>>AUTOIT SCRIPT<<<\" ascii wide\n\t\t$ = \"This is a third-party compiled AutoIt script.\" ascii wide\n\t\t$ = \"AU3!EA06\" ascii wide\n\t\t$msi_magic = {D0 CF 11 E0 A1 B1 1A E1 00 00 00}\n\n\tcondition:\n\t\tuint16( 0 ) != 0x5A4D and not $msi_magic at 0 and any of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

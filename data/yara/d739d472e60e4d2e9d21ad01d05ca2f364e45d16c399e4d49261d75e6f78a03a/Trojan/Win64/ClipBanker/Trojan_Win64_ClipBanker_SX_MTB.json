@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/ClipBanker/Trojan_Win64_ClipBanker_SX_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_ClipBanker_SX_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/ClipBanker.SX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_ClipBanker_SX_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/ClipBanker.SX!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {ba 01 00 00 00 33 c9 ff 15 ?? ?? ?? ?? 48 8b d8 48 85 c0 74 ?? ff 15 ?? ?? ?? ?? 3d b7 00 00 00 75 ?? 48 8b cb }\n\t\t$a_03_1 = {b9 01 00 00 00 ff 15 ?? ?? ?? ?? 48 8b f8 48 85 c0 74 ?? 48 8b c8 ff 15 ?? ?? ?? ?? 48 85 c0 74 0c 48 8b cf 48 8b f0 ff 15 }\n\t\t$a_01_2 = {64 72 76 6f 70 74 69 6d 63 78 73 71 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 5 ) >= 25\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

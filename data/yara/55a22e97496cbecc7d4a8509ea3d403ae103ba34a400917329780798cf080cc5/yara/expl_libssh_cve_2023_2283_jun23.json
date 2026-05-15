@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/expl_libssh_cve_2023_2283_jun23.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HKTL_EXPL_POC_LibSSH_Auth_Bypass_CVE_2023_2283_Jun23_1",
+                "tags": [],
+                "description": "Detects POC code used in attacks against libssh vulnerability CVE-2023-2283",
+                "author": "Florian Roth",
+                "reference": "https://github.com/github/securitylab/tree/1786eaae7f90d87ce633c46bbaa0691d2f9bf449/SecurityExploits/libssh/pubkey-auth-bypass-CVE-2023-2283",
+                "date": "2023-06-08",
+                "score": 85,
+                "id": "e72eba33-686f-5fca-bca3-2b875d1ec224"
+            },
+            "rule_text": "rule HKTL_EXPL_POC_LibSSH_Auth_Bypass_CVE_2023_2283_Jun23_1\n{\n\tmeta:\n\t\tdescription = \"Detects POC code used in attacks against libssh vulnerability CVE-2023-2283\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://github.com/github/securitylab/tree/1786eaae7f90d87ce633c46bbaa0691d2f9bf449/SecurityExploits/libssh/pubkey-auth-bypass-CVE-2023-2283\"\n\t\tdate = \"2023-06-08\"\n\t\tscore = 85\n\t\tid = \"e72eba33-686f-5fca-bca3-2b875d1ec224\"\n\n\tstrings:\n\t\t$s1 = \"nprocs = %d\" ascii fullword\n\t\t$s2 = \"fork failed: %s\" ascii fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x457f and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2023-2283"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_susp_execution_with_image_extension.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Hieu Tran",
+                "date": "2023-03-13",
+                "title": "Suspicious Rundll32 Execution With Image Extension",
+                "id": "4aa6040b-3f28-44e3-a769-9208e5feb5ec"
+            },
+            "rule_text": "title: Suspicious Rundll32 Execution With Image Extension\nid: 4aa6040b-3f28-44e3-a769-9208e5feb5ec\nrelated:\n- id: 089fc3d2-71e8-4763-a8a5-c97fbb0a403e\n  type: similar\nstatus: test\ndescription: Detects the execution of Rundll32.exe with DLL files masquerading as\n  image files\nreferences:\n- https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution\nauthor: Hieu Tran\ndate: 2023-03-13\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.exe\n  selection_cli:\n    CommandLine|contains:\n    - .bmp\n    - .cr2\n    - .eps\n    - .gif\n    - .ico\n    - .jpeg\n    - .jpg\n    - .nef\n    - .orf\n    - .png\n    - .raw\n    - .sr2\n    - .tif\n    - .tiff\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

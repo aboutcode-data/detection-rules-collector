@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Coroxy/Backdoor_Win32_Coroxy_F.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Coroxy_F",
+                "tags": [],
+                "description": "Backdoor:Win32/Coroxy.F,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 09 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Coroxy_F\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Coroxy.F,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 09 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {64 a1 30 00 00 00 8b 40 0c 8b 70 0c 8b 58 10 8b 36 8b 7e 30 }\n\t\t$a_03_1 = {50 6a 00 6a 00 6a 00 6a 00 6a 00 6a 00 6a 00 6a 06 6a 01 8d 45 ?? 50 e8 }\n\t\t$a_03_2 = {ba 00 01 00 00 81 c2 00 00 00 80 83 bd ?? ?? ?? ?? 04 75 ?? 81 c2 00 00 80 00 81 c2 00 10 00 00 81 c2 00 20 00 00 6a 00 52 6a 00 6a 00 6a 00 ff }\n\t\t$a_03_3 = {50 68 04 00 00 98 ff 75 ?? e8 }\n\t\t$a_03_4 = {68 7e 66 04 80 ff 75 ?? e8 }\n\t\t$a_03_5 = {6a 64 6a 00 8d 85 ?? ?? ff ff 50 6a 00 ff 75 ?? e8 }\n\t\t$a_03_6 = {0a 00 c6 45 ?? 05 c6 45 ?? 01 c6 45 ?? 00 c6 45 ?? 01 c6 45 ?? 00 c6 45 ?? 00 c6 45 ?? 00 c6 45 ?? 00 c6 45 ?? 00 c6 45 ?? 00 }\n\t\t$a_03_7 = {68 60 ea 00 00 e8 ?? ?? 00 00 8d 85 ?? ?? ff ff 50 68 02 02 00 00 e8 }\n\t\t$a_03_8 = {eb 0a c7 85 ?? ?? ff ff ?? ?? 00 10 68 20 bf 02 00 e8 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 1 + ( #a_03_5 & 1 ) * 1 + ( #a_03_6 & 1 ) * 1 + ( #a_03_7 & 1 ) * 1 + ( #a_03_8 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

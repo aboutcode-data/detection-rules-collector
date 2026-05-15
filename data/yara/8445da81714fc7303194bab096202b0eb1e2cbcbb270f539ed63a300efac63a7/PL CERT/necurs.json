@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/PL CERT/necurs.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "necurs",
+                "tags": [],
+                "author": "akrasuski1",
+                "reference": "https://www.cert.pl/en/news/single/necurs-hybrid-spam-botnet/"
+            },
+            "rule_text": "rule necurs\n{\n\tmeta:\n\t\tauthor = \"akrasuski1\"\n\t\treference = \"https://www.cert.pl/en/news/single/necurs-hybrid-spam-botnet/\"\n\n\tstrings:\n\t\t$pushID0 = {68 0A CA 9B 2E}\n\t\t$pushID1 = {68 18 DD F0 3E}\n\t\t$pushID2 = {68 31 BF D7 B2}\n\t\t$pushID3 = {68 60 48 6A E1}\n\t\t$pushID4 = {68 84 9A 75 C3}\n\t\t$pushID5 = {68 9B 54 CC D8}\n\t\t$pushID6 = {68 EE A0 8A 0A}\n\t\t$pushID7 = {68 D7 91 35 54}\n\t\t$pushID8 = {68 44 FC 9D EA}\n\t\t$pushID9 = {68 A4 51 C4 74}\n\t\t$dga = {1B D9 01 7D 08 11 5D 0C\tFF 45 FC 39 75 FC}\n\t\t$string_drivers = \"%s\\\\drivers\\\\%s.sys\"\n\t\t$string_findme = \"findme\"\n\t\t$string_stupid = \"some stupid error\" wide\n\t\t$string_bcdedit = \"bcdedit.exe -set TESTSIGNING ON\"\n\n\tcondition:\n\t\t(2 of ( $string* ) and $dga ) or ( $dga and 7 of ( $pushID* ) ) or ( 2 of ( $string* ) and 7 of ( $pushID* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

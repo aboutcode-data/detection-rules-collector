@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_lsass_werfault_dump.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-27",
+                "title": "WerFault LSASS Process Memory Dump",
+                "id": "c3e76af5-4ce0-4a14-9c9a-25ceb8fda182"
+            },
+            "rule_text": "title: WerFault LSASS Process Memory Dump\nid: c3e76af5-4ce0-4a14-9c9a-25ceb8fda182\nstatus: test\ndescription: Detects WerFault creating a dump file with a name that indicates that\n  the dump file could be an LSASS process memory, which contains user credentials\nreferences:\n- https://github.com/helpsystems/nanodump\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-27\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    Image: C:\\WINDOWS\\system32\\WerFault.exe\n    TargetFilename|contains:\n    - \\lsass\n    - lsass.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

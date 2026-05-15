@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/FileCrypt/Ransom_Win32_FileCrypt_MK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_FileCrypt_MK_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/FileCrypt.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_FileCrypt_MK_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/FileCrypt.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_80_0 = {51 6b 6b 62 61 6c }\n\t\t$a_80_1 = {78 62 61 73 65 5f 6c 69 62 72 61 72 79 2e 7a 69 70 }\n\t\t$a_80_2 = {78 62 69 74 63 6f 69 6e 2e 62 6d 70 }\n\t\t$a_80_3 = {78 6c 6f 63 6b 2e 62 6d 70 }\n\t\t$a_80_4 = {78 6c 6f 63 6b 2e 69 63 6f }\n\n\tcondition:\n\t\t(( #a_80_0 & 1 ) * 2 + ( #a_80_1 & 1 ) * 1 + ( #a_80_2 & 1 ) * 1 + ( #a_80_3 & 1 ) * 1 + ( #a_80_4 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

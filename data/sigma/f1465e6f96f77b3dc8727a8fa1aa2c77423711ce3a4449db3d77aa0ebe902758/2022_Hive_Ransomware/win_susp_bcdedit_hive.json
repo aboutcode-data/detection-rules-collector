@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_Hive_Ransomware/win_susp_bcdedit_hive.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/22",
+                "title": "Use of bcdedit to Disrupt Boot Processes",
+                "id": "e28f76ad-bdd9-4e56-bd09-ce8b9b853b7f"
+            },
+            "rule_text": "title: Use of bcdedit to Disrupt Boot Processes\nid: e28f76ad-bdd9-4e56-bd09-ce8b9b853b7f\nstatus: experimental\ndescription: Detects the use of bcdedit to disrupt normal boot processes.\nreferences:\n- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a\n- https://blog.nviso.eu/2022/05/30/detecting-bcd-changes-to-inhibit-system-recovery/\nauthor: Micah Babinski\ndate: 2022/11/22\ntags:\n- attack.impact\n- attack.t1490\n- attack.g0092\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_exe:\n    Image|endswith: \\bcdedit.exe\n    CommandLine|contains|windash: /set\n  selection_ignorefailure:\n    CommandLine|contains: bootstatuspolicy\n    CommandLine|re: ignore[a-zA-Z]*failures\n  selection_disablerecovery:\n    CommandLine|contains|all:\n    - recoveryenabled\n    - 'no'\n  condition: selection_exe and (selection_ignorefailure or selection_disablerecovery)\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

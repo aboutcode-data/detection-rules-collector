@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/category/database/db_anomalous_query.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@juju4",
+                "date": "2022-12-27",
+                "title": "Suspicious SQL Query",
+                "id": "d84c0ded-edd7-4123-80ed-348bb3ccc4d5"
+            },
+            "rule_text": "title: Suspicious SQL Query\nid: d84c0ded-edd7-4123-80ed-348bb3ccc4d5\nstatus: test\ndescription: Detects suspicious SQL query keywrods that are often used during recon,\n  exfiltration or destructive activities. Such as dropping tables and selecting wildcard\n  fields\nauthor: '@juju4'\ndate: 2022-12-27\nreferences:\n- https://github.com/sqlmapproject/sqlmap\ntags:\n- attack.exfiltration\n- attack.initial-access\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1190\n- attack.t1505.001\nlogsource:\n  category: database\n  definition: 'Requirements: Must be able to log the SQL queries'\ndetection:\n  keywords:\n  - drop\n  - truncate\n  - dump\n  - select \\*\n  condition: keywords\nfalsepositives:\n- Inventory and monitoring activity\n- Vulnerability scanners\n- Legitimate applications\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

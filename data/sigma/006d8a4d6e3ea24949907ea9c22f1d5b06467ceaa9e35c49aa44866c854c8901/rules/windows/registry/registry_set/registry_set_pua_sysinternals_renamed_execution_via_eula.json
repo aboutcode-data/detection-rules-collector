@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_pua_sysinternals_renamed_execution_via_eula.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-24",
+                "title": "Suspicious Execution Of Renamed Sysinternals Tools - Registry",
+                "id": "f50f3c09-557d-492d-81db-9064a8d4e211"
+            },
+            "rule_text": "title: Suspicious Execution Of Renamed Sysinternals Tools - Registry\nid: f50f3c09-557d-492d-81db-9064a8d4e211\nrelated:\n- id: 25ffa65d-76d8-4da5-a832-3f2b0136e133\n  type: derived\n- id: 8023f872-3f1d-4301-a384-801889917ab4\n  type: similar\nstatus: test\ndescription: Detects the creation of the \"accepteula\" key related to the Sysinternals\n  tools being created from executables with the wrong name (e.g. a renamed Sysinternals\n  tool)\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-24\nmodified: 2025-10-26\ntags:\n- attack.resource-development\n- attack.t1588.002\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\Active Directory Explorer\n    - \\Handle\n    - \\LiveKd\n    - \\ProcDump\n    - \\Process Explorer\n    - \\PsExec\n    - \\PsLoggedon\n    - \\PsLoglist\n    - \\PsPasswd\n    - \\PsPing\n    - \\PsService\n    - \\SDelete\n    TargetObject|endswith: \\EulaAccepted\n  filter:\n    Image|endswith:\n    - \\ADExplorer.exe\n    - \\ADExplorer64.exe\n    - \\handle.exe\n    - \\handle64.exe\n    - \\livekd.exe\n    - \\livekd64.exe\n    - \\procdump.exe\n    - \\procdump64.exe\n    - \\procexp.exe\n    - \\procexp64.exe\n    - \\PsExec.exe\n    - \\PsExec64.exe\n    - \\PsLoggedon.exe\n    - \\PsLoggedon64.exe\n    - \\psloglist.exe\n    - \\psloglist64.exe\n    - \\pspasswd.exe\n    - \\pspasswd64.exe\n    - \\PsPing.exe\n    - \\PsPing64.exe\n    - \\PsService.exe\n    - \\PsService64.exe\n    - \\sdelete.exe\n  condition: selection and not filter\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_pua_sysinternals_renamed_execution_via_eula/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Lazy/Trojan_Win64_Lazy_LMM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Lazy_LMM_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Lazy.LMM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Lazy_LMM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Lazy.LMM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 95 94 ec ff ff bf ca 00 00 00 2b fa 0f af f8 be a1 02 00 00 0f af f9 2b f2 0f af f0 6a 20 0f af f1 58 2b c2 83 c2 02 }\n\t\t$a_81_1 = {4d 4e 53 5c 48 65 66 6e 65 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 20 + ( #a_81_1 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

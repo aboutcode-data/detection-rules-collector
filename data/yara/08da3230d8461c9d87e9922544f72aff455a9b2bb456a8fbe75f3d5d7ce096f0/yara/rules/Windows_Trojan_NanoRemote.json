@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Trojan_NanoRemote.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Trojan_NanoRemote_7974c813",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "7974c813-7e3c-45dd-84ff-955d340bf4d3",
+                "fingerprint": "57b605ef406dbc25444210679db74b6111570c4d66375f76f3806cae76881e94",
+                "creation_date": "2025-11-17",
+                "last_modified": "2026-01-06",
+                "threat_name": "Windows.Trojan.NanoRemote",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Trojan_NanoRemote_7974c813\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"7974c813-7e3c-45dd-84ff-955d340bf4d3\"\n\t\tfingerprint = \"57b605ef406dbc25444210679db74b6111570c4d66375f76f3806cae76881e94\"\n\t\tcreation_date = \"2025-11-17\"\n\t\tlast_modified = \"2026-01-06\"\n\t\tthreat_name = \"Windows.Trojan.NanoRemote\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$str1 = \"/drive/v3/files/%s?alt=media\" ascii fullword\n\t\t$str2 = \"08X-%04X-%04x-%02X%02X-%02X%02X%02X%02X%02X%02X\" ascii fullword\n\t\t$str3 = \"NanoRemote/\" wide\n\t\t$str4 = \"[+] pwd output:\" wide\n\t\t$str5 = \"Download task %s failed: write error (wrote %llu/%zu bytes)\"\n\t\t$seq1 = { 48 83 7C 24 28 00 74 ?? 4C 8D 4C 24 20 41 B8 40 00 00 00 BA 00 00 01 00 48 8B 4C 24 28 FF 15 ?? ?? ?? ?? 85 C0 }\n\t\t$seq2 = { BF 06 00 00 00 89 78 48 8B 0D ?? ?? ?? ?? 89 48 ?? FF D3 89 78 78 8B 0D ?? ?? ?? ?? 89 48 7C FF D3 89 78 18 8B 0D }\n\n\tcondition:\n\t\t4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

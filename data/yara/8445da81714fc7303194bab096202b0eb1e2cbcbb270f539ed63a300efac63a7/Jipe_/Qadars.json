@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Jipe_/Qadars.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "qadars",
+                "tags": [
+                    "banker"
+                ],
+                "author": "Jean-Philippe Teissier / @Jipe_",
+                "description": "Qadars - Mobile part. Maybe Perkele.",
+                "version": "1.0",
+                "filetype": "memory",
+                "ref1": "http://www.lexsi-leblog.fr/cert/qadars-nouveau-malware-bancaire-composant-mobile.html"
+            },
+            "rule_text": "rule qadars : banker\n{\n\tmeta:\n\t\tauthor = \"Jean-Philippe Teissier / @Jipe_\"\n\t\tdescription = \"Qadars - Mobile part. Maybe Perkele.\"\n\t\tversion = \"1.0\"\n\t\tfiletype = \"memory\"\n\t\tref1 = \"http://www.lexsi-leblog.fr/cert/qadars-nouveau-malware-bancaire-composant-mobile.html\"\n\n\tstrings:\n\t\t$cmd1 = \"m?D\"\n\t\t$cmd2 = \"m?S\"\n\t\t$cmd3 = \"ALL\"\n\t\t$cmd4 = \"FILTER\"\n\t\t$cmd5 = \"NONE\"\n\t\t$cmd6 = \"KILL\"\n\t\t$cmd7 = \"CANCEL\"\n\t\t$cmd8 = \"SMS\"\n\t\t$cmd9 = \"DIVERT\"\n\t\t$cmd10 = \"MESS\"\n\t\t$nofilter = \"nofilter1111111\"\n\t\t$botherderphonenumber1 = \"+380678409210\"\n\n\tcondition:\n\t\tall of ( $cmd* ) or $nofilter or any of ( $botherderphonenumber* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

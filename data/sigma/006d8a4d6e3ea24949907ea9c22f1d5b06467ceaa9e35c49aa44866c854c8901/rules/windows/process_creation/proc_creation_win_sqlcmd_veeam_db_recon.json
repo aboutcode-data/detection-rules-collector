@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sqlcmd_veeam_db_recon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-04",
+                "title": "Veeam Backup Database Suspicious Query",
+                "id": "696bfb54-227e-4602-ac5b-30d9d2053312"
+            },
+            "rule_text": "title: Veeam Backup Database Suspicious Query\nid: 696bfb54-227e-4602-ac5b-30d9d2053312\nstatus: test\ndescription: Detects potentially suspicious SQL queries using SQLCmd targeting the\n  Veeam backup databases in order to steal information.\nreferences:\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-04\ntags:\n- attack.collection\n- attack.t1005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sql:\n    Image|endswith: \\sqlcmd.exe\n    CommandLine|contains|all:\n    - VeeamBackup\n    - 'From '\n  selection_db:\n    CommandLine|contains:\n    - BackupRepositories\n    - Backups\n    - Credentials\n    - HostCreds\n    - SmbFileShares\n    - Ssh_creds\n    - VSphereInfo\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sdiagnhost_susp_child.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nextron Systems, @Kostastsale",
+                "date": "2022-06-01",
+                "title": "Sdiagnhost Calling Suspicious Child Process",
+                "id": "f3d39c45-de1a-4486-a687-ab126124f744"
+            },
+            "rule_text": "title: Sdiagnhost Calling Suspicious Child Process\nid: f3d39c45-de1a-4486-a687-ab126124f744\nstatus: test\ndescription: Detects sdiagnhost.exe calling a suspicious child process (e.g. used\n  in exploits for Follina / CVE-2022-30190)\nreferences:\n- https://twitter.com/nao_sec/status/1530196847679401984\n- https://doublepulsar.com/follina-a-microsoft-office-code-execution-vulnerability-1a47fce5629e\n- https://app.any.run/tasks/713f05d2-fe78-4b9d-a744-f7c133e3fafb/\n- https://app.any.run/tasks/f420d295-0457-4e9b-9b9e-6732be227583/\n- https://app.any.run/tasks/c4117d9a-f463-461a-b90f-4cd258746798/\nauthor: Nextron Systems, @Kostastsale\ndate: 2022-06-01\nmodified: 2024-08-23\ntags:\n- attack.stealth\n- attack.t1036\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\sdiagnhost.exe\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\cmd.exe\n    - \\mshta.exe\n    - \\cscript.exe\n    - \\wscript.exe\n    - \\taskkill.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\calc.exe\n  filter_main_cmd_bits:\n    Image|endswith: \\cmd.exe\n    CommandLine|contains: bits\n  filter_main_powershell_noprofile:\n    Image|endswith: \\powershell.exe\n    CommandLine|endswith:\n    - -noprofile -\n    - -noprofile\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2022-30190"
+            ]
+        }
+    ]
+}

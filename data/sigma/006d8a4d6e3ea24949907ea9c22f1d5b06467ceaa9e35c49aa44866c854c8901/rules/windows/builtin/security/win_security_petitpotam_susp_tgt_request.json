@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_petitpotam_susp_tgt_request.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mauricio Velazco, Michael Haag",
+                "date": "2021-09-02",
+                "title": "PetitPotam Suspicious Kerberos TGT Request",
+                "id": "6a53d871-682d-40b6-83e0-b7c1a6c4e3a5"
+            },
+            "rule_text": "title: PetitPotam Suspicious Kerberos TGT Request\nid: 6a53d871-682d-40b6-83e0-b7c1a6c4e3a5\nstatus: test\ndescription: 'Detect suspicious Kerberos TGT requests.\n\n  Once an attacer obtains a computer certificate by abusing Active Directory Certificate\n  Services in combination with PetitPotam, the next step would be to leverage the\n  certificate for malicious purposes.\n\n  One way of doing this is to request a Kerberos Ticket Granting Ticket using a tool\n  like Rubeus.\n\n  This request will generate a 4768 event with some unusual fields depending on the\n  environment.\n\n  This analytic will require tuning, we recommend filtering Account_Name to the Domain\n  Controller computer accounts.\n\n  '\nreferences:\n- https://github.com/topotam/PetitPotam\n- https://isc.sans.edu/forums/diary/Active+Directory+Certificate+Services+ADCS+PKI+domain+admin+vulnerability/27668/\n- https://github.com/splunk/security_content/blob/88d689fe8a055d8284337b9fad5d9152b42043db/detections/endpoint/petitpotam_suspicious_kerberos_tgt_request.yml\nauthor: Mauricio Velazco, Michael Haag\ndate: 2021-09-02\nmodified: 2022-10-05\ntags:\n- attack.credential-access\n- attack.t1187\nlogsource:\n  product: windows\n  service: security\n  definition: The advanced audit policy setting \"Account Logon > Kerberos Authentication\n    Service\" must be configured for Success/Failure\ndetection:\n  selection:\n    EventID: 4768\n    TargetUserName|endswith: $\n    CertThumbprint|contains: '*'\n  filter_local:\n    IpAddress: ::1\n  filter_thumbprint:\n    CertThumbprint: ''\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- False positives are possible if the environment is using certificates for authentication.\n  We recommend filtering Account_Name to the Domain Controller computer accounts.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

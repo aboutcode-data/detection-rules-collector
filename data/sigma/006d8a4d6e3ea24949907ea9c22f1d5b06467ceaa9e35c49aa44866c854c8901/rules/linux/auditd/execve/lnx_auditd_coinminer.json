@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_coinminer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-10-09",
+                "title": "Possible Coin Miner CPU Priority Param",
+                "id": "071d5e5a-9cef-47ec-bc4e-a42e34d8d0ed"
+            },
+            "rule_text": "title: Possible Coin Miner CPU Priority Param\nid: 071d5e5a-9cef-47ec-bc4e-a42e34d8d0ed\nstatus: test\ndescription: Detects command line parameter very often used with coin miners\nreferences:\n- https://xmrig.com/docs/miner/command-line-options\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-10-09\nmodified: 2022-12-25\ntags:\n- attack.privilege-escalation\n- attack.t1068\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  cmd1:\n    a1|startswith: --cpu-priority\n  cmd2:\n    a2|startswith: --cpu-priority\n  cmd3:\n    a3|startswith: --cpu-priority\n  cmd4:\n    a4|startswith: --cpu-priority\n  cmd5:\n    a5|startswith: --cpu-priority\n  cmd6:\n    a6|startswith: --cpu-priority\n  cmd7:\n    a7|startswith: --cpu-priority\n  condition: 1 of cmd*\nfalsepositives:\n- Other tools that use a --cpu-priority flag\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

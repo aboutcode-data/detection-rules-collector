@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_external_device.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Keith Wright",
+                "date": "2019-11-20",
+                "title": "External Disk Drive Or USB Storage Device Was Recognized By The System",
+                "id": "f69a87ea-955e-4fb4-adb2-bb9fd6685632"
+            },
+            "rule_text": "title: External Disk Drive Or USB Storage Device Was Recognized By The System\nid: f69a87ea-955e-4fb4-adb2-bb9fd6685632\nstatus: test\ndescription: Detects external disk drives or plugged-in USB devices.\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-6416\nauthor: Keith Wright\ndate: 2019-11-20\nmodified: 2024-02-09\ntags:\n- attack.t1091\n- attack.t1200\n- attack.lateral-movement\n- attack.initial-access\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection_eid:\n    EventID: 6416\n  selection_field:\n  - ClassName: DiskDrive\n  - DeviceDescription: USB Mass Storage Device\n  condition: all of selection_*\nfalsepositives:\n- Likely\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_base64_encoded_cmd.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy, Anton Kutepov, oscd.community",
+                "date": "2018-09-03",
+                "title": "Suspicious Encoded PowerShell Command Line",
+                "id": "ca2092a1-c273-4878-9b4b-0d60115bf5ea"
+            },
+            "rule_text": "title: Suspicious Encoded PowerShell Command Line\nid: ca2092a1-c273-4878-9b4b-0d60115bf5ea\nstatus: test\ndescription: Detects suspicious powershell process starts with base64 encoded commands\n  (e.g. Emotet)\nreferences:\n- https://app.any.run/tasks/6217d77d-3189-4db2-a957-8ab239f3e01e\nauthor: Florian Roth (Nextron Systems), Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy,\n  Anton Kutepov, oscd.community\ndate: 2018-09-03\nmodified: 2023-04-06\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli_enc:\n    CommandLine|contains: ' -e'\n  selection_cli_content:\n    CommandLine|contains:\n    - ' JAB'\n    - ' SUVYI'\n    - ' SQBFAFgA'\n    - ' aQBlAHgA'\n    - ' aWV4I'\n    - ' IAA'\n    - ' IAB'\n    - ' UwB'\n    - ' cwB'\n  selection_standalone:\n    CommandLine|contains:\n    - '.exe -ENCOD '\n    - ' BA^J e-'\n  filter_optional_remote_signed:\n    CommandLine|contains: ' -ExecutionPolicy remotesigned '\n  condition: selection_img and (all of selection_cli_* or selection_standalone) and\n    not 1 of filter_optional_*\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

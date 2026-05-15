@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_plead_downloader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PLEAD_Downloader_Jun18_1",
+                "tags": [],
+                "description": "Detects PLEAD Downloader",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://blog.jpcert.or.jp/2018/06/plead-downloader-used-by-blacktech.html",
+                "date": "2018-06-16",
+                "hash1": "a26df4f62ada084a596bf0f603691bc9c02024be98abec4a9872f0ff0085f940",
+                "id": "19d588d8-1f03-5f34-b82e-b645c28a19a4"
+            },
+            "rule_text": "rule PLEAD_Downloader_Jun18_1\n{\n\tmeta:\n\t\tdescription = \"Detects PLEAD Downloader\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://blog.jpcert.or.jp/2018/06/plead-downloader-used-by-blacktech.html\"\n\t\tdate = \"2018-06-16\"\n\t\thash1 = \"a26df4f62ada084a596bf0f603691bc9c02024be98abec4a9872f0ff0085f940\"\n\t\tid = \"19d588d8-1f03-5f34-b82e-b645c28a19a4\"\n\n\tstrings:\n\t\t$s1 = \"%02d:%02d:%02d\" ascii fullword\n\t\t$s2 = \"%02d-%02d-%02d\" ascii fullword\n\t\t$s3 = \"1111%02d%02d%02d_%02d%02d2222\" ascii fullword\n\t\t$a1 = \"Scanning...\" wide fullword\n\t\t$a2 = \"Checking...\" wide fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 200KB and ( all of ( $s* ) or ( 2 of ( $s* ) and 1 of ( $a* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_BrokePKG.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_BrokePKG_7b7d4581",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "7b7d4581-ee4d-48c3-81e4-4264d68e8fe9",
+                "fingerprint": "5d771035e2bc4ffea1b9fd6f29c76ff5d9278db42167d3dab90eb0ac8d4bdd78",
+                "creation_date": "2024-11-13",
+                "last_modified": "2024-11-22",
+                "threat_name": "Linux.Rootkit.BrokePKG",
+                "reference_sample": "97c5e011c7315a05c470eef4032030e461ec2a596513703beedeec0b0c6ed2da",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_BrokePKG_7b7d4581\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"7b7d4581-ee4d-48c3-81e4-4264d68e8fe9\"\n\t\tfingerprint = \"5d771035e2bc4ffea1b9fd6f29c76ff5d9278db42167d3dab90eb0ac8d4bdd78\"\n\t\tcreation_date = \"2024-11-13\"\n\t\tlast_modified = \"2024-11-22\"\n\t\tthreat_name = \"Linux.Rootkit.BrokePKG\"\n\t\treference_sample = \"97c5e011c7315a05c470eef4032030e461ec2a596513703beedeec0b0c6ed2da\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$license1 = \"author=R3tr074\"\n\t\t$license2 = \"name=brokepkg\"\n\t\t$license3 = \"description=Rootkit\"\n\t\t$license4 = \"license=GPL\"\n\t\t$str1 = \"brokepkg\"\n\t\t$str2 = \"brokepkg: module revealed\"\n\t\t$str3 = \"brokepkg: hidden module\"\n\t\t$str4 = \"brokepkg: given away root\"\n\t\t$str5 = \"brokepkg unloaded, my work has completed\"\n\t\t$str6 = \"br0k3_n0w_h1dd3n\"\n\t\t$hook1 = \"nf_inet_hooks\"\n\t\t$hook2 = \"ftrace_hook\"\n\t\t$hook3 = \"hook_getdents\"\n\t\t$hook4 = \"hook_kill\"\n\t\t$hook5 = \"hook_tcp4_seq_show\"\n\t\t$hook6 = \"hook_tcp6_seq_show\"\n\t\t$hook7 = \"orig_tcp6_seq_show\"\n\t\t$hook8 = \"orig_tcp4_seq_show\"\n\t\t$hook9 = \"orig_kill\"\n\t\t$hook10 = \"orig_getdents\"\n\n\tcondition:\n\t\t3 of ( $license* ) or 2 of ( $str* ) or 4 of ( $hook* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Loki/Trojan_BAT_Loki_E_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Loki_E_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Loki.E!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Loki_E_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Loki.E!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {03 04 03 8e 69 5d 03 8e 69 58 03 8e 69 5d 91 }\n\t\t$a_01_1 = {03 17 58 04 5d 04 58 04 5d }\n\t\t$a_01_2 = {03 04 05 5d 05 58 05 5d 91 }\n\t\t$a_01_3 = {04 05 5d 05 58 05 5d 0a 03 06 91 0e 04 61 0e 05 59 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 4 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zenpak/Trojan_Win32_Zenpak_GZM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zenpak_GZM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Zenpak.GZM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zenpak_GZM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zenpak.GZM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 f0 50 8f 05 ?? ?? ?? ?? 83 f2 ?? 42 89 d0 31 1d ?? ?? ?? ?? 89 f8 50 8f 05 ?? ?? ?? ?? 89 2d ?? ?? ?? ?? 8d 05 ?? ?? ?? ?? ff d0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zenpak_GZM_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Zenpak.GZM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zenpak_GZM_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zenpak.GZM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 ea 05 29 c2 ?? ?? 4a ba ?? ?? ?? ?? 4a 89 f8 50 8f 05 ?? ?? ?? ?? e8 ?? ?? ?? ?? c3 4a 01 1d ?? ?? ?? ?? 8d 05 ?? ?? ?? ?? 89 30 8d 05 ?? ?? ?? ?? 89 28 }\n\t\t$a_03_1 = {29 c2 89 e0 50 8f 05 ?? ?? ?? ?? 83 f0 01 e8 ?? ?? ?? ?? 01 2d ?? ?? ?? ?? 89 c2 8d 05 ?? ?? ?? ?? 01 18 e8 ?? ?? ?? ?? c3 01 c2 8d 05 ?? ?? ?? ?? 01 38 8d 05 ?? ?? ?? ?? 89 30 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Mint-Sandstorm/proc_creation_win_apt_mint_sandstorm_log4j_wstomcat_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), MSTIC (idea)",
+                "date": "2023-04-20",
+                "title": "Mint Sandstorm - Log4J Wstomcat Process Execution",
+                "id": "7c97c625-0350-4f0a-8943-f6cadc88125e"
+            },
+            "rule_text": "title: Mint Sandstorm - Log4J Wstomcat Process Execution\nid: 7c97c625-0350-4f0a-8943-f6cadc88125e\nstatus: test\ndescription: Detects Log4J Wstomcat process execution as seen in Mint Sandstorm activity\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2023/04/18/nation-state-threat-actor-mint-sandstorm-refines-tradecraft-to-attack-high-value-targets/\nauthor: Nasreddine Bencherchali (Nextron Systems), MSTIC (idea)\ndate: 2023-04-20\nmodified: 2023-11-29\ntags:\n- attack.execution\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\ws_tomcatservice.exe\n  filter_main_repadmin:\n    Image|endswith: \\repadmin.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

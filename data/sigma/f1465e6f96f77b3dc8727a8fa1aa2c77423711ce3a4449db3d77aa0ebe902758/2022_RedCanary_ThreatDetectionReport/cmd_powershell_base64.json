@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/cmd_powershell_base64.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Base64 Encoding in CMD or Powershell",
+                "id": "1b5f1187-7010-4f58-b6a3-2b762d594b90"
+            },
+            "rule_text": "title: Base64 Encoding in CMD or Powershell\nid: 1b5f1187-7010-4f58-b6a3-2b762d594b90\nstatus: experimental\ndescription: Looks for the execution of cmd.exe or powershell.exe with command lines\n  that includes the term base64. Inspired by the 2022 Red Canary Threat Detection\n  report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/obfuscated-files-information/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.defense_evasion\n- attack.t1140\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\powershell.exe\n    - \\cmd.exe\n    CommandLine|contains: base64\n  condition: selection\nfalsepositives:\n- Windows Config Manager (https://wtfbins.wtf/1)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

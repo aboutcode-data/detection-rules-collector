@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/WinNT/Rootkitdrv/VirTool_WinNT_Rootkitdrv_gen_FT.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_WinNT_Rootkitdrv_gen_FT",
+                "tags": [],
+                "description": "VirTool:WinNT/Rootkitdrv.gen!FT,SIGNATURE_TYPE_PEHSTR_EXT,15 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_WinNT_Rootkitdrv_gen_FT\n{\n\tmeta:\n\t\tdescription = \"VirTool:WinNT/Rootkitdrv.gen!FT,SIGNATURE_TYPE_PEHSTR_EXT,15 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 44 24 0c 8b 08 8b d1 83 ea 00 74 19 4a 74 0f 51 68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 59 59 eb 16 }\n\t\t$a_00_1 = {ff b0 d4 07 00 00 83 c0 04 50 }\n\t\t$a_00_2 = {5c 00 44 00 65 00 76 00 69 00 63 00 65 00 5c 00 6d 00 73 00 69 00 6f 00 73 00 44 00 6f 00 6d 00 33 00 32 00 }\n\t\t$a_00_3 = {5c 00 44 00 6f 00 73 00 44 00 65 00 76 00 69 00 63 00 65 00 73 00 5c 00 6d 00 73 00 69 00 6f 00 73 00 44 00 6f 00 6d 00 33 00 32 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 10 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

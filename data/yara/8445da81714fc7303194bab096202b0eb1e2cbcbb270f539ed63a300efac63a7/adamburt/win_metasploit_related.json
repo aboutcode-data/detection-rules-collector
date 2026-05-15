@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/adamburt/win_metasploit_related.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "metasploit_payload_msfpayload",
+                "tags": [],
+                "description": "This rule detects generic metasploit callback payloads generated with msfpayload",
+                "Author": "Adam Burt (adam_burt@symantec.com)"
+            },
+            "rule_text": "rule metasploit_payload_msfpayload\n{\n\tmeta:\n\t\tdescription = \"This rule detects generic metasploit callback payloads generated with msfpayload\"\n\t\tAuthor = \"Adam Burt (adam_burt@symantec.com)\"\n\n\tstrings:\n\t\t$a1 = \"asf\"\n\t\t$a2 = \"release\"\n\t\t$a3 = \"build\"\n\t\t$a4 = \"support\"\n\t\t$a5 = \"ab.pdb\"\n\t\t$l1 = \"WS2_32.dll\"\n\t\t$l2 = \"mswsock\"\n\t\t$l3 = \"ntdll.dll\"\n\t\t$l4 = \"KERNEL32.dll\"\n\t\t$l5 = \"shell32\"\n\t\t$l6 = \"malloc\"\n\t\t$l7 = \"fopen\"\n\t\t$l8 = \"fclose\"\n\t\t$l9 = \"fprintf\"\n\t\t$l10 = \"strncpy\"\n\n\tcondition:\n\t\tall of ( $l* ) and all of ( $a* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "metasploit_service_starter",
+                "tags": [],
+                "description": "This rule detects related metasploit service starters",
+                "author": "Adam Burt (adam_burt@symantec.com)"
+            },
+            "rule_text": "import \"pe\"\n\nrule metasploit_service_starter\n{\n\tmeta:\n\t\tdescription = \"This rule detects related metasploit service starters\"\n\t\tauthor = \"Adam Burt (adam_burt@symantec.com)\"\n\n\tstrings:\n\t\t$a1 = \"StartServiceCtrlDispatcher\"\n\t\t$a2 = \"RegisterServiceCtrlHandle\"\n\t\t$a3 = \"CloseHandle\"\n\t\t$a4 = \"memset\"\n\t\t$a5 = \"rundll32.exe\"\n\t\t$a6 = \"msvcrt.dll\"\n\n\tcondition:\n\t\tpe.sections[ 3 ] . name == \".bss\" and pe.sections [ 3 ] . virtual_size == 0x00000030 and pe.sections [ 2 ] . virtual_size == 0x0000001c and pe.sections [ 4 ] . virtual_size == 0x00000224 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

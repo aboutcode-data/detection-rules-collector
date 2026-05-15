@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_vulnerable_driver_blocklist_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-01-26",
+                "title": "Windows Vulnerable Driver Blocklist Disabled",
+                "id": "d526c60a-e236-4011-b165-831ffa52ab70"
+            },
+            "rule_text": "title: Windows Vulnerable Driver Blocklist Disabled\nid: d526c60a-e236-4011-b165-831ffa52ab70\nrelated:\n- id: 22154f0e-5132-4a54-aa78-cc62f6def531\n  type: similar\nstatus: experimental\ndescription: 'Detects when the Windows Vulnerable Driver Blocklist is set to disabled.\n  This setting is crucial for preventing the loading of known vulnerable drivers,\n\n  and its modification may indicate an attempt to bypass security controls. It is\n  often targeted by threat actors to facilitate the installation of malicious or vulnerable\n  drivers,\n\n  particularly in scenarios involving Endpoint Detection and Response (EDR) bypass\n  techniques.\n\n  This rule applies to systems that support the Vulnerable Driver Blocklist feature,\n  including Windows 10 version 1903 and later, and Windows Server 2022 and later.\n\n  Note that this change will require a reboot to take effect, and this rule only detects\n  the registry modification action.\n\n  '\nreferences:\n- https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-driver-block-rules\n- https://www.sophos.com/en-us/blog/sharpening-the-knife-gold-blades-strategic-evolution\n- https://learn.microsoft.com/en-us/windows/security/application-security/application-control/app-control-for-business/design/microsoft-recommended-driver-block-rules\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-01-26\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Control\\CI\\Config\\VulnerableDriverBlocklistEnable\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unlikely and should be investigated immediately.\nlevel: high\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_vulnerable_driver_blocklist_disable/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

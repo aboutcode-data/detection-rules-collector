@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sigverif_uncommon_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-19",
+                "title": "Uncommon Sigverif.EXE Child Process",
+                "id": "7d4aaec2-08ed-4430-8b96-28420e030e04"
+            },
+            "rule_text": "title: Uncommon Sigverif.EXE Child Process\nid: 7d4aaec2-08ed-4430-8b96-28420e030e04\nstatus: test\ndescription: 'Detects uncommon child processes spawning from \"sigverif.exe\", which\n  could indicate potential abuse of the latter as a living of the land binary in order\n  to proxy execution.\n\n  '\nreferences:\n- https://www.hexacorn.com/blog/2018/04/27/i-shot-the-sigverif-exe-the-gui-based-lolbin/\n- https://twitter.com/0gtweet/status/1457676633809330184\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-19\nmodified: 2024-08-27\ntags:\n- attack.stealth\n- attack.t1216\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\sigverif.exe\n  filter_main_werfault:\n    Image:\n    - C:\\Windows\\System32\\WerFault.exe\n    - C:\\Windows\\SysWOW64\\WerFault.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

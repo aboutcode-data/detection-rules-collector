@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Cluster 25/UNC1222_HermeticWiper_23433_10001.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "UNC1222_HermeticWiper_23433_10001",
+                "tags": [],
+                "date": "2022-02-23",
+                "description": "Detects HermeticWiper variants by internal strings",
+                "author": "Cluster25",
+                "tlp": "white",
+                "hash1": "0385eeab00e946a302b24a91dea4187c1210597b8e17cd9e2230450f5ece21da",
+                "hash2": "1bc44eef75779e3ca1eefb8ff5a64807dbc942b1e4a2672d77b9f6928d292591",
+                "report": "https://blog.cluster25.duskrise.com/2022/02/24/ukraine-analysis-of-the-new-disk-wiping-malware"
+            },
+            "rule_text": "rule UNC1222_HermeticWiper_23433_10001\n{\n\tmeta:\n\t\tdate = \"2022-02-23\"\n\t\tdescription = \"Detects HermeticWiper variants by internal strings\"\n\t\tauthor = \"Cluster25\"\n\t\ttlp = \"white\"\n\t\thash1 = \"0385eeab00e946a302b24a91dea4187c1210597b8e17cd9e2230450f5ece21da\"\n\t\thash2 = \"1bc44eef75779e3ca1eefb8ff5a64807dbc942b1e4a2672d77b9f6928d292591\"\n\t\treport = \"https://blog.cluster25.duskrise.com/2022/02/24/ukraine-analysis-of-the-new-disk-wiping-malware\"\n\n\tstrings:\n\t\t$ = \"tdrv.pdb\" fullword ascii\n\t\t$ = \"\\\\\\\\.\\\\EPMNTDRV\\\\%u\" fullword wide\n\t\t$ = \"PhysicalDrive%u\" fullword wide\n\t\t$ = \"Hermetica Digital Ltd\"\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and all of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

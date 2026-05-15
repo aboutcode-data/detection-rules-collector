@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/netlab360/elknot_billgates.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "elknot_xor",
+                "tags": [
+                    "ELF",
+                    "PE",
+                    "DDoS",
+                    "XOR",
+                    "BillGates"
+                ],
+                "author": "liuya@360.cn",
+                "description": "elknot/Billgates variants with XOR like C2 encryption scheme",
+                "reference": "http://blog.netlab.360.com/new-elknot-billgates-variant-with-xor-like-c2-configuration-encryption-scheme/",
+                "date": "2015-09-12"
+            },
+            "rule_text": "rule elknot_xor : ELF PE DDoS XOR BillGates\n{\n\tmeta:\n\t\tauthor = \"liuya@360.cn\"\n\t\tdescription = \"elknot/Billgates variants with XOR like C2 encryption scheme\"\n\t\treference = \"http://blog.netlab.360.com/new-elknot-billgates-variant-with-xor-like-c2-configuration-encryption-scheme/\"\n\t\tdate = \"2015-09-12\"\n\n\tstrings:\n\t\t$decrypt_c2_func_1 = {08 83 [5] 02 75 07 81 04 24 00 01 00 00 50 e8 [4] e9}\n\t\t$decrypt_c2_func_2 = {e8 00 00 00 00 87 [2] 83 eb 05 8d 83 [4] 83 bb [4] 02 75 05}\n\n\tcondition:\n\t\t1 of ( $decrypt_c2_func_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

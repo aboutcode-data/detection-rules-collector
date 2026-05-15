@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/ballastsecurity/poisonivy.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PoisonIvy",
+                "tags": [],
+                "author": " Kevin Breen <kevin@techanarchy.net>",
+                "date": "2014/04",
+                "ref": "http://malwareconfig.com/stats/PoisonIvy",
+                "maltype": "Remote Access Trojan",
+                "filetype": "exe"
+            },
+            "rule_text": "rule PoisonIvy\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tdate = \"2014/04\"\n\t\tref = \"http://malwareconfig.com/stats/PoisonIvy\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n\n\tstrings:\n\t\t$stub = {04 08 00 53 74 75 62 50 61 74 68 18 04}\n\t\t$string1 = \"CONNECT %s:%i HTTP/1.0\"\n\t\t$string2 = \"ws2_32\"\n\t\t$string3 = \"cks=u\"\n\t\t$string4 = \"thj@h\"\n\t\t$string5 = \"advpack\"\n\n\tcondition:\n\t\t$stub at 0x1620 and all of ( $string* ) or ( all of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

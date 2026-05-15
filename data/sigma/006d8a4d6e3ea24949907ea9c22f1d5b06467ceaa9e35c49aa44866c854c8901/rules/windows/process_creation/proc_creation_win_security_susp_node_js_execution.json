@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_security_susp_node_js_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-04-21",
+                "title": "NodeJS Execution of JavaScript File",
+                "id": "ba3874b9-0fae-465f-836c-eb5d071a1789"
+            },
+            "rule_text": "title: NodeJS Execution of JavaScript File\nid: ba3874b9-0fae-465f-836c-eb5d071a1789\nstatus: experimental\ndescription: 'Detects execution of JavaScript or JSC files using NodeJs binary node.exe,\n  that could be potentially suspicious.\n\n  Node.js is a popular open-source JavaScript runtime that runs code outside browsers\n  and is widely used for both frontend and backend development.\n\n  Adversaries have been observed abusing Node.js to disguise malware as legitimate\n  processes, evade security defenses, and maintain persistence within target systems.\n\n  Because Node.js is commonly used, this rule may generate false positives in some\n  environments. However, if such activity is unusual in your environment, it is highly\n  suspicious and warrants immediate investigation.\n\n  '\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2025/04/15/threat-actors-misuse-node-js-to-deliver-malware-and-other-malicious-payloads/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-04-21\ntags:\n- attack.execution\n- attack.t1059.007\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\node.exe\n  - OriginalFileName: node.exe\n  - Product: Node.js\n  selection_cmd:\n    CommandLine|contains: .js\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of node.exe to execute JavaScript or JSC files on your environment\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

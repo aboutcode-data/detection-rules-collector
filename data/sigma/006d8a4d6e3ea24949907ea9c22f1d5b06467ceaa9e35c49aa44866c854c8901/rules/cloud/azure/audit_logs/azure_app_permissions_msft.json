@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_app_permissions_msft.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'",
+                "date": "2022-07-10",
+                "title": "App Granted Microsoft Permissions",
+                "id": "c1d147ae-a951-48e5-8b41-dcd0170c7213"
+            },
+            "rule_text": "title: App Granted Microsoft Permissions\nid: c1d147ae-a951-48e5-8b41-dcd0170c7213\nstatus: test\ndescription: Detects when an application is granted delegated or app role permissions\n  for Microsoft Graph, Exchange, Sharepoint, or Azure AD\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications#application-granted-highly-privileged-permissions\nauthor: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'\ndate: 2022-07-10\ntags:\n- attack.credential-access\n- attack.t1528\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message:\n    - Add delegated permission grant\n    - Add app role assignment to service principal\n  condition: selection\nfalsepositives:\n- When the permission is legitimately needed for the app\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

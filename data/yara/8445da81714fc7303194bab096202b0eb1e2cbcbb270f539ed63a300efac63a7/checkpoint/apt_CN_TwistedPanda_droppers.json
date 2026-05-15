@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/apt_CN_TwistedPanda_droppers.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_CN_TwistedPanda_droppers",
+                "tags": [],
+                "author": "Check Point Research",
+                "description": "Detect droppers used by TwistedPanda",
+                "reference": "https://research.checkpoint.com/2022/twisted-panda-chinese-apt-espionage-operation-against-russians-state-owned-defense-institutes/",
+                "date": "2022-04-14",
+                "hash": "f29a0cda6e56fc0e26efa3b6628c6bcaa0819a3275a10e9da2a8517778152d66"
+            },
+            "rule_text": "rule apt_CN_TwistedPanda_droppers\n{\n\tmeta:\n\t\tauthor = \"Check Point Research\"\n\t\tdescription = \"Detect droppers used by TwistedPanda\"\n\t\treference = \"https://research.checkpoint.com/2022/twisted-panda-chinese-apt-espionage-operation-against-russians-state-owned-defense-institutes/\"\n\t\tdate = \"2022-04-14\"\n\t\thash = \"59dea38da6e515af45d6df68f8959601e2bbf0302e35b7989e741e9aba2f0291\"\n\t\thash = \"8b04479fdf22892cdfebd6e6fbed180701e036806ed0ddbe79f0b29f73449248\"\n\t\thash = \"f29a0cda6e56fc0e26efa3b6628c6bcaa0819a3275a10e9da2a8517778152d66\"\n\n\tstrings:\n\t\t$switch_control = { 81 FA [4] 75 ?? E8 [4] 48 89 05 [4] E? }\n\t\t$byte_manipulation = { 41 0F [2] 44 [2] 41 [2] 03 41 81 [5] 41 }\n\t\t$stack_strings_1 = { 25 00 70 00 }\n\t\t$stack_strings_2 = { 75 00 62 00 }\n\t\t$stack_strings_3 = { 6C 00 69 00 }\n\t\t$stack_strings_4 = { 63 00 25 00 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550 and filesize < 3000KB and #switch_control > 8 and all of ( $stack_strings_* ) and $byte_manipulation\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

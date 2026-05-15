@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Zilla/Trojan_BAT_Zilla_NITB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Zilla_NITB_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Zilla.NITB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Zilla_NITB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Zilla.NITB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {28 23 00 00 0a 02 6f ?? 00 00 0a 0a 06 6f ?? 00 00 0a 0b 06 07 6f ?? 00 00 0a 6f ?? 00 00 0a 0c 17 8d 01 00 00 01 0d 07 6f ?? 00 00 0a 8e 69 2d 02 14 0d 07 08 09 6f ?? 00 00 0a 26 2a }\n\t\t$a_01_1 = {72 65 71 75 65 73 74 65 64 50 72 69 76 69 6c 65 67 65 73 }\n\t\t$a_01_2 = {72 65 71 75 65 73 74 65 64 45 78 65 63 75 74 69 6f 6e 4c 65 76 65 6c }\n\t\t$a_01_3 = {47 65 74 50 61 74 68 52 6f 6f 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

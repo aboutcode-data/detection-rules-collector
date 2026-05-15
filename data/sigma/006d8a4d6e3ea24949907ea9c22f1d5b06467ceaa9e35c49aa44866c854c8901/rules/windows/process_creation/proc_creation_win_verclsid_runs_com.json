@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_verclsid_runs_com.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Victor Sergeev, oscd.community",
+                "date": "2020-10-09",
+                "title": "Verclsid.exe Runs COM Object",
+                "id": "d06be4b9-8045-428b-a567-740a26d9db25"
+            },
+            "rule_text": "title: Verclsid.exe Runs COM Object\nid: d06be4b9-8045-428b-a567-740a26d9db25\nstatus: test\ndescription: Detects when verclsid.exe is used to run COM object via GUID\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Verclsid/\n- https://gist.github.com/NickTyrer/0598b60112eaafe6d07789f7964290d5\n- https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/\nauthor: Victor Sergeev, oscd.community\ndate: 2020-10-09\nmodified: 2025-10-07\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\verclsid.exe\n  - OriginalFileName: verclsid.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - /S\n    - /C\n  filter_main_runtimebroker:\n    ParentImage|endswith: C:\\Windows\\System32\\RuntimeBroker.exe\n    CommandLine|contains|all:\n    - verclsid.exe\" /S /C {\n    - '} /I {'\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

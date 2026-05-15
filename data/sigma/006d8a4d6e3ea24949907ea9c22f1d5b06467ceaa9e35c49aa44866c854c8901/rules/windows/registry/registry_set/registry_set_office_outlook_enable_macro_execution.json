@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_office_outlook_enable_macro_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@ScoubiMtl",
+                "date": "2021-04-05",
+                "title": "Outlook Macro Execution Without Warning Setting Enabled",
+                "id": "e3b50fa5-3c3f-444e-937b-0a99d33731cd"
+            },
+            "rule_text": "title: Outlook Macro Execution Without Warning Setting Enabled\nid: e3b50fa5-3c3f-444e-937b-0a99d33731cd\nstatus: test\ndescription: Detects the modification of Outlook security setting to allow unprompted\n  execution of macros.\nreferences:\n- https://www.mdsec.co.uk/2020/11/a-fresh-outlook-on-mail-based-persistence/\n- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=53\nauthor: '@ScoubiMtl'\ndate: 2021-04-05\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.command-and-control\n- attack.t1137\n- attack.t1008\n- attack.t1546\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Outlook\\Security\\Level\n    Details|contains: '0x00000001'\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

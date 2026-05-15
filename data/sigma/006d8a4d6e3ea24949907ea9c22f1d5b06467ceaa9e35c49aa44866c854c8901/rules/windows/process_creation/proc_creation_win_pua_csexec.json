@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_csexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-22",
+                "title": "PUA - CsExec Execution",
+                "id": "d08a2711-ee8b-4323-bdec-b7d85e892b31"
+            },
+            "rule_text": "title: PUA - CsExec Execution\nid: d08a2711-ee8b-4323-bdec-b7d85e892b31\nstatus: test\ndescription: Detects the use of the lesser known remote execution tool named CsExec\n  a PsExec alternative\nreferences:\n- https://github.com/malcomvetter/CSExec\n- https://www.microsoft.com/security/blog/2022/05/09/ransomware-as-a-service-understanding-the-cybercrime-gig-economy-and-how-to-protect-yourself/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-22\nmodified: 2023-02-21\ntags:\n- attack.resource-development\n- attack.t1587.001\n- attack.execution\n- attack.t1569.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\csexec.exe\n  selection_pe:\n    Description: csexec\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

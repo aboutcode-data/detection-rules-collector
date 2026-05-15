@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/webshell_aspx_sportsball.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_aspx_sportsball",
+                "tags": [
+                    "Webshell"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-03-01",
+                "description": "The SPORTSBALL webshell allows attackers to upload files or execute commands on the system.",
+                "reference": "https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/",
+                "hash": "2fa06333188795110bba14a482020699a96f76fb1ceb80cbfa2df9d3008b5b0a",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule webshell_aspx_sportsball : Webshell\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-03-01\"\n\t\tdescription = \"The SPORTSBALL webshell allows attackers to upload files or execute commands on the system.\"\n\t\treference = \"https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/\"\n\t\thash = \"2fa06333188795110bba14a482020699a96f76fb1ceb80cbfa2df9d3008b5b0a\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$uniq1 = \"HttpCookie newcook = new HttpCookie(\\\"fqrspt\\\", HttpContext.Current.Request.Form\"\n\t\t$uniq2 = \"ZN2aDAB4rXsszEvCLrzgcvQ4oi5J1TuiRULlQbYwldE=\"\n\t\t$var1 = \"Result.InnerText = string.Empty;\"\n\t\t$var2 = \"newcook.Expires = DateTime.Now.AddDays(\"\n\t\t$var3 = \"System.Diagnostics.Process process = new System.Diagnostics.Process()\"\n\t\t$var4 = \"process.StandardInput.WriteLine(HttpContext.Current.Request.Form[\\\"\"\n\t\t$var5 = \"else if (!string.IsNullOrEmpty(HttpContext.Current.Request.Form[\\\"\"\n\t\t$var6 = \"<input type=\\\"submit\\\" value=\\\"Upload\\\" />\"\n\n\tcondition:\n\t\tany of ( $uniq* ) or all of ( $var* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

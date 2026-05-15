@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/GandCrab/Ransom_Win32_GandCrab_AV.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_GandCrab_AV",
+                "tags": [],
+                "description": "Ransom:Win32/GandCrab.AV,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_GandCrab_AV\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/GandCrab.AV,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6a 4c 58 66 a3 18 50 47 00 33 c0 c7 05 ?? ?? ?? ?? 33 32 2e 64 66 c7 05 ?? ?? ?? ?? 6c 6c 88 1d ?? ?? ?? ?? 66 a3 }\n\t\t$a_03_1 = {56 6a 64 6a 00 ff 15 ?? ?? ?? ?? 8b f0 68 ?? ?? ?? ?? 56 ff 15 ?? ?? ?? ?? c6 46 ?? ?? 8b c6 5e c3 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 20 ) >= 40\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

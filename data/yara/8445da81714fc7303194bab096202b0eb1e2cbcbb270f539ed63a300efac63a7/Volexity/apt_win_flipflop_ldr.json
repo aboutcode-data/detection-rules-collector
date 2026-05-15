@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/apt_win_flipflop_ldr.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_win_flipflop_ldr",
+                "tags": [
+                    "APT29"
+                ],
+                "author": "threatintel@volexity.com",
+                "date": "2021-05-25",
+                "description": "A loader for the CobaltStrike malware family, which ultimately takes the first and second bytes of an embedded file, and flips them prior to executing the resulting payload.",
+                "reference": "https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/",
+                "hash": "ee42ddacbd202008bcc1312e548e1d9ac670dd3d86c999606a3a01d464a2a330",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule apt_win_flipflop_ldr : APT29\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-05-25\"\n\t\tdescription = \"A loader for the CobaltStrike malware family, which ultimately takes the first and second bytes of an embedded file, and flips them prior to executing the resulting payload.\"\n\t\treference = \"https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/\"\n\t\thash = \"ee42ddacbd202008bcc1312e548e1d9ac670dd3d86c999606a3a01d464a2a330\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$s1 = \"irnjadle\"\n\t\t$s2 = \"BADCFEHGJILKNMPORQTSVUXWZY\"\n\t\t$s3 = \"iMrcsofo taBesC yrtpgoarhpciP orived r1v0.\"\n\n\tcondition:\n\t\tall of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

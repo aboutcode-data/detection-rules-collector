@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/O97M/Obfuse/Trojan_O97M_Obfuse_BS.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_O97M_Obfuse_BS",
+                "tags": [],
+                "description": "Trojan:O97M/Obfuse.BS,SIGNATURE_TYPE_MACROHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_O97M_Obfuse_BS\n{\n\tmeta:\n\t\tdescription = \"Trojan:O97M/Obfuse.BS,SIGNATURE_TYPE_MACROHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {50 72 69 76 61 74 65 20 53 75 62 20 45 64 69 74 54 65 78 74 31 5f 43 68 61 6e 67 65 28 29 0d 0a 44 69 6d 20 69 6e 64 31 20 41 73 20 53 74 72 69 6e 67 0d 0a 69 6e 64 31 20 3d 20 22 31 30 30 37 22 0d 0a 45 6e 64 20 53 75 62 }\n\t\t$a_00_1 = {2e 54 65 78 74 31 2c 20 4c 65 6e 28 }\n\t\t$a_02_2 = {20 3d 20 4c 65 6e 28 [0-20] 2e 4c 61 73 74 54 65 78 74 29 }\n\t\t$a_02_3 = {20 54 68 65 6e 20 53 68 65 6c 6c 20 [0-20] 0d 0a 45 6e 64 20 53 75 62 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

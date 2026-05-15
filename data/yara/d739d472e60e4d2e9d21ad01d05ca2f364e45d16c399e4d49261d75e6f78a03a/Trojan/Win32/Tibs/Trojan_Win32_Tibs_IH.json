@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Tibs/Trojan_Win32_Tibs_IH.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Tibs_IH",
+                "tags": [],
+                "description": "Trojan:Win32/Tibs.IH,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Tibs_IH\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Tibs.IH,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 18 be db ?? ?? ?? ff 94 ?? ?? ?? ?? ?? 61 b9 ?? ?? ?? ?? c9 c2 }\n\t\t$a_01_1 = {bb 05 ee 0f 00 81 f3 45 ee 0f 00 8d 55 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

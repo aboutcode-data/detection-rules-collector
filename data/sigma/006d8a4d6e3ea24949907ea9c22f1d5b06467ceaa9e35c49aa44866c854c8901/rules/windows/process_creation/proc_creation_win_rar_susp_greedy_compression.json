@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rar_susp_greedy_compression.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems), Florian Roth (Nextron Systems)",
+                "date": "2022-12-15",
+                "title": "Suspicious Greedy Compression Using Rar.EXE",
+                "id": "afe52666-401e-4a02-b4ff-5d128990b8cb"
+            },
+            "rule_text": "title: Suspicious Greedy Compression Using Rar.EXE\nid: afe52666-401e-4a02-b4ff-5d128990b8cb\nstatus: test\ndescription: Detects RAR usage that creates an archive from a suspicious folder, either\n  a system folder or one of the folders often used by attackers for staging purposes\nreferences:\n- https://decoded.avast.io/martinchlumecky/png-steganography\nauthor: X__Junior (Nextron Systems), Florian Roth (Nextron Systems)\ndate: 2022-12-15\nmodified: 2024-01-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_opt_1:\n  - Image|endswith: \\rar.exe\n  - Description: Command line RAR\n  selection_opt_2:\n    CommandLine|contains:\n    - '.exe a '\n    - ' a -m'\n  selection_cli_flags:\n    CommandLine|contains|all:\n    - ' -hp'\n    - ' -r '\n  selection_cli_folders:\n    CommandLine|contains:\n    - ' ?:\\\\\\*.'\n    - ' ?:\\\\\\\\\\*.'\n    - ' ?:\\$Recycle.bin\\'\n    - ' ?:\\PerfLogs\\'\n    - ' ?:\\Temp'\n    - ' ?:\\Users\\Public\\'\n    - ' ?:\\Windows\\'\n    - ' %public%'\n  condition: 1 of selection_opt_* and all of selection_cli_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

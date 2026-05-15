@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/lsasrv/win_system_lsasrv_ntlmv1.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Shelton, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-04-26",
+                "title": "NTLMv1 Logon Between Client and Server",
+                "id": "e9d4ab66-a532-4ef7-a502-66a9e4a34f5d"
+            },
+            "rule_text": "title: NTLMv1 Logon Between Client and Server\nid: e9d4ab66-a532-4ef7-a502-66a9e4a34f5d\nstatus: test\ndescription: Detects the reporting of NTLMv1 being used between a client and server.\n  NTLMv1 is insecure as the underlying encryption algorithms can be brute-forced by\n  modern hardware.\nreferences:\n- https://github.com/nasbench/EVTX-ETW-Resources/blob/f1b010ce0ee1b71e3024180de1a3e67f99701fe4/ETWProvidersManifests/Windows10/22H2/W10_22H2_Pro_20230321_19045.2728/WEPExplorer/LsaSrv.xml\nauthor: Tim Shelton, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-04-26\nmodified: 2023-06-06\ntags:\n- attack.lateral-movement\n- attack.t1550.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: LsaSrv\n    EventID:\n    - 6038\n    - 6039\n  condition: selection\nfalsepositives:\n- Environments that use NTLMv1\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

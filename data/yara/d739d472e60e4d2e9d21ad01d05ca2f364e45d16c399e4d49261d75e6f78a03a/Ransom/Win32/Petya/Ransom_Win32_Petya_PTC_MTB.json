@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Petya/Ransom_Win32_Petya_PTC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Petya_PTC_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Petya.PTC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Petya_PTC_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Petya.PTC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 55 f8 8d 9c 0a ?? ?? ?? ?? b8 ?? ?? ?? ?? 99 f7 fb 41 30 91 ?? ?? ?? ?? 83 f9 10 7c }\n\t\t$a_03_1 = {6a 40 68 00 ?? ?? ?? 68 ?? ?? ?? ?? 8b 3d ?? ?? ?? ?? ff d7 85 c0 74 ?? ff }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 4 + ( #a_03_1 & 1 ) * 2 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

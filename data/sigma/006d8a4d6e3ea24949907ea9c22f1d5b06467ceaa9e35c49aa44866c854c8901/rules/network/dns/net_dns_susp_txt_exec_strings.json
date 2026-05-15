@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/dns/net_dns_susp_txt_exec_strings.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis",
+                "date": "2018-08-08",
+                "title": "DNS TXT Answer with Possible Execution Strings",
+                "id": "8ae51330-899c-4641-8125-e39f2e07da72"
+            },
+            "rule_text": "title: DNS TXT Answer with Possible Execution Strings\nid: 8ae51330-899c-4641-8125-e39f2e07da72\nstatus: test\ndescription: Detects strings used in command execution in DNS TXT Answer\nreferences:\n- https://twitter.com/stvemillertime/status/1024707932447854592\n- https://github.com/samratashok/nishang/blob/414ee1104526d7057f9adaeee196d91ae447283e/Backdoors/DNS_TXT_Pwnage.ps1\nauthor: Markus Neis\ndate: 2018-08-08\nmodified: 2021-11-27\ntags:\n- attack.command-and-control\n- attack.t1071.004\nlogsource:\n  category: dns\ndetection:\n  selection:\n    record_type: TXT\n    answer|contains:\n    - IEX\n    - Invoke-Expression\n    - cmd.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

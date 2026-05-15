@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/HackTool/Win64/PWDump/HackTool_Win64_PWDump_PTC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HackTool_Win64_PWDump_PTC_MTB",
+                "tags": [],
+                "description": "HackTool:Win64/PWDump.PTC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,10 00 10 00 08 00 00 "
+            },
+            "rule_text": "rule HackTool_Win64_PWDump_PTC_MTB\n{\n\tmeta:\n\t\tdescription = \"HackTool:Win64/PWDump.PTC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,10 00 10 00 08 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {4c 2b e6 4c 89 74 24 ?? 4d 8b cc 4c 8b c6 48 8b d7 4c 8b 74 24 ?? 49 8b ce ff 15 }\n\t\t$a_03_1 = {4c 89 64 24 ?? 44 89 64 24 ?? 4c 89 64 24 ?? 4c 8b cb 45 33 c0 33 d2 49 8b ce ff 15 }\n\t\t$a_00_2 = {43 68 72 6f 6d 65 20 41 70 70 2d 42 6f 75 6e 64 20 45 6e 63 72 79 70 74 69 6f 6e 20 44 65 63 72 79 70 74 69 6f 6e }\n\t\t$a_00_3 = {43 6f 6f 6b 69 65 73 20 2f 20 50 61 73 73 77 6f 72 64 73 20 2f 20 50 61 79 6d 65 6e 74 20 4d 65 74 68 6f 64 73 }\n\t\t$a_00_4 = {52 65 66 6c 65 63 74 69 76 65 20 44 4c 4c 20 50 72 6f 63 65 73 73 20 49 6e 6a 65 63 74 69 6f 6e }\n\t\t$a_00_5 = {63 68 72 6f 6d 65 5f 64 65 63 72 79 70 74 2e 64 6c 6c }\n\t\t$a_00_6 = {54 65 72 6d 69 6e 61 74 69 6e 67 20 62 72 6f 77 73 65 72 20 50 49 44 }\n\t\t$a_00_7 = {63 68 72 6f 6d 65 5f 64 65 63 72 79 70 74 2e 6c 6f 67 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 4 + ( #a_03_1 & 1 ) * 2 + ( #a_00_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 2 + ( #a_00_4 & 1 ) * 2 + ( #a_00_5 & 1 ) * 2 + ( #a_00_6 & 1 ) * 1 + ( #a_00_7 & 1 ) * 1 ) >= 16\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

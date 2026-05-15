@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/generic/MalScript_Tricks.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MalScript_Tricks",
+                "tags": [],
+                "id": "3xg5wneq3ZntsMg61ltshS",
+                "fingerprint": "6c78cbc1250afb36970d87d8ee2fe8409f57c9d34251d6e3908454e6643f92e3",
+                "version": "1.0",
+                "creation_date": "2020-12-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-03-10",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies tricks often seen in malicious scripts such as moving the window off-screen or resizing it to zero.",
+                "category": "INFO"
+            },
+            "rule_text": "rule MalScript_Tricks\n{\n\tmeta:\n\t\tid = \"3xg5wneq3ZntsMg61ltshS\"\n\t\tfingerprint = \"6c78cbc1250afb36970d87d8ee2fe8409f57c9d34251d6e3908454e6643f92e3\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2020-12-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-03-10\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies tricks often seen in malicious scripts such as moving the window off-screen or resizing it to zero.\"\n\t\tcategory = \"INFO\"\n\n\tstrings:\n\t\t$s1 = \"window.moveTo -\" nocase\n\t\t$s2 = \"window.resizeTo 0\" nocase\n\t\t$x1 = \"window.moveTo(-\" nocase\n\t\t$x2 = \"window.resizeTo(\" nocase\n\n\tcondition:\n\t\tfilesize < 50KB and ( all of ( $s* ) or all of ( $x* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

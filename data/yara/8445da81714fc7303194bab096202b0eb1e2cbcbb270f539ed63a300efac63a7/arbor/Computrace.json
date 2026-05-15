@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/arbor/Computrace.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "bad_ComputraceAgent",
+                "tags": [],
+                "description": "Absolute Computrace Agent Lacking Hardcoded Domain",
+                "thread_level": 3,
+                "in_the_wild": true,
+                "reference": "https://pastebin.com/nsv0tqUg",
+                "reference2": "https://asert.arbornetworks.com/lojack-becomes-a-double-agent/",
+                "reference3": "https://www.blackhat.com/docs/us-14/materials/us-14-Kamlyuk-Kamluk-Computrace-Backdoor-Revisited.pdf"
+            },
+            "rule_text": "rule bad_ComputraceAgent\n{\n\tmeta:\n\t\tdescription = \"Absolute Computrace Agent Lacking Hardcoded Domain\"\n\t\tthread_level = 3\n\t\tin_the_wild = true\n\t\treference = \"https://pastebin.com/nsv0tqUg\"\n\t\treference2 = \"https://asert.arbornetworks.com/lojack-becomes-a-double-agent/\"\n\t\treference3 = \"https://www.blackhat.com/docs/us-14/materials/us-14-Kamlyuk-Kamluk-Computrace-Backdoor-Revisited.pdf\"\n\n\tstrings:\n\t\t$a = { D1 E0 F5 8B 4D 0C 83 D1 00 8B EC FF 33 83 C3 04 }\n\t\t$b1 = { 72 70 63 6E 65 74 70 2E 65 78 65 00 72 70 63 6E 65 74 70 00 }\n\t\t$b2 = { 54 61 67 49 64 00 }\n\t\t$domain = { c6 d0 d4 c7 d6 dd 9b db d4 d8 d0 c4 c0 d0 c7 cc 9b d6 da d8 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 20KB and ( $a or ( $b1 and $b2 ) ) and not $domain\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

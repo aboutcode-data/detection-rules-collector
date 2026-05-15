@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_HTMLSmuggling/correlation_temporal_html_smuggling.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/27",
+                "title": "HTML Smuggling Activity - Chain Rule",
+                "id": "0952f2fa-e29b-4eb5-831c-ce21520c56e3"
+            },
+            "rule_text": "title: HTML Smuggling Activity - Chain Rule\nid: 0952f2fa-e29b-4eb5-831c-ce21520c56e3\nstatus: experimental\ndescription: Detects HTML smuggling-style compromise (such as HTML > ZIP > ISO/IMG/VHD\n  > CMD/BAT/VBS > DLL). Includes rules to detect zipfile dropped by browser, ISO/IMG/VHD/LNK\n  file extraction, disk image mount, followed by user-initiated process creation on\n  an external drive.\nreferences:\n- https://blog.talosintelligence.com/html-smugglers-turn-to-svg-images/#:~:text=HTML%20smuggling%20is%20a%20technique,directly%20on%20the%20victim's%20device.\n- https://www.malwarebytes.com/blog/news/2021/11/evasive-maneuvers-html-smuggling-explained\n- Original research and analysis performed off of QakBot intelligence gathered at\n  https://github.com/pr0xylife/Qakbot, https://www.malware-traffic-analysis.net/,\n  and https://github.com/executemalware/Malware-IOCs\nauthor: Micah Babinski\ndate: 2022/12/27\ntags:\n- attack.s0650\n- attack.s0483\n- attack.initial_access\n- attack.defense_evasion\n- attack.execution\n- attack.t1564\n- attack.t1566.001\n- attack.t1566\n- attack.t1027\n- attack.t1027.006\n- attack.t1059\n- attack.t1204\n- attack.t1204.002\naction: correlation\ntype: temporal\nrule:\n- 1_win_zipfile_drop.yml\n- 2_win_susp_file_extraction.yml\n- 3_win_security_iso_mount.yml\n- 4_win_process_creation_ext_drive.yml\ngroup-by:\n- ComputerName\n- User\ntimespan: 1h\nordered: true\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

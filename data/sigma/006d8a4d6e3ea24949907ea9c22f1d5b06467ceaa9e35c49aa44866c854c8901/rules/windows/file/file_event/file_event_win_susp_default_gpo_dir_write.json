@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_default_gpo_dir_write.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "elhoim",
+                "date": "2022-04-28",
+                "title": "Suspicious Files in Default GPO Folder",
+                "id": "5f87308a-0a5b-4623-ae15-d8fa1809bc60"
+            },
+            "rule_text": "title: Suspicious Files in Default GPO Folder\nid: 5f87308a-0a5b-4623-ae15-d8fa1809bc60\nstatus: test\ndescription: Detects the creation of copy of suspicious files (EXE/DLL) to the default\n  GPO storage folder\nreferences:\n- https://redcanary.com/blog/intelligence-insights-november-2021/\nauthor: elhoim\ndate: 2022-04-28\ntags:\n- attack.stealth\n- attack.t1036.005\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|contains: \\Policies\\{31B2F340-016D-11D2-945F-00C04FB984F9}\\\n    TargetFilename|endswith:\n    - .dll\n    - .exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

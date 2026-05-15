@@ -1,0 +1,65 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/apt_ruag.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RUAG_Tavdig_Malformed_Executable",
+                "tags": [],
+                "description": "Detects an embedded executable with a malformed header - known from Tavdig malware",
+                "author": "Florian Roth",
+                "reference": "https://goo.gl/N5MEj0",
+                "score": 60
+            },
+            "rule_text": "rule RUAG_Tavdig_Malformed_Executable\n{\n\tmeta:\n\t\tdescription = \"Detects an embedded executable with a malformed header - known from Tavdig malware\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://goo.gl/N5MEj0\"\n\t\tscore = 60\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and uint32( uint32( 0x3C ) ) == 0x0000AD0B\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RUAG_Bot_Config_File",
+                "tags": [],
+                "description": "Detects a specific config file used by malware in RUAG APT case",
+                "author": "Florian Roth",
+                "reference": "https://goo.gl/N5MEj0",
+                "score": 60
+            },
+            "rule_text": "rule RUAG_Bot_Config_File\n{\n\tmeta:\n\t\tdescription = \"Detects a specific config file used by malware in RUAG APT case\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://goo.gl/N5MEj0\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$s1 = \"[CONFIG]\" ascii\n\t\t$s2 = \"name = \" ascii\n\t\t$s3 = \"exe = cmd.exe\" ascii\n\n\tcondition:\n\t\t$s1 at 0 and $s2 and $s3 and filesize < 160\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RUAG_Cobra_Malware",
+                "tags": [],
+                "description": "Detects a malware mentioned in the RUAG Case called Carbon/Cobra",
+                "author": "Florian Roth",
+                "reference": "https://goo.gl/N5MEj0",
+                "score": 60
+            },
+            "rule_text": "rule RUAG_Cobra_Malware\n{\n\tmeta:\n\t\tdescription = \"Detects a malware mentioned in the RUAG Case called Carbon/Cobra\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://goo.gl/N5MEj0\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$s1 = \"\\\\Cobra\\\\Release\\\\Cobra.pdb\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and $s1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RUAG_Cobra_Config_File",
+                "tags": [],
+                "description": "Detects a config text file used by malware Cobra in RUAG case",
+                "author": "Florian Roth",
+                "reference": "https://goo.gl/N5MEj0",
+                "score": 60
+            },
+            "rule_text": "rule RUAG_Cobra_Config_File\n{\n\tmeta:\n\t\tdescription = \"Detects a config text file used by malware Cobra in RUAG case\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://goo.gl/N5MEj0\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$h1 = \"[NAME]\" ascii\n\t\t$s1 = \"object_id=\" ascii\n\t\t$s2 = \"[TIME]\" ascii fullword\n\t\t$s3 = \"lastconnect\" ascii\n\t\t$s4 = \"[CW_LOCAL]\" ascii fullword\n\t\t$s5 = \"system_pipe\" ascii\n\t\t$s6 = \"user_pipe\" ascii\n\t\t$s7 = \"[TRANSPORT]\" ascii\n\t\t$s8 = \"run_task_system\" ascii\n\t\t$s9 = \"[WORKDATA]\" ascii\n\t\t$s10 = \"address1\" ascii\n\n\tcondition:\n\t\t$h1 at 0 and 8 of ( $s* ) and filesize < 5KB\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "RUAG_Exfil_Config_File",
+                "tags": [],
+                "description": "Detects a config text file used in data exfiltration in RUAG case",
+                "author": "Florian Roth",
+                "reference": "https://goo.gl/N5MEj0",
+                "score": 60
+            },
+            "rule_text": "rule RUAG_Exfil_Config_File\n{\n\tmeta:\n\t\tdescription = \"Detects a config text file used in data exfiltration in RUAG case\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://goo.gl/N5MEj0\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$h1 = \"[TRANSPORT]\" ascii\n\t\t$s1 = \"system_pipe\" ascii\n\t\t$s2 = \"spstatus\" ascii\n\t\t$s3 = \"adaptable\" ascii\n\t\t$s4 = \"post_frag\" ascii\n\t\t$s5 = \"pfsgrowperiod\" ascii\n\n\tcondition:\n\t\t$h1 at 0 and all of ( $s* ) and filesize < 1KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

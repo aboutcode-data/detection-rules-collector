@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/file/file_event/file_event_win_wdac_policy_creation_in_codeintegrity_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Andreas Braathen (mnemonic.io)",
+                "date": "2025-01-30",
+                "title": "WDAC Policy File Creation In CodeIntegrity Folder",
+                "id": "121b25f7-b9d6-4b37-afa0-cba317ec52f3"
+            },
+            "rule_text": "title: WDAC Policy File Creation In CodeIntegrity Folder\nid: 121b25f7-b9d6-4b37-afa0-cba317ec52f3\nstatus: experimental\ndescription: 'Attackers can craft a custom Windows Defender Application Control (WDAC)\n  policy that blocks Endpoint Detection and Response (EDR) components while allowing\n  their own malicious code. The policy is placed in the privileged Windows Code Integrity\n  folder (C:\\Windows\\System32\\CodeIntegrity\\). Upon reboot, the policy prevents EDR\n  drivers from loading, effectively bypassing security measures and may further enable\n  undetected lateral movement within an Active Directory environment.\n\n  '\nreferences:\n- https://beierle.win/2024-12-20-Weaponizing-WDAC-Killing-the-Dreams-of-EDR/\n- https://www.virustotal.com/gui/file/d2a4f52a9923336f119a52e531bbb1e66f18322fd8efa9af1a64b94f4d36dc97\nauthor: Andreas Braathen (mnemonic.io)\ndate: 2025-01-30\ntags:\n- attack.defense-impairment\n- attack.t1685\n- detection.threat-hunting\nlogsource:\n  category: file_event\n  product: windows\n  definition: 'Requirements: By default the file_event log source might not contain\n    the IntegrityLevel of the Process. It should be collected in order to use this\n    rule'\ndetection:\n  selection:\n    TargetFilename|contains: :\\Windows\\System32\\CodeIntegrity\\\n    TargetFilename|endswith:\n    - .cip\n    - .p7b\n    IntegrityLevel: High\n  condition: selection\nfalsepositives:\n- May occur legitimately as part of admin activity, but rarely with interactive elevation.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

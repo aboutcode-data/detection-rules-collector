@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_lsass_dmp_cli_keywords.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "E.M. Anhaus, Tony Lambert, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-10-24",
+                "title": "LSASS Dump Keyword In CommandLine",
+                "id": "ffa6861c-4461-4f59-8a41-578c39f3f23e"
+            },
+            "rule_text": "title: LSASS Dump Keyword In CommandLine\nid: ffa6861c-4461-4f59-8a41-578c39f3f23e\nrelated:\n- id: a5a2d357-1ab8-4675-a967-ef9990a59391\n  type: derived\nstatus: test\ndescription: 'Detects the presence of the keywords \"lsass\" and \".dmp\" in the commandline,\n  which could indicate a potential attempt to dump or create a dump of the lsass process.\n\n  '\nreferences:\n- https://github.com/Hackndo/lsassy\n- https://medium.com/@markmotig/some-ways-to-dump-lsass-exe-c4a75fdc49bf\n- https://github.com/elastic/detection-rules/blob/c76a39796972ecde44cb1da6df47f1b6562c9770/rules/windows/credential_access_lsass_memdump_file_created.toml\n- https://www.whiteoaksecurity.com/blog/attacks-defenses-dumping-lsass-no-mimikatz/\n- https://github.com/helpsystems/nanodump\n- https://github.com/CCob/MirrorDump\nauthor: E.M. Anhaus, Tony Lambert, oscd.community, Nasreddine Bencherchali (Nextron\n  Systems)\ndate: 2019-10-24\nmodified: 2023-08-29\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - CommandLine|contains:\n    - lsass.dmp\n    - lsass.zip\n    - lsass.rar\n    - Andrew.dmp\n    - Coredump.dmp\n    - NotLSASS.zip\n    - lsass_2\n    - lsassdump\n    - lsassdmp\n  - CommandLine|contains|all:\n    - lsass\n    - .dmp\n  - CommandLine|contains|all:\n    - SQLDmpr\n    - .mdmp\n  - CommandLine|contains|all:\n    - nanodump\n    - .dmp\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

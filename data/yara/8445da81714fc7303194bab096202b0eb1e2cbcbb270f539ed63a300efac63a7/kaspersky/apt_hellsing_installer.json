@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_hellsing_installer.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_hellsing_installer",
+                "tags": [],
+                "version": "1.0",
+                "filetype": "PE",
+                "author": "Costin Raiu, Kaspersky Lab",
+                "copyright": "Kaspersky Lab",
+                "date": "2015-04-07",
+                "description": "detection for Hellsing xweber/msger installers"
+            },
+            "rule_text": "rule apt_hellsing_installer\n{\n\tmeta:\n\t\tversion = \"1.0\"\n\t\tfiletype = \"PE\"\n\t\tauthor = \"Costin Raiu, Kaspersky Lab\"\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdate = \"2015-04-07\"\n\t\tdescription = \"detection for Hellsing xweber/msger installers\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$cmd = \"cmd.exe /c ping 127.0.0.1 -n 5&cmd.exe /c del /a /f \\\"%s\\\"\"\n\t\t$a1 = \"xweber_install_uac.exe\"\n\t\t$a2 = \"system32\\\\cmd.exe\" wide\n\t\t$a4 = \"S11SWFOrVwR9UlpWRVZZWAR0U1aoBHFTUl2oU1Y=\"\n\t\t$a5 = \"S11SWFOrVwR9dnFTUgRUVlNHWVdXBFpTVgRdUlpWRVZZWARdUqhZVlpFR1kEUVNSXahTVgRaU1YEUVNSXahTVl1SWwRZValdVFFZUqgQBF1SWlZFVllYBFRTVqg=\"\n\t\t$a6 = \"7dqm2ODf5N/Y2N/m6+br3dnZpunl44g=\"\n\t\t$a7 = \"vd/m7OXd2ai/5u7a59rr7Ki45drcqMPl5t/c5dqIZw==\"\n\t\t$a8 = \"vd/m7OXd2ai/usPl5qjY2uXp69nZqO7l2qjf5u7a59rr7Kjf5tzr2u7n6euo4+Xm39zl2qju5dqo4+Xm39zl2t/m7ajr19vf2OPr39rj5eaZmqbs5OSI Njl2tyI\"\n\t\t$a9 = \"C:\\\\Windows\\\\System32\\\\sysprep\\\\sysprep.exe\" wide\n\t\t$a10 = \"%SystemRoot%\\\\system32\\\\cmd.exe\" wide\n\t\t$a11 = \"msger_install.dll\"\n\t\t$a12 = {00 65 78 2E 64 6C 6C 00}\n\n\tcondition:\n\t\t($mz at 0 ) and ( $cmd and ( 2 of ( $a* ) ) ) and filesize < 500000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

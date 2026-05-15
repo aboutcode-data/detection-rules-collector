@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regsvr32_http_ip_pattern.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-01-11",
+                "title": "Potentially Suspicious Regsvr32 HTTP IP Pattern",
+                "id": "2dd2c217-bf68-437a-b57c-fe9fd01d5de8"
+            },
+            "rule_text": "title: Potentially Suspicious Regsvr32 HTTP IP Pattern\nid: 2dd2c217-bf68-437a-b57c-fe9fd01d5de8\nstatus: test\ndescription: Detects regsvr32 execution to download and install DLLs located remotely\n  where the address is an IP address.\nreferences:\n- https://twitter.com/mrd0x/status/1461041276514623491\n- https://twitter.com/tccontre18/status/1480950986650832903\n- https://lolbas-project.github.io/lolbas/Binaries/Regsvr32/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-01-11\nmodified: 2023-05-24\ntags:\n- attack.stealth\n- attack.t1218.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\regsvr32.exe\n  - OriginalFileName: REGSVR32.EXE\n  selection_ip:\n    CommandLine|contains:\n    - ' /i:http://1'\n    - ' /i:http://2'\n    - ' /i:http://3'\n    - ' /i:http://4'\n    - ' /i:http://5'\n    - ' /i:http://6'\n    - ' /i:http://7'\n    - ' /i:http://8'\n    - ' /i:http://9'\n    - ' /i:https://1'\n    - ' /i:https://2'\n    - ' /i:https://3'\n    - ' /i:https://4'\n    - ' /i:https://5'\n    - ' /i:https://6'\n    - ' /i:https://7'\n    - ' /i:https://8'\n    - ' /i:https://9'\n    - ' -i:http://1'\n    - ' -i:http://2'\n    - ' -i:http://3'\n    - ' -i:http://4'\n    - ' -i:http://5'\n    - ' -i:http://6'\n    - ' -i:http://7'\n    - ' -i:http://8'\n    - ' -i:http://9'\n    - ' -i:https://1'\n    - ' -i:https://2'\n    - ' -i:https://3'\n    - ' -i:https://4'\n    - ' -i:https://5'\n    - ' -i:https://6'\n    - ' -i:https://7'\n    - ' -i:https://8'\n    - ' -i:https://9'\n  condition: all of selection_*\nfalsepositives:\n- FQDNs that start with a number such as \"7-Zip\"\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

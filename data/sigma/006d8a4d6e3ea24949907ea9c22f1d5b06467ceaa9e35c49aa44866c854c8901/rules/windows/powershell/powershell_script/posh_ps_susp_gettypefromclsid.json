@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_gettypefromclsid.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-04-02",
+                "title": "Suspicious GetTypeFromCLSID ShellExecute",
+                "id": "8bc063d5-3a3a-4f01-a140-bc15e55e8437"
+            },
+            "rule_text": "title: Suspicious GetTypeFromCLSID ShellExecute\nid: 8bc063d5-3a3a-4f01-a140-bc15e55e8437\nstatus: test\ndescription: Detects suspicious Powershell code that execute COM Objects\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.015/T1546.015.md#atomic-test-2---powershell-execute-com-object\nauthor: frack113\ndate: 2022-04-02\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.015\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - ::GetTypeFromCLSID(\n    - .ShellExecute(\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

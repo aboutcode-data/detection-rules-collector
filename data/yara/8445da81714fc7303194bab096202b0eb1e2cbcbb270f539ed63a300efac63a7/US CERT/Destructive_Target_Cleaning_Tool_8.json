@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/US CERT/Destructive_Target_Cleaning_Tool_8.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Destructive_Target_Cleaning_Tool_8",
+                "tags": [],
+                "author": "US CERT",
+                "reference": "https://www.us-cert.gov/ncas/alerts/TA14-353A"
+            },
+            "rule_text": "rule Destructive_Target_Cleaning_Tool_8\n{\n\tmeta:\n\t\tauthor = \"US CERT\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA14-353A\"\n\n\tstrings:\n\t\t$license = \"{E903FFFF820050006F007200740069006F006E007300200063006F007000790072006900670068007400200052006F006200650072007400200064006500200042006100740068002C0020004A006F007200690073002000760061006E002000520061006E007400770069006A006B002C002000440065006C00690061006E000000000000000250000000000A002200CE000800EA03FFFF8200}\"\n\t\t$PuTTY = \"{50007500540054005900}\"\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and uint16( uint32( 0x3c ) ) == 0x4550 ) and $license and not $PuTTY\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

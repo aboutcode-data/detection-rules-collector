@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_winscp_portable_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "frack113",
+                "date": "2025-10-12",
+                "title": "Winscp Execution From Non Standard Folder",
+                "id": "7674f8ef-7141-4cf0-a311-ee359264c64c"
+            },
+            "rule_text": "title: Winscp Execution From Non Standard Folder\nid: 7674f8ef-7141-4cf0-a311-ee359264c64c\nstatus: experimental\ndescription: Detects the execution of Winscp from an a non standard folder. This could\n  indicate the execution of Winscp portable.\nreferences:\n- https://blogs.blackberry.com/en/2024/07/akira-ransomware-targets-the-latam-airline-industry\nauthor: frack113\ndate: 2025-10-12\ntags:\n- attack.exfiltration\n- attack.t1048\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\WinSCP.exe\n  - OriginalFileName: winscp.exe\n  filter_main_location:\n    Image|startswith: C:\\Program Files (x86)\\WinSCP\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

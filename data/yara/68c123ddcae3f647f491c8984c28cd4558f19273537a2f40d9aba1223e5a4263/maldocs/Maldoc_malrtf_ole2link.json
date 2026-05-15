@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/maldocs/Maldoc_malrtf_ole2link.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malrtf_ole2link",
+                "tags": [
+                    "exploit"
+                ],
+                "author": "@h3x2b <tracker _AT h3x.eu>",
+                "description": "Detect weaponized RTF documents with OLE2Link exploit"
+            },
+            "rule_text": "rule malrtf_ole2link : exploit\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\t\tdescription = \"Detect weaponized RTF documents with OLE2Link exploit\"\n\n\tstrings:\n\t\t$rtf_format_00 = \"{\\\\rtf1\"\n\t\t$rtf_format_01 = \"{\\\\rt\"\n\t\t$rtf_olelink_01 = \"\\\\objdata\" nocase\n\t\t$rtf_olelink_02 = \"4f4c45324c696e6b\" nocase\n\t\t$rtf_olelink_03 = \"d0cf11e0a1b11ae1\" nocase\n\t\t$rtf_payload_01 = \"68007400740070003a002f002f00\" nocase\n\t\t$rtf_payload_02 = \"680074007400700073003a002f002f00\" nocase\n\t\t$rtf_payload_03 = \"6600740070003a002f002f00\" nocase\n\n\tcondition:\n\t\tany of ( $rtf_format_* ) and all of ( $rtf_olelink_* ) and any of ( $rtf_payload_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Rustock/TrojanDropper_Win32_Rustock_O.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Rustock_O",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Rustock.O,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Rustock_O\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Rustock.O,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {66 81 38 4d 5a 68 ?? ?? ?? ?? 60 e8 ?? ?? ff ff 8b 50 10 66 0f ce 60 c7 44 ?? ?? ?? ?? ?? ?? e8 ?? ?? 00 00 }\n\t\t$a_02_1 = {f5 f5 33 44 24 ?? e9 87 00 00 00 83 f8 00 66 c7 44 24 ?? ?? ?? c6 44 24 ?? ?? 60 8d 64 24 ?? 0f 85 ?? ?? 00 00 9c 9c 90 90 [0-04] 9c e8 00 00 00 00 c7 44 24 ?? ?? ?? 40 00 83 ec f4 68 ?? ?? ?? ?? e8 ?? ?? 00 00 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

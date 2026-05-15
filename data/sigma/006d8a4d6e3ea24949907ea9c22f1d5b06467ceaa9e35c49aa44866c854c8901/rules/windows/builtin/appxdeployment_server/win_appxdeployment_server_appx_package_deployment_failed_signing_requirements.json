@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxdeployment_server_appx_package_deployment_failed_signing_requirements.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "AppX Package Deployment Failed Due to Signing Requirements",
+                "id": "898d5fc9-fbc3-43de-93ad-38e97237c344"
+            },
+            "rule_text": "title: AppX Package Deployment Failed Due to Signing Requirements\nid: 898d5fc9-fbc3-43de-93ad-38e97237c344\nstatus: test\ndescription: 'Detects an appx package deployment / installation with the error code\n  \"0x80073cff\" which indicates that the package didn''t meet the signing requirements.\n\n  '\nreferences:\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\n- https://learn.microsoft.com/en-us/windows/win32/appxpkg/troubleshooting\n- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\nmodified: 2025-12-03\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID: 401\n    ErrorCode: '0x80073cff'\n  condition: selection\nfalsepositives:\n- Legitimate AppX packages not signed by MS used part of an enterprise.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

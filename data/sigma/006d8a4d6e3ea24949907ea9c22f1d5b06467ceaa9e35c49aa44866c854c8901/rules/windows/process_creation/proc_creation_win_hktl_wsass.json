@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_wsass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-11-23",
+                "title": "HackTool - WSASS Execution",
+                "id": "589ac73f-8e12-409c-964e-31a2f5775ae2"
+            },
+            "rule_text": "title: HackTool - WSASS Execution\nid: 589ac73f-8e12-409c-964e-31a2f5775ae2\nstatus: experimental\ndescription: 'Detects execution of WSASS, a tool used to dump LSASS memory on Windows\n  systems by leveraging WER''s\n\n  (Windows Error Reporting) WerFaultSecure.EXE to bypass PPL (Protected Process Light)\n  protections.\n\n  '\nreferences:\n- https://github.com/TwoSevenOneT/WSASS\n- https://www.zerosalarium.com/2025/09/Dumping-LSASS-With-WER-On-Modern-Windows-11.html\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-11-23\nmodified: 2026-01-09\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\wsass.exe\n  selection_hash:\n    Hashes|contains: IMPHASH=32F5095C9BBDCACF28FD4060EB4DFC42\n  selection_cli:\n    CommandLine|re: (?i)\\.exe[\\\"\\']?\\s+[^\\\"]{0,64}werfaultsecure\\.exe[\\\"\\']?\\s+\\d{2,10}\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_hktl_wsass/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

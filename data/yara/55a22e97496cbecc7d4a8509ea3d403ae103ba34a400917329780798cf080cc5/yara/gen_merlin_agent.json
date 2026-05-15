@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_merlin_agent.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "merlinAgent",
+                "tags": [],
+                "description": "Detects Merlin agent",
+                "filetype": "pe, elf, mach",
+                "author": "Hilko Bengen",
+                "reference": "https://github.com/Ne0nd0g/merlin",
+                "date": "2017-12-26",
+                "id": "92346a3f-dce4-58db-893b-b7797fa20029"
+            },
+            "rule_text": "rule merlinAgent\n{\n\tmeta:\n\t\tdescription = \"Detects Merlin agent\"\n\t\tfiletype = \"pe, elf, mach\"\n\t\tauthor = \"Hilko Bengen\"\n\t\treference = \"https://github.com/Ne0nd0g/merlin\"\n\t\tdate = \"2017-12-26\"\n\t\tid = \"92346a3f-dce4-58db-893b-b7797fa20029\"\n\n\tstrings:\n\t\t$x1 = \"Command output:\\x0d\\x0a\\x0d\\x0a%s\"\n\t\t$x2 = \"[-]Connecting to web server at %s to update agent configuration information.\"\n\t\t$x3 = \"[-]%d out of %d total failed checkins\"\n\t\t$x4 = \"[!}Unknown AgentControl message type received %s\"\n\t\t$x5 = \"[-]Received Agent Kill Message\"\n\t\t$x6 = \"[-]Received Server OK, doing nothing\"\n\t\t$x7 = \"[!]There was an error with the HTTP client while performing a POST:\"\n\t\t$x8 = \"[-]Sleeping for %s at %s\"\n\t\t$s1 = \"Executing command %s %s %s\"\n\t\t$s2 = \"[+]Host Information:\"\n\t\t$s3 = \"\\tHostname: %s\"\n\t\t$s4 = \"\\tPlatform: %s\"\n\t\t$s5 = \"\\tUser GUID: %s\"\n\n\tcondition:\n\t\t1 of ( $x* ) or 4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

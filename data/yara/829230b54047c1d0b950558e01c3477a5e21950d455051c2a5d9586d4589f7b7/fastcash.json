@@ -1,0 +1,41 @@
+{
+    "source_url": "https://github.com/pmelson/yara_rules/blob/master/fastcash.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "fastcash_aix_injector",
+                "tags": [],
+                "author": "Paul Melson @pmelson",
+                "description": "HIDDEN COBRA AIX FastCash process injection tool",
+                "reference": "https://github.com/fboldewin/FastCashMalwareDissected/",
+                "sample_sha256": "d465637518024262c063f4a82d799a4e40ff3381014972f24ea18bc23c3b27ee"
+            },
+            "rule_text": "rule fastcash_aix_injector\n{\n\tmeta:\n\t\tauthor = \"Paul Melson @pmelson\"\n\t\tdescription = \"HIDDEN COBRA AIX FastCash process injection tool\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA18-275A\"\n\t\treference = \"https://github.com/fboldewin/FastCashMalwareDissected/\"\n\t\tsample_sha256 = \"d465637518024262c063f4a82d799a4e40ff3381014972f24ea18bc23c3b27ee\"\n\n\tstrings:\n\t\t$file_eng64 = \"/tmp/.ICE-unix/TMPENG%X.dat\"\n\t\t$file_config = \"/tmp/.ICE-unix/config_%d\"\n\t\t$file_dumpfile = \"/tmp/.ICE-unix/DUMP%X.dat\"\n\t\t$msg0 = \"[proc_writememory] ret=%d, err=%d(%s), addr=%p, len=%d, data=%p\"\n\t\t$msg1 = \"[main] Inject Start\"\n\t\t$msg2 = \"[main] SAVE REGISTRY\"\n\t\t$msg3 = \"[main] proc_readmemory fail\"\n\t\t$msg4 = \"[main] Exec func(%llX) OK\"\n\t\t$msg5 = \"[main] Exec func(%llX) fail ret=%X\"\n\t\t$msg6 = \"[main] Inject OK(%llX)\"\n\t\t$msg7 = \"[main] Inject fail ret=%llX\"\n\t\t$msg8 = \"[main] Eject OK\"\n\t\t$msg9 = \"[main] Eject fail ret=%llX\"\n\t\t$symbol00 = \"_GLOBAL__FI_eng64\"\n\t\t$symbol01 = \"_GLOBAL__FD_eng64\"\n\t\t$symbol02 = \"proc_attach\"\n\t\t$symbol03 = \"proc_detach\"\n\t\t$symbol04 = \"proc_continue\"\n\t\t$symbol05 = \"proc_wait\"\n\t\t$symbol06 = \"proc_fault\"\n\t\t$symbol07 = \"proc_getregs\"\n\t\t$symbol08 = \"proc_setregs\"\n\t\t$symbol09 = \"proc_readmemory\"\n\t\t$symbol10 = \"proc_writememory\"\n\t\t$symbol11 = \"inject\"\n\t\t$symbol12 = \"_$STATIC\"\n\t\t$source0 = \"/tmp//cchXKsHV.c\"\n\t\t$source1 = \"/tmp/tmp/eng64.c\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0xf701 and ( all of ( $file* ) or all of ( $msg* ) or all of ( $symbol* ) or all of ( $source* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "fastcash_aix_iso8583",
+                "tags": [],
+                "author": "Paul Melson @pmelson",
+                "description": "HIDDEN COBRA AIX FastCash ISO8583 module (may not be malicious, low attribution confidence)",
+                "reference": "https://github.com/fboldewin/FastCashMalwareDissected/",
+                "sample_sha256": "10ac312c8dd02e417dd24d53c99525c29d74dcbc84730351ad7a4e0a4b1a0eba"
+            },
+            "rule_text": "rule fastcash_aix_iso8583\n{\n\tmeta:\n\t\tauthor = \"Paul Melson @pmelson\"\n\t\tdescription = \"HIDDEN COBRA AIX FastCash ISO8583 module (may not be malicious, low attribution confidence)\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA18-275A\"\n\t\treference = \"https://github.com/fboldewin/FastCashMalwareDissected/\"\n\t\tsample_sha256 = \"3a5ba44f140821849de2d82d5a137c3bb5a736130dddb86b296d94e6b421594c\"\n\t\tsample_sha256 = \"ca9ab48d293cc84092e8db8f0ca99cb155b30c61d32a1da7cd3687de454fe86c\"\n\t\tsample_sha256 = \"10ac312c8dd02e417dd24d53c99525c29d74dcbc84730351ad7a4e0a4b1a0eba\"\n\n\tstrings:\n\t\t$symbol0 = \"msg_to_file\"\n\t\t$symbol1 = \"msg_to_file_recv\"\n\t\t$symbol2 = \"msg_to_file_send\"\n\t\t$symbol3 = \"DetourInitFunc\"\n\t\t$symbol4 = \"DetourAttach\"\n\t\t$symbol5 = \"DetourDetach\"\n\t\t$symbol6 = \"CheckPan\"\n\t\t$symbol7 = \"BlacklistCheck\"\n\t\t$aschex0 = \"DL_ASCHEX_TO_UINT32\"\n\t\t$aschex1 = \"DL_UINT32_TO_ASCHEX\"\n\t\t$aschex2 = \"_pack_iso_ASCHEX\"\n\t\t$aschex3 = \"_unpack_iso_ASCHEX\"\n\t\t$iso00 = \"DL_ISO8583_MSG_Init\"\n\t\t$iso01 = \"DL_ISO8583_MSG_Free\"\n\t\t$iso02 = \"DL_ISO8583_MSG_SetField_Str\"\n\t\t$iso03 = \"DL_ISO8583_MSG_SetField_Bin\"\n\t\t$iso04 = \"DL_ISO8583_MSG_RemoveField\"\n\t\t$iso05 = \"DL_ISO8583_MSG_HaveField\"\n\t\t$iso06 = \"DL_ISO8583_MSG_GetField_Str\"\n\t\t$iso07 = \"DL_ISO8583_MSG_GetField_Bin\"\n\t\t$iso08 = \"DL_ISO8583_MSG_Pack\"\n\t\t$iso09 = \"DL_ISO8583_MSG_Unpack\"\n\t\t$iso10 = \"_DL_ISO8583_MSG_AllocField\"\n\t\t$iso11 = \"DL_ISO8583_COMMON_SetHandler\"\n\t\t$iso12 = \"DL_ISO8583_DEFS_1987_GetHandler\"\n\t\t$iso13 = \"DL_ISO8583_DEFS_1993_GetHandler\"\n\t\t$iso14 = \"_DL_ISO8583_FIELD_Pack\"\n\t\t$iso15 = \"_DL_ISO8583_FIELD_Unpack\"\n\t\t$iso16 = \"DL_ISO8583_MSG_Dump\"\n\t\t$iso17 = \"_iso8583_1987_fields\"\n\t\t$iso18 = \"_iso8583_1993_fields\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0xf701 and ( all of ( $symbol* ) or all of ( $aschex* ) or all of ( $iso* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "fastcash_aix_pvpa",
+                "tags": [],
+                "author": "Paul Melson @pmelson",
+                "description": "HIDDEN COBRA AIX FastCash pvpa binary (may not be malicious, low attribution confidence)",
+                "reference": "https://github.com/fboldewin/FastCashMalwareDissected/",
+                "sample_sha256": "f3e521996c85c0cdb2bfb3a0fd91eb03e25ba6feef2ba3a1da844f1b17278dd2"
+            },
+            "rule_text": "rule fastcash_aix_pvpa\n{\n\tmeta:\n\t\tauthor = \"Paul Melson @pmelson\"\n\t\tdescription = \"HIDDEN COBRA AIX FastCash pvpa binary (may not be malicious, low attribution confidence)\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA18-275A\"\n\t\treference = \"https://github.com/fboldewin/FastCashMalwareDissected/\"\n\t\tsample_sha256 = \"f3e521996c85c0cdb2bfb3a0fd91eb03e25ba6feef2ba3a1da844f1b17278dd2\"\n\n\tstrings:\n\t\t$symbol_static = { 00 5f 24 53 54 41 54 49 43 00 }\n\t\t$symbol_pvpa = { 00 00 00 00 70 76 70 61 00 00 00 00 }\n\t\t$symbol_get_pvpa = { 00 2e 67 65 74 5f 70 76 70 61 00 }\n\t\t$symbol_get_posn = { 00 2e 73 65 74 5f 70 6f 73 6e 00 }\n\t\t$symbol_init_pvpa = { 00 2e 69 6e 69 74 5f 70 76 70 61 00 }\n\t\t$string0 = \"/dev/mem\"\n\t\t$string1 = \"set_posn\"\n\t\t$string2 = \"get_pvpa\"\n\t\t$string3 = \"init_pvpa\"\n\t\t$string4 = \"high_cpuid=%d\"\n\t\t$string5 = \"open kernel mem\"\n\t\t$string6 = \"cpu %d, old value = 0x%02x\"\n\t\t$string7 = \"Usage: pvpa [<new_value> <old_value>]\"\n\t\t$string8 = \"Invalid PVPA read, magic = 0x%08x, len = %d, cpu = %d\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0xf701 and ( all of ( $symbol* ) or all of ( $string* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

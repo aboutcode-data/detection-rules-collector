@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_restic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Nounou Mbeiri, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-10-17",
+                "title": "PUA - Restic Backup Tool Execution",
+                "id": "6ddff2e8-ea1a-45d0-8938-93dfc1d67ae7"
+            },
+            "rule_text": "title: PUA - Restic Backup Tool Execution\nid: 6ddff2e8-ea1a-45d0-8938-93dfc1d67ae7\nstatus: experimental\ndescription: 'Detects the execution of the Restic backup tool, which can be used for\n  data exfiltration.\n\n  Threat actors may leverage Restic to back up and exfiltrate sensitive data to remote\n  storage locations, including cloud services.\n\n  If not legitimately used in the enterprise environment, its presence may indicate\n  malicious activity.\n\n  '\nreferences:\n- https://thedfirreport.com/2024/09/30/nitrogen-campaign-drops-sliver-and-ends-with-blackcat-ransomware/#exfiltration\n- https://restic.net/\n- https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html\nauthor: Nounou Mbeiri, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-10-17\ntags:\n- attack.exfiltration\n- attack.t1048\n- attack.t1567.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_specific:\n  - CommandLine|contains|all:\n    - --password-file\n    - init\n    - ' -r '\n  - CommandLine|contains|all:\n    - --use-fs-snapshot\n    - backup\n    - ' -r '\n  selection_restic:\n    CommandLine|contains:\n    - 'sftp:'\n    - rest:http\n    - s3:s3.\n    - s3.http\n    - 'azure:'\n    - ' gs:'\n    - 'rclone:'\n    - 'swift:'\n    - ' b2:'\n    CommandLine|contains|all:\n    - ' init '\n    - ' -r '\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate use of Restic for backup purposes within the organization.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_net_use_mount_admin_share.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "oscd.community, Teymur Kheirkhabarov @HeirhabarovT, Zach Stanford @svch0st, wagga",
+                "date": "2020-10-05",
+                "title": "Windows Admin Share Mount Via Net.EXE",
+                "id": "3abd6094-7027-475f-9630-8ab9be7b9725"
+            },
+            "rule_text": "title: Windows Admin Share Mount Via Net.EXE\nid: 3abd6094-7027-475f-9630-8ab9be7b9725\nrelated:\n- id: f117933c-980c-4f78-b384-e3d838111165\n  type: similar\nstatus: test\ndescription: Detects when an admin share is mounted using net.exe\nreferences:\n- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view\nauthor: oscd.community, Teymur Kheirkhabarov @HeirhabarovT, Zach Stanford @svch0st,\n  wagga\ndate: 2020-10-05\nmodified: 2023-02-21\ntags:\n- attack.lateral-movement\n- attack.t1021.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - ' use '\n    - ' \\\\\\\\*\\\\*$'\n  condition: all of selection_*\nfalsepositives:\n- Administrators\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

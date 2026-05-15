@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/SmartApeSG/SmartApeSG_JS_dropper_stage1.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SmartApeSG_JS_dropper_stage1",
+                "tags": [],
+                "author": "RussianPanda",
+                "description": "Detects SmartApeSG initial JavaScript file",
+                "date": "1/11/2024",
+                "reference": "https://medium.com/walmartglobaltech/smartapesg-4605157a5b80",
+                "hash": "8769d9ebcf14b24a657532cd96f9520f54aa0e799399d840285311dfebe3fb15"
+            },
+            "rule_text": "rule SmartApeSG_JS_dropper_stage1\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdescription = \"Detects SmartApeSG initial JavaScript file\"\n\t\tdate = \"1/11/2024\"\n\t\treference = \"https://medium.com/walmartglobaltech/smartapesg-4605157a5b80\"\n\t\thash = \"8769d9ebcf14b24a657532cd96f9520f54aa0e799399d840285311dfebe3fb15\"\n\n\tstrings:\n\t\t$a1 = \"'GE'+'T'\"\n\t\t$a2 = \"'GE','T'\"\n\t\t$s1 = \"pt.Creat\"\n\t\t$s2 = \"L2.ServerX\"\n\t\t$s3 = \"ponseText\"\n\t\t$s4 = \"MLHTTP.6.0\"\n\t\t$s5 = /\\/news\\.php\\?([0-9]|[1-9][0-9]|100)/\n\n\tcondition:\n\t\tall of ( $s* ) and filesize < 1MB and any of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

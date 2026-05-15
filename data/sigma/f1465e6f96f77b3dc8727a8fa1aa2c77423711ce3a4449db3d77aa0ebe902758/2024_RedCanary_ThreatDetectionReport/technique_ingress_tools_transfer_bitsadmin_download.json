@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_ingress_tools_transfer_bitsadmin_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "BITSAdmin Downloading Malicious Binaries",
+                "id": "b195646e-8455-4fa1-b78a-91bb92371152"
+            },
+            "rule_text": "title: BITSAdmin Downloading Malicious Binaries\nid: b195646e-8455-4fa1-b78a-91bb92371152\nstatus: experimental\ndescription: \"It is not unusual for adversaries, including ones who peddle ransomware,\\\n  \\ to use \\nBITSAdmin to download arbitrary files from the internet in an effort\\\n  \\ to evade \\napplication blocklisting. The following analytic will look for the\\\n  \\ execution of \\nbitsadmin.exe with command options that suggest a file is being\\\n  \\ downloaded. Part \\nof the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/ingress-tool-transfer/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.command_and_control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\bitsadmin.exe\n    CommandLine|contains:\n    - download\n    - transfer\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

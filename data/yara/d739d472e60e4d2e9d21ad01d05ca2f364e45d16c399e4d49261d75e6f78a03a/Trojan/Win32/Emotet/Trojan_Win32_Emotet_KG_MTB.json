@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Emotet/Trojan_Win32_Emotet_KG_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Emotet_KG_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Emotet.KG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Emotet_KG_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Emotet.KG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {6a 40 68 00 ?? 00 00 ?? ?? ff }\n\t\t$a_02_1 = {6a 04 68 00 ?? 00 00 ?? ?? ff }\n\t\t$a_02_2 = {83 c0 02 66 85 [0-03] 2b ?? d1 f8 48 c3 }\n\t\t$a_02_3 = {d1 f8 48 c3 90 0a 19 00 66 8b [0-04] 66 85 [0-03] 2b }\n\t\t$a_02_4 = {8b e5 5d c3 90 0a 32 00 8b [0-04] 33 d2 f7 ?? 8b [0-02] 03 [0-02] 8b 4d ?? 8a ?? 90 17 03 01 01 01 32 30 33 [0-02] 8b 4d ?? 03 4d ?? 88 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_02_4 & 1 ) * 20 ) >= 22\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

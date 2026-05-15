@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Injuke/Trojan_Win64_Injuke_AHB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Injuke_AHB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Injuke.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Injuke_AHB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Injuke.AHB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b c8 c1 e9 1e 33 c1 69 c0 ?? ?? ?? ?? 03 c7 89 84 95 84 00 00 00 ff c7 48 ff c2 48 81 fa 70 02 00 00 7c }\n\t\t$a_03_1 = {8b c8 c1 e9 1e 33 c1 69 c0 ?? ?? ?? ?? 03 c7 89 44 95 34 ff c7 48 ff c2 48 81 fa 70 02 00 00 7c }\n\t\t$a_03_2 = {5c 44 42 47 c7 85 ?? ?? 00 00 42 75 66 66 c7 85 ?? ?? 00 00 65 72 70 2e c7 85 ?? ?? 00 00 64 6c 6c 00 4c 8d 85 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 + ( #a_03_2 & 1 ) * 20 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

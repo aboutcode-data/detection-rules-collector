@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/tjnel/yara_repo/blob/master/trojans/diamond_fox.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "diamond_fox",
+                "tags": [],
+                "author": "tjadanel @reonfleek",
+                "date": "2017-09-20",
+                "description": "Diamond Fox: Malware as a Service",
+                "reference": "https://blog.malwarebytes.com/threat-analysis/2017/03/diamond-fox-p1/",
+                "reference1": "https://blog.checkpoint.com/2017/05/10/diamondfox-modular-malware-one-stop-shop/",
+                "sha256_0": "92b449d5932fd42a5040b26e2a849aea3deb04ae0c4e400e6ddf13acd12a94e3",
+                "sha256_1": "68051027c5199d12fa6afd52e053bf3127429bdd65251308d1b6e26da10c6a9d"
+            },
+            "rule_text": "rule diamond_fox\n{\n\tmeta:\n\t\tauthor = \"tjadanel @reonfleek\"\n\t\tdate = \"2017-09-20\"\n\t\tdescription = \"Diamond Fox: Malware as a Service\"\n\t\treference = \"https://blog.malwarebytes.com/threat-analysis/2017/03/diamond-fox-p1/\"\n\t\treference1 = \"https://blog.checkpoint.com/2017/05/10/diamondfox-modular-malware-one-stop-shop/\"\n\t\tsha256_0 = \"92b449d5932fd42a5040b26e2a849aea3deb04ae0c4e400e6ddf13acd12a94e3\"\n\t\tsha256_1 = \"68051027c5199d12fa6afd52e053bf3127429bdd65251308d1b6e26da10c6a9d\"\n\n\tstrings:\n\t\t$cfg0 = \"L!NK\" nocase\n\t\t$persist0 = \"Policies\\\\System\\\\EnableLUA\" wide\n\t\t$persist1 = \"HKLM\\\\Software\\\\Microsoft\\\\Security Center\\\\UACDisableNotify\" wide\n\t\t$persist2 = \"\\\\Windows\\\\CurrentVersion\\\\\" wide\n\t\t$persist3 = \"\\\\Windows NT\\\\CurrentVersion\\\\\" wide\n\t\t$persist4 = \"Policies\\\\Explorer\\\\Run\\\\\" wide\n\t\t$persist5 = \"\\\\CurrentVersion\\\\RunOnce\\\\\" wide\n\t\t$diamond0 = \"70144646\" wide\n\t\t$diamond1 = \"coin\" wide\n\t\t$diamond2 = \"BitcoinDark\" wide\n\t\t$diamond3 = \"Asic\" wide\n\t\t$diamond4 = \"Prime\" wide\n\t\t$diamond5 = \"Electrum\" wide\n\t\t$diamond6 = \"Armory\" wide\n\t\t$diamond7 = \".vbs\" wide\n\t\t$comm0 = \"&x=\" wide\n\t\t$comm1 = \"ping -n 4 127.0.0.1 > nul\" wide\n\t\t$comm2 = \"?p=\" wide\n\t\t$comm3 = \"&y=\" wide\n\t\t$comm4 = \"/gate.php\" wide\n\t\t$comm5 = \"select * from \" wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D ) and ( all of ( $cfg* ) ) and ( all of ( $persist* ) ) and ( all of ( $comm* ) ) and ( all of ( $diamond* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

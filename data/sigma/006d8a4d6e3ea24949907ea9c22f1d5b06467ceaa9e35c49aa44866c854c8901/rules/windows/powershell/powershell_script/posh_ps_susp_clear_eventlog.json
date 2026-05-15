@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_clear_eventlog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2022-09-12",
+                "title": "Suspicious Eventlog Clear",
+                "id": "0f017df3-8f5a-414f-ad6b-24aff1128278"
+            },
+            "rule_text": "title: Suspicious Eventlog Clear\nid: 0f017df3-8f5a-414f-ad6b-24aff1128278\nrelated:\n- id: cc36992a-4671-4f21-a91d-6c2b72a2edf5\n  type: derived\nstatus: test\ndescription: Detects usage of known powershell cmdlets such as \"Clear-EventLog\" to\n  clear the Windows event logs\nreferences:\n- https://twitter.com/oroneequalsone/status/1568432028361830402\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.001/T1070.001.md\n- https://eqllib.readthedocs.io/en/latest/analytics/5b223758-07d6-4100-9e11-238cfdd0fe97.html\n- https://stackoverflow.com/questions/66011412/how-to-clear-a-event-log-in-powershell-7\n- https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.eventing.reader.eventlogsession.clearlog?view=windowsdesktop-9.0&viewFallbackFrom=dotnet-plat-ext-5.0#System_Diagnostics_Eventing_Reader_EventLogSession_ClearLog_System_String_\n- https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.eventlog.clear\nauthor: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron\n  Systems)\ndate: 2022-09-12\nmodified: 2025-10-06\ntags:\n- attack.defense-impairment\n- attack.t1685.005\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n  - ScriptBlockText|contains:\n    - 'Clear-EventLog '\n    - 'Remove-EventLog '\n    - 'Limit-EventLog '\n    - 'Clear-WinEvent '\n  - ScriptBlockText|contains|all:\n    - Eventing.Reader.EventLogSession\n    - ClearLog\n  - ScriptBlockText|contains|all:\n    - Diagnostics.EventLog\n    - Clear\n  condition: selection\nfalsepositives:\n- Rare need to clear logs before doing something. Sometimes used by installers or\n  cleaner scripts. The script should be investigated to determine if it's legitimate\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

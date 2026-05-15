@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/AsyncRAT/Trojan_Win64_AsyncRAT_ARA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_AsyncRAT_ARA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/AsyncRAT.ARA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_AsyncRAT_ARA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/AsyncRAT.ARA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {48 8b 45 e8 48 89 c1 48 83 c0 01 48 89 45 e8 eb d9 48 8b 45 e8 48 8b 4d f0 48 01 c1 48 8b 45 e8 48 8b 55 10 48 01 c2 0f be 02 8b 55 18 31 d0 88 01 eb cd }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 ) >= 2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_AsyncRAT_ARA_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win64/AsyncRAT.ARA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_AsyncRAT_ARA_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/AsyncRAT.ARA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {4b 44 46 36 32 44 46 4a 46 4a 46 46 32 36 4a 2e 62 61 74 }\n\t\t$a_01_1 = {74 61 73 6b 6b 69 6c 6c 20 2f 46 20 2f 69 6d 20 73 76 63 68 6f 73 74 2e 65 78 65 }\n\t\t$a_01_2 = {5c 44 69 73 63 6f 72 64 4e 75 6b 65 42 6f 74 5c 78 36 34 5c 52 65 6c 65 61 73 65 5c 31 2e 70 64 62 }\n\t\t$a_01_3 = {5c 73 68 61 72 65 73 63 72 65 65 6e 5c 78 36 34 5c 52 65 6c 65 61 73 65 5c 73 68 61 72 65 73 63 72 65 65 6e 2e 70 64 62 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 3 + ( #a_01_3 & 1 ) * 3 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

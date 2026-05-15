@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Agent/Backdoor_Win32_Agent_OY.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Agent_OY",
+                "tags": [],
+                "description": "Backdoor:Win32/Agent.OY,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Agent_OY\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Agent.OY,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {b0 53 b1 45 88 44 24 ?? 88 44 24 ?? b0 52 88 4c 24 ?? 88 44 24 ?? 88 44 24 }\n\t\t$a_03_1 = {50 c6 44 24 ?? 55 c6 44 24 ?? 52 c6 44 24 ?? 4c c6 44 24 ?? 44 88 4c 24 ?? c6 44 24 ?? 77 }\n\t\t$a_00_2 = {47 45 54 20 25 73 20 48 54 54 50 2f 31 2e 31 }\n\t\t$a_03_3 = {6a 06 8d 85 ?? ?? ff ff 50 ff 15 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

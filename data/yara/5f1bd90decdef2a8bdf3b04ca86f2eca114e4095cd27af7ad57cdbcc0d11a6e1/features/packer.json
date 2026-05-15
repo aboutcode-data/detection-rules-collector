@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/packer.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "upx_sections",
+                "tags": [
+                    "info",
+                    "packer",
+                    "upx"
+                ],
+                "description": "Contains UPX sections"
+            },
+            "rule_text": "rule upx_sections : info packer upx\n{\n\tmeta:\n\t\tdescription = \"Contains UPX sections\"\n\n\tstrings:\n\t\t$str_upx_01 = \"UPX0\"\n\t\t$str_upx_02 = \"UPX1\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and all of ( $str_upx_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_computer_discovery_get_adcomputer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-11-17",
+                "title": "Computer Discovery And Export Via Get-ADComputer Cmdlet - PowerShell",
+                "id": "db885529-903f-4c5d-9864-28fe199e6370"
+            },
+            "rule_text": "title: Computer Discovery And Export Via Get-ADComputer Cmdlet - PowerShell\nid: db885529-903f-4c5d-9864-28fe199e6370\nrelated:\n- id: 435e10e4-992a-4281-96f3-38b11106adde\n  type: similar\nstatus: test\ndescription: Detects usage of the Get-ADComputer cmdlet to collect computer information\n  and output it to a file\nreferences:\n- http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html\n- https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/\n- https://www.cisa.gov/uscert/sites/default/files/publications/aa22-320a_joint_csa_iranian_government-sponsored_apt_actors_compromise_federal%20network_deploy_crypto%20miner_credential_harvester.pdf\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-11-17\ntags:\n- attack.discovery\n- attack.t1033\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - 'Get-ADComputer '\n    - ' -Filter \\*'\n    ScriptBlockText|contains:\n    - ' | Select '\n    - Out-File\n    - Set-Content\n    - Add-Content\n  condition: selection\nfalsepositives:\n- Legitimate admin scripts may use the same technique, it's better to exclude specific\n  computers or users who execute these commands or scripts often\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

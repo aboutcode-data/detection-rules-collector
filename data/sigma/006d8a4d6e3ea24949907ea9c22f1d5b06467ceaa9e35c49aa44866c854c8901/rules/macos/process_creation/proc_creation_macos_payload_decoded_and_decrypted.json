@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_payload_decoded_and_decrypted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch (rule), Elastic (idea)",
+                "date": "2022-10-17",
+                "title": "Payload Decoded and Decrypted via Built-in Utilities",
+                "id": "234dc5df-40b5-49d1-bf53-0d44ce778eca"
+            },
+            "rule_text": "title: Payload Decoded and Decrypted via Built-in Utilities\nid: 234dc5df-40b5-49d1-bf53-0d44ce778eca\nstatus: test\ndescription: Detects when a built-in utility is used to decode and decrypt a payload\n  after a macOS disk image (DMG) is executed. Malware authors may attempt to evade\n  detection and trick users into executing malicious code by encoding and encrypting\n  their payload and placing it in a disk image file. This behavior is consistent with\n  adware or malware families such as Bundlore and Shlayer.\nreferences:\n- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-5d42c3d772e04f1e8d0eb60f5233bc79def1ea73105a2d8822f44164f77ef823\nauthor: Tim Rauch (rule), Elastic (idea)\ndate: 2022-10-17\ntags:\n- attack.stealth\n- attack.t1059\n- attack.t1204\n- attack.execution\n- attack.t1140\n- attack.s0482\n- attack.s0402\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    Image|endswith: /openssl\n    CommandLine|contains|all:\n    - /Volumes/\n    - enc\n    - -base64\n    - ' -d '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

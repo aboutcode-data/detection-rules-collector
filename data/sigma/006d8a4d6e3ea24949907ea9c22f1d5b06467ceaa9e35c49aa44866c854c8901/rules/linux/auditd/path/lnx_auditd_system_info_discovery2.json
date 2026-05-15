@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/path/lnx_auditd_system_info_discovery2.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Ömer Günal, oscd.community",
+                "date": "2020-10-08",
+                "title": "System and Hardware Information Discovery",
+                "id": "1f358e2e-cb63-43c3-b575-dfb072a6814f"
+            },
+            "rule_text": "title: System and Hardware Information Discovery\nid: 1f358e2e-cb63-43c3-b575-dfb072a6814f\nrelated:\n- id: 42df45e7-e6e9-43b5-8f26-bec5b39cc239\n  type: derived\nstatus: stable\ndescription: Detects system information discovery commands\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-4---linux-vm-check-via-hardware\nauthor: \"\\xD6mer G\\xFCnal, oscd.community\"\ndate: 2020-10-08\nmodified: 2022-11-26\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: PATH\n    name:\n    - /sys/class/dmi/id/bios_version\n    - /sys/class/dmi/id/product_name\n    - /sys/class/dmi/id/chassis_vendor\n    - /proc/scsi/scsi\n    - /proc/ide/hd0/model\n    - /proc/version\n    - /etc/*version\n    - /etc/*release\n    - /etc/issue\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

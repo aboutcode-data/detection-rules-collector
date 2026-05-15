@@ -1,0 +1,37 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/apt_glassRAT.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "glassRAT",
+                "tags": [],
+                "author": "RSA RESEARCH",
+                "date": "3 Nov 2015",
+                "description": "Detects GlassRAT by RSA (modified by Florian Roth - speed improvements)",
+                "Info": "GlassRat"
+            },
+            "rule_text": "rule glassRAT\n{\n\tmeta:\n\t\tauthor = \"RSA RESEARCH\"\n\t\tdate = \"3 Nov 2015\"\n\t\tdescription = \"Detects GlassRAT by RSA (modified by Florian Roth - speed improvements)\"\n\t\tInfo = \"GlassRat\"\n\n\tstrings:\n\t\t$bin1 = {85 C0 B3 01}\n\t\t$bin3 = {68 4C 50 00 10}\n\t\t$bin4 = {68 48 50 00 10}\n\t\t$bin5 = {68 44 50 00 10}\n\t\t$hs = {CB FF 5D C9 AD 3F 5B A1 54 13 FE FB 05 C6 22}\n\t\t$s1 = \"pwlfnn10,gzg\"\n\t\t$s2 = \"AddNum\"\n\t\t$s3 = \"ServiceMain\"\n\t\t$s4 = \"The Window\"\n\t\t$s5 = \"off.dat\"\n\n\tcondition:\n\t\tall of ( $bin* ) and $hs and 3 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "GlassRAT_Generic",
+                "tags": [],
+                "description": "Detects GlassRAT Malware",
+                "author": "Florian Roth",
+                "reference": "https://blogs.rsa.com/peering-into-glassrat/",
+                "date": "2015-11-23",
+                "score": 80,
+                "hash1": "30d26aebcee21e4811ff3a44a7198a5c519843a24f334880384a7158e07ae399",
+                "hash2": "3bdeb3805e9230361fb93c6ffb0bfec8d3aee9455d95b2428c7f6292d387d3a4",
+                "hash3": "79993f1912958078c4d98503e00dc526eb1d0ca4d020d17b010efa6c515ca92e",
+                "hash4": "a9b30b928ebf9cda5136ee37053fa045f3a53d0706dcb2343c91013193de761e",
+                "hash5": "c11faf7290299bb13925e46d040ed59ab3ca8938eab1f171aa452603602155cb",
+                "hash6": "d95fa58a81ab2d90a8cbe05165c00f9c8ad5b4f49e98df2ad391f5586893490d",
+                "hash7": "f1209eb95ce1319af61f371c7f27bf6846eb90f8fd19e8d84110ebaf4744b6ea"
+            },
+            "rule_text": "rule GlassRAT_Generic\n{\n\tmeta:\n\t\tdescription = \"Detects GlassRAT Malware\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://blogs.rsa.com/peering-into-glassrat/\"\n\t\tdate = \"2015-11-23\"\n\t\tscore = 80\n\t\thash1 = \"30d26aebcee21e4811ff3a44a7198a5c519843a24f334880384a7158e07ae399\"\n\t\thash2 = \"3bdeb3805e9230361fb93c6ffb0bfec8d3aee9455d95b2428c7f6292d387d3a4\"\n\t\thash3 = \"79993f1912958078c4d98503e00dc526eb1d0ca4d020d17b010efa6c515ca92e\"\n\t\thash4 = \"a9b30b928ebf9cda5136ee37053fa045f3a53d0706dcb2343c91013193de761e\"\n\t\thash5 = \"c11faf7290299bb13925e46d040ed59ab3ca8938eab1f171aa452603602155cb\"\n\t\thash6 = \"d95fa58a81ab2d90a8cbe05165c00f9c8ad5b4f49e98df2ad391f5586893490d\"\n\t\thash7 = \"f1209eb95ce1319af61f371c7f27bf6846eb90f8fd19e8d84110ebaf4744b6ea\"\n\n\tstrings:\n\t\t$s1 = \"cmd.exe /c %s\" fullword ascii\n\t\t$s2 = \"update.dll\" fullword ascii\n\t\t$s3 = \"SYSTEM\\\\CurrentControlSet\\\\Services\\\\RasAuto\\\\Parameters\" fullword ascii\n\t\t$s4 = \"%%temp%%\\\\%u\" fullword ascii\n\t\t$s5 = \"\\\\off.dat\" fullword ascii\n\t\t$s6 = \"rundll32 \\\"%s\\\",AddNum\" fullword ascii\n\t\t$s7 = \"cmd.exe /c erase /F \\\"%s\\\"\" fullword ascii\n\t\t$s8 = \"SYSTEM\\\\ControlSet00%d\\\\Services\\\\RasAuto\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 15MB and 5 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

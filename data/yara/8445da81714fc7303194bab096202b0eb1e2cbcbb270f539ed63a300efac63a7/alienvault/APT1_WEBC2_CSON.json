@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/alienvault/APT1_WEBC2_CSON.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT1_WEBC2_CSON",
+                "tags": [],
+                "author": "AlienVault Labs",
+                "info": "CommentCrew-threat-apt1"
+            },
+            "rule_text": "rule APT1_WEBC2_CSON\n{\n\tmeta:\n\t\tauthor = \"AlienVault Labs\"\n\t\tinfo = \"CommentCrew-threat-apt1\"\n\n\tstrings:\n\t\t$httpa1 = \"/Default.aspx?INDEX=\" wide ascii\n\t\t$httpa2 = \"/Default.aspx?ID=\" wide ascii\n\t\t$httpb1 = \"Win32\" wide ascii\n\t\t$httpb2 = \"Accept: text*/*\" wide ascii\n\t\t$exe1 = \"xcmd.exe\" wide ascii\n\t\t$exe2 = \"Google.exe\" wide ascii\n\n\tcondition:\n\t\t1 of ( $exe* ) and 1 of ( $httpa* ) and all of ( $httpb* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

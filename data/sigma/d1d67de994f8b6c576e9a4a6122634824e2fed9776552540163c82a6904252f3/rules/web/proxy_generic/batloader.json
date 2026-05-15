@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/batloader.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2023-08-15",
+                "title": "BatLoader C2 traffic",
+                "id": "354d2c39-b961-42df-842a-df510e525d66"
+            },
+            "rule_text": "title: BatLoader C2 traffic\nid: 354d2c39-b961-42df-842a-df510e525d66\ndescription: Likely BatLoader C2 traffic\nstatus: stable\nauthor: NTT Security - Axel Olsson\nreferences:\n- https://www.esentire.com/blog/batloader-continues-signed-msix-app-package-abuse\n- 0bbc90d442d216669fd9a511b319f91adfccad27110667b2dc22f914bdda559d\n- 56b5e3a9f1a4706428a32fc7480e4b480ef46b9307d85639cba1c0acf615ad51\n- 5ba6fbbfebbc31b41ecca7e2669b1dda41839a571b672d6ac430b291974a03a5\ndate: '2023-08-15'\nlogsource:\n  category: proxy\ndetection:\n  selection_uri_query:\n  - c-uri-query: sc-status=install\n  - c-uri-query|startswith: sc-status=start&av=\n  selection_uri_path:\n    c-uri: /\n  condition: selection_uri_query and selection_uri_path\nfalsepositives:\n- Unlikely, but could be legitimate URLs with same path\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

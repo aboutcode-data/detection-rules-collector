@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/schtasks_susp_behavior.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Windows Scheduled Task Behaving Improperly or Suspiciously",
+                "id": "ccb39be9-ba55-4553-9614-a94e98e58626"
+            },
+            "rule_text": "title: Windows Scheduled Task Behaving Improperly or Suspiciously\nid: ccb39be9-ba55-4553-9614-a94e98e58626\nstatus: experimental\ndescription: Detects scheduled tasks created with the /create flag and a reference\n  to commonly-abused Windows utilities. Inspired by the 2022 Red Canary Threat Detection\n  report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/scheduled-task/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.persistence\n- attack.execution\n- attack.t1053\n- attack.t1053.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains:\n    - cmd.exe\n    - powershell.exe\n    - regsvr32.exe\n    - rundll32.exe\n    - mshta.exe\n    CommandLine|contains|windash: /create\n  condition: selection\nfalsepositives:\n- Creation of legitimate scheduled tasks which need to run cmd or similar utilities.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

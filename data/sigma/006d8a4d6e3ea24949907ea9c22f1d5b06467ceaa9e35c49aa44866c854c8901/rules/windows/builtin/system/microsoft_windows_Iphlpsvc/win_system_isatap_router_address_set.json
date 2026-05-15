@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/microsoft_windows_Iphlpsvc/win_system_isatap_router_address_set.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "hamid",
+                "date": "2025-10-19",
+                "title": "ISATAP Router Address Was Set",
+                "id": "d22df9cd-2aee-4089-93c7-9dc4eae77f2c"
+            },
+            "rule_text": "title: ISATAP Router Address Was Set\nid: d22df9cd-2aee-4089-93c7-9dc4eae77f2c\nstatus: experimental\ndescription: 'Detects the configuration of a new ISATAP router on a Windows host.\n  While ISATAP is a legitimate Microsoft technology for IPv6 transition, unexpected\n  or unauthorized ISATAP router configurations could indicate a potential IPv6 DNS\n  Takeover attack using tools like mitm6.\n\n  In such attacks, adversaries advertise themselves as DHCPv6 servers and set malicious\n  ISATAP routers to intercept traffic.\n\n  This detection should be correlated with network baselines and known legitimate\n  ISATAP deployments in your environment.\n\n  '\nreferences:\n- https://www.blackhillsinfosec.com/mitm6-strikes-again-the-dark-side-of-ipv6/\n- https://redfoxsec.com/blog/ipv6-dns-takeover/\n- https://www.securityhq.com/blog/malicious-isatap-tunneling-unearthed-on-windows-server/\n- https://medium.com/@ninnesoturan/detecting-ipv6-dns-takeover-a54a6a88be1f\nauthor: hamid\ndate: 2025-10-19\ntags:\n- attack.impact\n- attack.credential-access\n- attack.collection\n- attack.initial-access\n- attack.privilege-escalation\n- attack.execution\n- attack.t1557\n- attack.t1565.002\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    EventID: 4100\n    Provider_Name: Microsoft-Windows-Iphlpsvc\n  filter_main_localhost:\n    IsatapRouter:\n    - 127.0.0.1\n    - ::1\n  filter_optional_null:\n    IsatapRouter: null\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate ISATAP router configuration in enterprise environments\n- IPv6 transition projects and network infrastructure changes\n- Network administrators configuring dual-stack networking\n- Automatic ISATAP configuration in some Windows deployments\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

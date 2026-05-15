@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/attachment.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "with_attachment",
+                "tags": [
+                    "mail"
+                ],
+                "author": "Antonio Sanchez <asanchez@hispasec.com>",
+                "reference": "http://laboratorio.blogs.hispasec.com/",
+                "description": "Rule to detect the presence of an or several attachments"
+            },
+            "rule_text": "rule with_attachment : mail\n{\n\tmeta:\n\t\tauthor = \"Antonio Sanchez <asanchez@hispasec.com>\"\n\t\treference = \"http://laboratorio.blogs.hispasec.com/\"\n\t\tdescription = \"Rule to detect the presence of an or several attachments\"\n\n\tstrings:\n\t\t$attachment_id = \"X-Attachment-Id\"\n\n\tcondition:\n\t\t$attachment_id\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "without_attachments",
+                "tags": [
+                    "mail"
+                ],
+                "author": "Antonio Sanchez <asanchez@hispasec.com>",
+                "reference": "http://laboratorio.blogs.hispasec.com/",
+                "description": "Rule to detect the no presence of any attachment"
+            },
+            "rule_text": "rule without_attachments : mail\n{\n\tmeta:\n\t\tauthor = \"Antonio Sanchez <asanchez@hispasec.com>\"\n\t\treference = \"http://laboratorio.blogs.hispasec.com/\"\n\t\tdescription = \"Rule to detect the no presence of any attachment\"\n\n\tstrings:\n\t\t$eml_01 = \"From:\"\n\t\t$eml_02 = \"To:\"\n\t\t$eml_03 = \"Subject:\"\n\t\t$attachment_id = \"X-Attachment-Id\"\n\t\t$mime_type = \"Content-Type: multipart/mixed\"\n\n\tcondition:\n\t\tall of ( $eml_* ) and not $attachment_id and not $mime_type\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

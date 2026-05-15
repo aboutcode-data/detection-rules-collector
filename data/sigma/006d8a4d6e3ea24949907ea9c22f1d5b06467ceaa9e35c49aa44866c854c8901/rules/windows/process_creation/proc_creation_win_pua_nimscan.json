@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_nimscan.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-05",
+                "title": "PUA - NimScan Execution",
+                "id": "4fd6b1c7-19b8-4488-97f6-00f0924991a3"
+            },
+            "rule_text": "title: PUA - NimScan Execution\nid: 4fd6b1c7-19b8-4488-97f6-00f0924991a3\nstatus: test\ndescription: 'Detects usage of NimScan, a portscanner utility.\n\n  In early 2025, adversaries were observed using this utility to scan for open ports\n  on remote hosts in a compromised environment.\n\n  This rule identifies the execution of NimScan based on the process image name and\n  specific hash values associated with different versions of the tool.\n\n  '\nreferences:\n- https://x.com/cyberfeeddigest/status/1887041526397587859\n- https://github.com/elddy/NimScan\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-05\ntags:\n- attack.discovery\n- attack.t1046\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\NimScan.exe\n  - Hashes|contains:\n    - IMPHASH=41BB1C7571B3A724EB83A1D2B96DBB8C\n    - IMPHASH=B1B6ADACB172795480179EFD18A29549\n    - IMPHASH=0D1F896DC7642AD8384F9042F30279C2\n  condition: selection\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

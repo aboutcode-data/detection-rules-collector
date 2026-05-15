@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_gup_suspicious_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-02-06",
+                "title": "Suspicious GUP Usage",
+                "id": "0a4f6091-223b-41f6-8743-f322ec84930b"
+            },
+            "rule_text": "title: Suspicious GUP Usage\nid: 0a4f6091-223b-41f6-8743-f322ec84930b\nstatus: test\ndescription: Detects execution of the Notepad++ updater in a suspicious directory,\n  which is often used in DLL side-loading attacks\nreferences:\n- https://www.fireeye.com/blog/threat-research/2018/09/apt10-targeting-japanese-corporations-using-updated-ttps.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-02-06\nmodified: 2022-08-13\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\GUP.exe\n  filter_programfiles:\n    Image|endswith:\n    - \\Program Files\\Notepad++\\updater\\GUP.exe\n    - \\Program Files (x86)\\Notepad++\\updater\\GUP.exe\n  filter_user:\n    Image|contains: \\Users\\\n    Image|endswith:\n    - \\AppData\\Local\\Notepad++\\updater\\GUP.exe\n    - \\AppData\\Roaming\\Notepad++\\updater\\GUP.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Execution of tools named GUP.exe and located in folders different than Notepad++\\updater\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_impacket_smbexec_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "SMBexec.py Execution",
+                "id": "c250b516-78d8-4664-8b86-8f3c9c0b53c8"
+            },
+            "rule_text": "title: SMBexec.py Execution\nid: c250b516-78d8-4664-8b86-8f3c9c0b53c8\nstatus: experimental\ndescription: \"Similar to the wmiexec.py detector logic, this detection analytic is\\\n  \\ looking for services.exe \\nspawning cmd.exe with a command line that has the following\\\n  \\ strings: '/Q', '/c', 'echo',' > ', \\n' 2>&1'. These strings are unique to the\\\n  \\ execution of smbexec.py, which allows a semi-interactive \\nshell used through\\\n  \\ SMB. This script functions similar to psexec.py, but does not write a service\\\n  \\ \\nbinary to disk on the target machine. Part of the RedCanary 2024 Threat Detection\\\n  \\ Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/impacket/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.s0357\n- attack.execution\n- attack.t1569\n- attack.t1569.002\n- attack.lateral_movement\n- attack.t1021\n- attack.t1021.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\services.exe\n    Image|endswith: \\cmd.exe\n    CommandLine|contains:\n    - /Q\n    - /c\n    - echo\n    - '^> '\n    - ' 2^>^&1 > '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

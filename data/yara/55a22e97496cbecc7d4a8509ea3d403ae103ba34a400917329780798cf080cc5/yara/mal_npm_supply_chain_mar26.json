@@ -1,0 +1,33 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_npm_supply_chain_mar26.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_NPM_SupplyChain_Attack_Mar26",
+                "tags": [],
+                "description": "Detects package.json which include the malicious plain-crypto-js package as dependency",
+                "author": "Marius Benthin",
+                "date": "2026-03-31",
+                "reference": "https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan",
+                "hash": "5e3e89c7351f385e36bb70286866a62957cc1aaab195539edb8c7bb62968a137",
+                "score": 80
+            },
+            "rule_text": "rule MAL_NPM_SupplyChain_Attack_Mar26\n{\n\tmeta:\n\t\tdescription = \"Detects package.json which include the malicious plain-crypto-js package as dependency\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-03-31\"\n\t\treference = \"https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan\"\n\t\thash = \"5e3e89c7351f385e36bb70286866a62957cc1aaab195539edb8c7bb62968a137\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$s1 = \"\\\"dependencies\\\":\"\n\t\t$s2 = { 22 70 6C 61 69 6E 2D 63 72 79 70 74 6F 2D 6A 73 22 3A [0-3] 22 [0-2] 34 2E 32 2E }\n\n\tcondition:\n\t\tfilesize < 10KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_JS_Dropper_Mar26",
+                "tags": [],
+                "description": "Detects suspicious JavaScript dropper used in plain-crypto-js supply chain attacks",
+                "author": "Marius Benthin",
+                "date": "2026-03-31",
+                "reference": "https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan",
+                "hash": "e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09",
+                "score": 70
+            },
+            "rule_text": "rule SUSP_JS_Dropper_Mar26\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious JavaScript dropper used in plain-crypto-js supply chain attacks\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-03-31\"\n\t\treference = \"https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan\"\n\t\thash = \"e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$sa1 = \"Buffer.from(\"\n\t\t$sa2 = \"FileSync(\"\n\t\t$sa3 = \".replaceAll(\"\n\t\t$sb1 = \".arch()\"\n\t\t$sb2 = \".platform()\"\n\t\t$sb3 = \".release()\"\n\t\t$sb4 = \".type()\"\n\n\tcondition:\n\t\tfilesize < 10KB and all of ( $sa* ) and 2 of ( $sb* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

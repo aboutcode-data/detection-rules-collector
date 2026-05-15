@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/XWorm/Trojan_BAT_XWorm_ARZA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_XWorm_ARZA_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/XWorm.ARZA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_XWorm_ARZA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/XWorm.ARZA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0a 0b 07 03 6f ?? 00 00 0a 07 04 6f ?? 00 00 0a 07 17 6f ?? 00 00 0a 07 18 6f ?? 00 00 0a 07 6f ?? 00 00 0a 0c 06 73 ?? 00 00 0a 0d 09 08 16 73 ?? 00 00 0a 13 04 73 ?? 00 00 0a 13 05 11 04 11 05 6f ?? 00 00 0a 11 05 6f ?? 00 00 0a 13 06 de 36 }\n\t\t$a_01_1 = {46 72 6f 6d 42 61 73 65 36 34 53 74 72 69 6e 67 }\n\t\t$a_01_2 = {43 72 65 61 74 65 44 65 63 72 79 70 74 6f 72 }\n\t\t$a_01_3 = {44 65 63 72 79 70 74 46 72 6f 6d 42 61 73 65 36 34 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 4 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

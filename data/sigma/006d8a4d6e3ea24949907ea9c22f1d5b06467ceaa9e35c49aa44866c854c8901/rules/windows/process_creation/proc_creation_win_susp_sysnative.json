@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_sysnative.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2022-08-23",
+                "title": "Process Creation Using Sysnative Folder",
+                "id": "3c1b5fb0-c72f-45ba-abd1-4d4c353144ab"
+            },
+            "rule_text": "title: Process Creation Using Sysnative Folder\nid: 3c1b5fb0-c72f-45ba-abd1-4d4c353144ab\nstatus: test\ndescription: Detects process creation events that use the Sysnative folder (common\n  for CobaltStrike spawns)\nreferences:\n- https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/\nauthor: Max Altgelt (Nextron Systems)\ndate: 2022-08-23\nmodified: 2025-10-08\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - CommandLine|contains: :\\Windows\\Sysnative\\\n  - Image|contains: :\\Windows\\Sysnative\\\n  filter_main_ngen:\n    Image|contains:\n    - C:\\Windows\\Microsoft.NET\\Framework64\\v\n    - C:\\Windows\\Microsoft.NET\\Framework\\v\n    - C:\\Windows\\Microsoft.NET\\FrameworkArm\\v\n    - C:\\Windows\\Microsoft.NET\\FrameworkArm64\\v\n    Image|endswith: \\ngen.exe\n    CommandLine|contains: install\n  filter_optional_xampp:\n    CommandLine|contains|all:\n    - '\"C:\\Windows\\sysnative\\cmd.exe\"'\n    - \\xampp\\\n    - \\catalina_start.bat\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

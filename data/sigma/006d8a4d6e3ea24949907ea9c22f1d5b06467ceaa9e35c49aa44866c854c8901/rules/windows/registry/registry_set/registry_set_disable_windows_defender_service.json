@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disable_windows_defender_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ján Trenčanský, frack113, AlertIQ, Nasreddine Bencherchali",
+                "date": "2022-08-01",
+                "title": "Windows Defender Service Disabled - Registry",
+                "id": "e1aa95de-610a-427d-b9e7-9b46cfafbe6a"
+            },
+            "rule_text": "title: Windows Defender Service Disabled - Registry\nid: e1aa95de-610a-427d-b9e7-9b46cfafbe6a\nstatus: test\ndescription: Detects when an attacker or tool disables the  Windows Defender service\n  (WinDefend) via the registry\nreferences:\n- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/\n- https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105\nauthor: \"J\\xE1n Tren\\u010Dansk\\xFD, frack113, AlertIQ, Nasreddine Bencherchali\"\ndate: 2022-08-01\nmodified: 2024-03-25\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|endswith: \\Services\\WinDefend\\Start\n    Details: DWORD (0x00000004)\n  condition: selection\nfalsepositives:\n- Administrator actions\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

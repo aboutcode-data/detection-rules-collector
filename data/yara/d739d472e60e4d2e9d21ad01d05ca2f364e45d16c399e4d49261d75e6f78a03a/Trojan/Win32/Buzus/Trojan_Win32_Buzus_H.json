@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Buzus/Trojan_Win32_Buzus_H.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Buzus_H",
+                "tags": [],
+                "description": "Trojan:Win32/Buzus.H,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Buzus_H\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Buzus.H,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {66 81 38 4d 5a 75 ?? 60 89 85 ?? ?? ?? ?? 8b d0 8b d8 03 40 3c 03 58 78 89 9d ?? ?? ?? ?? 8d 9d ?? ?? ?? ?? 8d bd ?? ?? ?? ?? 8b 33 89 b5 ?? ?? ?? ?? e8 ?? ?? ?? ?? ab 83 c3 04 83 3b 00 }\n\t\t$a_03_1 = {c7 45 94 04 00 02 80 c7 45 8c 0a 00 00 00 ba ?? ?? ?? ?? 8d 4d d0 ff 15 ?? ?? ?? ?? 8d 55 d0 52 8d 45 9c 50 e8 ?? ?? ?? ?? 8d 4d 8c 51 8d 55 9c 52 }\n\t\t$a_00_2 = {47 00 62 00 74 00 73 00 6d 00 5f 00 52 00 45 00 2e 00 76 00 62 00 70 00 }\n\t\t$a_00_3 = {44 00 4a 00 5f 00 53 00 75 00 6e 00 2e 00 76 00 62 00 70 00 }\n\t\t$a_00_4 = {45 00 72 00 73 00 6d 00 73 00 5f 00 4a 00 4b 00 2e 00 76 00 62 00 70 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

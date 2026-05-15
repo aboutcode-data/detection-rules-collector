@@ -1,0 +1,15 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Fidelis/apt_nix_elf_derusbi.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_nix_elf_derusbi",
+                "tags": [],
+                "author": "Fidelis Cybersecurity",
+                "reference": "https://www.fidelissecurity.com/resources/turbo-campaign-featuring-derusbi-64-bit-linux"
+            },
+            "rule_text": "rule apt_nix_elf_derusbi\n{\n\tmeta:\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\treference = \"https://www.fidelissecurity.com/resources/turbo-campaign-featuring-derusbi-64-bit-linux\"\n\n\tstrings:\n\t\t$ = \"LxMain\"\n\t\t$ = \"execve\"\n\t\t$ = \"kill\"\n\t\t$ = \"cp -a %s %s\"\n\t\t$ = \"%s &\"\n\t\t$ = \"dbus-daemon\"\n\t\t$ = \"--noprofile\"\n\t\t$ = \"--norc\"\n\t\t$ = \"TERM=vt100\"\n\t\t$ = \"/proc/%u/cmdline\"\n\t\t$ = \"loadso\"\n\t\t$ = \"/proc/self/exe\"\n\t\t$ = \"Proxy-Connection: Keep-Alive\"\n\t\t$ = \"Connection: Keep-Alive\"\n\t\t$ = \"CONNECT %s\"\n\t\t$ = \"HOST: %s:%d\"\n\t\t$ = \"User-Agent: Mozilla/4.0\"\n\t\t$ = \"Proxy-Authorization: Basic %s\"\n\t\t$ = \"Server: Apache\"\n\t\t$ = \"Proxy-Authenticate\"\n\t\t$ = \"gettimeofday\"\n\t\t$ = \"pthread_create\"\n\t\t$ = \"pthread_join\"\n\t\t$ = \"pthread_mutex_init\"\n\t\t$ = \"pthread_mutex_destroy\"\n\t\t$ = \"pthread_mutex_lock\"\n\t\t$ = \"getsockopt\"\n\t\t$ = \"socket\"\n\t\t$ = \"setsockopt\"\n\t\t$ = \"select\"\n\t\t$ = \"bind\"\n\t\t$ = \"shutdown\"\n\t\t$ = \"listen\"\n\t\t$ = \"opendir\"\n\t\t$ = \"readdir\"\n\t\t$ = \"closedir\"\n\t\t$ = \"rename\"\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x4464c457f ) and ( all of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

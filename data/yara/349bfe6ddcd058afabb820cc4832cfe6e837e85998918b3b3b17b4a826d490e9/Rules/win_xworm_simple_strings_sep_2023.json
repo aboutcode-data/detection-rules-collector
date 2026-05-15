@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/embee-research/Yara-detection-rules/blob/master/Rules/win_xworm_simple_strings_sep_2023.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_xworm_simple_strings",
+                "tags": [],
+                "author": "Matthew @ Embee_Research",
+                "created": "2023/08/30",
+                "description": "Detects simple strings present in unobfuscated xworm",
+                "sha_256": "820bb1a31f421b90ea51efc3e71cc720c8c2784fb1e882e732e8fafb8631a389"
+            },
+            "rule_text": "import \"dotnet\"\n\nrule win_xworm_simple_strings\n{\n\tmeta:\n\t\tauthor = \"Matthew @ Embee_Research\"\n\t\tcreated = \"2023/08/30\"\n\t\tdescription = \"Detects simple strings present in unobfuscated xworm\"\n\t\tsha_256 = \"4459d95c0493d640ecc9453cf6a4f2b7538b1a7b95032f70803fc726b8e40422\"\n\t\tsha_256 = \"820bb1a31f421b90ea51efc3e71cc720c8c2784fb1e882e732e8fafb8631a389\"\n\n\tstrings:\n\t\t$x1 = \"XWorm V\" wide nocase\n\t\t$s1 = \"/create /f /RL HIGHEST /sc minute /mo 1 /tn \" wide\n\t\t$s2 = \"/create /f /sc minute /mo 1 /tn \" wide\n\t\t$s3 = \"-ExecutionPolicy Bypass Add-MpPreference -ExclusionPath \" wide\n\n\tcondition:\n\t\tdotnet.is_dotnet and $x1 and ( 2 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

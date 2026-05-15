@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2018/TA/MuddyWater/proc_creation_win_apt_muddywater_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-10",
+                "title": "Potential MuddyWater APT Activity",
+                "id": "36222790-0d43-4fe8-86e4-674b27809543"
+            },
+            "rule_text": "title: Potential MuddyWater APT Activity\nid: 36222790-0d43-4fe8-86e4-674b27809543\nstatus: test\ndescription: Detects potential Muddywater APT activity\nreferences:\n- https://www.mandiant.com/resources/blog/iranian-threat-group-updates-ttps-in-spear-phishing-campaign\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-10\ntags:\n- attack.execution\n- attack.stealth\n- attack.g0069\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_mshta:\n    CommandLine|contains|all:\n    - vbscript:Close(Execute(\"CreateObject(\n    - powershell\n    - -w 1 -exec Bypass\n    - \\ProgramData\\\n  selection_survey:\n    CommandLine|contains|all:\n    - Win32_OperatingSystem\n    - Win32_NetworkAdapterConfiguration\n    - root\\SecurityCenter2\n    - '[System.Net.DNS]'\n  selection_pwsh_backdoor:\n    CommandLine|contains|all:\n    - '[Convert]::ToBase64String'\n    - '[System.Text.Encoding]::UTF8.GetString]'\n    - GetResponse().GetResponseStream()\n    - '[System.Net.HttpWebRequest]::Create('\n    - '-bxor '\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

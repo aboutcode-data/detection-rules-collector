@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/RomeoAlfa.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RomeoAlfa",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "fba0b8bdc1be44d100ac31b864830fcc9d056f1f5ab5486384e09bd088256dd0.file2.bin"
+            },
+            "rule_text": "import \"pe\"\n\nrule RomeoAlfa\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"fba0b8bdc1be44d100ac31b864830fcc9d056f1f5ab5486384e09bd088256dd0.file2.bin\"\n\n\tstrings:\n\t\t$zeroIPLoader = {\n\t\t\t68 [4] \n\t\t\t56 \n\t\t\tE8 [4] \n\t\t\t83 C6 28 \n\t\t\t83 C4 08 \n\t\t\t81 FE [4] \n\t\t\t7C E? \n\t\t}\n\t\t$sleeper = {\n\t\t\t\t5? \n\t\t\t\t8B [3]                       \n\t\t\t\t85 ??                        \n\t\t\t\t7E ??                        \n\t\t\t\t5? \n\t\t\t\t8B 3D [4]                    \n\t\t\t\t68 [4]               \n\t\t\t\tFF ??                        \n\t\t\t\t4? \n\t\t\t\t75 ??                        \n\t\t\t\t5? \n\t\t\t\t5? \n\t\t\t\tC3                           \n\t\t\t}\n\t\t$xercesc = \"xercesc\"\n\n\tcondition:\n\t\t($sleeper in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or $zeroIPLoader in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) ) and not $xercesc\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

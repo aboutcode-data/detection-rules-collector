@@ -1,0 +1,670 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/antidebug_antivm/antidebug_antivm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "WindowsPE",
+                "tags": []
+            },
+            "rule_text": "private rule WindowsPE\n{\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3C ) ) == 0x00004550\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerCheck__PEB",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerCheck"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerCheck__PEB : AntiDebug DebuggerCheck\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"IsDebugged\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerCheck__GlobalFlags",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerCheck"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerCheck__GlobalFlags : AntiDebug DebuggerCheck\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"NtGlobalFlags\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerCheck__QueryInfo",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerCheck"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerCheck__QueryInfo : AntiDebug DebuggerCheck\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"QueryInformationProcess\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerCheck__RemoteAPI",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerCheck"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerCheck__RemoteAPI : AntiDebug DebuggerCheck\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"CheckRemoteDebuggerPresent\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerHiding__Thread",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerHiding"
+                ],
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara",
+                "weight": 1
+            },
+            "rule_text": "rule DebuggerHiding__Thread : AntiDebug DebuggerHiding\n{\n\tmeta:\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\t\tweight = 1\n\n\tstrings:\n\t\t$ = \"SetInformationThread\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerHiding__Active",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerHiding"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerHiding__Active : AntiDebug DebuggerHiding\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"DebugActiveProcess\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerException__ConsoleCtrl",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerException"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerException__ConsoleCtrl : AntiDebug DebuggerException\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"GenerateConsoleCtrlEvent\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerException__SetConsoleCtrl",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerException"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerException__SetConsoleCtrl : AntiDebug DebuggerException\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"SetConsoleCtrlHandler\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ThreadControl__Context",
+                "tags": [
+                    "AntiDebug",
+                    "ThreadControl"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule ThreadControl__Context : AntiDebug ThreadControl\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"SetThreadContext\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerCheck__DrWatson",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerCheck"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule DebuggerCheck__DrWatson : AntiDebug DebuggerCheck\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"__invoke__watson\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SEH__v3",
+                "tags": [
+                    "AntiDebug",
+                    "SEH"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule SEH__v3 : AntiDebug SEH\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"____except__handler3\"\n\t\t$ = \"____local__unwind3\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SEH__v4",
+                "tags": [
+                    "AntiDebug",
+                    "SEH"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule SEH__v4 : AntiDebug SEH\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"____except__handler4\"\n\t\t$ = \"____local__unwind4\"\n\t\t$ = \"__XcptFilter\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SEH__vba",
+                "tags": [
+                    "AntiDebug",
+                    "SEH"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule SEH__vba : AntiDebug SEH\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"vbaExceptHandler\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SEH__vectored",
+                "tags": [
+                    "AntiDebug",
+                    "SEH"
+                ],
+                "weight": 1,
+                "Author": "naxonez",
+                "reference": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule SEH__vectored : AntiDebug SEH\n{\n\tmeta:\n\t\tweight = 1\n\t\tAuthor = \"naxonez\"\n\t\treference = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$ = \"AddVectoredExceptionHandler\"\n\t\t$ = \"RemoveVectoredExceptionHandler\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SEH_Save",
+                "tags": [
+                    "Tactic_DefensiveEvasion",
+                    "Technique_AntiDebugging",
+                    "SubTechnique_SEH"
+                ],
+                "author": "Malware Utkonos",
+                "original_author": "naxonez",
+                "source": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule SEH_Save : Tactic_DefensiveEvasion Technique_AntiDebugging SubTechnique_SEH\n{\n\tmeta:\n\t\tauthor = \"Malware Utkonos\"\n\t\toriginal_author = \"naxonez\"\n\t\tsource = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$a = { 64 ff 35 00 00 00 00 }\n\n\tcondition:\n\t\tWindowsPE and $a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SEH_Init",
+                "tags": [
+                    "Tactic_DefensiveEvasion",
+                    "Technique_AntiDebugging",
+                    "SubTechnique_SEH"
+                ],
+                "author": "Malware Utkonos",
+                "original_author": "naxonez",
+                "source": "https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara"
+            },
+            "rule_text": "rule SEH_Init : Tactic_DefensiveEvasion Technique_AntiDebugging SubTechnique_SEH\n{\n\tmeta:\n\t\tauthor = \"Malware Utkonos\"\n\t\toriginal_author = \"naxonez\"\n\t\tsource = \"https://github.com/naxonez/yaraRules/blob/master/AntiDebugging.yara\"\n\n\tstrings:\n\t\t$a = { 64 A3 00 00 00 00 }\n\t\t$b = { 64 89 25 00 00 00 00 }\n\n\tcondition:\n\t\tWindowsPE and ( $a or $b )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Dlls",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for common sandbox dlls",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Dlls\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for common sandbox dlls\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$dll1 = \"sbiedll.dll\" wide nocase ascii fullword\n\t\t$dll2 = \"dbghelp.dll\" wide nocase ascii fullword\n\t\t$dll3 = \"api_log.dll\" wide nocase ascii fullword\n\t\t$dll4 = \"dir_watch.dll\" wide nocase ascii fullword\n\t\t$dll5 = \"pstorec.dll\" wide nocase ascii fullword\n\t\t$dll6 = \"vmcheck.dll\" wide nocase ascii fullword\n\t\t$dll7 = \"wpespy.dll\" wide nocase ascii fullword\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Qemu_Description",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for QEMU systembiosversion key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Qemu_Description\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for QEMU systembiosversion key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\Description\\\\System\" nocase wide ascii\n\t\t$value = \"SystemBiosVersion\" nocase wide ascii\n\t\t$data = \"QEMU\" wide nocase ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Qemu_DeviceMap",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for Qemu reg keys",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Qemu_DeviceMap\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for Qemu reg keys\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\DEVICEMAP\\\\Scsi\\\\Scsi Port 0\\\\Scsi Bus 0\\\\Target Id 0\\\\Logical Unit Id 0\" nocase wide ascii\n\t\t$value = \"Identifier\" nocase wide ascii\n\t\t$data = \"QEMU\" wide nocase ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_Description",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks Vbox description reg key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_Description\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks Vbox description reg key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\Description\\\\System\" nocase wide ascii\n\t\t$value = \"SystemBiosVersion\" nocase wide ascii\n\t\t$data = \"VBOX\" nocase wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_DeviceMap",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks Vbox registry keys",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_DeviceMap\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks Vbox registry keys\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\DEVICEMAP\\\\Scsi\\\\Scsi Port 0\\\\Scsi Bus 0\\\\Target Id 0\\\\Logical Unit Id 0\" nocase wide ascii\n\t\t$value = \"Identifier\" nocase wide ascii\n\t\t$data = \"VBOX\" nocase wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_Guest_Additions",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of the guest additions registry key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_Guest_Additions\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of the guest additions registry key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"SOFTWARE\\\\Oracle\\\\VirtualBox Guest Additions\" wide ascii nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_VideoDrivers",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for reg keys of Vbox video drivers",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_VideoDrivers\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for reg keys of Vbox video drivers\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\Description\\\\System\" nocase wide ascii\n\t\t$value = \"VideoBiosVersion\" wide nocase ascii\n\t\t$data = \"VIRTUALBOX\" nocase wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VMWare_DeviceMap",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of VmWare Registry Keys",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VMWare_DeviceMap\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of VmWare Registry Keys\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\DEVICEMAP\\\\Scsi\\\\Scsi Port 0\\\\Scsi Bus 0\\\\Target Id 0\\\\Logical Unit Id 0\" wide ascii nocase\n\t\t$value = \"Identifier\" wide nocase ascii\n\t\t$data = \"VMware\" wide nocase ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VmTools",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of VmTools reg key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VmTools\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of VmTools reg key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$ = \"SOFTWARE\\\\VMware, Inc.\\\\VMware Tools\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Wine",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of Wine",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Wine\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of Wine\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$ = \"wine_get_unix_file_name\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "vmdetect",
+                "tags": [],
+                "author": "nex",
+                "description": "Possibly employs anti-virtualization techniques"
+            },
+            "rule_text": "rule vmdetect\n{\n\tmeta:\n\t\tauthor = \"nex\"\n\t\tdescription = \"Possibly employs anti-virtualization techniques\"\n\n\tstrings:\n\t\t$vmware = {56 4D 58 68}\n\t\t$virtualpc = {0F 3F 07 0B}\n\t\t$ssexy = {66 0F 70 ?? ?? 66 0F DB ?? ?? ?? ?? ?? 66 0F DB ?? ?? ?? ?? ?? 66 0F EF}\n\t\t$vmcheckdll = {45 C7 00 01}\n\t\t$redpill = {0F 01 0D 00 00 00 00 C3}\n\t\t$vmware1 = \"VMXh\"\n\t\t$vmware2 = \"Ven_VMware_\" nocase\n\t\t$vmware3 = \"Prod_VMware_Virtual_\" nocase\n\t\t$vmware4 = \"hgfs.sys\" nocase\n\t\t$vmware5 = \"mhgfs.sys\" nocase\n\t\t$vmware6 = \"prleth.sys\" nocase\n\t\t$vmware7 = \"prlfs.sys\" nocase\n\t\t$vmware8 = \"prlmouse.sys\" nocase\n\t\t$vmware9 = \"prlvideo.sys\" nocase\n\t\t$vmware10 = \"prl_pv32.sys\" nocase\n\t\t$vmware11 = \"vpc-s3.sys\" nocase\n\t\t$vmware12 = \"vmsrvc.sys\" nocase\n\t\t$vmware13 = \"vmx86.sys\" nocase\n\t\t$vmware14 = \"vmnet.sys\" nocase\n\t\t$vmware15 = \"vmicheartbeat\" nocase\n\t\t$vmware16 = \"vmicvss\" nocase\n\t\t$vmware17 = \"vmicshutdown\" nocase\n\t\t$vmware18 = \"vmicexchange\" nocase\n\t\t$vmware19 = \"vmdebug\" nocase\n\t\t$vmware20 = \"vmmouse\" nocase\n\t\t$vmware21 = \"vmtools\" nocase\n\t\t$vmware22 = \"VMMEMCTL\" nocase\n\t\t$vmware23 = \"vmx86\" nocase\n\t\t$vmware24 = \"vmware\" nocase\n\t\t$virtualpc1 = \"vpcbus\" nocase\n\t\t$virtualpc2 = \"vpc-s3\" nocase\n\t\t$virtualpc3 = \"vpcuhub\" nocase\n\t\t$virtualpc4 = \"msvmmouf\" nocase\n\t\t$xen1 = \"xenevtchn\" nocase\n\t\t$xen2 = \"xennet\" nocase\n\t\t$xen3 = \"xennet6\" nocase\n\t\t$xen4 = \"xensvc\" nocase\n\t\t$xen5 = \"xenvdb\" nocase\n\t\t$xen6 = \"XenVMM\" nocase\n\t\t$virtualbox1 = \"VBoxHook.dll\" nocase\n\t\t$virtualbox2 = \"VBoxService\" nocase\n\t\t$virtualbox3 = \"VBoxTray\" nocase\n\t\t$virtualbox4 = \"VBoxMouse\" nocase\n\t\t$virtualbox5 = \"VBoxGuest\" nocase\n\t\t$virtualbox6 = \"VBoxSF\" nocase\n\t\t$virtualbox7 = \"VBoxGuestAdditions\" nocase\n\t\t$virtualbox8 = \"VBOX HARDDISK\" nocase\n\t\t$vmware_mac_1a = \"00-05-69\"\n\t\t$vmware_mac_1b = \"00:05:69\"\n\t\t$vmware_mac_1c = \"000569\"\n\t\t$vmware_mac_2a = \"00-50-56\"\n\t\t$vmware_mac_2b = \"00:50:56\"\n\t\t$vmware_mac_2c = \"005056\"\n\t\t$vmware_mac_3a = \"00-0C-29\" nocase\n\t\t$vmware_mac_3b = \"00:0C:29\" nocase\n\t\t$vmware_mac_3c = \"000C29\" nocase\n\t\t$vmware_mac_4a = \"00-1C-14\" nocase\n\t\t$vmware_mac_4b = \"00:1C:14\" nocase\n\t\t$vmware_mac_4c = \"001C14\" nocase\n\t\t$virtualbox_mac_1a = \"08-00-27\"\n\t\t$virtualbox_mac_1b = \"08:00:27\"\n\t\t$virtualbox_mac_1c = \"080027\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Debugger",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Looks for both isDebuggerPresent and CheckRemoteDebuggerPresent",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_Debugger\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Looks for both isDebuggerPresent and CheckRemoteDebuggerPresent\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"CheckRemoteDebuggerPresent\" ) and pe.imports ( \"kernel32.dll\" , \"IsDebuggerPresent\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_DriveSize",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Rule tries to catch uses of DeviceIOControl being used to get the drive size",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_DriveSize\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Rule tries to catch uses of DeviceIOControl being used to get the drive size\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$physicaldrive = \"\\\\\\\\.\\\\PhysicalDrive0\" wide ascii nocase\n\t\t$dwIoControlCode = {68 5c 40 07 00 [0-5] FF 15}\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"CreateFileA\" ) and pe.imports ( \"kernel32.dll\" , \"DeviceIoControl\" ) and $dwIoControlCode and $physicaldrive\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_FilePaths",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for filepaths containing popular sandbox names",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_FilePaths\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for filepaths containing popular sandbox names\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$path1 = \"SANDBOX\" wide ascii\n\t\t$path2 = \"\\\\SAMPLE\" wide ascii\n\t\t$path3 = \"\\\\VIRUS\" wide ascii\n\n\tcondition:\n\t\tall of ( $path* ) and pe.imports ( \"kernel32.dll\" , \"GetModuleFileNameA\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_UserNames",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Looks for malware checking for common sandbox usernames",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_UserNames\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Looks for malware checking for common sandbox usernames\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$user1 = \"MALTEST\" wide ascii\n\t\t$user2 = \"TEQUILABOOMBOOM\" wide ascii\n\t\t$user3 = \"SANDBOX\" wide ascii\n\t\t$user4 = \"VIRUS\" wide ascii\n\t\t$user5 = \"MALWARE\" wide ascii\n\n\tcondition:\n\t\tall of ( $user* ) and pe.imports ( \"advapi32.dll\" , \"GetUserNameA\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_OutputDebugStringA_iat",
+                "tags": [],
+                "Author": "http://twitter.com/j0sm1",
+                "Description": "Detect in IAT OutputDebugstringA",
+                "Date": "20/04/2015"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_OutputDebugStringA_iat\n{\n\tmeta:\n\t\tAuthor = \"http://twitter.com/j0sm1\"\n\t\tDescription = \"Detect in IAT OutputDebugstringA\"\n\t\tDate = \"20/04/2015\"\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"OutputDebugStringA\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_FindWindowA_iat",
+                "tags": [],
+                "Author": "http://twitter.com/j0sm1",
+                "Description": "it's checked if FindWindowA() is imported",
+                "Date": "20/04/2015",
+                "Reference": "http://www.codeproject.com/Articles/30815/An-Anti-Reverse-Engineering-Guide#OllyFindWindow"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_FindWindowA_iat\n{\n\tmeta:\n\t\tAuthor = \"http://twitter.com/j0sm1\"\n\t\tDescription = \"it's checked if FindWindowA() is imported\"\n\t\tDate = \"20/04/2015\"\n\t\tReference = \"http://www.codeproject.com/Articles/30815/An-Anti-Reverse-Engineering-Guide#OllyFindWindow\"\n\n\tstrings:\n\t\t$ollydbg = \"OLLYDBG\"\n\t\t$windbg = \"WinDbgFrameClass\"\n\n\tcondition:\n\t\tpe.imports( \"user32.dll\" , \"FindWindowA\" ) and ( $ollydbg or $windbg )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DebuggerCheck__MemoryWorkingSet",
+                "tags": [
+                    "AntiDebug",
+                    "DebuggerCheck"
+                ],
+                "author": "Fernando Mercês",
+                "date": "2015-06",
+                "description": "Anti-debug process memory working set size check",
+                "reference": "http://www.gironsec.com/blog/2015/06/anti-debugger-trick-quicky/"
+            },
+            "rule_text": "import \"pe\"\n\nrule DebuggerCheck__MemoryWorkingSet : AntiDebug DebuggerCheck\n{\n\tmeta:\n\t\tauthor = \"Fernando Mercês\"\n\t\tdate = \"2015-06\"\n\t\tdescription = \"Anti-debug process memory working set size check\"\n\t\treference = \"http://www.gironsec.com/blog/2015/06/anti-debugger-trick-quicky/\"\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"K32GetProcessMemoryInfo\" ) and pe.imports ( \"kernel32.dll\" , \"GetCurrentProcess\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "WMI_VM_Detect",
+                "tags": [
+                    "WMI_VM_Detect"
+                ],
+                "version": 2,
+                "threat": "Using WMI to detect virtual machines via querying video card information",
+                "behaviour_class": "Evasion",
+                "author": "Joe Giron",
+                "date": "2015-09-25",
+                "description": "Detection of Virtual Appliances through the use of WMI for use of evasion."
+            },
+            "rule_text": "rule WMI_VM_Detect : WMI_VM_Detect\n{\n\tmeta:\n\t\tversion = 2\n\t\tthreat = \"Using WMI to detect virtual machines via querying video card information\"\n\t\tbehaviour_class = \"Evasion\"\n\t\tauthor = \"Joe Giron\"\n\t\tdate = \"2015-09-25\"\n\t\tdescription = \"Detection of Virtual Appliances through the use of WMI for use of evasion.\"\n\n\tstrings:\n\t\t$selstr = \"SELECT Description FROM Win32_VideoController\" nocase ascii wide\n\t\t$selstr2 = \"SELECT * FROM Win32_VideoController\" nocase ascii wide\n\t\t$vm1 = \"virtualbox graphics adapter\" nocase ascii wide\n\t\t$vm2 = \"vmware svga ii\" nocase ascii wide\n\t\t$vm3 = \"vm additions s3 trio32/64\" nocase ascii wide\n\t\t$vm4 = \"parallel\" nocase ascii wide\n\t\t$vm5 = \"remotefx\" nocase ascii wide\n\t\t$vm6 = \"cirrus logic\" nocase ascii wide\n\t\t$vm7 = \"matrox\" nocase ascii wide\n\n\tcondition:\n\t\tany of ( $selstr* ) and any of ( $vm* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "anti_dbg",
+                "tags": [],
+                "author": "x0r",
+                "description": "Checks if being debugged",
+                "version": "0.2"
+            },
+            "rule_text": "rule anti_dbg\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Checks if being debugged\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$d1 = \"Kernel32.dll\" nocase\n\t\t$c1 = \"CheckRemoteDebuggerPresent\"\n\t\t$c2 = \"IsDebuggerPresent\"\n\t\t$c3 = \"OutputDebugString\"\n\t\t$c4 = \"ContinueDebugEvent\"\n\t\t$c5 = \"DebugActiveProcess\"\n\n\tcondition:\n\t\t$d1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "anti_dbgtools",
+                "tags": [],
+                "author": "x0r",
+                "description": "Checks for the presence of known debug tools",
+                "version": "0.1"
+            },
+            "rule_text": "rule anti_dbgtools\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Checks for the presence of known debug tools\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"procexp.exe\" nocase\n\t\t$f2 = \"procmon.exe\" nocase\n\t\t$f3 = \"processmonitor.exe\" nocase\n\t\t$f4 = \"wireshark.exe\" nocase\n\t\t$f5 = \"fiddler.exe\" nocase\n\t\t$f6 = \"windbg.exe\" nocase\n\t\t$f7 = \"ollydbg.exe\" nocase\n\t\t$f8 = \"winhex.exe\" nocase\n\t\t$f9 = \"processhacker.exe\" nocase\n\t\t$f10 = \"hiew32.exe\" nocase\n\t\t$c11 = \"\\\\\\\\.\\\\NTICE\"\n\t\t$c12 = \"\\\\\\\\.\\\\SICE\"\n\t\t$c13 = \"\\\\\\\\.\\\\Syser\"\n\t\t$c14 = \"\\\\\\\\.\\\\SyserBoot\"\n\t\t$c15 = \"\\\\\\\\.\\\\SyserDbgMsg\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_joesanbox",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for Joe Sandbox",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_joesanbox\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for Joe Sandbox\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\" nocase\n\t\t$c1 = \"RegQueryValue\"\n\t\t$s1 = \"55274-640-2673064-23950\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_anubis",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for Anubis",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_anubis\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for Anubis\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\" nocase\n\t\t$c1 = \"RegQueryValue\"\n\t\t$s1 = \"76487-337-8429955-22614\"\n\t\t$s2 = \"76487-640-1457236-23837\"\n\n\tcondition:\n\t\t$p1 and $c1 and 1 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_threatExpert",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for ThreatExpert",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_threatExpert\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for ThreatExpert\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"dbghelp.dll\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_sandboxie",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for Sandboxie",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_sandboxie\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for Sandboxie\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"SbieDLL.dll\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antisb_cwsandbox",
+                "tags": [],
+                "author": "x0r",
+                "description": "Anti-Sandbox checks for CWSandbox",
+                "version": "0.1"
+            },
+            "rule_text": "rule antisb_cwsandbox\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Anti-Sandbox checks for CWSandbox\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\" nocase\n\t\t$s1 = \"76487-644-3177037-23510\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antivm_virtualbox",
+                "tags": [],
+                "author": "x0r",
+                "description": "AntiVM checks for VirtualBox",
+                "version": "0.1"
+            },
+            "rule_text": "rule antivm_virtualbox\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"AntiVM checks for VirtualBox\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"VBoxService.exe\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antivm_vmware",
+                "tags": [],
+                "author": "x0r",
+                "description": "AntiVM checks for VMWare",
+                "version": "0.1"
+            },
+            "rule_text": "rule antivm_vmware\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"AntiVM checks for VMWare\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$s1 = \"vmware.exe\" nocase\n\t\t$s2 = \"vmware-authd.exe\" nocase\n\t\t$s3 = \"vmware-hostd.exe\" nocase\n\t\t$s4 = \"vmware-tray.exe\" nocase\n\t\t$s5 = \"vmware-vmx.exe\" nocase\n\t\t$s6 = \"vmnetdhcp.exe\" nocase\n\t\t$s7 = \"vpxclient.exe\" nocase\n\t\t$s8 = { b868584d56bb00000000b90a000000ba58560000ed }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "antivm_bios",
+                "tags": [],
+                "author": "x0r",
+                "description": "AntiVM checks for Bios version",
+                "version": "0.2"
+            },
+            "rule_text": "rule antivm_bios\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"AntiVM checks for Bios version\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$p1 = \"HARDWARE\\\\DESCRIPTION\\\\System\" nocase\n\t\t$p2 = \"HARDWARE\\\\DESCRIPTION\\\\System\\\\BIOS\" nocase\n\t\t$c1 = \"RegQueryValue\"\n\t\t$r1 = \"SystemBiosVersion\"\n\t\t$r2 = \"VideoBiosVersion\"\n\t\t$r3 = \"SystemManufacturer\"\n\n\tcondition:\n\t\t1 of ( $p* ) and 1 of ( $c* ) and 1 of ( $r* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_antivirus",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable AntiVirus",
+                "version": "0.2"
+            },
+            "rule_text": "rule disable_antivirus\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable AntiVirus\"\n\t\tversion = \"0.2\"\n\n\tstrings:\n\t\t$p1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\Explorer\\\\DisallowRun\" nocase\n\t\t$p2 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Uninstall\\\\\" nocase\n\t\t$p3 = \"SOFTWARE\\\\Policies\\\\Microsoft\\\\Windows Defender\" nocase\n\t\t$c1 = \"RegSetValue\"\n\t\t$r1 = \"AntiVirusDisableNotify\"\n\t\t$r2 = \"DontReportInfectionInformation\"\n\t\t$r3 = \"DisableAntiSpyware\"\n\t\t$r4 = \"RunInvalidSignatures\"\n\t\t$r5 = \"AntiVirusOverride\"\n\t\t$r6 = \"CheckExeSignatures\"\n\t\t$f1 = \"blackd.exe\" nocase\n\t\t$f2 = \"blackice.exe\" nocase\n\t\t$f3 = \"lockdown.exe\" nocase\n\t\t$f4 = \"lockdown2000.exe\" nocase\n\t\t$f5 = \"taskkill.exe\" nocase\n\t\t$f6 = \"tskill.exe\" nocase\n\t\t$f7 = \"smc.exe\" nocase\n\t\t$f8 = \"sniffem.exe\" nocase\n\t\t$f9 = \"zapro.exe\" nocase\n\t\t$f10 = \"zlclient.exe\" nocase\n\t\t$f11 = \"zonealarm.exe\" nocase\n\n\tcondition:\n\t\t($c1 and $p1 and 1 of ( $f* ) ) or ( $c1 and $p2 ) or 1 of ( $r* ) or $p3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_uax",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable User Access Control",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_uax\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable User Access Control\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Security Center\" nocase\n\t\t$r1 = \"UACDisableNotify\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_firewall",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable Firewall",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_firewall\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable Firewall\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SYSTEM\\\\CurrentControlSet\\\\Services\\\\SharedAccess\\\\Parameters\\\\FirewallPolicy\" nocase\n\t\t$c1 = \"RegSetValue\"\n\t\t$r1 = \"FirewallPolicy\"\n\t\t$r2 = \"EnableFirewall\"\n\t\t$r3 = \"FirewallDisableNotify\"\n\t\t$s1 = \"netsh firewall add allowedprogram\"\n\n\tcondition:\n\t\t(1 of ( $p* ) and $c1 and 1 of ( $r* ) ) or $s1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_registry",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable Registry editor",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_registry\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable Registry editor\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\System\" nocase\n\t\t$c1 = \"RegSetValue\"\n\t\t$r1 = \"DisableRegistryTools\"\n\t\t$r2 = \"DisableRegedit\"\n\n\tcondition:\n\t\t1 of ( $p* ) and $c1 and 1 of ( $r* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_dep",
+                "tags": [],
+                "author": "x0r",
+                "description": "Bypass DEP",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_dep\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Bypass DEP\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$c1 = \"EnableExecuteProtectionSupport\"\n\t\t$c2 = \"NtSetInformationProcess\"\n\t\t$c3 = \"VirtualProctectEx\"\n\t\t$c4 = \"SetProcessDEPPolicy\"\n\t\t$c5 = \"ZwProtectVirtualMemory\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "disable_taskmanager",
+                "tags": [],
+                "author": "x0r",
+                "description": "Disable Task Manager",
+                "version": "0.1"
+            },
+            "rule_text": "rule disable_taskmanager\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Disable Task Manager\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\System\" nocase\n\t\t$r1 = \"DisableTaskMgr\"\n\n\tcondition:\n\t\t1 of ( $p* ) and 1 of ( $r* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "check_patchlevel",
+                "tags": [],
+                "author": "x0r",
+                "description": "Check if hotfix are applied",
+                "version": "0.1"
+            },
+            "rule_text": "rule check_patchlevel\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Check if hotfix are applied\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$p1 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Hotfix\" nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "win_hook",
+                "tags": [],
+                "author": "x0r",
+                "description": "Affect hook table",
+                "version": "0.1"
+            },
+            "rule_text": "rule win_hook\n{\n\tmeta:\n\t\tauthor = \"x0r\"\n\t\tdescription = \"Affect hook table\"\n\t\tversion = \"0.1\"\n\n\tstrings:\n\t\t$f1 = \"user32.dll\" nocase\n\t\t$c1 = \"UnhookWindowsHookEx\"\n\t\t$c2 = \"SetWindowsHookExA\"\n\t\t$c3 = \"CallNextHookEx\"\n\n\tcondition:\n\t\t$f1 and 1 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "vmdetect_misc",
+                "tags": [
+                    "vmdetect"
+                ],
+                "author": "@abhinavbom",
+                "maltype": "NA",
+                "version": "0.1",
+                "date": "31/10/2015",
+                "description": "Following Rule is referenced from AlienVault's Yara rule repository.This rule contains additional processes and driver names."
+            },
+            "rule_text": "rule vmdetect_misc : vmdetect\n{\n\tmeta:\n\t\tauthor = \"@abhinavbom\"\n\t\tmaltype = \"NA\"\n\t\tversion = \"0.1\"\n\t\tdate = \"31/10/2015\"\n\t\tdescription = \"Following Rule is referenced from AlienVault's Yara rule repository.This rule contains additional processes and driver names.\"\n\n\tstrings:\n\t\t$vbox1 = \"VBoxService\" nocase ascii wide\n\t\t$vbox2 = \"VBoxTray\" nocase ascii wide\n\t\t$vbox3 = \"SOFTWARE\\\\Oracle\\\\VirtualBox Guest Additions\" nocase ascii wide\n\t\t$vbox4 = \"SOFTWARE\\\\\\\\Oracle\\\\\\\\VirtualBox Guest Additions\" nocase ascii wide\n\t\t$wine1 = \"wine_get_unix_file_name\" ascii wide\n\t\t$vmware1 = \"vmmouse.sys\" ascii wide\n\t\t$vmware2 = \"VMware Virtual IDE Hard Drive\" ascii wide\n\t\t$miscvm1 = \"SYSTEM\\\\ControlSet001\\\\Services\\\\Disk\\\\Enum\" nocase ascii wide\n\t\t$miscvm2 = \"SYSTEM\\\\\\\\ControlSet001\\\\\\\\Services\\\\\\\\Disk\\\\\\\\Enum\" nocase ascii wide\n\t\t$vmdrv1 = \"hgfs.sys\" ascii wide\n\t\t$vmdrv2 = \"vmhgfs.sys\" ascii wide\n\t\t$vmdrv3 = \"prleth.sys\" ascii wide\n\t\t$vmdrv4 = \"prlfs.sys\" ascii wide\n\t\t$vmdrv5 = \"prlmouse.sys\" ascii wide\n\t\t$vmdrv6 = \"prlvideo.sys\" ascii wide\n\t\t$vmdrv7 = \"prl_pv32.sys\" ascii wide\n\t\t$vmdrv8 = \"vpc-s3.sys\" ascii wide\n\t\t$vmdrv9 = \"vmsrvc.sys\" ascii wide\n\t\t$vmdrv10 = \"vmx86.sys\" ascii wide\n\t\t$vmdrv11 = \"vmnet.sys\" ascii wide\n\t\t$vmsrvc1 = \"vmicheartbeat\" ascii wide\n\t\t$vmsrvc2 = \"vmicvss\" ascii wide\n\t\t$vmsrvc3 = \"vmicshutdown\" ascii wide\n\t\t$vmsrvc4 = \"vmicexchange\" ascii wide\n\t\t$vmsrvc5 = \"vmci\" ascii wide\n\t\t$vmsrvc6 = \"vmdebug\" ascii wide\n\t\t$vmsrvc7 = \"vmmouse\" ascii wide\n\t\t$vmsrvc8 = \"VMTools\" ascii wide\n\t\t$vmsrvc9 = \"VMMEMCTL\" ascii wide\n\t\t$vmsrvc10 = \"vmware\" ascii wide\n\t\t$vmsrvc11 = \"vmx86\" ascii wide\n\t\t$vmsrvc12 = \"vpcbus\" ascii wide\n\t\t$vmsrvc13 = \"vpc-s3\" ascii wide\n\t\t$vmsrvc14 = \"vpcuhub\" ascii wide\n\t\t$vmsrvc15 = \"msvmmouf\" ascii wide\n\t\t$vmsrvc16 = \"VBoxMouse\" ascii wide\n\t\t$vmsrvc17 = \"VBoxGuest\" ascii wide\n\t\t$vmsrvc18 = \"VBoxSF\" ascii wide\n\t\t$vmsrvc19 = \"xenevtchn\" ascii wide\n\t\t$vmsrvc20 = \"xennet\" ascii wide\n\t\t$vmsrvc21 = \"xennet6\" ascii wide\n\t\t$vmsrvc22 = \"xensvc\" ascii wide\n\t\t$vmsrvc23 = \"xenvdb\" ascii wide\n\t\t$miscproc1 = \"vmware2\" ascii wide\n\t\t$miscproc2 = \"vmount2\" ascii wide\n\t\t$miscproc3 = \"vmusrvc\" ascii wide\n\t\t$miscproc4 = \"vmsrvc\" ascii wide\n\t\t$miscproc5 = \"vboxservice\" ascii wide\n\t\t$miscproc6 = \"vboxtray\" ascii wide\n\t\t$miscproc7 = \"xenservice\" ascii wide\n\t\t$vmware_mac_1a = \"00-05-69\"\n\t\t$vmware_mac_1b = \"00:05:69\"\n\t\t$vmware_mac_2a = \"00-50-56\"\n\t\t$vmware_mac_2b = \"00:50:56\"\n\t\t$vmware_mac_3a = \"00-0C-29\"\n\t\t$vmware_mac_3b = \"00:0C:29\"\n\t\t$vmware_mac_4a = \"00-1C-14\"\n\t\t$vmware_mac_4b = \"00:1C:14\"\n\t\t$virtualbox_mac_1a = \"08-00-27\"\n\t\t$virtualbox_mac_1b = \"08:00:27\"\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

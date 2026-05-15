@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_Metasploit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "android_meterpreter",
+                "tags": [
+                    "android"
+                ],
+                "author": "73mp74710n",
+                "ref": "https://github.com/zombieleet/yara-rules/blob/master/android_metasploit.yar",
+                "comment": "Metasploit Android Meterpreter Payload"
+            },
+            "rule_text": "rule android_meterpreter : android\n{\n\tmeta:\n\t\tauthor = \"73mp74710n\"\n\t\tref = \"https://github.com/zombieleet/yara-rules/blob/master/android_metasploit.yar\"\n\t\tcomment = \"Metasploit Android Meterpreter Payload\"\n\n\tstrings:\n\t\t$checkPK = \"META-INF/PK\"\n\t\t$checkHp = \"[Hp^\"\n\t\t$checkSdeEncode = /;.Sk/\n\t\t$stopEval = \"eval\"\n\t\t$stopBase64 = \"base64_decode\"\n\n\tcondition:\n\t\tany of ( $check* ) or any of ( $stop* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "android_metasploit",
+                "tags": [
+                    "android"
+                ],
+                "author": "https://twitter.com/plutec_net",
+                "description": "This rule detects apps made with metasploit framework",
+                "sample": "cb9a217032620c63b85a58dde0f9493f69e4bda1e12b180047407c15ee491b41"
+            },
+            "rule_text": "rule android_metasploit : android\n{\n\tmeta:\n\t\tauthor = \"https://twitter.com/plutec_net\"\n\t\tdescription = \"This rule detects apps made with metasploit framework\"\n\t\tsample = \"cb9a217032620c63b85a58dde0f9493f69e4bda1e12b180047407c15ee491b41\"\n\n\tstrings:\n\t\t$a = \"*Lcom/metasploit/stage/PayloadTrustManager;\"\n\t\t$b = \"(com.metasploit.stage.PayloadTrustManager\"\n\t\t$c = \"Lcom/metasploit/stage/Payload$1;\"\n\t\t$d = \"Lcom/metasploit/stage/Payload;\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

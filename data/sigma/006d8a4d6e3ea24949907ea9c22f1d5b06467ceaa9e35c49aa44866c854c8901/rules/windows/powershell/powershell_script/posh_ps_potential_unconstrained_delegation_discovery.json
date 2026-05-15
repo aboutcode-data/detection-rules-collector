@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_potential_unconstrained_delegation_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "frack113",
+                "date": "2025-03-05",
+                "title": "Potential Unconstrained Delegation Discovery Via Get-ADComputer - ScriptBlock",
+                "id": "cdfa73b6-3c9d-4bb8-97f8-ddbd8921f5c5"
+            },
+            "rule_text": "title: Potential Unconstrained Delegation Discovery Via Get-ADComputer - ScriptBlock\nid: cdfa73b6-3c9d-4bb8-97f8-ddbd8921f5c5\nstatus: experimental\ndescription: Detects the use of the \"Get-ADComputer\" cmdlet in order to identify systems\n  which are configured for unconstrained delegation.\nreferences:\n- https://pentestlab.blog/2022/03/21/unconstrained-delegation/\n- https://learn.microsoft.com/en-us/powershell/module/activedirectory/get-adcomputer?view=windowsserver2022-ps\nauthor: frack113\ndate: 2025-03-05\ntags:\n- attack.reconnaissance\n- attack.discovery\n- attack.credential-access\n- attack.t1018\n- attack.t1558\n- attack.t1589.002\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enable'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - -Properties*TrustedForDelegation\n    - -Properties*TrustedToAuthForDelegation\n    - -Properties*msDS-AllowedToDelegateTo\n    - -Properties*PrincipalsAllowedToDelegateToAccount\n    - -LDAPFilter*(userAccountControl:1.2.840.113556.1.4.803:=524288)\n  condition: selection\nfalsepositives:\n- Legitimate use of the library for administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

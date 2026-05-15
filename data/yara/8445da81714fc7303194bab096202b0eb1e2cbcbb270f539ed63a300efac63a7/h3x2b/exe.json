@@ -1,0 +1,61 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/h3x2b/exe.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "executable_au3",
+                "tags": [
+                    "info",
+                    "executable",
+                    "windows"
+                ],
+                "author": "@h3x2b <tracker _AT h3x.eu>",
+                "description": "Match AU3 autoit executables"
+            },
+            "rule_text": "rule executable_au3 : info executable windows\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\t\tdescription = \"Match AU3 autoit executables\"\n\n\tstrings:\n\t\t$str_au3_01 = \"AU3\"\n\t\t$str_au3_02 = { A3 48 4B BE 98 6C 4A A9 99 4C 53 0A 86 D6 48 7D }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "executable_pe",
+                "tags": [
+                    "info",
+                    "executable",
+                    "windows"
+                ],
+                "author": "@h3x2b <tracker _AT h3x.eu>",
+                "description": "Detect PE executables"
+            },
+            "rule_text": "rule executable_pe : info executable windows\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\t\tdescription = \"Detect PE executables\"\n\n\tstrings:\n\t\t$pe = \"PE\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( $pe at ( uint32( 0x3c ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "executable_elf32",
+                "tags": [
+                    "info",
+                    "executable",
+                    "linux"
+                ],
+                "author": "@h3x2b <tracker _AT h3x.eu>",
+                "description": "Detect ELF 32 bit executable"
+            },
+            "rule_text": "rule executable_elf32 : info executable linux\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\t\tdescription = \"Detect ELF 32 bit executable\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and uint8( 4 ) == 0x01\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "executable_elf64",
+                "tags": [
+                    "info",
+                    "executable",
+                    "linux"
+                ],
+                "author": "@h3x2b <tracker _AT h3x.eu>",
+                "description": "Detect ELF 64 bit executable"
+            },
+            "rule_text": "rule executable_elf64 : info executable linux\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker _AT h3x.eu>\"\n\t\tdescription = \"Detect ELF 64 bit executable\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and uint8( 4 ) == 0x02\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

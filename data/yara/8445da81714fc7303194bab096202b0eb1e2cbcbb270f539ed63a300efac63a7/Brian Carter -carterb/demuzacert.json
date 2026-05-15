@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Brian Carter -carterb/demuzacert.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PotentiallyCompromisedCert",
+                "tags": [],
+                "description": "Search for PE files using cert issued to DEMUZA ",
+                "author": "Brian Carter",
+                "last_modified": "July 21, 2017",
+                "sample": "7ef8f5e0ca92a0f3a5bd8cdc52236564",
+                "TLP": "WHITE"
+            },
+            "rule_text": "rule PotentiallyCompromisedCert\n{\n\tmeta:\n\t\tdescription = \"Search for PE files using cert issued to DEMUZA \"\n\t\tauthor = \"Brian Carter\"\n\t\tlast_modified = \"July 21, 2017\"\n\t\tsample = \"7ef8f5e0ca92a0f3a5bd8cdc52236564\"\n\t\tTLP = \"WHITE\"\n\n\tstrings:\n\t\t$magic = { 50 4b 03 04 (14 | 0a) 00 }\n\t\t$txt1 = \"demuza@yandex.ru\" nocase\n\t\t$txt2 = \"https://secure.comodo.net/CPS0C\" nocase\n\t\t$txt3 = \"COMODO CA Limited1\"\n\n\tcondition:\n\t\t$magic at 0 and all of ( $txt* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/quasar.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_Quasar_strings",
+                "tags": [],
+                "description": "detect QuasarRAT in memory",
+                "author": "JPCERT/CC Incident Response Group",
+                "rule_usage": "memory scan",
+                "hash1": "390c1530ff62d8f4eddff0ac13bc264cbf4183e7e3d6accf8f721ffc5250e724"
+            },
+            "rule_text": "rule malware_Quasar_strings\n{\n\tmeta:\n\t\tdescription = \"detect QuasarRAT in memory\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\trule_usage = \"memory scan\"\n\t\thash1 = \"390c1530ff62d8f4eddff0ac13bc264cbf4183e7e3d6accf8f721ffc5250e724\"\n\n\tstrings:\n\t\t$quasarstr1 = \"Client.exe\" wide\n\t\t$quasarstr2 = \"({0}:{1}:{2})\" wide\n\t\t$sql1 = \"SELECT * FROM Win32_DisplayConfiguration\" wide\n\t\t$sql2 = \"{0}d : {1}h : {2}m : {3}s\" wide\n\t\t$sql3 = \"SELECT * FROM FirewallProduct\" wide\n\t\t$net1 = \"echo DONT CLOSE THIS WINDOW!\" wide\n\t\t$net2 = \"freegeoip.net/xml/\" wide\n\t\t$net3 = \"http://api.ipify.org/\" wide\n\t\t$resource = { 52 00 65 00 73 00 6F 00 75 00 72 00 63 00 65 00 73 00 00 17 69 00 6E 00 66 00 6F 00 72 00 6D 00 61 00 74 00 69 00 6F 00 6E 00 00 }\n\n\tcondition:\n\t\t(( all of ( $quasarstr* ) or all of ( $sql* ) ) and $resource ) or all of ( $net* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

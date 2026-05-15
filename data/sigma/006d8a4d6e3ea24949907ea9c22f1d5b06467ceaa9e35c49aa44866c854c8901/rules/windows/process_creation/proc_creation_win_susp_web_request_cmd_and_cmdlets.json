@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_web_request_cmd_and_cmdlets.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "James Pemberton / @4A616D6573, Endgame, JHasenbusch, oscd.community, Austin Songer @austinsonger",
+                "date": "2019-10-24",
+                "title": "Usage Of Web Request Commands And Cmdlets",
+                "id": "9fc51a3c-81b3-4fa7-b35f-7c02cf10fd2d"
+            },
+            "rule_text": "title: Usage Of Web Request Commands And Cmdlets\nid: 9fc51a3c-81b3-4fa7-b35f-7c02cf10fd2d\nrelated:\n- id: 1139d2e2-84b1-4226-b445-354492eba8ba\n  type: similar\n- id: f67dbfce-93bc-440d-86ad-a95ae8858c90\n  type: obsolete\n- id: cd5c8085-4070-4e22-908d-a5b3342deb74\n  type: obsolete\n- id: 6e897651-f157-4d8f-aaeb-df8151488385\n  type: obsolete\nstatus: test\ndescription: Detects the use of various web request commands with commandline tools\n  and Windows PowerShell cmdlets (including aliases) via CommandLine\nreferences:\n- https://4sysops.com/archives/use-powershell-to-download-a-file-with-http-https-and-ftp/\n- https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell\n- https://learn.microsoft.com/en-us/powershell/module/bitstransfer/add-bitsfile?view=windowsserver2019-ps\nauthor: James Pemberton / @4A616D6573, Endgame, JHasenbusch, oscd.community, Austin\n  Songer @austinsonger\ndate: 2019-10-24\nmodified: 2025-10-20\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - '[System.Net.WebRequest]::create'\n    - 'curl '\n    - Invoke-RestMethod\n    - Invoke-WebRequest\n    - ' irm '\n    - 'iwr '\n    - Resume-BitsTransfer\n    - Start-BitsTransfer\n    - 'wget '\n    - WinHttp.WinHttpRequest\n  condition: selection\nfalsepositives:\n- Use of Get-Command and Get-Help modules to reference Invoke-WebRequest and Start-BitsTransfer.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

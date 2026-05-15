@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_BlackCat_Ransomware/win_susp_reg_added_maxmpxct_sysmon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/04",
+                "title": "Suspicious Registry Key Added: LanmanServer Parameters",
+                "id": "9c5df39b-0fe2-450b-bc90-a1b748dca8af"
+            },
+            "rule_text": "title: 'Suspicious Registry Key Added: LanmanServer Parameters'\nid: 9c5df39b-0fe2-450b-bc90-a1b748dca8af\nstatus: experimental\ndescription: Detects registry addition for LanmanServer MaxMpxCt. BlackCat does this\n  to increase the number of outstanding requests allowed, such as SMB requests to\n  distribute ransomware through an environment.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/06/13/the-many-lives-of-blackcat-ransomware/\nauthor: Micah Babinski\ndate: 2022/12/04\ntags:\n- attack.command_and_control\n- attack.defense_evasion\n- attack.t1105\n- attack.t1562\nlogsource:\n  category: registry_add\n  product: windows\ndetection:\n  selection:\n    EventType: CreateKey\n    TargetObject: SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

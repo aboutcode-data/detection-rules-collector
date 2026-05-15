@@ -1,0 +1,63 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/securityartwork/multibanker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "xmlc",
+                "tags": [
+                    "banker"
+                ]
+            },
+            "rule_text": "rule xmlc : banker\n{\n\tstrings:\n\t\t$a = \"/c del\" fullword\n\t\t$b = \"PostDel\" fullword\n\t\t$c = \">> NUL\" fullword\n\t\t$d = \"LOADXML\"\n\t\t$e = \"lm.dat\"\n\t\t$f = \"---------------%s----------------\"\n\n\tcondition:\n\t\tfilesize < 150KB and ( 3 of ( $a , $b , $c , $d , $e , $f ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "silent_banker",
+                "tags": [
+                    "banker"
+                ]
+            },
+            "rule_text": "rule silent_banker : banker\n{\n\tstrings:\n\t\t$a = {6A 40 68 00 30 00 00 6A 14 8D 91}\n\t\t$b = {8D 4D B0 2B C1 83 C0 27 99 6A 4E 59 F7 F9}\n\t\t$c = \"UVODFRYSIHLNWPEJXQZAKCBGMT\"\n\n\tcondition:\n\t\t$a or $b or $c\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "zbot",
+                "tags": [
+                    "banker"
+                ]
+            },
+            "rule_text": "rule zbot : banker\n{\n\tstrings:\n\t\t$a = \"__SYSTEM__\" wide\n\t\t$b = \"*tanentry*\"\n\t\t$c = \"*<option\"\n\t\t$d = \"*<select\"\n\t\t$e = \"*<input\"\n\n\tcondition:\n\t\t($a and $b ) or ( $c and $d and $e )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "banbra",
+                "tags": [
+                    "banker"
+                ]
+            },
+            "rule_text": "rule banbra : banker\n{\n\tstrings:\n\t\t$a = \"senha\" fullword nocase\n\t\t$b = \"cartao\" fullword nocase\n\t\t$c = \"caixa\"\n\t\t$d = \"login\" fullword nocase\n\t\t$e = \".com.br\"\n\n\tcondition:\n\t\t#a> 3 and #b > 3 and #c > 3 and #d > 3 and #e > 3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "spyeye",
+                "tags": [],
+                "description": "Indicates that the SpyEye Trojan is installed"
+            },
+            "rule_text": "rule spyeye\n{\n\tmeta:\n\t\tdescription = \"Indicates that the SpyEye Trojan is installed\"\n\n\tstrings:\n\t\t$a = \"SPYNET\"\n\t\t$b = \"SpyEye\"\n\n\tcondition:\n\t\t($a and $b )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "tdl3",
+                "tags": [],
+                "null_string": 1
+            },
+            "rule_text": "rule tdl3\n{\n\tmeta:\n\t\tnull_string = 1\n\n\tstrings:\n\t\t$1 = \"\\\\\\\\?\\\\globalroot\\\\\"\n\t\t$2 = \".ini\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

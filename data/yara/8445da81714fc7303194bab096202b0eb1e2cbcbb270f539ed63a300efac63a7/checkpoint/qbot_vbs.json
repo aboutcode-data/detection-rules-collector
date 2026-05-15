@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/qbot_vbs.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "qbot_vbs",
+                "tags": [],
+                "description": "Catches QBot VBS files",
+                "reference": "https://research.checkpoint.com/2020/exploring-qbots-latest-attack-methods/",
+                "author": "Alex Ilgayev",
+                "date": "2020-06-07"
+            },
+            "rule_text": "rule qbot_vbs\n{\n\tmeta:\n\t\tdescription = \"Catches QBot VBS files\"\n\t\treference = \"https://research.checkpoint.com/2020/exploring-qbots-latest-attack-methods/\"\n\t\tauthor = \"Alex Ilgayev\"\n\t\tdate = \"2020-06-07\"\n\n\tstrings:\n\t\t$s3 = \"ms.Send\"\n\t\t$s4 = \"for i=1 to 6\"\n\t\t$s5 = \"if ms.readyState = 4 Then\"\n\t\t$s6 = \"if len(ms.responseBody) <> 0 then\"\n\t\t$s7 = /if left\\(ms.responseText, \\w*?\\) = \\\"MZ\\\" then/\n\n\tcondition:\n\t\tfilesize > 20MB and $s3 and $s4 and $s5 and $s6 and $s7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

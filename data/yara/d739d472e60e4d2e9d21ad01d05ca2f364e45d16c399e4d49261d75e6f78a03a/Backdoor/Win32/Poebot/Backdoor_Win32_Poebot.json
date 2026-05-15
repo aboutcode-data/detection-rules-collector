@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Poebot/Backdoor_Win32_Poebot.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Poebot",
+                "tags": [],
+                "description": "Backdoor:Win32/Poebot,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Poebot\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Poebot,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {6a 00 ff 35 ?? ?? ?? 00 68 ?? ?? ?? 00 8d 85 a4 ee ff ff 50 e8 ?? ?? 00 00 83 c4 20 83 a5 d8 ee ff ff 00 eb 0d 8b 85 d8 ee ff ff 40 89 85 d8 ee ff ff 83 bd d8 ee ff ff 0a 75 05 e8 }\n\t\t$a_02_1 = {8d 85 a4 ee ff ff 50 e8 89 02 00 00 83 c4 20 89 bd d8 ee ff ff 83 bd d8 ee ff ff 0a 75 05 e8 ?? ?? ff ff 68 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

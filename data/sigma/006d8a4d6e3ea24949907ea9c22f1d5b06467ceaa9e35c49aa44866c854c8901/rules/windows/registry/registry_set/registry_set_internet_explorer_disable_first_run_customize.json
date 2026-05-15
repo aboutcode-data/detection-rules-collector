@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_internet_explorer_disable_first_run_customize.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-16",
+                "title": "Internet Explorer DisableFirstRunCustomize Enabled",
+                "id": "ab567429-1dfb-4674-b6d2-979fd2f9d125"
+            },
+            "rule_text": "title: Internet Explorer DisableFirstRunCustomize Enabled\nid: ab567429-1dfb-4674-b6d2-979fd2f9d125\nstatus: test\ndescription: 'Detects changes to the Internet Explorer \"DisableFirstRunCustomize\"\n  value, which prevents Internet Explorer from running the first run wizard the first\n  time a user starts the browser after installing Internet Explorer or Windows.\n\n  '\nreferences:\n- https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/devil-bait/NCSC-MAR-Devil-Bait.pdf\n- https://unit42.paloaltonetworks.com/operation-ke3chang-resurfaces-with-new-tidepool-malware/\n- https://admx.help/?Category=InternetExplorer&Policy=Microsoft.Policies.InternetExplorer::NoFirstRunCustomise\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-16\nmodified: 2025-10-07\ntags:\n- attack.defense-impairment\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|endswith: \\Microsoft\\Internet Explorer\\Main\\DisableFirstRunCustomize\n    Details:\n    - DWORD (0x00000001)\n    - DWORD (0x00000002)\n  filter_main_generic:\n    Image:\n    - C:\\Windows\\explorer.exe\n    - C:\\Windows\\System32\\ie4uinit.exe\n  filter_optional_avira:\n    Image|contains|all:\n    - \\Temp\\\n    - \\.cr\\avira_\n    Details|contains: DWORD (0x00000001)\n  filter_optional_foxit:\n    Image:\n    - C:\\Program Files (x86)\\Foxit Software\\Foxit PDF Reader\\FoxitPDFReader.exe\n    - C:\\Program Files\\Foxit Software\\Foxit PDF Reader\\FoxitPDFReader.exe\n    Details|contains: DWORD (0x00000001)\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- As this is controlled by group policy as well as user settings. Some false positives\n  may occur.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

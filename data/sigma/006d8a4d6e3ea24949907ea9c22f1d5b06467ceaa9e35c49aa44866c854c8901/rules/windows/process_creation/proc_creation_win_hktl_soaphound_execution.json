@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_soaphound_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2024-01-26",
+                "title": "HackTool - SOAPHound Execution",
+                "id": "e92a4287-e072-4a40-9739-370c106bb750"
+            },
+            "rule_text": "title: HackTool - SOAPHound Execution\nid: e92a4287-e072-4a40-9739-370c106bb750\nstatus: test\ndescription: 'Detects the execution of SOAPHound, a .NET tool for collecting Active\n  Directory data, using specific command-line arguments that may indicate an attempt\n  to extract sensitive AD information.\n\n  '\nreferences:\n- https://github.com/FalconForceTeam/SOAPHound\n- https://medium.com/falconforce/soaphound-tool-to-collect-active-directory-data-via-adws-165aca78288c\nauthor: '@kostastsale'\ndate: 2024-01-26\ntags:\n- attack.discovery\n- attack.t1087\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_1:\n    CommandLine|contains:\n    - ' --buildcache '\n    - ' --bhdump '\n    - ' --certdump '\n    - ' --dnsdump '\n  selection_2:\n    CommandLine|contains:\n    - ' -c '\n    - ' --cachefilename '\n    - ' -o '\n    - ' --outputdirectory'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/plugx.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PlugXBootLDRCode",
+                "tags": [
+                    "PlugX",
+                    "Family"
+                ],
+                "description": "PlugX boot.ldr code tricks",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-12"
+            },
+            "rule_text": "private rule PlugXBootLDRCode : PlugX Family\n{\n\tmeta:\n\t\tdescription = \"PlugX boot.ldr code tricks\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-12\"\n\n\tstrings:\n\t\t$GetProcAdd = { 80 38 47 75 36 80 78 01 65 75 30 80 78 02 74 75 2A 80 78 03 50 }\n\t\t$L4_LoadLibraryA = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 4C 6F 61 64 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 4C 69 62 72 }\n\t\t$L4_VirtualAlloc = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 56 69 72 74 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 75 61 6C 41 }\n\t\t$L4_VirtualFree = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 56 69 72 74 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 75 61 6C 46 }\n\t\t$L4_ExitThread = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 45 78 69 74 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 54 68 72 65 }\n\t\t$L4_ntdll = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 6E 74 64 6C 66 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) C6 00 }\n\t\t$L4_RtlDecompressBuffer = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 52 74 6C 44 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 65 63 6F 6D }\n\t\t$L4_memcpy = { C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 6D 65 6D 63 66 C7 ( ?? ?? | ?? ?? ?? ?? ?? ) 70 79 }\n\n\tcondition:\n\t\t$GetProcAdd or ( all of ( $L4_* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PlugXStrings",
+                "tags": [
+                    "PlugX",
+                    "Family"
+                ],
+                "description": "PlugX Identifying Strings",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-12"
+            },
+            "rule_text": "private rule PlugXStrings : PlugX Family\n{\n\tmeta:\n\t\tdescription = \"PlugX Identifying Strings\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-12\"\n\n\tstrings:\n\t\t$BootLDR = \"boot.ldr\" wide ascii\n\t\t$Dwork = \"d:\\\\work\" nocase\n\t\t$Plug25 = \"plug2.5\"\n\t\t$Plug30 = \"Plug3.0\"\n\t\t$Shell6 = \"Shell6\"\n\n\tcondition:\n\t\t$BootLDR or ( $Dwork and ( $Plug25 or $Plug30 or $Shell6 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "PlugX",
+                "tags": [
+                    "Family"
+                ],
+                "description": "PlugX",
+                "author": "Seth Hardy",
+                "last_modified": "2014-06-12"
+            },
+            "rule_text": "rule PlugX : Family\n{\n\tmeta:\n\t\tdescription = \"PlugX\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-06-12\"\n\n\tcondition:\n\t\tPlugXBootLDRCode or PlugXStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

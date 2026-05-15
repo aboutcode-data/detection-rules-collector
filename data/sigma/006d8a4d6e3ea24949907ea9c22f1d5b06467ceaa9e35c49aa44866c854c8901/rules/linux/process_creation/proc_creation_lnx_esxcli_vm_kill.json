@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_esxcli_vm_kill.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Cedric Maurugeon",
+                "date": "2023-09-04",
+                "title": "ESXi VM Kill Via ESXCLI",
+                "id": "2992ac4d-31e9-4325-99f2-b18a73221bb2"
+            },
+            "rule_text": "title: ESXi VM Kill Via ESXCLI\nid: 2992ac4d-31e9-4325-99f2-b18a73221bb2\nstatus: test\ndescription: Detects execution of the \"esxcli\" command with the \"vm\" and \"kill\" flag\n  in order to kill/shutdown a specific VM.\nreferences:\n- https://www.crowdstrike.com/blog/hypervisor-jackpotting-ecrime-actors-increase-targeting-of-esxi-servers/\n- https://developer.broadcom.com/xapis/esxcli-command-reference/7.0.0/namespace/esxcli_vm.html\n- https://www.secuinfra.com/en/techtalk/hide-your-hypervisor-analysis-of-esxiargs-ransomware/\n- https://www.trendmicro.com/en_us/research/22/e/new-linux-based-ransomware-cheerscrypt-targets-exsi-devices.html\nauthor: Nasreddine Bencherchali (Nextron Systems), Cedric Maurugeon\ndate: 2023-09-04\ntags:\n- attack.execution\n- attack.impact\n- attack.t1059.012\n- attack.t1529\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: /esxcli\n    CommandLine|contains|all:\n    - vm process\n    - kill\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

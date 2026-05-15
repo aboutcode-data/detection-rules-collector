@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_wmi_suspicious_process_lineage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Suspicious Process Lineage - WMI",
+                "id": "75e6bb57-d135-4308-b0ac-936e2d76d4d5"
+            },
+            "rule_text": "title: Suspicious Process Lineage - WMI\nid: 75e6bb57-d135-4308-b0ac-936e2d76d4d5\nstatus: experimental\ndescription: \"In general, trusted binaries and known administrative tools and processes\\\n  \\ will initiate WMI \\nactivity. As such, it makes sense to look for known bad processes\\\n  \\ launching WMI or deviations \\nfrom the expected where a legitimate but unusual\\\n  \\ Windows binary spawns WMI\\u2014or spawns from it. \\nThe following is an amalgamation\\\n  \\ of several analytics that can detect a wide array of threats, \\nranging from red\\\n  \\ team activity to web shells to coinminers. Part of the RedCanary 2024 Threat \\n\\\n  Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\wmiprvse.exe\n    Image|endswith:\n    - \\rundll32.exe\n    - \\msbuild.exe\n    - \\powershell.exe\n    - \\cmd.exe\n    - \\mshta.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/code_integrity/win_codeintegrity_whql_failure.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-06",
+                "title": "CodeIntegrity - Unmet WHQL Requirements For Loaded Kernel Module",
+                "id": "2f8cd7a0-9d5a-4f62-9f8b-2c951aa0dd1f"
+            },
+            "rule_text": "title: CodeIntegrity - Unmet WHQL Requirements For Loaded Kernel Module\nid: 2f8cd7a0-9d5a-4f62-9f8b-2c951aa0dd1f\nstatus: test\ndescription: Detects loaded kernel modules that did not meet the WHQL signing requirements.\nreferences:\n- https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/operations/event-id-explanations\n- https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/operations/event-tag-explanations\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-06\nmodified: 2023-06-14\ntags:\n- attack.privilege-escalation\nlogsource:\n  product: windows\n  service: codeintegrity-operational\ndetection:\n  selection:\n    EventID:\n    - 3082\n    - 3083\n  filter_optional_vmware:\n    FileNameBuffer:\n    - system32\\drivers\\vsock.sys\n    - System32\\drivers\\vmci.sys\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_susp_control_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-04-15",
+                "title": "Suspicious Control Panel DLL Load",
+                "id": "d7eb979b-c2b5-4a6f-a3a7-c87ce6763819"
+            },
+            "rule_text": "title: Suspicious Control Panel DLL Load\nid: d7eb979b-c2b5-4a6f-a3a7-c87ce6763819\nstatus: test\ndescription: Detects suspicious Rundll32 execution from control.exe as used by Equation\n  Group and Exploit Kits\nreferences:\n- https://twitter.com/rikvduijn/status/853251879320662017\n- https://twitter.com/felixw3000/status/853354851128025088\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-04-15\nmodified: 2023-02-09\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\System32\\control.exe\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  filter:\n    CommandLine|contains: Shell32.dll\n  condition: all of selection_* and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

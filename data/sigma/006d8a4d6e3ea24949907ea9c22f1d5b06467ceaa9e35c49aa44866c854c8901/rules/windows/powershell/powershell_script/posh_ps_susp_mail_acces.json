@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_mail_acces.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-21",
+                "title": "Powershell Local Email Collection",
+                "id": "2837e152-93c8-43d2-85ba-c3cd3c2ae614"
+            },
+            "rule_text": "title: Powershell Local Email Collection\nid: 2837e152-93c8-43d2-85ba-c3cd3c2ae614\nstatus: test\ndescription: 'Adversaries may target user email on local systems to collect sensitive\n  information.\n\n  Files containing email data can be acquired from a users local system, such as Outlook\n  storage or cache files.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1114.001/T1114.001.md\nauthor: frack113\ndate: 2021-07-21\nmodified: 2022-12-25\ntags:\n- attack.collection\n- attack.t1114.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Get-Inbox.ps1\n    - Microsoft.Office.Interop.Outlook\n    - Microsoft.Office.Interop.Outlook.olDefaultFolders\n    - -comobject outlook.application\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

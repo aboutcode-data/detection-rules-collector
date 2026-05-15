@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_win_defender_exclusions_added.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-16",
+                "title": "Windows Defender Exclusions Added - PowerShell",
+                "id": "c1344fa2-323b-4d2e-9176-84b4d4821c88"
+            },
+            "rule_text": "title: Windows Defender Exclusions Added - PowerShell\nid: c1344fa2-323b-4d2e-9176-84b4d4821c88\nrelated:\n- id: 17769c90-230e-488b-a463-e05c08e9d48f\n  type: similar\nstatus: test\ndescription: Detects modifications to the Windows Defender configuration settings\n  using PowerShell to add exclusions\nreferences:\n- https://www.elastic.co/guide/en/security/current/windows-defender-exclusions-added-via-powershell.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-16\nmodified: 2022-11-26\ntags:\n- attack.defense-impairment\n- attack.t1685\n- attack.execution\n- attack.t1059\nlogsource:\n  category: ps_script\n  product: windows\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_args_exc:\n    ScriptBlockText|contains:\n    - ' -ExclusionPath '\n    - ' -ExclusionExtension '\n    - ' -ExclusionProcess '\n    - ' -ExclusionIpAddress '\n  selection_args_pref:\n    ScriptBlockText|contains:\n    - 'Add-MpPreference '\n    - 'Set-MpPreference '\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

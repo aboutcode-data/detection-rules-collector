@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_index_value_removal.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-26",
+                "title": "Removal Of Index Value to Hide Schedule Task - Registry",
+                "id": "526cc8bc-1cdc-48ad-8b26-f19bff969cec"
+            },
+            "rule_text": "title: Removal Of Index Value to Hide Schedule Task - Registry\nid: 526cc8bc-1cdc-48ad-8b26-f19bff969cec\nrelated:\n- id: acd74772-5f88-45c7-956b-6a7b36c294d2\n  type: similar\n- id: 5b16df71-8615-4f7f-ac9b-6c43c0509e61\n  type: similar\nstatus: test\ndescription: Detects when the \"index\" value of a scheduled task is removed or deleted\n  from the registry. Which effectively hides it from any tooling such as \"schtasks\n  /query\"\nreferences:\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/06/20/defending-against-scheduled-task-attacks-in-windows-environments\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-26\nmodified: 2025-10-25\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  product: windows\n  category: registry_delete\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\TaskCache\\Tree\\\n    - Index\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_index_value_removal/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

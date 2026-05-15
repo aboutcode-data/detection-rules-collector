@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/network_connection/net_connection_win_dllhost_non_local_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "bartblaze",
+                "date": "2020-07-13",
+                "title": "Dllhost.EXE Initiated Network Connection To Non-Local IP Address",
+                "id": "cfed2f44-16df-4bf3-833a-79405198b277"
+            },
+            "rule_text": "title: Dllhost.EXE Initiated Network Connection To Non-Local IP Address\nid: cfed2f44-16df-4bf3-833a-79405198b277\nstatus: test\ndescription: 'Detects Dllhost.EXE initiating a network connection to a non-local IP\n  address.\n\n  Aside from Microsoft own IP range that needs to be excluded. Network communication\n  from Dllhost will depend entirely on the hosted DLL.\n\n  An initial baseline is recommended before deployment.\n\n  '\nreferences:\n- https://redcanary.com/blog/child-processes/\n- https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08\nauthor: bartblaze\ndate: 2020-07-13\nmodified: 2024-07-16\ntags:\n- attack.stealth\n- attack.t1218\n- attack.execution\n- attack.t1559.001\n- detection.threat-hunting\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\dllhost.exe\n    Initiated: 'true'\n  filter_main_local_ranges:\n    DestinationIp|cidr:\n    - ::1/128\n    - 10.0.0.0/8\n    - 127.0.0.0/8\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - 169.254.0.0/16\n    - fc00::/7\n    - fe80::/10\n  filter_main_msrange:\n    DestinationIp|cidr:\n    - 20.184.0.0/13\n    - 20.192.0.0/10\n    - 23.72.0.0/13\n    - 51.10.0.0/15\n    - 51.103.0.0/16\n    - 51.104.0.0/15\n    - 52.224.0.0/11\n    - 150.171.0.0/19\n    - 204.79.197.0/24\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Communication to other corporate systems that use IP addresses from public address\n  spaces\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

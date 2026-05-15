@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Abucrosm/Ransom_Win32_Abucrosm_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Abucrosm_MTB",
+                "tags": [],
+                "description": "Ransom:Win32/Abucrosm!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Abucrosm_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Abucrosm!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {2a d3 80 c2 6d 88 15 ?? ?? ?? ?? 8b 7c 24 14 8b 4c 24 10 8a d1 2a 15 ?? ?? ?? ?? 88 54 24 0f 8b 3f 81 c7 ?? ?? ?? ?? 89 3d ?? ?? ?? ?? 3d ?? ?? ?? ?? 75 [0-60] 2b c3 83 c0 19 0f b7 d0 8b 44 24 14 8b f2 89 38 }\n\t\t$a_03_1 = {8b 7c 24 10 8a d8 2a 1d ?? ?? ?? ?? 8b 4c 24 20 80 c3 60 8b 54 24 1c 8b 3f 81 c7 ?? ?? ?? ?? 89 15 ?? ?? ?? ?? 83 f9 07 74 [0-50] 8a ca 2a c8 8d 41 08 8b 4c 24 10 89 39 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

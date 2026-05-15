@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Trickbot/Trojan_Win32_Trickbot_J_ibt.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Trickbot_J_ibt",
+                "tags": [],
+                "description": "Trojan:Win32/Trickbot.J!ibt,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Trickbot_J_ibt\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Trickbot.J!ibt,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {3a 00 5c 00 50 00 72 00 6f 00 67 00 72 00 61 00 6d 00 44 00 61 00 74 00 61 00 5c 00 [0-40] ?? 04 ?? 04 ?? 04 ?? 04 2e 00 65 00 78 00 65 00 }\n\t\t$a_02_1 = {3a 00 5c 00 50 00 72 00 6f 00 67 00 72 00 61 00 6d 00 44 00 61 00 74 00 61 00 5c 00 [0-40] ?? 10 ?? 10 ?? 10 ?? 10 2e 00 65 00 78 00 65 00 }\n\t\t$a_02_2 = {68 00 04 00 00 8d [0-09] ff 15 [0-20] ff 15 ?? ?? ?? ?? 85 c0 74 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 5 + ( #a_02_1 & 1 ) * 5 + ( #a_02_2 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

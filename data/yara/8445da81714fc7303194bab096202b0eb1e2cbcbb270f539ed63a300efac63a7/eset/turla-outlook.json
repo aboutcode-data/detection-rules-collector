@@ -1,0 +1,104 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/eset/turla-outlook.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "not_ms",
+                "tags": []
+            },
+            "rule_text": "import \"pe\"\n\nprivate rule not_ms\n{\n\tcondition:\n\t\tnot for any i in ( 0 .. pe.number_of_signatures - 1 ) : ( pe.signatures [ i ] . issuer contains \"Microsoft Corporation\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "turla_outlook_gen",
+                "tags": [],
+                "author": "ESET Research",
+                "date": "05-09-2018",
+                "description": "Turla Outlook malware",
+                "version": 2,
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf",
+                "source": "https://github.com/eset/malware-ioc/",
+                "contact": "github@eset.com",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule turla_outlook_gen\n{\n\tmeta:\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"05-09-2018\"\n\t\tdescription = \"Turla Outlook malware\"\n\t\tversion = 2\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tcontact = \"github@eset.com\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"Outlook Express\" ascii wide\n\t\t$s2 = \"Outlook watchdog\" ascii wide\n\t\t$s3 = \"Software\\\\RIT\\\\The Bat!\" ascii wide\n\t\t$s4 = \"Mail Event Window\" ascii wide\n\t\t$s5 = \"Software\\\\Mozilla\\\\Mozilla Thunderbird\\\\Profiles\" ascii wide\n\t\t$s6 = \"%%PDF-1.4\\n%%%c%c\\n\" ascii wide\n\t\t$s7 = \"%Y-%m-%dT%H:%M:%S+0000\" ascii wide\n\t\t$s8 = \"rctrl_renwnd32\" ascii wide\n\t\t$s9 = \"NetUIHWND\" ascii wide\n\t\t$s10 = \"homePostalAddress\" ascii wide\n\t\t$s11 = \"/EXPORT;OVERRIDE;START=-%d;END=-%d;FOLDER=%s;OUT=\" ascii wide\n\t\t$s12 = \"Re:|FWD:|AW:|FYI:|NT|QUE:\" ascii wide\n\t\t$s13 = \"IPM.Note\" ascii wide\n\t\t$s14 = \"MAPILogonEx\" ascii wide\n\t\t$s15 = \"pipe\\\\The Bat! %d CmdLine\" ascii wide\n\t\t$s16 = \"PowerShellRunner.dll\" ascii wide\n\t\t$s17 = \"cmd container\" ascii wide\n\t\t$s18 = \"mapid.tlb\" ascii wide nocase\n\t\t$s19 = \"Content-Type: F)*+\" ascii wide fullword\n\n\tcondition:\n\t\tnot_ms and 5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "turla_outlook_filenames",
+                "tags": [],
+                "author": "ESET Research",
+                "date": "22-08-2018",
+                "description": "Turla Outlook filenames",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf",
+                "source": "https://github.com/eset/malware-ioc/",
+                "contact": "github@eset.com",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule turla_outlook_filenames\n{\n\tmeta:\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"22-08-2018\"\n\t\tdescription = \"Turla Outlook filenames\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tcontact = \"github@eset.com\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"mapid.tlb\"\n\t\t$s2 = \"msmime.dll\"\n\t\t$s3 = \"scawrdot.db\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "turla_outlook_log",
+                "tags": [],
+                "author": "ESET Research",
+                "date": "22-08-2018",
+                "description": "First bytes of the encrypted Turla Outlook logs",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf",
+                "source": "https://github.com/eset/malware-ioc/",
+                "contact": "github@eset.com",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule turla_outlook_log\n{\n\tmeta:\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"22-08-2018\"\n\t\tdescription = \"First bytes of the encrypted Turla Outlook logs\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tcontact = \"github@eset.com\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = {01 87 C9 75 C8 69 98 AC E0 C9 7B [21] EB BB 60 BB 5A}\n\n\tcondition:\n\t\t$s1 at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "turla_outlook_exports",
+                "tags": [],
+                "author": "ESET Research",
+                "date": "22-08-2018",
+                "description": "Export names of Turla Outlook Malware",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf",
+                "source": "https://github.com/eset/malware-ioc/",
+                "contact": "github@eset.com",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "import \"pe\"\n\nrule turla_outlook_exports\n{\n\tmeta:\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"22-08-2018\"\n\t\tdescription = \"Export names of Turla Outlook Malware\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tcontact = \"github@eset.com\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tcondition:\n\t\t(pe.exports ( \"install\" ) or pe.exports ( \"Install\" ) ) and pe.exports ( \"TBP_Initialize\" ) and pe.exports ( \"TBP_Finalize\" ) and pe.exports ( \"TBP_GetName\" ) and pe.exports ( \"DllRegisterServer\" ) and pe.exports ( \"DllGetClassObject\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "turla_outlook_pdf",
+                "tags": [],
+                "author": "ESET Research",
+                "date": "22-08-2018",
+                "description": "Detect PDF documents generated by Turla Outlook malware",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf",
+                "source": "https://github.com/eset/malware-ioc/",
+                "contact": "github@eset.com",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule turla_outlook_pdf\n{\n\tmeta:\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"22-08-2018\"\n\t\tdescription = \"Detect PDF documents generated by Turla Outlook malware\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tcontact = \"github@eset.com\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s1 = \"Adobe PDF Library 9.0\" ascii wide nocase\n\t\t$s2 = \"Acrobat PDFMaker 9.0\" ascii wide nocase\n\t\t$s3 = {FF D8 FF E0 00 10 4A 46 49 46}\n\t\t$s4 = {00 3F 00 FD FC A2 8A 28 03 FF D9}\n\t\t$s5 = \"W5M0MpCehiHzreSzNTczkc9d\" ascii wide nocase\n\t\t$s6 = \"PDF-1.4\" ascii wide nocase\n\n\tcondition:\n\t\t5 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "outlook_misty1",
+                "tags": [],
+                "author": "ESET Research",
+                "date": "22-08-2018",
+                "description": "Detects the Turla MISTY1 implementation",
+                "reference": "https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf",
+                "source": "https://github.com/eset/malware-ioc/",
+                "contact": "github@eset.com",
+                "license": "BSD 2-Clause"
+            },
+            "rule_text": "rule outlook_misty1\n{\n\tmeta:\n\t\tauthor = \"ESET Research\"\n\t\tdate = \"22-08-2018\"\n\t\tdescription = \"Detects the Turla MISTY1 implementation\"\n\t\treference = \"https://www.welivesecurity.com/wp-content/uploads/2018/08/Eset-Turla-Outlook-Backdoor.pdf\"\n\t\tsource = \"https://github.com/eset/malware-ioc/\"\n\t\tcontact = \"github@eset.com\"\n\t\tlicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$o1 = {81 E7 FF 01 00 00}\n\t\t$s1 = {C1 E1 09}\n\t\t$s2 = {66 33 C6}\n\t\t$s3 = {C1 E8 07}\n\t\t$o2 = {8B 11 8D 04 1F 50 03 D3 8D 4D C4}\n\n\tcondition:\n\t\t$o2 and for all i in ( 1 .. #o1 ) : ( for all of ( $s* ) : ( $ in ( @o1 [ i ] - 500 .. @o1 [ i ] + 500 ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

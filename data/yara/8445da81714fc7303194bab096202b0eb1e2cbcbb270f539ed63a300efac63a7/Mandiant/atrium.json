@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/atrium.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_Webshell_PL_ATRIUM_1",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "md5": "ca0175d86049fa7c796ea06b413857a3",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_Webshell_PL_ATRIUM_1\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tmd5 = \"ca0175d86049fa7c796ea06b413857a3\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$s1 = \"CGI::param(\"\n\t\t$s2 = \"system(\"\n\t\t$s3 = /if[\\x09\\x20]{0,32}\\(CGI::param\\([\\x22\\x27]\\w{1,64}[\\x22\\x27]\\)\\)\\s{0,128}\\{[\\x09\\x20]{0,32}print [\\x22\\x27]Cache-Control: no-cache\\\\n[\\x22\\x27][\\x09\\x20]{0,32};\\s{0,128}print [\\x22\\x27]Content-type: text\\/html\\\\n\\\\n[\\x22\\x27][\\x09\\x20]{0,32};\\s{0,128}my \\$\\w{1,64}[\\x09\\x20]{0,32}=[\\x09\\x20]{0,32}CGI::param\\([\\x22\\x27]\\w{1,64}[\\x22\\x27]\\)[\\x09\\x20]{0,32};\\s{0,128}system\\([\\x22\\x27]\\$/\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vmware_vmtoolsd_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "bohops, Bhabesh Raj",
+                "date": "2021-10-08",
+                "title": "VMToolsd Suspicious Child Process",
+                "id": "5687f942-867b-4578-ade7-1e341c46e99a"
+            },
+            "rule_text": "title: VMToolsd Suspicious Child Process\nid: 5687f942-867b-4578-ade7-1e341c46e99a\nstatus: test\ndescription: Detects suspicious child process creations of VMware Tools process which\n  may indicate persistence setup\nreferences:\n- https://bohops.com/2021/10/08/analyzing-and-detecting-a-vmtools-persistence-technique/\n- https://user-images.githubusercontent.com/61026070/136518004-b68cce7d-f9b8-4e9a-9b7b-53b1568a9a94.png\n- https://github.com/vmware/open-vm-tools/blob/master/open-vm-tools/tools.conf\nauthor: bohops, Bhabesh Raj\ndate: 2021-10-08\nmodified: 2023-07-25\ntags:\n- attack.execution\n- attack.persistence\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\vmtoolsd.exe\n  selection_img:\n  - Image|endswith:\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\wscript.exe\n  - OriginalFileName:\n    - Cmd.Exe\n    - cscript.exe\n    - MSHTA.EXE\n    - PowerShell.EXE\n    - pwsh.dll\n    - REGSVR32.EXE\n    - RUNDLL32.EXE\n    - wscript.exe\n  filter_main_vmwaretools_script:\n    Image|endswith: \\cmd.exe\n    CommandLine|contains:\n    - \\VMware\\VMware Tools\\poweron-vm-default.bat\n    - \\VMware\\VMware Tools\\poweroff-vm-default.bat\n    - \\VMware\\VMware Tools\\resume-vm-default.bat\n    - \\VMware\\VMware Tools\\suspend-vm-default.bat\n  filter_main_empty:\n    Image|endswith: \\cmd.exe\n    CommandLine: ''\n  filter_main_null:\n    Image|endswith: \\cmd.exe\n    CommandLine: null\n  condition: all of selection* and not 1 of filter_main_*\nfalsepositives:\n- Legitimate use by VM administrator\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

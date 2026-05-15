@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_meterpreter_getsystem.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov, Ecco, Florian Roth",
+                "date": "2019-10-26",
+                "title": "Potential Meterpreter/CobaltStrike Activity",
+                "id": "15619216-e993-4721-b590-4c520615a67d"
+            },
+            "rule_text": "title: Potential Meterpreter/CobaltStrike Activity\nid: 15619216-e993-4721-b590-4c520615a67d\nstatus: test\ndescription: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting\n  a specific service starting\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment\n- https://blog.cobaltstrike.com/2014/04/02/what-happens-when-i-type-getsystem/\nauthor: Teymur Kheirkhabarov, Ecco, Florian Roth\ndate: 2019-10-26\nmodified: 2023-02-05\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134.001\n- attack.t1134.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    ParentImage|endswith: \\services.exe\n  selection_technique_1:\n    CommandLine|contains|all:\n    - /c\n    - echo\n    - \\pipe\\\n    CommandLine|contains:\n    - cmd\n    - '%COMSPEC%'\n  selection_technique_2:\n    CommandLine|contains|all:\n    - rundll32\n    - .dll,a\n    - '/p:'\n  filter_defender:\n    CommandLine|contains: MpCmdRun\n  condition: selection_img and 1 of selection_technique_* and not 1 of filter_*\nfalsepositives:\n- Commandlines containing components like cmd accidentally\n- Jobs and services started with cmd\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

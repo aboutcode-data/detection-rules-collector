@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_winpeas.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Georg Lauenstein (sure[secure])",
+                "date": "2022-09-19",
+                "title": "HackTool - winPEAS Execution",
+                "id": "98b53e78-ebaf-46f8-be06-421aafd176d9"
+            },
+            "rule_text": "title: HackTool - winPEAS Execution\nid: 98b53e78-ebaf-46f8-be06-421aafd176d9\nstatus: test\ndescription: WinPEAS is a script that search for possible paths to escalate privileges\n  on Windows hosts. The checks are explained on book.hacktricks.xyz\nreferences:\n- https://github.com/carlospolop/PEASS-ng\n- https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation\nauthor: Georg Lauenstein (sure[secure])\ndate: 2022-09-19\nmodified: 2023-03-23\ntags:\n- attack.privilege-escalation\n- attack.discovery\n- attack.t1082\n- attack.t1087\n- attack.t1046\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: winPEAS.exe\n  - Image|endswith:\n    - \\winPEASany_ofs.exe\n    - \\winPEASany.exe\n    - \\winPEASx64_ofs.exe\n    - \\winPEASx64.exe\n    - \\winPEASx86_ofs.exe\n    - \\winPEASx86.exe\n  selection_cli_option:\n    CommandLine|contains:\n    - ' applicationsinfo'\n    - ' browserinfo'\n    - ' eventsinfo'\n    - ' fileanalysis'\n    - ' filesinfo'\n    - ' processinfo'\n    - ' servicesinfo'\n    - ' windowscreds'\n  selection_cli_dl:\n    CommandLine|contains: https://github.com/carlospolop/PEASS-ng/releases/latest/download/\n  selection_cli_specific:\n  - ParentCommandLine|endswith: ' -linpeas'\n  - CommandLine|endswith: ' -linpeas'\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

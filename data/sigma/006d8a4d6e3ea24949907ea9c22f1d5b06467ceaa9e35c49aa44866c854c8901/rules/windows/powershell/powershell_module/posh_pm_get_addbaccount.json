@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_get_addbaccount.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-16",
+                "title": "Suspicious Get-ADDBAccount Usage",
+                "id": "b140afd9-474b-4072-958e-2ebb435abd68"
+            },
+            "rule_text": "title: Suspicious Get-ADDBAccount Usage\nid: b140afd9-474b-4072-958e-2ebb435abd68\nstatus: test\ndescription: Detects suspicious invocation of the Get-ADDBAccount script that reads\n  from a ntds.dit file and may be used to get access to credentials without using\n  any credential dumpers\nreferences:\n- https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/\n- https://github.com/MichaelGrafnetter/DSInternals/blob/7ba59c12ee9a1cb430d7dc186a3366842dd612c8/Documentation/PowerShell/Get-ADDBAccount.md\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-16\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection:\n    Payload|contains|all:\n    - Get-ADDBAccount\n    - 'BootKey '\n    - 'DatabasePath '\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

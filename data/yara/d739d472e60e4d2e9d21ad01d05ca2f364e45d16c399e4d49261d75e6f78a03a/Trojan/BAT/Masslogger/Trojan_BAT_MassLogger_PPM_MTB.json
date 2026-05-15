@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Masslogger/Trojan_BAT_MassLogger_PPM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_MassLogger_PPM_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/MassLogger.PPM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_MassLogger_PPM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/MassLogger.PPM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0b 00 0b 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {72 00 65 00 73 00 6f 00 75 00 72 00 63 00 65 00 73 00 2f 00 38 00 33 00 37 00 37 00 32 00 39 00 32 00 2e 00 77 00 65 00 62 00 70 00 }\n\t\t$a_03_1 = {1f 18 fe 02 13 04 11 04 2c 28 07 06 fe 06 c1 00 00 06 73 d8 00 00 0a 6f ?? 00 00 0a 00 07 06 fe 06 c2 00 00 06 73 d8 00 00 0a 6f ?? 00 00 0a 00 }\n\t\t$a_01_2 = {00 02 72 e1 15 00 70 28 49 01 00 06 7d 69 00 00 04 2a }\n\t\t$a_01_3 = {12 06 28 db 00 00 0a 13 07 11 07 6f dc 00 00 0a 00 00 12 06 28 dd 00 00 0a 13 08 11 08 2d e1 }\n\t\t$a_00_4 = {53 74 72 52 65 76 65 72 73 65 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

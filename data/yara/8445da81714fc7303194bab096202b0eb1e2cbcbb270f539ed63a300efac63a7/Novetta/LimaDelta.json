@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/LimaDelta.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "LimaDelta",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "81e6118a6d8bf8994ce93f940059217481bfd15f2757c48c589983a6af54cfcc"
+            },
+            "rule_text": "import \"pe\"\n\nrule LimaDelta\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"81e6118a6d8bf8994ce93f940059217481bfd15f2757c48c589983a6af54cfcc\"\n\n\tstrings:\n\t\t$fileDecoder = {\n\t\t\t8B ?? ?? \n\t\t\t83 ?? 10 \n\t\t\t81 ?? 6D 3A 71 58 \n\t\t\t89 ?? \n\t\t\t33 ?? \n\t\t\t66 ?? ?? F0 \n\t\t\t89 ?? 04 \n\t\t\t83 ?? 08 \n\t\t\t4? \n\t\t\t75 \n\t\t}\n\t\t$authenicateBufferGen = {\n\t\t\tBB 01 \n\t\t\t74 ??\n\t\t\tFF 15 [4]\n\t\t\t99 \n\t\t\tB? 32 00 00 00 \n\t\t\tF7 ?? \n\t\t\t8B ?? \n\t\t\t8D [3]\n\t\t\t5? \n\t\t\t5? \n\t\t\tE8 [4]\n\t\t\t83 C4 08 \n\t\t\t83 ?? 46 \n\t\t}\n\n\tcondition:\n\t\t$authenicateBufferGen in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or $fileDecoder in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

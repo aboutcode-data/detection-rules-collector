@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Wolyx/Backdoor_Win32_Wolyx_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Wolyx_B",
+                "tags": [],
+                "description": "Backdoor:Win32/Wolyx.B,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Wolyx_B\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Wolyx.B,SIGNATURE_TYPE_PEHSTR,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {66 75 63 6b 79 6f 75 00 }\n\t\t$a_01_1 = {6d 73 73 65 63 65 73 00 ff ff ff ff 0a 00 00 00 73 70 69 64 65 72 67 61 74 65 00 00 ff ff ff ff 08 00 00 00 75 66 73 65 61 67 6e 74 00 }\n\t\t$a_01_2 = {49 45 69 6e 66 6f 2e 64 6c 6c 00 57 53 50 53 74 61 72 74 75 70 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Wolyx_B_2",
+                "tags": [],
+                "description": "Backdoor:Win32/Wolyx.B,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Wolyx_B_2\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Wolyx.B,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6a 00 6a 00 6a 02 6a 00 6a 02 68 00 00 00 40 a1 ?? ?? ?? ?? 8b 00 50 e8 ?? ?? ?? ?? 8b f0 83 fe ff 74 ?? 6a 00 8d 45 fc 50 57 8d 45 f8 e8 ?? ?? ?? ?? 50 56 e8 ?? ?? ?? ?? 56 e8 }\n\t\t$a_02_1 = {64 ff 30 64 89 20 c6 45 f7 00 8d 45 ec 50 68 3f 00 0f 00 6a 00 8b 45 0c e8 ?? ?? ?? ?? 50 8b 45 10 50 a1 ?? ?? ?? ?? 8b 00 ff d0 85 c0 }\n\t\t$a_01_2 = {41 44 31 38 42 42 34 35 42 32 37 43 38 39 34 36 41 44 31 39 41 30 37 36 38 45 37 34 39 34 35 38 41 45 32 39 41 30 35 42 42 32 34 37 38 38 34 37 41 46 30 32 41 31 35 41 38 44 37 37 38 45 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

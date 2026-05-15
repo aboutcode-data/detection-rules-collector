@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_right_to_left_override_extension_spoofing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jonathan Peters (Nextron Systems), Florian Roth (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2024-11-17",
+                "title": "Potential File Extension Spoofing Using Right-to-Left Override",
+                "id": "979baf41-ca44-4540-9d0c-4fcef3b5a3a4"
+            },
+            "rule_text": "title: Potential File Extension Spoofing Using Right-to-Left Override\nid: 979baf41-ca44-4540-9d0c-4fcef3b5a3a4\nrelated:\n- id: ad691d92-15f2-4181-9aa4-723c74f9ddc3\n  type: derived\nstatus: test\ndescription: 'Detects suspicious filenames that contain a right-to-left override character\n  and a potentially spoofed file extensions.\n\n  '\nreferences:\n- https://redcanary.com/blog/right-to-left-override/\n- https://www.malwarebytes.com/blog/news/2014/01/the-rtlo-method\n- https://tria.ge/241015-l98snsyeje/behavioral2\n- https://www.unicode.org/versions/Unicode5.2.0/ch02.pdf\nauthor: Jonathan Peters (Nextron Systems), Florian Roth (Nextron Systems), Swachchhanda\n  Shrawan Poudel (Nextron Systems)\ndate: 2024-11-17\nmodified: 2026-03-20\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1036.002\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_rtlo_unicode:\n    TargetFilename|contains:\n    - \\u202e\n    - '[U+202E]'\n    - \"\\u202E\"\n  selection_extensions:\n    TargetFilename|contains:\n    - 3pm.\n    - 4pm.\n    - cod.\n    - fdp.\n    - ftr.\n    - gepj.\n    - gnp.\n    - gpj.\n    - ism.\n    - lmth.\n    - nls.\n    - piz.\n    - slx.\n    - tdo.\n    - vsc.\n    - vwm.\n    - xcod.\n    - xslx.\n    - xtpp.\n  condition: all of selection_*\nfalsepositives:\n- Filenames that contains scriptures such as arabic or hebrew might make use of this\n  character\nlevel: high\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_susp_right_to_left_override_extension_spoofing/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

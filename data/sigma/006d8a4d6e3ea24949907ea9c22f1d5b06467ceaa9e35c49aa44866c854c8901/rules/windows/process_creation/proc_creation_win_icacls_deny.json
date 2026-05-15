@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_icacls_deny.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-07-18",
+                "title": "Use Icacls to Hide File to Everyone",
+                "id": "4ae81040-fc1c-4249-bfa3-938d260214d9"
+            },
+            "rule_text": "title: Use Icacls to Hide File to Everyone\nid: 4ae81040-fc1c-4249-bfa3-938d260214d9\nstatus: test\ndescription: Detect use of icacls to deny access for everyone in Users folder sometimes\n  used to hide malicious files\nreferences:\n- https://app.any.run/tasks/1df999e6-1cb8-45e3-8b61-499d1b7d5a9b/\nauthor: frack113\ndate: 2022-07-18\nmodified: 2024-04-29\ntags:\n- attack.stealth\n- attack.t1564.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_icacls:\n  - OriginalFileName: iCACLS.EXE\n  - Image|endswith: \\icacls.exe\n  selection_cmd:\n    CommandLine|contains|all:\n    - /deny\n    - '*S-1-1-0:'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

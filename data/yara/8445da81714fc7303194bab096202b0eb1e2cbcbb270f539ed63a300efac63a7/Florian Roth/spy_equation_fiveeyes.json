@@ -1,0 +1,367 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/spy_equation_fiveeyes.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_equation_exploitlib_mutexes",
+                "tags": [],
+                "copyright": "Kaspersky Lab",
+                "description": "Rule to detect Equation group's Exploitation library http://goo.gl/ivt8EW",
+                "version": "1.0",
+                "last_modified": "2015-02-16",
+                "reference": "http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/"
+            },
+            "rule_text": "rule apt_equation_exploitlib_mutexes\n{\n\tmeta:\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdescription = \"Rule to detect Equation group's Exploitation library http://goo.gl/ivt8EW\"\n\t\tversion = \"1.0\"\n\t\tlast_modified = \"2015-02-16\"\n\t\treference = \"http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = \"prkMtx\" wide\n\t\t$a2 = \"cnFormSyncExFBC\" wide\n\t\t$a3 = \"cnFormVoidFBC\" wide\n\t\t$a4 = \"cnFormSyncExFBC\"\n\t\t$a5 = \"cnFormVoidFBC\"\n\n\tcondition:\n\t\t(( $mz at 0 ) and any of ( $a* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_equation_doublefantasy_genericresource",
+                "tags": [],
+                "copyright": "Kaspersky Lab",
+                "description": "Rule to detect DoubleFantasy encoded config http://goo.gl/ivt8EW",
+                "version": "1.0",
+                "last_modified": "2015-02-16",
+                "reference": "http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/"
+            },
+            "rule_text": "rule apt_equation_doublefantasy_genericresource\n{\n\tmeta:\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdescription = \"Rule to detect DoubleFantasy encoded config http://goo.gl/ivt8EW\"\n\t\tversion = \"1.0\"\n\t\tlast_modified = \"2015-02-16\"\n\t\treference = \"http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = {06 00 42 00 49 00 4E 00 52 00 45 00 53 00}\n\t\t$a2 = \"yyyyyyyyyyyyyyyy\"\n\t\t$a3 = \"002\"\n\n\tcondition:\n\t\t(( $mz at 0 ) and all of ( $a* ) ) and filesize < 500000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_equation_equationlaser_runtimeclasses",
+                "tags": [],
+                "copyright": "Kaspersky Lab",
+                "description": "Rule to detect the EquationLaser malware",
+                "version": "1.0",
+                "last_modified": "2015-02-16",
+                "reference": "https://securelist.com/blog/"
+            },
+            "rule_text": "rule apt_equation_equationlaser_runtimeclasses\n{\n\tmeta:\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdescription = \"Rule to detect the EquationLaser malware\"\n\t\tversion = \"1.0\"\n\t\tlast_modified = \"2015-02-16\"\n\t\treference = \"https://securelist.com/blog/\"\n\n\tstrings:\n\t\t$a1 = \"?a73957838_2@@YAXXZ\"\n\t\t$a2 = \"?a84884@@YAXXZ\"\n\t\t$a3 = \"?b823838_9839@@YAXXZ\"\n\t\t$a4 = \"?e747383_94@@YAXXZ\"\n\t\t$a5 = \"?e83834@@YAXXZ\"\n\t\t$a6 = \"?e929348_827@@YAXXZ\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_equation_cryptotable",
+                "tags": [],
+                "copyright": "Kaspersky Lab",
+                "description": "Rule to detect the crypto library used in Equation group malware",
+                "version": "1.0",
+                "last_modified": "2015-02-16",
+                "reference": "https://securelist.com/blog/"
+            },
+            "rule_text": "rule apt_equation_cryptotable\n{\n\tmeta:\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdescription = \"Rule to detect the crypto library used in Equation group malware\"\n\t\tversion = \"1.0\"\n\t\tlast_modified = \"2015-02-16\"\n\t\treference = \"https://securelist.com/blog/\"\n\n\tstrings:\n\t\t$a = {37 DF E8 B6 C7 9C 0B AE 91 EF F0 3B 90 C6 80 85 5D 19 4B 45 44 12 3C E2 0D 5C 1C 7B C4 FF D6 05 17 14 4F 03 74 1E 41 DA 8F 7D DE 7E 99 F1 35 AC B8 46 93 CE 23 82 07 EB 2B D4 72 71 40 F3 B0 F7 78 D7 4C D1 55 1A 39 83 18 FA E1 9A 56 B1 96 AB A6 30 C5 5F BE 0C 50 C1}\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_TripleFantasy_1",
+                "tags": [],
+                "description": "Equation Group Malware - TripleFantasy http://goo.gl/ivt8EW",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "b2b2cd9ca6f5864ef2ac6382b7b6374a9fb2cbe9"
+            },
+            "rule_text": "rule Equation_Kaspersky_TripleFantasy_1\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - TripleFantasy http://goo.gl/ivt8EW\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"b2b2cd9ca6f5864ef2ac6382b7b6374a9fb2cbe9\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"%SystemRoot%\\\\system32\\\\hnetcfg.dll\" fullword wide\n\t\t$s1 = \"%WINDIR%\\\\System32\\\\ahlhcib.dll\" fullword wide\n\t\t$s2 = \"%WINDIR%\\\\sjyntmv.dat\" fullword wide\n\t\t$s3 = \"Global\\\\{8c38e4f3-591f-91cf-06a6-67b84d8a0102}\" fullword wide\n\t\t$s4 = \"%WINDIR%\\\\System32\\\\owrwbsdi\" fullword wide\n\t\t$s5 = \"Chrome\" fullword wide\n\t\t$s6 = \"StringIndex\" fullword ascii\n\t\t$x1 = \"itemagic.net@443\" fullword wide\n\t\t$x2 = \"team4heat.net@443\" fullword wide\n\t\t$x5 = \"62.216.152.69@443\" fullword wide\n\t\t$x6 = \"84.233.205.37@443\" fullword wide\n\t\t$z1 = \"www.microsoft.com@80\" fullword wide\n\t\t$z2 = \"www.google.com@80\" fullword wide\n\t\t$z3 = \"127.0.0.1:3128\" fullword wide\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 300000 and ( ( all of ( $s* ) and all of ( $z* ) ) or ( all of ( $s* ) and 1 of ( $x* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_DoubleFantasy_1",
+                "tags": [],
+                "description": "Equation Group Malware - DoubleFantasy",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "d09b4b6d3244ac382049736ca98d7de0c6787fa2"
+            },
+            "rule_text": "rule Equation_Kaspersky_DoubleFantasy_1\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - DoubleFantasy\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"d09b4b6d3244ac382049736ca98d7de0c6787fa2\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$z1 = \"msvcp5%d.dll\" fullword ascii\n\t\t$s0 = \"actxprxy.GetProxyDllInfo\" fullword ascii\n\t\t$s3 = \"actxprxy.DllGetClassObject\" fullword ascii\n\t\t$s5 = \"actxprxy.DllRegisterServer\" fullword ascii\n\t\t$s6 = \"actxprxy.DllUnregisterServer\" fullword ascii\n\t\t$x1 = \"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\" ascii\n\t\t$x2 = \"191H1a1\" fullword ascii\n\t\t$x3 = \"November \" fullword ascii\n\t\t$x4 = \"abababababab\" fullword ascii\n\t\t$x5 = \"January \" fullword ascii\n\t\t$x6 = \"October \" fullword ascii\n\t\t$x7 = \"September \" fullword ascii\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 350000 and ( ( $z1 ) or ( all of ( $s* ) and 6 of ( $x* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_GROK_Keylogger",
+                "tags": [],
+                "description": "Equation Group Malware - GROK keylogger",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "50b8f125ed33233a545a1aac3c9d4bb6aa34b48f"
+            },
+            "rule_text": "rule Equation_Kaspersky_GROK_Keylogger\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - GROK keylogger\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"50b8f125ed33233a545a1aac3c9d4bb6aa34b48f\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"c:\\\\users\\\\rmgree5\\\\\" ascii\n\t\t$s1 = \"msrtdv.sys\" fullword wide\n\t\t$x1 = \"svrg.pdb\" fullword ascii\n\t\t$x2 = \"W32pServiceTable\" fullword ascii\n\t\t$x3 = \"In forma\" fullword ascii\n\t\t$x4 = \"ReleaseF\" fullword ascii\n\t\t$x5 = \"criptor\" fullword ascii\n\t\t$x6 = \"astMutex\" fullword ascii\n\t\t$x7 = \"ARASATAU\" fullword ascii\n\t\t$x8 = \"R0omp4ar\" fullword ascii\n\t\t$z1 = \"H.text\" fullword ascii\n\t\t$z2 = \"\\\\registry\\\\machine\\\\software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\" fullword wide\n\t\t$z4 = \"\\\\registry\\\\machine\\\\SYSTEM\\\\ControlSet001\\\\Control\\\\Session Manager\\\\Environment\" wide fullword\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 250000 and ( $s0 or ( $s1 and 6 of ( $x* ) ) or ( 6 of ( $x* ) and all of ( $z* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_GreyFishInstaller",
+                "tags": [],
+                "description": "Equation Group Malware - Grey Fish",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "58d15d1581f32f36542f3e9fb4b1fc84d2a6ba35"
+            },
+            "rule_text": "rule Equation_Kaspersky_GreyFishInstaller\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - Grey Fish\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"58d15d1581f32f36542f3e9fb4b1fc84d2a6ba35\"\n\n\tstrings:\n\t\t$s0 = \"DOGROUND.exe\" fullword wide\n\t\t$s1 = \"Windows Configuration Services\" fullword wide\n\t\t$s2 = \"GetMappedFilenameW\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_EquationDrugInstaller",
+                "tags": [],
+                "description": "Equation Group Malware - EquationDrug installer LUTEUSOBSTOS",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "61fab1b8451275c7fd580895d9c68e152ff46417"
+            },
+            "rule_text": "rule Equation_Kaspersky_EquationDrugInstaller\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - EquationDrug installer LUTEUSOBSTOS\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"61fab1b8451275c7fd580895d9c68e152ff46417\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"\\\\system32\\\\win32k.sys\" fullword wide\n\t\t$s1 = \"ALL_FIREWALLS\" fullword ascii\n\t\t$x1 = \"@prkMtx\" fullword wide\n\t\t$x2 = \"STATIC\" fullword wide\n\t\t$x3 = \"windir\" fullword wide\n\t\t$x4 = \"cnFormVoidFBC\" fullword wide\n\t\t$x5 = \"CcnFormSyncExFBC\" fullword wide\n\t\t$x6 = \"WinStaObj\" fullword wide\n\t\t$x7 = \"BINRES\" fullword wide\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 500000 and all of ( $s* ) and 5 of ( $x* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_EquationLaserInstaller",
+                "tags": [],
+                "description": "Equation Group Malware - EquationLaser Installer",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "5e1f56c1e57fbff96d4999db1fd6dd0f7d8221df"
+            },
+            "rule_text": "rule Equation_Kaspersky_EquationLaserInstaller\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - EquationLaser Installer\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"5e1f56c1e57fbff96d4999db1fd6dd0f7d8221df\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"Failed to get Windows version\" fullword ascii\n\t\t$s1 = \"lsasrv32.dll and lsass.exe\" fullword wide\n\t\t$s2 = \"\\\\\\\\%s\\\\mailslot\\\\%s\" fullword ascii\n\t\t$s3 = \"%d-%d-%d %d:%d:%d Z\" fullword ascii\n\t\t$s4 = \"lsasrv32.dll\" fullword ascii\n\t\t$s5 = \"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\" fullword ascii\n\t\t$s6 = \"%s %02x %s\" fullword ascii\n\t\t$s7 = \"VIEWERS\" fullword ascii\n\t\t$s8 = \"5.2.3790.220 (srv03_gdr.040918-1552)\" fullword wide\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 250000 and 6 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_FannyWorm",
+                "tags": [],
+                "description": "Equation Group Malware - Fanny Worm",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "1f0ae54ac3f10d533013f74f48849de4e65817a7"
+            },
+            "rule_text": "rule Equation_Kaspersky_FannyWorm\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - Fanny Worm\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"1f0ae54ac3f10d533013f74f48849de4e65817a7\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s1 = \"x:\\\\fanny.bmp\" fullword ascii\n\t\t$s2 = \"32.exe\" fullword ascii\n\t\t$s3 = \"d:\\\\fanny.bmp\" fullword ascii\n\t\t$x1 = \"c:\\\\windows\\\\system32\\\\kernel32.dll\" fullword ascii\n\t\t$x2 = \"System\\\\CurrentControlSet\\\\Services\\\\USBSTOR\\\\Enum\" fullword ascii\n\t\t$x3 = \"System\\\\CurrentControlSet\\\\Services\\\\PartMgr\\\\Enum\" fullword ascii\n\t\t$x4 = \"\\\\system32\\\\win32k.sys\" fullword wide\n\t\t$x5 = \"\\\\AGENTCPD.DLL\" fullword ascii\n\t\t$x6 = \"agentcpd.dll\" fullword ascii\n\t\t$x7 = \"PADupdate.exe\" fullword ascii\n\t\t$x8 = \"dll_installer.dll\" fullword ascii\n\t\t$x9 = \"\\\\restore\\\\\" fullword ascii\n\t\t$x10 = \"Q:\\\\__?__.lnk\" fullword ascii\n\t\t$x11 = \"Software\\\\Microsoft\\\\MSNetMng\" fullword ascii\n\t\t$x12 = \"\\\\shelldoc.dll\" fullword ascii\n\t\t$x13 = \"file size = %d bytes\" fullword ascii\n\t\t$x14 = \"\\\\MSAgent\" fullword ascii\n\t\t$x15 = \"Global\\\\RPCMutex\" fullword ascii\n\t\t$x16 = \"Global\\\\DirectMarketing\" fullword ascii\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 300000 and ( ( 2 of ( $s* ) ) or ( 1 of ( $s* ) and 6 of ( $x* ) ) or ( 14 of ( $x* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_HDD_reprogramming_module",
+                "tags": [],
+                "description": "Equation Group Malware - HDD reprogramming module",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "ff2b50f371eb26f22eb8a2118e9ab0e015081500"
+            },
+            "rule_text": "rule Equation_Kaspersky_HDD_reprogramming_module\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - HDD reprogramming module\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"ff2b50f371eb26f22eb8a2118e9ab0e015081500\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"nls_933w.dll\" fullword ascii\n\t\t$s1 = \"BINARY\" fullword wide\n\t\t$s2 = \"KfAcquireSpinLock\" fullword ascii\n\t\t$s3 = \"HAL.dll\" fullword ascii\n\t\t$s4 = \"READ_REGISTER_UCHAR\" fullword ascii\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 300000 and all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_EOP_Package",
+                "tags": [],
+                "description": "Equation Group Malware - EoP package and malware launcher",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "2bd1b1f5b4384ce802d5d32d8c8fd3d1dc04b962"
+            },
+            "rule_text": "rule Equation_Kaspersky_EOP_Package\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - EoP package and malware launcher\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"2bd1b1f5b4384ce802d5d32d8c8fd3d1dc04b962\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"abababababab\" fullword ascii\n\t\t$s1 = \"abcdefghijklmnopq\" fullword ascii\n\t\t$s2 = \"@STATIC\" fullword wide\n\t\t$s3 = \"$aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\" fullword ascii\n\t\t$s4 = \"@prkMtx\" fullword wide\n\t\t$s5 = \"prkMtx\" fullword wide\n\t\t$s6 = \"cnFormVoidFBC\" fullword wide\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 100000 and all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_TripleFantasy_Loader",
+                "tags": [],
+                "description": "Equation Group Malware - TripleFantasy Loader",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/16",
+                "hash": "4ce6e77a11b443cc7cbe439b71bf39a39d3d7fa3"
+            },
+            "rule_text": "rule Equation_Kaspersky_TripleFantasy_Loader\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - TripleFantasy Loader\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/16\"\n\t\thash = \"4ce6e77a11b443cc7cbe439b71bf39a39d3d7fa3\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$x1 = \"Original Innovations, LLC\" fullword wide\n\t\t$x2 = \"Moniter Resource Protocol\" fullword wide\n\t\t$x3 = \"ahlhcib.dll\" fullword wide\n\t\t$s0 = \"hnetcfg.HNetGetSharingServicesPage\" fullword ascii\n\t\t$s1 = \"hnetcfg.IcfGetOperationalMode\" fullword ascii\n\t\t$s2 = \"hnetcfg.IcfGetDynamicFwPorts\" fullword ascii\n\t\t$s3 = \"hnetcfg.HNetFreeFirewallLoggingSettings\" fullword ascii\n\t\t$s4 = \"hnetcfg.HNetGetShareAndBridgeSettings\" fullword ascii\n\t\t$s5 = \"hnetcfg.HNetGetFirewallSettingsPage\" fullword ascii\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 50000 and ( all of ( $x* ) and all of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Equation_Kaspersky_SuspiciousString",
+                "tags": [],
+                "description": "Equation Group Malware - suspicious string found in sample",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/ivt8EW",
+                "date": "2015/02/17",
+                "score": 60
+            },
+            "rule_text": "rule Equation_Kaspersky_SuspiciousString\n{\n\tmeta:\n\t\tdescription = \"Equation Group Malware - suspicious string found in sample\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/ivt8EW\"\n\t\tdate = \"2015/02/17\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s1 = \"i386\\\\DesertWinterDriver.pdb\" fullword\n\t\t$s2 = \"Performing UR-specific post-install...\"\n\t\t$s3 = \"Timeout waiting for the \\\"canInstallNow\\\" event from the implant-specific EXE!\"\n\t\t$s4 = \"STRAITSHOOTER30.exe\"\n\t\t$s5 = \"standalonegrok_2.1.1.1\"\n\t\t$s6 = \"c:\\\\users\\\\rmgree5\\\\\"\n\n\tcondition:\n\t\t($mz at 0 ) and filesize < 500000 and all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_NetworkSniffer1",
+                "tags": [],
+                "description": "EquationDrug - Backdoor driven by network sniffer - mstcp32.sys, fat32.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "26e787997a338d8111d96c9a4c103cf8ff0201ce"
+            },
+            "rule_text": "rule EquationDrug_NetworkSniffer1\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Backdoor driven by network sniffer - mstcp32.sys, fat32.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"26e787997a338d8111d96c9a4c103cf8ff0201ce\"\n\n\tstrings:\n\t\t$s0 = \"Microsoft(R) Windows (TM) Operating System\" fullword wide\n\t\t$s1 = \"\\\\Registry\\\\User\\\\CurrentUser\\\\\" fullword wide\n\t\t$s3 = \"sys\\\\mstcp32.dbg\" fullword ascii\n\t\t$s7 = \"mstcp32.sys\" fullword wide\n\t\t$s8 = \"p32.sys\" fullword ascii\n\t\t$s9 = \"\\\\Device\\\\%ws_%ws\" fullword wide\n\t\t$s10 = \"\\\\DosDevices\\\\%ws\" fullword wide\n\t\t$s11 = \"\\\\Device\\\\%ws\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_CompatLayer_UnilayDLL",
+                "tags": [],
+                "description": "EquationDrug - Unilay.DLL",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "a3a31937956f161beba8acac35b96cb74241cd0f"
+            },
+            "rule_text": "rule EquationDrug_CompatLayer_UnilayDLL\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Unilay.DLL\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"a3a31937956f161beba8acac35b96cb74241cd0f\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s0 = \"unilay.dll\" fullword ascii\n\n\tcondition:\n\t\t($mz at 0 ) and $s0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_HDDSSD_Op",
+                "tags": [],
+                "description": "EquationDrug - HDD/SSD firmware operation - nls_933w.dll",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "ff2b50f371eb26f22eb8a2118e9ab0e015081500"
+            },
+            "rule_text": "rule EquationDrug_HDDSSD_Op\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - HDD/SSD firmware operation - nls_933w.dll\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"ff2b50f371eb26f22eb8a2118e9ab0e015081500\"\n\n\tstrings:\n\t\t$s0 = \"nls_933w.dll\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_NetworkSniffer2",
+                "tags": [],
+                "description": "EquationDrug - Network Sniffer - tdip.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "7e3cd36875c0e5ccb076eb74855d627ae8d4627f"
+            },
+            "rule_text": "rule EquationDrug_NetworkSniffer2\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Network Sniffer - tdip.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"7e3cd36875c0e5ccb076eb74855d627ae8d4627f\"\n\n\tstrings:\n\t\t$s0 = \"Microsoft(R) Windows (TM) Operating System\" fullword wide\n\t\t$s1 = \"IP Transport Driver\" fullword wide\n\t\t$s2 = \"tdip.sys\" fullword wide\n\t\t$s3 = \"sys\\\\tdip.dbg\" fullword ascii\n\t\t$s4 = \"dip.sys\" fullword ascii\n\t\t$s5 = \"\\\\Device\\\\%ws_%ws\" fullword wide\n\t\t$s6 = \"\\\\DosDevices\\\\%ws\" fullword wide\n\t\t$s7 = \"\\\\Device\\\\%ws\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_NetworkSniffer3",
+                "tags": [],
+                "description": "EquationDrug - Network Sniffer - tdip.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "14599516381a9646cd978cf962c4f92386371040"
+            },
+            "rule_text": "rule EquationDrug_NetworkSniffer3\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Network Sniffer - tdip.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"14599516381a9646cd978cf962c4f92386371040\"\n\n\tstrings:\n\t\t$s0 = \"Corporation. All rights reserved.\" fullword wide\n\t\t$s1 = \"IP Transport Driver\" fullword wide\n\t\t$s2 = \"tdip.sys\" fullword wide\n\t\t$s3 = \"tdip.pdb\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_VolRec_Driver",
+                "tags": [],
+                "description": "EquationDrug - Collector plugin for Volrec - msrstd.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "ee2b504ad502dc3fed62d6483d93d9b1221cdd6c"
+            },
+            "rule_text": "rule EquationDrug_VolRec_Driver\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Collector plugin for Volrec - msrstd.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"ee2b504ad502dc3fed62d6483d93d9b1221cdd6c\"\n\n\tstrings:\n\t\t$s0 = \"msrstd.sys\" fullword wide\n\t\t$s1 = \"msrstd.pdb\" fullword ascii\n\t\t$s2 = \"msrstd driver\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_KernelRootkit",
+                "tags": [],
+                "description": "EquationDrug - Kernel mode stage 0 and rootkit (Windows 2000 and above) - msndsrv.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "597715224249e9fb77dc733b2e4d507f0cc41af6"
+            },
+            "rule_text": "rule EquationDrug_KernelRootkit\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Kernel mode stage 0 and rootkit (Windows 2000 and above) - msndsrv.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"597715224249e9fb77dc733b2e4d507f0cc41af6\"\n\n\tstrings:\n\t\t$s0 = \"Microsoft(R) Windows (TM) Operating System\" fullword wide\n\t\t$s1 = \"Parmsndsrv.dbg\" fullword ascii\n\t\t$s2 = \"\\\\Registry\\\\User\\\\CurrentUser\\\\\" fullword wide\n\t\t$s3 = \"msndsrv.sys\" fullword wide\n\t\t$s5 = \"\\\\REGISTRY\\\\MACHINE\\\\System\\\\CurrentControlSet\\\\Control\\\\Windows\" fullword wide\n\t\t$s6 = \"\\\\Device\\\\%ws_%ws\" fullword wide\n\t\t$s7 = \"\\\\DosDevices\\\\%ws\" fullword wide\n\t\t$s9 = \"\\\\Device\\\\%ws\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_Keylogger",
+                "tags": [],
+                "description": "EquationDrug - Key/clipboard logger driver - msrtvd.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "b93aa17b19575a6e4962d224c5801fb78e9a7bb5"
+            },
+            "rule_text": "rule EquationDrug_Keylogger\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Key/clipboard logger driver - msrtvd.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"b93aa17b19575a6e4962d224c5801fb78e9a7bb5\"\n\n\tstrings:\n\t\t$s0 = \"\\\\registry\\\\machine\\\\software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\" fullword wide\n\t\t$s2 = \"\\\\registry\\\\machine\\\\SYSTEM\\\\ControlSet001\\\\Control\\\\Session Manager\\\\En\" wide\n\t\t$s3 = \"\\\\DosDevices\\\\Gk\" fullword wide\n\t\t$s5 = \"\\\\Device\\\\Gk0\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_NetworkSniffer4",
+                "tags": [],
+                "description": "EquationDrug - Network-sniffer/patcher - atmdkdrv.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "cace40965f8600a24a2457f7792efba3bd84d9ba"
+            },
+            "rule_text": "rule EquationDrug_NetworkSniffer4\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Network-sniffer/patcher - atmdkdrv.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"cace40965f8600a24a2457f7792efba3bd84d9ba\"\n\n\tstrings:\n\t\t$s0 = \"Copyright 1999 RAVISENT Technologies Inc.\" fullword wide\n\t\t$s1 = \"\\\\systemroot\\\\\" fullword ascii\n\t\t$s2 = \"RAVISENT Technologies Inc.\" fullword wide\n\t\t$s3 = \"Created by VIONA Development\" fullword wide\n\t\t$s4 = \"\\\\Registry\\\\User\\\\CurrentUser\\\\\" fullword wide\n\t\t$s5 = \"\\\\device\\\\harddiskvolume\" fullword wide\n\t\t$s7 = \"ATMDKDRV.SYS\" fullword wide\n\t\t$s8 = \"\\\\Device\\\\%ws_%ws\" fullword wide\n\t\t$s9 = \"\\\\DosDevices\\\\%ws\" fullword wide\n\t\t$s10 = \"CineMaster C 1.1 WDM Main Driver\" fullword wide\n\t\t$s11 = \"\\\\Device\\\\%ws\" fullword wide\n\t\t$s13 = \"CineMaster C 1.1 WDM\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_PlatformOrchestrator",
+                "tags": [],
+                "description": "EquationDrug - Platform orchestrator - mscfg32.dll, svchost32.dll",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "febc4f30786db7804008dc9bc1cebdc26993e240"
+            },
+            "rule_text": "rule EquationDrug_PlatformOrchestrator\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Platform orchestrator - mscfg32.dll, svchost32.dll\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"febc4f30786db7804008dc9bc1cebdc26993e240\"\n\n\tstrings:\n\t\t$s0 = \"SERVICES.EXE\" fullword wide\n\t\t$s1 = \"\\\\command.com\" fullword wide\n\t\t$s2 = \"Microsoft(R) Windows (TM) Operating System\" fullword wide\n\t\t$s3 = \"LSASS.EXE\" fullword wide\n\t\t$s4 = \"Windows Configuration Services\" fullword wide\n\t\t$s8 = \"unilay.dll\" fullword ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_NetworkSniffer5",
+                "tags": [],
+                "description": "EquationDrug - Network-sniffer/patcher - atmdkdrv.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "09399b9bd600d4516db37307a457bc55eedcbd17"
+            },
+            "rule_text": "rule EquationDrug_NetworkSniffer5\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Network-sniffer/patcher - atmdkdrv.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"09399b9bd600d4516db37307a457bc55eedcbd17\"\n\n\tstrings:\n\t\t$s0 = \"Microsoft(R) Windows (TM) Operating System\" fullword wide\n\t\t$s1 = \"\\\\Registry\\\\User\\\\CurrentUser\\\\\" fullword wide\n\t\t$s2 = \"atmdkdrv.sys\" fullword wide\n\t\t$s4 = \"\\\\Device\\\\%ws_%ws\" fullword wide\n\t\t$s5 = \"\\\\DosDevices\\\\%ws\" fullword wide\n\t\t$s6 = \"\\\\Device\\\\%ws\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "EquationDrug_FileSystem_Filter",
+                "tags": [],
+                "description": "EquationDrug - Filesystem filter driver - volrec.sys, scsi2mgr.sys",
+                "author": "Florian Roth @4nc4p",
+                "reference": "http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/",
+                "date": "2015/03/11",
+                "hash": "57fa4a1abbf39f4899ea76543ebd3688dcc11e13"
+            },
+            "rule_text": "rule EquationDrug_FileSystem_Filter\n{\n\tmeta:\n\t\tdescription = \"EquationDrug - Filesystem filter driver - volrec.sys, scsi2mgr.sys\"\n\t\tauthor = \"Florian Roth @4nc4p\"\n\t\treference = \"http://securelist.com/blog/research/69203/inside-the-equationdrug-espionage-platform/\"\n\t\tdate = \"2015/03/11\"\n\t\thash = \"57fa4a1abbf39f4899ea76543ebd3688dcc11e13\"\n\n\tstrings:\n\t\t$s0 = \"volrec.sys\" fullword wide\n\t\t$s1 = \"volrec.pdb\" fullword ascii\n\t\t$s2 = \"Volume recognizer driver\" fullword wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_equation_keyword",
+                "tags": [],
+                "description": "Rule to detect Equation group's keyword in executable file",
+                "last_modified": "2015-09-26",
+                "reference": "http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/"
+            },
+            "rule_text": "rule apt_equation_keyword\n{\n\tmeta:\n\t\tdescription = \"Rule to detect Equation group's keyword in executable file\"\n\t\tlast_modified = \"2015-09-26\"\n\t\treference = \"http://securelist.com/blog/research/68750/equation-the-death-star-of-malware-galaxy/\"\n\n\tstrings:\n\t\t$a1 = \"Backsnarf_AB25\" wide\n\t\t$a2 = \"Backsnarf_AB25\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 1 of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_ilasm_il_code_compilation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-05-07",
+                "title": "C# IL Code Compilation Via Ilasm.EXE",
+                "id": "850d55f9-6eeb-4492-ad69-a72338f65ba4"
+            },
+            "rule_text": "title: C# IL Code Compilation Via Ilasm.EXE\nid: 850d55f9-6eeb-4492-ad69-a72338f65ba4\nstatus: test\ndescription: Detects the use of \"Ilasm.EXE\" in order to compile C# intermediate (IL)\n  code to EXE or DLL.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Ilasm/\n- https://www.echotrail.io/insights/search/ilasm.exe\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-05-07\nmodified: 2022-05-16\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1127\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\ilasm.exe\n  - OriginalFileName: ilasm.exe\n  selection_cli:\n    CommandLine|contains:\n    - ' /dll'\n    - ' /exe'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_conhost_uncommon_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-28",
+                "title": "Conhost Spawned By Uncommon Parent Process",
+                "id": "cbb9e3d1-2386-4e59-912e-62f1484f7a89"
+            },
+            "rule_text": "title: Conhost Spawned By Uncommon Parent Process\nid: cbb9e3d1-2386-4e59-912e-62f1484f7a89\nstatus: test\ndescription: Detects when the Console Window Host (conhost.exe) process is spawned\n  by an uncommon parent process, which could be indicative of potential code injection\n  activity.\nreferences:\n- https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-28\nmodified: 2025-03-06\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\conhost.exe\n    ParentImage|endswith:\n    - \\explorer.exe\n    - \\lsass.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\services.exe\n    - \\smss.exe\n    - \\spoolsv.exe\n    - \\svchost.exe\n    - \\userinit.exe\n    - \\wininit.exe\n    - \\winlogon.exe\n  filter_main_svchost:\n    ParentCommandLine|contains:\n    - -k apphost -s AppHostSvc\n    - -k imgsvc\n    - -k localService -p -s RemoteRegistry\n    - -k LocalSystemNetworkRestricted -p -s NgcSvc\n    - -k NetSvcs -p -s NcaSvc\n    - -k netsvcs -p -s NetSetupSvc\n    - -k netsvcs -p -s wlidsvc\n    - -k NetworkService -p -s DoSvc\n    - -k wsappx -p -s AppXSvc\n    - -k wsappx -p -s ClipSVC\n    - -k wusvcs -p -s WaaSMedicSvc\n  filter_optional_dropbox:\n    ParentCommandLine|contains:\n    - C:\\Program Files (x86)\\Dropbox\\Client\\\n    - C:\\Program Files\\Dropbox\\Client\\\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

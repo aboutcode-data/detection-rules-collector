@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/clickfix_command_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Andreas Foureaux",
+                "date": "2025-10-05",
+                "title": "ClickFix Command Execution",
+                "id": "d3b99c23-2d06-41c4-a25b-84b13df6bfd4"
+            },
+            "rule_text": "title: ClickFix Command Execution\nid: d3b99c23-2d06-41c4-a25b-84b13df6bfd4\nstatus: test\ndescription: Detects a variant of ClickFix where the user is tricked into running\n  a malicious command as part of \"verfification\"\nreferences:\n- https://redcanary.com/blog/threat-intelligence/intelligence-insights-september-2025/\nauthor: NTT Security - Andreas Foureaux\ndate: 2025-10-05\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_cmd_image:\n    Image|endswith: \\cmd.exe\n    ParentImage|endswith: \\explorer.exe\n  selection_cmd_command:\n  - CommandLine|contains|all:\n    - start\n    - exit\n  condition: all of selection_cmd*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

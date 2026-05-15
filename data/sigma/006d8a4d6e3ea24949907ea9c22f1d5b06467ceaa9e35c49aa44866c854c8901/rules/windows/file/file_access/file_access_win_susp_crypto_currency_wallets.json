@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_access/file_access_win_susp_crypto_currency_wallets.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2024-07-29",
+                "title": "Access To Crypto Currency Wallets By Uncommon Applications",
+                "id": "f41b0311-44f9-44f0-816d-dd45e39d4bc8"
+            },
+            "rule_text": "title: Access To Crypto Currency Wallets By Uncommon Applications\nid: f41b0311-44f9-44f0-816d-dd45e39d4bc8\nstatus: test\ndescription: 'Detects file access requests to crypto currency files by uncommon processes.\n\n  Could indicate potential attempt of crypto currency wallet stealing.\n\n  '\nreferences:\n- Internal Research\nauthor: X__Junior (Nextron Systems)\ndate: 2024-07-29\ntags:\n- attack.t1003\n- attack.credential-access\nlogsource:\n  category: file_access\n  product: windows\n  definition: 'Requirements: Microsoft-Windows-Kernel-File ETW provider'\ndetection:\n  selection:\n  - FileName|contains:\n    - \\AppData\\Roaming\\Ethereum\\keystore\\\n    - \\AppData\\Roaming\\EthereumClassic\\keystore\\\n    - \\AppData\\Roaming\\monero\\wallets\\\n  - FileName|endswith:\n    - \\AppData\\Roaming\\Bitcoin\\wallet.dat\n    - \\AppData\\Roaming\\BitcoinABC\\wallet.dat\n    - \\AppData\\Roaming\\BitcoinSV\\wallet.dat\n    - \\AppData\\Roaming\\DashCore\\wallet.dat\n    - \\AppData\\Roaming\\DogeCoin\\wallet.dat\n    - \\AppData\\Roaming\\Litecoin\\wallet.dat\n    - \\AppData\\Roaming\\Ripple\\wallet.dat\n    - \\AppData\\Roaming\\Zcash\\wallet.dat\n  filter_main_system:\n    Image: System\n  filter_main_generic:\n    Image|startswith:\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n    - C:\\Windows\\system32\\\n    - C:\\Windows\\SysWOW64\\\n  filter_optional_defender:\n    Image|startswith: C:\\ProgramData\\Microsoft\\Windows Defender\\\n    Image|endswith:\n    - \\MpCopyAccelerator.exe\n    - \\MsMpEng.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Antivirus, Anti-Spyware, Anti-Malware Software\n- Backup software\n- Legitimate software installed on partitions other than \"C:\\\"\n- Searching software such as \"everything.exe\"\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/StealC/Trojan_Win64_StealC_AHC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_StealC_AHC_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/StealC.AHC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,37 00 37 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_StealC_AHC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/StealC.AHC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,37 00 37 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 89 44 24 38 48 8d 4c 24 20 48 8d 84 24 90 90 00 00 00 c7 44 24 24 ?? 00 00 00 48 89 44 24 40 ff 15 }\n\t\t$a_01_1 = {2f 63 20 62 69 74 73 61 64 6d 69 6e 20 2f 74 72 61 6e 73 66 65 72 20 6a 6f 62 5f 25 78 20 2f 64 6f 77 6e 6c 6f 61 64 20 2f 70 72 69 6f 72 69 74 79 20 6e 6f 72 6d 61 6c }\n\t\t$a_01_2 = {2d 75 72 6c 63 61 63 68 65 20 2d 73 70 6c 69 74 20 2d 66 20 22 25 73 22 20 22 25 73 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 30 + ( #a_01_2 & 1 ) * 20 ) >= 55\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mstsc_run_local_rdp_file_susp_location.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-18",
+                "title": "Suspicious Mstsc.EXE Execution With Local RDP File",
+                "id": "6e22722b-dfb1-4508-a911-49ac840b40f8"
+            },
+            "rule_text": "title: Suspicious Mstsc.EXE Execution With Local RDP File\nid: 6e22722b-dfb1-4508-a911-49ac840b40f8\nstatus: test\ndescription: Detects potential RDP connection via Mstsc using a local \".rdp\" file\n  located in suspicious locations.\nreferences:\n- https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/\n- https://web.archive.org/web/20230726144748/https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-18\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\mstsc.exe\n  - OriginalFileName: mstsc.exe\n  selection_extension:\n    CommandLine|endswith:\n    - .rdp\n    - .rdp\"\n  selection_paths:\n    CommandLine|contains:\n    - :\\Users\\Public\\\n    - :\\Windows\\System32\\spool\\drivers\\color\n    - ':\\Windows\\System32\\Tasks_Migrated '\n    - :\\Windows\\Tasks\\\n    - :\\Windows\\Temp\\\n    - :\\Windows\\Tracing\\\n    - \\AppData\\Local\\Temp\\\n    - \\Downloads\\\n  condition: all of selection_*\nfalsepositives:\n- Likelihood is related to how often the paths are used in the environment\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_Impacket/dcomexec/zeek_dce_impacket_remote_create_instance_dcomexec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2023/01/08",
+                "title": "Possible Impacket DCOMExec Connection Attempt - Zeek",
+                "id": "f6127748-4656-435f-b07c-c624f8f18812"
+            },
+            "rule_text": "title: Possible Impacket DCOMExec Connection Attempt - Zeek\nid: f6127748-4656-435f-b07c-c624f8f18812\nstatus: experimental\ndescription: Detects attempts to connect via DCOM Endpoints, as used by Impacket DCOMExec.\n  This event will occur on successful or unsuccessful attempts using any of the three\n  DCOMExec -object options.\nreferences:\n- https://github.com/fortra/impacket/blob/master/impacket/dcerpc/v5/dcomrt.py\n- https://tools.thehacker.recipes/impacket\n- https://riccardoancarani.github.io/2020-05-10-hunting-for-impacket/\n- https://wadcoms.github.io/wadcoms/Impacket-DCOMExec/\nauthor: Micah Babinski\ndate: 2023/01/08\ntags:\n- attack.s0357\n- attack.execution\n- attack.lateral_movement\n- attack.t1021\n- attack.t1021.003\nlogsource:\n  product: zeek\n  service: dce_rpc\ndetection:\n  selection:\n    operation: RemoteCreateInstance\n    endpoint: IRemoteSCMActivator\n    id.resp_p: 135\n    named_pipe: 135\n  condition: selection\nfields:\n- id.orig_h\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

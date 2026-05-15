@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_cobaltstrike_service_installs.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Wojciech Lesicki",
+                "date": "2021-06-29",
+                "title": "Potential CobaltStrike Service Installations - Registry",
+                "id": "61a7697c-cb79-42a8-a2ff-5f0cdfae0130"
+            },
+            "rule_text": "title: Potential CobaltStrike Service Installations - Registry\nid: 61a7697c-cb79-42a8-a2ff-5f0cdfae0130\nstatus: test\ndescription: 'Detects known malicious service installs that appear in cases in which\n  a Cobalt Strike beacon elevates privileges or lateral movement.\n\n  '\nreferences:\n- https://www.sans.org/webcasts/tech-tuesday-workshop-cobalt-strike-detection-log-analysis-119395\nauthor: Wojciech Lesicki\ndate: 2021-06-29\nmodified: 2024-03-25\ntags:\n- attack.persistence\n- attack.execution\n- attack.privilege-escalation\n- attack.lateral-movement\n- attack.t1021.002\n- attack.t1543.003\n- attack.t1569.002\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_key:\n  - TargetObject|contains: \\System\\CurrentControlSet\\Services\n  - TargetObject|contains|all:\n    - \\System\\ControlSet\n    - \\Services\n  selection_details:\n  - Details|contains|all:\n    - ADMIN$\n    - .exe\n  - Details|contains|all:\n    - '%COMSPEC%'\n    - start\n    - powershell\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

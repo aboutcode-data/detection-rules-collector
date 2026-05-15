@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/codewatchorg/angler_ek_redirector.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AnglerEKredirector",
+                "tags": [],
+                "description": "Angler Exploit Kit Redirector",
+                "ref": "http://blog.xanda.org/2015/08/28/yara-rule-for-angler-ek-redirector-js/",
+                "author": "adnan.shukor@gmail.com",
+                "date": "08-July-2015",
+                "impact": "5",
+                "version": "1"
+            },
+            "rule_text": "rule AnglerEKredirector\n{\n\tmeta:\n\t\tdescription = \"Angler Exploit Kit Redirector\"\n\t\tref = \"http://blog.xanda.org/2015/08/28/yara-rule-for-angler-ek-redirector-js/\"\n\t\tauthor = \"adnan.shukor@gmail.com\"\n\t\tdate = \"08-July-2015\"\n\t\timpact = \"5\"\n\t\tversion = \"1\"\n\n\tstrings:\n\t\t$ekr1 = \"<script>var date = new Date(new Date().getTime() + 60*60*24*7*1000);\" fullword\n\t\t$ekr2 = \"document.cookie=\\\"PHP_SESSION_PHP=\"\n\t\t$ekr3 = \"path=/; expires=\\\"+date.toUTCString();</script>\" fullword\n\t\t$ekr4 = \"<iframe src=\" fullword\n\t\t$ekr5 = \"</iframe></div>\" fullword\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

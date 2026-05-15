@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_wsman_provider_image_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-06-24",
+                "title": "Suspicious WSMAN Provider Image Loads",
+                "id": "ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94"
+            },
+            "rule_text": "title: Suspicious WSMAN Provider Image Loads\nid: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94\nstatus: test\ndescription: Detects signs of potential use of the WSMAN provider from uncommon processes\n  locally and remote execution.\nreferences:\n- https://twitter.com/chadtilbury/status/1275851297770610688\n- https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/\n- https://learn.microsoft.com/en-us/windows/win32/winrm/windows-remote-management-architecture\n- https://github.com/bohops/WSMan-WinRM\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-06-24\nmodified: 2025-10-17\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.lateral-movement\n- attack.t1021.003\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  request_client:\n  - ImageLoaded|endswith:\n    - \\WsmSvc.dll\n    - \\WsmAuto.dll\n    - \\Microsoft.WSMan.Management.ni.dll\n  - OriginalFileName:\n    - WsmSvc.dll\n    - WSMANAUTOMATION.DLL\n    - Microsoft.WSMan.Management.dll\n  respond_server:\n    Image|endswith: \\svchost.exe\n    OriginalFileName: WsmWmiPl.dll\n  filter_general:\n    Image:\n    - C:\\Program Files (x86)\\PowerShell\\6\\pwsh.exe\n    - C:\\Program Files (x86)\\PowerShell\\7\\pwsh.exe\n    - C:\\Program Files\\PowerShell\\6\\pwsh.exe\n    - C:\\Program Files\\PowerShell\\7\\pwsh.exe\n    - C:\\Windows\\System32\\sdiagnhost.exe\n    - C:\\Windows\\System32\\services.exe\n    - C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell_ise.exe\n    - C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\n  filter_svchost:\n    CommandLine|contains:\n    - svchost.exe -k netsvcs -p -s BITS\n    - svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc\n    - svchost.exe -k NetworkService -p -s Wecsvc\n    - svchost.exe -k netsvcs\n  filter_mscorsvw:\n    Image|startswith:\n    - C:\\Windows\\Microsoft.NET\\Framework64\\v\n    - C:\\Windows\\Microsoft.NET\\Framework\\v\n    - C:\\Windows\\Microsoft.NET\\FrameworkArm\\v\n    - C:\\Windows\\Microsoft.NET\\FrameworkArm64\\v\n    Image|endswith: \\mscorsvw.exe\n  filter_svr_2019:\n    Image:\n    - C:\\Windows\\System32\\Configure-SMRemoting.exe\n    - C:\\Windows\\System32\\ServerManager.exe\n  filter_nextron:\n    Image|startswith: C:\\Windows\\Temp\\asgard2-agent\\\n  filter_citrix:\n    Image|startswith: C:\\Program Files\\Citrix\\\n  filter_upgrade:\n    Image|startswith: C:\\$WINDOWS.~BT\\Sources\\\n  filter_mmc:\n    Image|endswith: \\mmc.exe\n  svchost:\n    Image|endswith: \\svchost.exe\n  commandline_null:\n    CommandLine: null\n  condition: ( request_client or respond_server ) and not 1 of filter* and not ( svchost\n    and commandline_null )\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

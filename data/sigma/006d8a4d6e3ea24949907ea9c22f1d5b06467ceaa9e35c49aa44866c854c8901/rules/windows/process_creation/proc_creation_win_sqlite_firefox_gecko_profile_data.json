@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sqlite_firefox_gecko_profile_data.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-04-08",
+                "title": "SQLite Firefox Profile Data DB Access",
+                "id": "4833155a-4053-4c9c-a997-777fcea0baa7"
+            },
+            "rule_text": "title: SQLite Firefox Profile Data DB Access\nid: 4833155a-4053-4c9c-a997-777fcea0baa7\nstatus: test\ndescription: Detect usage of the \"sqlite\" binary to query databases in Firefox and\n  other Gecko-based browsers for potential data stealing.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1539/T1539.md#atomic-test-1---steal-firefox-cookies-windows\n- https://blog.cyble.com/2022/04/21/prynt-stealer-a-new-info-stealer-performing-clipper-and-keylogger-activities/\nauthor: frack113\ndate: 2022-04-08\nmodified: 2023-01-19\ntags:\n- attack.credential-access\n- attack.t1539\n- attack.collection\n- attack.t1005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sql:\n  - Product: SQLite\n  - Image|endswith:\n    - \\sqlite.exe\n    - \\sqlite3.exe\n  selection_firefox:\n    CommandLine|contains:\n    - cookies.sqlite\n    - places.sqlite\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

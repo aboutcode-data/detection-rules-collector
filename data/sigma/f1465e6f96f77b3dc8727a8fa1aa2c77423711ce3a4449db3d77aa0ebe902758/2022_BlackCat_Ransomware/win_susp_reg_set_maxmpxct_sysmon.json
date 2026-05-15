@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_BlackCat_Ransomware/win_susp_reg_set_maxmpxct_sysmon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/04",
+                "title": "Suspicious Registry Key Set (MaxMpxCt)",
+                "id": "4bd730d9-37d6-4a87-b392-ffb9ab52bf21"
+            },
+            "rule_text": "title: Suspicious Registry Key Set (MaxMpxCt)\nid: 4bd730d9-37d6-4a87-b392-ffb9ab52bf21\nstatus: experimental\ndescription: Detects registry value set to change MaxMpxCt settings. BlackCat does\n  this to increase the number of outstanding requests allowed, such as SMB requests\n  to distribute ransomware through an environment.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/06/13/the-many-lives-of-blackcat-ransomware/\nauthor: Micah Babinski\ndate: 2022/12/04\ntags:\n- attack.command_and_control\n- attack.defense_evasion\n- attack.t1105\n- attack.t1562\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    EventType: SetValue\n    TargetObject: HKLM\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters\\MaxMpxCt\n    Details: DWORD (0x0000ffff)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

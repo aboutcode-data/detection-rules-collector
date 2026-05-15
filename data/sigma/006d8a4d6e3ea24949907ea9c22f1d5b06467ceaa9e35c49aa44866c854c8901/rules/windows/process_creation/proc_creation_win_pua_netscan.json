@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_netscan.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@d4ns4n_ (Wuerth-Phoenix)",
+                "date": "2024-04-25",
+                "title": "PUA - SoftPerfect Netscan Execution",
+                "id": "ca387a8e-1c84-4da3-9993-028b45342d30"
+            },
+            "rule_text": "title: PUA - SoftPerfect Netscan Execution\nid: ca387a8e-1c84-4da3-9993-028b45342d30\nstatus: test\ndescription: 'Detects usage of SoftPerfect''s \"netscan.exe\". An application for scanning\n  networks.\n\n  It is actively used in-the-wild by threat actors to inspect and understand the network\n  architecture of a victim.\n\n  '\nreferences:\n- https://www.protect.airbus.com/blog/uncovering-cyber-intruders-netscan/\n- https://secjoes-reports.s3.eu-central-1.amazonaws.com/Sockbot%2Bin%2BGoLand.pdf\n- https://www.sentinelone.com/labs/black-basta-ransomware-attacks-deploy-custom-edr-evasion-tools-tied-to-fin7-threat-actor/\n- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/yanluowang-ransomware-attacks-continue\n- https://research.nccgroup.com/2022/07/13/climbing-mount-everest-black-byte-bytes-back/\n- https://www.bleepingcomputer.com/news/security/microsoft-exchange-servers-hacked-to-deploy-hive-ransomware/\n- https://www.softperfect.com/products/networkscanner/\nauthor: '@d4ns4n_ (Wuerth-Phoenix)'\ndate: 2024-04-25\ntags:\n- attack.discovery\n- attack.t1046\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\netscan.exe\n  - Product: Network Scanner\n  - Description: Application for scanning networks\n  condition: selection\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

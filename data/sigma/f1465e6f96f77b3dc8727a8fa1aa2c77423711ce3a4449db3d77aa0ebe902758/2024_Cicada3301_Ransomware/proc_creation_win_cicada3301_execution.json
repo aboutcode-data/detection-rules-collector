@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_Cicada3301_Ransomware/proc_creation_win_cicada3301_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)",
+                "date": "2024-09-08",
+                "title": "Cicada3301 Ransomware Execution via PSExec",
+                "id": "79495647-d84d-4804-9a52-5263cfdf2c63"
+            },
+            "rule_text": "title: Cicada3301 Ransomware Execution via PSExec\nid: 79495647-d84d-4804-9a52-5263cfdf2c63\nstatus: experimental\ndescription: 'Detects the use of a potentially-renamed psexec to run the Cicada3301\n  ransomware tool.\n\n  '\nreferences:\n- https://engage.morphisec.com/threat-analysis-cicada3301\nauthor: Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)\ndate: 2024-09-08\ntags:\n- attack.execution\n- attack.t1569\n- attack.t1569.002\n- attack.s0029\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n  - Image|endswith: \\psexec0.exe\n  - OriginalFileName: psexec.c\n  selection_2:\n    CommandLine|contains:\n    - --key\n    - --path\n    - '-p '\n    - '-s '\n    - --no_local\n    - --no_net\n    - --no_impl\n    - --no_notes\n  filter:\n    Image|endswith: \\psexec.exe\n  condition: all of selection_* and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

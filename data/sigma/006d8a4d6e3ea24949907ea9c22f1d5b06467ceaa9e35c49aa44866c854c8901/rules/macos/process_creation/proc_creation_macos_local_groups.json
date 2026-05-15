@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_local_groups.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ömer Günal, Alejandro Ortuno, oscd.community",
+                "date": "2020-10-11",
+                "title": "Local Groups Discovery - MacOs",
+                "id": "89bb1f97-c7b9-40e8-b52b-7d6afbd67276"
+            },
+            "rule_text": "title: Local Groups Discovery - MacOs\nid: 89bb1f97-c7b9-40e8-b52b-7d6afbd67276\nstatus: test\ndescription: Detects enumeration of local system groups\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.001/T1069.001.md\nauthor: \"\\xD6mer G\\xFCnal, Alejandro Ortuno, oscd.community\"\ndate: 2020-10-11\nmodified: 2022-11-27\ntags:\n- attack.discovery\n- attack.t1069.001\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection_1:\n    Image|endswith: /dscacheutil\n    CommandLine|contains|all:\n    - -q\n    - group\n  selection_2:\n    Image|endswith: /cat\n    CommandLine|contains: /etc/group\n  selection_3:\n    Image|endswith: /dscl\n    CommandLine|contains|all:\n    - -list\n    - /groups\n  condition: 1 of selection*\nfalsepositives:\n- Legitimate administration activities\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

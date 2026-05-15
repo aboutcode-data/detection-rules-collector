@@ -1,0 +1,144 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_fireball.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Fireball_de_svr",
+                "tags": [],
+                "description": "Detects Fireball malware - file de_svr.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "hash1": "f964a4b95d5c518fd56f06044af39a146d84b801d9472e022de4c929a5b8fdcc",
+                "id": "29395239-66d8-5340-b884-9b8f036cc27f"
+            },
+            "rule_text": "rule Fireball_de_svr\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file de_svr.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\thash1 = \"f964a4b95d5c518fd56f06044af39a146d84b801d9472e022de4c929a5b8fdcc\"\n\t\tid = \"29395239-66d8-5340-b884-9b8f036cc27f\"\n\n\tstrings:\n\t\t$s1 = \"cmd.exe /c MD \" fullword ascii\n\t\t$s2 = \"rundll32.exe \\\"%s\\\",%s\" fullword wide\n\t\t$s3 = \"http://d12zpbetgs1pco.cloudfront.net/Weatherapi/shell\" fullword wide\n\t\t$s4 = \"C:\\\\v3\\\\exe\\\\de_svr_inst.pdb\" fullword ascii\n\t\t$s5 = \"Internet Connect Failed!\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 3000KB and 4 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Fireball_lancer",
+                "tags": [],
+                "description": "Detects Fireball malware - file lancer.dll",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "hash1": "7d68386554e514f38f98f24e8056c11c0a227602ed179d54ed08f2251dc9ea93",
+                "id": "2209bcb4-74a6-5c39-962c-ccd4ce62619e"
+            },
+            "rule_text": "rule Fireball_lancer\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file lancer.dll\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\thash1 = \"7d68386554e514f38f98f24e8056c11c0a227602ed179d54ed08f2251dc9ea93\"\n\t\tid = \"2209bcb4-74a6-5c39-962c-ccd4ce62619e\"\n\n\tstrings:\n\t\t$x1 = \"\\\\instlsp\\\\Release\\\\Lancer.pdb\" ascii\n\t\t$x2 = \"lanceruse.dat\" fullword wide\n\t\t$s1 = \"Lancer.dll\" fullword ascii\n\t\t$s2 = \"RunDll32.exe \\\"\" fullword wide\n\t\t$s3 = \"Micr.dll\" fullword wide\n\t\t$s4 = \"AG64.dll\" fullword wide\n\t\t$s5 = \"\\\",Start\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 400KB and ( 1 of ( $x* ) or 3 of ( $s* ) ) ) or ( 6 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "QQBrowser",
+                "tags": [],
+                "description": "Not malware but suspicious browser - file QQBrowser.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "score": 50,
+                "hash1": "adcf6b8aa633286cd3a2ce7c79befab207802dec0e705ed3c74c043dabfc604c",
+                "id": "457507c5-0411-5d72-891b-ae3e428ea2d6"
+            },
+            "rule_text": "rule QQBrowser\n{\n\tmeta:\n\t\tdescription = \"Not malware but suspicious browser - file QQBrowser.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\tscore = 50\n\t\thash1 = \"adcf6b8aa633286cd3a2ce7c79befab207802dec0e705ed3c74c043dabfc604c\"\n\t\tid = \"457507c5-0411-5d72-891b-ae3e428ea2d6\"\n\n\tstrings:\n\t\t$s1 = \"TerminateProcessWithoutDump\" fullword ascii\n\t\t$s2 = \".Downloader.dll\" fullword wide\n\t\t$s3 = \"Software\\\\Chromium\\\\BrowserCrashDumpAttempts\" fullword wide\n\t\t$s4 = \"QQBrowser_Broker.exe\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 2000KB and all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "chrome_elf",
+                "tags": [],
+                "description": "Detects Fireball malware - file chrome_elf.dll",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "hash1": "e4d4f6fbfbbbf3904ca45d296dc565138a17484c54aebbb00ba9d57f80dfe7e5",
+                "id": "8680d5b5-e26f-5a3f-aeab-b965afe91027"
+            },
+            "rule_text": "rule chrome_elf\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file chrome_elf.dll\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\thash1 = \"e4d4f6fbfbbbf3904ca45d296dc565138a17484c54aebbb00ba9d57f80dfe7e5\"\n\t\tid = \"8680d5b5-e26f-5a3f-aeab-b965afe91027\"\n\n\tstrings:\n\t\t$x2 = \"schtasks /Create /SC HOURLY /MO %d /ST 00:%02d:00 /TN \\\"%s\\\" /TR \\\"%s\\\" /RU \\\"SYSTEM\\\"\" fullword wide\n\t\t$s6 = \"aHR0cDovL2R2Mm0xdXVtbnNndHUuY2xvdWRmcm9udC5uZXQvdjQvZ3RnLyVzP2FjdGlvbj12aXNpdC5jaGVsZi5pbnN0YWxs\" fullword ascii\n\t\t$s7 = \"QueryInterface call failed for IExecAction: %x\" fullword ascii\n\t\t$s10 = \"%s %s,Rundll32_Do %s\" fullword wide\n\t\t$s13 = \"Failed to create an instance of ITaskService: %x\" fullword ascii\n\t\t$s16 = \"Rundll32_Do\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 600KB and 4 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Fireball_regkey",
+                "tags": [],
+                "description": "Detects Fireball malware - file regkey.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "modified": "2022-12-21",
+                "hash1": "fff2818caa9040486a634896f329b8aebaec9121bdf9982841f0646763a1686b",
+                "id": "6e22bb93-8c8b-510f-a9e4-6e57c392c2ae"
+            },
+            "rule_text": "rule Fireball_regkey\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file regkey.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\tmodified = \"2022-12-21\"\n\t\thash1 = \"fff2818caa9040486a634896f329b8aebaec9121bdf9982841f0646763a1686b\"\n\t\tid = \"6e22bb93-8c8b-510f-a9e4-6e57c392c2ae\"\n\n\tstrings:\n\t\t$s1 = \"\\\\WinMain\\\\Release\\\\WinMain.pdb\" ascii\n\t\t$s2 = \"ScreenShot\" fullword wide\n\t\t$s3 = \"WINMAIN\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 300KB and all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Fireball_winsap",
+                "tags": [],
+                "description": "Detects Fireball malware - file winsap.dll",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "hash1": "c7244d139ef9ea431a5b9cc6a2176a6a9908710892c74e215431b99cd5228359",
+                "id": "e68e7738-f325-5b73-9e61-4e2413b7b7be"
+            },
+            "rule_text": "rule Fireball_winsap\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file winsap.dll\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\thash1 = \"c7244d139ef9ea431a5b9cc6a2176a6a9908710892c74e215431b99cd5228359\"\n\t\tid = \"e68e7738-f325-5b73-9e61-4e2413b7b7be\"\n\n\tstrings:\n\t\t$s1 = \"aHR0cDovL2\" ascii\n\t\t$s2 = \"%s\\\\svchost.exe -k %s\" fullword wide\n\t\t$s3 = \"\\\\SETUP.dll\" wide\n\t\t$s4 = \"WinSAP.dll\" fullword ascii\n\t\t$s5 = \"Error %u in WinHttpQueryDataAvailable.\" fullword ascii\n\t\t$s6 = \"UPDATE OVERWRITE\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 600KB and 4 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Fireball_archer",
+                "tags": [],
+                "description": "Detects Fireball malware - file archer.dll",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "modified": "2022-12-21",
+                "hash1": "9b4971349ae85aa09c0a69852ed3e626c954954a3927b3d1b6646f139b930022",
+                "id": "16bb95c1-af69-5688-8999-f097d02d2ffc"
+            },
+            "rule_text": "rule Fireball_archer\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file archer.dll\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\tmodified = \"2022-12-21\"\n\t\thash1 = \"9b4971349ae85aa09c0a69852ed3e626c954954a3927b3d1b6646f139b930022\"\n\t\tid = \"16bb95c1-af69-5688-8999-f097d02d2ffc\"\n\n\tstrings:\n\t\t$x1 = \"\\\\archer_lyl\\\\Release\\\\Archer_Input.pdb\" ascii\n\t\t$s1 = \"Archer_Input.dll\" fullword ascii\n\t\t$s2 = \"InstallArcherSvc\" fullword ascii\n\t\t$s3 = \"%s_%08X\" fullword wide\n\t\t$s4 = \"d\\\\\\\\.\\\\PhysicalDrive%d\" fullword wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 400KB and ( $x1 or 3 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "clearlog",
+                "tags": [],
+                "description": "Detects Fireball malware - file clearlog.dll",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "hash1": "14093ce6d0fe8ab60963771f48937c669103842a0400b8d97f829b33c420f7e3",
+                "id": "3eb58a7a-b04d-52c2-8c3c-c149da8d4aa8"
+            },
+            "rule_text": "rule clearlog\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file clearlog.dll\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\thash1 = \"14093ce6d0fe8ab60963771f48937c669103842a0400b8d97f829b33c420f7e3\"\n\t\tid = \"3eb58a7a-b04d-52c2-8c3c-c149da8d4aa8\"\n\n\tstrings:\n\t\t$x1 = \"\\\\ClearLog\\\\Release\\\\logC.pdb\" ascii\n\t\t$s1 = \"C:\\\\Windows\\\\System32\\\\cmd.exe /c \\\"\\\"\" fullword wide\n\t\t$s2 = \"logC.dll\" fullword ascii\n\t\t$s3 = \"hhhhh.exe\" fullword wide\n\t\t$s4 = \"ttttt.exe\" fullword wide\n\t\t$s5 = \"Logger Name:\" fullword ascii\n\t\t$s6 = \"cle.log.1\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 500KB and $x1 or 2 of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Fireball_gubed",
+                "tags": [],
+                "description": "Detects Fireball malware - file gubed.exe",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/4pTkGQ",
+                "date": "2017-06-02",
+                "modified": "2022-12-21",
+                "hash1": "e3f69a1fb6fcaf9fd93386b6ba1d86731cd9e5648f7cff5242763188129cd158",
+                "id": "cba2913f-4d9a-5925-ad9a-f5815a635291"
+            },
+            "rule_text": "rule Fireball_gubed\n{\n\tmeta:\n\t\tdescription = \"Detects Fireball malware - file gubed.exe\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/4pTkGQ\"\n\t\tdate = \"2017-06-02\"\n\t\tmodified = \"2022-12-21\"\n\t\thash1 = \"e3f69a1fb6fcaf9fd93386b6ba1d86731cd9e5648f7cff5242763188129cd158\"\n\t\tid = \"cba2913f-4d9a-5925-ad9a-f5815a635291\"\n\n\tstrings:\n\t\t$x1 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Image File Execution Options\\\\MRT.exe\" fullword wide\n\t\t$x2 = \"tIphlpapi.dll\" fullword wide\n\t\t$x3 = \"http://%s/provide?clients=%s&reqs=visit.startload\" fullword wide\n\t\t$x4 = \"\\\\Gubed\\\\Release\\\\Gubed.pdb\" ascii\n\t\t$x5 = \"d2hrpnfyb3wv3k.cloudfront.net\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 300KB and 1 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

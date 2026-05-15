@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_visual_basic_compiler.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ensar Şamil, @sblmsrsn, @oscd_initiative",
+                "date": "2020-10-07",
+                "title": "Visual Basic Command Line Compiler Usage",
+                "id": "7b10f171-7f04-47c7-9fa2-5be43c76e535"
+            },
+            "rule_text": "title: Visual Basic Command Line Compiler Usage\nid: 7b10f171-7f04-47c7-9fa2-5be43c76e535\nstatus: test\ndescription: Detects successful code compilation via Visual Basic Command Line Compiler\n  that utilizes Windows Resource to Object Converter.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Vbc/\nauthor: \"Ensar \\u015Eamil, @sblmsrsn, @oscd_initiative\"\ndate: 2020-10-07\nmodified: 2021-11-27\ntags:\n- attack.stealth\n- attack.t1027.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\vbc.exe\n    Image|endswith: \\cvtres.exe\n  condition: selection\nfalsepositives:\n- Utilization of this tool should not be seen in enterprise environment\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

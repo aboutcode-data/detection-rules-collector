@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/Lazarus/proc_creation_win_apt_lazarus_group_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), wagga",
+                "date": "2020-12-23",
+                "title": "Lazarus Group Activity",
+                "id": "24c4d154-05a4-4b99-b57d-9b977472443a"
+            },
+            "rule_text": "title: Lazarus Group Activity\nid: 24c4d154-05a4-4b99-b57d-9b977472443a\nrelated:\n- id: 7b49c990-4a9a-4e65-ba95-47c9cc448f6e\n  type: obsolete\nstatus: test\ndescription: Detects different process execution behaviors as described in various\n  threat reports on Lazarus group activity\nreferences:\n- https://securelist.com/lazarus-covets-covid-19-related-intelligence/99906/\n- https://www.hvs-consulting.de/lazarus-report/\nauthor: Florian Roth (Nextron Systems), wagga\ndate: 2020-12-23\nmodified: 2023-03-10\ntags:\n- attack.g0032\n- attack.execution\n- attack.t1059\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_generic:\n    CommandLine|contains:\n    - reg.exe save hklm\\sam %temp%\\~reg_sam.save\n    - 1q2w3e4r@#$@#$@#$\n    - ' -hp1q2w3e4 '\n    - '.dat data03 10000 -p '\n  selection_netstat:\n    CommandLine|contains|all:\n    - 'netstat -aon | find '\n    - ESTA\n    - ' > %temp%\\~'\n  selection_network_discovery:\n    CommandLine|contains|all:\n    - .255 10 C:\\ProgramData\\IBM\\\n    - .DAT\n  selection_persistence:\n    CommandLine|contains|all:\n    - ' /c '\n    - ' -p 0x'\n    CommandLine|contains:\n    - C:\\ProgramData\\\n    - C:\\RECYCLER\\\n  selection_rundll32:\n    CommandLine|contains|all:\n    - 'rundll32 '\n    - C:\\ProgramData\\\n    CommandLine|contains:\n    - .bin,\n    - .tmp,\n    - .dat,\n    - .io,\n    - .ini,\n    - .db,\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

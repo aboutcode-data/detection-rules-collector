@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_delete/registry_delete_mstsc_history_cleared.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-10-19",
+                "title": "Terminal Server Client Connection History Cleared - Registry",
+                "id": "07bdd2f5-9c58-4f38-aec8-e101bb79ef8d"
+            },
+            "rule_text": "title: Terminal Server Client Connection History Cleared - Registry\nid: 07bdd2f5-9c58-4f38-aec8-e101bb79ef8d\nstatus: test\ndescription: Detects the deletion of registry keys containing the MSTSC connection\n  history\nreferences:\n- https://learn.microsoft.com/en-us/troubleshoot/windows-server/remote/remove-entries-from-remote-desktop-connection-computer\n- http://woshub.com/how-to-clear-rdp-connections-history/\n- https://www.trendmicro.com/en_us/research/23/a/vice-society-ransomware-group-targets-manufacturing-companies.html\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-10-19\nmodified: 2023-02-08\ntags:\n- attack.persistence\n- attack.stealth\n- attack.defense-impairment\n- attack.t1070\n- attack.t1112\nlogsource:\n  category: registry_delete\n  product: windows\ndetection:\n  selection1:\n    EventType: DeleteValue\n    TargetObject|contains: \\Microsoft\\Terminal Server Client\\Default\\MRU\n  selection2:\n    EventType: DeleteKey\n    TargetObject|contains: \\Microsoft\\Terminal Server Client\\Servers\\\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

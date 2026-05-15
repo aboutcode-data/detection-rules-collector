@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Potentialdownloader/TrojanDownloader_Win32_Potentialdownloader_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Potentialdownloader_A",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Potentialdownloader.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Potentialdownloader_A\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Potentialdownloader.A,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {50 e8 04 00 00 00 ?? ?? ?? ?? 58 2b 00 ff 10 }\n\t\t$a_02_1 = {ff 75 fc e8 ?? 00 00 00 68 74 74 70 3a 2f 2f }\n\t\t$a_00_2 = {64 a1 30 00 00 00 8b 40 0c 8b 70 1c }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

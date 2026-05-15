@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_system_network_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ömer Günal and remotephone, oscd.community",
+                "date": "2020-10-06",
+                "title": "System Network Discovery - Linux",
+                "id": "e7bd1cfa-b446-4c88-8afb-403bcd79e3fa"
+            },
+            "rule_text": "title: System Network Discovery - Linux\nid: e7bd1cfa-b446-4c88-8afb-403bcd79e3fa\nstatus: test\ndescription: Detects enumeration of local network configuration\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1016/T1016.md\nauthor: \"\\xD6mer G\\xFCnal and remotephone, oscd.community\"\ndate: 2020-10-06\nmodified: 2022-09-15\ntags:\n- attack.discovery\n- attack.t1016\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith:\n    - /firewall-cmd\n    - /ufw\n    - /iptables\n    - /netstat\n    - /ss\n    - /ip\n    - /ifconfig\n    - /systemd-resolve\n    - /route\n  selection_cli:\n    CommandLine|contains: /etc/resolv.conf\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate administration activities\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

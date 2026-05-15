@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_wmp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-23",
+                "title": "UAC Bypass Using Windows Media Player - Process",
+                "id": "0058b9e5-bcd7-40d4-9205-95ca5a16d7b2"
+            },
+            "rule_text": "title: UAC Bypass Using Windows Media Player - Process\nid: 0058b9e5-bcd7-40d4-9205-95ca5a16d7b2\nstatus: test\ndescription: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll\n  (UACMe 32)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-23\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img_1:\n    Image: C:\\Program Files\\Windows Media Player\\osk.exe\n  selection_img_2:\n    Image: C:\\Windows\\System32\\cmd.exe\n    ParentCommandLine: '\"C:\\Windows\\system32\\mmc.exe\" \"C:\\Windows\\system32\\eventvwr.msc\"\n      /s'\n  selection_integrity:\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n  condition: 1 of selection_img_* and selection_integrity\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

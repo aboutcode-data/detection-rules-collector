@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_clickonce_trust_prompt.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@SerkinValery, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-12",
+                "title": "ClickOnce Trust Prompt Tampering",
+                "id": "ac9159cc-c364-4304-8f0a-d63fc1a0aabb"
+            },
+            "rule_text": "title: ClickOnce Trust Prompt Tampering\nid: ac9159cc-c364-4304-8f0a-d63fc1a0aabb\nstatus: test\ndescription: Detects changes to the ClickOnce trust prompt registry key in order to\n  enable an installation from different locations such as the Internet.\nreferences:\n- https://posts.specterops.io/less-smartscreen-more-caffeine-ab-using-clickonce-for-trusted-code-execution-1446ea8051c5\n- https://learn.microsoft.com/en-us/visualstudio/deployment/how-to-configure-the-clickonce-trust-prompt-behavior\nauthor: '@SerkinValery, Nasreddine Bencherchali (Nextron Systems)'\ndate: 2023-06-12\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\MICROSOFT\\.NETFramework\\Security\\TrustManager\\PromptingLevel\\\n    TargetObject|endswith:\n    - \\Internet\n    - \\LocalIntranet\n    - \\MyComputer\n    - \\TrustedSites\n    - \\UntrustedSites\n    Details: Enabled\n  condition: selection\nfalsepositives:\n- Legitimate internal requirements.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

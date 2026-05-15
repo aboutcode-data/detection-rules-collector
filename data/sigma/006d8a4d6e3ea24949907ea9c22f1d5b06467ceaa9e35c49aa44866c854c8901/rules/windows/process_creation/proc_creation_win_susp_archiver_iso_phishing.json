@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_archiver_iso_phishing.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-06-07",
+                "title": "Phishing Pattern ISO in Archive",
+                "id": "fcdf69e5-a3d3-452a-9724-26f2308bf2b1"
+            },
+            "rule_text": "title: Phishing Pattern ISO in Archive\nid: fcdf69e5-a3d3-452a-9724-26f2308bf2b1\nstatus: test\ndescription: Detects cases in which an ISO files is opend within an archiver like\n  7Zip or Winrar, which is a sign of phishing as threat actors put small ISO files\n  in archives as email attachments to bypass certain filters and protective measures\n  (mark of web)\nreferences:\n- https://twitter.com/1ZRR4H/status/1534259727059787783\n- https://app.any.run/tasks/e1fe6a62-bce8-4323-a49a-63795d9afd5d/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-06-07\ntags:\n- attack.initial-access\n- attack.t1566\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith:\n    - \\Winrar.exe\n    - \\7zFM.exe\n    - \\peazip.exe\n    Image|endswith:\n    - \\isoburn.exe\n    - \\PowerISO.exe\n    - \\ImgBurn.exe\n  condition: selection\nfalsepositives:\n- Legitimate cases in which archives contain ISO or IMG files and the user opens the\n  archive and the image via clicking and not extraction\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

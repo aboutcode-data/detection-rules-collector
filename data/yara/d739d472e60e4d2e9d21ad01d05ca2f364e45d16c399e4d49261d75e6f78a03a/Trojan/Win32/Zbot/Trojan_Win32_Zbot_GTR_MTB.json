@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zbot/Trojan_Win32_Zbot_GTR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zbot_GTR_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Zbot.GTR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zbot_GTR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zbot.GTR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 45 44 8b 00 8b 55 40 8a 14 0a 88 14 08 8b 45 10 8b 55 14 33 c6 8d 8c 01 ?? ?? ?? ?? 8b 45 1c 8b 00 3b 48 54 72 d9 8b 45 1c 8b 08 0f b7 49 14 8b 10 8d 4c 0a 18 89 4d 24 8b 4d 08 8b 55 0c 33 ce 2b cf eb 62 }\n\t\t$a_02_1 = {8b 45 e8 8b 55 e4 69 c0 ?? ?? ?? ?? 8b 5d ?? 2b c2 33 d2 f7 f3 8b d1 69 c0 ?? ?? ?? ?? 05 ?? ?? ?? ?? 33 c6 2b d0 3b d7 0f 86 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

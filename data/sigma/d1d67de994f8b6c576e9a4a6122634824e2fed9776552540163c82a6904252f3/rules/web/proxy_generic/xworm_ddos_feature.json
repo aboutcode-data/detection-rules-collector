@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/xworm_ddos_feature.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Leandro Ferreira",
+                "date": "2025-12-12",
+                "title": "Xworm Application Layer DDoS Feature",
+                "id": "c3225cc7-66a1-435a-a093-26be8655b2cd"
+            },
+            "rule_text": "title: Xworm Application Layer DDoS Feature\nid: c3225cc7-66a1-435a-a093-26be8655b2cd\ndescription: Detects HTTP DDoS feature built in to Xworm. Based on hardcoded characteristics\n  of these requests.\nstatus: stable\nauthor: Leandro Ferreira\nreferences:\n- https://vx-underground.org/Builders/XWorm/XWorm%20V6.0\n- https://thehackernews.com/2025/10/xworm-60-returns-with-35-plugins-and.html\ndate: 2025-12-12\nmodified: 2025-12-12\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    http_method: POST\n    http_content_type: application/x-www-form-urlencoded\n    uri_path: /\n  useragents:\n    http_user_agent:\n    - Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0\n    - Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15\n      (KHTML, like Gecko) Version/11.0 Mobile/15E148 Safari/604.1\n    - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\n      Chrome/60.0.3112.113 Safari/537.36\n  condition: selection and 1 of useragents\nfalsepositives:\n- As of this moment Content Length is not parsed and this can therefore trigger some\n  false positives. The hardcoded useragents are old so hopefully not.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

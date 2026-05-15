@@ -1,0 +1,13 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/GoDaddy/libgcc.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "libgcc_backdoor",
+                "tags": []
+            },
+            "rule_text": "rule libgcc_backdoor\n{\n\tstrings:\n\t\t$decode_fn = { 89C8C1F81FC1E81C8D140183E20F29C20FB682????????30041983C10139F175DF }\n\t\t$decryption_key = \"BB2FA36AAA9541F0\"\n\t\t$function1 = \"exec_packet\"\n\t\t$function2 = \"build_udphdr\"\n\t\t$function3 = \"build_tcphdr\"\n\t\t$function4 = \"http_download_mem\"\n\t\t$function5 = \"daemon_get_kill_process\"\n\n\tcondition:\n\t\tIsElfFile and ( $decode_fn or $decryption_key or all of ( $function* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_keyvault_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-16",
+                "title": "Azure Key Vault Modified or Deleted",
+                "id": "459a2970-bb84-4e6a-a32e-ff0fbd99448d"
+            },
+            "rule_text": "title: Azure Key Vault Modified or Deleted\nid: 459a2970-bb84-4e6a-a32e-ff0fbd99448d\nstatus: test\ndescription: Identifies when a key vault is modified or deleted.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer @austinsonger\ndate: 2021-08-16\nmodified: 2022-08-23\ntags:\n- attack.impact\n- attack.credential-access\n- attack.t1552\n- attack.t1552.001\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.KEYVAULT/VAULTS/WRITE\n    - MICROSOFT.KEYVAULT/VAULTS/DELETE\n    - MICROSOFT.KEYVAULT/VAULTS/DEPLOY/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/ACCESSPOLICIES/WRITE\n  condition: selection\nfalsepositives:\n- Key Vault being modified or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Key Vault modified or deleted from unfamiliar users should be investigated. If known\n  behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

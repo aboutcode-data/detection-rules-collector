@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_webshell_chinachopper.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ChinaChopper_Generic",
+                "tags": [],
+                "description": "China Chopper Webshells - PHP and ASPX",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://www.fireeye.com/content/dam/legacy/resources/pdfs/fireeye-china-chopper-report.pdf",
+                "date": "2015/03/10",
+                "modified": "2022-10-27",
+                "id": "2473cef1-88cf-5b76-a87a-2978e6780b4f"
+            },
+            "rule_text": "rule ChinaChopper_Generic\n{\n\tmeta:\n\t\tdescription = \"China Chopper Webshells - PHP and ASPX\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://www.fireeye.com/content/dam/legacy/resources/pdfs/fireeye-china-chopper-report.pdf\"\n\t\tdate = \"2015/03/10\"\n\t\tmodified = \"2022-10-27\"\n\t\tid = \"2473cef1-88cf-5b76-a87a-2978e6780b4f\"\n\n\tstrings:\n\t\t$x_aspx = /%@\\sPage\\sLanguage=.Jscript.%><%eval\\(Request\\.Item\\[.{,100}unsafe/\n\t\t$x_php = /<?php.\\@eval\\(\\$_POST./\n\t\t$fp1 = \"GET /\"\n\t\t$fp2 = \"POST /\"\n\n\tcondition:\n\t\tfilesize < 300KB and 1 of ( $x* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

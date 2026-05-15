@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_user32_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-06-04",
+                "title": "Suspicious Workstation Locking via Rundll32",
+                "id": "3b5b0213-0460-4e3f-8937-3abf98ff7dcc"
+            },
+            "rule_text": "title: Suspicious Workstation Locking via Rundll32\nid: 3b5b0213-0460-4e3f-8937-3abf98ff7dcc\nstatus: test\ndescription: Detects a suspicious call to the user32.dll function that locks the user\n  workstation\nreferences:\n- https://app.any.run/tasks/2aef9c63-f944-4763-b3ef-81eee209d128/\nauthor: frack113\ndate: 2022-06-04\nmodified: 2023-02-09\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_call_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_call_parent:\n    ParentImage|endswith: \\cmd.exe\n  selection_call_cli:\n    CommandLine|contains: user32.dll,\n  selection_function:\n    CommandLine|contains: LockWorkStation\n  condition: all of selection_*\nfalsepositives:\n- Scripts or links on the user desktop used to lock the workstation instead of Windows+L\n  or the menu option\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

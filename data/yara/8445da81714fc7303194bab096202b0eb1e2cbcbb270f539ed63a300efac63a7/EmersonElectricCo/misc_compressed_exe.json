@@ -1,0 +1,37 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/EmersonElectricCo/misc_compressed_exe.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "compressed_exe_in_rar",
+                "tags": [],
+                "author": "Jason Batchelor",
+                "company": "Emerson",
+                "lastmod": "20150813",
+                "desc": "Detect on evidence of a compressed executable within a RAR"
+            },
+            "rule_text": "rule compressed_exe_in_rar\n{\n\tmeta:\n\t\tauthor = \"Jason Batchelor\"\n\t\tcompany = \"Emerson\"\n\t\tlastmod = \"20150813\"\n\t\tdesc = \"Detect on evidence of a compressed executable within a RAR\"\n\n\tstrings:\n\t\t$rar = { 52 61 72 21 1A 07 00 }\n\t\t$file_header_part = { 74 [12] ( 00 | 01 | 02 | 03 | 04 | 05 ) [9] ( 30 | 31 | 32 | 33 | 34 | 35 ) }\n\t\t$exe_ext = \".exe\"\n\n\tcondition:\n\t\t$rar at 0 and for any r in ( 1 .. #file_header_part ) : ( $exe_ext in ( @file_header_part [ r ] + 30 .. @file_header_part [ r ] + 30 + uint16( @file_header_part [ r ] + 24 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "compressed_exe_in_zip",
+                "tags": [],
+                "author": "Jason Batchelor",
+                "company": "Emerson",
+                "lastmod": "20150813",
+                "desc": "Detect on evidence of a compressed executable within a ZIP"
+            },
+            "rule_text": "rule compressed_exe_in_zip\n{\n\tmeta:\n\t\tauthor = \"Jason Batchelor\"\n\t\tcompany = \"Emerson\"\n\t\tlastmod = \"20150813\"\n\t\tdesc = \"Detect on evidence of a compressed executable within a ZIP\"\n\n\tstrings:\n\t\t$pk = { 50 4B 03 04 }\n\t\t$exe_ext = \".exe\"\n\n\tcondition:\n\t\t$pk at 0 and for any p in ( 1 .. #pk ) : ( $exe_ext in ( @pk [ p ] + 30 .. @pk [ p ] + 30 + uint16( @pk [ p ] + 26 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "misc_compressed_exe",
+                "tags": []
+            },
+            "rule_text": "rule misc_compressed_exe\n{\n\tcondition:\n\t\tcompressed_exe_in_zip or compressed_exe_in_rar\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

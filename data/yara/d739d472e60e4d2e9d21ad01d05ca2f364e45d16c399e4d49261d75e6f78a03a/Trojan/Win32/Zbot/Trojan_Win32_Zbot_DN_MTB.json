@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Zbot/Trojan_Win32_Zbot_DN_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Zbot_DN_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Zbot.DN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Zbot_DN_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Zbot.DN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {bf f5 b2 36 f8 31 ee 55 28 3a 1a 5e 3f a3 b2 30 34 03 30 99 08 f3 f2 9d e1 f2 }\n\t\t$a_81_1 = {43 3a 5c 55 73 65 72 73 5c 46 72 61 6e 6b 5c 44 65 73 6b 74 6f 70 5c 6b 68 48 52 45 62 50 6a 2e 65 78 65 }\n\t\t$a_81_2 = {43 3a 5c 55 73 65 72 73 5c 61 64 6d 69 6e 5c 44 6f 77 6e 6c 6f 61 64 73 5c 66 66 65 6e 67 68 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_81_1 & 1 ) * 1 + ( #a_81_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

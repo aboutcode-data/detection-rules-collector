@@ -1,0 +1,28 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/eset/Linux_Moose.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "is_elf",
+                "tags": []
+            },
+            "rule_text": "private rule is_elf\n{\n\tstrings:\n\t\t$header = { 7F 45 4C 46 }\n\n\tcondition:\n\t\t$header at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "moose",
+                "tags": [],
+                "Author": "Thomas Dupuy",
+                "Date": "2015/04/21",
+                "Description": "Linux/Moose malware",
+                "Reference": "http://www.welivesecurity.com/wp-content/uploads/2015/05/Dissecting-LinuxMoose.pdf",
+                "Source": "https://github.com/eset/malware-ioc/",
+                "Contact": "github@eset.com",
+                "License": "BSD 2-Clause"
+            },
+            "rule_text": "rule moose\n{\n\tmeta:\n\t\tAuthor = \"Thomas Dupuy\"\n\t\tDate = \"2015/04/21\"\n\t\tDescription = \"Linux/Moose malware\"\n\t\tReference = \"http://www.welivesecurity.com/wp-content/uploads/2015/05/Dissecting-LinuxMoose.pdf\"\n\t\tSource = \"https://github.com/eset/malware-ioc/\"\n\t\tContact = \"github@eset.com\"\n\t\tLicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$s0 = \"Status: OK\"\n\t\t$s1 = \"--scrypt\"\n\t\t$s2 = \"stratum+tcp://\"\n\t\t$s3 = \"cmd.so\"\n\t\t$s4 = \"/Challenge\"\n\t\t$s7 = \"processor\"\n\t\t$s9 = \"cpu model\"\n\t\t$s21 = \"password is wrong\"\n\t\t$s22 = \"password:\"\n\t\t$s23 = \"uthentication failed\"\n\t\t$s24 = \"sh\"\n\t\t$s25 = \"ps\"\n\t\t$s26 = \"echo -n -e \"\n\t\t$s27 = \"chmod\"\n\t\t$s28 = \"elan2\"\n\t\t$s29 = \"elan3\"\n\t\t$s30 = \"chmod: not found\"\n\t\t$s31 = \"cat /proc/cpuinfo\"\n\t\t$s32 = \"/proc/%s/cmdline\"\n\t\t$s33 = \"kill %s\"\n\n\tcondition:\n\t\tis_elf and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

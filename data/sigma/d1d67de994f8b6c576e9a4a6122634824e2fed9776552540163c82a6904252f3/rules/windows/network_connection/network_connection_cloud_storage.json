@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/network_connection/network_connection_cloud_storage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2026-02-09",
+                "title": "Cloud Storage Traffic by Unknown Process",
+                "id": "ffc2ca97-6189-4bd0-a981-72726e32f47a"
+            },
+            "rule_text": "title: Cloud Storage Traffic by Unknown Process\nid: ffc2ca97-6189-4bd0-a981-72726e32f47a\ndescription: Somewhat obscure cloud storage services that has been abused by malware\n  as a C2 channel.\nreferences:\n- https://blog.sekoia.io/apt28-operation-phantom-net-voxel/\n- https://www.zscaler.com/blogs/security-research/apt28-leverages-cve-2026-21509-operation-neusploit\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2026-02-09\nlogsource:\n  product: windows\n  category: network_connection\ndetection:\n  selection_url:\n  - url_host:\n    - app.koofr.net\n    - api.icedrive.net\n  - url_host|re:\n    - ^(gateway|ingest|egest)\\.(filen\\.io|filen\\.net|filen-[0-9]+\\.net)$\n  filter_known_software:\n  - image|endswith:\n    - \\chrome.exe\n    - \\msedge.exe\n    - \\firefox.exe\n    - \\vivaldi.exe\n  filter_os:\n    src_os|contains:\n    - nix\n    - mac\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Benign software, web browsers, ...\nlevel: medium\ntags:\n- attack.command-and-control\n- attack.t1102\n",
+            "vulnerabilities": [
+                "CVE-2026-21509"
+            ]
+        }
+    ]
+}

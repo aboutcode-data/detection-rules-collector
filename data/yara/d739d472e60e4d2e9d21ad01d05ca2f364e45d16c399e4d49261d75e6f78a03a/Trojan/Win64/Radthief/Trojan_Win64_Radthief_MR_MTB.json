@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Radthief/Trojan_Win64_Radthief_MR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Radthief_MR_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Radthief.MR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Radthief_MR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Radthief.MR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c0 2e 74 68 65 6d 69 64 61 00 ?? ?? 00 00 70 09 ?? ?? ?? ?? ?? ?? 42 06 }\n\t\t$a_01_1 = {60 20 20 20 20 20 20 20 20 44 65 05 00 00 e0 02 00 00 34 04 00 00 86 01 }\n\t\t$a_01_2 = {c0 20 20 20 20 20 20 20 20 98 69 00 00 00 f0 08 00 00 32 00 00 00 0e 06 }\n\t\t$a_03_3 = {40 00 00 c0 2e 74 68 65 6d 69 64 61 ?? ?? ?? ?? ?? 70 09 ?? ?? ?? ?? ?? ?? 42 06 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 3 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 5 + ( #a_03_3 & 1 ) * 5 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

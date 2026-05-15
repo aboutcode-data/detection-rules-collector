@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_net_user_default_accounts_manipulation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-01",
+                "title": "Suspicious Manipulation Of Default Accounts Via Net.EXE",
+                "id": "5b768e71-86f2-4879-b448-81061cbae951"
+            },
+            "rule_text": "title: Suspicious Manipulation Of Default Accounts Via Net.EXE\nid: 5b768e71-86f2-4879-b448-81061cbae951\nstatus: test\ndescription: Detects suspicious manipulations of default accounts such as 'administrator'\n  and 'guest'. For example 'enable' or 'disable' accounts or change the password...etc\nreferences:\n- https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html\n- https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/\n- https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-01\nmodified: 2023-02-21\ntags:\n- attack.collection\n- attack.t1560.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  selection_user_option:\n    CommandLine|contains: ' user '\n  selection_username:\n    CommandLine|contains:\n    - \" J\\xE4rjestelm\\xE4nvalvoja \"\n    - ' Rendszergazda '\n    - \" \\u0410\\u0434\\u043C\\u0438\\u043D\\u0438\\u0441\\u0442\\u0440\\u0430\\u0442\\u043E\\u0440\\\n      \\ \"\n    - ' Administrateur '\n    - ' Administrador '\n    - \" Administrat\\xF6r \"\n    - ' Administrator '\n    - ' guest '\n    - ' DefaultAccount '\n    - \" \\\"J\\xE4rjestelm\\xE4nvalvoja\\\" \"\n    - ' \"Rendszergazda\" '\n    - \" \\\"\\u0410\\u0434\\u043C\\u0438\\u043D\\u0438\\u0441\\u0442\\u0440\\u0430\\u0442\\u043E\\\n      \\u0440\\\" \"\n    - ' \"Administrateur\" '\n    - ' \"Administrador\" '\n    - \" \\\"Administrat\\xF6r\\\" \"\n    - ' \"Administrator\" '\n    - ' \"guest\" '\n    - ' \"DefaultAccount\" '\n    - \" 'J\\xE4rjestelm\\xE4nvalvoja' \"\n    - ' ''Rendszergazda'' '\n    - \" '\\u0410\\u0434\\u043C\\u0438\\u043D\\u0438\\u0441\\u0442\\u0440\\u0430\\u0442\\u043E\\u0440\\\n      ' \"\n    - ' ''Administrateur'' '\n    - ' ''Administrador'' '\n    - \" 'Administrat\\xF6r' \"\n    - ' ''Administrator'' '\n    - ' ''guest'' '\n    - ' ''DefaultAccount'' '\n  filter:\n    CommandLine|contains|all:\n    - guest\n    - /active no\n  condition: all of selection_* and not filter\nfalsepositives:\n- Some false positives could occur with the admin or guest account. It depends on\n  the scripts being used by the admins in your env. If you experience a lot of FP\n  you could reduce the level to medium\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

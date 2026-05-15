@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanSpy/Win32/Banker/TrojanSpy_Win32_Banker_QQ.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanSpy_Win32_Banker_QQ",
+                "tags": [],
+                "description": "TrojanSpy:Win32/Banker.QQ,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanSpy_Win32_Banker_QQ\n{\n\tmeta:\n\t\tdescription = \"TrojanSpy:Win32/Banker.QQ,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {5c 62 63 6b 2e 62 63 6b [0-20] 5c [0-10] 2e 65 78 65 00 }\n\t\t$a_02_1 = {44 61 64 6f 73 20 64 65 20 61 70 6c 69 63 61 74 69 76 6f 73 5c [0-10] 70 70 6c 69 63 61 74 69 6f 6e 20 44 61 74 61 5c [0-10] 55 53 45 52 50 52 4f 46 49 4c 45 [0-10] 70 70 44 61 74 61 5c [0-10] 57 65 62 4d 61 6f }\n\t\t$a_03_2 = {85 db 7c 65 8b 45 ?? c1 e0 ?? 03 d8 89 5d ?? 83 c7 ?? 83 ff 08 7c 48 83 ef 08 8b cf }\n\t\t$a_03_3 = {85 db 7e 2b be 01 00 00 00 8d 45 ?? 8b d7 52 8b 55 ?? 8a 54 32 ?? 59 2a d1 f6 d2 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

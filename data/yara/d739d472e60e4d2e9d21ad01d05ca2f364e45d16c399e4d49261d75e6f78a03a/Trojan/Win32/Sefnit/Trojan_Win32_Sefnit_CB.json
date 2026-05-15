@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Sefnit/Trojan_Win32_Sefnit_CB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Sefnit_CB",
+                "tags": [],
+                "description": "Trojan:Win32/Sefnit.CB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Sefnit_CB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Sefnit.CB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 78 14 08 72 02 8b 00 6a 02 50 ff 15 ?? ?? ?? ?? c6 45 fc ?? 56 53 }\n\t\t$a_01_1 = {5b 00 74 00 61 00 73 00 6b 00 5f 00 73 00 74 00 61 00 72 00 74 00 5d 00 00 00 }\n\t\t$a_01_2 = {2c 00 73 00 63 00 68 00 65 00 64 00 75 00 6c 00 65 00 5f 00 74 00 61 00 73 00 6b 00 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_tasklist_basic_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-11",
+                "title": "Suspicious Tasklist Discovery Command",
+                "id": "63332011-f057-496c-ad8d-d2b6afb27f96"
+            },
+            "rule_text": "title: Suspicious Tasklist Discovery Command\nid: 63332011-f057-496c-ad8d-d2b6afb27f96\nstatus: test\ndescription: Adversaries may attempt to get information about running processes on\n  a system. Information obtained could be used to gain an understanding of common\n  software/applications running on systems within the network\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1057/T1057.md#atomic-test-2---process-discovery---tasklist\nauthor: frack113\ndate: 2021-12-11\nmodified: 2022-12-25\ntags:\n- attack.discovery\n- attack.t1057\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - CommandLine|contains: tasklist\n  - Image|endswith: \\tasklist.exe\n  - OriginalFileName: tasklist.exe\n  condition: selection\nfalsepositives:\n- Likely from users, administrator and different internal and third party applications.\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/ransomware/Fusion.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Fusion",
+                "tags": [],
+                "id": "5zeDUSWAX6101brsHGmiNB",
+                "fingerprint": "a1e5d90fc057d3d32754d241df9b1847eaad9e67e4b54368c28ee179a796944e",
+                "version": "1.0",
+                "creation_date": "2021-06-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2021-12-30",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Fusion ransomware, Go variant of Nemty/Nefilim.",
+                "category": "MALWARE",
+                "malware": "FUSION",
+                "malware_type": "RANSOMWARE"
+            },
+            "rule_text": "rule Fusion\n{\n\tmeta:\n\t\tid = \"5zeDUSWAX6101brsHGmiNB\"\n\t\tfingerprint = \"a1e5d90fc057d3d32754d241df9b1847eaad9e67e4b54368c28ee179a796944e\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2021-06-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2021-12-30\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Fusion ransomware, Go variant of Nemty/Nefilim.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"FUSION\"\n\t\tmalware_type = \"RANSOMWARE\"\n\n\tstrings:\n\t\t$s1 = \"main.getdrives\" ascii wide\n\t\t$s2 = \"main.SaveNote\" ascii wide\n\t\t$s3 = \"main.FileSearch\" ascii wide\n\t\t$s4 = \"main.BytesToPublicKey\" ascii wide\n\t\t$s5 = \"main.GenerateRandomBytes\" ascii wide\n\t\t$x1 = /Fa[i1]led to fi.Close/ ascii wide\n\t\t$x2 = /Fa[i1]led to fi2.Close/ ascii wide\n\t\t$x3 = /Fa[i1]led to get stat/ ascii wide\n\t\t$x4 = /Fa[i1]led to os.OpenFile/ ascii wide\n\t\t$pdb1 = \"C:/OpenServer/domains/build/aes.go\" ascii wide\n\t\t$pdb2 = \"C:/Users/eugene/Desktop/test go/test.go\" ascii wide\n\t\t$pdb3 = \"C:/Users/eugene/Desktop/web/src/aes_\" ascii wide\n\n\tcondition:\n\t\t4 of ( $s* ) or 3 of ( $x* ) or any of ( $pdb* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

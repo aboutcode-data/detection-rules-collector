@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_console_history_file_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Luc Génaux",
+                "date": "2025-04-03",
+                "title": "Potential PowerShell Console History Access Attempt via History File",
+                "id": "f4ff7323-b5fc-4323-8b52-6b9408e15788"
+            },
+            "rule_text": "title: Potential PowerShell Console History Access Attempt via History File\nid: f4ff7323-b5fc-4323-8b52-6b9408e15788\nstatus: experimental\ndescription: 'Detects potential access attempts to the PowerShell console history\n  directly via history file (ConsoleHost_history.txt).\n\n  This can give access to plaintext passwords used in PowerShell commands or used\n  for general reconnaissance.\n\n  '\nreferences:\n- https://0xdf.gitlab.io/2018/11/08/powershell-history-file.html\nauthor: \"Luc G\\xE9naux\"\ndate: 2025-04-03\ntags:\n- attack.credential-access\n- attack.t1552.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - ConsoleHost_history.txt\n    - (Get-PSReadLineOption).HistorySavePath\n  condition: selection\nfalsepositives:\n- Legitimate access of the console history file is possible\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

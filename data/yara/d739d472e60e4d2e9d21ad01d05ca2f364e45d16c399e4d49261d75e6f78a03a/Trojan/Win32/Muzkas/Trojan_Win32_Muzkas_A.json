@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Muzkas/Trojan_Win32_Muzkas_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Muzkas_A",
+                "tags": [],
+                "description": "Trojan:Win32/Muzkas.A,SIGNATURE_TYPE_PEHSTR_EXT,08 00 06 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Muzkas_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Muzkas.A,SIGNATURE_TYPE_PEHSTR_EXT,08 00 06 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {83 f8 0a 75 1c 68 bc 02 00 00 e8 b9 1b ff ff }\n\t\t$a_01_1 = {ff 13 50 ff 13 8b f0 8d 55 bc }\n\t\t$a_01_2 = {ff 51 74 8b 4d fc ba 09 00 00 00 8b 03 8b 30 ff 56 0c 83 7d e4 00 74 61 }\n\t\t$a_01_3 = {69 65 5f 67 75 76 65 6e 6c 69 6b 5f 70 6c 75 67 69 6e }\n\t\t$a_01_4 = {73 65 63 75 72 69 74 79 5c 2e 6a 70 67 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 + ( #a_01_2 & 1 ) * 2 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

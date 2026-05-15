@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/CryptInject/Trojan_Win64_CryptInject_AB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_CryptInject_AB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/CryptInject.AB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_CryptInject_AB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/CryptInject.AB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 45 fd 99 35 ?? ?? ?? ?? 66 a3 ?? ?? ?? ?? 0f bf 45 f4 0f bf 0d ?? ?? ?? ?? 33 c1 a3 ?? ?? ?? ?? 0f be 15 ?? ?? ?? ?? 85 d2 74 }\n\t\t$a_03_1 = {66 89 55 f0 b8 ?? ?? ?? ?? 66 89 45 f0 0f bf 0d ?? ?? ?? ?? 0f be 15 ?? ?? ?? ?? 03 ca 0f bf 05 ?? ?? ?? ?? 03 c1 66 a3 ?? ?? ?? ?? e9 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

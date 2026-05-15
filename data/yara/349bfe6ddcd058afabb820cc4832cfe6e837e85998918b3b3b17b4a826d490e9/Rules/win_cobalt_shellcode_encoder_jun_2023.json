@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/embee-research/Yara-detection-rules/blob/master/Rules/win_cobalt_shellcode_encoder_jun_2023.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_cobalt_strike_loader_shellcode_jun_2023",
+                "tags": [],
+                "author": "Matthew @ Embee_research",
+                "vendor": "",
+                "created": "2023/06/31",
+                "description": "Detection of an encoder observed with Cobalt Strike shellcode"
+            },
+            "rule_text": "rule win_cobalt_strike_loader_shellcode_jun_2023\n{\n\tmeta:\n\t\tauthor = \"Matthew @ Embee_research\"\n\t\tvendor = \"\"\n\t\tcreated = \"2023/06/31\"\n\t\tdescription = \"Detection of an encoder observed with Cobalt Strike shellcode\"\n\n\tstrings:\n\t\t$get_enc_offset = {8b 88 c0 00 00 00 8b 90 c4 00 00 00 48 8d b0 c8 00 00 00}\n\t\t$decode_loop = {ac 83 e1 03 d2 c8 ff c1 aa ff ca 75 f3}\n\t\t$b64_initial_bytes = \"SInISIlMJAiLiMAAAACLkMQAAABIjbDIAAAA\" wide ascii\n\n\tcondition:\n\t\t(( $get_enc_offset and $decode_loop ) or $b64_initial_bytes ) and filesize < 10000KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

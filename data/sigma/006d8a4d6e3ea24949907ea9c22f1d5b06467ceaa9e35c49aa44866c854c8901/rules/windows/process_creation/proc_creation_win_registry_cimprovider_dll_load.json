@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_registry_cimprovider_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ivan Dyachkov, Yulia Fomina, oscd.community",
+                "date": "2020-10-07",
+                "title": "DLL Execution Via Register-cimprovider.exe",
+                "id": "a2910908-e86f-4687-aeba-76a5f996e652"
+            },
+            "rule_text": "title: DLL Execution Via Register-cimprovider.exe\nid: a2910908-e86f-4687-aeba-76a5f996e652\nstatus: test\ndescription: Detects using register-cimprovider.exe to execute arbitrary dll file.\nreferences:\n- https://twitter.com/PhilipTsukerman/status/992021361106268161\n- https://lolbas-project.github.io/lolbas/Binaries/Register-cimprovider/\nauthor: Ivan Dyachkov, Yulia Fomina, oscd.community\ndate: 2020-10-07\nmodified: 2021-11-27\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\register-cimprovider.exe\n    CommandLine|contains|all:\n    - -path\n    - dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

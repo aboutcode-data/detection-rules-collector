@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_diantz_ads.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-11-26",
+                "title": "Suspicious Diantz Alternate Data Stream Execution",
+                "id": "6b369ced-4b1d-48f1-b427-fdc0de0790bd"
+            },
+            "rule_text": "title: Suspicious Diantz Alternate Data Stream Execution\nid: 6b369ced-4b1d-48f1-b427-fdc0de0790bd\nstatus: test\ndescription: Compress target file into a cab file stored in the Alternate Data Stream\n  (ADS) of the target file.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Diantz/\nauthor: frack113\ndate: 2021-11-26\nmodified: 2022-12-31\ntags:\n- attack.stealth\n- attack.t1564.004\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - diantz.exe\n    - .cab\n    CommandLine|re: :[^\\\\]\n  condition: selection\nfalsepositives:\n- Very Possible\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

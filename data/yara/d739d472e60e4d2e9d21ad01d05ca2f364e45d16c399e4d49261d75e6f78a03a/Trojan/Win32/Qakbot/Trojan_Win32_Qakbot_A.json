@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Qakbot/Trojan_Win32_Qakbot_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Qakbot_A",
+                "tags": [],
+                "description": "Trojan:Win32/Qakbot.A,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 07 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Qakbot_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Qakbot.A,SIGNATURE_TYPE_PEHSTR_EXT,16 00 16 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {03 00 33 00 30 00 38 00 }\n\t\t$a_01_1 = {03 00 33 00 31 00 31 00 }\n\t\t$a_01_2 = {03 00 31 00 31 00 38 00 }\n\t\t$a_01_3 = {03 00 35 00 32 00 34 00 }\n\t\t$a_03_4 = {01 23 45 67 c7 44 24 ?? 89 ab cd ef c7 44 24 ?? fe dc ba 98 c7 44 24 }\n\t\t$a_03_5 = {03 ce 03 c1 33 d2 6a ?? 5b f7 f3 ?? ?? ?? ?? ?? ?? ?? ?? ?? 46 }\n\t\t$a_03_6 = {48 f7 d8 1b c0 25 ?? ?? ?? ?? 81 ?? ?? ?? ?? ?? 05 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_03_4 & 1 ) * 10 + ( #a_03_5 & 1 ) * 10 + ( #a_03_6 & 1 ) * 10 ) >= 22\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

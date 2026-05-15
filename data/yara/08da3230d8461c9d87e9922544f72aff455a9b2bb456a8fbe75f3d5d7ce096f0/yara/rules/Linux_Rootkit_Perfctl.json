@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_Perfctl.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_Perfctl_ce456896",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "ce456896-1a13-4e31-8913-55f5b49badcb",
+                "fingerprint": "feda52cd93fa66194b030d5cb759ceef9b97073bb765349e8f06af6f37b547bc",
+                "creation_date": "2024-11-14",
+                "last_modified": "2024-11-22",
+                "threat_name": "Linux.Rootkit.Perfctl",
+                "reference_sample": "69de4c062eebb13bf2ee3ee0febfd4a621f2a17c3048416d897aecf14503213a",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_Perfctl_ce456896\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"ce456896-1a13-4e31-8913-55f5b49badcb\"\n\t\tfingerprint = \"feda52cd93fa66194b030d5cb759ceef9b97073bb765349e8f06af6f37b547bc\"\n\t\tcreation_date = \"2024-11-14\"\n\t\tlast_modified = \"2024-11-22\"\n\t\tthreat_name = \"Linux.Rootkit.Perfctl\"\n\t\treference_sample = \"69de4c062eebb13bf2ee3ee0febfd4a621f2a17c3048416d897aecf14503213a\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$a1 = { 48 01 D0 48 89 45 F0 48 8B 45 F0 48 89 C6 48 C7 C7 FF FF FF FF }\n\t\t$a2 = { BF 5E F8 00 00 E8 ?? ?? FF FF 66 89 85 52 FF FF FF BF 01 00 00 7F E8 ?? ?? FF FF 89 85 54 FF FF FF }\n\t\t$str1 = \"r;rr\" wide\n\t\t$str2 = { 0D 0A 25 73 0D 0A }\n\t\t$str3 = \"rrr01\" wide\n\n\tcondition:\n\t\tany of ( $a* ) or 2 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

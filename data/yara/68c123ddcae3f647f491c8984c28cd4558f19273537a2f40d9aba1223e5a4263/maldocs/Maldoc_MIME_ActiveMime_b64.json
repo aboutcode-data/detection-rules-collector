@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/maldocs/Maldoc_MIME_ActiveMime_b64.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MIME_MSO_ActiveMime_base64",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect MIME MSO Base64 encoded ActiveMime file",
+                "date": "2016-02-28",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule MIME_MSO_ActiveMime_base64 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect MIME MSO Base64 encoded ActiveMime file\"\n\t\tdate = \"2016-02-28\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$mime = \"MIME-Version:\"\n\t\t$base64 = \"Content-Transfer-Encoding: base64\"\n\t\t$mso = \"Content-Type: application/x-mso\"\n\t\t$activemime = /Q(\\x0D\\x0A|)W(\\x0D\\x0A|)N(\\x0D\\x0A|)0(\\x0D\\x0A|)a(\\x0D\\x0A|)X(\\x0D\\x0A|)Z(\\x0D\\x0A|)l(\\x0D\\x0A|)T(\\x0D\\x0A|)W/\n\n\tcondition:\n\t\t$mime at 0 and $base64 and $mso and $activemime\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

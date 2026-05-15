@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_office_svchost_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-10-13",
+                "title": "Suspicious New Instance Of An Office COM Object",
+                "id": "9bdaf1e9-fdef-443b-8081-4341b74a7e28"
+            },
+            "rule_text": "title: Suspicious New Instance Of An Office COM Object\nid: 9bdaf1e9-fdef-443b-8081-4341b74a7e28\nstatus: test\ndescription: 'Detects an svchost process spawning an instance of an office application.\n  This happens when the initial word application creates an instance of one of the\n  Office COM objects such as ''Word.Application'', ''Excel.Application'', etc.\n\n  This can be used by malicious actors to create malicious Office documents with macros\n  on the fly. (See vba2clr project in the references)\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/office/troubleshoot/office-developer/automate-word-create-file-using-visual-basic\n- https://github.com/med0x2e/vba2clr\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-10-13\nmodified: 2023-12-19\ntags:\n- attack.execution\n- detection.threat-hunting\n- attack.stealth\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|endswith: \\svchost.exe\n    Image|endswith:\n    - \\eqnedt32.exe\n    - \\excel.exe\n    - \\msaccess.exe\n    - \\mspub.exe\n    - \\powerpnt.exe\n    - \\visio.exe\n    - \\winword.exe\n  condition: selection\nfalsepositives:\n- Legitimate usage of office automation via scripting\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

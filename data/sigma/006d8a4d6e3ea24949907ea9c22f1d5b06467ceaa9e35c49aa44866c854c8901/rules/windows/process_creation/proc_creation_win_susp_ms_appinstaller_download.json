@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_ms_appinstaller_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel",
+                "date": "2023-11-09",
+                "title": "Potential File Download Via MS-AppInstaller Protocol Handler",
+                "id": "180c7c5c-d64b-4a63-86e9-68910451bc8b"
+            },
+            "rule_text": "title: Potential File Download Via MS-AppInstaller Protocol Handler\nid: 180c7c5c-d64b-4a63-86e9-68910451bc8b\nrelated:\n- id: 7cff77e1-9663-46a3-8260-17f2e1aa9d0a\n  type: derived\nstatus: test\ndescription: 'Detects usage of the \"ms-appinstaller\" protocol handler via command\n  line to potentially download arbitrary files via AppInstaller.EXE\n\n  The downloaded files are temporarly stored in \":\\Users\\%username%\\AppData\\Local\\Packages\\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\\AC\\INetCache\\<RANDOM-8-CHAR-DIRECTORY>\"\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/AppInstaller/\nauthor: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel\ndate: 2023-11-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - ms-appinstaller://?source=\n    - http\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_rdp_reverse_tunnel.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden",
+                "date": "2019-02-16",
+                "title": "RDP over Reverse SSH Tunnel WFP",
+                "id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41"
+            },
+            "rule_text": "title: RDP over Reverse SSH Tunnel WFP\nid: 5bed80b6-b3e8-428e-a3ae-d3c757589e41\nstatus: test\ndescription: Detects svchost hosting RDP termsvcs communicating with the loopback\n  address\nreferences:\n- https://twitter.com/SBousseaden/status/1096148422984384514\n- https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES/blob/44fbe85f72ee91582876b49678f9a26292a155fb/Command%20and%20Control/DE_RDP_Tunnel_5156.evtx\nauthor: Samir Bousseaden\ndate: 2019-02-16\nmodified: 2022-09-02\ntags:\n- attack.command-and-control\n- attack.lateral-movement\n- attack.t1090.001\n- attack.t1090.002\n- attack.t1021.001\n- car.2013-07-002\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 5156\n  sourceRDP:\n    SourcePort: 3389\n    DestAddress:\n    - 127.*\n    - ::1\n  destinationRDP:\n    DestPort: 3389\n    SourceAddress:\n    - 127.*\n    - ::1\n  filter_app_container:\n    FilterOrigin: AppContainer Loopback\n  filter_thor:\n    Application|endswith:\n    - \\thor.exe\n    - \\thor64.exe\n  condition: selection and ( sourceRDP or destinationRDP ) and not 1 of filter*\nfalsepositives:\n- Programs that connect locally to the RDP port\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

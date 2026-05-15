@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/EmersonElectricCo/misc_hexascii_pe_in_html.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "misc_hexascii_pe_in_html",
+                "tags": [
+                    "encoding",
+                    "html",
+                    "suspicious"
+                ],
+                "author": "Jason Batchelor",
+                "created": "2016-03-02",
+                "modified": "2016-03-02",
+                "university": "Carnegie Mellon University",
+                "description": "Detect on presence of hexascii encoded executable inside scripted code section of html file"
+            },
+            "rule_text": "rule misc_hexascii_pe_in_html : encoding html suspicious\n{\n\tmeta:\n\t\tauthor = \"Jason Batchelor\"\n\t\tcreated = \"2016-03-02\"\n\t\tmodified = \"2016-03-02\"\n\t\tuniversity = \"Carnegie Mellon University\"\n\t\tdescription = \"Detect on presence of hexascii encoded executable inside scripted code section of html file\"\n\n\tstrings:\n\t\t$html_start = \"<html>\" ascii nocase\n\t\t$html_end = \"</html>\" ascii nocase\n\t\t$mz = \"4d5a\" ascii nocase\n\t\t$pe = \"50450000\" ascii nocase\n\n\tcondition:\n\t\tall of ( $html* ) and $pe in ( @mz [ 1 ] .. filesize )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

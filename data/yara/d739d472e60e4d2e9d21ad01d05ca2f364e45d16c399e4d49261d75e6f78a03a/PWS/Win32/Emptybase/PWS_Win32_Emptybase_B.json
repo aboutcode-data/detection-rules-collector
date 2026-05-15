@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/PWS/Win32/Emptybase/PWS_Win32_Emptybase_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PWS_Win32_Emptybase_B",
+                "tags": [],
+                "description": "PWS:Win32/Emptybase.B,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule PWS_Win32_Emptybase_B\n{\n\tmeta:\n\t\tdescription = \"PWS:Win32/Emptybase.B,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {74 44 ff 77 04 ff 77 0c 68 ?? ?? ?? ?? 56 e8 ?? ?? ?? ?? 53 56 ff 75 f8 c6 06 47 c6 46 01 45 c6 46 02 54 }\n\t\t$a_03_1 = {75 54 8d 45 e0 50 ff 75 0c e8 ?? ?? ?? ?? 59 59 6a 06 8d 45 e0 50 ff 75 f4 e8 }\n\t\t$a_01_2 = {55 70 64 61 74 65 00 00 53 74 6f 70 00 00 00 00 41 63 74 69 76 61 74 65 00 00 00 00 45 78 65 63 75 74 65 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

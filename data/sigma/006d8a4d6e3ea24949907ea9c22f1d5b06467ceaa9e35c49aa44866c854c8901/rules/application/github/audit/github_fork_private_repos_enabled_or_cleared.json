@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_fork_private_repos_enabled_or_cleared.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Romain Gaillard (@romain-gaillard)",
+                "date": "2024-07-29",
+                "title": "Github Fork Private Repositories Setting Enabled/Cleared",
+                "id": "69b3bd1e-b38a-462f-9a23-fbdbf63d2294"
+            },
+            "rule_text": "title: Github Fork Private Repositories Setting Enabled/Cleared\nid: 69b3bd1e-b38a-462f-9a23-fbdbf63d2294\nstatus: test\ndescription: 'Detects when the policy allowing forks of private and internal repositories\n  is changed (enabled or cleared).\n\n  '\nreferences:\n- https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/audit-log-events-for-your-enterprise#private_repository_forking\nauthor: Romain Gaillard (@romain-gaillard)\ndate: 2024-07-29\ntags:\n- attack.persistence\n- attack.exfiltration\n- attack.t1020\n- attack.t1537\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action:\n    - private_repository_forking.clear\n    - private_repository_forking.enable\n  condition: selection\nfalsepositives:\n- Allowed administrative activities.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_http_susp_file_ext_from_susp_tld.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "@signalblur, Corelight",
+                "date": "2025-02-26",
+                "title": "HTTP Request to Low Reputation TLD or Suspicious File Extension",
+                "id": "68c2c604-92ad-468b-bf4a-aac49adad08c"
+            },
+            "rule_text": "title: HTTP Request to Low Reputation TLD or Suspicious File Extension\nid: 68c2c604-92ad-468b-bf4a-aac49adad08c\nstatus: experimental\ndescription: 'Detects HTTP requests to low reputation TLDs (e.g. .xyz, .top, .ru)\n  or ending in suspicious file extensions (.exe, .dll, .hta), which may indicate malicious\n  activity.\n\n  '\nreferences:\n- https://www.howtogeek.com/137270/50-file-extensions-that-are-potentially-dangerous-on-windows\n- https://www.spamhaus.org/reputation-statistics/cctlds/domains/\nauthor: '@signalblur, Corelight'\ndate: 2025-02-26\ntags:\n- attack.initial-access\n- attack.command-and-control\nlogsource:\n  product: zeek\n  service: http\ndetection:\n  selection_suspicious_tld:\n    host|endswith:\n    - .bid\n    - .by\n    - .cf\n    - .click\n    - .cm\n    - .ga\n    - .gq\n    - .ir\n    - .kp\n    - .loan\n    - .ml\n    - .mm\n    - .party\n    - .pw\n    - .ru\n    - .su\n    - .sy\n    - .tk\n    - .top\n    - .tv\n    - .ve\n    - .work\n    - .xyz\n  selection_malicious_ext:\n    uri|endswith:\n    - .bat\n    - .bin\n    - .cmd\n    - .cpl\n    - .dll\n    - .dylib\n    - .elf\n    - .exe\n    - .hta\n    - .iso\n    - .jar\n    - .js\n    - .lnk\n    - .msi\n    - .pif\n    - .ps1\n    - .py\n    - .reg\n    - .scr\n    - .sh\n    - .so\n    - .vbs\n    - .wsf\n  selection_malicious_mime:\n    resp_mime_types:\n    - application/vnd.microsoft.portable-executable\n    - application/x-bat\n    - application/x-dosexec\n    - application/x-elf\n    - application/x-iso9660-image\n    - application/x-java-archive\n    - application/x-ms-shortcut\n    - application/x-msdos-program\n    - application/x-msdownload\n    - application/x-python-code\n    - application/x-sh\n  condition: selection_suspicious_tld and 1 of selection_malicious_*\nfalsepositives:\n- Rare legitimate software downloads from low quality TLDs\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

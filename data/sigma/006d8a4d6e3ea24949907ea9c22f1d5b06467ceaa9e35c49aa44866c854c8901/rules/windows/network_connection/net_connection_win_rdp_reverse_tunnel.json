@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_rdp_reverse_tunnel.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden",
+                "date": "2019-02-16",
+                "title": "RDP Over Reverse SSH Tunnel",
+                "id": "5f699bc5-5446-4a4a-a0b7-5ef2885a3eb4"
+            },
+            "rule_text": "title: RDP Over Reverse SSH Tunnel\nid: 5f699bc5-5446-4a4a-a0b7-5ef2885a3eb4\nstatus: test\ndescription: Detects svchost hosting RDP termsvcs communicating with the loopback\n  address and on TCP port 3389\nreferences:\n- https://twitter.com/cyb3rops/status/1096842275437625346\nauthor: Samir Bousseaden\ndate: 2019-02-16\nmodified: 2024-03-12\ntags:\n- attack.command-and-control\n- attack.t1572\n- attack.lateral-movement\n- attack.t1021.001\n- car.2013-07-002\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\svchost.exe\n    Initiated: 'true'\n    SourcePort: 3389\n  selection_destination:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - ::1/128\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

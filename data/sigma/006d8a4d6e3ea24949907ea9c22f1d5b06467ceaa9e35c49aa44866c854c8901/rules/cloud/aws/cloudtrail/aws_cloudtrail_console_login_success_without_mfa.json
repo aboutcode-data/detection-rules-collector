@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_console_login_success_without_mfa.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Thuya@Hacktilizer, Ivan Saakov",
+                "date": "2025-10-18",
+                "title": "AWS Successful Console Login Without MFA",
+                "id": "77caf516-34e5-4df9-b4db-20744fea0a60"
+            },
+            "rule_text": "title: AWS Successful Console Login Without MFA\nid: 77caf516-34e5-4df9-b4db-20744fea0a60\nstatus: experimental\ndescription: 'Detects successful AWS console logins that were performed without Multi-Factor\n  Authentication (MFA).\n\n  This alert can be used to identify potential unauthorized access attempts, as logging\n  in without MFA can indicate compromised credentials or misconfigured security settings.\n\n  '\nreferences:\n- https://securitylabs.datadoghq.com/cloud-security-atlas/vulnerabilities/iam-user-without-mfa/\n- https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-aws-console-sign-in-events.html\nauthor: Thuya@Hacktilizer, Ivan Saakov\ndate: 2025-10-18\nmodified: 2025-10-21\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078.004\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventName: ConsoleLogin\n    additionalEventData.MFAUsed: 'NO'\n    responseElements.ConsoleLogin: Success\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

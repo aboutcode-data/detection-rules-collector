@@ -1,0 +1,44 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/exe.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "executable_pe",
+                "tags": [
+                    "info",
+                    "executable",
+                    "windows"
+                ],
+                "description": "Detect PE executable based on MZ and PE magic"
+            },
+            "rule_text": "rule executable_pe : info executable windows\n{\n\tmeta:\n\t\tdescription = \"Detect PE executable based on MZ and PE magic\"\n\n\tstrings:\n\t\t$pe = \"PE\"\n\n\tcondition:\n\t\tuint16be( 0 ) == 0x4d5a and ( $pe at ( uint32( 0x3c ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "executable_elf32",
+                "tags": [
+                    "info",
+                    "executable",
+                    "linux"
+                ],
+                "description": "Detect ELF 32 bit executable based on ELF magic"
+            },
+            "rule_text": "rule executable_elf32 : info executable linux\n{\n\tmeta:\n\t\tdescription = \"Detect ELF 32 bit executable based on ELF magic\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7f454c46 and uint8( 4 ) == 0x01\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "executable_elf64",
+                "tags": [
+                    "info",
+                    "executable",
+                    "linux"
+                ],
+                "description": "Detect ELF 64 bit executable based on ELF magic"
+            },
+            "rule_text": "rule executable_elf64 : info executable linux\n{\n\tmeta:\n\t\tdescription = \"Detect ELF 64 bit executable based on ELF magic\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0x7f454c46 and uint8( 4 ) == 0x02\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

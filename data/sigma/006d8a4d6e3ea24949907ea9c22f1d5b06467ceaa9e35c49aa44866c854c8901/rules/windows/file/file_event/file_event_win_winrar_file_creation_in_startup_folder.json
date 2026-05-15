@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_winrar_file_creation_in_startup_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-07-16",
+                "title": "WinRAR Creating Files in Startup Locations",
+                "id": "74a2b37d-fea4-41e0-9ac7-c9fbcf1f60cc"
+            },
+            "rule_text": "title: WinRAR Creating Files in Startup Locations\nid: 74a2b37d-fea4-41e0-9ac7-c9fbcf1f60cc\nstatus: experimental\ndescription: 'Detects WinRAR creating files in Windows startup locations, which may\n  indicate an attempt to establish persistence by adding malicious files to the Startup\n  folder.\n\n  This kind of behaviour has been associated with exploitation of WinRAR path traversal\n  vulnerability CVE-2025-6218 or CVE-2025-8088.\n\n  '\nreferences:\n- https://github.com/mulwareX/CVE-2025-6218-POC\n- https://x.com/0x534c/status/1944694507787710685\n- https://www.welivesecurity.com/en/eset-research/update-winrar-tools-now-romcom-and-others-exploiting-zero-day-vulnerability/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-07-16\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.001\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\WinRAR.exe\n    - \\Rar.exe\n    TargetFilename|contains: \\Start Menu\\Programs\\Startup\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2025-6218",
+                "CVE-2025-8088"
+            ]
+        }
+    ]
+}

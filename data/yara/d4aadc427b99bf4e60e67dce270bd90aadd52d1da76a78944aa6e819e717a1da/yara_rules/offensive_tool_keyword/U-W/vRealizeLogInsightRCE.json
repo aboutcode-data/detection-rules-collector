@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/U-W/vRealizeLogInsightRCE.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "vRealizeLogInsightRCE",
+                "tags": [],
+                "description": "Detection patterns for the tool 'vRealizeLogInsightRCE' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "vRealizeLogInsightRCE",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule vRealizeLogInsightRCE\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'vRealizeLogInsightRCE' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"vRealizeLogInsightRCE\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\-\\-payload_file\\s.{0,1000}\\s\\-\\-payload_path/ nocase ascii wide\n\t\t$string2 = \"/horizon3ai/\" nocase ascii wide\n\t\t$string3 = /Downloading\\s.{0,1000}\\/.{0,1000}\\.tar\\sto\\s\\/tmp\\/.{0,1000}\\.pak/ nocase ascii wide\n\t\t$string4 = /loginsight\\.thrift/ nocase ascii wide\n\t\t$string5 = /VMSA\\-2023\\-0001\\.py/ nocase ascii wide\n\t\t$string6 = /VMware\\-vRealize\\-Log\\-Insight\\.cert/ nocase ascii wide\n\t\t$string7 = \"vRealizeLogInsightRCE\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2022-31704",
+                "CVE-2022-31711",
+                "CVE-2022-31706"
+            ]
+        }
+    ]
+}

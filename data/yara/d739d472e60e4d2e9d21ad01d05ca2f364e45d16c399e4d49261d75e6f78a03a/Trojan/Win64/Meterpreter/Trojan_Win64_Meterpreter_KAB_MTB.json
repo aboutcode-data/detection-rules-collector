@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Meterpreter/Trojan_Win64_Meterpreter_KAB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Meterpreter_KAB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Meterpreter.KAB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Meterpreter_KAB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Meterpreter.KAB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {89 c2 89 d0 48 69 c0 ?? ?? ?? ?? 48 c1 e8 ?? c1 e8 ?? 6b c0 ?? 29 c2 89 d0 05 }\n\t\t$a_01_1 = {6b c0 33 8b 55 f8 d1 fa 09 c2 8b 45 f8 31 d0 89 45 f8 8b 45 f8 83 e0 0f 83 f8 0a 0f 94 c0 84 c0 74 0b }\n\t\t$a_01_2 = {2e 6a 78 6b 33 7a }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 5 ) >= 35\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

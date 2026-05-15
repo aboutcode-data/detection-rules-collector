@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_curl_fileupload.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Cedric MAURUGEON (Update)",
+                "date": "2022-09-15",
+                "title": "Suspicious Curl File Upload - Linux",
+                "id": "00b90cc1-17ec-402c-96ad-3a8117d7a582"
+            },
+            "rule_text": "title: Suspicious Curl File Upload - Linux\nid: 00b90cc1-17ec-402c-96ad-3a8117d7a582\nrelated:\n- id: 00bca14a-df4e-4649-9054-3f2aa676bc04\n  type: derived\nstatus: test\ndescription: Detects a suspicious curl process start the adds a file to a web request\nreferences:\n- https://twitter.com/d1r4c/status/1279042657508081664\n- https://medium.com/@petehouston/upload-files-with-curl-93064dcccc76\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1105/T1105.md#atomic-test-19---curl-upload-file\n- https://curl.se/docs/manpage.html\n- https://www.trendmicro.com/en_us/research/22/i/how-malicious-actors-abuse-native-linux-tools-in-their-attacks.html\nauthor: Nasreddine Bencherchali (Nextron Systems), Cedric MAURUGEON (Update)\ndate: 2022-09-15\nmodified: 2023-05-02\ntags:\n- attack.exfiltration\n- attack.command-and-control\n- attack.t1567\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith: /curl\n  selection_cli:\n  - CommandLine|contains:\n    - ' --form'\n    - ' --upload-file '\n    - ' --data '\n    - ' --data-'\n  - CommandLine|re: \\s-[FTd]\\s\n  filter_optional_localhost:\n    CommandLine|contains:\n    - ://localhost\n    - ://127.0.0.1\n  condition: all of selection_* and not 1 of filter_optional_*\nfalsepositives:\n- Scripts created by developers and admins\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

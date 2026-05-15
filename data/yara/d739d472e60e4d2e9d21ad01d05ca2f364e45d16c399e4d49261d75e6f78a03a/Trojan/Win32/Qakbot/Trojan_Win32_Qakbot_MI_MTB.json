@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Qakbot/Trojan_Win32_Qakbot_MI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Qakbot_MI_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Qakbot.MI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Qakbot_MI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Qakbot.MI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 45 c8 3b 45 cc 73 ?? 6a ?? e8 ?? ?? ?? ?? 8b 55 f4 03 55 c8 8b 45 ec 03 45 c4 8b 4d d4 e8 ?? ?? ?? ?? 8b 45 d4 01 45 c4 8b 45 d4 01 45 c8 8b 45 d0 01 45 c8 eb ?? 8b 45 e8 }\n\t\t$a_03_1 = {03 d8 8b 45 ec 31 18 6a 00 e8 ?? ?? ?? ?? 8b 55 e8 83 c2 04 03 c2 89 45 e8 8b 45 ec 83 c0 04 89 45 ec 8b 45 e8 3b 45 e4 72 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

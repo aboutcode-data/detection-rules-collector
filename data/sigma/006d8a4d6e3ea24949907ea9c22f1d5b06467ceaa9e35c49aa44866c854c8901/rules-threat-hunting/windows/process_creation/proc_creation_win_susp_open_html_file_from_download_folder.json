@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_open_html_file_from_download_folder.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Joseph Kamau",
+                "date": "2025-12-05",
+                "title": "HTML File Opened From Download Folder",
+                "id": "538c5851-8c03-4724-8ec4-623bc7aadaea"
+            },
+            "rule_text": "title: HTML File Opened From Download Folder\nid: 538c5851-8c03-4724-8ec4-623bc7aadaea\nstatus: experimental\ndescription: 'Detects web browser process opening an HTML file from a user''s Downloads\n  folder.\n\n  This behavior is could be associated with phishing attacks where threat actors send\n  HTML attachments to users.\n\n  When a user opens such an attachment, it can lead to the execution of malicious\n  scripts or the download of malware.\n\n  During investigation, analyze the HTML file for embedded scripts or links, check\n  for any subsequent downloads or process executions, and investigate the source of\n  the email or message containing the attachment.\n\n  '\nreferences:\n- https://app.any.run/tasks/ae3c4ded-fd6a-43ed-8215-ba0ba574ad33\n- https://app.any.run/tasks/8901e2d5-0c5a-48ba-a8e9-10b5ed7e06f4\nauthor: Joseph Kamau\ndate: 2025-12-05\ntags:\n- attack.t1598.002\n- attack.t1566.001\n- attack.initial-access\n- attack.reconnaissance\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith:\n    - \\brave.exe\n    - \\chrome.exe\n    - \\firefox.exe\n    - \\msedge.exe\n    - \\opera.exe\n    - \\vivaldi.exe\n    CommandLine|contains|all:\n    - :\\users\\\n    - \\Downloads\\\n    - .htm\n  condition: selection\nfalsepositives:\n- Opening any HTML file located in users directories via a browser process will trigger\n  this.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

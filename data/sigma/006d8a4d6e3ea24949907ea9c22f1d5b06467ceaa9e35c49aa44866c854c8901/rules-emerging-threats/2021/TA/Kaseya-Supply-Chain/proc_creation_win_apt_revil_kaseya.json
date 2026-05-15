@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2021/TA/Kaseya-Supply-Chain/proc_creation_win_apt_revil_kaseya.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-07-03",
+                "title": "REvil Kaseya Incident Malware Patterns",
+                "id": "5de632bc-7fbd-4c8a-944a-fce55c59eae5"
+            },
+            "rule_text": "title: REvil Kaseya Incident Malware Patterns\nid: 5de632bc-7fbd-4c8a-944a-fce55c59eae5\nstatus: test\ndescription: Detects process command line patterns and locations used by REvil group\n  in Kaseya incident (can also match on other malware)\nreferences:\n- https://community.sophos.com/b/security-blog/posts/active-ransomware-attack-on-kaseya-customers\n- https://www.joesandbox.com/analysis/443736/0/html\n- https://doublepulsar.com/kaseya-supply-chain-attack-delivers-mass-ransomware-event-to-us-companies-76e4ec6ec64b\n- https://therecord.media/revil-ransomware-executes-supply-chain-attack-via-malicious-kaseya-update/\n- https://blog.truesec.com/2021/07/04/kaseya-supply-chain-attack-targeting-msps-to-deliver-revil-ransomware/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-07-03\nmodified: 2022-05-20\ntags:\n- attack.execution\n- attack.t1059\n- attack.g0115\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    CommandLine|contains:\n    - C:\\Windows\\cert.exe\n    - del /q /f c:\\kworking\\agent.crt\n    - Kaseya VSA Agent Hot-fix\n    - \\AppData\\Local\\Temp\\MsMpEng.exe\n    - rmdir /s /q %SystemDrive%\\inetpub\\logs\n    - del /s /q /f %SystemDrive%\\\\*.log\n    - c:\\kworking1\\agent.exe\n    - c:\\kworking1\\agent.crt\n  selection2:\n    Image:\n    - C:\\Windows\\MsMpEng.exe\n    - C:\\Windows\\cert.exe\n    - C:\\kworking\\agent.exe\n    - C:\\kworking1\\agent.exe\n  selection3:\n    CommandLine|contains|all:\n    - del /s /q /f\n    - WebPages\\Errors\\webErrorLog.txt\n  condition: 1 of selection*\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

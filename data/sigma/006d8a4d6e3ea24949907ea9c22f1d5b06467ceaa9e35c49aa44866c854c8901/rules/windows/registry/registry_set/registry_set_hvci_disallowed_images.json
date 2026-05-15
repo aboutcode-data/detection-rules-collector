@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_hvci_disallowed_images.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Omar Khaled (@beacon_exe)",
+                "date": "2023-12-05",
+                "title": "Driver Added To Disallowed Images In HVCI - Registry",
+                "id": "555155a2-03bf-4fe7-af74-d176b3fdbe16"
+            },
+            "rule_text": "title: Driver Added To Disallowed Images In HVCI - Registry\nid: 555155a2-03bf-4fe7-af74-d176b3fdbe16\nrelated:\n- id: 44cee399-f6b1-45cc-a87c-ea14c6064d6b\n  type: similar\nstatus: test\ndescription: 'Detects changes to the \"HVCIDisallowedImages\" registry value to potentially\n  add a driver to the list, in order to prevent it from loading.\n\n  '\nreferences:\n- https://github.com/yardenshafir/conference_talks/blob/3de1f5d7c02656c35117f067fbff0a219c304b09/OffensiveCon_2023_Your_Mitigations_are_My_Opportunities.pdf\n- https://x.com/yarden_shafir/status/1822667605175324787\nauthor: Nasreddine Bencherchali (Nextron Systems), Omar Khaled (@beacon_exe)\ndate: 2023-12-05\nmodified: 2024-08-21\ntags:\n- attack.stealth\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - \\Control\\CI\\\n    - \\HVCIDisallowedImages\n  condition: selection\nfalsepositives:\n- Legitimate usage of this key would also trigger this. Investigate the driver being\n  added and make sure its intended\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

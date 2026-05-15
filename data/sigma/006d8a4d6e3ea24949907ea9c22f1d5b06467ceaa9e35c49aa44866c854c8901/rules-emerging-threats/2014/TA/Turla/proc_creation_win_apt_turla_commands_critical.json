@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2014/TA/Turla/proc_creation_win_apt_turla_commands_critical.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis",
+                "date": "2017-11-07",
+                "title": "Turla Group Lateral Movement",
+                "id": "c601f20d-570a-4cde-a7d6-e17f99cb8e7f"
+            },
+            "rule_text": "title: Turla Group Lateral Movement\nid: c601f20d-570a-4cde-a7d6-e17f99cb8e7f\nstatus: test\ndescription: Detects automated lateral movement by Turla group\nreferences:\n- https://securelist.com/the-epic-turla-operation/65545/\nauthor: Markus Neis\ndate: 2017-11-07\nmodified: 2022-10-09\ntags:\n- attack.g0010\n- attack.execution\n- attack.t1059\n- attack.lateral-movement\n- attack.t1021.002\n- attack.discovery\n- attack.t1083\n- attack.t1135\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine:\n    - net use \\\\\\\\%DomainController%\\C$ \"P@ssw0rd\" *\n    - dir c:\\\\*.doc* /s\n    - dir %TEMP%\\\\*.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

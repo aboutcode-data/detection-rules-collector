@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_perflogs_susp_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-05-05",
+                "title": "Suspicious File Created In PerfLogs",
+                "id": "bbb7e38c-0b41-4a11-b306-d2a457b7ac2b"
+            },
+            "rule_text": "title: Suspicious File Created In PerfLogs\nid: bbb7e38c-0b41-4a11-b306-d2a457b7ac2b\nstatus: test\ndescription: Detects suspicious file based on their extension being created in \"C:\\PerfLogs\\\".\n  Note that this directory mostly contains \".etl\" files\nreferences:\n- Internal Research\n- https://labs.withsecure.com/publications/fin7-target-veeam-servers\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-05-05\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|startswith: C:\\PerfLogs\\\n    TargetFilename|endswith:\n    - .7z\n    - .bat\n    - .bin\n    - .chm\n    - .dll\n    - .exe\n    - .hta\n    - .lnk\n    - .ps1\n    - .psm1\n    - .py\n    - .scr\n    - .sys\n    - .vbe\n    - .vbs\n    - .zip\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

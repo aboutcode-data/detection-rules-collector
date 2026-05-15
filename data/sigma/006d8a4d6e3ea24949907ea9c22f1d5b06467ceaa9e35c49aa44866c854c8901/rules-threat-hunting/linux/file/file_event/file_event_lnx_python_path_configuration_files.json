@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/linux/file/file_event/file_event_lnx_python_path_configuration_files.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Braathen (mnemonic.io)",
+                "date": "2024-04-25",
+                "title": "Python Path Configuration File Creation - Linux",
+                "id": "fb96c26c-9f85-4ae7-af0d-ed1ed1f1f5ce"
+            },
+            "rule_text": "title: Python Path Configuration File Creation - Linux\nid: fb96c26c-9f85-4ae7-af0d-ed1ed1f1f5ce\nrelated:\n- id: e3652ba3-0ad8-4010-a957-b7ba369e7bac\n  type: similar\n- id: 4f394635-13ef-4599-b677-3353e0f84f55\n  type: similar\nstatus: test\ndescription: 'Detects creation of a Python path configuration file (.pth) in Python\n  library folders, which can be maliciously abused for code execution and persistence.\n\n  Modules referenced by these files are run at every Python startup (v3.5+), regardless\n  of whether the module is imported by the calling script.\n\n  Default paths are ''\\lib\\site-packages\\*.pth'' (Windows) and ''/lib/pythonX.Y/site-packages/*.pth''\n  (Unix and macOS).\n\n  '\nreferences:\n- https://www.volexity.com/blog/2024/04/12/zero-day-exploitation-of-unauthenticated-remote-code-execution-vulnerability-in-globalprotect-cve-2024-3400/\n- https://www.virustotal.com/gui/file/3de2a4392b8715bad070b2ae12243f166ead37830f7c6d24e778985927f9caac\n- https://docs.python.org/3/library/site.html\nauthor: Andreas Braathen (mnemonic.io)\ndate: 2024-04-25\ntags:\n- attack.execution\n- attack.t1059.006\n- detection.threat-hunting\nlogsource:\n  product: linux\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|re: (?i)/lib/python3\\.([5-9]|[0-9]{2})/site-packages/\n    TargetFilename|endswith: .pth\n  condition: selection\nfalsepositives:\n- Although .pth files are discouraged due to potential security implications, these\n  are legitimate files by specification.\nlevel: medium\n",
+            "vulnerabilities": [
+                "CVE-2024-3400"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/IcedID.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_IcedID_loader",
+                "tags": [],
+                "description": "IcedID Loader",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "6ae543b0a3380779b65bff8c3ca0267f741173aed0d35265d6c92c0298fb924c"
+            },
+            "rule_text": "rule malware_IcedID_loader\n{\n\tmeta:\n\t\tdescription = \"IcedID Loader\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"6ae543b0a3380779b65bff8c3ca0267f741173aed0d35265d6c92c0298fb924c\"\n\n\tstrings:\n\t\t$a1 = \"update_data.dat\" wide\n\t\t$a2 = \"files/bp.dat\" ascii\n\t\t$a3 = \"Update_%x\" wide\n\t\t$a4 = \"Custom_update\" wide\n\t\t$b1 = {35 87 63 00 00 ?? ?? ?? ?? ?? ?? ?? ?? 35 9A 76 00 00}\n\t\t$b2 = {C7 ?? ?? C5 9D 1C 81}\n\t\t$b3 = {69 ?? ?? 93 01 00 01}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( all of ( $a* ) or all of ( $b* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_file_and_directory_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, oscd.community, CheraghiMilad",
+                "date": "2020-10-19",
+                "title": "File and Directory Discovery - Linux",
+                "id": "d3feb4ee-ff1d-4d3d-bd10-5b28a238cc72"
+            },
+            "rule_text": "title: File and Directory Discovery - Linux\nid: d3feb4ee-ff1d-4d3d-bd10-5b28a238cc72\nstatus: test\ndescription: 'Detects usage of system utilities such as \"find\", \"tree\", \"findmnt\",\n  etc, to discover files, directories and network shares.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md\nauthor: Daniil Yugoslavskiy, oscd.community, CheraghiMilad\ndate: 2020-10-19\nmodified: 2024-12-01\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_file_with_asterisk:\n    Image|endswith: /file\n    CommandLine|re: (.){200,}\n  selection_recursive_ls:\n    Image|endswith: /ls\n    CommandLine|contains: -R\n  selection_find_execution:\n    Image|endswith: /find\n  selection_tree_execution:\n    Image|endswith: /tree\n  selection_findmnt_execution:\n    Image|endswith: /findmnt\n  selection_locate_execution:\n    Image|endswith: /mlocate\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate activities\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

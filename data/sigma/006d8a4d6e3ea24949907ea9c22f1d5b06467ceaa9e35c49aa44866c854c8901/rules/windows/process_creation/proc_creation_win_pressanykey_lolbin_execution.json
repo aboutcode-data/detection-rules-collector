@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pressanykey_lolbin_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-01-11",
+                "title": "Visual Studio NodejsTools PressAnyKey Arbitrary Binary Execution",
+                "id": "a20391f8-76fb-437b-abc0-dba2df1952c6"
+            },
+            "rule_text": "title: Visual Studio NodejsTools PressAnyKey Arbitrary Binary Execution\nid: a20391f8-76fb-437b-abc0-dba2df1952c6\nrelated:\n- id: 65c3ca2c-525f-4ced-968e-246a713d164f\n  type: similar\nstatus: test\ndescription: Detects child processes of Microsoft.NodejsTools.PressAnyKey.exe that\n  can be used to execute any other binary\nreferences:\n- https://twitter.com/mrd0x/status/1463526834918854661\n- https://gist.github.com/nasbench/a989ce64cefa8081bd50cf6ad8c491b5\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-01-11\nmodified: 2023-04-11\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\Microsoft.NodejsTools.PressAnyKey.exe\n  condition: selection\nfalsepositives:\n- Legitimate use by developers as part of NodeJS development with Visual Studio Tools\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/github/audit/github_ssh_certificate_config_changed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Romain Gaillard (@romain-gaillard)",
+                "date": "2024-07-29",
+                "title": "Github SSH Certificate Configuration Changed",
+                "id": "2f575940-d85e-4ddc-af13-17dad6f1a0ef"
+            },
+            "rule_text": "title: Github SSH Certificate Configuration Changed\nid: 2f575940-d85e-4ddc-af13-17dad6f1a0ef\nstatus: test\ndescription: Detects when changes are made to the SSH certificate configuration of\n  the organization.\nreferences:\n- https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-git-access-to-your-organizations-repositories/about-ssh-certificate-authorities\n- https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/audit-log-events-for-your-enterprise#ssh_certificate_authority\nauthor: Romain Gaillard (@romain-gaillard)\ndate: 2024-07-29\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078.004\nlogsource:\n  product: github\n  service: audit\n  definition: 'Requirements: The audit log streaming feature must be enabled to be\n    able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'\ndetection:\n  selection:\n    action:\n    - ssh_certificate_authority.create\n    - ssh_certificate_requirement.disable\n  condition: selection\nfalsepositives:\n- Allowed administrative activities.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

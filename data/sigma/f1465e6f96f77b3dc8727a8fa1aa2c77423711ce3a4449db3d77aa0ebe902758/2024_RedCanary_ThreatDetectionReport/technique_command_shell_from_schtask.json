@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_command_shell_from_schtask.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Windows Scheduled Task Creating Shell",
+                "id": "8b1a34e3-c4d6-4af6-9836-35a0da09b85b"
+            },
+            "rule_text": "title: Windows Scheduled Task Creating Shell\nid: 8b1a34e3-c4d6-4af6-9836-35a0da09b85b\nstatus: experimental\ndescription: \"Adversaries frequently establish persistence by using scheduled tasks\\\n  \\ to launch \\nthe Windows Command Shell. Detecting this behavior is relatively straightforward.\\\n  \\ \\nPart of the RedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-command-shell/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1059\n- attack.t1059.003\n- attack.t1053\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains: create\n  selection2:\n    CommandLine|contains:\n    - cmd.exe /c\n    - cmd /c\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

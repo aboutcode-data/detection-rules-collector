@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_action1_code_exec_and_remote_sessions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2023-04-13",
+                "title": "Remote Access Tool - Action1 Arbitrary Code Execution and Remote Sessions",
+                "id": "aa3168fb-d594-4f93-a92d-7a9ba675b766"
+            },
+            "rule_text": "title: Remote Access Tool - Action1 Arbitrary Code Execution and Remote Sessions\nid: aa3168fb-d594-4f93-a92d-7a9ba675b766\nstatus: test\ndescription: 'Detects the execution of Action1 in order to execute arbitrary code\n  or establish a remote session.\n\n\n  Action1 is a powerful Remote Monitoring and Management tool that enables users to\n  execute commands, scripts, and binaries.\n\n  Through the web interface of action1, the administrator must create a new policy\n  or an app to establish remote execution and then points that the agent is installed.\n\n\n  Hunting Opportunity 1- Weed Out The Noise\n\n\n  When threat actors execute a script, a command, or a binary through these new policies\n  and apps, the names of these become visible in the command line during the execution\n  process. Below is an example of the command line that contains the deployment of\n  a binary through  a policy with name \"test_app_1\":\n\n\n  ParentCommandLine: \"C:\\WINDOWS\\Action1\\action1_agent.exe schedule:Deploy_App__test_app_1_1681327673425\n  runaction:0\"\n\n\n  After establishing a baseline, we can split the command to extract the policy name\n  and group all the policy names and inspect the results with a list of frequency\n  occurrences.\n\n\n  Hunting Opportunity 2 - Remote Sessions On Out Of Office Hours\n\n\n  If you have admins within your environment using remote sessions to administer endpoints,\n  you can create a threat-hunting query and modify the time of the initiated sessions\n  looking for abnormal activity.\n\n  '\nreferences:\n- https://twitter.com/Kostastsale/status/1646256901506605063?s=20\n- https://www.action1.com/documentation/\nauthor: '@kostastsale'\ndate: 2023-04-13\ntags:\n- attack.command-and-control\n- attack.t1219.002\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_app_deployment_exec:\n    ParentImage|endswith: \\action1_agent.exe\n    Image|contains: \\Windows\\Action1\\package_downloads\\\n  selection_command_exec:\n    ParentImage|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    ParentCommandLine|contains:\n    - \\Action1\\scripts\\Run_Command_\n    - \\Action1\\scripts\\Run_PowerShell_\n  selection_remote_session_init:\n    Image|endswith: \\agent1_remote.exe\n  condition: 1 of selection_*\nfalsepositives:\n- If Action1 is among the approved software in your environment, you might find that\n  this is a noisy query. See description for ideas on how to alter this query and\n  start looking for suspicious activities.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

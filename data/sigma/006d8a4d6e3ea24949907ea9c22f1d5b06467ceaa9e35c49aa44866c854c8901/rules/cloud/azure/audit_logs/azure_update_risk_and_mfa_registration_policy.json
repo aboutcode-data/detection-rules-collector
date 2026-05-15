@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_update_risk_and_mfa_registration_policy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Harjot Singh (@cyb3rjy0t)",
+                "date": "2024-08-13",
+                "title": "User Risk and MFA Registration Policy Updated",
+                "id": "d4c7758e-9417-4f2e-9109-6125d66dabef"
+            },
+            "rule_text": "title: User Risk and MFA Registration Policy Updated\nid: d4c7758e-9417-4f2e-9109-6125d66dabef\nstatus: test\ndescription: 'Detects changes and updates to the user risk and MFA registration policy.\n\n  Attackers can modified the policies to Bypass MFA, weaken security thresholds, facilitate\n  further attacks, maintain persistence.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-configure-mfa-policy\n- https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities\nauthor: Harjot Singh (@cyb3rjy0t)\ndate: 2024-08-13\ntags:\n- attack.persistence\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    LoggedByService: AAD Management UX\n    Category: Policy\n    OperationName: Update User Risk and MFA Registration Policy\n  condition: selection\nfalsepositives:\n- Known updates by administrators.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

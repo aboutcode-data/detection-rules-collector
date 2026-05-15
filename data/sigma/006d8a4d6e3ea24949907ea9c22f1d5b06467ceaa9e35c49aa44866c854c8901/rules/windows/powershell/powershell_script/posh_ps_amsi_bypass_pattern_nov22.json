@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_amsi_bypass_pattern_nov22.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-11-09",
+                "title": "AMSI Bypass Pattern Assembly GetType",
+                "id": "e0d6c087-2d1c-47fd-8799-3904103c5a98"
+            },
+            "rule_text": "title: AMSI Bypass Pattern Assembly GetType\nid: e0d6c087-2d1c-47fd-8799-3904103c5a98\nstatus: test\ndescription: Detects code fragments found in small and obfuscated AMSI bypass PowerShell\n  scripts\nreferences:\n- https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/\n- https://twitter.com/cyb3rops/status/1588574518057979905?s=20&t=A7hh93ONM7ni1Rj1jO5OaA\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-11-09\ntags:\n- attack.defense-impairment\n- attack.t1685\n- attack.execution\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - '[Ref].Assembly.GetType'\n    - SetValue($null,$true)\n    - NonPublic,Static\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

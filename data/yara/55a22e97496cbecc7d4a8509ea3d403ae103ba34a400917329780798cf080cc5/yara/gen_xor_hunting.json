@@ -1,0 +1,36 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_xor_hunting.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_XORed_Mozilla_Oct19",
+                "tags": [],
+                "old_rule_name": "SUSP_XORed_Mozilla",
+                "description": "Detects suspicious single byte XORed keyword 'Mozilla/5.0' - it uses yara's XOR modifier and therefore cannot print the XOR key. You can use the CyberChef recipe linked in the reference field to brute force the used key.",
+                "author": "Florian Roth",
+                "reference": "https://gchq.github.io/CyberChef/#recipe=XOR_Brute_Force()",
+                "date": "2019-10-28",
+                "modified": "2023-11-03",
+                "score": 60,
+                "id": "71e5b399-c384-5330-ae52-4e0a806e7969"
+            },
+            "rule_text": "rule SUSP_XORed_Mozilla_Oct19\n{\n\tmeta:\n\t\told_rule_name = \"SUSP_XORed_Mozilla\"\n\t\tdescription = \"Detects suspicious single byte XORed keyword 'Mozilla/5.0' - it uses yara's XOR modifier and therefore cannot print the XOR key. You can use the CyberChef recipe linked in the reference field to brute force the used key.\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://gchq.github.io/CyberChef/#recipe=XOR_Brute_Force()\"\n\t\tdate = \"2019-10-28\"\n\t\tmodified = \"2023-11-03\"\n\t\tscore = 60\n\t\tid = \"71e5b399-c384-5330-ae52-4e0a806e7969\"\n\n\tstrings:\n\t\t$xo1 = \"Mozilla/5.0\" xor ascii wide\n\t\t$xof1 = \"Mozilla/5.0\" ascii wide\n\t\t$fpa1 = \"Sentinel Labs\" wide\n\t\t$fpa2 = \"<filter object at\" ascii\n\t\t$fpb1 = { 64 65 78 0a 30 33 35 }\n\n\tcondition:\n\t\t$xo1 and not $xof1 and not 1 of ( $fpa* ) and not $fpb1 at 0\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_XORed_MSDOS_Stub_Message",
+                "tags": [],
+                "description": "Detects suspicious XORed MSDOS stub message",
+                "author": "Florian Roth",
+                "reference": "https://yara.readthedocs.io/en/latest/writingrules.html#xor-strings",
+                "date": "2019-10-28",
+                "modified": "2023-10-11",
+                "score": 55,
+                "id": "9ab52434-9162-5fd5-bf34-8b163f6aeec4"
+            },
+            "rule_text": "rule SUSP_XORed_MSDOS_Stub_Message\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious XORed MSDOS stub message\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://yara.readthedocs.io/en/latest/writingrules.html#xor-strings\"\n\t\tdate = \"2019-10-28\"\n\t\tmodified = \"2023-10-11\"\n\t\tscore = 55\n\t\tid = \"9ab52434-9162-5fd5-bf34-8b163f6aeec4\"\n\n\tstrings:\n\t\t$xo1 = \"This program cannot be run in DOS mode\" xor(0x01-0xff) ascii wide\n\t\t$xo2 = \"This program must be run under Win32\" xor(0x01-0xff) ascii wide\n\t\t$fp1 = \"AVAST Software\" fullword wide ascii\n\t\t$fp2 = \"AVG Netherlands\" fullword wide ascii\n\t\t$fp3 = \"AVG Technologies\" ascii wide\n\t\t$fp4 = \"Malicious Software Removal Tool\" wide\n\t\t$fp5 = \"McAfee Labs\" fullword ascii wide\n\t\t$fp6 = \"Kaspersky Lab\" fullword ascii wide\n\t\t$fp7 = \"<propertiesmap>\" ascii wide\n\t\t$fp10 = \"Avira Engine Module\" wide\n\t\t$fp11 = \"syntevo GmbH\" wide fullword\n\t\t$fp13 = \"SophosClean\" ascii\n\t\t$fp14 = \"SophosHomeClean\" wide\n\n\tcondition:\n\t\t1 of ( $x* ) and not 1 of ( $fp* ) and not uint16( 0 ) == 0xb0b0 and not uint16( 0 ) == 0x5953\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

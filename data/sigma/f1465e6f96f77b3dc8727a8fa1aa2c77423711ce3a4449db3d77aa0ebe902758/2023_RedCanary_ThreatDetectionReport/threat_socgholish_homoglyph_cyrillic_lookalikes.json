@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/threat_socgholish_homoglyph_cyrillic_lookalikes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, @micahbabinski",
+                "date": "2023/05/07",
+                "title": "Potential Homoglyph Attack Using Lookalike Characters",
+                "id": "32e280f1-8ad4-46ef-9e80-910657611fbc"
+            },
+            "rule_text": "title: Potential Homoglyph Attack Using Lookalike Characters\nid: 32e280f1-8ad4-46ef-9e80-910657611fbc\nstatus: experimental\ndescription: 'Detects the presence of unicode characters which are homoglyphs, or\n  identical in appearance, to ASCII letter characters.\n\n  This is used as an obfuscation and masquerading techniques. Only \"perfect\" homoglyphs\n  are included; these are characters that\n\n  are indistinguishable from ASCII characters and thus may make excellent candidates\n  for homoglyph attack characters.\n\n  '\nreferences:\n- https://redcanary.com/threat-detection-report/threats/socgholish/#threat-socgholish\n- http://www.irongeek.com/homoglyph-attack-generator.php\nauthor: Micah Babinski, @micahbabinski\ndate: 2023/05/07\ntags:\n- attack.defense_evasion\n- attack.t1036\n- attack.t1036.003\n- attack.t1036.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - \"\\u0410\"\n    - \"\\u0430\"\n    - \"\\u0412\"\n    - \"\\u0415\"\n    - \"\\u0435\"\n    - \"\\u041A\"\n    - \"\\u041C\"\n    - \"\\u041D\"\n    - \"\\u041E\"\n    - \"\\u043E\"\n    - \"\\u0420\"\n    - \"\\u0440\"\n    - \"\\u0421\"\n    - \"\\u0441\"\n    - \"\\u0422\"\n    - \"\\u0425\"\n    - \"\\u0445\"\n    - \"\\u0405\"\n    - \"\\u0455\"\n    - \"\\u0406\"\n    - \"\\u0456\"\n    - \"\\u0408\"\n    - \"\\u0458\"\n    - \"\\u04AE\"\n    - \"\\u04BB\"\n    - \"\\u04C0\"\n    - \"\\u04CF\"\n    - \"\\u0501\"\n    - \"\\u050C\"\n    - \"\\u051A\"\n    - \"\\u051B\"\n    - \"\\u051C\"\n    - \"\\u051D\"\n    - \"\\u0391\"\n    - \"\\u0392\"\n    - \"\\u0395\"\n    - \"\\u0396\"\n    - \"\\u0397\"\n    - \"\\u0399\"\n    - \"\\u039A\"\n    - \"\\u039C\"\n    - \"\\u039D\"\n    - \"\\u039F\"\n    - \"\\u03BF\"\n    - \"\\u03A1\"\n    - \"\\u03A4\"\n    - \"\\u03A5\"\n    - \"\\u03A7\"\n  condition: selection\nfalsepositives:\n- Commandlines with legitimate Cyrillic text; will likely require tuning (or not be\n  usable) in countries where these alphabets are in use.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

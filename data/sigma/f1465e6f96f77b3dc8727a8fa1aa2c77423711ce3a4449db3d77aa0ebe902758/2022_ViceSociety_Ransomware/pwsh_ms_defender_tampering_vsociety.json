@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_ViceSociety_Ransomware/pwsh_ms_defender_tampering_vsociety.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/26",
+                "title": "Powershell MS Defender Tampering - ScriptBlockLogging",
+                "id": "9e50b0e6-464b-4eb3-858c-690d2d51e812"
+            },
+            "rule_text": "title: Powershell MS Defender Tampering - ScriptBlockLogging\nid: 9e50b0e6-464b-4eb3-858c-690d2d51e812\nrelated:\n- id: 14c71865-6cd3-44ae-adaa-1db923fae5f2\n  type: derived\nstatus: experimental\ndescription: Detects powershell scripts attempting to disable MS Defender components\n  using Set-MpPreference as performed by Vice Society ransomware gang. This includes\n  additional techniques to evade existing rules by feeding in a proxy value of $true\n  using a powershell boolean expression like (0 -eq $false).\nreferences:\n- https://www.educba.com/powershell-boolean/\n- https://learn.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2022-ps\n- https://www.microsoft.com/en-us/security/blog/2022/10/25/dev-0832-vice-society-opportunistic-ransomware-campaigns-impacting-us-education-sector/\nauthor: Micah Babinski\ndate: 2022/11/26\ntags:\n- attack.defense_evasion\n- attack.t1562\n- attack.t1562.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: Script block logging must be enabled\ndetection:\n  selection_options_disabling_preference:\n    ScriptBlockText|contains|all:\n    - Set-MpPreference\n    - -DisableRealtimeMonitoring\n  filter:\n    ScriptBlockText|re: .*Set-MpPreference.*Disable.*\\s(\\$false|0).*\n  condition: selection_options_disabling_preference and not filter\nfalsepositives:\n- Legitimate PowerShell scripts which need to disable MS Defender.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

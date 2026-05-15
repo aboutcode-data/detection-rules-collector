@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/A-C/certutil.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "certutil",
+                "tags": [],
+                "description": "Detection patterns for the tool 'certutil' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "certutil",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule certutil\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'certutil' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"certutil\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /certutil\\s\\-urlcache\\s\\-split\\s\\-f\\shttp.{0,1000}\\.exe/ nocase ascii wide\n\t\t$string2 = /certutil\\.exe\\s\\-urlcache\\s\\-split\\s\\-f\\s.{0,1000}https\\:\\/\\/cdn\\.discordapp\\.com\\/attachments\\// nocase ascii wide\n\t\t$string3 = /certutil\\.exe\\s\\-urlcache\\s\\-split\\s\\-f\\shttp.{0,1000}\\.bat\\sC\\:\\\\ProgramData\\\\/ nocase ascii wide\n\t\t$string4 = /certutil\\.exe\\s\\-urlcache\\s\\-split\\s\\-f\\shttp.{0,1000}\\.ps1\\sC\\:\\\\ProgramData\\\\/ nocase ascii wide\n\t\t$string5 = /certutil\\.exe\\s\\-urlcache\\s\\-split\\s\\-f\\shttp.{0,1000}\\.vbs\\sC\\:\\\\ProgramData\\\\/ nocase ascii wide\n\t\t$string6 = /certutil\\.exe\\s\\-urlcache\\s\\-split\\s\\-f\\shttps\\:\\/\\/raw\\.githubusercontent\\.com\\// nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

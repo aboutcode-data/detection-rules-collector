@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_dns_server_level_plugin_dll.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-05-08",
+                "title": "New DNS ServerLevelPluginDll Installed",
+                "id": "e61e8a88-59a9-451c-874e-70fcc9740d67"
+            },
+            "rule_text": "title: New DNS ServerLevelPluginDll Installed\nid: e61e8a88-59a9-451c-874e-70fcc9740d67\nrelated:\n- id: cbe51394-cd93-4473-b555-edf0144952d9\n  type: derived\n- id: f63b56ee-3f79-4b8a-97fb-5c48007e8573\n  type: derived\nstatus: test\ndescription: Detects the installation of a DNS plugin DLL via ServerLevelPluginDll\n  parameter in registry, which can be used to execute code in context of the DNS server\n  (restart required)\nreferences:\n- https://medium.com/@esnesenon/feature-not-bug-dnsadmin-to-dc-compromise-in-one-line-a0f779b8dc83\n- https://blog.3or.de/hunting-dns-server-level-plugin-dll-injection.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-05-08\nmodified: 2023-08-17\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.defense-impairment\n- attack.t1574.001\n- attack.t1112\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|endswith: \\services\\DNS\\Parameters\\ServerLevelPluginDll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

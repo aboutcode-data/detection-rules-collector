@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_system_info_uncommon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "TropChaud",
+                "date": "2023-01-26",
+                "title": "Uncommon System Information Discovery Via Wmic.EXE",
+                "id": "9d5a1274-922a-49d0-87f3-8c653483b909"
+            },
+            "rule_text": "title: Uncommon System Information Discovery Via Wmic.EXE\nid: 9d5a1274-922a-49d0-87f3-8c653483b909\nrelated:\n- id: d85ecdd7-b855-4e6e-af59-d9c78b5b861e\n  type: derived\nstatus: test\ndescription: 'Detects the use of the WMI command-line (WMIC) utility to identify and\n  display various system information,\n\n  including OS, CPU, GPU, and disk drive names; memory capacity; display resolution;\n  and baseboard, BIOS,\n\n  and GPU driver products/versions.\n\n  Some of these commands were used by Aurora Stealer in late 2022/early 2023.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/a2ccd19c37d0278b4ffa8583add3cf52060a5418/atomics/T1082/T1082.md#atomic-test-25---system-information-discovery-with-wmic\n- https://nwgat.ninja/getting-system-information-with-wmic-on-windows/\n- https://blog.sekoia.io/aurora-a-rising-stealer-flying-under-the-radar\n- https://blog.cyble.com/2023/01/18/aurora-a-stealer-using-shapeshifting-tactics/\n- https://app.any.run/tasks/a6aa0057-82ec-451f-8f99-55650ca537da/\n- https://www.virustotal.com/gui/file/d6f6bc10ae0e634ed4301d584f61418cee18e5d58ad9af72f8aa552dc4aaeca3/behavior\nauthor: TropChaud\ndate: 2023-01-26\nmodified: 2023-12-19\ntags:\n- attack.discovery\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_wmic:\n  - Description: WMI Commandline Utility\n  - OriginalFileName: wmic.exe\n  - Image|endswith: \\WMIC.exe\n  selection_commands:\n    CommandLine|contains:\n    - LOGICALDISK get Name,Size,FreeSpace\n    - os get Caption,OSArchitecture,Version\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

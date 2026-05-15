@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vscode_tunnel_remote_shell_.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-25",
+                "title": "Visual Studio Code Tunnel Shell Execution",
+                "id": "f4a623c2-4ef5-4c33-b811-0642f702c9f1"
+            },
+            "rule_text": "title: Visual Studio Code Tunnel Shell Execution\nid: f4a623c2-4ef5-4c33-b811-0642f702c9f1\nstatus: test\ndescription: Detects the execution of a shell (powershell, bash, wsl...) via Visual\n  Studio Code tunnel. Attackers can abuse this functionality to establish a C2 channel\n  and execute arbitrary commands on the system.\nreferences:\n- https://ipfyx.fr/post/visual-studio-code-tunnel/\n- https://badoption.eu/blog/2023/01/31/code_c2.html\n- https://code.visualstudio.com/docs/remote/tunnels\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-25\ntags:\n- attack.command-and-control\n- attack.t1071.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|contains: \\servers\\Stable-\n    ParentImage|endswith: \\server\\node.exe\n    ParentCommandLine|contains: .vscode-server\n  selection_child_1:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    CommandLine|contains: \\terminal\\browser\\media\\shellIntegration.ps1\n  selection_child_2:\n    Image|endswith:\n    - \\wsl.exe\n    - \\bash.exe\n  condition: selection_parent and 1 of selection_child_*\nfalsepositives:\n- Legitimate use of Visual Studio Code tunnel and running code from there\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

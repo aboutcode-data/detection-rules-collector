@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_mouselock_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Cian Heasley",
+                "date": "2020-08-13",
+                "title": "PUA - Mouse Lock Execution",
+                "id": "c9192ad9-75e5-43eb-8647-82a0a5b493e3"
+            },
+            "rule_text": "title: PUA - Mouse Lock Execution\nid: c9192ad9-75e5-43eb-8647-82a0a5b493e3\nstatus: test\ndescription: In Kaspersky's 2020 Incident Response Analyst Report they listed legitimate\n  tool \"Mouse Lock\" as being used for both credential access and collection in security\n  incidents.\nreferences:\n- https://github.com/klsecservices/Publications/blob/657deb6a6eb6e00669afd40173f425fb49682eaa/Incident-Response-Analyst-Report-2020.pdf\n- https://sourceforge.net/projects/mouselock/\nauthor: Cian Heasley\ndate: 2020-08-13\nmodified: 2023-02-21\ntags:\n- attack.credential-access\n- attack.collection\n- attack.t1056.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n  - Product|contains: Mouse Lock\n  - Company|contains: Misc314\n  - CommandLine|contains: Mouse Lock_\n  condition: selection\nfalsepositives:\n- Legitimate uses of Mouse Lock software\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

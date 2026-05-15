@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_krbrelay.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-04-27",
+                "title": "HackTool - KrbRelay Execution",
+                "id": "e96253b8-6b3b-4f90-9e59-3b24b99cf9b4"
+            },
+            "rule_text": "title: HackTool - KrbRelay Execution\nid: e96253b8-6b3b-4f90-9e59-3b24b99cf9b4\nstatus: test\ndescription: Detects the use of KrbRelay, a Kerberos relaying tool\nreferences:\n- https://github.com/cube0x0/KrbRelay\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-04-27\nmodified: 2023-02-04\ntags:\n- attack.credential-access\n- attack.t1558.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\KrbRelay.exe\n  - OriginalFileName: KrbRelay.exe\n  selection_cli_1:\n    CommandLine|contains|all:\n    - ' -spn '\n    - ' -clsid '\n    - ' -rbcd '\n  selection_cli_2:\n    CommandLine|contains|all:\n    - shadowcred\n    - clsid\n    - spn\n  selection_cli_3:\n    CommandLine|contains|all:\n    - 'spn '\n    - 'session '\n    - 'clsid '\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

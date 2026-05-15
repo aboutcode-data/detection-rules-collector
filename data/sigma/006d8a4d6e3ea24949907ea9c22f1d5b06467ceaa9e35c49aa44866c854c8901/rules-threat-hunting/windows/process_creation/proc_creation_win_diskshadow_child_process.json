@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_diskshadow_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Harjot Singh @cyb3rjy0t",
+                "date": "2023-09-15",
+                "title": "Diskshadow Child Process Spawned",
+                "id": "56b1dde8-b274-435f-a73a-fb75eb81262a"
+            },
+            "rule_text": "title: Diskshadow Child Process Spawned\nid: 56b1dde8-b274-435f-a73a-fb75eb81262a\nrelated:\n- id: fa1a7e52-3d02-435b-81b8-00da14dd66c1\n  type: similar\n- id: 1dde5376-a648-492e-9e54-4241dd9b0c7f\n  type: similar\n- id: 9f546b25-5f12-4c8d-8532-5893dcb1e4b8\n  type: similar\n- id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2\n  type: similar\nstatus: test\ndescription: Detects any child process spawning from \"Diskshadow.exe\". This could\n  be due to executing Diskshadow in interpreter mode or script mode and using the\n  \"exec\" flag to launch other applications.\nreferences:\n- https://bohops.com/2018/03/26/diskshadow-the-return-of-vss-evasion-persistence-and-active-directory-database-extraction/\n- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration\n- https://medium.com/@cyberjyot/lolbin-execution-via-diskshadow-f6ff681a27a4\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/diskshadow\nauthor: Harjot Singh @cyb3rjy0t\ndate: 2023-09-15\ntags:\n- attack.stealth\n- attack.t1218\n- attack.execution\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\diskshadow.exe\n  filter_main_werfault:\n    Image|endswith: :\\Windows\\System32\\WerFault.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Likely from legitimate usage of Diskshadow in Interpreter mode.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/webserver_generic/sensitive_file_exposure.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2024-05-21",
+                "title": "Sensitive File Exposed on Web Server",
+                "id": "76f2b262-e158-4644-aae8-b0de0fcf8854"
+            },
+            "rule_text": "title: Sensitive File Exposed on Web Server\nid: 76f2b262-e158-4644-aae8-b0de0fcf8854\ndescription: Detects potentially sensitive files downloaded from a web server\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: 2024-05-21\nmodified: 2026-02-12\nlogsource:\n  category: webserver\ndetection:\n  file_exists:\n    status: 200\n  file_is_sensitive:\n  - cs-uri|contains:\n    - .bak\n    - .env\n    - .sql\n    - /.git/\n  condition: file_exists and file_is_sensitive\nfalsepositives:\n- Some web servers log status as 200 even if the file doesn't exist. Visit the URL\n  to verify\ntags:\n- attack.initial-access\n- attack.t1595\n- attack.t1594\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

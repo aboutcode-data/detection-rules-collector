@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/granite_coroner.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "granite_coroner_dropper",
+                "tags": [],
+                "description": "Payload dropper for password theft or keylogging"
+            },
+            "rule_text": "rule granite_coroner_dropper\n{\n\tmeta:\n\t\tdescription = \"Payload dropper for password theft or keylogging\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$granitea = \"GRANITE\" nocase\n\t\t$granitew = \"GRANITE\" nocase wide\n\t\t$jocastaeluviuma = \"JOCASTAELUVIUM\" nocase\n\t\t$jocastaeluviumw = \"JOCASTAELUVIUM\" nocase wide\n\t\t$coronera = \"CORONER\" nocase\n\t\t$coronerw = \"CORONER\" nocase wide\n\t\t$bolshiecharitya = \"BOLSHIECHARITY\" nocase\n\t\t$bolshiecharityw = \"BOLSHIECHARITY\" nocase wide\n\t\t$cypher_cryptor = \"Cypher Cryptor\" wide\n\n\tcondition:\n\t\t$mz at 0 and ( $granitea and $jocastaeluviuma ) or ( $granitew and $jocastaeluviumw ) or ( $coronera and $bolshiecharitya ) or ( $coronerw and $bolshiecharityw ) or $cypher_cryptor\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "granite_jocasteluvium",
+                "tags": []
+            },
+            "rule_text": "rule granite_jocasteluvium\n{\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$string1 = \"JumpID(\\\"\\\",\\\"%s\\\")\"\n\t\t$string2 = \" - Clipboard - \"\n\t\t$string3 = \"Content-Type: application/x-www-form-urlencoded\"\n\t\t$string4 = \"text=\"\n\t\t$string5 = \"[Num Lock]\"\n\t\t$string6 = \"[PrtScr]\"\n\t\t$string7 = \"msgss.exe\"\n\t\t$string8 = \"User Interface Manager\" wide\n\n\tcondition:\n\t\t$mz at 0 and 7 of ( $string* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "coroner_bolshiecharity",
+                "tags": [],
+                "description": "Password extraction utility"
+            },
+            "rule_text": "rule coroner_bolshiecharity\n{\n\tmeta:\n\t\tdescription = \"Password extraction utility\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$passwords = \"chelsea\\x0055555\\x00angel1\\x00hardcore\\x00dexter\\x00saved\\x00112233\\x00hallo\\x00\"\n\n\tcondition:\n\t\t$mz at 0 and $passwords\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

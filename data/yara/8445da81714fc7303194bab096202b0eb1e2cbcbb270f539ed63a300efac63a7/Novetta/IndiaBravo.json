@@ -1,0 +1,48 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/IndiaBravo.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IndiaBravo_PapaAlfa",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "rule IndiaBravo_PapaAlfa\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$ = \"pmsconfig.msi\" wide\n\t\t$ = \"scvrit001.bat\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IndiaBravo_RomeoCharlie",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "58ad28ac4fb911abb6a20382456c4ad6fe5c8ee5.ex_",
+                "Status": "Signature is too loose to be useful."
+            },
+            "rule_text": "import \"pe\"\n\nrule IndiaBravo_RomeoCharlie\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"58ad28ac4fb911abb6a20382456c4ad6fe5c8ee5.ex_\"\n\t\tStatus = \"Signature is too loose to be useful.\"\n\n\tstrings:\n\t\t$a = {\n\t\t\t50 \n\t\t\t68 7E 66 04 80 \n\t\t\t8B 8D [4]\n\t\t\t51 \n\t\t\tFF 15 [4] \n\t\t\t83 F8 FF \n\t\t\t75 \n\t\t}\n\t\t$b1 = \"xc123465-efff-87cc-37abcdef9\"\n\t\t$b2 = \"[Check] - PORT ERROR...\" wide\n\t\t$b3 = \"%sd.e%sc n%ssh%srewa%s ad%s po%sop%sing T%s %d\"\n\n\tcondition:\n\t\t2 of ( $b* ) or $a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IndiaBravo_RomeoBravo",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "6e3db4da27f12eaba005217eba7cd9133bc258c97fe44605d12e20a556775009"
+            },
+            "rule_text": "import \"pe\"\n\nrule IndiaBravo_RomeoBravo\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"6e3db4da27f12eaba005217eba7cd9133bc258c97fe44605d12e20a556775009\"\n\n\tstrings:\n\t\t$a = {\n\t\t\tE8 [4] \n\t\t\t68 [2] 00 00 \n\t\t\t68 [4]\n\t\t\tA3 [4]\n\t\t\t89 15 [4]\n\t\t\tE8 [4]\n\t\t\t83 C4 08 \n\t\t\t8D [3]\n\t\t\t6A 00 \n\t\t\t5? \n\t\t\t68 [2] 00 00 \n\t\t\t68 [4]\n\t\t\t5? \n\t\t\tFF 15 [4]\n\t\t\t5? \n\t\t\tFF 15 \n\n\t\t}\n\t\t$b1 = \"tmscompg.msi\" wide\n\t\t$b2 = \"cvrit000.bat\"\n\n\tcondition:\n\t\t2 of ( $b* ) or $a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IndiaBravo_generic",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "rule IndiaBravo_generic\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$extractDll = \"[2] - Extract Dll...\" wide\n\t\t$createSvc = \"[3] - CreateSVC...\" wide\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

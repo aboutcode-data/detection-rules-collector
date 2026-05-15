@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Intezer/NexePirateSteal.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "nexe_piratesteal",
+                "tags": [],
+                "author": "Intezer",
+                "description": "Hunting for Nexe compiled PirateStealer Dropper",
+                "tlp": "white"
+            },
+            "rule_text": "rule nexe_piratesteal\n{\n\tmeta:\n\t\tauthor = \"Intezer\"\n\t\tdescription = \"Hunting for Nexe compiled PirateStealer Dropper\"\n\t\ttlp = \"white\"\n\n\tstrings:\n\t\t$nexe_str = \"process.__nexe = {\\\"resources\\\"\"\n\t\t$steal_str0 = \"file.includes(\\\"iscord\\\")\"\n\t\t$steal_str1 = \"\\\\app-*\\\\modules\\\\discord_desktop_core-*\\\\discord_desktop_core\\\\index.js\"\n\t\t$steal_str2 = \"pwnBetterDiscord\"\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5A4D and $nexe_str and 2 of ( $steal_str* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

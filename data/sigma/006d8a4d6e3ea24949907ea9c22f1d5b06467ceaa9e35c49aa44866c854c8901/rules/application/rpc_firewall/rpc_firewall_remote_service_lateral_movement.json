@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/rpc_firewall/rpc_firewall_remote_service_lateral_movement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sagie Dulce, Dekel Paz",
+                "date": "2022-01-01",
+                "title": "Remote Server Service Abuse for Lateral Movement",
+                "id": "10018e73-06ec-46ec-8107-9172f1e04ff2"
+            },
+            "rule_text": "title: Remote Server Service Abuse for Lateral Movement\nid: 10018e73-06ec-46ec-8107-9172f1e04ff2\nstatus: test\ndescription: Detects remote RPC calls to possibly abuse remote encryption service\n  via MS-EFSR\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-srvs/accf23b0-0f57-441c-9185-43041f1b0ee9\n- https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/ddd4608fe8684fcf2fcf9b48c5f0b3c28097f8a3/documents/MS-SCMR.md\n- https://github.com/zeronetworks/rpcfirewall\n- https://zeronetworks.com/blog/stopping-lateral-movement-via-the-rpc-firewall/\nauthor: Sagie Dulce, Dekel Paz\ndate: 2022-01-01\ntags:\n- attack.lateral-movement\n- attack.execution\n- attack.t1569.002\nlogsource:\n  product: rpc_firewall\n  category: application\n  definition: 'Requirements: install and apply the RPC Firewall to all processes with\n    \"audit:true action:block uuid:367abb81-9844-35f1-ad32-98f038001003'\ndetection:\n  selection:\n    EventLog: RPCFW\n    EventID: 3\n    InterfaceUuid: 367abb81-9844-35f1-ad32-98f038001003\n  condition: selection\nfalsepositives:\n- Administrative tasks on remote services\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

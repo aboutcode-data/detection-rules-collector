@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_syncappvpublishingserver_execute_psh.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-07-12",
+                "title": "SyncAppvPublishingServer Execute Arbitrary PowerShell Code",
+                "id": "fbd7c32d-db2a-4418-b92c-566eb8911133"
+            },
+            "rule_text": "title: SyncAppvPublishingServer Execute Arbitrary PowerShell Code\nid: fbd7c32d-db2a-4418-b92c-566eb8911133\nrelated:\n- id: fde7929d-8beb-4a4c-b922-be9974671667\n  type: obsolete\nstatus: test\ndescription: Executes arbitrary PowerShell code using SyncAppvPublishingServer.exe.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md\n- https://lolbas-project.github.io/lolbas/Binaries/Syncappvpublishingserver/\nauthor: frack113\ndate: 2021-07-12\nmodified: 2022-10-04\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\SyncAppvPublishingServer.exe\n  - OriginalFileName: syncappvpublishingserver.exe\n  selection_cli:\n    CommandLine|contains: '\"n; '\n  condition: all of selection_*\nfalsepositives:\n- App-V clients\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

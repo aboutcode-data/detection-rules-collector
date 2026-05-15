@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/VBKrypt/Trojan_Win32_VBKrypt_BA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_VBKrypt_BA_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/VBKrypt.BA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_VBKrypt_BA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/VBKrypt.BA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 49 0c 8b 1d ?? ?? ?? ?? 68 ?? ?? ?? ?? 66 0f b6 04 01 66 2b 05 ?? ?? ?? ?? c7 85 ?? ff ff ff 90 0a ff 00 3b 85 ?? ff ff ff 0f 8f ?? ?? 00 00 }\n\t\t$a_02_1 = {8b 51 0c 88 04 3a 8b 0d ?? ?? ?? ?? b8 01 00 00 00 03 c1 0f 80 ?? ?? ?? ?? a3 ?? ?? ?? ?? e9 ?? ?? ff ff }\n\t\t$a_02_2 = {50 52 ff d7 50 a1 ?? ?? ?? ?? 50 6a 00 ff 15 ?? ?? ?? ?? 8d 4d c0 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

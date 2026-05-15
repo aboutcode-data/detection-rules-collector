@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_query_session_exfil.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-01",
+                "title": "Query Usage To Exfil Data",
+                "id": "53ef0cef-fa24-4f25-a34a-6c72dfa2e6e2"
+            },
+            "rule_text": "title: Query Usage To Exfil Data\nid: 53ef0cef-fa24-4f25-a34a-6c72dfa2e6e2\nstatus: test\ndescription: Detects usage of \"query.exe\" a system binary to exfil information such\n  as \"sessions\" and \"processes\" for later use\nreferences:\n- https://twitter.com/MichalKoczwara/status/1553634816016498688\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-01\nmodified: 2023-01-19\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: :\\Windows\\System32\\query.exe\n    CommandLine|contains:\n    - session >\n    - process >\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

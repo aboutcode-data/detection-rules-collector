@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_com_key_linking.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Kutepov Anton, oscd.community",
+                "date": "2019-10-23",
+                "title": "Potential COM Object Hijacking Via TreatAs Subkey - Registry",
+                "id": "9b0f8a61-91b2-464f-aceb-0527e0a45020"
+            },
+            "rule_text": "title: Potential COM Object Hijacking Via TreatAs Subkey - Registry\nid: 9b0f8a61-91b2-464f-aceb-0527e0a45020\nstatus: test\ndescription: Detects COM object hijacking via TreatAs subkey\nreferences:\n- https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/\nauthor: Kutepov Anton, oscd.community\ndate: 2019-10-23\nmodified: 2025-10-26\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.015\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains|all:\n    - HKU\\\n    - Classes\\CLSID\\\n    - \\TreatAs\n  filter_main_svchost:\n    Image: C:\\WINDOWS\\system32\\svchost.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Maybe some system utilities in rare cases use linking keys for backward compatibility\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_persistence_com_key_linking/info.yml\nsimulation:\n- type: atomic-red-team\n  name: COM hijacking via TreatAs\n  technique: T1546.015\n  atomic_guid: 33eacead-f117-4863-8eb0-5c6304fbfaa9\n",
+            "vulnerabilities": []
+        }
+    ]
+}

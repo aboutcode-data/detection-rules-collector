@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_meshagent_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@Kostastsale",
+                "date": "2024-09-22",
+                "title": "Remote Access Tool - MeshAgent Command Execution via MeshCentral",
+                "id": "74a2b202-73e0-4693-9a3a-9d36146d0775"
+            },
+            "rule_text": "title: Remote Access Tool - MeshAgent Command Execution via MeshCentral\nid: 74a2b202-73e0-4693-9a3a-9d36146d0775\nstatus: test\ndescription: 'Detects the use of MeshAgent to execute commands on the target host,\n  particularly when threat actors might abuse it to execute commands directly.\n\n  MeshAgent can execute commands on the target host by leveraging win-console to obscure\n  their activities and win-dispatcher to run malicious code through IPC with child\n  processes.\n\n  '\nreferences:\n- https://github.com/Ylianst/MeshAgent\n- https://github.com/Ylianst/MeshAgent/blob/52cf129ca43d64743181fbaf940e0b4ddb542a37/modules/win-dispatcher.js#L173\n- https://github.com/Ylianst/MeshAgent/blob/52cf129ca43d64743181fbaf940e0b4ddb542a37/modules/win-info.js#L55\nauthor: '@Kostastsale'\ndate: 2024-09-22\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentImage|endswith: \\meshagent.exe\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  condition: selection\nfalsepositives:\n- False positives can be found in environments using MeshAgent for remote management,\n  analysis should prioritize the grandparent process, MeshAgent.exe, and scrutinize\n  the resulting child processes triggered by any suspicious interactive commands directed\n  at the target host.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

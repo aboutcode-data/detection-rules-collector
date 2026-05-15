@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/application/msiinstaller/win_msi_install_from_web.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Stamatis Chatzimangou",
+                "date": "2022-10-23",
+                "title": "MSI Installation From Web",
+                "id": "5594e67a-7f92-4a04-b65d-1a42fd824a60"
+            },
+            "rule_text": "title: MSI Installation From Web\nid: 5594e67a-7f92-4a04-b65d-1a42fd824a60\nstatus: test\ndescription: Detects installation of a remote msi file from web.\nreferences:\n- https://twitter.com/_st0pp3r_/status/1583922009842802689\nauthor: Stamatis Chatzimangou\ndate: 2022-10-23\ntags:\n- attack.stealth\n- attack.t1218\n- attack.t1218.007\nlogsource:\n  product: windows\n  service: application\ndetection:\n  selection:\n    Provider_Name: MsiInstaller\n    EventID:\n    - 1040\n    - 1042\n    Data|contains: ://\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

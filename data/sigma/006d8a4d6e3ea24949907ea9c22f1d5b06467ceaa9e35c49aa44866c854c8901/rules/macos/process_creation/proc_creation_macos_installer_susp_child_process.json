@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_installer_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sohan G (D4rkCiph3r)",
+                "date": "2023-02-18",
+                "title": "Suspicious Installer Package Child Process",
+                "id": "e0cfaecd-602d-41af-988d-f6ccebb2af26"
+            },
+            "rule_text": "title: Suspicious Installer Package Child Process\nid: e0cfaecd-602d-41af-988d-f6ccebb2af26\nstatus: test\ndescription: Detects the execution of suspicious child processes from macOS installer\n  package parent process. This includes osascript, JXA, curl and wget amongst other\n  interpreters\nreferences:\n- https://redcanary.com/blog/clipping-silver-sparrows-wings/\n- https://github.com/elastic/detection-rules/blob/4312d8c9583be524578a14fe6295c3370b9a9307/rules/macos/execution_installer_package_spawned_network_event.toml\nauthor: Sohan G (D4rkCiph3r)\ndate: 2023-02-18\ntags:\n- attack.t1059\n- attack.t1059.007\n- attack.t1071\n- attack.t1071.001\n- attack.execution\n- attack.command-and-control\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection_installer:\n    ParentImage|endswith:\n    - /package_script_service\n    - /installer\n    Image|endswith:\n    - /sh\n    - /bash\n    - /dash\n    - /python\n    - /ruby\n    - /perl\n    - /php\n    - /javascript\n    - /osascript\n    - /tclsh\n    - /curl\n    - /wget\n    CommandLine|contains:\n    - preinstall\n    - postinstall\n  condition: selection_installer\nfalsepositives:\n- Legitimate software uses the scripts (preinstall, postinstall)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

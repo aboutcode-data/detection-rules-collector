@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/tenable/yara-rules/blob/master/webshells/pas_web_kit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PAS_TOOL_PHP_WEB_KIT",
+                "tags": [],
+                "description": "PAS TOOL PHP WEB KIT FOUND",
+                "source": "https://www.us-cert.gov/security-publications/GRIZZLY-STEPPE-Russian-Malicious-Cyber-Activity",
+                "filetype": "PHP"
+            },
+            "rule_text": "rule PAS_TOOL_PHP_WEB_KIT\n{\n\tmeta:\n\t\tdescription = \"PAS TOOL PHP WEB KIT FOUND\"\n\t\tsource = \"https://www.us-cert.gov/security-publications/GRIZZLY-STEPPE-Russian-Malicious-Cyber-Activity\"\n\t\tfiletype = \"PHP\"\n\n\tstrings:\n\t\t$php = \"<?php\"\n\t\t$base64decode = /\\='base'\\.\\(\\d+\\*\\d+\\)\\.'_de'\\.'code'/\n\t\t$strreplace = \"(str_replace(\"\n\t\t$md5 = \".substr(md5(strrev(\"\n\t\t$gzinflate = \"gzinflate\"\n\t\t$cookie = \"_COOKIE\"\n\t\t$isset = \"isset\"\n\n\tcondition:\n\t\t( filesize > 20KB and filesize < 22KB ) and #cookie == 2 and #isset == 3 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sharp_impersonation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sai Prashanth Pulisetti @pulisettis, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-27",
+                "title": "HackTool - SharpImpersonation Execution",
+                "id": "f89b08d0-77ad-4728-817b-9b16c5a69c7a"
+            },
+            "rule_text": "title: HackTool - SharpImpersonation Execution\nid: f89b08d0-77ad-4728-817b-9b16c5a69c7a\nrelated:\n- id: cf0c254b-22f1-4b2b-8221-e137b3c0af94\n  type: similar\nstatus: test\ndescription: Detects execution of the SharpImpersonation tool. Which can be used to\n  manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively\nreferences:\n- https://s3cur3th1ssh1t.github.io/SharpImpersonation-Introduction/\n- https://github.com/S3cur3Th1sSh1t/SharpImpersonation\nauthor: Sai Prashanth Pulisetti @pulisettis, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-27\nmodified: 2023-02-13\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1134.001\n- attack.t1134.003\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\SharpImpersonation.exe\n  - OriginalFileName: SharpImpersonation.exe\n  selection_cli:\n  - CommandLine|contains|all:\n    - ' user:'\n    - ' binary:'\n  - CommandLine|contains|all:\n    - ' user:'\n    - ' shellcode:'\n  - CommandLine|contains:\n    - ' technique:CreateProcessAsUserW'\n    - ' technique:ImpersonateLoggedOnuser'\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

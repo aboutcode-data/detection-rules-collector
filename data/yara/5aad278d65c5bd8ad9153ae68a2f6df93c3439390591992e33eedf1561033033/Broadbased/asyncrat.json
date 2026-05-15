@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/jeFF0Falltrades/YARA-Signatures/blob/master/Broadbased/asyncrat.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "asyncrat",
+                "tags": [],
+                "author": "jeFF0Falltrades"
+            },
+            "rule_text": "rule asyncrat\n{\n\tmeta:\n\t\tauthor = \"jeFF0Falltrades\"\n\n\tstrings:\n\t\t$str_async = \"AsyncClient\" wide ascii nocase\n\t\t$str_aes_exc = \"masterKey can not be null or empty\" wide ascii\n\t\t$str_schtasks = \"schtasks /create /f /sc onlogon /rl highest\" wide ascii\n\t\t$dcrat_1 = \"dcrat\" wide ascii nocase\n\t\t$dcrat_2 = \"qwqdan\" wide ascii\n\t\t$dcrat_3 = \"YW1zaS5kbGw=\" wide ascii\n\t\t$dcrat_4 = \"VmlydHVhbFByb3RlY3Q=\" wide ascii\n\t\t$dcrat_5 = \"save_Plugin\" wide ascii\n\t\t$byte_aes_key_base = { 7E [3] 04 73 [3] 06 80 }\n\t\t$byte_aes_salt_base = { BF EB 1E 56 FB CD 97 3B B2 19 }\n\t\t$patt_verify_hash = { 7e [3] 04 6f [3] 0a 6f [3] 0a 74 [3] 01 }\n\t\t$patt_config = { 72 [3] 70 80 [3] 04 }\n\n\tcondition:\n\t\t( not any of ( $dcrat* ) ) and 6 of them and #patt_config >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

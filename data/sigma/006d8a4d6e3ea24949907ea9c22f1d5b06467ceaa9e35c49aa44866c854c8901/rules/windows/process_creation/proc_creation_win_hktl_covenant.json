@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_covenant.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community",
+                "date": "2020-06-04",
+                "title": "HackTool - Covenant PowerShell Launcher",
+                "id": "c260b6db-48ba-4b4a-a76f-2f67644e99d2"
+            },
+            "rule_text": "title: HackTool - Covenant PowerShell Launcher\nid: c260b6db-48ba-4b4a-a76f-2f67644e99d2\nstatus: test\ndescription: Detects suspicious command lines used in Covenant luanchers\nreferences:\n- https://posts.specterops.io/covenant-v0-5-eee0507b85ba\nauthor: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community\ndate: 2020-06-04\nmodified: 2023-02-21\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.001\n- attack.t1564.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_1:\n    CommandLine|contains|all:\n    - -Sta\n    - -Nop\n    - -Window\n    - Hidden\n    CommandLine|contains:\n    - -Command\n    - -EncodedCommand\n  selection_2:\n    CommandLine|contains:\n    - 'sv o (New-Object IO.MemorySteam);sv d '\n    - mshta file.hta\n    - GruntHTTP\n    - -EncodedCommand cwB2ACAAbwAgA\n  condition: 1 of selection_*\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

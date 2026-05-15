@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Fsysna/Trojan_Win64_Fsysna_NFC_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Fsysna_NFC_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Fsysna.NFC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Fsysna_NFC_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Fsysna.NFC!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {75 e2 48 8b 84 24 ?? ?? ?? ?? 89 44 24 28 48 8d 84 24 ?? ?? ?? ?? 48 89 44 24 20 41 b9 ?? ?? ?? ?? 45 33 c0 48 8d 15 a9 d0 02 00 }\n\t\t$a_01_1 = {43 6d 4e 74 5a 43 35 6c 65 47 55 67 4c 32 4d 67 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

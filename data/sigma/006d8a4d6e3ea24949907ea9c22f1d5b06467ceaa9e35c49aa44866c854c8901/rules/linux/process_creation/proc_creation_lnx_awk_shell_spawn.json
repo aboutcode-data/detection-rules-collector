@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_awk_shell_spawn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)",
+                "date": "2024-09-02",
+                "title": "Suspicious Invocation of Shell via AWK - Linux",
+                "id": "8c1a5675-cb85-452f-a298-b01b22a51856"
+            },
+            "rule_text": "title: Suspicious Invocation of Shell via AWK - Linux\nid: 8c1a5675-cb85-452f-a298-b01b22a51856\nstatus: test\ndescription: 'Detects the execution of \"awk\" or it''s sibling commands, to invoke\n  a shell using the system() function.\n\n  This behavior is commonly associated with attempts to execute arbitrary commands\n  or escalate privileges, potentially leading to unauthorized access or further exploitation.\n\n  '\nreferences:\n- https://gtfobins.github.io/gtfobins/awk/#shell\n- https://gtfobins.github.io/gtfobins/gawk/#shell\n- https://gtfobins.github.io/gtfobins/nawk/#shell\n- https://gtfobins.github.io/gtfobins/mawk/#shell\nauthor: Li Ling, Andy Parkidomo, Robert Rakowski, Blake Hartstein (Bloomberg L.P.)\ndate: 2024-09-02\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith:\n    - /awk\n    - /gawk\n    - /mawk\n    - /nawk\n    CommandLine|contains: BEGIN {system\n  selection_cli:\n    CommandLine|contains:\n    - /bin/bash\n    - /bin/dash\n    - /bin/fish\n    - /bin/sh\n    - /bin/zsh\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

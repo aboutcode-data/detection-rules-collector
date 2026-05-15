@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/seaspy.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_SeaSpy_str",
+                "tags": [],
+                "description": "malware SeaSpy",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "5e3c128749f7ae4616a4620e0b53c0e5381724a790bba8314acb502ce7334df2"
+            },
+            "rule_text": "rule malware_SeaSpy_str\n{\n\tmeta:\n\t\tdescription = \"malware SeaSpy\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"3f26a13f023ad0dcd7f2aa4e7771bba74910ee227b4b36ff72edc5f07336f115\"\n\t\thash = \"5e3c128749f7ae4616a4620e0b53c0e5381724a790bba8314acb502ce7334df2\"\n\n\tstrings:\n\t\t$msg1 = \"<Network-Interface> <Listen-Port>\" ascii fullword\n\t\t$msg2 = \"<Network-Interface>. e.g.\" ascii fullword\n\t\t$msg3 = \"Port value out of range.\" ascii fullword\n\t\t$msg4 = \"enter open tty shell...\" ascii fullword\n\t\t$msg5 = \"NO port code\" ascii fullword\n\t\t$msg6 = \"pcap_lookupnet: %s\" ascii fullword\n\t\t$msg7 = \"pcap_compile\" ascii fullword\n\t\t$msg8 = \"pcap_setfilter\" ascii fullword\n\t\t$msg9 = \"Child process id:%d\" ascii fullword\n\t\t$func1 = \"open_tty_shell\" ascii fullword\n\t\t$func2 = \"start_pcap_listener\" ascii fullword\n\t\t$func3 = \"pcap_open_live\" ascii fullword\n\t\t$func4 = \"pcap_setfilter\" ascii fullword\n\t\t$func5 = \"reverse_shell\" ascii fullword\n\t\t$key1 = \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuJDBIgz2Gb70ExKb7fww\" ascii fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and ( 4 of ( $msg* ) or 4 of ( $func* ) or 1 of ( $key* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

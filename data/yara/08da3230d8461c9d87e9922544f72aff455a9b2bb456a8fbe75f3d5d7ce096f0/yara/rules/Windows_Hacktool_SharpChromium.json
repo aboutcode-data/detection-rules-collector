@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Hacktool_SharpChromium.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Hacktool_SharpChromium_41ce5080",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "41ce5080-7d84-4a56-8de8-86959eb92057",
+                "fingerprint": "b6695ded1a6f647812c7f355e089a2ed7209ac59f51a97d8f6b1897bb1e7d9ad",
+                "creation_date": "2022-11-20",
+                "last_modified": "2023-01-11",
+                "threat_name": "Windows.Hacktool.SharpChromium",
+                "reference_sample": "9dd65aa53728d51f0f3b9aaf51a24f8a2c3f84b4a4024245575975cf9ad7f2e5",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Hacktool_SharpChromium_41ce5080\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"41ce5080-7d84-4a56-8de8-86959eb92057\"\n\t\tfingerprint = \"b6695ded1a6f647812c7f355e089a2ed7209ac59f51a97d8f6b1897bb1e7d9ad\"\n\t\tcreation_date = \"2022-11-20\"\n\t\tlast_modified = \"2023-01-11\"\n\t\tthreat_name = \"Windows.Hacktool.SharpChromium\"\n\t\treference_sample = \"9dd65aa53728d51f0f3b9aaf51a24f8a2c3f84b4a4024245575975cf9ad7f2e5\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$guid = \"F1653F20-D47D-4F29-8C55-3C835542AF5F\" ascii wide nocase\n\t\t$print_str0 = \"[X] Exception occurred while writing cookies to file: {0}\" ascii wide fullword\n\t\t$print_str1 = \"[*] All cookies written to {0}\" ascii wide fullword\n\t\t$print_str2 = \"\\\\{0}-cookies.json\" ascii wide fullword\n\t\t$print_str3 = \"[*] {0} {1} extraction.\" ascii wide fullword\n\n\tcondition:\n\t\t$guid or all of ( $print_str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

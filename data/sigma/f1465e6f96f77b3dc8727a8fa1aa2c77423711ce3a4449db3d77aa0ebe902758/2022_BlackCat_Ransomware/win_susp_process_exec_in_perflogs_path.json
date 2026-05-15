@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_BlackCat_Ransomware/win_susp_process_exec_in_perflogs_path.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/12/04",
+                "title": "Suspicious Process Execution in PerfLogs Directory",
+                "id": "82469ee5-ccf3-4669-9be6-31830f7ef3d7"
+            },
+            "rule_text": "title: Suspicious Process Execution in PerfLogs Directory\nid: 82469ee5-ccf3-4669-9be6-31830f7ef3d7\nstatus: experimental\ndescription: Detects process execution in PerfLogs folder - a folder used by Windows\n  for log collection - and matching previously-observed naming patterns for ransomware\n  executables.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/06/13/the-many-lives-of-blackcat-ransomware/\nauthor: Micah Babinski\ndate: 2022/12/04\ntags:\n- attack.defense_evasion\n- attack.t1564\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    ParentImage|contains: perflogs\n  selection2:\n    ParentImage|re: ^.*\\\\[a-z]{3}\\.exe\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

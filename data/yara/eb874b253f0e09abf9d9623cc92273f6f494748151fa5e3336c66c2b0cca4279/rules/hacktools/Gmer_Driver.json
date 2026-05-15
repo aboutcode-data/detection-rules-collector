@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/hacktools/Gmer_Driver.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Gmer_Driver",
+                "tags": [],
+                "id": "47o6RMYvn1Hb14eggdrcHy",
+                "fingerprint": "7cc773597ea063add205ee1bce0ccce287d6f548ecb317923e83078a7018ed77",
+                "version": "1.0",
+                "creation_date": "2021-07-01",
+                "first_imported": "2021-12-30",
+                "last_modified": "2025-03-10",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies Gmer's driver, sometimes used by attackers to disable security software.",
+                "category": "MALWARE",
+                "reference": "http://www.gmer.net/"
+            },
+            "rule_text": "import \"pe\"\n\nrule Gmer_Driver\n{\n\tmeta:\n\t\tid = \"47o6RMYvn1Hb14eggdrcHy\"\n\t\tfingerprint = \"7cc773597ea063add205ee1bce0ccce287d6f548ecb317923e83078a7018ed77\"\n\t\tversion = \"1.0\"\n\t\tcreation_date = \"2021-07-01\"\n\t\tfirst_imported = \"2021-12-30\"\n\t\tlast_modified = \"2025-03-10\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies Gmer's driver, sometimes used by attackers to disable security software.\"\n\t\tcategory = \"MALWARE\"\n\t\treference = \"http://www.gmer.net/\"\n\n\tstrings:\n\t\t$ = \"e:\\\\projects\\\\cpp\\\\gmer\\\\driver64\\\\objfre_wlh_amd64\\\\amd64\\\\gmer64.pdb\"\n\t\t$ = \"GMER Driver http://www.gmer.net\" ascii wide\n\n\tcondition:\n\t\tany of them or pe.version_info [ \"OriginalFilename\" ] contains \"gmer64.sys\" or pe.version_info [ \"InternalName\" ] contains \"gmer64.sys\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

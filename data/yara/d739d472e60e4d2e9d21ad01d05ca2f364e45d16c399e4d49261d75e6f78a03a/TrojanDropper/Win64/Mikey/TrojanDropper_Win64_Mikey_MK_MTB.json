@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win64/Mikey/TrojanDropper_Win64_Mikey_MK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win64_Mikey_MK_MTB",
+                "tags": [],
+                "description": "TrojanDropper:Win64/Mikey.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win64_Mikey_MK_MTB\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win64/Mikey.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {4d 85 c0 48 8d 41 fe 48 0f 45 c1 66 89 28 48 8b ca 48 8d 44 24 ?? 0f 1f 40 00 66 39 28 }\n\t\t$a_03_1 = {48 8b 9c 24 ?? ?? 00 00 4c 8b a4 24 ?? ?? 00 00 48 8b bc 24 ?? ?? 00 00 4c 8b bc 24 ?? ?? 00 00 4c 8b b4 24 ?? ?? 00 00 48 8b 8d d0 0f 00 00 48 33 cc }\n\t\t$a_01_2 = {25 30 34 64 2d 25 30 32 64 2d 25 30 32 64 54 25 30 32 64 3a 25 30 32 64 3a 25 30 32 64 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 15 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 5 ) >= 25\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

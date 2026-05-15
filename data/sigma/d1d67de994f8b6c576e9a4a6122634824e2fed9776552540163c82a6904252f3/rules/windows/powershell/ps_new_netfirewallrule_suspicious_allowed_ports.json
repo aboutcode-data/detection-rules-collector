@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/powershell/ps_new_netfirewallrule_suspicious_allowed_ports.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Axel Olsson",
+                "date": "2026-02-12",
+                "title": "Powershell New-NetFirewallRule Suspicious Locally Allowed Port",
+                "id": "337134fa-b455-470c-a345-a29d93399da3"
+            },
+            "rule_text": "title: Powershell New-NetFirewallRule Suspicious Locally Allowed Port\nid: 337134fa-b455-470c-a345-a29d93399da3\ndescription: Usage of New-NetFirewallRule to create local firewall opening for suspicious\n  port. This behavior was observed in the Russian APT attack on Polish OT-Infrastructure.\nreferences:\n- https://cert.pl/uploads/docs/CERT_Polska_Energy_Sector_Incident_Report_2025.pdf\n- https://learn.microsoft.com/en-us/powershell/module/netsecurity/new-netfirewallrule\nstatus: stable\nauthor: Axel Olsson\ndate: 2026-02-12\nmodified: 2026-02-12\nlogsource:\n  product: windows\n  category: ps_script\ndetection:\n  selection_1:\n    script_block|contains|all:\n    - New-NetFirewallRule\n    - -Name\n    - -DisplayName\n    - -LocalPort\n    - Allow\n  selection_2:\n    script_block|contains:\n    - '445'\n    - '3389'\n  condition: selection_1 and selection_2\nfalsepositives:\n- Legitimate Firewall Rule\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

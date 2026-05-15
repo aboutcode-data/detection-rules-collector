@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_office_vba_warnings_tamper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Trent Liffick (@tliffick), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2020-05-22",
+                "title": "Office Macros Warning Disabled",
+                "id": "91239011-fe3c-4b54-9f24-15c86bb65913"
+            },
+            "rule_text": "title: Office Macros Warning Disabled\nid: 91239011-fe3c-4b54-9f24-15c86bb65913\nrelated:\n- id: 9b894e57-033f-46cf-b7fa-a52804181973\n  type: obsolete\nstatus: test\ndescription: Detects registry changes to Microsoft Office \"VBAWarning\" to a value\n  of \"1\" which enables the execution of all macros, whether signed or unsigned.\nreferences:\n- https://twitter.com/inversecos/status/1494174785621819397\n- https://www.mcafee.com/blogs/other-blogs/mcafee-labs/zloader-with-a-new-infection-technique/\n- https://securelist.com/scarcruft-surveilling-north-korean-defectors-and-human-rights-activists/105074/\nauthor: Trent Liffick (@tliffick), Nasreddine Bencherchali (Nextron Systems)\ndate: 2020-05-22\nmodified: 2024-03-19\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Security\\VBAWarnings\n    Details: DWORD (0x00000001)\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

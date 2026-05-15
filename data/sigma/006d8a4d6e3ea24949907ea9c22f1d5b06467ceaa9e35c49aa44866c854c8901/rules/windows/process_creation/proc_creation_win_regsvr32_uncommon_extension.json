@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regsvr32_uncommon_extension.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-07-17",
+                "title": "Regsvr32 DLL Execution With Uncommon Extension",
+                "id": "50919691-7302-437f-8e10-1fe088afa145"
+            },
+            "rule_text": "title: Regsvr32 DLL Execution With Uncommon Extension\nid: 50919691-7302-437f-8e10-1fe088afa145\nstatus: test\ndescription: Detects a \"regsvr32\" execution where the DLL doesn't contain a common\n  file extension.\nreferences:\n- https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-07-17\nmodified: 2023-05-24\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.stealth\n- attack.t1574\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\regsvr32.exe\n  - OriginalFileName: REGSVR32.EXE\n  filter_main_legit_ext:\n    CommandLine|contains:\n    - .ax\n    - .cpl\n    - .dll\n    - .ocx\n  filter_optional_pascal:\n    CommandLine|contains: .ppl\n  filter_optional_avg:\n    CommandLine|contains: .bav\n  filter_main_null_4688:\n    CommandLine: null\n  filter_main_empty_4688:\n    CommandLine: ''\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Other legitimate extensions currently not in the list either from third party or\n  specific Windows components.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

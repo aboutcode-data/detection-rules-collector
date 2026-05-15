@@ -1,0 +1,28 @@
+{
+    "source_url": "https://github.com/bartblaze/Yara-rules/blob/master/rules/APT/Autumn_Backdoor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Autumn_Backdoor",
+                "tags": [],
+                "id": "2kQ17alOYwTwkkTNA8vZCX",
+                "fingerprint": "v1_sha256_7a32b90fb6e962a82af808d698dc19d503c075606f5a7e52f783f0c7d71f5936",
+                "version": "2.0",
+                "date": "2025-09-26",
+                "modified": "2025-11-18",
+                "status": "RELEASED",
+                "sharing": "TLP:CLEAR",
+                "source": "BARTBLAZE",
+                "author": "@bartblaze",
+                "description": "Identifies backdoored libcef.dll (stage 1), used by a China-nexus APT, as seen in the Autumn Dragon report.",
+                "category": "MALWARE",
+                "malware": "UNKNOWN",
+                "malware_type": "BACKDOOR",
+                "reference": "https://cyberarmor.tech/blog/autumn-dragon-china-nexus-apt-group-targets-south-east-asia",
+                "hash": "a3805b24b66646c0cf7ca9abad502fe15b33b53e56a04489cfb64a238616a7bf"
+            },
+            "rule_text": "rule Autumn_Backdoor\n{\n\tmeta:\n\t\tid = \"2kQ17alOYwTwkkTNA8vZCX\"\n\t\tfingerprint = \"v1_sha256_7a32b90fb6e962a82af808d698dc19d503c075606f5a7e52f783f0c7d71f5936\"\n\t\tversion = \"2.0\"\n\t\tdate = \"2025-09-26\"\n\t\tmodified = \"2025-11-18\"\n\t\tstatus = \"RELEASED\"\n\t\tsharing = \"TLP:CLEAR\"\n\t\tsource = \"BARTBLAZE\"\n\t\tauthor = \"@bartblaze\"\n\t\tdescription = \"Identifies backdoored libcef.dll (stage 1), used by a China-nexus APT, as seen in the Autumn Dragon report.\"\n\t\tcategory = \"MALWARE\"\n\t\tmalware = \"UNKNOWN\"\n\t\tmalware_type = \"BACKDOOR\"\n\t\treference = \"https://cyberarmor.tech/blog/autumn-dragon-china-nexus-apt-group-targets-south-east-asia\"\n\t\thash = \"a3805b24b66646c0cf7ca9abad502fe15b33b53e56a04489cfb64a238616a7bf\"\n\n\tstrings:\n\t\t$s1 = \"Could not get process list.\"\n\t\t$s2 = \"Please send the document now.\"\n\t\t$s3 = \"Failed to create pipe.\"\n\t\t$s4 = \"Failed to start process.\"\n\t\t$s5 = \"Command executed but returned no output.\"\n\t\t$s6 = \"Screenshot taken.\"\n\t\t$s7 = \"Please send a document, not text.\"\n\t\t$x1 = \"No file or photo found in message.\"\n\t\t$x2 = \"Error: Cannot create file on disk.\"\n\t\t$x3 = \"File saved to: \"\n\t\t$x4 = \"Error receiving file:\"\n\n\tcondition:\n\t\t4 of ( $s* ) or 3 of ( $x* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_java_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades), Florian Roth",
+                "date": "2021-12-17",
+                "title": "Suspicious Processes Spawned by Java.EXE",
+                "id": "0d34ed8b-1c12-4ff2-828c-16fc860b766d"
+            },
+            "rule_text": "title: Suspicious Processes Spawned by Java.EXE\nid: 0d34ed8b-1c12-4ff2-828c-16fc860b766d\nrelated:\n- id: dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0\n  type: similar\nstatus: test\ndescription: Detects suspicious processes spawned from a Java host process which could\n  indicate a sign of exploitation (e.g. log4j)\nreferences:\n- https://web.archive.org/web/20231230220738/https://www.lunasec.io/docs/blog/log4j-zero-day/\nauthor: Andreas Hunkeler (@Karneades), Florian Roth\ndate: 2021-12-17\nmodified: 2024-01-18\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\java.exe\n    Image|endswith:\n    - \\AppVLP.exe\n    - \\bitsadmin.exe\n    - \\certutil.exe\n    - \\cscript.exe\n    - \\curl.exe\n    - \\forfiles.exe\n    - \\hh.exe\n    - \\mftrace.exe\n    - \\mshta.exe\n    - \\net.exe\n    - \\net1.exe\n    - \\query.exe\n    - \\reg.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\schtasks.exe\n    - \\scrcons.exe\n    - \\scriptrunner.exe\n    - \\sh.exe\n    - \\systeminfo.exe\n    - \\whoami.exe\n    - \\wmic.exe\n    - \\wscript.exe\n  condition: selection\nfalsepositives:\n- Legitimate calls to system binaries\n- Company specific internal usage\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

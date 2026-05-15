@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/ggupdate.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ggupdate_windows",
+                "tags": [],
+                "description": "ggupdate.exe keylogger (Windows)"
+            },
+            "rule_text": "rule ggupdate_windows\n{\n\tmeta:\n\t\tdescription = \"ggupdate.exe keylogger (Windows)\"\n\n\tstrings:\n\t\t$s1 = \"Les Blues\"\n\t\t$s2 = \"lesblues.exe\"\n\t\t$s3 = \"Boodled8\"\n\t\t$s4 = \"Misexplain6\"\n\t\t$s5 = \"lesblues\"\n\t\t$s6 = \"Sniffs5\"\n\t\t$s7 = \"Oneiromancy\"\n\t\t$s8 = \"Lophtcrack\" ascii wide\n\n\tcondition:\n\t\tIsPeFile and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ggupdate_linux",
+                "tags": [],
+                "description": "ggupdate keylogger (Linux)"
+            },
+            "rule_text": "rule ggupdate_linux\n{\n\tmeta:\n\t\tdescription = \"ggupdate keylogger (Linux)\"\n\n\tstrings:\n\t\t$s1 = \"%s.Identifier\"\n\t\t$s2 = \"0:%llu:%s;\"\n\t\t$s3 = \"%s%.2d-%.2d-%.4d\"\n\t\t$s4 = \"[%s] - [%.2d/%.2d/%d %.2d:%.2d:%.2d]\"\n\n\tcondition:\n\t\tIsElfFile and 3 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

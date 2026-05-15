@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_susp_target_shell_application.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Splunk Research Team",
+                "date": "2024-07-29",
+                "title": "Remote Thread Created In Shell Application",
+                "id": "a9d4d3fa-8fc0-41bc-80b1-30b9fda79d6f"
+            },
+            "rule_text": "title: Remote Thread Created In Shell Application\nid: a9d4d3fa-8fc0-41bc-80b1-30b9fda79d6f\nstatus: test\ndescription: 'Detects remote thread creation in command shell applications, such as\n  \"Cmd.EXE\" and \"PowerShell.EXE\".\n\n  It is a common technique used by malware, such as IcedID, to inject malicious code\n  and execute it within legitimate processes.\n\n  '\nreferences:\n- https://research.splunk.com/endpoint/10399c1e-f51e-11eb-b920-acde48001122/\n- https://www.binarydefense.com/resources/blog/icedid-gziploader-analysis/\nauthor: Splunk Research Team\ndate: 2024-07-29\nmodified: 2025-07-04\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: create_remote_thread\ndetection:\n  selection:\n    TargetImage|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  filter_main_system:\n    SourceImage|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Program Files (x86)\\\n    - C:\\Program Files\\\n  filter_optional_defender:\n    SourceImage|endswith: \\MsMpEng.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_suspicious_env_variables.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-20",
+                "title": "Suspicious Environment Variable Has Been Registered",
+                "id": "966315ef-c5e1-4767-ba25-fce9c8de3660"
+            },
+            "rule_text": "title: Suspicious Environment Variable Has Been Registered\nid: 966315ef-c5e1-4767-ba25-fce9c8de3660\nstatus: test\ndescription: Detects the creation of user-specific or system-wide environment variables\n  via the registry. Which contains suspicious commands and strings\nreferences:\n- https://infosec.exchange/@sbousseaden/109542254124022664\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-20\nmodified: 2023-08-17\ntags:\n- attack.persistence\n- attack.stealth\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection_main:\n    TargetObject|contains: \\Environment\\\n  selection_details:\n  - Details:\n    - powershell\n    - pwsh\n  - Details|contains:\n    - \\AppData\\Local\\Temp\\\n    - C:\\Users\\Public\\\n    - TVqQAAMAAAAEAAAA\n    - TVpQAAIAAAAEAA8A\n    - TVqAAAEAAAAEABAA\n    - TVoAAAAAAAAAAAAA\n    - TVpTAQEAAAAEAAAA\n    - SW52b2tlL\n    - ludm9rZS\n    - JbnZva2Ut\n    - SQBuAHYAbwBrAGUALQ\n    - kAbgB2AG8AawBlAC0A\n    - JAG4AdgBvAGsAZQAtA\n  - Details|startswith:\n    - SUVY\n    - SQBFAF\n    - SQBuAH\n    - cwBhA\n    - aWV4\n    - aQBlA\n    - R2V0\n    - dmFy\n    - dgBhA\n    - dXNpbm\n    - H4sIA\n    - Y21k\n    - cABhAH\n    - Qzpc\n    - Yzpc\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

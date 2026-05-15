@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_invoke_obfuscation_clip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jonathan Cheong, oscd.community",
+                "date": "2020-10-13",
+                "title": "Invoke-Obfuscation CLIP+ Launcher - PowerShell Module",
+                "id": "a136cde0-61ad-4a61-9b82-8dc490e60dd2"
+            },
+            "rule_text": "title: Invoke-Obfuscation CLIP+ Launcher - PowerShell Module\nid: a136cde0-61ad-4a61-9b82-8dc490e60dd2\nrelated:\n- id: 73e67340-0d25-11eb-adc1-0242ac120002\n  type: derived\nstatus: test\ndescription: Detects Obfuscated use of Clip.exe to execute PowerShell\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Jonathan Cheong, oscd.community\ndate: 2020-10-13\nmodified: 2024-04-05\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_4103:\n    Payload|re: cmd.{0,5}(?:/c|/r).+clip(?:\\.exe)?.{0,4}&&.+clipboard]::\\(\\s\\\\\"\\{\\d\\}.+-f.+\"\n  condition: selection_4103\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

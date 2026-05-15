@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/crowdstrike/CrowdStrike_ PutterPanda _02 - rc4_dropper putterpanda.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CrowdStrike_PutterPanda_02",
+                "tags": [
+                    "rc4_dropper",
+                    "putterpanda"
+                ],
+                "description": "PUTTER PANDA - RC4 dropper",
+                "date": "2014-03-30",
+                "version": "1.0",
+                "in_the_wild": true,
+                "copyright": "CrowdStrike, Inc.",
+                "actor": "PUTTER PANDA"
+            },
+            "rule_text": "rule CrowdStrike_PutterPanda_02 : rc4_dropper putterpanda\n{\n\tmeta:\n\t\tdescription = \"PUTTER PANDA - RC4 dropper\"\n\t\tdate = \"2014-03-30\"\n\t\tversion = \"1.0\"\n\t\tin_the_wild = true\n\t\tcopyright = \"CrowdStrike, Inc.\"\n\t\tactor = \"PUTTER PANDA\"\n\n\tstrings:\n\t\t$res_lock = \"LockResource\"\n\t\t$res_size = \"SizeofResource\"\n\t\t$res_load = \"LoadResource\"\n\t\t$com = \"COMSPEC\"\n\t\t$cryptaq = \"CryptAcquireContextA\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( all of ( $res_* ) ) and $cryptaq and $com\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

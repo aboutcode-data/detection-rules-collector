@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/deprecated/Android/Android_Pink_Locker.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Android_pinkLocker",
+                "tags": [
+                    "android"
+                ],
+                "description": "Yara detection for Android Locker app named Pink Club",
+                "author": "@5h1vang",
+                "ref1": "https://www.virustotal.com/es/file/388799cbbe2c8ddc0768c4b994379508e602f68503888a001635c3be2c8c350d/analysis/",
+                "ref2": "https://analyst.koodous.com/rulesets/1186",
+                "sample": "388799cbbe2c8ddc0768c4b994379508e602f68503888a001635c3be2c8c350d"
+            },
+            "rule_text": "import \"androguard\"\n\nrule Android_pinkLocker : android\n{\n\tmeta:\n\t\tdescription = \"Yara detection for Android Locker app named Pink Club\"\n\t\tauthor = \"@5h1vang\"\n\t\tref1 = \"https://www.virustotal.com/es/file/388799cbbe2c8ddc0768c4b994379508e602f68503888a001635c3be2c8c350d/analysis/\"\n\t\tref2 = \"https://analyst.koodous.com/rulesets/1186\"\n\t\tsample = \"388799cbbe2c8ddc0768c4b994379508e602f68503888a001635c3be2c8c350d\"\n\n\tstrings:\n\t\t$str_1 = \"arnrsiec sisani\"\n\t\t$str_2 = \"rhguecisoijng ts\"\n\t\t$str_3 = \"assets/data.db\"\n\t\t$str_4 = \"res/xml/device_admin_sample.xmlPK\"\n\n\tcondition:\n\t\tandroguard.url( /lineout\\.pw/ ) or androguard.certificate.sha1 ( \"D88B53449F6CAC93E65CA5E224A5EAD3E990921E\" ) or androguard.permission ( /android.permission.INTERNET/ ) and androguard.permission ( /android.permission.DISABLE_KEYGUARD/ ) and all of ( $str_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

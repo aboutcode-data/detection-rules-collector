@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_dns_mining_pools.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Saw Winn Naung, Azure-Sentinel, @neu5ron",
+                "date": "2021-08-19",
+                "title": "DNS Events Related To Mining Pools",
+                "id": "bf74135c-18e8-4a72-a926-0e4f47888c19"
+            },
+            "rule_text": "title: DNS Events Related To Mining Pools\nid: bf74135c-18e8-4a72-a926-0e4f47888c19\nstatus: test\ndescription: Identifies clients that may be performing DNS lookups associated with\n  common currency mining pools.\nreferences:\n- https://github.com/Azure/Azure-Sentinel/blob/fa0411f9424b6c47b4d5a20165e4f1b168c1f103/Detections/ASimDNS/imDNS_Miners.yaml\nauthor: Saw Winn Naung, Azure-Sentinel, @neu5ron\ndate: 2021-08-19\nmodified: 2022-07-07\ntags:\n- attack.execution\n- attack.t1569.002\n- attack.impact\n- attack.t1496\nlogsource:\n  service: dns\n  product: zeek\ndetection:\n  selection:\n    query|endswith:\n    - monerohash.com\n    - do-dear.com\n    - xmrminerpro.com\n    - secumine.net\n    - xmrpool.com\n    - minexmr.org\n    - hashanywhere.com\n    - xmrget.com\n    - mininglottery.eu\n    - minergate.com\n    - moriaxmr.com\n    - multipooler.com\n    - moneropools.com\n    - xmrpool.eu\n    - coolmining.club\n    - supportxmr.com\n    - minexmr.com\n    - hashvault.pro\n    - xmrpool.net\n    - crypto-pool.fr\n    - xmr.pt\n    - miner.rocks\n    - walpool.com\n    - herominers.com\n    - gntl.co.uk\n    - semipool.com\n    - coinfoundry.org\n    - cryptoknight.cc\n    - fairhash.org\n    - baikalmine.com\n    - tubepool.xyz\n    - fairpool.xyz\n    - asiapool.io\n    - coinpoolit.webhop.me\n    - nanopool.org\n    - moneropool.com\n    - miner.center\n    - prohash.net\n    - poolto.be\n    - cryptoescrow.eu\n    - monerominers.net\n    - cryptonotepool.org\n    - extrmepool.org\n    - webcoin.me\n    - kippo.eu\n    - hashinvest.ws\n    - monero.farm\n    - linux-repository-updates.com\n    - 1gh.com\n    - dwarfpool.com\n    - hash-to-coins.com\n    - pool-proxy.com\n    - hashfor.cash\n    - fairpool.cloud\n    - litecoinpool.org\n    - mineshaft.ml\n    - abcxyz.stream\n    - moneropool.ru\n    - cryptonotepool.org.uk\n    - extremepool.org\n    - extremehash.com\n    - hashinvest.net\n    - unipool.pro\n    - crypto-pools.org\n    - monero.net\n    - backup-pool.com\n    - mooo.com\n    - freeyy.me\n    - cryptonight.net\n    - shscrypto.net\n  exclude_answers:\n    answers:\n    - 127.0.0.1\n    - 0.0.0.0\n  exclude_rejected:\n    rejected: 'true'\n  condition: selection and not 1 of exclude_*\nfalsepositives:\n- A DNS lookup does not necessarily  mean a successful attempt, verify a) if there\n  was a response using the zeek answers field, if there was then verify the connections\n  (conn.log) to those IPs. b) verify if HTTP, SSL, or TLS activity to the domain that\n  was queried. http.log field is 'host' and ssl/tls is 'server_name'.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

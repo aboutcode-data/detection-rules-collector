@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Spammer/Win32/Boblat/Spammer_Win32_Boblat_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Spammer_Win32_Boblat_A",
+                "tags": [],
+                "description": "Spammer:Win32/Boblat.A,SIGNATURE_TYPE_PEHSTR_EXT,11 00 11 00 06 00 00 "
+            },
+            "rule_text": "rule Spammer_Win32_Boblat_A\n{\n\tmeta:\n\t\tdescription = \"Spammer:Win32/Boblat.A,SIGNATURE_TYPE_PEHSTR_EXT,11 00 11 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {3d 0e 00 07 80 74 ?? 3d 08 00 0c 80 74 ?? 3b c7 75 ?? 33 c0 40 a3 }\n\t\t$a_00_1 = {50 68 13 00 00 20 57 }\n\t\t$a_00_2 = {0f b6 86 99 01 00 00 50 0f b6 86 98 01 00 00 50 0f b6 86 97 01 00 00 50 0f b6 86 96 01 00 00 50 0f b6 86 95 01 00 00 50 0f b6 86 94 01 00 00 50 }\n\t\t$a_01_3 = {2d 2d 3d 5f 42 6c 61 74 42 6f 75 6e 64 61 72 79 2d }\n\t\t$a_01_4 = {68 74 74 70 3a 2f 2f 25 73 25 73 25 73 }\n\t\t$a_01_5 = {2f 73 6d 74 70 2f 73 6d 74 70 2e 70 68 70 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 5 + ( #a_00_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 + ( #a_01_5 & 1 ) * 1 ) >= 17\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

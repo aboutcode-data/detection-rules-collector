@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDropper/Win32/Twores/TrojanDropper_Win32_Twores_L.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDropper_Win32_Twores_L",
+                "tags": [],
+                "description": "TrojanDropper:Win32/Twores.L,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDropper_Win32_Twores_L\n{\n\tmeta:\n\t\tdescription = \"TrojanDropper:Win32/Twores.L,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8a 04 30 8b 54 24 ?? 34 ?? 42 57 88 06 6a 00 89 54 24 ?? 46 ff d5 39 44 24 90 1b 00 72 e0 8b 74 24 }\n\t\t$a_01_1 = {6a 00 68 80 00 00 00 6a 02 6a 00 6a 02 68 00 00 00 40 }\n\t\t$a_00_2 = {4c 6f 61 64 52 65 73 6f 75 72 63 65 }\n\t\t$a_00_3 = {53 69 7a 65 6f 66 52 65 73 6f 75 72 63 65 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

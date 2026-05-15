@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_curl_download_exec_combo.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2020-01-13",
+                "title": "Curl Download And Execute Combination",
+                "id": "21dd6d38-2b18-4453-9404-a0fe4a0cc288"
+            },
+            "rule_text": "title: Curl Download And Execute Combination\nid: 21dd6d38-2b18-4453-9404-a0fe4a0cc288\nstatus: test\ndescription: Adversaries can use curl to download payloads remotely and execute them.\n  Curl is included by default in Windows 10 build 17063 and later.\nreferences:\n- https://medium.com/@reegun/curl-exe-is-the-new-rundll32-exe-lolbin-3f79c5f35983\nauthor: Sreeman, Nasreddine Bencherchali (Nextron Systems)\ndate: 2020-01-13\nmodified: 2024-03-05\ntags:\n- attack.stealth\n- attack.t1218\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|windash: ' -c '\n    CommandLine|contains|all:\n    - 'curl '\n    - http\n    - -o\n    - '&'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

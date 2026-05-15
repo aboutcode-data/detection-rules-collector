@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/deadbits/yara-rules/blob/master/rules/TA505_FlowerPippi.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TA505_FlowerPippi",
+                "tags": [
+                    "TA505",
+                    "financial",
+                    "backdoor",
+                    "winmalware"
+                ],
+                "Author": "Adam M. Swanda",
+                "Website": "https://www.deadbits.org",
+                "Repo": "https://github.com/deadbits/yara-rules",
+                "Date": "2019-07-18"
+            },
+            "rule_text": "rule TA505_FlowerPippi : TA505 financial backdoor winmalware\n{\n\tmeta:\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tWebsite = \"https://www.deadbits.org\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\t\tDate = \"2019-07-18\"\n\n\tstrings:\n\t\t$pipi = \"pipipipip\" ascii fullword\n\t\t$pdb0 = \"Loader.pdb\" ascii fullword\n\t\t$str0 = \"bot.php\" ascii fullword\n\t\t$str1 = \"%.2X\" ascii fullword\n\t\t$str2 = \"sd.bat\" ascii fullword\n\t\t$str3 = \"open\" ascii fullword\n\t\t$str4 = \"domain\" ascii fullword\n\t\t$str5 = \"proxy\" ascii fullword\n\t\t$str6 = \".exe\" ascii fullword\n\t\t$str7 = \"Can't launch EXE file\" ascii fullword\n\t\t$str8 = \"Can't load file\" ascii fullword\n\t\t$str9 = \".dll\" ascii fullword\n\t\t$str10 = \"Dll function not found\" ascii fullword\n\t\t$str11 = \"Can't load Dll\" ascii fullword\n\t\t$str12 = \"__start_session__\" ascii fullword\n\t\t$str13 = \"__failed__\" ascii fullword\n\t\t$str14 = \"RSDSG\" ascii fullword\n\t\t$str15 = \"ProxyServer\" ascii fullword\n\t\t$str16 = \":Repeat\" ascii fullword\n\t\t$str17 = \"del \\\"%s\\\"\" ascii fullword\n\t\t$str18 = \"if exist \\\"%s\\\" goto Repeat\" ascii fullword\n\t\t$str19 = \"rmdir \\\"%s\" ascii fullword\n\t\t$str20 = \"del \\\"%s\\\"\" ascii fullword\n\t\t$str21 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Internet Settings\" ascii fullword\n\t\t$str22 = \"ProxyEnable\" ascii fullword\n\t\t$str23 = \".00cfg\" ascii fullword\n\t\t$str24 = \".idata\" ascii fullword\n\t\t$api0 = \"IsProcessorFeaturePresent\" ascii fullword\n\t\t$api1 = \"IsDebuggerPresent\" ascii fullword\n\t\t$api2 = \"HttpOpenRequestA\" ascii fullword\n\t\t$api3 = \"InternetCrackUrlA\" ascii fullword\n\t\t$api4 = \"InternetOpenW\" ascii fullword\n\t\t$api5 = \"HttpSendRequestW\" ascii fullword\n\t\t$api6 = \"InternetCloseHandle\" ascii fullword\n\t\t$api7 = \"InternetConnectA\" ascii fullword\n\t\t$api8 = \"InternetSetOptionW\" ascii fullword\n\t\t$api9 = \"InternetReadFile\" ascii fullword\n\t\t$api10 = \"WININET.dll\" ascii fullword\n\t\t$api11 = \"URLDownloadToFileA\" ascii fullword\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize < 700KB and ( ( 10 of ( $str* ) and $pipi ) or ( 10 of ( $str* ) and $pdb0 ) or ( 10 of ( $str* ) and 5 of ( $api* ) ) or ( all of them ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

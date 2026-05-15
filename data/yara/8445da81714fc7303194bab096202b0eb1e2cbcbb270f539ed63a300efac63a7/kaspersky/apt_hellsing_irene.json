@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/kaspersky/apt_hellsing_irene.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_hellsing_irene",
+                "tags": [],
+                "version": "1.0",
+                "filetype": "PE",
+                "author": "Costin Raiu, Kaspersky Lab",
+                "copyright": "Kaspersky Lab",
+                "date": "2015-04-07",
+                "description": "detection for Hellsing msger irene installer"
+            },
+            "rule_text": "rule apt_hellsing_irene\n{\n\tmeta:\n\t\tversion = \"1.0\"\n\t\tfiletype = \"PE\"\n\t\tauthor = \"Costin Raiu, Kaspersky Lab\"\n\t\tcopyright = \"Kaspersky Lab\"\n\t\tdate = \"2015-04-07\"\n\t\tdescription = \"detection for Hellsing msger irene installer\"\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$a1 = \"\\\\Drivers\\\\usbmgr.tmp\" wide\n\t\t$a2 = \"\\\\Drivers\\\\usbmgr.sys\" wide\n\t\t$a3 = \"common_loadDriver CreateFile error! \"\n\t\t$a4 = \"common_loadDriver StartService error && GetLastError():%d! \"\n\t\t$a5 = \"irene\" wide\n\t\t$a6 = \"aPLib v0.43 - the smaller the better\"\n\n\tcondition:\n\t\t($mz at 0 ) and ( 4 of ( $a* ) ) and filesize < 500000\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

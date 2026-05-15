@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_apt_silence_eda.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Alina Stepchenkova, Group-IB, oscd.community",
+                "date": "2019-11-01",
+                "title": "Silence.EDA Detection",
+                "id": "3ceb2083-a27f-449a-be33-14ec1b7cc973"
+            },
+            "rule_text": "title: Silence.EDA Detection\nid: 3ceb2083-a27f-449a-be33-14ec1b7cc973\nstatus: test\ndescription: Detects Silence EmpireDNSAgent as described in the Group-IP report\nreferences:\n- https://www.group-ib.com/resources/threat-research/silence_2.0.going_global.pdf\nauthor: Alina Stepchenkova, Group-IB, oscd.community\ndate: 2019-11-01\nmodified: 2023-04-03\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.command-and-control\n- attack.t1071.004\n- attack.t1572\n- attack.impact\n- attack.t1529\n- attack.g0091\n- attack.s0363\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  empire:\n    ScriptBlockText|contains|all:\n    - System.Diagnostics.Process\n    - Stop-Computer\n    - Restart-Computer\n    - Exception in execution\n    - $cmdargs\n    - Close-Dnscat2Tunnel\n  dnscat:\n    ScriptBlockText|contains|all:\n    - set type=$LookupType`nserver\n    - $Command | nslookup 2>&1 | Out-String\n    - New-RandomDNSField\n    - '[Convert]::ToString($SYNOptions, 16)'\n    - $Session.Dead = $True\n    - $Session[\"Driver\"] -eq\n  condition: empire and dnscat\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win64/Injecz/VirTool_Win64_Injecz_B_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win64_Injecz_B_MTB",
+                "tags": [],
+                "description": "VirTool:Win64/Injecz.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win64_Injecz_B_MTB\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win64/Injecz.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {48 89 b4 24 40 01 00 00 48 8b b4 24 b8 00 00 00 48 89 b4 24 48 01 00 00 bb 02 00 00 00 48 89 d9 48 8d ?? ?? ?? ?? ?? ?? e8 ?? ?? ?? ?? 48 8d ?? ?? ?? ?? ?? bb 0b 00 00 00 66 ?? e8 fb ?? ?? ?? 89 44 24 3c 48 85 db }\n\t\t$a_00_1 = {48 8b 8c 24 80 00 00 00 48 89 08 48 8b 54 24 48 48 89 50 08 48 8b 5c 24 40 48 89 58 10 48 8b 5c 24 78 48 89 58 18 48 8b 1d ee c8 0d 00 }\n\t\t$a_00_2 = {48 8b 8c 24 80 00 00 00 48 89 08 48 8b 54 24 48 48 89 50 08 48 8b 9c 24 e0 00 00 00 48 89 58 10 48 8b 5c 24 78 48 89 58 18 48 8b 9c 24 d8 00 00 00 48 89 58 20 48 8b 1d 0d c8 0d 00 }\n\t\t$a_00_3 = {48 8b 8c 24 80 00 00 00 48 89 08 44 0f 11 78 08 48 8b 54 24 58 48 89 50 18 48 8b 54 24 48 48 89 50 20 44 0f 11 78 28 48 8b 15 81 c6 0d 00 48 89 c3 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

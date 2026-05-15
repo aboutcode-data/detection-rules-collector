@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mikesxrs/HermeticWiperCert.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HermeticWiper_Certificate",
+                "tags": [],
+                "description": "Detects a certificate used in HermeticWiper Attack",
+                "date": "2022-02-24",
+                "author": "@X0RC1SM",
+                "hash": "0385eeab00e946a302b24a91dea4187c1210597b8e17cd9e2230450f5ece21da",
+                "malware": "HermeticWiper"
+            },
+            "rule_text": "import \"pe\"\n\nrule HermeticWiper_Certificate\n{\n\tmeta:\n\t\tdescription = \"Detects a certificate used in HermeticWiper Attack\"\n\t\tdate = \"2022-02-24\"\n\t\tauthor = \"@X0RC1SM\"\n\t\thash = \"0385eeab00e946a302b24a91dea4187c1210597b8e17cd9e2230450f5ece21da\"\n\t\tmalware = \"HermeticWiper\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and for any i in ( 0 .. pe.number_of_signatures ) : ( pe.signatures [ i ] . serial == \"0c:48:73:28:73:ac:8c:ce:ba:f8:f0:e1:e8:32:9c:ec\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_invoke_obfuscation_via_use_mhsta.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-08",
+                "title": "Invoke-Obfuscation Via Use MSHTA - PowerShell",
+                "id": "e55a5195-4724-480e-a77e-3ebe64bd3759"
+            },
+            "rule_text": "title: Invoke-Obfuscation Via Use MSHTA - PowerShell\nid: e55a5195-4724-480e-a77e-3ebe64bd3759\nstatus: test\ndescription: Detects Obfuscated Powershell via use MSHTA in Scripts\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-08\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_4104:\n    ScriptBlockText|contains|all:\n    - set\n    - '&&'\n    - mshta\n    - vbscript:createobject\n    - .run\n    - (window.close)\n  condition: selection_4104\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

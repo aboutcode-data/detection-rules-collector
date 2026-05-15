@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hh_html_help_susp_child_process.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Maxim Pavlunin, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2020-04-01",
+                "title": "HTML Help HH.EXE Suspicious Child Process",
+                "id": "52cad028-0ff0-4854-8f67-d25dfcbc78b4"
+            },
+            "rule_text": "title: HTML Help HH.EXE Suspicious Child Process\nid: 52cad028-0ff0-4854-8f67-d25dfcbc78b4\nstatus: test\ndescription: Detects a suspicious child process of a Microsoft HTML Help (HH.exe)\nreferences:\n- https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/chm-badness-delivers-a-banking-trojan/\n- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-27939090904026cc396b0b629c8e4314acd6f5dac40a676edbc87f4567b47eb7\n- https://www.ptsecurity.com/ww-en/analytics/pt-esc-threat-intelligence/higaisa-or-winnti-apt-41-backdoors-old-and-new/\n- https://www.zscaler.com/blogs/security-research/unintentional-leak-glimpse-attack-vectors-apt37\nauthor: Maxim Pavlunin, Nasreddine Bencherchali (Nextron Systems)\ndate: 2020-04-01\nmodified: 2023-04-12\ntags:\n- attack.execution\n- attack.initial-access\n- attack.stealth\n- attack.t1047\n- attack.t1059.001\n- attack.t1059.003\n- attack.t1059.005\n- attack.t1059.007\n- attack.t1218\n- attack.t1218.001\n- attack.t1218.010\n- attack.t1218.011\n- attack.t1566\n- attack.t1566.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\hh.exe\n    Image|endswith:\n    - \\CertReq.exe\n    - \\CertUtil.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\installutil.exe\n    - \\MSbuild.exe\n    - \\MSHTA.EXE\n    - \\msiexec.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\schtasks.exe\n    - \\wmic.exe\n    - \\wscript.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

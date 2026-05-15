@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_ngrok.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-05-14",
+                "title": "PUA - Ngrok Execution",
+                "id": "ee37eb7c-a4e7-4cd5-8fa4-efa27f1c3f31"
+            },
+            "rule_text": "title: PUA - Ngrok Execution\nid: ee37eb7c-a4e7-4cd5-8fa4-efa27f1c3f31\nstatus: test\ndescription: 'Detects the use of Ngrok, a utility used for port forwarding and tunneling,\n  often used by threat actors to make local protected services publicly available.\n\n  Involved domains are bin.equinox.io for download and *.ngrok.io for connections.\n\n  '\nreferences:\n- https://ngrok.com/docs\n- https://www.fireeye.com/blog/threat-research/2021/05/shining-a-light-on-darkside-ransomware-operations.html\n- https://stackoverflow.com/questions/42442320/ssh-tunnel-to-ngrok-and-initiate-rdp\n- https://www.virustotal.com/gui/file/58d21840d915aaf4040ceb89522396124c82f325282f805d1085527e1e2ccfa1/detection\n- https://cybleinc.com/2021/02/15/ngrok-platform-abused-by-hackers-to-deliver-a-new-wave-of-phishing-attacks/\n- https://twitter.com/xorJosh/status/1598646907802451969\n- https://www.softwaretestinghelp.com/how-to-use-ngrok/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-05-14\nmodified: 2023-02-21\ntags:\n- attack.command-and-control\n- attack.t1572\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    CommandLine|contains:\n    - ' tcp 139'\n    - ' tcp 445'\n    - ' tcp 3389'\n    - ' tcp 5985'\n    - ' tcp 5986'\n  selection2:\n    CommandLine|contains|all:\n    - ' start '\n    - --all\n    - --config\n    - .yml\n  selection3:\n    Image|endswith: ngrok.exe\n    CommandLine|contains:\n    - ' tcp '\n    - ' http '\n    - ' authtoken '\n  selection4:\n    CommandLine|contains:\n    - '.exe authtoken '\n    - .exe start --all\n  condition: 1 of selection*\nfalsepositives:\n- Another tool that uses the command line switches of Ngrok\n- Ngrok http 3978 (https://learn.microsoft.com/en-us/azure/bot-service/bot-service-debug-channel-ngrok?view=azure-bot-service-4.0)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

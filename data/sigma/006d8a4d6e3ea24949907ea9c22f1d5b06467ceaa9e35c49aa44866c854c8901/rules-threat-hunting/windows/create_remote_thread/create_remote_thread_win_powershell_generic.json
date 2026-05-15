@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_powershell_generic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-06",
+                "title": "Remote Thread Creation Via PowerShell",
+                "id": "eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50"
+            },
+            "rule_text": "title: Remote Thread Creation Via PowerShell\nid: eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50\nrelated:\n- id: 99b97608-3e21-4bfe-8217-2a127c396a0e\n  type: derived\nstatus: test\ndescription: Detects the creation of a remote thread from a Powershell process to\n  another process\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-06\nmodified: 2023-11-10\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.threat-hunting\nlogsource:\n  product: windows\n  category: create_remote_thread\ndetection:\n  selection:\n    SourceImage|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  filter_main_compattelrunner:\n    SourceParentImage|endswith: :\\Windows\\System32\\CompatTelRunner.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_psexec_paexec_escalate_system.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-11-23",
+                "title": "PsExec/PAExec Escalation to LOCAL SYSTEM",
+                "id": "8834e2f7-6b4b-4f09-8906-d2276470ee23"
+            },
+            "rule_text": "title: PsExec/PAExec Escalation to LOCAL SYSTEM\nid: 8834e2f7-6b4b-4f09-8906-d2276470ee23\nrelated:\n- id: 207b0396-3689-42d9-8399-4222658efc99\n  type: similar\nstatus: test\ndescription: Detects suspicious commandline flags used by PsExec and PAExec to escalate\n  a command line to LOCAL_SYSTEM rights\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/psexec\n- https://www.poweradmin.com/paexec/\n- https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-11-23\nmodified: 2024-03-05\ntags:\n- attack.resource-development\n- attack.t1587.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_sys:\n    CommandLine|contains|windash:\n    - ' -s cmd'\n    - ' -s -i cmd'\n    - ' -i -s cmd'\n    - ' -s pwsh'\n    - ' -s -i pwsh'\n    - ' -i -s pwsh'\n    - ' -s powershell'\n    - ' -s -i powershell'\n    - ' -i -s powershell'\n  selection_other:\n    CommandLine|contains:\n    - psexec\n    - paexec\n    - accepteula\n  condition: all of selection_*\nfalsepositives:\n- Admins that use PsExec or PAExec to escalate to the SYSTEM account for maintenance\n  purposes (rare)\n- Users that debug Microsoft Intune issues using the commands mentioned in the official\n  documentation; see https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

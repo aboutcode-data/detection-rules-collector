@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win64/Bazarloader/Backdoor_Win64_Bazarloader_SSA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win64_Bazarloader_SSA",
+                "tags": [],
+                "description": "Backdoor:Win64/Bazarloader.SSA,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win64_Bazarloader_SSA\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win64/Bazarloader.SSA,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {41 55 41 54 57 56 53 48 83 ec 50 48 b8 [0-08] 8b 9c 24 a8 00 00 00 8b b4 24 b0 00 00 00 48 8b bc 24 b8 00 00 00 48 89 44 24 40 45 89 c5 45 89 c8 49 89 d4 }\n\t\t$a_02_1 = {c7 44 24 3c [0-04] 4c 8b 8c 24 a0 00 00 00 c7 44 24 48 [0-04] c6 44 24 4c 00 48 89 44 24 34 31 c0 }\n\t\t$a_00_2 = {4c 8b 4c 24 28 44 89 ea 4c 89 e1 44 8b 44 24 24 48 89 bc 24 b0 00 00 00 89 b4 24 a8 00 00 00 89 9c 24 a0 00 00 00 48 83 c4 50 5b 5e 5f 41 5c 41 5d 48 ff e0 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 5 + ( #a_02_1 & 1 ) * 5 + ( #a_00_2 & 1 ) * 5 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/trojan_backwash_iis_scout.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "trojan_backwash_iis_scout",
+                "tags": [
+                    "XEGroup"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Simple backdoor which collects information about the IIS server it is installed on. It appears to the attacker refers to this components as 'XValidate' - i.e. to validate infected machines.",
+                "reference": "https://www.volexity.com/blog/2021/12/07/xe-group-exposed-8-years-of-hacking-card-skimming-for-profit/",
+                "date": "2021-11-17",
+                "hash1": "6f44a9c13459533a1f3e0b0e698820611a18113c851f763797090b8be64fd9d5",
+                "memory_suitable": 1,
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule trojan_backwash_iis_scout : XEGroup\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Simple backdoor which collects information about the IIS server it is installed on. It appears to the attacker refers to this components as 'XValidate' - i.e. to validate infected machines.\"\n\t\treference = \"https://www.volexity.com/blog/2021/12/07/xe-group-exposed-8-years-of-hacking-card-skimming-for-profit/\"\n\t\tdate = \"2021-11-17\"\n\t\thash1 = \"6f44a9c13459533a1f3e0b0e698820611a18113c851f763797090b8be64fd9d5\"\n\t\tmemory_suitable = 1\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$s1 = \"SOAPRequest\" ascii\n\t\t$s2 = \"requestServer\" ascii\n\t\t$s3 = \"getFiles\" ascii\n\t\t$s4 = \"APP_POOL_CONFIG\" wide\n\t\t$s5 = \"<virtualDirectory\" wide\n\t\t$s6 = \"stringinstr\" ascii\n\t\t$s7 = \"504f5354\" wide\n\t\t$s8 = \"XValidate\" ascii\n\t\t$s9 = \"XEReverseShell\" ascii\n\t\t$s10 = \"XERsvData\" ascii\n\n\tcondition:\n\t\t6 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

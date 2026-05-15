@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Dofoil/Trojan_Win32_Dofoil_STA.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Dofoil_STA",
+                "tags": [],
+                "description": "Trojan:Win32/Dofoil.STA,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Dofoil_STA\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Dofoil.STA,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {4e 11 00 00 c7 [0-06] 1c 37 ef c6 }\n\t\t$a_03_1 = {c6 c3 66 6d c7 [0-06] ba 48 f5 62 c7 [0-06] 02 9e 92 29 c7 [0-06] 56 c1 16 6e }\n\t\t$a_03_2 = {d3 e0 c1 ea 05 03 [0-06] 03 [0-06] 89 ?? ?? ?? e8 }\n\t\t$a_00_3 = {6b 65 72 6e 65 6c 33 32 2e 64 6c 6c 00 00 00 00 78 00 61 00 74 00 65 00 70 00 61 00 00 00 00 00 6b 65 72 6e 65 6c 33 32 2e 64 6c 6c 00 00 00 00 56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

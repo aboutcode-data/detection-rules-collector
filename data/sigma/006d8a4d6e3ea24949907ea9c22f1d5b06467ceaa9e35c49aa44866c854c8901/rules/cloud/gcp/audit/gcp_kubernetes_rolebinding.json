@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/gcp/audit/gcp_kubernetes_rolebinding.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-09",
+                "title": "Google Cloud Kubernetes RoleBinding",
+                "id": "0322d9f2-289a-47c2-b5e1-b63c90901a3e"
+            },
+            "rule_text": "title: Google Cloud Kubernetes RoleBinding\nid: 0322d9f2-289a-47c2-b5e1-b63c90901a3e\nstatus: test\ndescription: Detects the creation or patching of potential malicious RoleBinding.\n  This includes RoleBindings and ClusterRoleBinding.\nreferences:\n- https://github.com/elastic/detection-rules/pull/1267\n- https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole\n- https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control\n- https://kubernetes.io/docs/reference/access-authn-authz/rbac/\n- https://cloud.google.com/kubernetes-engine/docs/how-to/audit-logging\nauthor: Austin Songer @austinsonger\ndate: 2021-08-09\nmodified: 2022-10-09\ntags:\n- attack.credential-access\nlogsource:\n  product: gcp\n  service: gcp.audit\ndetection:\n  selection:\n    gcp.audit.method_name:\n    - io.k8s.authorization.rbac.v*.clusterrolebindings.create\n    - io.k8s.authorization.rbac.v*.rolebindings.create\n    - io.k8s.authorization.rbac.v*.clusterrolebindings.patch\n    - io.k8s.authorization.rbac.v*.rolebindings.patch\n    - io.k8s.authorization.rbac.v*.clusterrolebindings.update\n    - io.k8s.authorization.rbac.v*.rolebindings.update\n    - io.k8s.authorization.rbac.v*.clusterrolebindings.delete\n    - io.k8s.authorization.rbac.v*.rolebindings.delete\n  condition: selection\nfalsepositives:\n- RoleBindings and ClusterRoleBinding being modified or deleted may be performed by\n  a system administrator. Verify whether the user identity, user agent, and/or hostname\n  should be making changes in your environment.\n- RoleBindings and ClusterRoleBinding modified or deleted from unfamiliar users should\n  be investigated. If known behavior is causing false positives, it can be exempted\n  from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

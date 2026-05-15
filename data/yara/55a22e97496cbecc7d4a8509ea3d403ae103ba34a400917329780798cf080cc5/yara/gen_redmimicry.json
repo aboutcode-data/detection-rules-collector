@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_redmimicry.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "HKTL_RedMimicry_Agent",
+                "tags": [],
+                "date": "2020-06-22",
+                "modified": "2023-01-06",
+                "author": "mirar@chaosmail.org",
+                "sharing": "tlp:white",
+                "description": "matches the RedMimicry agent executable and payload",
+                "reference": "https://redmimicry.com",
+                "id": "a4d4ec77-4a0d-5afd-9181-85433e8b5fda"
+            },
+            "rule_text": "rule HKTL_RedMimicry_Agent\n{\n\tmeta:\n\t\tdate = \"2020-06-22\"\n\t\tmodified = \"2023-01-06\"\n\t\tauthor = \"mirar@chaosmail.org\"\n\t\tsharing = \"tlp:white\"\n\t\tdescription = \"matches the RedMimicry agent executable and payload\"\n\t\treference = \"https://redmimicry.com\"\n\t\tid = \"a4d4ec77-4a0d-5afd-9181-85433e8b5fda\"\n\n\tstrings:\n\t\t$reg0 = \"HKEY_CURRENT_USER\\\\\" ascii\n\t\t$reg1 = \"HKEY_LOCAL_MACHINE\\\\\" ascii\n\t\t$reg2 = \"HKEY_CURRENT_CONFIG\\\\\" ascii\n\t\t$reg3 = \"HKEY_CLASSES_ROOT\\\\\" ascii\n\t\t$cmd0 = \"C:\\\\Windows\\\\System32\\\\cmd.exe\" ascii fullword\n\t\t$lua0 = \"client_recv\" ascii fullword\n\t\t$lua1 = \"client_send\" ascii fullword\n\t\t$lua2 = \"$LuaVersion: \" ascii\n\t\t$sym0 = \"VirtualAllocEx\" wide fullword\n\t\t$sym1 = \"kernel32.dll\" wide fullword\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "HKTL_RedMimicry_WinntiLoader",
+                "tags": [],
+                "date": "2020-06-22",
+                "modified": "2023-01-10",
+                "author": "mirar@chaosmail.org",
+                "sharing": "tlp:white",
+                "description": "matches the Winnti 'Cooper' loader version used for the RedMimicry breach emulation",
+                "reference": "https://redmimicry.com",
+                "id": "a8be1377-faa0-560d-a12c-0369b1f91180"
+            },
+            "rule_text": "rule HKTL_RedMimicry_WinntiLoader\n{\n\tmeta:\n\t\tdate = \"2020-06-22\"\n\t\tmodified = \"2023-01-10\"\n\t\tauthor = \"mirar@chaosmail.org\"\n\t\tsharing = \"tlp:white\"\n\t\tdescription = \"matches the Winnti 'Cooper' loader version used for the RedMimicry breach emulation\"\n\t\treference = \"https://redmimicry.com\"\n\t\tid = \"a8be1377-faa0-560d-a12c-0369b1f91180\"\n\n\tstrings:\n\t\t$s0 = \"Cooper\" ascii fullword\n\t\t$s1 = \"stone64.dll\" ascii fullword\n\t\t$decoding_loop = { 49 63 D0 43 8D 0C 01 41 FF C0 42 32 0C 1A 0F B6 C1 C0 E9 04 C0 E0 04 02 C1 42 88 04 1A 44 3B 03 72 DE }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

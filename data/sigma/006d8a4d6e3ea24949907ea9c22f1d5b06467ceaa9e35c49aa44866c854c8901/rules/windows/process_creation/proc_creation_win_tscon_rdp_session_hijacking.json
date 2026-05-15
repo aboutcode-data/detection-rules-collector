@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_tscon_rdp_session_hijacking.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@juju4",
+                "date": "2022-12-27",
+                "title": "Potential RDP Session Hijacking Activity",
+                "id": "224f140f-3553-4cd1-af78-13d81bf9f7cc"
+            },
+            "rule_text": "title: Potential RDP Session Hijacking Activity\nid: 224f140f-3553-4cd1-af78-13d81bf9f7cc\nstatus: test\ndescription: Detects potential RDP Session Hijacking activity on Windows systems\nreferences:\n- https://twitter.com/Moti_B/status/909449115477659651\nauthor: '@juju4'\ndate: 2022-12-27\nmodified: 2024-12-01\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\tscon.exe\n  - OriginalFileName: tscon.exe\n  selection_integrity:\n    IntegrityLevel:\n    - System\n    - S-1-16-16384\n  condition: all of selection_*\nfalsepositives:\n- Administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_wmi_suspicious_commands.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Suspicious Commands - WMI",
+                "id": "5a6a9a1b-97d0-43d8-9dd7-3cdef056c3c3"
+            },
+            "rule_text": "title: Suspicious Commands - WMI\nid: 5a6a9a1b-97d0-43d8-9dd7-3cdef056c3c3\nstatus: experimental\ndescription: \"Looking for suspicious command-line parameters is another solid indicator\\\n  \\ of malice. Certain \\nred team and post-exploitation frameworks will spawn unique\\\n  \\ and unsigned binaries or commands \\nremotely using the well known process call\\\n  \\ create command, and we\\u2019ve got a couple different \\ndetection methods that\\\n  \\ have alerted us to related activity over the years. Potentially \\nsuspicious WMI\\\n  \\ command switches include create, node:, process, and call. Of course, the \\nmaliciousness\\\n  \\ of these commands are context-specific, and therefore, the following may \\nrequire\\\n  \\ tuning or generate high volumes of false positives. Part of the RedCanary 2024\\\n  \\ Threat \\nDetection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/windows-management-instrumentation/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wmic.exe\n    CommandLine|contains:\n    - create\n    - 'node:'\n    - process\n    - call\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

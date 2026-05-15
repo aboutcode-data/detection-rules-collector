@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_module/posh_pm_susp_ad_group_reco.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-15",
+                "title": "AD Groups Or Users Enumeration Using PowerShell - PoshModule",
+                "id": "815bfc17-7fc6-4908-a55e-2f37b98cedb4"
+            },
+            "rule_text": "title: AD Groups Or Users Enumeration Using PowerShell - PoshModule\nid: 815bfc17-7fc6-4908-a55e-2f37b98cedb4\nstatus: test\ndescription: 'Adversaries may attempt to find domain-level groups and permission settings.\n\n  The knowledge of domain-level permission groups can help adversaries determine which\n  groups exist and which users belong to a particular group.\n\n  Adversaries may use this information to determine which users have elevated permissions,\n  such as domain administrators.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.002/T1069.002.md\nauthor: frack113\ndate: 2021-12-15\nmodified: 2023-01-20\ntags:\n- attack.discovery\n- attack.t1069.001\nlogsource:\n  product: windows\n  category: ps_module\n  definition: 0ad03ef1-f21b-4a79-8ce8-e6900c54b65b\ndetection:\n  selection_ad_principal:\n  - Payload|contains: get-ADPrincipalGroupMembership\n  - ContextInfo|contains: get-ADPrincipalGroupMembership\n  selection_get_aduser:\n  - Payload|contains|all:\n    - get-aduser\n    - '-f '\n    - '-pr '\n    - DoesNotRequirePreAuth\n  - ContextInfo|contains|all:\n    - get-aduser\n    - '-f '\n    - '-pr '\n    - DoesNotRequirePreAuth\n  condition: 1 of selection_*\nfalsepositives:\n- Administrator script\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

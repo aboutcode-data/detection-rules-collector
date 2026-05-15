@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_mklink_osk_cmd.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-11",
+                "title": "Potential Privilege Escalation Using Symlink Between Osk and Cmd",
+                "id": "e9b61244-893f-427c-b287-3e708f321c6b"
+            },
+            "rule_text": "title: Potential Privilege Escalation Using Symlink Between Osk and Cmd\nid: e9b61244-893f-427c-b287-3e708f321c6b\nstatus: test\ndescription: Detects the creation of a symbolic link between \"cmd.exe\" and the accessibility\n  on-screen keyboard binary (osk.exe) using \"mklink\". This technique provides an elevated\n  command prompt to the user from the login screen without the need to log in.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/5c1e6f1b4fafd01c8d1ece85f510160fc1275fbf/atomics/T1546.008/T1546.008.md\n- https://ss64.com/nt/mklink.html\nauthor: frack113\ndate: 2022-12-11\nmodified: 2022-12-20\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.008\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cli:\n    CommandLine|contains|all:\n    - mklink\n    - \\osk.exe\n    - \\cmd.exe\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_cmd_mklink_osk_cmd/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

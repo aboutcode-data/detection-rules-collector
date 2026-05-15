@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxdeployment_server_uncommon_package_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "AppX Located in Uncommon Directory Added to Deployment Pipeline",
+                "id": "c977cb50-3dff-4a9f-b873-9290f56132f1"
+            },
+            "rule_text": "title: AppX Located in Uncommon Directory Added to Deployment Pipeline\nid: c977cb50-3dff-4a9f-b873-9290f56132f1\nstatus: test\ndescription: 'Detects an appx package that was added to the pipeline of the \"to be\n  processed\" packages that is located in uncommon locations.\n\n  '\nreferences:\n- Internal Research\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\n- https://learn.microsoft.com/en-us/windows/win32/appxpkg/troubleshooting\n- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\nmodified: 2025-12-03\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection:\n    EventID: 854\n  filter_main_generic:\n    Path|contains:\n    - :/Program%20Files\n    - :/Windows/System32/\n    - :\\Program Files (x86)\\\n    - :\\Program Files\\\n    - :\\Windows\\ImmersiveControlPanel\\\n    - :\\Windows\\PrintDialog\\\n    - :\\Windows\\SystemApps\\\n    - AppData/Local/Temp/WinGet/Microsoft.Winget.Source\n    - x-windowsupdate://\n  filter_main_specific:\n    Path|contains:\n    - https://installer.teams.static.microsoft/\n    - https://res.cdn.office.net\n    - https://statics.teams.cdn.live.net/\n    - https://statics.teams.cdn.office.net/\n    - microsoft.com\n  filter_optional_onedrive:\n    Path|contains: AppData\\Local\\Microsoft\\OneDrive\\\n  filter_optional_winget:\n    Path|contains:\n    - AppData/Local/Temp/WinGet/Microsoft.Winget.Source\n    - AppData\\Local\\Temp\\WinGet\\Microsoft.Winget.Source\n  filter_optional_x_windowsupdate:\n    Path|contains: x-windowsupdate://\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

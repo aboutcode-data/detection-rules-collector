@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/D-F/esxcli.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "esxcli",
+                "tags": [],
+                "description": "Detection patterns for the tool 'esxcli' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "esxcli",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule esxcli\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'esxcli' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"esxcli\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \"esxcli network firewall set -enabled f\" nocase ascii wide\n\t\t$string2 = \"esxcli network firewall set --enabled f\" nocase ascii wide\n\t\t$string3 = \"esxcli system account add\" nocase ascii wide\n\t\t$string4 = \"esxcli system account remove\" nocase ascii wide\n\t\t$string5 = /esxcli\\ssystem\\saccount\\sset\\s\\-i\\s.{0,1000}\\s\\-s\\st/ nocase ascii wide\n\t\t$string6 = \"esxcli system auditrecords local disable\" nocase ascii wide\n\t\t$string7 = \"esxcli system coredump file set --unconfigure\" nocase ascii wide\n\t\t$string8 = \"esxcli system permission list\" nocase ascii wide\n\t\t$string9 = \"esxcli system settings encryption set - require-exec-installed-only=F\" nocase ascii wide\n\t\t$string10 = \"esxcli system settings encryption set - require-secure-boot=F\" nocase ascii wide\n\t\t$string11 = \"esxcli system settings kernel set -s execInstalledOnly -v F\" nocase ascii wide\n\t\t$string12 = \"esxcli system syslog config set --logdir=/tmp\" nocase ascii wide\n\t\t$string13 = \"esxcli vm process kill \" nocase ascii wide\n\t\t$string14 = \"esxcli vm process list\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

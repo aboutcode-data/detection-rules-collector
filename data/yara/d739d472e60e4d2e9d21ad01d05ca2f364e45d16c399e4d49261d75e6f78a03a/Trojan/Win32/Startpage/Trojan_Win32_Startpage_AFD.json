@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Startpage/Trojan_Win32_Startpage_AFD.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Startpage_AFD",
+                "tags": [],
+                "description": "Trojan:Win32/Startpage.AFD,SIGNATURE_TYPE_PEHSTR,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Startpage_AFD\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Startpage.AFD,SIGNATURE_TYPE_PEHSTR,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {2e 74 65 70 22 20 2f 50 20 45 76 65 72 79 6f 6e 65 3a 52 00 fe 25 25 5c 63 6d 64 2e 65 78 65 20 2f 63 20 65 63 68 6f 20 59 7c 20 63 61 63 6c 73 20 22 }\n\t\t$a_01_1 = {68 74 74 70 3a 2f 2f 25 37 37 25 37 37 25 37 37 25 32 45 25 36 35 25 37 41 25 33 31 25 33 37 25 33 33 25 32 45 25 36 33 25 36 46 25 36 44 2f 74 61 6f 62 61 6f 2f }\n\t\t$a_01_2 = {68 74 74 70 3a 2f 2f 25 37 39 25 36 46 25 37 35 25 37 38 25 33 31 25 32 45 25 36 33 25 36 46 25 36 44 2f 3f }\n\t\t$a_01_3 = {5c c1 b4 bd d3 5c d0 a1 d3 ce cf b7 2e 75 72 6c 00 }\n\t\t$a_01_4 = {5c c1 b4 bd d3 5c cc d4 b1 a6 cd f8 2e 75 72 6c 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

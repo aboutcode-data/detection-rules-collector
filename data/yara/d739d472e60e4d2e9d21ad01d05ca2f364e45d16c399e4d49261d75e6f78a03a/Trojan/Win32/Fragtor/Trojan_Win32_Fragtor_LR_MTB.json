@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Fragtor/Trojan_Win32_Fragtor_LR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Fragtor_LR_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Fragtor.LR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Fragtor_LR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Fragtor.LR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 53 58 ff 43 14 8b 4b 14 8b 42 50 0f af c1 3d d0 07 00 00 73 ?? 8d 41 01 89 43 14 8b 4a 50 0f af c8 }\n\t\t$a_03_1 = {bb 0a 00 00 00 3b cb 0f 4c cb 89 4a 50 8b 4d f8 5b 85 c9 78 ?? 89 8a b8 00 00 00 85 c0 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 10 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

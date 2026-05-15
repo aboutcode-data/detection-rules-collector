@@ -1,0 +1,72 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_turbo_campaign.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_nix_elf_derusbi",
+                "tags": [],
+                "description": "Detects Derusbi Backdoor ELF",
+                "author": "Fidelis Cybersecurity",
+                "date": "2016/02/29",
+                "modified": "2023-05-04",
+                "reference": "https://github.com/fideliscyber/indicators/tree/master/FTA-1021",
+                "id": "c825c5d6-1c2f-5ee7-871e-4be3f41d73f7"
+            },
+            "rule_text": "rule apt_nix_elf_derusbi\n{\n\tmeta:\n\t\tdescription = \"Detects Derusbi Backdoor ELF\"\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\tdate = \"2016/02/29\"\n\t\tmodified = \"2023-05-04\"\n\t\treference = \"https://github.com/fideliscyber/indicators/tree/master/FTA-1021\"\n\t\tid = \"c825c5d6-1c2f-5ee7-871e-4be3f41d73f7\"\n\n\tstrings:\n\t\t$s1 = \"LxMain\"\n\t\t$s2 = \"execve\"\n\t\t$s3 = \"kill\"\n\t\t$s4 = \"cp -a %s %s\"\n\t\t$s5 = \"%s &\"\n\t\t$s6 = \"dbus-daemon\"\n\t\t$s7 = \"--noprofile\"\n\t\t$s8 = \"--norc\"\n\t\t$s9 = \"TERM=vt100\"\n\t\t$s10 = \"/proc/%u/cmdline\"\n\t\t$s11 = \"loadso\"\n\t\t$s12 = \"/proc/self/exe\"\n\t\t$s13 = \"Proxy-Connection: Keep-Alive\"\n\t\t$s14 = \"Connection: Keep-Alive\"\n\t\t$s15 = \"CONNECT %s\"\n\t\t$s16 = \"HOST: %s:%d\"\n\t\t$s17 = \"User-Agent: Mozilla/4.0\"\n\t\t$s18 = \"Proxy-Authorization: Basic %s\"\n\t\t$s19 = \"Server: Apache\"\n\t\t$s20 = \"Proxy-Authenticate\"\n\t\t$s21 = \"gettimeofday\"\n\t\t$s22 = \"pthread_create\"\n\t\t$s23 = \"pthread_join\"\n\t\t$s24 = \"pthread_mutex_init\"\n\t\t$s25 = \"pthread_mutex_destroy\"\n\t\t$s26 = \"pthread_mutex_lock\"\n\t\t$s27 = \"getsockopt\"\n\t\t$s28 = \"socket\"\n\t\t$s29 = \"setsockopt\"\n\t\t$s30 = \"select\"\n\t\t$s31 = \"bind\"\n\t\t$s32 = \"shutdown\"\n\t\t$s33 = \"listen\"\n\t\t$s34 = \"opendir\"\n\t\t$s35 = \"readdir\"\n\t\t$s36 = \"closedir\"\n\t\t$s37 = \"rename\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_nix_elf_derusbi_kernelModule",
+                "tags": [],
+                "description": "Detects Derusbi Backdoor ELF Kernel Module",
+                "author": "Fidelis Cybersecurity",
+                "date": "2016/02/29",
+                "modified": "2023-05-04",
+                "reference": "https://github.com/fideliscyber/indicators/tree/master/FTA-1021",
+                "id": "98196ffc-8a6f-5edc-a688-eeb449410b72"
+            },
+            "rule_text": "rule apt_nix_elf_derusbi_kernelModule\n{\n\tmeta:\n\t\tdescription = \"Detects Derusbi Backdoor ELF Kernel Module\"\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\tdate = \"2016/02/29\"\n\t\tmodified = \"2023-05-04\"\n\t\treference = \"https://github.com/fideliscyber/indicators/tree/master/FTA-1021\"\n\t\tid = \"98196ffc-8a6f-5edc-a688-eeb449410b72\"\n\n\tstrings:\n\t\t$s1 = \"__this_module\"\n\t\t$s2 = \"init_module\"\n\t\t$s3 = \"unhide_pid\"\n\t\t$s4 = \"is_hidden_pid\"\n\t\t$s5 = \"clear_hidden_pid\"\n\t\t$s6 = \"hide_pid\"\n\t\t$s7 = \"license\"\n\t\t$s8 = \"description\"\n\t\t$s9 = \"srcversion=\"\n\t\t$s10 = \"depends=\"\n\t\t$s12 = \"vermagic=\"\n\t\t$s13 = \"current_task\"\n\t\t$s14 = \"sock_release\"\n\t\t$s15 = \"module_layout\"\n\t\t$s16 = \"init_uts_ns\"\n\t\t$s17 = \"init_net\"\n\t\t$s18 = \"init_task\"\n\t\t$s19 = \"filp_open\"\n\t\t$s20 = \"__netlink_kernel_create\"\n\t\t$s21 = \"kfree_skb\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_nix_elf_Derusbi_Linux_SharedMemCreation",
+                "tags": [],
+                "description": "Detects Derusbi Backdoor ELF Shared Memory Creation",
+                "author": "Fidelis Cybersecurity",
+                "date": "2016/02/29",
+                "reference": "https://github.com/fideliscyber/indicators/tree/master/FTA-1021",
+                "id": "068b7bea-853d-57e8-a9fe-8b451dbc7582"
+            },
+            "rule_text": "rule apt_nix_elf_Derusbi_Linux_SharedMemCreation\n{\n\tmeta:\n\t\tdescription = \"Detects Derusbi Backdoor ELF Shared Memory Creation\"\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\tdate = \"2016/02/29\"\n\t\treference = \"https://github.com/fideliscyber/indicators/tree/master/FTA-1021\"\n\t\tid = \"068b7bea-853d-57e8-a9fe-8b451dbc7582\"\n\n\tstrings:\n\t\t$byte1 = { B6 03 00 00 ?? 40 00 00 00 ?? 0D 5F 01 82 }\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and any of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_nix_elf_Derusbi_Linux_Strings",
+                "tags": [],
+                "description": "Detects Derusbi Backdoor ELF Strings",
+                "author": "Fidelis Cybersecurity",
+                "date": "2016/02/29",
+                "reference": "https://github.com/fideliscyber/indicators/tree/master/FTA-1021",
+                "id": "06717cc9-678d-5912-a671-65605b9c9968"
+            },
+            "rule_text": "rule apt_nix_elf_Derusbi_Linux_Strings\n{\n\tmeta:\n\t\tdescription = \"Detects Derusbi Backdoor ELF Strings\"\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\tdate = \"2016/02/29\"\n\t\treference = \"https://github.com/fideliscyber/indicators/tree/master/FTA-1021\"\n\t\tid = \"06717cc9-678d-5912-a671-65605b9c9968\"\n\n\tstrings:\n\t\t$a1 = \"loadso\" wide ascii fullword\n\t\t$a2 = \"\\nuname -a\\n\\n\" wide ascii\n\t\t$a3 = \"/dev/shm/.x11.id\" wide ascii\n\t\t$a4 = \"LxMain64\" wide ascii nocase\n\t\t$a5 = \"# \\\\u@\\\\h:\\\\w \\\\$ \" wide ascii\n\t\t$b1 = \"0123456789abcdefghijklmnopqrstuvwxyz\" wide\n\t\t$b2 = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\" wide\n\t\t$b3 = \"ret %d\" wide fullword\n\t\t$b4 = \"uname -a\\n\\n\" wide ascii\n\t\t$b5 = \"/proc/%u/cmdline\" wide ascii\n\t\t$b6 = \"/proc/self/exe\" wide ascii\n\t\t$b7 = \"cp -a %s %s\" wide ascii\n\t\t$c1 = \"/dev/pts/4\" wide ascii fullword\n\t\t$c2 = \"/tmp/1408.log\" wide ascii fullword\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and ( ( 1 of ( $a* ) and 4 of ( $b* ) ) or ( 1 of ( $a* ) and 1 of ( $c* ) ) or 2 of ( $a* ) or all of ( $b* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "apt_win_exe_trojan_derusbi",
+                "tags": [],
+                "description": "Detects Derusbi Backdoor Win32",
+                "author": "Fidelis Cybersecurity",
+                "date": "2016/02/29",
+                "reference": "https://github.com/fideliscyber/indicators/tree/master/FTA-1021",
+                "id": "6e7fecfa-f801-59b2-a394-df4c368011b7"
+            },
+            "rule_text": "rule apt_win_exe_trojan_derusbi\n{\n\tmeta:\n\t\tdescription = \"Detects Derusbi Backdoor Win32\"\n\t\tauthor = \"Fidelis Cybersecurity\"\n\t\tdate = \"2016/02/29\"\n\t\treference = \"https://github.com/fideliscyber/indicators/tree/master/FTA-1021\"\n\t\tid = \"6e7fecfa-f801-59b2-a394-df4c368011b7\"\n\n\tstrings:\n\t\t$sa_4 = \"HOST: %s:%d\"\n\t\t$sa_6 = \"User-Agent: Mozilla\"\n\t\t$sa_7 = \"Proxy-Connection: Keep-Alive\"\n\t\t$sa_8 = \"Connection: Keep-Alive\"\n\t\t$sa_9 = \"Server: Apache\"\n\t\t$sa_12 = \"ZwUnloadDriver\"\n\t\t$sa_13 = \"ZwLoadDriver\"\n\t\t$sa_18 = \"_time64\"\n\t\t$sa_19 = \"DllRegisterServer\"\n\t\t$sa_20 = \"DllUnregisterServer\"\n\t\t$sa_21 = { 8b [5] 8b ?? d3 ?? 83 ?? 08 30 [5] 40 3b [5] 72 }\n\t\t$sb_1 = \"PCC_CMD_PACKET\"\n\t\t$sb_2 = \"PCC_CMD\"\n\t\t$sb_3 = \"PCC_BASEMOD\"\n\t\t$sb_4 = \"PCC_PROXY\"\n\t\t$sb_5 = \"PCC_SYS\"\n\t\t$sb_6 = \"PCC_PROCESS\"\n\t\t$sb_7 = \"PCC_FILE\"\n\t\t$sb_8 = \"PCC_SOCK\"\n\t\t$sc_1 = \"bcdedit -set testsigning\" wide ascii\n\t\t$sc_2 = \"update.microsoft.com\" wide ascii\n\t\t$sc_3 = \"_crt_debugger_hook\" wide ascii\n\t\t$sc_4 = \"ue8G5\" wide ascii\n\t\t$sd_2 = \"\\\\\\\\.\\\\pipe\\\\%s\" wide ascii\n\t\t$sd_3 = \".dat\" wide ascii\n\t\t$sd_4 = \"CONNECT %s:%d\" wide ascii\n\t\t$sd_5 = \"\\\\Device\\\\\" wide ascii\n\t\t$se_1 = \"-%s-%04d\" wide ascii\n\t\t$se_2 = \"-%04d\" wide ascii\n\t\t$se_5 = \"2.03\" wide ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( all of ( $sa_* ) or ( ( 8 of ( $sa_* ) ) and ( ( 5 of ( $sb_* ) ) or ( 3 of ( $sc_* ) ) or ( all of ( $sd_* ) ) or ( 1 of ( $sc_* ) and all of ( $se_* ) ) ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Tibs/Trojan_Win32_Tibs_gen_G.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Tibs_gen_G",
+                "tags": [],
+                "description": "Trojan:Win32/Tibs.gen!G,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Tibs_gen_G\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Tibs.gen!G,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {89 c7 f3 a4 61 83 c0 (04|05) ff e0 8b bd ?? ?? ?? ?? 03 bd ?? ?? ?? ?? 8d b5 ?? ?? ?? ?? 8b 8d ?? ?? ?? ?? 68 00 10 00 00 57 e8 8a 01 00 00 f3 a4 }\n\t\t$a_03_1 = {89 c7 f3 a4 61 (83 c0 ?? 05 ??|?? ?? ?? ff) e0 60 8b bd ?? ?? ?? ?? 03 bd ?? ?? ?? ?? 8d b5 ?? ?? ?? ?? 8b 8d ?? ?? ?? ?? 68 00 10 00 00 57 e8 ?? ?? 00 00 f3 a4 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Convagent/Trojan_Win32_Convagent_SXH_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Convagent_SXH_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Convagent.SXH!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Convagent_SXH_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Convagent.SXH!MTB,SIGNATURE_TYPE_PEHSTR_EXT,28 00 28 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8d 85 e8 f7 ff ff 50 68 ?? ?? ?? ?? ff 15 ?? ?? ?? ?? 03 c0 50 68 ?? ?? ?? ?? 57 ff 15 }\n\t\t$a_01_1 = {99 b9 9f 86 01 00 f7 f9 8d 85 f4 fd ff ff 52 }\n\t\t$a_80_2 = {25 73 5c 6d 61 63 4f 53 78 }\n\t\t$a_80_3 = {64 2e 77 73 66 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_01_1 & 1 ) * 10 + ( #a_80_2 & 1 ) * 5 + ( #a_80_3 & 1 ) * 5 ) >= 40\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

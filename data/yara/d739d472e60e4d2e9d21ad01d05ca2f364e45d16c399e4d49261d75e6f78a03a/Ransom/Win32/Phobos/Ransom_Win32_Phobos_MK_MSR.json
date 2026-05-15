@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/Win32/Phobos/Ransom_Win32_Phobos_MK_MSR.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_Win32_Phobos_MK_MSR",
+                "tags": [],
+                "description": "Ransom:Win32/Phobos.MK!MSR,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Ransom_Win32_Phobos_MK_MSR\n{\n\tmeta:\n\t\tdescription = \"Ransom:Win32/Phobos.MK!MSR,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b7 88 28 92 41 00 66 89 88 ?? ?? ?? ?? 83 c0 02 66 3b ce 74 05 83 ea 01 75 e5 }\n\t\t$a_03_1 = {0f b6 0e 33 c8 81 e1 ?? ?? ?? ?? c1 e8 08 33 44 8c 04 83 ea 01 83 c6 01 85 d2 75 e4 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

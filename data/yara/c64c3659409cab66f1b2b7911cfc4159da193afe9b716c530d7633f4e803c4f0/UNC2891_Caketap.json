@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/fboldewin/YARA-rules/blob/master/UNC2891_Caketap.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "UNC2891_Caketap",
+                "tags": [],
+                "description": "Detects UNC2891 Rootkit Caketap",
+                "author": "Frank Boldewin (@r3c0nst)",
+                "date": "2022-30-03"
+            },
+            "rule_text": "rule UNC2891_Caketap\n{\n\tmeta:\n\t\tdescription = \"Detects UNC2891 Rootkit Caketap\"\n\t\tauthor = \"Frank Boldewin (@r3c0nst)\"\n\t\tdate = \"2022-30-03\"\n\n\tstrings:\n\t\t$str1 = \".caahGss187\" ascii fullword\n\t\t$str2 = \"ipstat\" ascii\n\t\t$code1 = {41 80 7E 06 4B 75 ?? 41 80 7E 07 57 75 ?? 41 0F B6 46 2B}\n\t\t$code2 = {41 C6 46 01 3D 41 C6 46 08 32}\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and ( all of ( $code* ) or ( all of ( $str* ) and #str2 == 2 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_dns_nkn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael Portera (@mportatoes)",
+                "date": "2022-04-21",
+                "title": "New Kind of Network (NKN) Detection",
+                "id": "fa7703d6-0ee8-4949-889c-48c84bc15b6f"
+            },
+            "rule_text": "title: New Kind of Network (NKN) Detection\nid: fa7703d6-0ee8-4949-889c-48c84bc15b6f\nstatus: test\ndescription: NKN is a networking service using blockchain technology to support a\n  decentralized network of peers. While there are legitimate uses for it, it can also\n  be used as a C2 channel. This rule looks for a DNS request to the ma>\nreferences:\n- https://github.com/nknorg/nkn-sdk-go\n- https://unit42.paloaltonetworks.com/manageengine-godzilla-nglite-kdcsponge/\n- https://github.com/Maka8ka/NGLite\nauthor: Michael Portera (@mportatoes)\ndate: 2022-04-21\ntags:\n- attack.command-and-control\nlogsource:\n  product: zeek\n  service: dns\ndetection:\n  selection:\n    query|contains|all:\n    - seed\n    - .nkn.org\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

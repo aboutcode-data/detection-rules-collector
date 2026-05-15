@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/R-T/SharpGPOAbuse.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SharpGPOAbuse",
+                "tags": [],
+                "description": "Detection patterns for the tool 'SharpGPOAbuse' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "SharpGPOAbuse",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule SharpGPOAbuse\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'SharpGPOAbuse' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"SharpGPOAbuse\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\-\\-AddComputerTask\\s\\-\\-TaskName\\s.{0,1000}\\s\\-\\-Author\\s.{0,1000}\\s\\-\\-Command\\s.{0,1000}\\s\\-\\-Arguments\\s.{0,1000}\\s\\-\\-GPOName\\s/ nocase ascii wide\n\t\t$string2 = /\\s\\-\\-AddLocalAdmin\\s\\-\\-UserAccount\\s.{0,1000}\\s\\-\\-GPOName\\s/ nocase ascii wide\n\t\t$string3 = /\\s\\-\\-AddUserRights\\s\\-\\-UserRights\\s.{0,1000}\\s\\-\\-UserAccount\\s.{0,1000}\\s\\-\\-GPOName\\s/ nocase ascii wide\n\t\t$string4 = /\\s\\-\\-AddUserScript\\s\\-\\-ScriptName\\s.{0,1000}\\s\\-\\-ScriptContents\\s.{0,1000}\\s\\-\\-GPOName\\s/ nocase ascii wide\n\t\t$string5 = /\\s\\-\\-GPOName\\s.{0,1000}\\s\\-\\-FilterEnabled\\s\\-\\-TargetDnsName\\s/ nocase ascii wide\n\t\t$string6 = /\\sNewLocalAdmin\\(/ nocase ascii wide\n\t\t$string7 = /\\\\SharpGPOAbuse\\.pdb/ nocase ascii wide\n\t\t$string8 = \">SharpGPOAbuse<\" nocase ascii wide\n\t\t$string9 = \"SharpGPOAbuse\" nocase ascii wide\n\t\t$string10 = \"SharpGPOAbuse\" nocase ascii wide\n\t\t$string11 = /SharpGPOAbuse\\.exe/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

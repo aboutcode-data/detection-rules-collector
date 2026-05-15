@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/R-T/smb-reverse-shell.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "smb_reverse_shell",
+                "tags": [],
+                "description": "Detection patterns for the tool 'smb-reverse-shell' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "smb-reverse-shell",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule smb_reverse_shell\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'smb-reverse-shell' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"smb-reverse-shell\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = \"/smb-reverse-shell\" nocase ascii wide\n\t\t$string2 = /invoke.{0,1000}\\s\\-Action\\scommand\\s\\-Execute\\s.{0,1000}\\s\\-Session/ nocase ascii wide\n\t\t$string3 = \"Invoke-SmbObey \" nocase ascii wide\n\t\t$string4 = /Invoke\\-SmbObey\\./ nocase ascii wide\n\t\t$string5 = \"Invoke-SmbOrder \" nocase ascii wide\n\t\t$string6 = /Invoke\\-SmbOrder\\./ nocase ascii wide\n\t\t$string7 = /smb\\-reverse\\-shell\\.git/ nocase ascii wide\n\t\t$string8 = \"smb-reverse-shell-main\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

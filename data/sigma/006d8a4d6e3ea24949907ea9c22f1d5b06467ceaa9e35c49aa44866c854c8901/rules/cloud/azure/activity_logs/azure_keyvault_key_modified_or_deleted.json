@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_keyvault_key_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-08-16",
+                "title": "Azure Keyvault Key Modified or Deleted",
+                "id": "80eeab92-0979-4152-942d-96749e11df40"
+            },
+            "rule_text": "title: Azure Keyvault Key Modified or Deleted\nid: 80eeab92-0979-4152-942d-96749e11df40\nstatus: test\ndescription: Identifies when a Keyvault Key is modified or deleted in Azure.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer @austinsonger\ndate: 2021-08-16\nmodified: 2022-08-23\ntags:\n- attack.impact\n- attack.credential-access\n- attack.t1552\n- attack.t1552.001\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName:\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/UPDATE/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/CREATE\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/CREATE/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/IMPORT/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/RECOVER/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/RESTORE/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/DELETE\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/BACKUP/ACTION\n    - MICROSOFT.KEYVAULT/VAULTS/KEYS/PURGE/ACTION\n  condition: selection\nfalsepositives:\n- Key being modified or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Key modified or deleted from unfamiliar users should be investigated. If known behavior\n  is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

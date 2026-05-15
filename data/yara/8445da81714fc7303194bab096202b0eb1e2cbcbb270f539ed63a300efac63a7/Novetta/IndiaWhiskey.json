@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/IndiaWhiskey.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IndiaWhiskey",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "0c729deec341267c5a9a2271f20266ac3b0775d70436c7770ddc20605088f3b4",
+                "Description": "Winsec Installer"
+            },
+            "rule_text": "import \"pe\"\n\nrule IndiaWhiskey\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"0c729deec341267c5a9a2271f20266ac3b0775d70436c7770ddc20605088f3b4\"\n\t\tDescription = \"Winsec Installer\"\n\n\tstrings:\n\t\t$a = {\n\t\t\tFF 15 [4] \n\t\t\t83 C4 18 \n\t\t\t8D [5] \n\t\t\t5? \n\t\t\t5? \n\t\t\t5? \n\t\t\t5? \n\t\t\t5? \n\t\t\t5? \n\t\t\t6A 01\n\t\t\t[0-2] \n\t\t\t6A 02 \n\t\t\t68 20 01 00 00 \n\t\t\t68 FF 01 0F 00 \n\t\t\tFF 75 ?? \n\t\t\tFF 75 ?? \n\t\t\t(5? | FF 75 ??)\n\t\t\tFF 15 \n\t\t}\n\n\tcondition:\n\t\t$a in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

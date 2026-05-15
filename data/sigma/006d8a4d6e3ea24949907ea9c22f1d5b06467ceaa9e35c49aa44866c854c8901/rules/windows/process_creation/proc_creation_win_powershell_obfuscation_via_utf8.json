@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_obfuscation_via_utf8.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-07-09",
+                "title": "Potential PowerShell Obfuscation Via WCHAR/CHAR",
+                "id": "e312efd0-35a1-407f-8439-b8d434b438a6"
+            },
+            "rule_text": "title: Potential PowerShell Obfuscation Via WCHAR/CHAR\nid: e312efd0-35a1-407f-8439-b8d434b438a6\nstatus: test\ndescription: Detects suspicious encoded character syntax often used for defense evasion\nreferences:\n- https://twitter.com/0gtweet/status/1281103918693482496\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-07-09\nmodified: 2025-03-03\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.001\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains:\n    - '[char]0x'\n    - (WCHAR)0x\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

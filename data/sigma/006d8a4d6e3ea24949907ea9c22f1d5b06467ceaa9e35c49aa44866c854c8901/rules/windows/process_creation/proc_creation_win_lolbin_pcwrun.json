@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_lolbin_pcwrun.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "A. Sungurov , oscd.community",
+                "date": "2020-10-12",
+                "title": "Indirect Command Execution By Program Compatibility Wizard",
+                "id": "b97cd4b1-30b8-4a9d-bd72-6293928d52bc"
+            },
+            "rule_text": "title: Indirect Command Execution By Program Compatibility Wizard\nid: b97cd4b1-30b8-4a9d-bd72-6293928d52bc\nstatus: test\ndescription: Detect indirect command execution via Program Compatibility Assistant\n  pcwrun.exe\nreferences:\n- https://twitter.com/pabraeken/status/991335019833708544\n- https://lolbas-project.github.io/lolbas/Binaries/Pcwrun/\nauthor: A. Sungurov , oscd.community\ndate: 2020-10-12\nmodified: 2021-11-27\ntags:\n- attack.stealth\n- attack.t1218\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\pcwrun.exe\n  condition: selection\nfalsepositives:\n- Need to use extra processing with 'unique_count' / 'filter' to focus on outliers\n  as opposed to commonly seen artifacts\n- Legit usage of scripts\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

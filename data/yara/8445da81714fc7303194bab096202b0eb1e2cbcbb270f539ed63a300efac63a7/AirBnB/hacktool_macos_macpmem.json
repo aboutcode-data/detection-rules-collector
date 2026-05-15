@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/AirBnB/hacktool_macos_macpmem.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "hacktool_macos_macpmem",
+                "tags": [],
+                "description": "MacPmem enables read/write access to physical memory on macOS. Can be used by CSIRT teams and attackers.",
+                "reference": "https://github.com/google/rekall/tree/master/tools/osx/MacPmem",
+                "author": "@mimeframe"
+            },
+            "rule_text": "rule hacktool_macos_macpmem\n{\n\tmeta:\n\t\tdescription = \"MacPmem enables read/write access to physical memory on macOS. Can be used by CSIRT teams and attackers.\"\n\t\treference = \"https://github.com/google/rekall/tree/master/tools/osx/MacPmem\"\n\t\tauthor = \"@mimeframe\"\n\n\tstrings:\n\t\t$a1 = \"%s/MacPmem.kext\" wide ascii\n\t\t$a2 = \"The Pmem physical memory imager.\" wide ascii\n\t\t$a3 = \"The OSXPmem memory imager.\" wide ascii\n\t\t$a4 = \"These AFF4 Volumes will be loaded and their metadata will be parsed before the program runs.\" wide ascii\n\t\t$a5 = \"Pmem driver version incompatible. Reported\" wide ascii\n\t\t$a6 = \"Memory access driver left loaded since you specified the -l flag.\" wide ascii\n\t\t$b1 = \"Unloading MacPmem\" wide ascii\n\t\t$b2 = \"MacPmem load tag is\" wide ascii\n\n\tcondition:\n\t\tMachO and 2 of ( $a* ) or all of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

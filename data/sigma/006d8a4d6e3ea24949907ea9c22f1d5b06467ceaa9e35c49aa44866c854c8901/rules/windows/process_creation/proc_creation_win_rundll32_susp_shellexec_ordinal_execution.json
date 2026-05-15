@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_susp_shellexec_ordinal_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel",
+                "date": "2024-12-01",
+                "title": "Suspicious ShellExec_RunDLL Call Via Ordinal",
+                "id": "8823e85d-31d8-473e-b7f4-92da070f0fc6"
+            },
+            "rule_text": "title: Suspicious ShellExec_RunDLL Call Via Ordinal\nid: 8823e85d-31d8-473e-b7f4-92da070f0fc6\nrelated:\n- id: d87bd452-6da1-456e-8155-7dc988157b7d\n  type: derived\nstatus: test\ndescription: 'Detects suspicious call to the \"ShellExec_RunDLL\" exported function\n  of SHELL32.DLL through the ordinal number to launch other commands.\n\n  Adversary might only use the ordinal number in order to bypass existing detection\n  that alert on usage of ShellExec_RunDLL on CommandLine.\n\n  '\nreferences:\n- https://redcanary.com/blog/raspberry-robin/\n- https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/\n- https://github.com/SigmaHQ/sigma/issues/1009\n- https://strontic.github.io/xcyclopedia/library/shell32.dll-65DA072F25DE83D9F83653E3FEA3644D.html\nauthor: Swachchhanda Shrawan Poudel\ndate: 2024-12-01\ntags:\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent_img:\n    ParentCommandLine|contains: SHELL32.DLL\n  selection_parent_ordinal:\n    ParentCommandLine|contains:\n    - '#568'\n    - '#570'\n    - '#572'\n    - '#576'\n  selection_susp_cli_parent:\n  - ParentCommandLine|contains:\n    - comspec\n    - iex\n    - Invoke-\n    - msiexec\n    - odbcconf\n    - regsvr32\n  - ParentCommandLine|contains:\n    - \\Desktop\\\n    - \\ProgramData\\\n    - \\Temp\\\n    - \\Users\\Public\\\n  selection_susp_child_img:\n    Image|endswith:\n    - \\bash.exe\n    - \\bitsadmin.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\curl.exe\n    - \\mshta.exe\n    - \\msiexec.exe\n    - \\msxsl.exe\n    - \\odbcconf.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\regsvr32.exe\n    - \\schtasks.exe\n    - \\wmic.exe\n    - \\wscript.exe\n  condition: all of selection_parent_* and 1 of selection_susp_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

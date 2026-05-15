@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/SolarMarker/solarphantom.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SolarPhantom",
+                "tags": [],
+                "author": "RussianPanda",
+                "reference": "https://www.esentire.com/blog/solarmarker-to-jupyter-and-back",
+                "description": "SolarPhantom Backdoor Detection"
+            },
+            "rule_text": "rule SolarPhantom\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\treference = \"https://www.esentire.com/blog/solarmarker-to-jupyter-and-back\"\n\t\tdescription = \"SolarPhantom Backdoor Detection\"\n\n\tstrings:\n\t\t$p1 = {B8 94 E3 46 00 E8 C6 EB FA FF 8B 45 F8}\n\t\t$p2 = {68 E8 EF 46 00 FF 75 E4}\n\t\t$p3 = {62 72 76 70 72 66 5f 62 6b 70}\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and 1 of ( $p* ) and filesize < 600KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_account_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Samir Bousseaden",
+                "date": "2019-04-03",
+                "title": "AD Privileged Users or Groups Reconnaissance",
+                "id": "35ba1d85-724d-42a3-889f-2e2362bcaf23"
+            },
+            "rule_text": "title: AD Privileged Users or Groups Reconnaissance\nid: 35ba1d85-724d-42a3-889f-2e2362bcaf23\nstatus: test\ndescription: Detect priv users or groups recon based on 4661 eventid and known privileged\n  users or groups SIDs\nreferences:\n- https://web.archive.org/web/20230329163438/https://blog.menasec.net/2019/02/threat-hunting-5-detecting-enumeration.html\nauthor: Samir Bousseaden\ndate: 2019-04-03\nmodified: 2022-07-13\ntags:\n- attack.discovery\n- attack.t1087.002\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: enable Object Access SAM on your Domain Controllers'\ndetection:\n  selection:\n    EventID: 4661\n    ObjectType:\n    - SAM_USER\n    - SAM_GROUP\n  selection_object:\n  - ObjectName|endswith:\n    - '-512'\n    - '-502'\n    - '-500'\n    - '-505'\n    - '-519'\n    - '-520'\n    - '-544'\n    - '-551'\n    - '-555'\n  - ObjectName|contains: admin\n  filter:\n    SubjectUserName|endswith: $\n  condition: selection and selection_object and not filter\nfalsepositives:\n- If source account name is not an admin then its super suspicious\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

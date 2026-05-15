@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_wusa_cab_files_extraction.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-04",
+                "title": "Cab File Extraction Via Wusa.EXE",
+                "id": "59b39960-5f9d-4a49-9cef-1e4d2c1d0cb9"
+            },
+            "rule_text": "title: Cab File Extraction Via Wusa.EXE\nid: 59b39960-5f9d-4a49-9cef-1e4d2c1d0cb9\nrelated:\n- id: c74c0390-3e20-41fd-a69a-128f0275a5ea\n  type: derived\nstatus: test\ndescription: 'Detects execution of the \"wusa.exe\" (Windows Update Standalone Installer)\n  utility to extract cab using the \"/extract\" argument that is no longer supported.\n\n  '\nreferences:\n- https://web.archive.org/web/20180331144337/https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-04\nmodified: 2024-08-15\ntags:\n- attack.execution\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wusa.exe\n    CommandLine|contains: '/extract:'\n  condition: selection\nfalsepositives:\n- The \"extract\" flag still works on older 'wusa.exe' versions, which could be a legitimate\n  use (monitor the path of the cab being extracted)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

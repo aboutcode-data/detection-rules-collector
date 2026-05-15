@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_terminated_unexpectedly.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-14",
+                "title": "Important Windows Service Terminated Unexpectedly",
+                "id": "56abae0c-6212-4b97-adc0-0b559bb950c3"
+            },
+            "rule_text": "title: Important Windows Service Terminated Unexpectedly\nid: 56abae0c-6212-4b97-adc0-0b559bb950c3\nstatus: test\ndescription: Detects important or interesting Windows services that got terminated\n  unexpectedly.\nreferences:\n- https://www.randori.com/blog/vulnerability-analysis-queuejumper-cve-2023-21554/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-14\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection_eid:\n    Provider_Name: Service Control Manager\n    EventID: 7034\n  selection_name:\n  - param1|contains: Message Queuing\n  - Binary|contains:\n    - 4d0053004d005100\n    - 6d0073006d007100\n  condition: all of selection_*\nfalsepositives:\n- Rare false positives could occur since service termination could happen due to multiple\n  reasons\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2023-21554"
+            ]
+        }
+    ]
+}

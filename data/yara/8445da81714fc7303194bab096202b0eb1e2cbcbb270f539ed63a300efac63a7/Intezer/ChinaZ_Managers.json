@@ -1,0 +1,49 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Intezer/ChinaZ_Managers.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "NewManager",
+                "tags": [],
+                "copyright": "Intezer Labs",
+                "author": "Intezer Labs",
+                "reference": "https://www.intezer.com"
+            },
+            "rule_text": "private rule NewManager\n{\n\tmeta:\n\t\tcopyright = \"Intezer Labs\"\n\t\tauthor = \"Intezer Labs\"\n\t\treference = \"https://www.intezer.com\"\n\n\tstrings:\n\t\t$a0 = {8B ?? 04 3? 03 00 00 11 74 4D 3? 11 00 00 11 74 61 3? 02 00 00 11 }\n\t\t$b0 = \"_ConnectServer\"\n\t\t$b1 = \"/root/1/ampS.log\"\n\t\t$b2 = \"/etc/rc%d.d/S%d%s\"\n\t\t$b3 = \"Get SYstem Info\"\n\t\t$b4 = \"newmanager\"\n\t\t$b5 = \"NO DDXC\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "AmpManager",
+                "tags": [],
+                "copyright": "Intezer Labs",
+                "author": "Intezer Labs",
+                "reference": "https://www.intezer.com"
+            },
+            "rule_text": "private rule AmpManager\n{\n\tmeta:\n\t\tcopyright = \"Intezer Labs\"\n\t\tauthor = \"Intezer Labs\"\n\t\treference = \"https://www.intezer.com\"\n\n\tstrings:\n\t\t$a0 = {C7 85 ?? F8 FF FF ?? 00 00 11 C7 85 ?? F8 FF FF 00 00 00 00 C7 85 ?? F8 FF FF ?? 00 00 00}\n\t\t$b0 = \"ampserver/main.cpp\"\n\t\t$b1 = \"M-SEARCH * HTTP/1.1\"\n\t\t$b2 = \"rm -f /usr/bin/ammint | killall ammint 2>/dev/null &\"\n\t\t$b3 = \"ln -s /etc/init.d/%s %s\"\n\t\t$b4 = \"camplz123\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DDoSManager",
+                "tags": [],
+                "copyright": "Intezer Labs",
+                "author": "Intezer Labs",
+                "reference": "https://www.intezer.com"
+            },
+            "rule_text": "private rule DDoSManager\n{\n\tmeta:\n\t\tcopyright = \"Intezer Labs\"\n\t\tauthor = \"Intezer Labs\"\n\t\treference = \"https://www.intezer.com\"\n\n\tstrings:\n\t\t$a0 = { 55 89 e5 5? 8b ?? 0c 8B ?? 08 85 ?? 7E 16 31 ?? 0F B6 ?? ?? 83 F? 19 83 C? 7A 88 ?? ?? 83 C? 01}\n\t\t$b0 = \"5CFake\"\n\t\t$b1 = \"/tmp/Cfg.9\"\n\t\t$b2 = \"0|%s|%s|1|65535|\"\n\t\t$b3 = \"8CManager\"\n\t\t$b4 = \"SingTool\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "ChinaZ_Managers",
+                "tags": [],
+                "copyright": "Intezer Labs",
+                "author": "Intezer Labs",
+                "reference": "https://www.intezer.com"
+            },
+            "rule_text": "rule ChinaZ_Managers\n{\n\tmeta:\n\t\tcopyright = \"Intezer Labs\"\n\t\tauthor = \"Intezer Labs\"\n\t\treference = \"https://www.intezer.com\"\n\n\tcondition:\n\t\tNewManager or AmpManager or DDoSManager\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

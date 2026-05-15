@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_user_added_to_local_administrators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-14",
+                "title": "User Added to Local Administrator Group",
+                "id": "c265cf08-3f99-46c1-8d59-328247057d57"
+            },
+            "rule_text": "title: User Added to Local Administrator Group\nid: c265cf08-3f99-46c1-8d59-328247057d57\nstatus: stable\ndescription: Detects the addition of a new member to the local administrator group,\n  which could be legitimate activity or a sign of privilege escalation activity\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4732\n- https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-14\nmodified: 2021-01-17\ntags:\n- attack.initial-access\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078\n- attack.persistence\n- attack.t1098\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection_eid:\n    EventID: 4732\n  selection_group:\n  - TargetUserName|startswith: Administr\n  - TargetSid: S-1-5-32-544\n  filter_main_computer_accounts:\n    SubjectUserName|endswith: $\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Legitimate administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

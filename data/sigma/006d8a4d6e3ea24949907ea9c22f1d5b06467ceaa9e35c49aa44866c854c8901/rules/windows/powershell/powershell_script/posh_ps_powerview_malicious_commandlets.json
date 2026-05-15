@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_powerview_malicious_commandlets.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj",
+                "date": "2021-05-18",
+                "title": "PowerView PowerShell Cmdlets - ScriptBlock",
+                "id": "dcd74b95-3f36-4ed9-9598-0490951643aa"
+            },
+            "rule_text": "title: PowerView PowerShell Cmdlets - ScriptBlock\nid: dcd74b95-3f36-4ed9-9598-0490951643aa\nrelated:\n- id: b2317cfa-4a47-4ead-b3ff-297438c0bc2d\n  type: similar\nstatus: test\ndescription: Detects Cmdlet names from PowerView of the PowerSploit exploitation framework.\nreferences:\n- https://powersploit.readthedocs.io/en/stable/Recon/README\n- https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon\n- https://thedfirreport.com/2020/10/08/ryuks-return\n- https://adsecurity.org/?p=2277\nauthor: Bhabesh Raj\ndate: 2021-05-18\nmodified: 2023-11-22\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - Export-PowerViewCSV\n    - Find-DomainLocalGroupMember\n    - Find-DomainObjectPropertyOutlier\n    - Find-DomainProcess\n    - Find-DomainShare\n    - Find-DomainUserEvent\n    - Find-DomainUserLocation\n    - Find-ForeignGroup\n    - Find-ForeignUser\n    - Find-GPOComputerAdmin\n    - Find-GPOLocation\n    - Find-InterestingDomain\n    - Find-InterestingFile\n    - Find-LocalAdminAccess\n    - Find-ManagedSecurityGroups\n    - Get-CachedRDPConnection\n    - Get-DFSshare\n    - Get-DomainDFSShare\n    - Get-DomainDNSRecord\n    - Get-DomainDNSZone\n    - Get-DomainFileServer\n    - Get-DomainGPOComputerLocalGroupMapping\n    - Get-DomainGPOLocalGroup\n    - Get-DomainGPOUserLocalGroupMapping\n    - Get-LastLoggedOn\n    - Get-LoggedOnLocal\n    - Get-NetFileServer\n    - Get-NetForest\n    - Get-NetGPOGroup\n    - Get-NetProcess\n    - Get-NetRDPSession\n    - Get-RegistryMountedDrive\n    - Get-RegLoggedOn\n    - Get-WMIRegCachedRDPConnection\n    - Get-WMIRegLastLoggedOn\n    - Get-WMIRegMountedDrive\n    - Get-WMIRegProxy\n    - Invoke-ACLScanner\n    - Invoke-CheckLocalAdminAccess\n    - Invoke-EnumerateLocalAdmin\n    - Invoke-EventHunter\n    - Invoke-FileFinder\n    - Invoke-Kerberoast\n    - Invoke-MapDomainTrust\n    - Invoke-ProcessHunter\n    - Invoke-RevertToSelf\n    - Invoke-ShareFinder\n    - Invoke-UserHunter\n    - Invoke-UserImpersonation\n    - Remove-RemoteConnection\n    - Request-SPNTicket\n    - Resolve-IPAddress\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

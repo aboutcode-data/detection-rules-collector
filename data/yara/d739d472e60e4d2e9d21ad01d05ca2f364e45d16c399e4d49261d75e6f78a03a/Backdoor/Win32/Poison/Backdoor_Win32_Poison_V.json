@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Poison/Backdoor_Win32_Poison_V.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Poison_V",
+                "tags": [],
+                "description": "Backdoor:Win32/Poison.V,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 08 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Poison_V\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Poison.V,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 08 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {52 50 8d 46 48 50 e8 ?? ?? ff ff 83 f8 ff 0f 84 08 01 00 00 89 06 66 81 7e 04 b3 d7 0f 85 c3 00 00 00 66 ff 4e 04 6a 00 ff 36 e8 ?? ?? ff ff 40 }\n\t\t$a_03_1 = {b9 65 00 00 00 e8 ?? ?? ff ff 66 8b 83 ?? ?? 00 00 66 89 83 ?? ?? 00 00 eb 0d e8 ?? ?? ff ff 84 c0 0f 84 ?? ?? 00 00 c6 83 ?? ?? 00 00 01 c6 83 ?? ?? 00 00 00 8b 83 ?? ?? 00 00 }\n\t\t$a_03_2 = {eb 08 8d 45 f8 e8 ?? ?? ff ff 8b 45 f8 e8 ?? ?? ff ff 50 68 ?? ?? 40 00 8d 45 e8 ba ?? ?? 41 00 b9 15 00 00 00 e8 ?? ?? ff ff ff 75 e8 68 ?? ?? 40 00 8d 45 ec ba 03 00 00 00 e8 ?? ?? ff ff }\n\t\t$a_01_3 = {54 4d 79 53 76 72 }\n\t\t$a_01_4 = {54 4d 79 54 68 64 }\n\t\t$a_01_5 = {54 4d 79 53 70 79 }\n\t\t$a_01_6 = {54 4d 79 41 75 64 }\n\t\t$a_01_7 = {54 4d 79 43 61 6d }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 + ( #a_03_2 & 1 ) * 5 + ( #a_01_3 & 1 ) * 2 + ( #a_01_4 & 1 ) * 2 + ( #a_01_5 & 1 ) * 2 + ( #a_01_6 & 1 ) * 2 + ( #a_01_7 & 1 ) * 2 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

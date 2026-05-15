@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/SierraCharlie.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SierraCharlie",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "f4750e1d82b08318bdc1eb6d3399dee52750250f7959a5e4f83245449f399698.bin"
+            },
+            "rule_text": "import \"pe\"\n\nrule SierraCharlie\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"f4750e1d82b08318bdc1eb6d3399dee52750250f7959a5e4f83245449f399698.bin\"\n\n\tstrings:\n\t\t$dnsResolve = {\n\t\t\t8B 0D 50 A7 56 00 \n\t\t\t81 F6 8C 3F 7C 5E \n\t\t\t6A 01 \n\t\t\t50 \n\t\t\t85 C9 \n\t\t\t74 3A \n\t\t\tFF D1 \n\t\t}\n\t\t$file1 = \"wmplog21t.sqm\"\n\t\t$file2 = \"wmplog15r.sqm\"\n\t\t$file3 = \"wmplog09c.sqm\"\n\n\tcondition:\n\t\t$dnsResolve in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) ) or 2 of ( $file* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

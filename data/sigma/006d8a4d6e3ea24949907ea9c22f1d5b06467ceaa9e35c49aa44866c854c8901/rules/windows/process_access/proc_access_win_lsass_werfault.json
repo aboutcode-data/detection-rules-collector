@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_lsass_werfault.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2012-06-27",
+                "title": "Credential Dumping Attempt Via WerFault",
+                "id": "e5b33f7d-eb93-48b6-9851-09e1e610b6d7"
+            },
+            "rule_text": "title: Credential Dumping Attempt Via WerFault\nid: e5b33f7d-eb93-48b6-9851-09e1e610b6d7\nstatus: test\ndescription: Detects process LSASS memory dump using Mimikatz, NanoDump, Invoke-Mimikatz,\n  Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll or\n  dbgcore.dll for win10, server2016 and up.\nreferences:\n- https://github.com/helpsystems/nanodump/commit/578116faea3d278d53d70ea932e2bbfe42569507\nauthor: Florian Roth (Nextron Systems)\ndate: 2012-06-27\nmodified: 2023-11-29\ntags:\n- attack.credential-access\n- attack.t1003.001\n- attack.s0002\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    SourceImage|endswith: \\WerFault.exe\n    TargetImage|endswith: \\lsass.exe\n    GrantedAccess: '0x1FFFFF'\n  condition: selection\nfalsepositives:\n- Actual failures in lsass.exe that trigger a crash dump (unlikely)\n- Unknown cases in which WerFault accesses lsass.exe\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

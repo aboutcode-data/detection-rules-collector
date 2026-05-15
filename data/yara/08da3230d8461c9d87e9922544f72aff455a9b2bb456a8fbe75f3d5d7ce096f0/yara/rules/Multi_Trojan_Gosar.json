@@ -1,0 +1,44 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Multi_Trojan_Gosar.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Multi_Trojan_Gosar_31dba745",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "31dba745-8079-4161-9299-84a4c33b95c8",
+                "fingerprint": "87e44b3050eb33edb24ad8aa8923ed91124f2e92e4eae42e94decefc49ccbf4c",
+                "creation_date": "2024-11-05",
+                "last_modified": "2024-12-04",
+                "threat_name": "Multi.Trojan.Gosar",
+                "reference_sample": "4caf4b280e61745ce53f96f48a74dea3b69df299c3b9de78ba4731b83c76c334",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "multi"
+            },
+            "rule_text": "rule Multi_Trojan_Gosar_31dba745\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"31dba745-8079-4161-9299-84a4c33b95c8\"\n\t\tfingerprint = \"87e44b3050eb33edb24ad8aa8923ed91124f2e92e4eae42e94decefc49ccbf4c\"\n\t\tcreation_date = \"2024-11-05\"\n\t\tlast_modified = \"2024-12-04\"\n\t\tthreat_name = \"Multi.Trojan.Gosar\"\n\t\treference_sample = \"4caf4b280e61745ce53f96f48a74dea3b69df299c3b9de78ba4731b83c76c334\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"multi\"\n\n\tstrings:\n\t\t$a1 = \"GetRecoverAccounts\"\n\t\t$a2 = \"GetIsFirstScreen\"\n\t\t$a3 = \"DoWebcamStop\"\n\t\t$a4 = \"DoAskElevate\"\n\t\t$a5 = \"vibrant/proto/pb\"\n\t\t$a6 = \"vibrant/network/sender\"\n\t\t$a7 = \"vibrant/pkg/helpers\"\n\n\tcondition:\n\t\t3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Multi_Trojan_Gosar_670efa04",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "670efa04-a5c9-40b4-bcdf-453af8162a6f",
+                "fingerprint": "7a0f61bb77e16baceafd60d3041002bb551f64c567ef9f495362718716c53c6a",
+                "creation_date": "2025-09-02",
+                "last_modified": "2025-09-19",
+                "threat_name": "Multi.Trojan.Gosar",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "multi"
+            },
+            "rule_text": "rule Multi_Trojan_Gosar_670efa04\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"670efa04-a5c9-40b4-bcdf-453af8162a6f\"\n\t\tfingerprint = \"7a0f61bb77e16baceafd60d3041002bb551f64c567ef9f495362718716c53c6a\"\n\t\tcreation_date = \"2025-09-02\"\n\t\tlast_modified = \"2025-09-19\"\n\t\tthreat_name = \"Multi.Trojan.Gosar\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"multi\"\n\n\tstrings:\n\t\t$byte_sequence_1 = { C6 44 24 3B 00 C6 44 24 3B 01 48 89 C1 48 89 DF 48 8D 74 24 3B 41 B8 01 00 00 00 4D 89 C1 48 8B 84 24 D8 00 00 00 48 8B 9C 24 E0 00 00 00 }\n\t\t$a_clip_board0 = \"<b>[CLIPBOARD_START]</b><xmp>\"\n\t\t$a_clip_board1 = \"</b>]</p><br>[Applications]\"\n\t\t$a_clip_board2 = \"replace clipboard content failed\"\n\n\tcondition:\n\t\t$byte_sequence_1 or all of ( $a_clip_board* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

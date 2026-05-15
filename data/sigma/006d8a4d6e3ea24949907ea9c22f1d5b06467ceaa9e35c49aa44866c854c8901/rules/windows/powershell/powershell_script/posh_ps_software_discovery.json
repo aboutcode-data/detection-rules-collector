@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_software_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nikita Nazarov, oscd.community",
+                "date": "2020-10-16",
+                "title": "Detected Windows Software Discovery - PowerShell",
+                "id": "2650dd1a-eb2a-412d-ac36-83f06c4f2282"
+            },
+            "rule_text": "title: Detected Windows Software Discovery - PowerShell\nid: 2650dd1a-eb2a-412d-ac36-83f06c4f2282\nstatus: test\ndescription: Adversaries may attempt to enumerate software for a variety of reasons,\n  such as figuring out what security measures are present or if the compromised system\n  has a version of software that is vulnerable.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518/T1518.md\n- https://github.com/harleyQu1nn/AggressorScripts\nauthor: Nikita Nazarov, oscd.community\ndate: 2020-10-16\nmodified: 2022-12-02\ntags:\n- attack.discovery\n- attack.t1518\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - get-itemProperty\n    - \\software\\\n    - select-object\n    - format-table\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

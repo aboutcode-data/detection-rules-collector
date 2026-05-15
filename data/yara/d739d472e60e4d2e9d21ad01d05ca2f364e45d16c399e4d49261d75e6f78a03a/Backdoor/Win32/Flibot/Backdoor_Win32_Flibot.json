@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Flibot/Backdoor_Win32_Flibot.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Flibot",
+                "tags": [],
+                "description": "Backdoor:Win32/Flibot,SIGNATURE_TYPE_PEHSTR_EXT,12 00 0f 00 06 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Flibot\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Flibot,SIGNATURE_TYPE_PEHSTR_EXT,12 00 0f 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {50 00 49 00 4e 00 47 00 }\n\t\t$a_00_1 = {50 00 4f 00 4e 00 47 00 }\n\t\t$a_00_2 = {4a 00 4f 00 49 00 4e 00 }\n\t\t$a_00_3 = {46 00 4c 00 56 00 50 00 40 00 4a 00 4b 00 49 00 }\n\t\t$a_03_4 = {66 33 45 d0 0f bf d0 52 ff 15 ?? ?? ?? ?? 8b d0 8d 4d c8 ff 15 ?? ?? ?? ?? 50 ff 15 ?? ?? ?? ?? 8b d0 8d 4d d4 ff 15 }\n\t\t$a_03_5 = {66 33 45 d0 0f bf c0 50 e8 ?? ?? ?? ?? 8b d0 8d 4d c8 e8 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? 8b d0 8d 4d d4 e8 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 5 + ( #a_03_4 & 1 ) * 10 + ( #a_03_5 & 1 ) * 10 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

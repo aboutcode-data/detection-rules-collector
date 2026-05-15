@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/application/bitbucket/audit/bitbucket_audit_user_login_failure_via_ssh_detected.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Muhammad Faisal (@faisalusuf)",
+                "date": "2024-02-25",
+                "title": "Bitbucket User Login Failure Via SSH",
+                "id": "d3f90469-fb05-42ce-b67d-0fded91bbef3"
+            },
+            "rule_text": "title: Bitbucket User Login Failure Via SSH\nid: d3f90469-fb05-42ce-b67d-0fded91bbef3\nstatus: test\ndescription: 'Detects SSH user login access failures.\n\n  Please note that this rule can be noisy and is recommended to use with correlation\n  based on \"author.name\" field.\n\n  '\nreferences:\n- https://confluence.atlassian.com/bitbucketserver/view-and-configure-the-audit-log-776640417.html\n- https://confluence.atlassian.com/bitbucketserver/enable-ssh-access-to-git-repositories-776640358.html\nauthor: Muhammad Faisal (@faisalusuf)\ndate: 2024-02-25\ntags:\n- attack.lateral-movement\n- attack.credential-access\n- attack.t1021.004\n- attack.t1110\nlogsource:\n  product: bitbucket\n  service: audit\n  definition: 'Requirements: \"Advance\" log level is required to receive these audit\n    events.'\ndetection:\n  selection:\n    auditType.category: Authentication\n    auditType.action: User login failed(SSH)\n  condition: selection\nfalsepositives:\n- Legitimate user wrong password attempts.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

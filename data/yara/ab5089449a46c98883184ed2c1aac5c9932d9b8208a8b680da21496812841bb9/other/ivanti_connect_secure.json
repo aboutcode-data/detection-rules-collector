@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/ivanti_connect_secure.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_DSLog_str",
+                "tags": [],
+                "description": "Ivanti Connect Secure infected DSLog.pm backdoor",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "88071ac4500021da896d0a92c935dcb9ca5c2dfe02caa0ee1b924d8b72ae404e"
+            },
+            "rule_text": "rule webshell_DSLog_str\n{\n\tmeta:\n\t\tdescription = \"Ivanti Connect Secure infected DSLog.pm backdoor\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"88071ac4500021da896d0a92c935dcb9ca5c2dfe02caa0ee1b924d8b72ae404e\"\n\n\tstrings:\n\t\t$str1 = \"my $ua = $ENV{HTTP_USER_AGENT};\" ascii\n\t\t$str2 = \"my $req = $ENV{QUERY_STRING};\" ascii\n\t\t$str3 = \"my @param = split(/&/, $req);\" ascii\n\t\t$str4 = \"system(${res[1]});\" ascii\n\t\t$str5 = \"$res[1] =~ tr/!-~/P-~!-O/;\" ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

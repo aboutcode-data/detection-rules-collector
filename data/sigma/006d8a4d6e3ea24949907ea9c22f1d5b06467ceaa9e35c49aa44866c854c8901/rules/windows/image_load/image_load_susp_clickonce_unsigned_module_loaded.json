@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_susp_clickonce_unsigned_module_loaded.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@SerkinValery",
+                "date": "2023-06-08",
+                "title": "Unsigned Module Loaded by ClickOnce Application",
+                "id": "060d5ad4-3153-47bb-8382-43e5e29eda92"
+            },
+            "rule_text": "title: Unsigned Module Loaded by ClickOnce Application\nid: 060d5ad4-3153-47bb-8382-43e5e29eda92\nstatus: test\ndescription: Detects unsigned module load by ClickOnce application.\nreferences:\n- https://posts.specterops.io/less-smartscreen-more-caffeine-ab-using-clickonce-for-trusted-code-execution-1446ea8051c5\nauthor: '@SerkinValery'\ndate: 2023-06-08\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection_path:\n    Image|contains: \\AppData\\Local\\Apps\\2.0\\\n  selection_sig_status:\n  - Signed: 'false'\n  - SignatureStatus: Expired\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

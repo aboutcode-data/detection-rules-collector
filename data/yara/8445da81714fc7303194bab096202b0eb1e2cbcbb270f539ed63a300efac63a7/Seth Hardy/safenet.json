@@ -1,0 +1,44 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Seth Hardy/safenet.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SafeNetCode",
+                "tags": [
+                    "SafeNet",
+                    "Family"
+                ],
+                "description": "SafeNet code features",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-16"
+            },
+            "rule_text": "private rule SafeNetCode : SafeNet Family\n{\n\tmeta:\n\t\tdescription = \"SafeNet code features\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-16\"\n\n\tstrings:\n\t\t$ = { 83 C7 14 81 FF F8 D0 40 00 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SafeNetStrings",
+                "tags": [
+                    "SafeNet",
+                    "Family"
+                ],
+                "description": "Strings used by SafeNet",
+                "author": "Seth Hardy",
+                "last_modified": "2014-07-16"
+            },
+            "rule_text": "private rule SafeNetStrings : SafeNet Family\n{\n\tmeta:\n\t\tdescription = \"Strings used by SafeNet\"\n\t\tauthor = \"Seth Hardy\"\n\t\tlast_modified = \"2014-07-16\"\n\n\tstrings:\n\t\t$ = \"6dNfg8Upn5fBzGgj8licQHblQvLnUY19z5zcNKNFdsDhUzuI8otEsBODrzFCqCKr\"\n\t\t$ = \"/safe/record.php\"\n\t\t$ = \"_Rm.bat\" wide ascii\n\t\t$ = \"try\\x0d\\x0a\\x09\\x09\\x09\\x09  del %s\" wide ascii\n\t\t$ = \"Ext.org\" wide ascii\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SafeNet",
+                "tags": [
+                    "Family"
+                ],
+                "description": "SafeNet family"
+            },
+            "rule_text": "rule SafeNet : Family\n{\n\tmeta:\n\t\tdescription = \"SafeNet family\"\n\n\tcondition:\n\t\tSafeNetCode or SafeNetStrings\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

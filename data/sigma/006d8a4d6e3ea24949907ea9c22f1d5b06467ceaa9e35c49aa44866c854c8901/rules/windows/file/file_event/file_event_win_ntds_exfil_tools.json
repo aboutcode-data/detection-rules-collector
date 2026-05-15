@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_ntds_exfil_tools.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-03-11",
+                "title": "NTDS Exfiltration Filename Patterns",
+                "id": "3a8da4e0-36c1-40d2-8b29-b3e890d5172a"
+            },
+            "rule_text": "title: NTDS Exfiltration Filename Patterns\nid: 3a8da4e0-36c1-40d2-8b29-b3e890d5172a\nstatus: test\ndescription: Detects creation of files with specific name patterns seen used in various\n  tools that export the NTDS.DIT for exfiltration.\nreferences:\n- https://github.com/rapid7/metasploit-framework/blob/eb6535009f5fdafa954525687f09294918b5398d/modules/post/windows/gather/ntds_grabber.rb\n- https://github.com/rapid7/metasploit-framework/blob/eb6535009f5fdafa954525687f09294918b5398d/data/post/powershell/NTDSgrab.ps1\n- https://github.com/SecureAuthCorp/impacket/blob/7d2991d78836b376452ca58b3d14daa61b67cb40/impacket/examples/secretsdump.py#L2405\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-03-11\nmodified: 2023-05-05\ntags:\n- attack.credential-access\n- attack.t1003.003\nlogsource:\n  product: windows\n  category: file_event\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\All.cab\n    - .ntds.cleartext\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

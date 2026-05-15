@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Brian Carter -carterb/injector_panel_sqlite.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "INJECTOR_PANEL_SQLITE",
+                "tags": [],
+                "description": "Find sqlite dbs used with tables inject panel",
+                "author": "Brian Carter",
+                "last_modified": "August 14, 2017"
+            },
+            "rule_text": "rule INJECTOR_PANEL_SQLITE\n{\n\tmeta:\n\t\tdescription = \"Find sqlite dbs used with tables inject panel\"\n\t\tauthor = \"Brian Carter\"\n\t\tlast_modified = \"August 14, 2017\"\n\n\tstrings:\n\t\t$magic = { 53 51 4C 69 74 65 20 66 6F 72 6D 61 74 20 33 00 }\n\t\t$txt1 = \"CREATE TABLE Settings\"\n\t\t$txt2 = \"CREATE TABLE Jabber\"\n\t\t$txt3 = \"CREATE TABLE Users\"\n\t\t$txt4 = \"CREATE TABLE Log\"\n\t\t$txt5 = \"CREATE TABLE Fakes\"\n\t\t$txt6 = \"CREATE TABLE ATS_links\"\n\n\tcondition:\n\t\t$magic at 0 and all of ( $txt* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

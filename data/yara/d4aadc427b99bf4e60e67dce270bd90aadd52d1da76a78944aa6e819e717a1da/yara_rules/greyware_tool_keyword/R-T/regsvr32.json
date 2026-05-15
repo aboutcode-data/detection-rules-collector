@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/greyware_tool_keyword/R-T/regsvr32.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "regsvr32",
+                "tags": [],
+                "description": "Detection patterns for the tool 'regsvr32' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "regsvr32",
+                "rule_category": "greyware_tool_keyword"
+            },
+            "rule_text": "rule regsvr32\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'regsvr32' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"regsvr32\"\n\t\trule_category = \"greyware_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /cmd\\s\\/c\\sregsvr32\\.exe\\s\\/s\\sC\\:\\\\.{0,1000}\\\\desktop\\.ini\\\\\"\\sstart\\=\\sauto/ nocase ascii wide\n\t\t$string2 = /regsvr32\\sAmsiProvider\\.dll/ nocase ascii wide\n\t\t$string3 = /sc\\screate\\s.{0,1000}cmd\\s\\/c\\sregsvr32\\.exe\\s\\/s\\s.{0,1000}\\\\desktop\\.ini/ nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

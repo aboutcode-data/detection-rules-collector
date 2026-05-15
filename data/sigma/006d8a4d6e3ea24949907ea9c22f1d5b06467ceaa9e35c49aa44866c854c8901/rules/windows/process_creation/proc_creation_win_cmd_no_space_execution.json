@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_no_space_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-23",
+                "title": "Cmd.EXE Missing Space Characters Execution Anomaly",
+                "id": "a16980c2-0c56-4de0-9a79-17971979efdd"
+            },
+            "rule_text": "title: Cmd.EXE Missing Space Characters Execution Anomaly\nid: a16980c2-0c56-4de0-9a79-17971979efdd\nstatus: test\ndescription: 'Detects Windows command lines that miss a space before or after the\n  /c flag when running a command using the cmd.exe.\n\n  This could be a sign of obfuscation of a fat finger problem (typo by the developer).\n\n  '\nreferences:\n- https://twitter.com/cyb3rops/status/1562072617552678912\n- https://ss64.com/nt/cmd.html\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-23\nmodified: 2023-03-06\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    CommandLine|contains:\n    - cmd.exe/c\n    - \\cmd/c\n    - '\"cmd/c'\n    - cmd.exe/k\n    - \\cmd/k\n    - '\"cmd/k'\n    - cmd.exe/r\n    - \\cmd/r\n    - '\"cmd/r'\n  selection2:\n    CommandLine|contains:\n    - /cwhoami\n    - /cpowershell\n    - /cschtasks\n    - /cbitsadmin\n    - /ccertutil\n    - /kwhoami\n    - /kpowershell\n    - /kschtasks\n    - /kbitsadmin\n    - /kcertutil\n  selection3:\n    CommandLine|contains:\n    - cmd.exe /c\n    - cmd /c\n    - cmd.exe /k\n    - cmd /k\n    - cmd.exe /r\n    - cmd /r\n  filter_generic:\n    CommandLine|contains:\n    - 'cmd.exe /c '\n    - 'cmd /c '\n    - 'cmd.exe /k '\n    - 'cmd /k '\n    - 'cmd.exe /r '\n    - 'cmd /r '\n  filter_fp:\n  - CommandLine|contains: AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\node_modules\n  - CommandLine|endswith: cmd.exe/c .\n  - CommandLine: cmd.exe /c\n  condition: 1 of selection* and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

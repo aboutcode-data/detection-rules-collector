@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Doina/Trojan_Win64_Doina_SXA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Doina_SXA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Doina.SXA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Doina_SXA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Doina.SXA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {4c 8b 06 48 b8 ?? ?? ?? ?? ?? ?? ?? ?? 49 01 c0 4c 89 c0 48 b9 ?? ?? ?? ?? ?? ?? ?? ?? 48 31 c8 49 f7 e0 48 31 c2 48 c1 ea ?? 48 8d 4a 04 4c 89 06 31 d2 e8 ?? ?? ?? ?? 48 8b 85 b0 07 00 00 89 c1 83 e1 }\n\t\t$a_03_1 = {81 f1 43 4d 00 00 0f b6 40 02 83 f0 44 66 09 c8 0f 85 ?? ?? ?? ?? 49 8d 4d 01 48 39 d9 0f 83 ?? ?? ?? ?? 48 c1 e1 04 48 8d 04 0e 48 8b 3c 0e 4c 8b 64 0e 08 48 8d 14 0e 48 83 c2 10 49 c1 e0 04 49 83 c0 e0 }\n\t\t$a_01_2 = {63 6d 64 2e 65 78 65 5c 5c 2e 5c 4e 55 4c 50 41 54 48 }\n\t\t$a_01_3 = {53 65 74 53 75 73 70 65 6e 64 53 74 61 74 65 73 68 75 74 64 6f 77 6e 20 2f 72 20 2f 74 20 30 73 68 75 74 64 6f 77 6e 20 2f 73 20 2f 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 32\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

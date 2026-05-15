@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_offlinescannershell_mpclient_sideloading.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-03-06",
+                "title": "Potential Mpclient.DLL Sideloading Via OfflineScannerShell.EXE Execution",
+                "id": "02b18447-ea83-4b1b-8805-714a8a34546a"
+            },
+            "rule_text": "title: Potential Mpclient.DLL Sideloading Via OfflineScannerShell.EXE Execution\nid: 02b18447-ea83-4b1b-8805-714a8a34546a\nstatus: test\ndescription: 'Detects execution of Windows Defender \"OfflineScannerShell.exe\" from\n  its non standard directory.\n\n  The \"OfflineScannerShell.exe\" binary is vulnerable to DLL side loading and will\n  load any DLL named \"mpclient.dll\" from the current working directory.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/OfflineScannerShell/\nauthor: frack113\ndate: 2022-03-06\nmodified: 2023-08-03\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\OfflineScannerShell.exe\n  - OriginalFileName: OfflineScannerShell.exe\n  filter_main_legit_dir:\n    CurrentDirectory: C:\\Program Files\\Windows Defender\\Offline\\\n  filter_main_empty:\n    CurrentDirectory: ''\n  filter_main_null:\n    CurrentDirectory: null\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

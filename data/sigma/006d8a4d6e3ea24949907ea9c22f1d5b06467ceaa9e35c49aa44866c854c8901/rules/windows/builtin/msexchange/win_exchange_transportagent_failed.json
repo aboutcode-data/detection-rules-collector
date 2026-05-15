@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/msexchange/win_exchange_transportagent_failed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tobias Michalski (Nextron Systems)",
+                "date": "2021-06-08",
+                "title": "Failed MSExchange Transport Agent Installation",
+                "id": "c7d16cae-aaf3-42e5-9c1c-fb8553faa6fa"
+            },
+            "rule_text": "title: Failed MSExchange Transport Agent Installation\nid: c7d16cae-aaf3-42e5-9c1c-fb8553faa6fa\nstatus: test\ndescription: Detects a failed installation of a Exchange Transport Agent\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=8\nauthor: Tobias Michalski (Nextron Systems)\ndate: 2021-06-08\nmodified: 2022-07-12\ntags:\n- attack.persistence\n- attack.t1505.002\nlogsource:\n  service: msexchange-management\n  product: windows\ndetection:\n  selection:\n    EventID: 6\n    Data|contains: Install-TransportAgent\n  condition: selection\nfalsepositives:\n- Legitimate installations of exchange TransportAgents. AssemblyPath is a good indicator\n  for this.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

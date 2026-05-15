@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_cobaltstrike_process_patterns.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-07-27",
+                "title": "Potential CobaltStrike Process Patterns",
+                "id": "f35c5d71-b489-4e22-a115-f003df287317"
+            },
+            "rule_text": "title: Potential CobaltStrike Process Patterns\nid: f35c5d71-b489-4e22-a115-f003df287317\nstatus: test\ndescription: Detects potential process patterns related to Cobalt Strike beacon activity\nreferences:\n- https://hausec.com/2021/07/26/cobalt-strike-and-tradecraft/\n- https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-07-27\nmodified: 2023-03-29\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_generic_1:\n    CommandLine|endswith: cmd.exe /C whoami\n    ParentImage|startswith: C:\\Temp\\\n  selection_generic_2:\n    ParentImage|endswith:\n    - \\runonce.exe\n    - \\dllhost.exe\n    CommandLine|contains|all:\n    - cmd.exe /c echo\n    - '> \\\\\\\\.\\\\pipe'\n  selection_conhost_1:\n    ParentCommandLine|contains|all:\n    - cmd.exe /C echo\n    - ' > \\\\\\\\.\\\\pipe'\n    CommandLine|endswith: conhost.exe 0xffffffff -ForceV1\n  selection_conhost_2:\n    ParentCommandLine|endswith: /C whoami\n    CommandLine|endswith: conhost.exe 0xffffffff -ForceV1\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

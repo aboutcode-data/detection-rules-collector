@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Fakecrss/Trojan_Win32_Fakecrss_MR_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Fakecrss_MR_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Fakecrss.MR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Fakecrss_MR_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Fakecrss.MR!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 00 8a 74 18 ?? 88 b5 ?? ?? ?? ?? 8a d6 8a 8d ?? ?? ?? ?? 80 e2 ?? 80 e6 ?? c0 e1 ?? 0a 4c 18 ?? c0 e2 ?? 0a 14 18 c0 e6 ?? 0a 74 18 ?? 81 3d ?? ?? ?? ?? ?? ?? 88 8d ?? ?? ?? ?? 8b 8d ?? ?? ?? ?? 88 95 ?? ?? ?? ?? 88 b5 ?? ?? ?? ?? 75 }\n\t\t$a_02_1 = {88 14 0e 88 74 0e ?? 83 c6 ?? 89 b5 ?? ?? ?? ?? 88 04 0e 8d 8d ?? ?? ?? ?? e8 ?? ?? ?? ?? 03 9d ?? ?? ?? ?? 8b b5 ?? ?? ?? ?? 3b 1f 0f 82 }\n\t\t$a_00_2 = {44 69 67 69 79 65 79 6f 20 64 6f 67 75 6c 61 77 6f 78 65 20 68 69 7a 6f }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

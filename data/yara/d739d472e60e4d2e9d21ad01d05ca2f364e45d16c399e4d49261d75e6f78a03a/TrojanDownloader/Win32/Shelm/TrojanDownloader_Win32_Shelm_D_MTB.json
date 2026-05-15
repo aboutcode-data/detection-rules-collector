@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Shelm/TrojanDownloader_Win32_Shelm_D_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Shelm_D_MTB",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Shelm.D!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Shelm_D_MTB\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Shelm.D!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {83 ec 04 8d 85 ?? fa ff ff 89 44 24 04 c7 04 24 02 02 00 00 a1 ?? ?? 40 00 ff d0 83 ec 08 c7 44 24 14 00 00 00 00 c7 44 24 10 00 00 00 00 c7 44 24 0c 00 00 00 00 c7 44 24 08 06 00 00 00 c7 44 24 04 01 00 00 00 c7 04 24 02 00 00 00 a1 ?? ?? 40 00 ff d0 83 ec 18 89 45 ?? 66 c7 45 }\n\t\t$a_03_1 = {89 04 24 a1 ?? ?? 40 00 ff d0 83 ec 04 89 45 ?? 8b 45 0c 0f b7 c0 89 04 24 a1 ?? ?? 40 00 ff d0 83 ec 04 66 89 45 ?? c7 44 24 18 00 00 00 00 c7 44 24 14 00 00 00 00 c7 44 24 10 00 00 00 00 c7 44 24 0c 00 00 00 00 c7 44 24 08 10 00 00 00 8d 45 ?? 89 44 24 04 8b 45 ?? 89 04 24 a1 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

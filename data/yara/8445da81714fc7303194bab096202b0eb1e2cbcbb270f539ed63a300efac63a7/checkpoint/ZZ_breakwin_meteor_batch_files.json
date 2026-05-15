@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/ZZ_breakwin_meteor_batch_files.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ZZ_breakwin_meteor_batch_files",
+                "tags": [],
+                "description": "Detect the batch files used in the attacks",
+                "reference": "https://research.checkpoint.com/2021/indra-hackers-behind-recent-attacks-on-iran/",
+                "author": "Check Point Research",
+                "date": "22-07-2021"
+            },
+            "rule_text": "rule ZZ_breakwin_meteor_batch_files\n{\n\tmeta:\n\t\tdescription = \"Detect the batch files used in the attacks\"\n\t\treference = \"https://research.checkpoint.com/2021/indra-hackers-behind-recent-attacks-on-iran/\"\n\t\tauthor = \"Check Point Research\"\n\t\tdate = \"22-07-2021\"\n\n\tstrings:\n\t\t$filename_0 = \"mscap.bmp\"\n\t\t$filename_1 = \"mscap.jpg\"\n\t\t$filename_2 = \"msconf.conf\"\n\t\t$filename_3 = \"msmachine.reg\"\n\t\t$filename_4 = \"mssetup.exe\"\n\t\t$filename_5 = \"msuser.reg\"\n\t\t$filename_6 = \"msapp.exe\"\n\t\t$filename_7 = \"bcd.rar\"\n\t\t$filename_8 = \"bcd.bat\"\n\t\t$filename_9 = \"msrun.bat\"\n\t\t$command_line_0 = \"powershell -Command \\\"%exclude_command% '%defender_exclusion_folder%\"\n\t\t$command_line_1 = \"start /b \\\"\\\" update.bat hackemall\"\n\n\tcondition:\n\t\t4 of ( $filename_* ) or any of ( $command_line_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

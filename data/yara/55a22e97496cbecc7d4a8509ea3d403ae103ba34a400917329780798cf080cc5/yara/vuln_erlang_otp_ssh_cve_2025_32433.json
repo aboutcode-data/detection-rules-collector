@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/vuln_erlang_otp_ssh_cve_2025_32433.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VULN_Erlang_OTP_SSH_CVE_2025_32433_Apr25",
+                "tags": [],
+                "description": "Detects binaries vulnerable to CVE-2025-32433 in Erlang/OTP SSH",
+                "author": "Pierre-Henri Pezier, Florian Roth",
+                "reference": "https://www.upwind.io/feed/cve-2025-32433-critical-erlang-otp-ssh-vulnerability-cvss-10",
+                "date": "2025-04-18",
+                "score": 60
+            },
+            "rule_text": "rule VULN_Erlang_OTP_SSH_CVE_2025_32433_Apr25\n{\n\tmeta:\n\t\tdescription = \"Detects binaries vulnerable to CVE-2025-32433 in Erlang/OTP SSH\"\n\t\tauthor = \"Pierre-Henri Pezier, Florian Roth\"\n\t\treference = \"https://www.upwind.io/feed/cve-2025-32433-critical-erlang-otp-ssh-vulnerability-cvss-10\"\n\t\tdate = \"2025-04-18\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$a1 = { 46 4F 52 31 ?? ?? ?? ?? 42 45 41 4D }\n\t\t$s1 = \"ssh_connection.erl\"\n\t\t$fix1 = \"chars_limit\"\n\t\t$fix2 = \"allow    macro_log\"\n\t\t$fix3 = \"logger\"\n\t\t$fix4 = \"max_log_item_len\"\n\n\tcondition:\n\t\tfilesize < 1MB and $a1 at 0 and $s1 and not 1 of ( $fix* )\n}\n",
+            "vulnerabilities": [
+                "CVE-2025-32433"
+            ]
+        }
+    ]
+}

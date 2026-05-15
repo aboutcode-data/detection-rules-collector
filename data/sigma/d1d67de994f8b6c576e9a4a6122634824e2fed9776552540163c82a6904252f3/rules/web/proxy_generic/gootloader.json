@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/gootloader.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Patrik Olson",
+                "date": "2023-11-30",
+                "title": "Gootloader C2",
+                "id": "a8926206-42c8-4e85-a81a-48aba3c4752e"
+            },
+            "rule_text": "title: Gootloader C2\nid: a8926206-42c8-4e85-a81a-48aba3c4752e\ndescription: Gootloader leverages compromised WordPress sites for C2 redirection\nstatus: test\nauthor: NTT Security - Patrik Olson\ndate: '2023-11-30'\nmodified: '2023-11-30'\nreferences:\n- https://securityintelligence.com/x-force/gootbot-gootloaders-new-approach-to-post-exploitation/\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-method: GET\n    c-uri: /xmlrpc.php\n  internal_src:\n  - src_ip|cidr:\n    - 10.0.0.0/8\n    - 192.168.0.0/16\n    - 172.16.0.0/12\n  - vendor:\n    - Zscaler\n  condition: selection and internal_src\nfalsepositives:\n- Unknown; real XMLRPC traffic should always use POST requests\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

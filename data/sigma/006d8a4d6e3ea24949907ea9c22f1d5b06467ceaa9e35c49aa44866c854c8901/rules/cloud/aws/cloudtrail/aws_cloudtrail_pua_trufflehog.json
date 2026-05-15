@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_pua_trufflehog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-10-21",
+                "title": "PUA - AWS TruffleHog Execution",
+                "id": "a840e606-7c8c-4684-9bc1-eb6b6155127f"
+            },
+            "rule_text": "title: PUA - AWS TruffleHog Execution\nid: a840e606-7c8c-4684-9bc1-eb6b6155127f\nstatus: experimental\ndescription: 'Detects the execution of TruffleHog, a popular open-source tool used\n  for scanning repositories for secrets and sensitive information, within an AWS environment.\n\n  It has been reported to be used by threat actors for credential harvesting. All\n  detections should be investigated to determine if the usage is authorized by security\n  teams or potentially malicious.\n\n  '\nreferences:\n- https://github.com/trufflesecurity/trufflehog\n- https://www.rapid7.com/blog/post/tr-crimson-collective-a-new-threat-group-observed-operating-in-the-cloud/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-10-21\ntags:\n- attack.credential-access\n- attack.t1555\n- attack.t1003\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    userAgent: TruffleHog\n  condition: selection\nfalsepositives:\n- Legitimate use of TruffleHog by security teams for credential scanning.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

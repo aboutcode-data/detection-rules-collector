@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/KillAv/Trojan_Win32_Killav_FE_dll.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Killav_FE_dll",
+                "tags": [],
+                "description": "Trojan:Win32/Killav.FE!dll,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Killav_FE_dll\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Killav.FE!dll,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {68 4f d1 c1 5b 90 09 1e 00 c6 45 ?? 61 c6 45 ?? 76 c6 45 ?? 70 c6 45 ?? 2e 88 45 ?? 88 5d ?? 88 45 ?? c6 45 ?? 00 90 90 }\n\t\t$a_03_1 = {81 ec 50 03 00 00 b0 73 53 88 45 ?? 88 45 ?? b0 6b b3 78 88 45 ?? 88 45 ?? b0 6c b2 2f 88 45 ?? 88 45 ?? b0 65 b1 20 }\n\t\t$a_01_2 = {64 79 73 31 68 7b 68 }\n\t\t$a_01_3 = {66 72 71 69 6c 6a 23 64 79 73 23 76 77 64 75 77 40 23 67 6c 76 64 65 6f 68 67 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Masquerading/Trojan_Win32_Masquerading_F.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Masquerading_F",
+                "tags": [],
+                "description": "Trojan:Win32/Masquerading.F,SIGNATURE_TYPE_CMDHSTR_EXT,05 00 05 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Masquerading_F\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Masquerading.F,SIGNATURE_TYPE_CMDHSTR_EXT,05 00 05 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {5c 00 74 00 65 00 6d 00 70 00 5c 00 [0-60] 65 00 78 00 70 00 6c 00 6f 00 72 00 65 00 72 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_02_1 = {5c 74 65 6d 70 5c [0-60] 65 78 70 6c 6f 72 65 72 2e 65 78 65 }\n\t\t$a_02_2 = {5c 00 74 00 65 00 6d 00 70 00 5c 00 [0-60] 2e 00 74 00 78 00 74 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_02_3 = {5c 74 65 6d 70 5c [0-60] 2e 74 78 74 2e 65 78 65 }\n\t\t$a_80_4 = {5f 6d 61 69 6e 20 }\n\t\t$a_80_5 = {5c 5c 2e 5c 70 69 70 65 5c 6d 6f 76 65 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 + ( #a_80_4 & 1 ) * 2 + ( #a_80_5 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

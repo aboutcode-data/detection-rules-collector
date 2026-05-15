@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_susp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "pH-T (Nextron Systems), Florian Roth (Nextron Systems)",
+                "date": "2022-03-18",
+                "title": "Suspicious Service Installation",
+                "id": "1d61f71d-59d2-479e-9562-4ff5f4ead16b"
+            },
+            "rule_text": "title: Suspicious Service Installation\nid: 1d61f71d-59d2-479e-9562-4ff5f4ead16b\nrelated:\n- id: ca83e9f3-657a-45d0-88d6-c1ac280caf53\n  type: obsolete\n- id: 26481afe-db26-4228-b264-25a29fe6efc7\n  type: similar\nstatus: test\ndescription: Detects suspicious service installation commands\nreferences:\n- Internal Research\nauthor: pH-T (Nextron Systems), Florian Roth (Nextron Systems)\ndate: 2022-03-18\nmodified: 2023-12-04\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- car.2013-09-005\n- attack.t1543.003\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ImagePath|contains:\n    - ' -nop '\n    - ' -sta '\n    - ' -w hidden '\n    - :\\Temp\\\n    - .downloadfile(\n    - .downloadstring(\n    - \\ADMIN$\\\n    - \\Perflogs\\\n    - '&&'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

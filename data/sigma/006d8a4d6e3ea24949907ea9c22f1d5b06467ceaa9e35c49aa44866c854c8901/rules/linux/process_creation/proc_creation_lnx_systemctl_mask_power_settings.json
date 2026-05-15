@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_systemctl_mask_power_settings.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Milad Cheraghi, Nasreddine Bencherchali",
+                "date": "2025-10-17",
+                "title": "Mask System Power Settings Via Systemctl",
+                "id": "c172b7b5-f3a1-4af2-90b7-822c63df86cb"
+            },
+            "rule_text": "title: Mask System Power Settings Via Systemctl\nid: c172b7b5-f3a1-4af2-90b7-822c63df86cb\nstatus: experimental\ndescription: 'Detects the use of systemctl mask to disable system power management\n  targets such as suspend, hibernate, or hybrid sleep.\n\n  Adversaries may mask these targets to prevent a system from entering sleep or shutdown\n  states, ensuring their malicious processes remain active and uninterrupted.\n\n  This behavior can be associated with persistence or defense evasion, as it impairs\n  normal system power operations to maintain long-term access or avoid termination\n  of malicious activity.\n\n  '\nauthor: Milad Cheraghi, Nasreddine Bencherchali\ndate: 2025-10-17\nreferences:\n- https://www.man7.org/linux/man-pages/man1/systemctl.1.html\n- https://linux-audit.com/systemd/faq/what-is-the-difference-between-systemctl-disable-and-systemctl-mask/\ntags:\n- attack.persistence\n- attack.impact\n- attack.t1653\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_systemctl:\n    Image|endswith: /systemctl\n    CommandLine|contains: ' mask'\n  selection_power_options:\n    CommandLine|contains:\n    - suspend.target\n    - hibernate.target\n    - hybrid-sleep.target\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

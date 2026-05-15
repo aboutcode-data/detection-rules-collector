@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msxsl_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2019-10-21",
+                "title": "Msxsl.EXE Execution",
+                "id": "9e50a8b3-dd05-4eb8-9153-bdb6b79d50b0"
+            },
+            "rule_text": "title: Msxsl.EXE Execution\nid: 9e50a8b3-dd05-4eb8-9153-bdb6b79d50b0\nstatus: test\ndescription: 'Detects the execution of the MSXSL utility. This can be used to execute\n  Extensible Stylesheet Language (XSL) files. These files are commonly used to describe\n  the processing and rendering of data within XML files.\n\n  Adversaries can abuse this functionality to execute arbitrary files while potentially\n  bypassing application whitelisting defenses.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1220/T1220.md\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Msxsl/\nauthor: Timur Zinniatullin, oscd.community\ndate: 2019-10-21\nmodified: 2023-11-09\ntags:\n- attack.stealth\n- attack.t1220\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\msxsl.exe\n  condition: selection\nfalsepositives:\n- Msxsl is not installed by default and is deprecated, so unlikely on most systems.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/proofpoint/AdGholas_mem.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AdGholas_mem",
+                "tags": [],
+                "malfamily": "AdGholas",
+                "author": "Proofpoint",
+                "reference": "https://www.proofpoint.com/us/threat-insight/post/massive-adgholas-malvertising-campaigns-use-steganography-and-file-whitelisting-to-hide-in-plain-sight",
+                "reference2": "https://blog.malwarebytes.com/cybercrime/exploits/2016/12/adgholas-malvertising-business-as-usual/"
+            },
+            "rule_text": "rule AdGholas_mem\n{\n\tmeta:\n\t\tmalfamily = \"AdGholas\"\n\t\tauthor = \"Proofpoint\"\n\t\treference = \"https://www.proofpoint.com/us/threat-insight/post/massive-adgholas-malvertising-campaigns-use-steganography-and-file-whitelisting-to-hide-in-plain-sight\"\n\t\treference2 = \"https://blog.malwarebytes.com/cybercrime/exploits/2016/12/adgholas-malvertising-business-as-usual/\"\n\n\tstrings:\n\t\t$a1 = \"(3e8)!=\" ascii wide\n\t\t$a2 = /href=\\x22\\.\\x22\\+[a-z]+\\,mimeType\\}/ ascii wide\n\t\t$a3 = /\\+[a-z]+\\([\\x22\\x27]divx[^\\x22\\x27]+torrent[^\\x22\\x27]*[\\x22\\x27]\\.split/ ascii wide\n\t\t$a4 = \"chls\" nocase ascii wide\n\t\t$a5 = \"saz\" nocase ascii wide\n\t\t$a6 = \"flac\" nocase ascii wide\n\t\t$a7 = \"pcap\" nocase ascii wide\n\n\tcondition:\n\t\tall of ( $a* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

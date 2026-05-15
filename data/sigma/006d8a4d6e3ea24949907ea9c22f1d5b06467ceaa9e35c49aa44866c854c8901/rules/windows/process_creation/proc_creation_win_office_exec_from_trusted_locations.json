@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_office_exec_from_trusted_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-21",
+                "title": "Potentially Suspicious Office Document Executed From Trusted Location",
+                "id": "f99abdf0-6283-4e71-bd2b-b5c048a94743"
+            },
+            "rule_text": "title: Potentially Suspicious Office Document Executed From Trusted Location\nid: f99abdf0-6283-4e71-bd2b-b5c048a94743\nstatus: test\ndescription: Detects the execution of an Office application that points to a document\n  that is located in a trusted location. Attackers often used this to avoid macro\n  security and execute their malicious code.\nreferences:\n- Internal Research\n- https://twitter.com/Max_Mal_/status/1633863678909874176\n- https://techcommunity.microsoft.com/t5/microsoft-365-blog/new-security-hardening-policies-for-trusted-documents/ba-p/3023465\n- https://twitter.com/_JohnHammond/status/1588155401752788994\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-21\nmodified: 2023-10-18\ntags:\n- attack.stealth\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\explorer.exe\n    - \\dopus.exe\n  selection_img:\n  - Image|endswith:\n    - \\EXCEL.EXE\n    - \\POWERPNT.EXE\n    - \\WINWORD.exe\n  - OriginalFileName:\n    - Excel.exe\n    - POWERPNT.EXE\n    - WinWord.exe\n  selection_trusted_location:\n    CommandLine|contains:\n    - \\AppData\\Roaming\\Microsoft\\Templates\n    - \\AppData\\Roaming\\Microsoft\\Word\\Startup\\\n    - \\Microsoft Office\\root\\Templates\\\n    - \\Microsoft Office\\Templates\\\n  filter_main_dotx:\n    CommandLine|endswith:\n    - .dotx\n    - .xltx\n    - .potx\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

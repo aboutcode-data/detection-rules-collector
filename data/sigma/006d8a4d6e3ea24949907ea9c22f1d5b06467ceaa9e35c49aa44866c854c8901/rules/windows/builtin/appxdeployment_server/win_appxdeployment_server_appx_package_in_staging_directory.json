@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/appxdeployment_server/win_appxdeployment_server_appx_package_in_staging_directory.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-01-11",
+                "title": "AppX Located in Known Staging Directory Added to Deployment Pipeline",
+                "id": "5cdeaf3d-1489-477c-95ab-c318559fc051"
+            },
+            "rule_text": "title: AppX Located in Known Staging Directory Added to Deployment Pipeline\nid: 5cdeaf3d-1489-477c-95ab-c318559fc051\nstatus: test\ndescription: 'Detects an appx package that was added to the pipeline of the \"to be\n  processed\" packages that is located in a known folder often used as a staging directory.\n\n  '\nreferences:\n- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/\n- https://learn.microsoft.com/en-us/windows/win32/appxpkg/troubleshooting\n- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-01-11\ntags:\n- attack.stealth\nlogsource:\n  product: windows\n  service: appxdeployment-server\ndetection:\n  selection_eid:\n    EventID: 854\n  selection_paths_forward:\n    Path|contains:\n    - :/Perflogs/\n    - :/Users/Public/\n    - :/Windows/Temp/\n    - /AppdData/Local/Temp/\n    - /Desktop/\n    - /Downloads/\n  selection_paths_back:\n    Path|contains:\n    - :\\PerfLogs\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Temp\\\n    - \\AppdData\\Local\\Temp\\\n    - \\Desktop\\\n    - \\Downloads\\\n  condition: selection_eid and 1 of selection_paths_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/AMOS/amos_stealer_4_25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AMOS_Stealer",
+                "tags": [],
+                "description": "Detects AMOS Stealer",
+                "author": "RussianPanda",
+                "date": "2025-04-11",
+                "hash": "55663778a8c593b77a82ea1be072c73dd6a1d7a9567bbfbfad7d3dec9f672996"
+            },
+            "rule_text": "rule AMOS_Stealer\n{\n\tmeta:\n\t\tdescription = \"Detects AMOS Stealer\"\n\t\tauthor = \"RussianPanda\"\n\t\tdate = \"2025-04-11\"\n\t\thash = \"55663778a8c593b77a82ea1be072c73dd6a1d7a9567bbfbfad7d3dec9f672996\"\n\n\tstrings:\n\t\t$op1 = {E8 ?? ?? ?? ?? EB 00 48 8D}\n\t\t$op2 = {48 8D BD ?? ?? FF FF E8 ?? ?? 00 00 48 8D BD}\n\n\tcondition:\n\t\t( uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xcefaedfe or uint32( 0 ) == 0xfeedfacf or uint32( 0 ) == 0xcffaedfe or uint32( 0 ) == 0xcafebabe or uint32( 0 ) == 0xbebafeca or uint32( 0 ) == 0xcafebabf or uint32( 0 ) == 0xbfbafeca ) and ( #op1 > 50000 and #op2 > 4 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

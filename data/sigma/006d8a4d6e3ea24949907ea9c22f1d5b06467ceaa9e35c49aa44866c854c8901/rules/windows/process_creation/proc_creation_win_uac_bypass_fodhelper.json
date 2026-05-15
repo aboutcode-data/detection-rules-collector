@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_fodhelper.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "E.M. Anhaus (originally from Atomic Blue Detections, Tony Lambert), oscd.community",
+                "date": "2019-10-24",
+                "title": "Bypass UAC via Fodhelper.exe",
+                "id": "7f741dcf-fc22-4759-87b4-9ae8376676a2"
+            },
+            "rule_text": "title: Bypass UAC via Fodhelper.exe\nid: 7f741dcf-fc22-4759-87b4-9ae8376676a2\nstatus: test\ndescription: Identifies use of Fodhelper.exe to bypass User Account Control. Adversaries\n  use this technique to execute privileged processes.\nreferences:\n- https://eqllib.readthedocs.io/en/latest/analytics/e491ce22-792f-11e9-8f5c-d46d6d62a49e.html\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md\nauthor: E.M. Anhaus (originally from Atomic Blue Detections, Tony Lambert), oscd.community\ndate: 2019-10-24\nmodified: 2021-11-27\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\fodhelper.exe\n  condition: selection\nfalsepositives:\n- Legitimate use of fodhelper.exe utility by legitimate user\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

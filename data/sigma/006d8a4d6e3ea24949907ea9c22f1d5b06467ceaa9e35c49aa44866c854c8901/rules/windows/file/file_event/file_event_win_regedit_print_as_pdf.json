@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_regedit_print_as_pdf.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-07-08",
+                "title": "PDF File Created By RegEdit.EXE",
+                "id": "145095eb-e273-443b-83d0-f9b519b7867b"
+            },
+            "rule_text": "title: PDF File Created By RegEdit.EXE\nid: 145095eb-e273-443b-83d0-f9b519b7867b\nstatus: test\ndescription: 'Detects the creation of a file with the \".pdf\" extension by the \"RegEdit.exe\"\n  process.\n\n  This indicates that a user is trying to print/save a registry key as a PDF in order\n  to potentially extract sensitive information and bypass defenses.\n\n  '\nreferences:\n- https://sensepost.com/blog/2024/dumping-lsa-secrets-a-story-about-task-decorrelation/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-07-08\ntags:\n- attack.stealth\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\regedit.exe\n    TargetFilename|endswith: .pdf\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

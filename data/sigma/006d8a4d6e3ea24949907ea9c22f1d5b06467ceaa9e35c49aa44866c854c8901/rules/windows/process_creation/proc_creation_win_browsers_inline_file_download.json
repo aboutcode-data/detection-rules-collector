@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_browsers_inline_file_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-01-11",
+                "title": "File Download From Browser Process Via Inline URL",
+                "id": "94771a71-ba41-4b6e-a757-b531372eaab6"
+            },
+            "rule_text": "title: File Download From Browser Process Via Inline URL\nid: 94771a71-ba41-4b6e-a757-b531372eaab6\nstatus: test\ndescription: Detects execution of a browser process with a URL argument pointing to\n  a file with a potentially interesting extension. This can be abused to download\n  arbitrary files or to hide from the user for example by launching the browser in\n  a minimized state.\nreferences:\n- https://twitter.com/mrd0x/status/1478116126005641220\n- https://lolbas-project.github.io/lolbas/Binaries/Msedge/\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-01-11\nmodified: 2025-10-27\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith:\n    - \\brave.exe\n    - \\chrome.exe\n    - \\msedge.exe\n    - \\opera.exe\n    - \\vivaldi.exe\n  selection_http:\n    CommandLine|contains: http\n  selection_extensions:\n  - CommandLine|endswith:\n    - .7z\n    - .dat\n    - .dll\n    - .exe\n    - .hta\n    - .ps1\n    - .psm1\n    - .txt\n    - .vbe\n    - .vbs\n    - .zip\n  - CommandLine|contains:\n    - .7z\"\n    - .dat\"\n    - .dll\"\n    - .hta\"\n    - .ps1\"\n    - .psm1\"\n    - .txt\"\n    - .vbe\"\n    - .vbs\"\n    - .zip\"\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_browsers_inline_file_download/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

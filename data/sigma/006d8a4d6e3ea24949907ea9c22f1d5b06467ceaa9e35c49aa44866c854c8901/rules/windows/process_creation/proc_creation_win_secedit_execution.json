@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_secedit_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Janantha Marasinghe",
+                "date": "2022-11-18",
+                "title": "Potential Suspicious Activity Using SeCEdit",
+                "id": "c2c76b77-32be-4d1f-82c9-7e544bdfe0eb"
+            },
+            "rule_text": "title: Potential Suspicious Activity Using SeCEdit\nid: c2c76b77-32be-4d1f-82c9-7e544bdfe0eb\nstatus: test\ndescription: Detects potential suspicious behaviour using secedit.exe. Such as exporting\n  or modifying the security policy\nreferences:\n- https://blueteamops.medium.com/secedit-and-i-know-it-595056dee53d\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/secedit\nauthor: Janantha Marasinghe\ndate: 2022-11-18\nmodified: 2022-12-30\ntags:\n- attack.collection\n- attack.discovery\n- attack.persistence\n- attack.credential-access\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.defense-impairment\n- attack.t1685.001\n- attack.t1547.001\n- attack.t1505.005\n- attack.t1556.002\n- attack.t1685\n- attack.t1574.007\n- attack.t1564.002\n- attack.t1546.008\n- attack.t1546.007\n- attack.t1547.014\n- attack.t1547.010\n- attack.t1547.002\n- attack.t1557\n- attack.t1082\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\secedit.exe\n  - OriginalFileName: SeCEdit\n  selection_flags_discovery:\n    CommandLine|contains|all:\n    - /export\n    - /cfg\n  selection_flags_configure:\n    CommandLine|contains|all:\n    - /configure\n    - /db\n  condition: selection_img and (1 of selection_flags_*)\nfalsepositives:\n- Legitimate administrative use\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

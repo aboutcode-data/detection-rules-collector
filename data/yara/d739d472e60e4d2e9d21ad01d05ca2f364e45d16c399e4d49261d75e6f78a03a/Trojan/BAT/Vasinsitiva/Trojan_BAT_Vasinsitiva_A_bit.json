@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Vasinsitiva/Trojan_BAT_Vasinsitiva_A_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Vasinsitiva_A_bit",
+                "tags": [],
+                "description": "Trojan:BAT/Vasinsitiva.A!bit,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Vasinsitiva_A_bit\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Vasinsitiva.A!bit,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {41 6e 74 69 55 41 43 }\n\t\t$a_01_1 = {68 00 61 00 63 00 6b 00 69 00 6e 00 67 00 5f 00 6c 00 69 00 76 00 65 00 5f 00 62 00 6f 00 74 00 6e 00 65 00 74 00 5f 00 6c 00 65 00 74 00 73 00 5f 00 67 00 6f 00 }\n\t\t$a_03_2 = {5f 00 2e 00 65 00 78 00 65 00 [0-10] 72 00 75 00 6e 00 61 00 73 00 41 00 [0-10] 2e 00 65 00 78 00 65 00 }\n\t\t$a_03_3 = {07 09 11 05 b7 19 28 ?? ?? ?? ?? 28 ?? ?? ?? ?? 28 ?? ?? ?? ?? b9 08 11 05 6c 23 ?? ?? ?? ?? ?? ?? ?? ?? 5b 28 ?? ?? ?? ?? 11 04 6c 5d 23 ?? ?? ?? ?? ?? ?? ?? ?? 58 28 ?? ?? ?? ?? b7 17 28 ?? ?? ?? ?? 28 ?? ?? ?? ?? 6a 61 b7 28 ?? ?? ?? ?? 28 ?? ?? ?? ?? 28 ?? ?? ?? ?? 0b 11 05 19 6a d6 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_03_3 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

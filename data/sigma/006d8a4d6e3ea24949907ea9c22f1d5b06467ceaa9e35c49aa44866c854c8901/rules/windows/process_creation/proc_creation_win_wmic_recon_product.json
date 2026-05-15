@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_recon_product.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali",
+                "date": "2023-02-14",
+                "title": "Potential Product Reconnaissance Via Wmic.EXE",
+                "id": "15434e33-5027-4914-88d5-3d4145ec25a9"
+            },
+            "rule_text": "title: Potential Product Reconnaissance Via Wmic.EXE\nid: 15434e33-5027-4914-88d5-3d4145ec25a9\nstatus: test\ndescription: Detects the execution of WMIC in order to get a list of firewall and\n  antivirus products\nreferences:\n- https://thedfirreport.com/2023/03/06/2022-year-in-review/\n- https://www.yeahhub.com/list-installed-programs-version-path-windows/\n- https://learn.microsoft.com/en-us/answers/questions/253555/software-list-inventory-wmic-product\nauthor: Nasreddine Bencherchali\ndate: 2023-02-14\nmodified: 2025-10-22\ntags:\n- attack.execution\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wmic.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains: Product\n  filter_main_call_operations:\n    CommandLine|contains:\n    - ' uninstall'\n    - ' install'\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

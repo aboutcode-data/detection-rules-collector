@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CryptInject/Trojan_Win32_CryptInject_BI_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CryptInject_BI_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CryptInject.BI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CryptInject_BI_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CryptInject.BI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {c8 0b 98 7f b8 c6 ee 57 15 81 45 ?? be 6c ?? 28 81 e3 15 2d 0d 0f 81 6d ?? 36 18 c4 05 81 f3 26 ed 5f 56 81 45 ?? 40 b7 cb 5c a1 ?? ?? ?? ?? 8b 5d ?? 33 f2 3d 9b 04 00 00 75 0a }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CryptInject_BI_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/CryptInject.BI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CryptInject_BI_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CryptInject.BI!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {f6 da 32 c2 d2 fc 80 c2 e0 0f bb d0 80 f2 75 66 35 bd 0d 66 81 fa ce 01 c1 f8 88 32 da c0 e4 8c 12 c0 d3 e8 89 0c 14 f9 8b 07 8d bf 04 00 00 00 e9 }\n\t\t$a_01_1 = {f7 da 42 81 f2 81 3a eb 41 d1 ca 66 f7 c1 8c 0b 80 fa 45 33 da f9 03 f2 e9 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

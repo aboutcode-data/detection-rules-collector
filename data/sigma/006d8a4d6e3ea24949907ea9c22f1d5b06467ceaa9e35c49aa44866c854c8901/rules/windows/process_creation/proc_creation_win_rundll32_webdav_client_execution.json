@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_webdav_client_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-05-02",
+                "title": "WebDav Client Execution Via Rundll32.EXE",
+                "id": "2dbd9d3d-9e27-42a8-b8df-f13825c6c3d5"
+            },
+            "rule_text": "title: WebDav Client Execution Via Rundll32.EXE\nid: 2dbd9d3d-9e27-42a8-b8df-f13825c6c3d5\nstatus: test\ndescription: 'Detects \"svchost.exe\" spawning \"rundll32.exe\" with command arguments\n  like \"C:\\windows\\system32\\davclnt.dll,DavSetCookie\".\n\n  This could be an indicator of exfiltration or use of WebDav to launch code (hosted\n  on a WebDav server).\n\n  '\nreferences:\n- https://github.com/OTRF/detection-hackathon-apt29/issues/17\n- https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/7.B.4_C10730EA-6345-4934-AA0F-B0EFCA0C4BA6.md\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-05-02\nmodified: 2023-09-18\ntags:\n- attack.exfiltration\n- attack.t1048.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\svchost.exe\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains: C:\\windows\\system32\\davclnt.dll,DavSetCookie\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

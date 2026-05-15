@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_use_of_te_bin.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Agro (@agro_sev) oscd.community",
+                "date": "2020-10-13",
+                "title": "Malicious Windows Script Components File Execution by TAEF Detection",
+                "id": "634b00d5-ccc3-4a06-ae3b-0ec8444dd51b"
+            },
+            "rule_text": "title: Malicious Windows Script Components File Execution by TAEF Detection\nid: 634b00d5-ccc3-4a06-ae3b-0ec8444dd51b\nstatus: test\ndescription: 'Windows Test Authoring and Execution Framework (TAEF) framework allows\n  you to run automation by executing tests files written on different languages (C,\n  C#, Microsoft COM Scripting interfaces\n\n  Adversaries may execute malicious code (such as WSC file with VBScript, dll and\n  so on) directly by running te.exe\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Te/\n- https://twitter.com/pabraeken/status/993298228840992768\n- https://learn.microsoft.com/en-us/windows-hardware/drivers/taef/\nauthor: Agro (@agro_sev) oscd.community\ndate: 2020-10-13\nmodified: 2021-11-27\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\te.exe\n  - ParentImage|endswith: \\te.exe\n  - OriginalFileName: \\te.exe\n  condition: selection\nfalsepositives:\n- It's not an uncommon to use te.exe directly to execute legal TAEF tests\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

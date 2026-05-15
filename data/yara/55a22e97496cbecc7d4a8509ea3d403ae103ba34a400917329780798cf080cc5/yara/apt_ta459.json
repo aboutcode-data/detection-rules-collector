@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_ta459.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TA459_Malware_May17_1",
+                "tags": [],
+                "description": "Detects TA459 related malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/RLf9qU",
+                "date": "2017-05-31",
+                "hash1": "5fd61793d498a395861fa263e4438183a3c4e6f1e4f098ac6e97c9d0911327bf",
+                "id": "eb5d2464-ab95-5f5d-8b20-fa023da53130"
+            },
+            "rule_text": "rule TA459_Malware_May17_1\n{\n\tmeta:\n\t\tdescription = \"Detects TA459 related malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/RLf9qU\"\n\t\tdate = \"2017-05-31\"\n\t\thash1 = \"5fd61793d498a395861fa263e4438183a3c4e6f1e4f098ac6e97c9d0911327bf\"\n\t\tid = \"eb5d2464-ab95-5f5d-8b20-fa023da53130\"\n\n\tstrings:\n\t\t$s3 = \"xtsewy\" fullword ascii\n\t\t$s6 = \"CW&mhAklnfVULL\" ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x6152 and filesize < 800KB and all of them )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "TA459_Malware_May17_2",
+                "tags": [],
+                "description": "Detects TA459 related malware",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/RLf9qU",
+                "date": "2017-05-31",
+                "hash1": "4601133e94c4bc74916a9d96a5bc27cc3125cdc0be7225b2c7d4047f8506b3aa",
+                "id": "62954422-4657-5ded-9883-bb78eac697fb"
+            },
+            "rule_text": "rule TA459_Malware_May17_2\n{\n\tmeta:\n\t\tdescription = \"Detects TA459 related malware\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/RLf9qU\"\n\t\tdate = \"2017-05-31\"\n\t\thash1 = \"4601133e94c4bc74916a9d96a5bc27cc3125cdc0be7225b2c7d4047f8506b3aa\"\n\t\tid = \"62954422-4657-5ded-9883-bb78eac697fb\"\n\n\tstrings:\n\t\t$a1 = \"Mcutil.dll\" fullword ascii\n\t\t$a2 = \"mcut.exe\" fullword ascii\n\t\t$s1 = \"Software\\\\WinRAR SFX\" fullword ascii\n\t\t$s2 = \"AYou may need to run this self-extracting archive as administrator\" fullword wide\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and filesize < 900KB and all of ( $a* ) and 1 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

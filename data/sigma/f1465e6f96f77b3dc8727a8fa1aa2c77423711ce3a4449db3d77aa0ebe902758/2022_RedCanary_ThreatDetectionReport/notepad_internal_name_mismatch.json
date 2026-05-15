@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/notepad_internal_name_mismatch.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Process Executing with Unusual Command Lines",
+                "id": "1b7bc524-7d66-4902-9524-0e22e5cbe667"
+            },
+            "rule_text": "title: Process Executing with Unusual Command Lines\nid: 1b7bc524-7d66-4902-9524-0e22e5cbe667\nstatus: experimental\ndescription: Looks for the execution of non-powershell process with command lines\n  matching common powershell format. Inspired by the 2022 Red Canary Threat Detection\n  report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rename-system-utilities/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.defense_evasion\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  filter:\n    Image|endswith: \\powershell.exe\n  selection:\n    CommandLine|contains:\n    - iex\n    - invoke-expression\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

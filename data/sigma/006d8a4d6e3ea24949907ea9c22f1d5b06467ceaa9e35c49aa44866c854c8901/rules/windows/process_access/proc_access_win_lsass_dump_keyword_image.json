@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_lsass_dump_keyword_image.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-02-10",
+                "title": "LSASS Memory Access by Tool With Dump Keyword In Name",
+                "id": "9bd012ee-0dff-44d7-84a0-aa698cfd87a3"
+            },
+            "rule_text": "title: LSASS Memory Access by Tool With Dump Keyword In Name\nid: 9bd012ee-0dff-44d7-84a0-aa698cfd87a3\nstatus: test\ndescription: Detects LSASS process access requests from a source process with the\n  \"dump\" keyword in its image name.\nreferences:\n- https://twitter.com/_xpn_/status/1491557187168178176\n- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/dump-credentials-from-lsass-process-without-mimikatz\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-02-10\nmodified: 2023-11-29\ntags:\n- attack.credential-access\n- attack.t1003.001\n- attack.s0002\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    TargetImage|endswith: \\lsass.exe\n    SourceImage|contains: dump\n    GrantedAccess|endswith:\n    - '10'\n    - '30'\n    - '50'\n    - '70'\n    - '90'\n    - B0\n    - D0\n    - F0\n    - '18'\n    - '38'\n    - '58'\n    - '78'\n    - '98'\n    - B8\n    - D8\n    - F8\n    - 1A\n    - 3A\n    - 5A\n    - 7A\n    - 9A\n    - BA\n    - DA\n    - FA\n    - '0x14C2'\n    - FF\n  condition: selection\nfalsepositives:\n- Rare programs that contain the word dump in their name and access lsass\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

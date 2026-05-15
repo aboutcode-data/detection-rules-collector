@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_always_install_elevated_windows_installer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community",
+                "date": "2020-10-13",
+                "title": "Always Install Elevated Windows Installer",
+                "id": "cd951fdc-4b2f-47f5-ba99-a33bf61e3770"
+            },
+            "rule_text": "title: Always Install Elevated Windows Installer\nid: cd951fdc-4b2f-47f5-ba99-a33bf61e3770\nstatus: test\ndescription: Detects Windows Installer service (msiexec.exe) trying to install MSI\n  packages with SYSTEM privilege\nreferences:\n- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg\nauthor: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community\ndate: 2020-10-13\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_user:\n    User|contains:\n    - AUTHORI\n    - AUTORI\n  selection_image_1:\n    Image|contains|all:\n    - \\Windows\\Installer\\\n    - msi\n    Image|endswith: tmp\n  selection_image_2:\n    Image|endswith: \\msiexec.exe\n    IntegrityLevel:\n    - System\n    - S-1-16-16384\n  filter_installer:\n    ParentImage: C:\\Windows\\System32\\services.exe\n  filter_repair:\n  - CommandLine|endswith: \\system32\\msiexec.exe /V\n  - ParentCommandLine|endswith: \\system32\\msiexec.exe /V\n  filter_sophos:\n    ParentImage|startswith: C:\\ProgramData\\Sophos\\\n  filter_avira:\n    ParentImage|startswith: C:\\ProgramData\\Avira\\\n  filter_avast:\n    ParentImage|startswith:\n    - C:\\Program Files\\Avast Software\\\n    - C:\\Program Files (x86)\\Avast Software\\\n  filter_google_update:\n    ParentImage|startswith:\n    - C:\\Program Files\\Google\\Update\\\n    - C:\\Program Files (x86)\\Google\\Update\\\n  condition: 1 of selection_image_* and selection_user and not 1 of filter_*\nfalsepositives:\n- System administrator usage\n- Anti virus products\n- WindowsApps located in \"C:\\Program Files\\WindowsApps\\\"\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

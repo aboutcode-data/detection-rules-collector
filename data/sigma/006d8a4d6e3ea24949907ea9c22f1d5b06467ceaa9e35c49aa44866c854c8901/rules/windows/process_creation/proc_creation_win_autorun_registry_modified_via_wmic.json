@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_autorun_registry_modified_via_wmic.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-02-17",
+                "title": "Suspicious Autorun Registry Modified via WMI",
+                "id": "c80e66d8-1780-48a9-b412-46663fd21ac0"
+            },
+            "rule_text": "title: Suspicious Autorun Registry Modified via WMI\nid: c80e66d8-1780-48a9-b412-46663fd21ac0\nstatus: experimental\ndescription: 'Detects suspicious activity where the WMIC process is used to create\n  an autorun registry entry via reg.exe, which is often indicative of persistence\n  mechanisms employed by malware.\n\n  '\nreferences:\n- Internal Research\n- https://github.com/HackTricks-wiki/hacktricks/blob/e4c7b21b8f36c97c35b7c622732b38a189ce18f7/src/windows-hardening/windows-local-privilege-escalation/privilege-escalation-with-autorun-binaries.md\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-02-17\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1547.001\n- attack.t1047\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_execution_img:\n  - Image|endswith: \\wmic.exe\n  - OriginalFileName: wmic.exe\n  - ParentImage|endswith: \\wmiprvse.exe\n  selection_execution_cmd:\n    CommandLine|contains|all:\n    - reg\n    - ' add '\n    CommandLine|contains:\n    - \\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n    - \\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run\n    - \\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run\n  selection_suspicious_paths_1:\n    CommandLine|contains:\n    - :\\Perflogs\n    - :\\ProgramData'\n    - :\\Windows\\Temp\n    - :\\Temp\n    - \\AppData\\Local\\Temp\n    - \\AppData\\Roaming\n    - :\\$Recycle.bin\n    - :\\Users\\Default\n    - :\\Users\\public\n    - '%temp%'\n    - '%tmp%'\n    - '%Public%'\n    - '%AppData%'\n  selection_suspicious_paths_user_1:\n    CommandLine|contains: :\\Users\\\n  selection_suspicious_paths_user_2:\n    CommandLine|contains:\n    - \\Favorites\n    - \\Favourites\n    - \\Contacts\n    - \\Music\n    - \\Pictures\n    - \\Documents\n    - \\Photos\n  condition: all of selection_execution_* and (selection_suspicious_paths_1 or (all\n    of selection_suspicious_paths_user_*))\nfalsepositives:\n- Legitimate administrative activity or software installations\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

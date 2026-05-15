@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ReverseShell/Trojan_Win32_ReverseShell_GXT_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ReverseShell_GXT_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/ReverseShell.GXT!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ReverseShell_GXT_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ReverseShell.GXT!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8d 85 50 fe ff ff 89 44 24 04 8b 45 f0 89 04 24 a1 ?? ?? ?? ?? ff d0 83 ec 0c 85 c0 }\n\t\t$a_03_1 = {ff d0 83 ec 18 89 45 f0 66 c7 85 ?? ?? ?? ?? 02 00 8b 45 f4 0f b7 c0 89 04 24 a1 ?? ?? ?? ?? ff d0 83 ec 04 66 89 85 52 fe ff ff c7 04 24 ?? ?? ?? ?? a1 ?? ?? ?? ?? ff d0 83 ec 04 89 85 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 5 + ( #a_03_1 & 1 ) * 5 ) >= 10\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

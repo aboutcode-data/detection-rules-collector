@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_dump_file_susp_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-07",
+                "title": "Potentially Suspicious DMP/HDMP File Creation",
+                "id": "aba15bdd-657f-422a-bab3-ac2d2a0d6f1c"
+            },
+            "rule_text": "title: Potentially Suspicious DMP/HDMP File Creation\nid: aba15bdd-657f-422a-bab3-ac2d2a0d6f1c\nrelated:\n- id: 3a525307-d100-48ae-b3b9-0964699d7f97\n  type: similar\nstatus: test\ndescription: Detects the creation of a file with the \".dmp\"/\".hdmp\" extension by a\n  shell or scripting application such as \"cmd\", \"powershell\", etc. Often created by\n  software during a crash. Memory dumps can sometimes contain sensitive information\n  such as credentials. It's best to determine the source of the crash.\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/wer/collecting-user-mode-dumps\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-07\ntags:\n- attack.stealth\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\mshta.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\wscript.exe\n    TargetFilename|endswith:\n    - .dmp\n    - .dump\n    - .hdmp\n  condition: selection\nfalsepositives:\n- Some administrative PowerShell or VB scripts might have the ability to collect dumps\n  and move them to other folders which might trigger a false positive.\nlevel: medium\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_dump_file_susp_creation/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

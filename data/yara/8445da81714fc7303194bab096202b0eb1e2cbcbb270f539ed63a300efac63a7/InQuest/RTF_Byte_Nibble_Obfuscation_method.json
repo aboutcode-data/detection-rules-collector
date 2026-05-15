@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/InQuest/RTF_Byte_Nibble_Obfuscation_method.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "RTF_Byte_Nibble_Obfuscation_method1",
+                "tags": []
+            },
+            "rule_text": "rule RTF_Byte_Nibble_Obfuscation_method1\n{\n\tstrings:\n\t\t$magic = {7b 5c 72}\n\t\t$update = \"\\\\objupdate\" nocase\n\t\t$data = \"\\\\objdata\" nocase\n\t\t$nibble_a = /([A-Fa-f0-9]\\\\'[A-Fa-f0-9]{4}){4}/\n\t\t$nibble_b = /(\\\\'[A-Fa-f0-9]+\\\\'[A-Fa-f0-9]{4}){4}/\n\n\tcondition:\n\t\t$magic in ( 0 .. 30 ) and all of them and ( #nibble_a > 10 or #nibble_b > 10 )\n}\n",
+            "vulnerabilities": [
+                "CVE-2018-8174"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "RTF_Byte_Nibble_Obfuscation_method2",
+                "tags": []
+            },
+            "rule_text": "rule RTF_Byte_Nibble_Obfuscation_method2\n{\n\tstrings:\n\t\t$magic = {7b 5c 72}\n\t\t$nibble = /\\\\objupdate.{0,1024}\\\\objdata.{0,1024}([A-Fa-f0-9]\\\\'[A-Fa-f0-9]{4}){2}/\n\n\tcondition:\n\t\t$magic in ( 0 .. 30 ) and all of them\n}\n",
+            "vulnerabilities": [
+                "CVE-2018-8174"
+            ]
+        }
+    ]
+}

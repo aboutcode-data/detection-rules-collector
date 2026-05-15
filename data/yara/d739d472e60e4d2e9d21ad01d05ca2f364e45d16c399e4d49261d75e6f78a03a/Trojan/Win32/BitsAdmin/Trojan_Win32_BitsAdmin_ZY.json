@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/BitsAdmin/Trojan_Win32_BitsAdmin_ZY.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_BitsAdmin_ZY",
+                "tags": [],
+                "description": "Trojan:Win32/BitsAdmin.ZY,SIGNATURE_TYPE_CMDHSTR_EXT,0b 00 0b 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_BitsAdmin_ZY\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/BitsAdmin.ZY,SIGNATURE_TYPE_CMDHSTR_EXT,0b 00 0b 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {62 00 69 00 74 00 73 00 61 00 64 00 6d 00 69 00 6e 00 }\n\t\t$a_00_1 = {2f 00 74 00 72 00 61 00 6e 00 73 00 66 00 65 00 72 00 }\n\t\t$a_02_2 = {24 00 5c 00 [0-30] 2e 00 65 00 78 00 65 00 }\n\t\t$a_02_3 = {24 00 5c 00 [0-30] 2e 00 64 00 6c 00 6c 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 5 + ( #a_00_1 & 1 ) * 5 + ( #a_02_2 & 1 ) * 1 + ( #a_02_3 & 1 ) * 1 ) >= 11\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

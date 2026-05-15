@@ -1,0 +1,134 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/codewatchorg/malicious_office.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "maldoc_indirect_function_call_1",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_indirect_function_call_1 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {FF 75 ?? FF 55 ??}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #a ) : ( uint8( @a [ i ] + 2 ) == uint8( @a [ i ] + 5 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_indirect_function_call_2",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_indirect_function_call_2 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {FF B5 ?? ?? ?? ?? FF 95 ?? ?? ?? ??}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #a ) : ( ( uint8( @a [ i ] + 2 ) == uint8( @a [ i ] + 8 ) ) and ( uint8( @a [ i ] + 3 ) == uint8( @a [ i ] + 9 ) ) and ( uint8( @a [ i ] + 4 ) == uint8( @a [ i ] + 10 ) ) and ( uint8( @a [ i ] + 5 ) == uint8( @a [ i ] + 11 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_indirect_function_call_3",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_indirect_function_call_3 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {FF B7 ?? ?? ?? ?? FF 57 ??}\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_find_kernel32_base_method_1",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_find_kernel32_base_method_1 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a1 = {64 8B (05|0D|15|1D|25|2D|35|3D) 30 00 00 00}\n\t\t$a2 = {64 A1 30 00 00 00}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_find_kernel32_base_method_2",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_find_kernel32_base_method_2 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {31 ?? ?? 30 64 8B ??}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #a ) : ( ( uint8( @a [ i ] + 1 ) >= 0xC0 ) and ( ( ( uint8( @a [ i ] + 1 ) & 0x38 ) >> 3 ) == ( uint8( @a [ i ] + 1 ) & 0x07 ) ) and ( ( uint8( @a [ i ] + 2 ) & 0xF8 ) == 0xA0 ) and ( uint8( @a [ i ] + 6 ) <= 0x3F ) and ( ( ( uint8( @a [ i ] + 6 ) & 0x38 ) >> 3 ) != ( uint8( @a [ i ] + 6 ) & 0x07 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "maldoc_find_kernel32_base_method_3",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Didier Stevens (https://DidierStevens.com)"
+            },
+            "rule_text": "rule maldoc_find_kernel32_base_method_3 : maldoc\n{\n\tmeta:\n\t\tauthor = \"Didier Stevens (https://DidierStevens.com)\"\n\n\tstrings:\n\t\t$a = {68 30 00 00 00 (58|59|5A|5B|5C|5D|5E|5F) 64 8B ??}\n\n\tcondition:\n\t\tfor any i in ( 1 .. #a ) : ( ( ( uint8( @a [ i ] + 5 ) & 0x07 ) == ( uint8( @a [ i ] + 8 ) & 0x07 ) ) and ( uint8( @a [ i ] + 8 ) <= 0x3F ) and ( ( ( uint8( @a [ i ] + 8 ) & 0x38 ) >> 3 ) != ( uint8( @a [ i ] + 8 ) & 0x07 ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mwi_document",
+                "tags": [
+                    "exploitdoc",
+                    "maldoc"
+                ],
+                "description": "MWI generated document",
+                "author": "@Ydklijnsma",
+                "source": "http://blog.0x3a.com/post/117760824504/analysis-of-a-microsoft-word-intruder-sample"
+            },
+            "rule_text": "rule mwi_document : exploitdoc maldoc\n{\n\tmeta:\n\t\tdescription = \"MWI generated document\"\n\t\tauthor = \"@Ydklijnsma\"\n\t\tsource = \"http://blog.0x3a.com/post/117760824504/analysis-of-a-microsoft-word-intruder-sample\"\n\n\tstrings:\n\t\t$field_creation_tag = \"{\\\\field{\\\\*\\\\fldinst { INCLUDEPICTURE\"\n\t\t$mwistat_url = \".php?id=\"\n\t\t$field_closing_tag = \"\\\\\\\\* MERGEFORMAT \\\\\\\\d}}{\\\\fldrslt}}\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "macrocheck",
+                "tags": [
+                    "maldoc"
+                ],
+                "Author": "Fireeye Labs",
+                "Date": "2014/11/30",
+                "Description": "Identify office documents with the MACROCHECK credential stealer in them.  It can be run against .doc files or VBA macros extraced from .docx files (vbaProject.bin files).",
+                "Reference": "https://www.fireeye.com/blog/threat-research/2014/11/fin4_stealing_insid.html"
+            },
+            "rule_text": "rule macrocheck : maldoc\n{\n\tmeta:\n\t\tAuthor = \"Fireeye Labs\"\n\t\tDate = \"2014/11/30\"\n\t\tDescription = \"Identify office documents with the MACROCHECK credential stealer in them.  It can be run against .doc files or VBA macros extraced from .docx files (vbaProject.bin files).\"\n\t\tReference = \"https://www.fireeye.com/blog/threat-research/2014/11/fin4_stealing_insid.html\"\n\n\tstrings:\n\t\t$PARAMpword = \"pword=\" ascii wide\n\t\t$PARAMmsg = \"msg=\" ascii wide\n\t\t$PARAMuname = \"uname=\" ascii\n\t\t$userform = \"UserForm\" ascii wide\n\t\t$userloginform = \"UserLoginForm\" ascii wide\n\t\t$invalid = \"Invalid username or password\" ascii wide\n\t\t$up1 = \"uploadPOST\" ascii wide\n\t\t$up2 = \"postUpload\" ascii wide\n\n\tcondition:\n\t\tall of ( $PARAM* ) or ( ( $invalid or $userloginform or $userform ) and ( $up1 or $up2 ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Office_AutoOpen_Macro",
+                "tags": [
+                    "maldoc"
+                ],
+                "description": "Detects an Microsoft Office file that contains the AutoOpen Macro function",
+                "author": "Florian Roth",
+                "date": "2015-05-28",
+                "score": 60,
+                "hash1": "4d00695d5011427efc33c9722c61ced2",
+                "hash2": "63f6b20cb39630b13c14823874bd3743",
+                "hash3": "66e67c2d84af85a569a04042141164e6",
+                "hash4": "a3035716fe9173703941876c2bde9d98",
+                "hash5": "7c06cab49b9332962625b16f15708345",
+                "hash6": "bfc30332b7b91572bfe712b656ea8a0c",
+                "hash7": "25285b8fe2c41bd54079c92c1b761381"
+            },
+            "rule_text": "rule Office_AutoOpen_Macro : maldoc\n{\n\tmeta:\n\t\tdescription = \"Detects an Microsoft Office file that contains the AutoOpen Macro function\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015-05-28\"\n\t\tscore = 60\n\t\thash1 = \"4d00695d5011427efc33c9722c61ced2\"\n\t\thash2 = \"63f6b20cb39630b13c14823874bd3743\"\n\t\thash3 = \"66e67c2d84af85a569a04042141164e6\"\n\t\thash4 = \"a3035716fe9173703941876c2bde9d98\"\n\t\thash5 = \"7c06cab49b9332962625b16f15708345\"\n\t\thash6 = \"bfc30332b7b91572bfe712b656ea8a0c\"\n\t\thash7 = \"25285b8fe2c41bd54079c92c1b761381\"\n\n\tstrings:\n\t\t$s1 = \"AutoOpen\" ascii fullword\n\t\t$s2 = \"Macros\" wide fullword\n\n\tcondition:\n\t\tuint32be( 0 ) == 0xd0cf11e0 and all of ( $s* ) and filesize < 300000\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Embedded_EXE_Cloaking",
+                "tags": [
+                    "maldoc"
+                ],
+                "description": "Detects an embedded executable in a non-executable file",
+                "author": "Florian Roth",
+                "date": "2015/02/27",
+                "score": 80
+            },
+            "rule_text": "rule Embedded_EXE_Cloaking : maldoc\n{\n\tmeta:\n\t\tdescription = \"Detects an embedded executable in a non-executable file\"\n\t\tauthor = \"Florian Roth\"\n\t\tdate = \"2015/02/27\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$noex_png = { 89 50 4E 47 }\n\t\t$noex_pdf = { 25 50 44 46 }\n\t\t$noex_rtf = { 7B 5C 72 74 66 31 }\n\t\t$noex_jpg = { FF D8 FF E0 }\n\t\t$noex_gif = { 47 49 46 38 }\n\t\t$mz = { 4D 5A }\n\t\t$a1 = \"This program cannot be run in DOS mode\"\n\t\t$a2 = \"This program must be run under Win32\"\n\n\tcondition:\n\t\t(( $noex_png at 0 ) or ( $noex_pdf at 0 ) or ( $noex_rtf at 0 ) or ( $noex_jpg at 0 ) or ( $noex_gif at 0 ) ) and for any i in ( 1 .. #mz ) : ( @a1 < ( @mz [ i ] + 200 ) or @a2 < ( @mz [ i ] + 200 ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

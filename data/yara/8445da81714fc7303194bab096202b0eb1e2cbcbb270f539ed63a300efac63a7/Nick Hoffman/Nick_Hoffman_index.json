@@ -1,0 +1,194 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Nick Hoffman/Nick_Hoffman_index.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Check_Debugger",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Looks for both isDebuggerPresent and CheckRemoteDebuggerPresent",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_Debugger\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Looks for both isDebuggerPresent and CheckRemoteDebuggerPresent\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"CheckRemoteDebuggerPresent\" ) and pe.imports ( \"kernel32.dll\" , \"IsDebuggerPresent\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Dlls",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for common sandbox dlls",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Dlls\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for common sandbox dlls\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$dll1 = \"sbiedll.dll\" wide nocase ascii fullword\n\t\t$dll2 = \"dbghelp.dll\" wide nocase ascii fullword\n\t\t$dll3 = \"api_log.dll\" wide nocase ascii fullword\n\t\t$dll4 = \"dir_watch.dll\" wide nocase ascii fullword\n\t\t$dll5 = \"pstorec.dll\" wide nocase ascii fullword\n\t\t$dll6 = \"vmcheck.dll\" wide nocase ascii fullword\n\t\t$dll7 = \"wpespy.dll\" wide nocase ascii fullword\n\n\tcondition:\n\t\t2 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_DriveSize",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Rule tries to catch uses of DeviceIOControl being used to get the drive size",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_DriveSize\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Rule tries to catch uses of DeviceIOControl being used to get the drive size\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$physicaldrive = \"\\\\\\\\.\\\\PhysicalDrive0\" wide ascii nocase\n\t\t$dwIoControlCode = {68 5c 40 07 00 [0-5] FF 15}\n\n\tcondition:\n\t\tpe.imports( \"kernel32.dll\" , \"CreateFileA\" ) and pe.imports ( \"kernel32.dll\" , \"DeviceIoControl\" ) and $dwIoControlCode and $physicaldrive\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_FilePaths",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for filepaths containing popular sandbox names",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_FilePaths\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for filepaths containing popular sandbox names\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$path1 = \"SANDBOX\" wide ascii\n\t\t$path2 = \"\\\\SAMPLE\" wide ascii\n\t\t$path3 = \"\\\\VIRUS\" wide ascii\n\n\tcondition:\n\t\tall of ( $path* ) and pe.imports ( \"kernel32.dll\" , \"GetModuleFileNameA\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Qemu_Description",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for QEMU systembiosversion key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Qemu_Description\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for QEMU systembiosversion key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\Description\\\\System\" nocase wide ascii\n\t\t$value = \"SystemBiosVersion\" nocase wide ascii\n\t\t$data = \"QEMU\" wide nocase ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Qemu_DeviceMap",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for Qemu reg keys",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_Qemu_DeviceMap\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for Qemu reg keys\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\DEVICEMAP\\\\Scsi\\\\Scsi Port 0\\\\Scsi Bus 0\\\\Target Id 0\\\\Logical Unit Id 0\" nocase wide ascii\n\t\t$value = \"Identifier\" nocase wide ascii\n\t\t$data = \"QEMU\" wide nocase ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_UserNames",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Looks for malware checking for common sandbox usernames",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_UserNames\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Looks for malware checking for common sandbox usernames\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$user1 = \"MALTEST\" wide ascii\n\t\t$user2 = \"TEQUILABOOMBOOM\" wide ascii\n\t\t$user3 = \"SANDBOX\" wide ascii\n\t\t$user4 = \"VIRUS\" wide ascii\n\t\t$user5 = \"MALWARE\" wide ascii\n\n\tcondition:\n\t\tall of ( $user* ) and pe.imports ( \"advapi32.dll\" , \"GetUserNameA\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_Description",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks Vbox description reg key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_Description\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks Vbox description reg key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\Description\\\\System\" nocase wide ascii\n\t\t$value = \"SystemBiosVersion\" nocase wide ascii\n\t\t$data = \"VBOX\" nocase wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_DeviceMap",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks Vbox registry keys",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_DeviceMap\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks Vbox registry keys\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\DEVICEMAP\\\\Scsi\\\\Scsi Port 0\\\\Scsi Bus 0\\\\Target Id 0\\\\Logical Unit Id 0\" nocase wide ascii\n\t\t$value = \"Identifier\" nocase wide ascii\n\t\t$data = \"VBOX\" nocase wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_Guest_Additions",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of the guest additions registry key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_Guest_Additions\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of the guest additions registry key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"SOFTWARE\\\\Oracle\\\\VirtualBox Guest Additions\" wide ascii nocase\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VBox_VideoDrivers",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for reg keys of Vbox video drivers",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VBox_VideoDrivers\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for reg keys of Vbox video drivers\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\Description\\\\System\" nocase wide ascii\n\t\t$value = \"VideoBiosVersion\" wide nocase ascii\n\t\t$data = \"VIRTUALBOX\" nocase wide ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VmTools",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of VmTools reg key",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VmTools\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of VmTools reg key\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$tools = \"SOFTWARE\\\\VMware, Inc.\\\\VMware Tools\" nocase ascii wide\n\n\tcondition:\n\t\t$tools\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_VMWare_DeviceMap",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of VmWare Registry Keys",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "rule Check_VMWare_DeviceMap\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of VmWare Registry Keys\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$key = \"HARDWARE\\\\DEVICEMAP\\\\Scsi\\\\Scsi Port 0\\\\Scsi Bus 0\\\\Target Id 0\\\\Logical Unit Id 0\" wide ascii nocase\n\t\t$value = \"Identifier\" wide nocase ascii\n\t\t$data = \"VMware\" wide nocase ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Check_Wine",
+                "tags": [],
+                "Author": "Nick Hoffman",
+                "Description": "Checks for the existence of Wine",
+                "Sample": "de1af0e97e94859d372be7fcf3a5daa5"
+            },
+            "rule_text": "import \"pe\"\n\nrule Check_Wine\n{\n\tmeta:\n\t\tAuthor = \"Nick Hoffman\"\n\t\tDescription = \"Checks for the existence of Wine\"\n\t\tSample = \"de1af0e97e94859d372be7fcf3a5daa5\"\n\n\tstrings:\n\t\t$wine = \"wine_get_unix_file_name\"\n\n\tcondition:\n\t\t$wine and pe.imports ( \"kernel32.dll\" , \"GetModuleHandleA\" )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "LogPOS",
+                "tags": [],
+                "author": "Nick Hoffman - Morphick Security",
+                "description": "Detects Versions of LogPOS",
+                "md5": "af13e7583ed1b27c4ae219e344a37e2b"
+            },
+            "rule_text": "rule LogPOS\n{\n\tmeta:\n\t\tauthor = \"Nick Hoffman - Morphick Security\"\n\t\tdescription = \"Detects Versions of LogPOS\"\n\t\tmd5 = \"af13e7583ed1b27c4ae219e344a37e2b\"\n\n\tstrings:\n\t\t$mailslot = \"\\\\\\\\.\\\\mailslot\\\\LogCC\"\n\t\t$get = \"GET /%s?encoding=%c&t=%c&cc=%I64d&process=\"\n\t\t$sc = {64 A1 30 00 00 00 8B 40 0C 8B 40 1C 8B 40 08 }\n\n\tcondition:\n\t\t$sc and 1 of ( $mailslot , $get )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "BernhardPOS",
+                "tags": [],
+                "author": "Nick Hoffman / Jeremy Humble",
+                "last_update": "2015-07-14",
+                "source": "Morphick Inc.",
+                "description": "BernhardPOS Credit Card dumping tool",
+                "reference": "http://morphick.com/blog/2015/7/14/bernhardpos-new-pos-malware-discovered-by-morphick",
+                "md5": "e49820ef02ba5308ff84e4c8c12e7c3d"
+            },
+            "rule_text": "rule BernhardPOS\n{\n\tmeta:\n\t\tauthor = \"Nick Hoffman / Jeremy Humble\"\n\t\tlast_update = \"2015-07-14\"\n\t\tsource = \"Morphick Inc.\"\n\t\tdescription = \"BernhardPOS Credit Card dumping tool\"\n\t\treference = \"http://morphick.com/blog/2015/7/14/bernhardpos-new-pos-malware-discovered-by-morphick\"\n\t\tmd5 = \"e49820ef02ba5308ff84e4c8c12e7c3d\"\n\n\tstrings:\n\t\t$shellcode_kernel32_with_junk_code = { 33 c0 83 ?? ?? 83 ?? ?? 64 a1 30 00 00 00 83 ?? ?? 83 ?? ?? 8b 40 0c 83 ?? ?? 83 ?? ?? 8b 40 14 83 ?? ?? 83 ?? ?? 8b 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 8b 00 83 ?? ?? 83 ?? ?? 8b 40 10 83 ?? ?? }\n\t\t$mutex_name = \"OPSEC_BERNHARD\"\n\t\t$build_path = \"C:\\\\bernhard\\\\Debug\\\\bernhard.pdb\"\n\t\t$string_decode_routine = { 55 8b ec 83 ec 50 53 56 57 a1 ?? ?? ?? ?? 89 45 f8 66 8b 0d ?? ?? ?? ?? 66 89 4d fc 8a 15 ?? ?? ?? ?? 88 55 fe 8d 45 f8 50 ff ?? ?? ?? ?? ?? 89 45 f0 c7 45 f4 00 00 00 00 ?? ?? 8b 45 f4 83 c0 01 89 45 f4 8b 45 08 50 ff ?? ?? ?? ?? ?? 39 45 f4 ?? ?? 8b 45 08 03 45 f4 0f be 08 8b 45 f4 99 f7 7d f0 0f be 54 15 f8 33 ca 8b 45 08 03 45 f4 88 08 ?? ?? 5f 5e 5b 8b e5 5d }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Mozart",
+                "tags": [],
+                "author": "Nick Hoffman - Morphick Inc",
+                "description": "Detects samples of the Mozart POS RAM scraping utility"
+            },
+            "rule_text": "rule Mozart\n{\n\tmeta:\n\t\tauthor = \"Nick Hoffman - Morphick Inc\"\n\t\tdescription = \"Detects samples of the Mozart POS RAM scraping utility\"\n\n\tstrings:\n\t\t$pdb = \"z:\\\\Slender\\\\mozart\\\\mozart\\\\Release\\\\mozart.pdb\" nocase wide ascii\n\t\t$output = {67 61 72 62 61 67 65 2E 74 6D 70 00}\n\t\t$service_name = \"NCR SelfServ Platform Remote Monitor\" nocase wide ascii\n\t\t$service_name_short = \"NCR_RemoteMonitor\"\n\t\t$encode_data = {B8 08 10 00 00 E8 ?? ?? ?? ?? A1 ?? ?? ?? ?? 53 55 8B AC 24 14 10 00 00 89 84 24 0C 10 00 00 56 8B C5 33 F6 33 DB 8D 50 01 8D A4 24 00 00 00 00 8A 08 40 84 C9 ?? ?? 2B C2 89 44 24 0C ?? ?? 8B 94 24 1C 10 00 00 57 8B FD 2B FA 89 7C 24 10 ?? ?? 8B 7C 24 10 8A 04 17 02 86 E0 BA 40 00 88 02 B8 ?? ?? ?? ?? 46 8D 78 01 8D A4 24 00 00 00 00 8A 08 40 84 C9 ?? ?? 2B C7 3B F0 ?? ?? 33 F6 8B C5 43 42 8D 78 01 8A 08 40 84 C9 ?? ?? 2B C7 3B D8 ?? ?? 5F 8B B4 24 1C 10 00 00 8B C5 C6 04 33 00 8D 50 01 8A 08 40 84 C9 ?? ?? 8B 8C 24 20 10 00 00 2B C2 51 8D 54 24 14 52 50 56 E8 ?? ?? ?? ?? 83 C4 10 8B D6 5E 8D 44 24 0C 8B C8 5D 2B D1 5B 8A 08 88 0C 02 40 84 C9 ?? ?? 8B 8C 24 04 10 00 00 E8 ?? ?? ?? ?? 81 C4 08 10 00 00}\n\n\tcondition:\n\t\tany of ( $pdb , $output , $encode_data ) or all of ( $service* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/identity_protection/azure_identity_protection_anonymous_ip_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'",
+                "date": "2023-09-03",
+                "title": "Activity From Anonymous IP Address",
+                "id": "be4d9c86-d702-4030-b52e-c7859110e5e8"
+            },
+            "rule_text": "title: Activity From Anonymous IP Address\nid: be4d9c86-d702-4030-b52e-c7859110e5e8\nstatus: test\ndescription: Identifies that users were active from an IP address that has been identified\n  as an anonymous proxy IP address.\nreferences:\n- https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#activity-from-anonymous-ip-address\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-user-accounts#unusual-sign-ins\nauthor: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'\ndate: 2023-09-03\ntags:\n- attack.stealth\n- attack.t1078\n- attack.persistence\n- attack.privilege-escalation\n- attack.initial-access\nlogsource:\n  product: azure\n  service: riskdetection\ndetection:\n  selection:\n    riskEventType: riskyIPAddress\n  condition: selection\nfalsepositives:\n- We recommend investigating the sessions flagged by this detection in the context\n  of other sign-ins from the user.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

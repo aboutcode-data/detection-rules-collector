@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Ekstak/Trojan_Win32_Ekstak_CE_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Ekstak_CE_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Ekstak.CE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Ekstak_CE_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Ekstak.CE!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {b9 36 3c ec ?? 81 c1 ff 09 d8 11 eb ?? 58 33 fe ff 15 ?? ?? ?? ?? a1 ?? ?? ?? ?? 8b 35 ?? ?? ?? ?? 33 c6 33 c7 5f 3d 4e e6 40 bb 0f 84 ?? ?? ?? ?? e9 ?? ?? ?? ?? 81 e9 16 64 52 57 29 c8 59 57 }\n\t\t$a_02_1 = {b9 d2 e3 5b 84 81 e9 6e 44 93 59 81 c1 c6 14 8a 89 81 e9 a7 42 50 41 01 c8 59 29 c1 58 89 04 29 59 a1 ?? ?? ?? ?? 3d 4e e6 40 bb 74 ?? a9 00 00 ff ff 0f 85 }\n\t\t$a_02_2 = {6a 0a 58 50 ff 75 9c 56 56 ff 15 ?? ?? ?? ?? 50 e8 ?? ?? ?? ?? 89 45 a0 50 e8 ?? ?? ?? ?? 8b 45 ec 8b 08 8b 09 89 4d 98 50 51 e8 ?? ?? ?? ?? 59 59 c3 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_02_2 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

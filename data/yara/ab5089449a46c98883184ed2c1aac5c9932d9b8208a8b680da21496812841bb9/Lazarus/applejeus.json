@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/Lazarus/applejeus.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "AppleJeus_UnionCrypto_code",
+                "tags": [],
+                "description": "UnionCrypto malware in AppleJeus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "295c20d0f0a03fd8230098fade0af910b2c56e9e5700d4a3344d10c106a6ae2a"
+            },
+            "rule_text": "rule AppleJeus_UnionCrypto_code\n{\n\tmeta:\n\t\tdescription = \"UnionCrypto malware in AppleJeus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"295c20d0f0a03fd8230098fade0af910b2c56e9e5700d4a3344d10c106a6ae2a\"\n\n\tstrings:\n\t\t$http1 = \"auth_timestamp:\" ascii\n\t\t$http2 = \"auth_signature:\" ascii\n\t\t$http3 = \"&act=check\" ascii\n\t\t$http4 = \"Windows %d(%d)-%s\" ascii\n\t\t$key = \"vG2eZ1KOeGd2n5fr\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( all of ( $http* ) or $key )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "AppleJeus_UnionCrypto_loader",
+                "tags": [],
+                "description": "UnionCrypto loader in AppleJeus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "949dfcafd43d7b3d59fe3098e46661c883b1136c0836f8f9219552f13607405b"
+            },
+            "rule_text": "rule AppleJeus_UnionCrypto_loader\n{\n\tmeta:\n\t\tdescription = \"UnionCrypto loader in AppleJeus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"949dfcafd43d7b3d59fe3098e46661c883b1136c0836f8f9219552f13607405b\"\n\n\tstrings:\n\t\t$xorcode = { 33 D2 4D ?? ?? 01 8B C7 FF C7 F7 F6 42 0F B? ?? ?? 41 3? 4? FF 3B FB }\n\t\t$callcode = { 48 8? ?? E8 ?? ?? 00 00 FF D3 4C }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

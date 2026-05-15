@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_type_arbitrary_file_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-14",
+                "title": "Potential Download/Upload Activity Using Type Command",
+                "id": "aa0b3a82-eacc-4ec3-9150-b5a9a3e3f82f"
+            },
+            "rule_text": "title: Potential Download/Upload Activity Using Type Command\nid: aa0b3a82-eacc-4ec3-9150-b5a9a3e3f82f\nstatus: test\ndescription: Detects usage of the \"type\" command to download/upload data from WebDAV\n  server\nreferences:\n- https://mr0range.com/a-new-lolbin-using-the-windows-type-command-to-upload-download-files-81d7b6179e22\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-14\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_upload:\n    CommandLine|contains|all:\n    - 'type '\n    - ' > \\\\\\\\'\n  selection_download:\n    CommandLine|contains|all:\n    - type \\\\\\\\\n    - ' > '\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

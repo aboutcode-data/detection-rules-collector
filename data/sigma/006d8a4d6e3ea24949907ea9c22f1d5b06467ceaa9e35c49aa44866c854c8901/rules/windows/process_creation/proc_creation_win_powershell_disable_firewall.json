@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_disable_firewall.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tim Rauch, Elastic (idea)",
+                "date": "2022-09-14",
+                "title": "Windows Firewall Disabled via PowerShell",
+                "id": "12f6b752-042d-483e-bf9c-915a6d06ad75"
+            },
+            "rule_text": "title: Windows Firewall Disabled via PowerShell\nid: 12f6b752-042d-483e-bf9c-915a6d06ad75\nrelated:\n- id: 488b44e7-3781-4a71-888d-c95abfacf44d\n  type: similar\nstatus: test\ndescription: Detects attempts to disable the Windows Firewall using PowerShell\nreferences:\n- https://www.elastic.co/guide/en/security/current/windows-firewall-disabled-via-powershell.html\nauthor: Tim Rauch, Elastic (idea)\ndate: 2022-09-14\nmodified: 2023-02-13\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_name:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\powershell_ise.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_args:\n    CommandLine|contains|all:\n    - 'Set-NetFirewallProfile '\n    - ' -Enabled '\n    - ' False'\n  selection_opt:\n    CommandLine|contains:\n    - ' -All '\n    - Public\n    - Domain\n    - Private\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

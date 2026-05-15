@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Kolweb/Trojan_Win32_Kolweb_Q.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Kolweb_Q",
+                "tags": [],
+                "description": "Trojan:Win32/Kolweb.Q,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Kolweb_Q\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Kolweb.Q,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {64 72 69 76 65 72 61 2e 64 6c 6c 20 64 72 69 76 65 72 61 2e 65 78 65 00 }\n\t\t$a_03_1 = {83 e8 10 74 ?? 83 e8 10 74 ?? e9 ?? ?? 00 00 33 c0 89 44 24 08 8d 44 24 08 50 68 7f 66 04 40 8b 46 28 50 e8 ?? ?? ff ff 8b d0 8b c6 e8 ?? ?? ff ff 66 c7 04 24 03 74 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

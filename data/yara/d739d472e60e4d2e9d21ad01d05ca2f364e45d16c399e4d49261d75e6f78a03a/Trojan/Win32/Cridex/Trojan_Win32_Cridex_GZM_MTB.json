@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Cridex/Trojan_Win32_Cridex_GZM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Cridex_GZM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Cridex.GZM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Cridex_GZM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Cridex.GZM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0d 00 0d 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 01 ba ff fe fe 7e 03 d0 83 f0 ?? 33 c2 83 c1 ?? a9 ?? ?? ?? ?? 74 e8 }\n\t\t$a_01_1 = {62 65 73 74 68 6f 74 65 6c 33 36 30 2e 63 6f 6d }\n\t\t$a_01_2 = {56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\t\t$a_01_3 = {6c 43 51 68 41 6d 61 6c 43 51 68 41 6d 61 6c 43 51 68 41 6d 61 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 13\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

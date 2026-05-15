@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Lazy/Trojan_Win64_Lazy_AHG_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Lazy_AHG_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Lazy.AHG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Lazy_AHG_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Lazy.AHG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {fb 80 33 00 60 01 00 00 00 80 32 00 58 f7 00 00 ?? ?? ?? 00 98 3d }\n\t\t$a_03_1 = {0b 02 0e 1d 00 fe 03 00 00 42 2f 00 00 00 ?? ?? ?? ?? ?? 00 00 10 }\n\t\t$a_01_2 = {20 20 20 20 20 20 20 20 f4 fd 03 00 00 10 00 00 00 f0 01 00 00 04 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 20 + ( #a_03_1 & 1 ) * 10 + ( #a_01_2 & 1 ) * 5 ) >= 35\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Lazy_AHG_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win64/Lazy.AHG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Lazy_AHG_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Lazy.AHG!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0f 00 0f 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {48 c7 85 c0 3f 00 00 00 00 00 00 48 c7 85 c8 3f 00 00 00 00 00 00 48 c7 85 d0 3f 00 00 00 00 00 00 48 c7 85 d8 3f 00 00 00 00 00 00 48 8d 85 a0 3f 00 00 ba 40 }\n\t\t$a_01_1 = {48 c7 85 c0 1f 00 00 00 00 00 00 48 c7 85 c8 1f 00 00 00 00 00 00 48 c7 85 d0 1f 00 00 00 00 00 00 48 c7 85 d8 1f 00 00 00 00 00 00 48 8d 85 a0 1f 00 00 ba 40 }\n\t\t$a_00_2 = {40 41 6d 65 6c 69 65 44 61 74 61 6c 65 61 6b }\n\t\t$a_00_3 = {41 41 48 4c 6b 49 34 63 64 77 32 42 64 4e 64 4b 44 63 68 6e 69 6a 74 73 49 45 35 33 37 77 76 52 68 4c 49 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 10 + ( #a_00_2 & 1 ) * 3 + ( #a_00_3 & 1 ) * 2 ) >= 15\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Diamond-Sleet/dns_query_win_apt_diamond_steel_indicators.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-24",
+                "title": "Diamond Sleet APT DNS Communication Indicators",
+                "id": "fba38e0f-4607-4344-bb8f-a4b50cdeef7f"
+            },
+            "rule_text": "title: Diamond Sleet APT DNS Communication Indicators\nid: fba38e0f-4607-4344-bb8f-a4b50cdeef7f\nstatus: test\ndescription: Detects DNS queries related to Diamond Sleet APT activity\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2023/10/18/multiple-north-korean-threat-actors-exploiting-the-teamcity-cve-2023-42793-vulnerability/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-24\ntags:\n- attack.command-and-control\n- detection.emerging-threats\nlogsource:\n  product: windows\n  category: dns_query\ndetection:\n  selection:\n    QueryName|contains:\n    - 3dkit.org\n    - dersmarketim.com\n    - galerielamy.com\n    - olidhealth.com\n  condition: selection\nfalsepositives:\n- Might generate some false positive if triggered by a user during investigation for\n  example.\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2023-42793"
+            ]
+        }
+    ]
+}

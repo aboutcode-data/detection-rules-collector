@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/appraisel.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "appraisel_exe",
+                "tags": []
+            },
+            "rule_text": "rule appraisel_exe\n{\n\tstrings:\n\t\t$decode_function = {8B3883C0048D8FFFFEFEFEF7D723CF23CD75398B3883C0048D8FFFFEFEFEF7D723CF23CD75268B3883C0048D8FFFFEFEFEF7D723CF23CD75138B3883C0048D8FFFFEFEFEF7D723CF23CD74B4}\n\n\tcondition:\n\t\t$decode_function\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "appraisel_exe_payload",
+                "tags": [],
+                "decoder": "appraisel_exe_payload.py"
+            },
+            "rule_text": "rule appraisel_exe_payload\n{\n\tmeta:\n\t\tdecoder = \"appraisel_exe_payload.py\"\n\n\tstrings:\n\t\t$filename1 = \"%s\\\\Tmp\" wide\n\t\t$filename2 = \"%s\\\\Volume Panel\" wide\n\t\t$filename3 = \"\\\\VolPanlu.exe\" wide\n\t\t$filename4 = \"%s\\\\updstat.bin\" wide\n\t\t$filename5 = \"%s\\\\srvstat.bin\" wide\n\t\t$string1 = \"Panlu\" wide fullword\n\t\t$3min_uptime_test = {FF15????????3D20BF0200730B68C0D40100FF15????????680F270000}\n\n\tcondition:\n\t\t4 of ( $filename* , $string1 ) or $3min_uptime_test\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_werfault_lsass_shtinkering.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@pbssubhash , Nasreddine Bencherchali",
+                "date": "2022-12-08",
+                "title": "Potential Credential Dumping Via WER",
+                "id": "9a4ccd1a-3526-4d99-b980-9f9c5d3a6ff3"
+            },
+            "rule_text": "title: Potential Credential Dumping Via WER\nid: 9a4ccd1a-3526-4d99-b980-9f9c5d3a6ff3\nstatus: test\ndescription: Detects potential credential dumping via Windows Error Reporting LSASS\n  Shtinkering technique which uses the Windows Error Reporting to dump lsass\nreferences:\n- https://github.com/deepinstinct/Lsass-Shtinkering\n- https://media.defcon.org/DEF%20CON%2030/DEF%20CON%2030%20presentations/Asaf%20Gilboa%20-%20LSASS%20Shtinkering%20Abusing%20Windows%20Error%20Reporting%20to%20Dump%20LSASS.pdf\nauthor: '@pbssubhash , Nasreddine Bencherchali'\ndate: 2022-12-08\nmodified: 2022-12-09\ntags:\n- attack.credential-access\n- attack.t1003.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\Werfault.exe\n  - OriginalFileName: WerFault.exe\n  selection_cli:\n    ParentUser|contains:\n    - AUTHORI\n    - AUTORI\n    User|contains:\n    - AUTHORI\n    - AUTORI\n    CommandLine|contains|all:\n    - ' -u -p '\n    - ' -ip '\n    - ' -s '\n  filter_lsass:\n    ParentImage: C:\\Windows\\System32\\lsass.exe\n  condition: all of selection_* and not 1 of filter_*\nfalsepositives:\n- Windows Error Reporting might produce similar behavior. In that case, check the\n  PID associated with the \"-p\" parameter in the CommandLine.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

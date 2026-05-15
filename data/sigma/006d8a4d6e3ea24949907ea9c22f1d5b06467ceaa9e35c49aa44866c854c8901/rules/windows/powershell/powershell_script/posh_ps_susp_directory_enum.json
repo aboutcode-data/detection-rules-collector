@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_directory_enum.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-03-17",
+                "title": "Powershell Directory Enumeration",
+                "id": "162e69a7-7981-4344-84a9-0f1c9a217a52"
+            },
+            "rule_text": "title: Powershell Directory Enumeration\nid: 162e69a7-7981-4344-84a9-0f1c9a217a52\nstatus: test\ndescription: Detects technique used by MAZE ransomware to enumerate directories using\n  Powershell\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md\n- https://www.mandiant.com/resources/tactics-techniques-procedures-associated-with-maze-ransomware-incidents\nauthor: frack113\ndate: 2022-03-17\ntags:\n- attack.discovery\n- attack.t1083\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - foreach\n    - Get-ChildItem\n    - '-Path '\n    - '-ErrorAction '\n    - SilentlyContinue\n    - 'Out-File '\n    - -append\n  condition: selection\nfalsepositives:\n- Legitimate PowerShell scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

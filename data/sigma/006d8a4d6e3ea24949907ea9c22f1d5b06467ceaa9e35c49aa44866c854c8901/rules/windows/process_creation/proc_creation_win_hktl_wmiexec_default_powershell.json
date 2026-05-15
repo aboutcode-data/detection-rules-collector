@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_wmiexec_default_powershell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-08",
+                "title": "HackTool - Wmiexec Default Powershell Command",
+                "id": "022eaba8-f0bf-4dd9-9217-4604b0bb3bb0"
+            },
+            "rule_text": "title: HackTool - Wmiexec Default Powershell Command\nid: 022eaba8-f0bf-4dd9-9217-4604b0bb3bb0\nstatus: test\ndescription: Detects the execution of PowerShell with a specific flag sequence that\n  is used by the Wmiexec script\nreferences:\n- https://github.com/fortra/impacket/blob/f4b848fa27654ca95bc0f4c73dbba8b9c2c9f30a/examples/wmiexec.py\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-08\ntags:\n- attack.lateral-movement\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains: -NoP -NoL -sta -NonI -W Hidden -Exec Bypass -Enc\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

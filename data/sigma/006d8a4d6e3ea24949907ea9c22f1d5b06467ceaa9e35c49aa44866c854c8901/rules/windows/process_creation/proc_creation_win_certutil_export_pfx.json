@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_certutil_export_pfx.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-02-15",
+                "title": "Certificate Exported Via Certutil.EXE",
+                "id": "3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5"
+            },
+            "rule_text": "title: Certificate Exported Via Certutil.EXE\nid: 3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5\nstatus: test\ndescription: Detects the execution of the certutil with the \"exportPFX\" flag which\n  allows the utility to export certificates.\nreferences:\n- https://www.splunk.com/en_us/blog/security/a-golden-saml-journey-solarwinds-continued.html\nauthor: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community, Nasreddine\n  Bencherchali (Nextron Systems)\ndate: 2023-02-15\nmodified: 2024-03-05\ntags:\n- attack.stealth\n- attack.t1027\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\certutil.exe\n  - OriginalFileName: CertUtil.exe\n  selection_cli:\n    CommandLine|contains|windash: '-exportPFX '\n  condition: all of selection_*\nfalsepositives:\n- There legitimate reasons to export certificates. Investigate the activity to determine\n  if it's benign\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_certutil_export_pfx/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

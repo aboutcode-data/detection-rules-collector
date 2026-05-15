@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_eqgrp_triangulation_jun23.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "APT_Equation_Group_Op_Triangulation_TriangleDB_Implant_Jun23_1",
+                "tags": [],
+                "description": "Detects TriangleDB implant found being used in Operation Triangulation on iOS devices (maybe also used on macOS systems)",
+                "author": "Florian Roth",
+                "reference": "https://securelist.com/triangledb-triangulation-implant/110050/",
+                "date": "2023-06-21",
+                "score": 80,
+                "id": "d81a5103-41c8-5dba-a560-8fb5514f6c0a"
+            },
+            "rule_text": "rule APT_Equation_Group_Op_Triangulation_TriangleDB_Implant_Jun23_1\n{\n\tmeta:\n\t\tdescription = \"Detects TriangleDB implant found being used in Operation Triangulation on iOS devices (maybe also used on macOS systems)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://securelist.com/triangledb-triangulation-implant/110050/\"\n\t\tdate = \"2023-06-21\"\n\t\tscore = 80\n\t\tid = \"d81a5103-41c8-5dba-a560-8fb5514f6c0a\"\n\n\tstrings:\n\t\t$s1 = \"unmungeHexString\" ascii fullword\n\t\t$s2 = \"CRPwrInfo\" ascii fullword\n\t\t$s3 = \"CRConfig\" ascii fullword\n\t\t$s4 = \"CRXConfigureDBServer\" ascii fullword\n\n\tcondition:\n\t\t( uint16( 0 ) == 0xfacf and filesize < 30MB and $s1 and 2 of them ) or all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

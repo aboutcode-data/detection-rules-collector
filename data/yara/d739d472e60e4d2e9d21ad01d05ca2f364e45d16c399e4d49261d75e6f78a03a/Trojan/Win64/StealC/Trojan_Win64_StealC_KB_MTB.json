@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/StealC/Trojan_Win64_StealC_KB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_StealC_KB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/StealC.KB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_StealC_KB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/StealC.KB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {44 0f b6 1c 16 45 31 d9 44 88 0c 0b 48 ff c1 48 89 d8 4c 89 d2 49 39 c8 7e 26 }\n\t\t$a_01_1 = {65 6e 63 72 79 70 74 65 64 5f 64 61 74 61 2e 6c 7a 6d 61 }\n\t\t$a_81_2 = {6b 65 79 2e 62 69 6e }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 1 + ( #a_81_2 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_electron_execution_proxy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-09-05",
+                "title": "Potentially Suspicious Electron Application CommandLine",
+                "id": "378a05d8-963c-46c9-bcce-13c7657eac99"
+            },
+            "rule_text": "title: Potentially Suspicious Electron Application CommandLine\nid: 378a05d8-963c-46c9-bcce-13c7657eac99\nrelated:\n- id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8\n  type: similar\nstatus: test\ndescription: Detects potentially suspicious CommandLine of electron apps (teams, discord,\n  slack, etc.). This could be a sign of abuse to proxy execution through a signed\n  binary.\nreferences:\n- https://positive.security/blog/ms-officecmd-rce\n- https://lolbas-project.github.io/lolbas/Binaries/Teams/\n- https://lolbas-project.github.io/lolbas/Binaries/Msedge/\n- https://lolbas-project.github.io/lolbas/Binaries/msedgewebview2/\n- https://medium.com/@MalFuzzer/one-electron-to-rule-them-all-dc2e9b263daf\n- https://chromium.googlesource.com/chromium/chromium/+/master/content/public/common/content_switches.cc\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-09-05\nmodified: 2023-11-09\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\chrome.exe\n    - \\code.exe\n    - \\discord.exe\n    - \\GitHubDesktop.exe\n    - \\keybase.exe\n    - \\msedge_proxy.exe\n    - \\msedge.exe\n    - \\msedgewebview2.exe\n    - \\msteams.exe\n    - \\slack.exe\n    - \\Teams.exe\n  - OriginalFileName:\n    - chrome.exe\n    - code.exe\n    - discord.exe\n    - GitHubDesktop.exe\n    - keybase.exe\n    - msedge_proxy.exe\n    - msedge.exe\n    - msedgewebview2.exe\n    - msteams.exe\n    - slack.exe\n    - Teams.exe\n  selection_cli:\n    CommandLine|contains:\n    - --browser-subprocess-path\n    - --gpu-launcher\n    - --renderer-cmd-prefix\n    - --utility-cmd-prefix\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage for debugging purposes\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

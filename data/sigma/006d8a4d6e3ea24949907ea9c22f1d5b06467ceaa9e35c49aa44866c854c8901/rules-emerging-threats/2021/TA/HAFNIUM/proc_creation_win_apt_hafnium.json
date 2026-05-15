@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2021/TA/HAFNIUM/proc_creation_win_apt_hafnium.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-03-09",
+                "title": "HAFNIUM Exchange Exploitation Activity",
+                "id": "bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7"
+            },
+            "rule_text": "title: HAFNIUM Exchange Exploitation Activity\nid: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7\nstatus: test\ndescription: Detects activity observed by different researchers to be HAFNIUM group\n  activity (or related) on Exchange servers\nreferences:\n- https://blog.truesec.com/2021/03/07/exchange-zero-day-proxylogon-and-hafnium/\n- https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/\n- https://discuss.elastic.co/t/detection-and-response-for-hafnium-activity/266289/3\n- https://twitter.com/GadixCRK/status/1369313704869834753?s=20\n- https://twitter.com/BleepinComputer/status/1372218235949617161\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-03-09\nmodified: 2023-03-09\ntags:\n- attack.privilege-escalation\n- attack.execution\n- attack.persistence\n- attack.t1546\n- attack.t1053\n- attack.g0125\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_attrib:\n    CommandLine|contains|all:\n    - attrib\n    - ' +h '\n    - ' +s '\n    - ' +r '\n    - .aspx\n  selection_vsperfmon:\n  - Image|contains: \\ProgramData\\VSPerfMon\\\n  - CommandLine|contains|all:\n    - schtasks\n    - VSPerfMon\n  selection_opera_1:\n    Image|endswith: Opera_browser.exe\n    ParentImage|endswith:\n    - \\services.exe\n    - \\svchost.exe\n  selection_opera_2:\n    Image|endswith: Users\\Public\\opera\\Opera_browser.exe\n  selection_vssadmin:\n    CommandLine|contains|all:\n    - vssadmin list shadows\n    - Temp\\__output\n  selection_makecab_1:\n    Image|endswith: \\makecab.exe\n    CommandLine|contains|all:\n    - inetpub\\wwwroot\\\n    - .dmp.zip\n  selection_makecab_2:\n    Image|endswith: \\makecab.exe\n    CommandLine|contains:\n    - Microsoft\\Exchange Server\\\n    - compressionmemory\n    - .gif\n  selection_7zip:\n    CommandLine|contains|all:\n    - ' -t7z '\n    - C:\\Programdata\\pst\n    - \\it.zip\n  selection_rundll32:\n    CommandLine|contains|all:\n    - \\comsvcs.dll\n    - Minidump\n    - 'full '\n    - \\inetpub\\wwwroot\n  selection_other:\n    CommandLine|contains:\n    - Windows\\Temp\\xx.bat\n    - Windows\\WwanSvcdcs\n    - Windows\\Temp\\cw.exe\n  condition: 1 of selection*\nfalsepositives:\n- Unlikely\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

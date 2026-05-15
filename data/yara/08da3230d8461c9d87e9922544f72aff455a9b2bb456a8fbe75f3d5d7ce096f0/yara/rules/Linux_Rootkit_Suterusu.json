@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_Suterusu.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_Suterusu_94667bf2",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "94667bf2-7875-40c1-85fe-4b3421f3dc73",
+                "fingerprint": "e3b93c3a0ba94b657d71843eff9eef174f7a11abc4f43925ec70b844bc9b951f",
+                "creation_date": "2024-11-14",
+                "last_modified": "2024-11-22",
+                "threat_name": "Linux.Rootkit.Suterusu",
+                "reference_sample": "753fd579a684e09a70ae0fd147441c45d24a5acae94a78a92e393058c3b69506",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_Suterusu_94667bf2\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"94667bf2-7875-40c1-85fe-4b3421f3dc73\"\n\t\tfingerprint = \"e3b93c3a0ba94b657d71843eff9eef174f7a11abc4f43925ec70b844bc9b951f\"\n\t\tcreation_date = \"2024-11-14\"\n\t\tlast_modified = \"2024-11-22\"\n\t\tthreat_name = \"Linux.Rootkit.Suterusu\"\n\t\treference_sample = \"753fd579a684e09a70ae0fd147441c45d24a5acae94a78a92e393058c3b69506\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$str1 = \"Hiding PID %hu\"\n\t\t$str2 = \"Unhiding PID %hu\"\n\t\t$str3 = \"Hiding TCPv4 port %hu\"\n\t\t$str4 = \"Unhiding TCPv4 port %hu\"\n\t\t$str5 = \"Hiding TCPv6 port %hu\"\n\t\t$str6 = \"Unhiding TCPv6 port %hu\"\n\t\t$str7 = \"Hiding UDPv4 port %hu\"\n\t\t$str8 = \"Unhiding UDPv4 port %hu\"\n\t\t$str9 = \"Hiding UDPv6 port %hu\"\n\t\t$str10 = \"Unhiding UDPv6 port %hu\"\n\t\t$str11 = \"Hiding file/dir %s\"\n\t\t$str12 = \"Unhiding file/dir %s\"\n\t\t$func1 = \"hide_promisc\"\n\t\t$func2 = \"hidden_tcp6_ports\"\n\t\t$func3 = \"hide_udp4_port\"\n\t\t$func4 = \"unhide_udp6_port\"\n\t\t$func5 = \"hide_tcp4_port\"\n\t\t$func6 = \"hide_tcp6_port\"\n\t\t$func7 = \"hidden_udp4_ports\"\n\t\t$func8 = \"unhide_tcp4_port\"\n\t\t$func9 = \"unhide_file\"\n\t\t$func10 = \"hijack_stop\"\n\t\t$func11 = \"hooked_syms\"\n\t\t$func12 = \"hidden_tcp4_ports\"\n\t\t$func13 = \"unhide_proc\"\n\t\t$func14 = \"unhide_udp4_port\"\n\t\t$func15 = \"unhide_tcp6_port\"\n\t\t$func16 = \"hidden_udp6_ports\"\n\t\t$func17 = \"hijack_pause\"\n\t\t$func18 = \"hijack_start\"\n\t\t$menu1 = \"Hide process with pid [ARG]\"\n\t\t$menu2 = \"Unhide process with pid [ARG]\"\n\t\t$menu3 = \"Hide TCP 4 port [ARG]\"\n\t\t$menu4 = \"Unhide TCP 4 port [ARG]\"\n\t\t$menu5 = \"Hide UDPv4 port [ARG]\"\n\t\t$menu6 = \"Unhide UDPv4 port [ARG]\"\n\t\t$menu7 = \"Hide TCPv6 port [ARG]\"\n\t\t$menu8 = \"Unhide TCPv6 port [ARG]\"\n\t\t$menu9 = \"Hide UDPv4 port [ARG]\"\n\t\t$menu10 = \"Unhide UDPv6 port [ARG]\"\n\t\t$menu11 = \"Hide file/directory named [ARG]\"\n\t\t$menu12 = \"Unhide file/directory named [ARG]\"\n\n\tcondition:\n\t\t4 of ( $str* ) or 6 of ( $func* ) or 4 of ( $menu* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/builtin/firewall_as/win_firewall_as_change_rule.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-02-19",
+                "title": "Firewall Rule Modified In The Windows Firewall Exception List",
+                "id": "5570c4d9-8fdd-4622-965b-403a5a101aa0"
+            },
+            "rule_text": "title: Firewall Rule Modified In The Windows Firewall Exception List\nid: 5570c4d9-8fdd-4622-965b-403a5a101aa0\nstatus: test\ndescription: Detects when a rule has been modified in the Windows firewall exception\n  list\nreferences:\n- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)\nauthor: frack113\ndate: 2022-02-19\nmodified: 2024-01-22\ntags:\n- attack.defense-impairment\n- attack.t1686.003\n- detection.threat-hunting\nlogsource:\n  product: windows\n  service: firewall-as\ndetection:\n  selection:\n    EventID:\n    - 2005\n    - 2073\n  filter_optional_teams:\n    ApplicationPath|endswith: \\AppData\\local\\microsoft\\teams\\current\\teams.exe\n  filter_optional_keybase:\n    ApplicationPath|endswith: \\AppData\\Local\\Keybase\\keybase.exe\n  filter_optional_messenger:\n    ApplicationPath|endswith: \\AppData\\Local\\Programs\\Messenger\\Messenger.exe\n  filter_optional_opera:\n    ApplicationPath|contains|all:\n    - :\\Users\\\n    - \\AppData\\Local\\Programs\\Opera\\\n    - \\opera.exe\n  filter_optional_brave:\n    ApplicationPath|contains|all:\n    - :\\Users\\\n    - \\AppData\\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe\n  condition: selection and not 1 of filter_optional_*\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

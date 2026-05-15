@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/AgentTesla/Trojan_BAT_AgentTesla_ELL_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_AgentTesla_ELL_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/AgentTesla.ELL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_AgentTesla_ELL_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/AgentTesla.ELL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {01 0a 06 72 ?? ?? ?? 70 6f ?? ?? ?? 0a 72 ?? ?? ?? 70 6f ?? ?? ?? 0a 0b 07 6f ?? ?? ?? 0a 07 6f ?? ?? ?? 0a 20 00 01 00 00 14 14 14 6f ?? ?? ?? 0a 75 ?? ?? ?? 01 28 ?? ?? ?? 0a 26 00 2a 90 09 09 00 7e ?? ?? ?? 04 75 }\n\t\t$a_01_1 = {00 47 65 74 4d 65 74 68 6f 64 00 }\n\t\t$a_01_2 = {00 47 65 74 54 79 70 65 00 }\n\t\t$a_01_3 = {00 47 65 74 52 65 73 70 6f 6e 73 65 53 74 72 65 61 6d 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

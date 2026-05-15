@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dxcap_arbitrary_binary_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Beyu Denis, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2019-10-26",
+                "title": "New Capture Session Launched Via DXCap.EXE",
+                "id": "60f16a96-db70-42eb-8f76-16763e333590"
+            },
+            "rule_text": "title: New Capture Session Launched Via DXCap.EXE\nid: 60f16a96-db70-42eb-8f76-16763e333590\nstatus: test\ndescription: 'Detects the execution of \"DXCap.EXE\" with the \"-c\" flag, which allows\n  a user to launch any arbitrary binary or windows package through DXCap itself. This\n  can be abused to potentially bypass application whitelisting.\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Dxcap/\n- https://twitter.com/harr0ey/status/992008180904419328\nauthor: Beyu Denis, oscd.community, Nasreddine Bencherchali (Nextron Systems)\ndate: 2019-10-26\nmodified: 2022-06-09\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\DXCap.exe\n  - OriginalFileName: DXCap.exe\n  selection_cli:\n    CommandLine|contains: ' -c '\n  condition: all of selection*\nfalsepositives:\n- Legitimate execution of dxcap.exe by legitimate user\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

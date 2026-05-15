@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Cado Security/Linux_Wiper_AWFULSHRED.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Wiper_AWFULSHRED",
+                "tags": [],
+                "description": "Detects AWFULSHRED wiper used against Ukrainian ICS",
+                "reference": "https://github.com/cado-security/DFIR_Resources_Industroyer2",
+                "author": "mmuir@cadosecurity.com",
+                "date": "2022-04-12",
+                "license": "Apache License 2.0",
+                "hash": "bcdf0bd8142a4828c61e775686c9892d89893ed0f5093bdc70bde3e48d04ab99"
+            },
+            "rule_text": "rule Linux_Wiper_AWFULSHRED\n{\n\tmeta:\n\t\tdescription = \"Detects AWFULSHRED wiper used against Ukrainian ICS\"\n\t\treference = \"https://github.com/cado-security/DFIR_Resources_Industroyer2\"\n\t\tauthor = \"mmuir@cadosecurity.com\"\n\t\tdate = \"2022-04-12\"\n\t\tlicense = \"Apache License 2.0\"\n\t\thash = \"bcdf0bd8142a4828c61e775686c9892d89893ed0f5093bdc70bde3e48d04ab99\"\n\n\tstrings:\n\t\t$isBash = \"/bin/bash\" ascii\n\t\t$a1 = \"declare -r\" ascii\n\t\t$a2 = \"bash_history\" ascii\n\t\t$a3 = \"bs=1k if=/dev/urandom of=\" ascii\n\t\t$a4 = \"systemd\" ascii\n\t\t$a5 = \"apache http ssh\" ascii\n\t\t$a6 = \"shred\" ascii\n\t\t$var1 = \"iwljzfkg\" ascii\n\t\t$var2 = \"yrkdrrue\" ascii\n\t\t$var3 = \"agzerlyf\" ascii\n\t\t$var4 = \"rggygzny\" ascii\n\t\t$var5 = \"zubzgnvp\" ascii\n\n\tcondition:\n\t\t$isBash and 3 of ( $a* ) and 4 of ( $var* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

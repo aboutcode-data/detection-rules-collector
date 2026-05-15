@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Lokibot/Trojan_Win32_LokiBot_DP_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_LokiBot_DP_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/LokiBot.DP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_LokiBot_DP_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/LokiBot.DP!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {50 6a 40 68 ?? ?? ?? ?? 8b 45 fc 50 e8 }\n\t\t$a_02_1 = {33 db 8b f3 8a [0-06] 80 f2 1b 03 75 fc 88 16 90 05 05 01 90 40 40 90 05 05 01 90 43 81 fb [0-02] 00 00 75 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

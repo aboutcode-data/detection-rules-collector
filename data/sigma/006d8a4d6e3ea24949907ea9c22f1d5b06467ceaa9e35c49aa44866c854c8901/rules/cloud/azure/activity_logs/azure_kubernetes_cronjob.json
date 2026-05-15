@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_kubernetes_cronjob.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-11-22",
+                "title": "Azure Kubernetes CronJob",
+                "id": "1c71e254-6655-42c1-b2d6-5e4718d7fc0a"
+            },
+            "rule_text": "title: Azure Kubernetes CronJob\nid: 1c71e254-6655-42c1-b2d6-5e4718d7fc0a\nstatus: test\ndescription: 'Identifies when a Azure Kubernetes CronJob runs in Azure Cloud. Kubernetes\n  Job is a controller that creates one or more pods and ensures that a specified number\n  of them successfully terminate.\n\n  Kubernetes Job can be used to run containers that perform finite tasks for batch\n  jobs. Kubernetes CronJob is used to schedule Jobs.\n\n  An Adversary may use Kubernetes CronJob for scheduling execution of malicious code\n  that would run as a container in the cluster.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations#microsoftkubernetes\n- https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/\n- https://kubernetes.io/docs/concepts/workloads/controllers/job/\n- https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/\nauthor: Austin Songer @austinsonger\ndate: 2021-11-22\nmodified: 2022-12-18\ntags:\n- attack.persistence\n- attack.t1053.003\n- attack.privilege-escalation\n- attack.execution\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName|startswith:\n    - MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/BATCH\n    - MICROSOFT.CONTAINERSERVICE/MANAGEDCLUSTERS/BATCH\n    operationName|endswith:\n    - /CRONJOBS/WRITE\n    - /JOBS/WRITE\n  condition: selection\nfalsepositives:\n- Azure Kubernetes CronJob/Job may be done by a system administrator.\n- If known behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

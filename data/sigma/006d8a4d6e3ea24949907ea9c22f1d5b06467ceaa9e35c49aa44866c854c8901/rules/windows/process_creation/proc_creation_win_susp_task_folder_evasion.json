@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_task_folder_evasion.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sreeman",
+                "date": "2020-01-13",
+                "title": "Tasks Folder Evasion",
+                "id": "cc4e02ba-9c06-48e2-b09e-2500cace9ae0"
+            },
+            "rule_text": "title: Tasks Folder Evasion\nid: cc4e02ba-9c06-48e2-b09e-2500cace9ae0\nstatus: test\ndescription: 'The Tasks folder in system32 and syswow64 are globally writable paths.\n\n  Adversaries can take advantage of this and load or influence any script hosts or\n  ANY .NET Application\n\n  in Tasks to load and execute a custom assembly into cscript, wscript, regsvr32,\n  mshta, eventvwr\n\n  '\nreferences:\n- https://twitter.com/subTee/status/1216465628946563073\n- https://gist.github.com/am0nsec/8378da08f848424e4ab0cc5b317fdd26\nauthor: Sreeman\ndate: 2020-01-13\nmodified: 2022-12-25\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection1:\n    CommandLine|contains:\n    - 'echo '\n    - 'copy '\n    - 'type '\n    - file createnew\n  selection2:\n    CommandLine|contains:\n    - ' C:\\Windows\\System32\\Tasks\\'\n    - ' C:\\Windows\\SysWow64\\Tasks\\'\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

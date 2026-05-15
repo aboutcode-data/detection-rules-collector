@@ -1,0 +1,33 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/email/scam.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "content",
+                "tags": [
+                    "mail"
+                ],
+                "author": "A.Sanchez <asanchez@koodous.com>",
+                "description": "Detects scam emails with phishing attachment.",
+                "test1": "email/eml/transferencia1.eml",
+                "test2": "email/eml/transferencia2.eml"
+            },
+            "rule_text": "rule content : mail\n{\n\tmeta:\n\t\tauthor = \"A.Sanchez <asanchez@koodous.com>\"\n\t\tdescription = \"Detects scam emails with phishing attachment.\"\n\t\ttest1 = \"email/eml/transferencia1.eml\"\n\t\ttest2 = \"email/eml/transferencia2.eml\"\n\n\tstrings:\n\t\t$subject = \"Asunto: Justificante de transferencia\" nocase\n\t\t$body = \"Adjunto justificante de transferencia\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "attachment",
+                "tags": [
+                    "mail"
+                ],
+                "author": "A.Sanchez <asanchez@koodous.com>",
+                "description": "Detects scam emails with phishing attachment.",
+                "test1": "email/eml/transferencia1.eml",
+                "test2": "email/eml/transferencia2.eml"
+            },
+            "rule_text": "rule attachment : mail\n{\n\tmeta:\n\t\tauthor = \"A.Sanchez <asanchez@koodous.com>\"\n\t\tdescription = \"Detects scam emails with phishing attachment.\"\n\t\ttest1 = \"email/eml/transferencia1.eml\"\n\t\ttest2 = \"email/eml/transferencia2.eml\"\n\n\tstrings:\n\t\t$filename = \"filename=\\\"scan001.pdf.html\\\"\"\n\t\t$pleaseEnter = \"NTAlNkMlNjUlNjElNzMlNjUlMjAlNjUlNkUlNzQlNjUlNzIlMjAlN\"\n\t\t$emailReq = \"NkQlNjUlNkUlNzQlMkUlNjklNkUlNjQlNjUlNzglMzIlMkUlNDUlNkQlNjElNjklNkMlM0I\"\n\t\t$pAssign = \"NzAlMjAlM0QlMjAlNjQlNkYlNjMlNzUlNkQlNjUlNkUlNzQlMkUlNjklNkUlNjQlNjUl\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

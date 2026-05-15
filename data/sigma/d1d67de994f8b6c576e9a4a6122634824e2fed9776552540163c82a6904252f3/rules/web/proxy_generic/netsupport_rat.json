@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/netsupport_rat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Axel Olsson, Patrik Olson",
+                "date": "2023-10-31",
+                "title": "NetSupport RAT",
+                "id": "5dab7993-b3b6-4b8c-89e5-503783806f00"
+            },
+            "rule_text": "title: NetSupport RAT\nid: 5dab7993-b3b6-4b8c-89e5-503783806f00\ndescription: NetSupport Remote Admin Tool, commonly abused by malicious actors\nstatus: test\nauthor: NTT Security - Axel Olsson, Patrik Olson\ndate: '2023-10-31'\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-useragent|startswith: NetSupport Manager/\n  internal_src:\n  - vendor: Zscaler\n  - src_ip|cidr:\n    - 10.0.0.0/8\n    - 192.168.0.0/16\n    - 172.16.0.0/12\n  condition: selection and internal_src\nfalsepositives:\n- Unlikely\nlevel: high\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

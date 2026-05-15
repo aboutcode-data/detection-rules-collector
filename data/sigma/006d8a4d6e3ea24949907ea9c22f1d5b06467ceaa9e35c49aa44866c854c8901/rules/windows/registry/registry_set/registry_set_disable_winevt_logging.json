@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disable_winevt_logging.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-04",
+                "title": "Disable Windows Event Logging Via Registry",
+                "id": "2f78da12-f7c7-430b-8b19-a28f269b77a3"
+            },
+            "rule_text": "title: Disable Windows Event Logging Via Registry\nid: 2f78da12-f7c7-430b-8b19-a28f269b77a3\nstatus: test\ndescription: Detects tampering with the \"Enabled\" registry key in order to disable\n  Windows logging of a Windows event channel\nreferences:\n- https://twitter.com/WhichbufferArda/status/1543900539280293889\n- https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-04\nmodified: 2024-03-25\ntags:\n- attack.defense-impairment\n- attack.t1685.001\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\\n    TargetObject|endswith: \\Enabled\n    Details: DWORD (0x00000000)\n  filter_main_wevutil:\n    Image: C:\\Windows\\system32\\wevtutil.exe\n  filter_main_iis:\n    Image|startswith: C:\\Windows\\winsxs\\\n    Image|endswith: \\TiWorker.exe\n  filter_main_svchost:\n    Image: C:\\Windows\\System32\\svchost.exe\n    TargetObject|contains:\n    - \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-FileInfoMinifilter\n    - \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-ASN1\\\n    - \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-Kernel-AppCompat\\\n    - \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-Runtime\\Error\\\n    - \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-CAPI2/Operational\\\n  filter_main_trusted_installer:\n    Image: C:\\Windows\\servicing\\TrustedInstaller.exe\n    TargetObject|contains: \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-Compat-Appraiser\n  filter_optional_empty:\n    Image: ''\n  filter_optional_null:\n    Image: null\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Rare falsepositives may occur from legitimate administrators disabling specific\n  event log for troubleshooting\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

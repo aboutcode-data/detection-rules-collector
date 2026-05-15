@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_keywords.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Perez Diego (@darkquassar), Tuan Le (NCSGroup)",
+                "date": "2019-02-11",
+                "title": "Potential Suspicious PowerShell Keywords",
+                "id": "1f49f2ab-26bc-48b3-96cc-dcffbc93eadf"
+            },
+            "rule_text": "title: Potential Suspicious PowerShell Keywords\nid: 1f49f2ab-26bc-48b3-96cc-dcffbc93eadf\nstatus: test\ndescription: Detects potentially suspicious keywords that could indicate the use of\n  a PowerShell exploitation framework\nreferences:\n- https://posts.specterops.io/entering-a-covenant-net-command-and-control-e11038bcf462\n- https://github.com/PowerShellMafia/PowerSploit/blob/d943001a7defb5e0d1657085a77a0e78609be58f/CodeExecution/Invoke-ReflectivePEInjection.ps1\n- https://github.com/hlldz/Phant0m/blob/30c2935d8cf4aafda17ee2fab7cd0c4aa9a607c2/old/Invoke-Phant0m.ps1\n- https://gist.github.com/MHaggis/0dbe00ad401daa7137c81c99c268cfb7\nauthor: Florian Roth (Nextron Systems), Perez Diego (@darkquassar), Tuan Le (NCSGroup)\ndate: 2019-02-11\nmodified: 2023-04-21\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains:\n    - System.Reflection.Assembly.Load($\n    - '[System.Reflection.Assembly]::Load($'\n    - '[Reflection.Assembly]::Load($'\n    - System.Reflection.AssemblyName\n    - Reflection.Emit.AssemblyBuilderAccess\n    - Reflection.Emit.CustomAttributeBuilder\n    - Runtime.InteropServices.UnmanagedType\n    - Runtime.InteropServices.DllImportAttribute\n    - SuspendThread\n    - rundll32\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

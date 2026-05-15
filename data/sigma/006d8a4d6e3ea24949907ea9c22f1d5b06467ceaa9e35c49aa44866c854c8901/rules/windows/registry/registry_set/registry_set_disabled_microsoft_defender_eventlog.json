@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_disabled_microsoft_defender_eventlog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-07-04",
+                "title": "Disabled Windows Defender Eventlog",
+                "id": "fcddca7c-b9c0-4ddf-98da-e1e2d18b0157"
+            },
+            "rule_text": "title: Disabled Windows Defender Eventlog\nid: fcddca7c-b9c0-4ddf-98da-e1e2d18b0157\nstatus: test\ndescription: Detects the disabling of the Windows Defender eventlog as seen in relation\n  to Lockbit 3.0 infections\nreferences:\n- https://twitter.com/WhichbufferArda/status/1543900539280293889/photo/2\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-07-04\nmodified: 2023-08-17\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Microsoft\\Windows\\CurrentVersion\\WINEVT\\Channels\\Microsoft-Windows-Windows\n      Defender/Operational\\Enabled\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Other Antivirus software installations could cause Windows to disable that eventlog\n  (unknown)\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

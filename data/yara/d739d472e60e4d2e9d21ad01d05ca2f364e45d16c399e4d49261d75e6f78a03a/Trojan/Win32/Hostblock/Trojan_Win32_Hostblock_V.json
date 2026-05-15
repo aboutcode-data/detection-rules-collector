@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Hostblock/Trojan_Win32_Hostblock_V.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Hostblock_V",
+                "tags": [],
+                "description": "Trojan:Win32/Hostblock.V,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 06 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Hostblock_V\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Hostblock.V,SIGNATURE_TYPE_PEHSTR_EXT,20 00 20 00 06 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {31 32 37 2e 30 2e 30 2e 31 09 00 }\n\t\t$a_00_1 = {5c 64 72 69 76 65 72 73 5c 65 74 63 5c 68 6f 73 74 73 }\n\t\t$a_02_2 = {0f b6 56 28 8b 46 24 8a 92 ?? ?? ?? ?? 30 14 08 ?? ?? 28 03 c1 80 7e 28 2e 76 04 c6 46 28 00 [0-02] 3b 4e 10 72 }\n\t\t$a_00_3 = {50 00 6c 00 65 00 61 00 73 00 65 00 2c 00 20 00 72 00 75 00 6e 00 20 00 74 00 68 00 69 00 73 00 20 00 70 00 72 00 6f 00 67 00 72 00 61 00 6d 00 20 00 61 00 73 00 20 00 41 00 64 00 6d 00 69 00 6e 00 69 00 73 00 74 00 72 00 61 00 74 00 6f 00 72 00 21 00 }\n\t\t$a_00_4 = {6f 76 4c 7a 63 33 4c 6a 49 79 4d 53 34 78 4e 54 4d 75 4d 54 63 77 4c 33 52 6c 63 33 51 75 63 47 68 77 50 32 74 6c 65 54 30 71 77 65 72 74 }\n\t\t$a_00_5 = {73 64 66 6b 6a 76 6e 73 6c 64 6b 66 6a 76 6e }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 10 + ( #a_00_1 & 1 ) * 10 + ( #a_02_2 & 1 ) * 10 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 + ( #a_00_5 & 1 ) * 1 ) >= 32\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

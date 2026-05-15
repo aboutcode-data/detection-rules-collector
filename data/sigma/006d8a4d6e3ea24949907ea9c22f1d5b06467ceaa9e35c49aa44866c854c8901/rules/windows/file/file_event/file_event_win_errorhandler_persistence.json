@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_errorhandler_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-09",
+                "title": "Potential Persistence Attempt Via ErrorHandler.Cmd",
+                "id": "15904280-565c-4b73-9303-3291f964e7f9"
+            },
+            "rule_text": "title: Potential Persistence Attempt Via ErrorHandler.Cmd\nid: 15904280-565c-4b73-9303-3291f964e7f9\nstatus: test\ndescription: 'Detects creation of a file named \"ErrorHandler.cmd\" in the \"C:\\WINDOWS\\Setup\\Scripts\\\"\n  directory which could be used as a method of persistence\n\n  The content of C:\\WINDOWS\\Setup\\Scripts\\ErrorHandler.cmd is read whenever some tools\n  under C:\\WINDOWS\\System32\\oobe\\ (e.g. Setup.exe) fail to run for any reason.\n\n  '\nreferences:\n- https://www.hexacorn.com/blog/2022/01/16/beyond-good-ol-run-key-part-135/\n- https://github.com/last-byte/PersistenceSniper\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-09\nmodified: 2022-12-19\ntags:\n- attack.persistence\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith: \\WINDOWS\\Setup\\Scripts\\ErrorHandler.cmd\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

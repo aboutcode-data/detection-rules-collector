@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_Fontonlake.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_Fontonlake_8fa41f5e",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "8fa41f5e-d03d-4647-86fb-335e056c1c0d",
+                "fingerprint": "187aae8e659061a06b44e0d353e35e22ada9076c78d8a7e4493e1e4cc600bc9d",
+                "creation_date": "2021-10-12",
+                "last_modified": "2022-01-26",
+                "threat_name": "Linux.Rootkit.Fontonlake",
+                "reference_sample": "826222d399e2fb17ae6bc6a4e1493003881b1406154c4b817f0216249d04a234",
+                "severity": 100,
+                "arch_context": "x86",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_Fontonlake_8fa41f5e\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"8fa41f5e-d03d-4647-86fb-335e056c1c0d\"\n\t\tfingerprint = \"187aae8e659061a06b44e0d353e35e22ada9076c78d8a7e4493e1e4cc600bc9d\"\n\t\tcreation_date = \"2021-10-12\"\n\t\tlast_modified = \"2022-01-26\"\n\t\tthreat_name = \"Linux.Rootkit.Fontonlake\"\n\t\treference_sample = \"826222d399e2fb17ae6bc6a4e1493003881b1406154c4b817f0216249d04a234\"\n\t\tseverity = 100\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$a1 = \"kernel_write\" fullword\n\t\t$a2 = \"/proc/.dot3\" fullword\n\t\t$a3 = \"hide_pid\" fullword\n\t\t$h2 = \"s_hide_pids\" fullword\n\t\t$h3 = \"s_hide_tcp4_ports\" fullword\n\t\t$h4 = \"s_hide_strs\" fullword\n\t\t$tmp1 = \"/tmp/.tmH\" fullword\n\t\t$tmp2 = \"/tmp/.tmp_\" fullword\n\n\tcondition:\n\t\t( all of ( $a* ) and 1 of ( $tmp* ) ) or ( all of ( $h* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Crix/Trojan_Win32_Crix_B.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Crix_B",
+                "tags": [],
+                "description": "Trojan:Win32/Crix.B,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Crix_B\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Crix.B,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6a 1c 5f f7 ff 8a 82 ?? ?? ?? ?? 30 01 46 3b 75 0c 7e e4 }\n\t\t$a_01_1 = {7f f7 b9 a9 f1 a7 1f }\n\t\t$a_03_2 = {ff ff 6a 14 68 ?? ?? ?? ?? e8 ?? ?? ff ff 6a 12 68 ?? ?? ?? ?? e8 ?? ?? ff ff 6a 12 68 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

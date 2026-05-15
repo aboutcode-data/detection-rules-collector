@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/DragonOK/dragonok.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "DragonOK_CHWRITER_strings",
+                "tags": [],
+                "description": "CHWRITER malware",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "fb1ee331be22267bc74db1c42ebb8eb8029c87f6d7a74993127db5d7ffdceaf4"
+            },
+            "rule_text": "rule DragonOK_CHWRITER_strings\n{\n\tmeta:\n\t\tdescription = \"CHWRITER malware\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"fb1ee331be22267bc74db1c42ebb8eb8029c87f6d7a74993127db5d7ffdceaf4\"\n\n\tstrings:\n\t\t$command = \"%s a a b c %d \\\"%s\\\"\" wide\n\n\tcondition:\n\t\t$command\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "DragonOK_sysget_strings",
+                "tags": [],
+                "description": "sysget malware",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "a9a63b182674252efe32534d04f0361755e9f2f5d82b086b7999a313bd671348"
+            },
+            "rule_text": "rule DragonOK_sysget_strings\n{\n\tmeta:\n\t\tdescription = \"sysget malware\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"a9a63b182674252efe32534d04f0361755e9f2f5d82b086b7999a313bd671348\"\n\n\tstrings:\n\t\t$netbridge = \"\\\\netbridge\" wide\n\t\t$post = \"POST\" wide\n\t\t$cmd = \"cmd /c \" wide\n\t\t$register = \"index.php?type=register&pageinfo\" wide\n\n\tcondition:\n\t\t($netbridge and $post and $cmd ) or $register\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

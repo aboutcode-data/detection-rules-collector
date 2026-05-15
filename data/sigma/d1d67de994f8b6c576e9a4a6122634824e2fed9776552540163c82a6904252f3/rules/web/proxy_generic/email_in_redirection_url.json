@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/email_in_redirection_url.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Leandro Ferreira, Patrik Olson",
+                "date": "2023-07-04",
+                "title": "Email Address in Redirection Url",
+                "id": "32b3054c-762f-4e7f-b604-524548e5da00"
+            },
+            "rule_text": "title: Email Address in Redirection Url\nid: 32b3054c-762f-4e7f-b604-524548e5da00\ndescription: URL containing potential email address, on a domain that has been known\n  to redirect users to phishing sites.\nstatus: test\nauthor: NTT Security - Leandro Ferreira, Patrik Olson\ndate: '2023-07-04'\nmodified: '2023-12-04'\nlogsource:\n  category: proxy\ndetection:\n  redirector:\n    cs-host|endswith:\n    - codesandbox.io\n    - r20.rs6.net\n    - tracker.club-os.com\n    - actk.ke\n    - secure.adnxs.com\n    - go.skimresources.com\n    - r.smore.com\n    - apiservices.krxd.net\n  plain_email:\n  - c-uri|re:\n    - '@[^&/]+\\.(com|no|se)'\n  - c-uri-query|re:\n    - '@[^&/]+\\.(com|no|se)'\n  base64_tlds:\n    c-uri|re:\n    - (LmNvb|5jb2|uY29t)\n    c-uri-query|re:\n    - (LmNvb|5jb2|uY29t)\n  filter:\n  - url|contains:\n    - ssp.disqus.com\n  condition: redirector and (plain_email or base64_tlds) and not filter\nfalsepositives:\n- Surely. Visit the URL to verify if it is a phishing page\nlevel: medium\ntags:\n- attack.initial_access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

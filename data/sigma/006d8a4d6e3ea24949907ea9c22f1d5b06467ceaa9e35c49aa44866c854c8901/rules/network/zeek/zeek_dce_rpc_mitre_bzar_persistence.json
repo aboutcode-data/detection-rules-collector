@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/zeek/zeek_dce_rpc_mitre_bzar_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron, SOC Prime",
+                "date": "2020-03-19",
+                "title": "MITRE BZAR Indicators for Persistence",
+                "id": "53389db6-ba46-48e3-a94c-e0f2cefe1583"
+            },
+            "rule_text": "title: MITRE BZAR Indicators for Persistence\nid: 53389db6-ba46-48e3-a94c-e0f2cefe1583\nstatus: test\ndescription: Windows DCE-RPC functions which indicate a persistence techniques on\n  the remote system. All credit for the Zeek mapping of the suspicious endpoint/operation\n  field goes to MITRE.\nreferences:\n- https://github.com/mitre-attack/bzar#indicators-for-attck-persistence\nauthor: '@neu5ron, SOC Prime'\ndate: 2020-03-19\nmodified: 2021-11-27\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1547.004\nlogsource:\n  product: zeek\n  service: dce_rpc\ndetection:\n  op1:\n    endpoint: spoolss\n    operation: RpcAddMonitor\n  op2:\n    endpoint: spoolss\n    operation: RpcAddPrintProcessor\n  op3:\n    endpoint: IRemoteWinspool\n    operation: RpcAsyncAddMonitor\n  op4:\n    endpoint: IRemoteWinspool\n    operation: RpcAsyncAddPrintProcessor\n  op5:\n    endpoint: ISecLogon\n    operation: SeclCreateProcessWithLogonW\n  op6:\n    endpoint: ISecLogon\n    operation: SeclCreateProcessWithLogonExW\n  condition: 1 of op*\nfalsepositives:\n- Windows administrator tasks or troubleshooting\n- Windows management scripts or software\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

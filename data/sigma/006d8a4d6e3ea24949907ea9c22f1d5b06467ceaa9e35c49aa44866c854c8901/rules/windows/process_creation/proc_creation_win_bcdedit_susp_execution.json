@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bcdedit_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@neu5ron",
+                "date": "2019-02-07",
+                "title": "Potential Ransomware or Unauthorized MBR Tampering Via Bcdedit.EXE",
+                "id": "c9fbe8e9-119d-40a6-9b59-dd58a5d84429"
+            },
+            "rule_text": "title: Potential Ransomware or Unauthorized MBR Tampering Via Bcdedit.EXE\nid: c9fbe8e9-119d-40a6-9b59-dd58a5d84429\nstatus: test\ndescription: Detects potential malicious and unauthorized usage of bcdedit.exe\nreferences:\n- https://learn.microsoft.com/en-us/windows-hardware/drivers/devtest/bcdedit--set\n- https://twitter.com/malwrhunterteam/status/1372536434125512712/photo/2\nauthor: '@neu5ron'\ndate: 2019-02-07\nmodified: 2023-02-15\ntags:\n- attack.stealth\n- attack.t1070\n- attack.persistence\n- attack.t1542.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bcdedit.exe\n  - OriginalFileName: bcdedit.exe\n  selection_cli:\n    CommandLine|contains:\n    - delete\n    - deletevalue\n    - import\n    - safeboot\n    - network\n  condition: all of selection_*\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Xnet/Trojan_Win32_Xnet_ARAZ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Xnet_ARAZ_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Xnet.ARAZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Xnet_ARAZ_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Xnet.ARAZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 55 fc 8b 45 08 01 c2 8b 4d fc 8b 45 08 01 c8 0f b6 00 32 45 ec 88 02 83 45 fc 01 8b 45 fc 3b 45 0c 7c dc }\n\t\t$a_01_1 = {56 69 72 74 75 61 6c 41 6c 6c 6f 63 }\n\t\t$a_01_2 = {56 69 72 74 75 61 6c 50 72 6f 74 65 63 74 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

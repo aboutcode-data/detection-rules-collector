@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_susp_binary_no_cmdline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-07-03",
+                "title": "Suspicious Network Connection Binary No CommandLine",
+                "id": "20384606-a124-4fec-acbb-8bd373728613"
+            },
+            "rule_text": "title: Suspicious Network Connection Binary No CommandLine\nid: 20384606-a124-4fec-acbb-8bd373728613\nstatus: test\ndescription: Detects suspicious network connections made by a well-known Windows binary\n  run with no command line parameters\nreferences:\n- https://redcanary.com/blog/raspberry-robin/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-07-03\ntags:\n- attack.stealth\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith:\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\dllhost.exe\n    CommandLine|endswith:\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\dllhost.exe\n  filter_no_cmdline:\n    CommandLine: ''\n  filter_null:\n    CommandLine: null\n  condition: selection and not 1 of filter*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

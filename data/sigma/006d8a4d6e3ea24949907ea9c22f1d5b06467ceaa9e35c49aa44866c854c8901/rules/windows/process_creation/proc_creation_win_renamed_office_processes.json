@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_office_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-20",
+                "title": "Renamed Office Binary Execution",
+                "id": "0b0cd537-fc77-4e6e-a973-e53495c1083d"
+            },
+            "rule_text": "title: Renamed Office Binary Execution\nid: 0b0cd537-fc77-4e6e-a973-e53495c1083d\nstatus: test\ndescription: Detects the execution of a renamed office binary\nreferences:\n- https://infosec.exchange/@sbousseaden/109542254124022664\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-20\nmodified: 2025-12-09\ntags:\n- attack.stealth\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - OriginalFileName:\n    - Excel.exe\n    - MSACCESS.EXE\n    - MSPUB.EXE\n    - OneNote.exe\n    - OneNoteM.exe\n    - OUTLOOK.EXE\n    - POWERPNT.EXE\n    - WinWord.exe\n    - Olk.exe\n  - Description:\n    - Microsoft Access\n    - Microsoft Excel\n    - Microsoft OneNote\n    - Microsoft Outlook\n    - Microsoft PowerPoint\n    - Microsoft Publisher\n    - Microsoft Word\n    - Sent to OneNote Tool\n  filter_main_legit_names:\n    Image|endswith:\n    - \\EXCEL.exe\n    - \\excelcnv.exe\n    - \\MSACCESS.exe\n    - \\MSPUB.EXE\n    - \\ONENOTE.EXE\n    - \\ONENOTEM.EXE\n    - \\OUTLOOK.EXE\n    - \\POWERPNT.EXE\n    - \\WINWORD.exe\n    - \\OLK.EXE\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/BAT/Heracles/Trojan_BAT_Heracles_HB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_BAT_Heracles_HB_MTB",
+                "tags": [],
+                "description": "Trojan:BAT/Heracles.HB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_BAT_Heracles_HB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:BAT/Heracles.HB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {11 02 20 00 01 00 00 6f ?? 00 00 0a 38 00 00 00 00 11 02 11 00 6f ?? 00 00 0a 38 0e 00 00 00 11 02 6f ?? 00 00 0a 13 03 38 0e 00 00 00 11 02 11 01 6f ?? 00 00 0a 38 e4 ff ff ff 00 02 73 13 00 00 0a 13 04 38 00 00 00 00 00 11 04 11 03 16 73 19 00 00 0a 13 05 38 00 00 00 00 00 73 0a 00 00 0a 13 06 38 00 00 00 00 00 11 05 11 06 6f ?? 00 00 0a 38 00 00 00 00 11 06 6f ?? 00 00 0a 13 07 }\n\t\t$a_03_1 = {11 04 11 05 16 11 05 8e 69 6f ?? 00 00 0a 25 13 06 16 3d ?? 00 00 00 38 [0-14] 11 01 11 05 16 11 06 6f ?? 00 00 0a 38 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 4 + ( #a_03_1 & 1 ) * 2 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

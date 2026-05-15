@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_spoolsv_susp_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Justin C. (@endisphotic), @dreadphones (detection), Thomas Patzke (Sigma rule)",
+                "date": "2021-07-11",
+                "title": "Suspicious Spool Service Child Process",
+                "id": "dcdbc940-0bff-46b2-95f3-2d73f848e33b"
+            },
+            "rule_text": "title: Suspicious Spool Service Child Process\nid: dcdbc940-0bff-46b2-95f3-2d73f848e33b\nstatus: test\ndescription: Detects suspicious print spool service (spoolsv.exe) child processes.\nreferences:\n- https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries/blob/efa17a600b43c897b4b7463cc8541daa1987eeb4/Exploits/Print%20Spooler%20RCE/Suspicious%20Spoolsv%20Child%20Process.md\nauthor: Justin C. (@endisphotic), @dreadphones (detection), Thomas Patzke (Sigma rule)\ndate: 2021-07-11\nmodified: 2024-12-01\ntags:\n- attack.execution\n- attack.t1203\n- attack.privilege-escalation\n- attack.t1068\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  spoolsv:\n    ParentImage|endswith: \\spoolsv.exe\n    IntegrityLevel:\n    - System\n    - S-1-16-16384\n  suspicious_unrestricted:\n    Image|endswith:\n    - \\gpupdate.exe\n    - \\whoami.exe\n    - \\nltest.exe\n    - \\taskkill.exe\n    - \\wmic.exe\n    - \\taskmgr.exe\n    - \\sc.exe\n    - \\findstr.exe\n    - \\curl.exe\n    - \\wget.exe\n    - \\certutil.exe\n    - \\bitsadmin.exe\n    - \\accesschk.exe\n    - \\wevtutil.exe\n    - \\bcdedit.exe\n    - \\fsutil.exe\n    - \\cipher.exe\n    - \\schtasks.exe\n    - \\write.exe\n    - \\wuauclt.exe\n    - \\systeminfo.exe\n    - \\reg.exe\n    - \\query.exe\n  suspicious_net:\n    Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  suspicious_net_filter:\n    CommandLine|contains: start\n  suspicious_cmd:\n    Image|endswith: \\cmd.exe\n  suspicious_cmd_filter:\n    CommandLine|contains:\n    - .spl\n    - route add\n    - program files\n  suspicious_netsh:\n    Image|endswith: \\netsh.exe\n  suspicious_netsh_filter:\n    CommandLine|contains:\n    - add portopening\n    - rule name\n  suspicious_powershell:\n    Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  suspicious_powershell_filter:\n    CommandLine|contains: .spl\n  suspicious_rundll32_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  suspicious_rundll32_cli:\n    CommandLine|endswith: rundll32.exe\n  condition: spoolsv and ( suspicious_unrestricted or (suspicious_net and not suspicious_net_filter)\n    or (suspicious_cmd and not suspicious_cmd_filter) or (suspicious_netsh and not\n    suspicious_netsh_filter) or (suspicious_powershell and not suspicious_powershell_filter)\n    or all of suspicious_rundll32_* )\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

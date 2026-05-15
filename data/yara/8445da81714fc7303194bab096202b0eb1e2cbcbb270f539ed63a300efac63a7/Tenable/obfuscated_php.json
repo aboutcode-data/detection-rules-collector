@@ -1,0 +1,41 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Tenable/obfuscated_php.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "eval_statement",
+                "tags": [],
+                "description": "Obfuscated PHP eval statements",
+                "family": "PHP.Obfuscated",
+                "filetype": "PHP",
+                "hash": "14083cf438605d38a206be33542c7a4d48fb67c8ca0cfc165fa5f279a6d55361"
+            },
+            "rule_text": "rule eval_statement\n{\n\tmeta:\n\t\tdescription = \"Obfuscated PHP eval statements\"\n\t\tfamily = \"PHP.Obfuscated\"\n\t\tfiletype = \"PHP\"\n\t\thash = \"9da32d35a28d2f8481a4e3263e2f0bb3836b6aebeacf53cd37f2fe24a769ff52\"\n\t\thash = \"8c1115d866f9f645788f3689dff9a5bacfbee1df51058b4161819c750cf7c4a1\"\n\t\thash = \"14083cf438605d38a206be33542c7a4d48fb67c8ca0cfc165fa5f279a6d55361\"\n\n\tstrings:\n\t\t$obf = /eval[\\( \\t]+((base64_decode[\\( \\t]+)|(str_rot13[\\( \\t]+)|(gzinflate[\\( \\t]+)|(gzuncompress[\\( \\t]+)|(strrev[\\( \\t]+)|(gzdecode[\\( \\t]+))+/\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "hardcoded_urldecode",
+                "tags": [],
+                "description": "PHP with hard coded urldecode call",
+                "family": "PHP.Obfuscated",
+                "filetype": "PHP",
+                "hash": "38dc8383da0859dca82cf0c943dbf16d"
+            },
+            "rule_text": "rule hardcoded_urldecode\n{\n\tmeta:\n\t\tdescription = \"PHP with hard coded urldecode call\"\n\t\tfamily = \"PHP.Obfuscated\"\n\t\tfiletype = \"PHP\"\n\t\thash = \"79b22d7dbf49d8cfdc564936c8a6a1e2\"\n\t\thash = \"38dc8383da0859dca82cf0c943dbf16d\"\n\n\tstrings:\n\t\t$obf = /urldecode[\\t ]*\\([\\t ]*'(%[0-9a-fA-F][0-9a-fA-F])+'[\\t ]*\\)/\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "chr_obfuscation",
+                "tags": [],
+                "description": "PHP with string building using hard coded values in chr()",
+                "family": "PHP.Obfuscated",
+                "filetype": "PHP",
+                "hash": "cf2ab009cbd2576a806bfefb74906fdf"
+            },
+            "rule_text": "rule chr_obfuscation\n{\n\tmeta:\n\t\tdescription = \"PHP with string building using hard coded values in chr()\"\n\t\tfamily = \"PHP.Obfuscated\"\n\t\tfiletype = \"PHP\"\n\t\thash = \"d771409e152d0fabae45ea192076d45e\"\n\t\thash = \"543624bec87272974384c8ab77f2357a\"\n\t\thash = \"cf2ab009cbd2576a806bfefb74906fdf\"\n\n\tstrings:\n\t\t$obf = /\\$[^=]+=[\\t ]*(chr\\([0-9]+\\)\\.?){2,}/\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

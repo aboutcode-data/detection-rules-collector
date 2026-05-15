@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_maldoc.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_Doc_WindowsInstaller_Call_Feb22_1",
+                "tags": [],
+                "author": "Nils Kuhnert",
+                "date": "2022-02-26",
+                "description": "Triggers on docfiles executing windows installer. Used for deploying ThinBasic scripts.",
+                "tlp": "white",
+                "reference": "https://inquest.net/blog/2022/02/24/dangerously-thinbasic",
+                "reference2": "https://twitter.com/threatinsight/status/1497355737844133895",
+                "id": "8f2e8f91-74e0-5574-9c0a-1479d6114212"
+            },
+            "rule_text": "rule SUSP_Doc_WindowsInstaller_Call_Feb22_1\n{\n\tmeta:\n\t\tauthor = \"Nils Kuhnert\"\n\t\tdate = \"2022-02-26\"\n\t\tdescription = \"Triggers on docfiles executing windows installer. Used for deploying ThinBasic scripts.\"\n\t\ttlp = \"white\"\n\t\treference = \"https://inquest.net/blog/2022/02/24/dangerously-thinbasic\"\n\t\treference2 = \"https://twitter.com/threatinsight/status/1497355737844133895\"\n\t\tid = \"8f2e8f91-74e0-5574-9c0a-1479d6114212\"\n\n\tstrings:\n\t\t$ = \"WindowsInstaller.Installer$\"\n\t\t$ = \"CreateObject\"\n\t\t$ = \"InstallProduct\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0xd0cf11e0 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,362 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/Lazarus/lazarus.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Lazarus_BILDINGCAN_RC4",
+                "tags": [],
+                "description": "BILDINGCAN_RC4 in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "8db272ea1100996a8a0ed0da304610964dc8ca576aa114391d1be9d4c5dab02e"
+            },
+            "rule_text": "rule Lazarus_BILDINGCAN_RC4\n{\n\tmeta:\n\t\tdescription = \"BILDINGCAN_RC4 in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"8db272ea1100996a8a0ed0da304610964dc8ca576aa114391d1be9d4c5dab02e\"\n\n\tstrings:\n\t\t$customrc4 = { 75 C0 41 8B D2 41 BB 00 0C 00 00 0F 1F 80 00 00 00 00 }\n\t\t$id = \"T1B7D95256A2001E\" ascii\n\t\t$nop = { 66 66 66 66 0F 1F 84 00 00 00 00 }\n\t\t$post = \"id=%s%s&%s=%s&%s=%s&%s=\" ascii\n\t\t$command = \"%s%sc \\\"%s > %s 2>&1\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_BILDINGCAN_AES",
+                "tags": [],
+                "description": "BILDINGCAN_AES in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "925922ef243fa2adbd138942a9ecb4616ab69580a1864429a1405c13702fe773 "
+            },
+            "rule_text": "rule Lazarus_BILDINGCAN_AES\n{\n\tmeta:\n\t\tdescription = \"BILDINGCAN_AES in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"925922ef243fa2adbd138942a9ecb4616ab69580a1864429a1405c13702fe773 \"\n\n\tstrings:\n\t\t$AES = { 48 83 C3 04 30 43 FC 0F B6 44 1F FC 30 43 FD 0F B6 44 1F FD 30 43 FE 0F B6 44 1F FE 30 43 FF 48 FF C9 }\n\t\t$pass = \"RC2zWLyG50fPIPkQ\" wide\n\t\t$nop = { 66 66 66 66 0F 1F 84 00 00 00 00 }\n\t\t$confsize = { 48 8D ?? ?? ?? ?? 00 BA F0 06 00 00 E8 }\n\t\t$buffsize = { 00 00 C7 ?? ?? ??  B8 8E 03 00 }\n\t\t$rand = { 69 D2 ?? ?? 00 00 2B ?? 81 C? D2 04 00 00 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_BILDINGCAN_module",
+                "tags": [],
+                "description": "BILDINGCAN_AES module in Lazarus",
+                "author": "JPCERT/CC Incident Response Group"
+            },
+            "rule_text": "rule Lazarus_BILDINGCAN_module\n{\n\tmeta:\n\t\tdescription = \"BILDINGCAN_AES module in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\n\tstrings:\n\t\t$cmdcheck1 = { 3D ED AB 00 00 0F ?? ?? ?? 00 00 3D EF AB 00 00 0F ?? ?? ?? 00 00 3D 17 AC 00 00 0F ?? ?? ?? 00 00 }\n\t\t$cmdcheck2 = { 3D 17 AC 00 00 0F ?? ?? ?? 00 00 3D 67 EA 00 00 0F ?? ?? ?? 00 00 }\n\t\t$recvsize = { 00 00 41 81 F8 D8 AA 02 00 }\n\t\t$nop = { 66 66 66 66 0F 1F 84 00 00 00 00 }\n\t\t$rand = { 69 D2 ?? ?? 00 00 2B ?? 81 C? D2 04 00 00 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and 3 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_Torisma_strvest",
+                "tags": [],
+                "description": "Torisma in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "7762ba7ae989d47446da21cd04fd6fb92484dd07d078c7385ded459dedc726f9"
+            },
+            "rule_text": "rule Lazarus_Torisma_strvest\n{\n\tmeta:\n\t\tdescription = \"Torisma in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"7762ba7ae989d47446da21cd04fd6fb92484dd07d078c7385ded459dedc726f9\"\n\n\tstrings:\n\t\t$post1 = \"ACTION=NEXTPAGE\" ascii\n\t\t$post2 = \"ACTION=PREVPAGE\" ascii\n\t\t$post3 = \"ACTION=VIEW\" ascii\n\t\t$post4 = \"Your request has been accepted. ClientID\" ascii\n\t\t$password = \"ff7172d9c888b7a88a7d77372112d772\" ascii\n\t\t$vestt = { 4F 70 46 DA E1 8D F6 41 }\n\t\t$vestsbox = { 07 56 D2 37 3A F7 0A 52 }\n\t\t$vestrns = { 41 4B 1B DD 0D 65 72 EE }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( all of ( $post* ) or $password or all of ( $vest* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_LCPDot_strings",
+                "tags": [],
+                "description": "LCPDot in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "0c69fd9be0cc9fadacff2c0bacf59dab6d935b02b5b8d2c9cb049e9545bb55ce"
+            },
+            "rule_text": "rule Lazarus_LCPDot_strings\n{\n\tmeta:\n\t\tdescription = \"LCPDot in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"0c69fd9be0cc9fadacff2c0bacf59dab6d935b02b5b8d2c9cb049e9545bb55ce\"\n\n\tstrings:\n\t\t$ua = \"Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko\" wide\n\t\t$class = \"HotPlugin_class\" wide\n\t\t$post = \"Cookie=Enable&CookieV=%d&Cookie_Time=64\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_Torisma_config",
+                "tags": [],
+                "description": "Torisma config header",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "b78efeac54fa410e9e3e57e4f3d5ecc1b47fd4f7bf0d7266b3cb64cefa48f0ec"
+            },
+            "rule_text": "rule Lazarus_Torisma_config\n{\n\tmeta:\n\t\tdescription = \"Torisma config header\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"b78efeac54fa410e9e3e57e4f3d5ecc1b47fd4f7bf0d7266b3cb64cefa48f0ec\"\n\n\tstrings:\n\t\t$header = { 98 11 1A 45 90 78 BA F9 4E D6 8F EE }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_loader_thumbsdb",
+                "tags": [],
+                "description": "Loader Thumbs.db malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "44e4e14f8c8d299ccf5194719ab34a21ad6cc7847e49c0a7de05bf2371046f02"
+            },
+            "rule_text": "rule Lazarus_loader_thumbsdb\n{\n\tmeta:\n\t\tdescription = \"Loader Thumbs.db malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"44e4e14f8c8d299ccf5194719ab34a21ad6cc7847e49c0a7de05bf2371046f02\"\n\n\tstrings:\n\t\t$switchcase = { E8 ?? ?? ?? ?? 83 F8 64 74 ?? 3D C8 00 00 00 74 ?? 3D 2C 01 00 00 75 ?? E8 ?? ?? ?? ?? B9 D0 07 00 00 E8 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_Comebacker_strings",
+                "tags": [],
+                "description": "Comebacker malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "1ff4421a99793acda5dd7412cb9a62301b14ed0a455edbb776f56471bef08f8f"
+            },
+            "rule_text": "rule Lazarus_Comebacker_strings\n{\n\tmeta:\n\t\tdescription = \"Comebacker malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"1ff4421a99793acda5dd7412cb9a62301b14ed0a455edbb776f56471bef08f8f\"\n\n\tstrings:\n\t\t$postdata1 = \"%s=%s&%s=%s&%s=%s&%s=%d&%s=%d&%s=%s\" ascii\n\t\t$postdata2 = \"Content-Type: application/x-www-form-urlencoded\" wide\n\t\t$postdata3 = \"Connection: Keep-Alive\" wide\n\t\t$key = \"5618198335124815612315615648487\" ascii\n\t\t$str1 = \"Hash error!\" ascii wide\n\t\t$str2 = \"Dll Data Error|\" ascii wide\n\t\t$str3 = \"GetProcAddress Error|\" ascii wide\n\t\t$str4 = \"Sleeping|\" ascii wide\n\t\t$str5 = \"%s|%d|%d|\" ascii wide\n\n\tcondition:\n\t\tall of ( $postdata* ) or $key or all of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_VSingle_strings",
+                "tags": [],
+                "description": "VSingle malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "b114b1a6aecfe6746b674f1fdd38a45d9a6bb1b4eb0b0ca2fdb270343f7c7332",
+                "hash2": "63fa8ce7bf7c8324ed16c297092e1b1c5c0a0f8ab7f583ab16aa86a7992193e6"
+            },
+            "rule_text": "rule Lazarus_VSingle_strings\n{\n\tmeta:\n\t\tdescription = \"VSingle malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"b114b1a6aecfe6746b674f1fdd38a45d9a6bb1b4eb0b0ca2fdb270343f7c7332\"\n\t\thash2 = \"63fa8ce7bf7c8324ed16c297092e1b1c5c0a0f8ab7f583ab16aa86a7992193e6\"\n\n\tstrings:\n\t\t$encstr1 = \"Valefor was uninstalled successfully.\" ascii wide\n\t\t$encstr2 = \"Executable Download Parameter Error\" ascii wide\n\t\t$encstr3 = \"Plugin Execute Result\" ascii wide\n\t\t$pdb = \"G:\\\\Valefor\\\\Valefor_Single\\\\Release\\\\VSingle.pdb\" ascii\n\t\t$str1 = \"sonatelr\" ascii\n\t\t$str2 = \".\\\\mascotnot\" ascii\n\t\t$str3 = \"%s_main\" ascii\n\t\t$str4 = \"MigMut\" ascii\n\t\t$str5 = \"lkjwelwer\" ascii\n\t\t$str6 = \"CreateNamedPipeA finished with Error-%d\" ascii\n\t\t$str7 = \".\\\\pcinpae\" ascii\n\t\t$str8 = { C6 45 80 4C C6 45 81 00 C6 45 82 00 C6 45 83 00 C6 45 84 01 C6 45 85 14 C6 45 86 02 C6 45 87 00 }\n\t\t$xorkey1 = \"o2pq0qy4ymcrbe4s\" ascii wide\n\t\t$xorkey2 = \"qwrhcd4pywuyv2mw\" ascii wide\n\t\t$xorkey3 = \"3olu2yi3ynwlnvlu\" ascii wide\n\t\t$xorkey4 = \"uk0wia0uy3fl3uxd\" ascii wide\n\n\tcondition:\n\t\tall of ( $encstr* ) or $pdb or 1 of ( $xorkey* ) or 3 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_ValeforBeta_strings",
+                "tags": [],
+                "description": "ValeforBeta malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "5f3353063153a29c8c3075ffb1424b861444a091d9007e6f3b448ceae5a3f02e"
+            },
+            "rule_text": "rule Lazarus_ValeforBeta_strings\n{\n\tmeta:\n\t\tdescription = \"ValeforBeta malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"5f3353063153a29c8c3075ffb1424b861444a091d9007e6f3b448ceae5a3f02e\"\n\n\tstrings:\n\t\t$str0 = \"cmd interval: %d->%d\" ascii wide\n\t\t$str1 = \"script interval: %d->%d\" ascii wide\n\t\t$str2 = \"Command not exist. Try again.\" ascii wide\n\t\t$str3 = \"successfully uploaded from %s to %s\" ascii wide\n\t\t$str4 = \"success download from %s to %s\" ascii wide\n\t\t$str5 = \"failed with error code: %d\" ascii wide\n\n\tcondition:\n\t\t3 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_packer_code",
+                "tags": [],
+                "description": "Lazarus using packer",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "b114b1a6aecfe6746b674f1fdd38a45d9a6bb1b4eb0b0ca2fdb270343f7c7332",
+                "hash2": "5f3353063153a29c8c3075ffb1424b861444a091d9007e6f3b448ceae5a3f02e"
+            },
+            "rule_text": "rule Lazarus_packer_code\n{\n\tmeta:\n\t\tdescription = \"Lazarus using packer\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"b114b1a6aecfe6746b674f1fdd38a45d9a6bb1b4eb0b0ca2fdb270343f7c7332\"\n\t\thash2 = \"5f3353063153a29c8c3075ffb1424b861444a091d9007e6f3b448ceae5a3f02e\"\n\n\tstrings:\n\t\t$code = { 55 8B EC A1 ?? ?? ?? 00 83 C0 01 A3 ?? ?? ?? 00 83 3D ?? ?? ?? 00 ( 01 | 02 | 03 | 04 | 05 ) 76 16 8B 0D ?? ?? ?? 00 83 E9 01 89 0D ?? ?? ?? 00 B8 ?? ?? ?? ?? EB  }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_Kaos_golang",
+                "tags": [],
+                "description": "Kaos malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "6db57bbc2d07343dd6ceba0f53c73756af78f09fe1cb5ce8e8008e5e7242eae1",
+                "hash2": "2d6a590b86e7e1e9fa055ec5648cd92e2d5e5b3210045d4c1658fe92ecf1944c"
+            },
+            "rule_text": "rule Lazarus_Kaos_golang\n{\n\tmeta:\n\t\tdescription = \"Kaos malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"6db57bbc2d07343dd6ceba0f53c73756af78f09fe1cb5ce8e8008e5e7242eae1\"\n\t\thash2 = \"2d6a590b86e7e1e9fa055ec5648cd92e2d5e5b3210045d4c1658fe92ecf1944c\"\n\n\tstrings:\n\t\t$gofunc1 = \"processMarketPrice\" ascii wide\n\t\t$gofunc2 = \"handleMarketPrice\" ascii wide\n\t\t$gofunc3 = \"EierKochen\" ascii wide\n\t\t$gofunc4 = \"kandidatKaufhaus\" ascii wide\n\t\t$gofunc5 = \"getInitEggPrice\" ascii wide\n\t\t$gofunc6 = \"HttpPostWithCookie\" ascii wide\n\n\tcondition:\n\t\t4 of ( $gofunc* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_VSingle_elf",
+                "tags": [],
+                "description": "ELF_VSingle malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "f789e1895ce24da8d7b7acef8d0302ae9f90dab0c55c22b03e452aeba55e1d21"
+            },
+            "rule_text": "rule Lazarus_VSingle_elf\n{\n\tmeta:\n\t\tdescription = \"ELF_VSingle malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"f789e1895ce24da8d7b7acef8d0302ae9f90dab0c55c22b03e452aeba55e1d21\"\n\n\tstrings:\n\t\t$code1 = { C6 85 ?? ?? FF FF 26 C6 85 ?? ?? FF FF 75 C6 85 ?? ?? FF FF 69 C6 85 ?? ?? FF FF 73 }\n\t\t$code2 = { C6 85 ?? ?? FF FF 75 C6 85 ?? ?? FF FF 66 C6 85 ?? ?? FF FF 77 }\n\t\t$code3 = { C6 85 ?? ?? FF FF 25 C6 85 ?? ?? FF FF 73 C6 85 ?? ?? FF FF 7C C6 85 ?? ?? FF FF 25 C6 85 ?? ?? FF FF 78 }\n\t\t$code4 = { C6 85 ?? ?? FF FF 4D C6 85 ?? ?? FF FF 6F C6 85 ?? ?? FF FF 7A C6 85 ?? ?? FF FF 69 C6 85 ?? ?? FF FF 6C C6 85 ?? ?? FF FF 6C C6 85 ?? ?? FF FF 61 C6 85 ?? ?? FF FF 2F }\n\t\t$code5 = { C6 84 ?? ?? ?? 00 00 25 C6 84 ?? ?? ?? 00 00 73 C6 84 ?? ?? ?? 00 00 25 C6 84 ?? ?? ?? 00 00 31 C6 84 ?? ?? ?? 00 00 75 C6 84 ?? ?? ?? 00 00 25 C6 84 ?? ?? ?? 00 00 31 C6 84 ?? ?? ?? 00 00 75 }\n\n\tcondition:\n\t\t3 of ( $code* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_packer_upxmems",
+                "tags": [],
+                "description": "ELF malware packer based UPX in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "f789e1895ce24da8d7b7acef8d0302ae9f90dab0c55c22b03e452aeba55e1d21"
+            },
+            "rule_text": "rule Lazarus_packer_upxmems\n{\n\tmeta:\n\t\tdescription = \"ELF malware packer based UPX in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"f789e1895ce24da8d7b7acef8d0302ae9f90dab0c55c22b03e452aeba55e1d21\"\n\n\tstrings:\n\t\t$code1 = { 47 2C E8 3C 01 77 [10-14] 86 C4 C1 C0 10 86 C4 }\n\t\t$code2 = { 81 FD 00 FB FF FF 83 D1 02 8D }\n\t\t$sig = \"MEMS\" ascii\n\n\tcondition:\n\t\tall of ( $code* ) and #sig >= 3 and uint32( 0x98 ) == 0x534d454d\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_httpbot_jsessid",
+                "tags": [],
+                "description": "Unknown HTTP bot in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "451ad26a41a8b8ae82ccfc850d67b12289693b227a7114121888b444d72d4727"
+            },
+            "rule_text": "rule Lazarus_httpbot_jsessid\n{\n\tmeta:\n\t\tdescription = \"Unknown HTTP bot in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"451ad26a41a8b8ae82ccfc850d67b12289693b227a7114121888b444d72d4727\"\n\n\tstrings:\n\t\t$jsessid = \"jsessid=%08x%08x%08x\" ascii\n\t\t$http = \"%04x%04x%04x%04x\" ascii\n\t\t$init = { 51 68 ?? ?? ?? 00 51 BA 04 01 00 00 B9 ?? ?? ?? 00 E8 }\n\t\t$command = { 8B ?? ?? 05 69 62 2B 9F 83 F8 1D 0F ?? ?? ?? 00 00 FF}\n\n\tcondition:\n\t\t$command or ( $jsessid and $http and #init >= 3 )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_tool_smbscan",
+                "tags": [],
+                "description": "SMB scan tool in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "d16163526242508d6961f061aaffe3ae5321bd64d8ceb6b2788f1570757595fc",
+                "hash2": "11b29200f0696041dd607d0664f1ebf5dba2e2538666db663b3077d77f883195"
+            },
+            "rule_text": "rule Lazarus_tool_smbscan\n{\n\tmeta:\n\t\tdescription = \"SMB scan tool in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"d16163526242508d6961f061aaffe3ae5321bd64d8ceb6b2788f1570757595fc\"\n\t\thash2 = \"11b29200f0696041dd607d0664f1ebf5dba2e2538666db663b3077d77f883195\"\n\n\tstrings:\n\t\t$toolstr1 = \"Scan.exe StartIP EndIP ThreadCount logfilePath [Username Password Deep]\" ascii\n\t\t$toolstr2 = \"%s%-30s%I64d\\t%04d-%02d-%02d %02d:%02d\" ascii\n\t\t$toolstr3 = \"%s%-30s(DIR)\\t%04d-%02d-%02d %02d:%02d\" ascii\n\t\t$toolstr4 = \"%s U/P not Correct! - %d\" ascii\n\t\t$toolstr5 = \"%s %-20S%-30s%S\" ascii\n\t\t$toolstr6 = \"%s - %s:(Username - %s / Password - %s\" ascii\n\n\tcondition:\n\t\t4 of ( $toolstr* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_simplecurl_strings",
+                "tags": [],
+                "description": "Tool of simple curl in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "05ffcbda6d2e38da325ebb91928ee65d1305bcc5a6a78e99ccbcc05801bba962"
+            },
+            "rule_text": "rule Lazarus_simplecurl_strings\n{\n\tmeta:\n\t\tdescription = \"Tool of simple curl in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"05ffcbda6d2e38da325ebb91928ee65d1305bcc5a6a78e99ccbcc05801bba962\"\n\n\tstrings:\n\t\t$str1 = \"Usage: [application name].exe url filename\" ascii\n\t\t$str2 = \"completely succeed!\" ascii\n\t\t$str3 = \"InternetOpenSession failed..\" ascii\n\t\t$str4 = \"HttpSendRequestA failed..\" ascii\n\t\t$str5 = \"HttpQueryInfoA failed..\" ascii\n\t\t$str6 = \"response code: %s\" ascii\n\t\t$str7 = \"%02d.%02d.%04d - %02d:%02d:%02d:%03d :\" ascii\n\n\tcondition:\n\t\t4 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_Dtrack_code",
+                "tags": [],
+                "description": "Dtrack malware in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "467893f5e343563ed7c46a553953de751405828061811c7a13dbc0ced81648bb"
+            },
+            "rule_text": "rule Lazarus_Dtrack_code\n{\n\tmeta:\n\t\tdescription = \"Dtrack malware in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"2bcb693698c84b7613a8bde65729a51fcb175b04f5ff672811941f75a0095ed4\"\n\t\thash = \"467893f5e343563ed7c46a553953de751405828061811c7a13dbc0ced81648bb\"\n\n\tstrings:\n\t\t$rc4key1 = \"xwqmxykgy0s4\"\n\t\t$rc4key2 = \"hufkcohxyjrm\"\n\t\t$rc4key3 = \"fm5hkbfxyhd4\"\n\t\t$rc4key4 = \"ihy3ggfgyohx\"\n\t\t$rc4key5 = \"fwpbqyhcyf2k\"\n\t\t$rc4key6 = \"rcmgmg3ny3pa\"\n\t\t$rc4key7 = \"a30gjwdcypey\"\n\t\t$zippass1 = \"dkwero38oerA^t@#\"\n\t\t$zippass2 = \"z0r0f1@123\"\n\t\t$str1 = \"Using Proxy\"\n\t\t$str2 = \"Preconfig\"\n\t\t$str3 = \"%02d.%02d.%04d - %02d:%02d:%02d:%03d :\"\n\t\t$str4 = \"%02X:%02X:%02X:%02X:%02X:%02X\"\n\t\t$str5 = \"%s\\\\%c.tmp\"\n\t\t$code = { 81 ?? EB 03 00 00 89 ?? ?? ?? FF FF 83 ?? ?? ?? FF FF 14 0F 87 EA 00 00 00 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( 1 of ( $rc4key* ) or 1 of ( $zippass* ) or ( 3 of ( $str* ) and $code ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_keylogger_str",
+                "tags": [],
+                "description": "Keylogger in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "e0567863b10e9b1ac805292d30626ea24b28ee12f3682a93d29120db3b77a40a"
+            },
+            "rule_text": "rule Lazarus_keylogger_str\n{\n\tmeta:\n\t\tdescription = \"Keylogger in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"e0567863b10e9b1ac805292d30626ea24b28ee12f3682a93d29120db3b77a40a\"\n\n\tstrings:\n\t\t$mutex = \"c2hvcGxpZnRlcg\"\n\t\t$path = \"%APPDATA%\\\\\\\\Microsoft\\\\\\\\Camio\\\\\\\\\"\n\t\t$str = \"[%02d/%02d/%d %02d:%02d:%02d]\"\n\t\t$table1 = \"CppSQLite3Exception\"\n\t\t$table2 = \"CppSQLite3Query\"\n\t\t$table3 = \"CppSQLite3DB\"\n\t\t$table4 = \"CDataLog\"\n\t\t$table5 = \"CKeyLogger\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 4 of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_DreamJob_doc2021",
+                "tags": [],
+                "description": "Malicious doc used in Lazarus operation Dream Job",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "ffec6e6d4e314f64f5d31c62024252abde7f77acdd63991cb16923ff17828885",
+                "hash2": "8e1746829851d28c555c143ce62283bc011bbd2acfa60909566339118c9c5c97",
+                "hash3": "294acafed42c6a4f546486636b4859c074e53d74be049df99932804be048f42c"
+            },
+            "rule_text": "rule Lazarus_DreamJob_doc2021\n{\n\tmeta:\n\t\tdescription = \"Malicious doc used in Lazarus operation Dream Job\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"ffec6e6d4e314f64f5d31c62024252abde7f77acdd63991cb16923ff17828885\"\n\t\thash2 = \"8e1746829851d28c555c143ce62283bc011bbd2acfa60909566339118c9c5c97\"\n\t\thash3 = \"294acafed42c6a4f546486636b4859c074e53d74be049df99932804be048f42c\"\n\n\tstrings:\n\t\t$peheadb64 = \"dCBiZSBydW4gaW4gRE9TIG1vZGU\"\n\t\t$command1 = \"cmd /c copy /b %systemroot%\\\\system32\\\\\"\n\t\t$command2 = \"Select * from Win32_Process where name\"\n\t\t$command3 = \"cmd /c explorer.exe /root\"\n\t\t$command4 = \"-decode\"\n\t\t$command5 = \"c:\\\\Drivers\"\n\t\t$command6 = \"explorer.exe\"\n\t\t$command7 = \"cmd /c md\"\n\t\t$command8 = \"cmd /c del\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0xCFD0 and $peheadb64 and 4 of ( $command* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_boardiddownloader_code",
+                "tags": [],
+                "description": "boardid downloader in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "fe80e890689b0911d2cd1c29196c1dad92183c40949fe6f8c39deec8e745de7f"
+            },
+            "rule_text": "rule Lazarus_boardiddownloader_code\n{\n\tmeta:\n\t\tdescription = \"boardid downloader in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"fe80e890689b0911d2cd1c29196c1dad92183c40949fe6f8c39deec8e745de7f\"\n\n\tstrings:\n\t\t$enchttp = { C7 ?? ?? 06 1A 1A 1E C7 ?? ?? 1D 54 41 41 }\n\t\t$xorcode = { 80 74 ?? ?? 6E 80 74 ?? ?? 6E (48 83|83) ?? 02 (48|83) }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_obfuscate_string",
+                "tags": [],
+                "description": "Strings contained in obfuscated files used by Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "e5466b99c1af9fe3fefdd4da1e798786a821c6d853a320d16cc10c06bc6f3fc5"
+            },
+            "rule_text": "rule Lazarus_obfuscate_string\n{\n\tmeta:\n\t\tdescription = \"Strings contained in obfuscated files used by Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"e5466b99c1af9fe3fefdd4da1e798786a821c6d853a320d16cc10c06bc6f3fc5\"\n\n\tstrings:\n\t\t$str1 = { 2D 41 72 67 75 6D 65 6E 74 4C 69 73 74 20 27 5C 22 00 }\n\t\t$str2 = \"%^&|,\" wide\n\t\t$str3 = \"SeDebugPrivilege\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and filesize > 1MB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_VSingle_github",
+                "tags": [],
+                "description": "VSingle using GitHub in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "2eb16dbc1097a590f07787ab285a013f5fe235287cb4fb948d4f9cce9efa5dbc"
+            },
+            "rule_text": "rule Lazarus_VSingle_github\n{\n\tmeta:\n\t\tdescription = \"VSingle using GitHub in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"199ba618efc6af9280c5abd86c09cdf2d475c09c8c7ffc393a35c3d70277aed1\"\n\t\thash = \"2eb16dbc1097a590f07787ab285a013f5fe235287cb4fb948d4f9cce9efa5dbc\"\n\n\tstrings:\n\t\t$str1 = \"Arcan3\" ascii wide fullword\n\t\t$str2 = \"Wr0te\" ascii wide fullword\n\t\t$str3 = \"luxuryboy\" ascii wide fullword\n\t\t$str4 = \"pnpgather\" ascii wide fullword\n\t\t$str5 = \"happyv1m\" ascii wide fullword\n\t\t$str6 = \"laz3rpik\" ascii wide fullword\n\t\t$str7 = \"d0ta\" ascii wide fullword\n\t\t$str8 = \"Dronek\" ascii wide fullword\n\t\t$str9 = \"Panda3\" ascii wide fullword\n\t\t$str10 = \"cpsponso\" ascii wide fullword\n\t\t$str11 = \"ggo0dlluck\" ascii wide fullword\n\t\t$str12 = \"gar3ia\" ascii wide fullword\n\t\t$str13 = \"wo0d\" ascii wide fullword\n\t\t$str14 = \"tr3e\" ascii wide fullword\n\t\t$str15 = \"l0ve\" ascii wide fullword\n\t\t$str16 = \"v0siej\" ascii wide fullword\n\t\t$str17 = \"e0vvsje\" ascii wide fullword\n\t\t$str18 = \"polaris\" ascii wide fullword\n\t\t$str19 = \"grav1ty\" ascii wide fullword\n\t\t$str20 = \"w1inter\" ascii wide fullword\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x464C457F and 8 of ( $str* ) ) or ( uint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 8 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_BTREE_str",
+                "tags": [],
+                "description": "BTREE malware using Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "4fb31b9f5432fd09f1fa51a35e8de98fca6081d542827b855db4563be2e50e58"
+            },
+            "rule_text": "rule Lazarus_BTREE_str\n{\n\tmeta:\n\t\tdescription = \"BTREE malware using Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"4fb31b9f5432fd09f1fa51a35e8de98fca6081d542827b855db4563be2e50e58\"\n\n\tstrings:\n\t\t$command1 = \"curl -A cur1-agent -L %s -s -d da\" ascii wide\n\t\t$command2 = \"cmd /c timeout /t 10 & rundll32 \\\"%s\\\" #1\" ascii wide\n\t\t$command3 = \"rundll32.exe %s #1 %S\" ascii wide\n\t\t$command4 = \"%s\\\\marcoor.dll\" ascii wide\n\t\t$rc4key = \"FaDm8CtBH7W660wlbtpyWg4jyLFbgR3IvRw6EdF8IG667d0TEimzTiZ6aBteigP3\" ascii wide\n\n\tcondition:\n\t\t2 of ( $command* ) or $rc4key\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_msi_str",
+                "tags": [],
+                "description": "msi file using Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "f0b6d6981e06c7be2e45650e5f6d39570c1ee640ccb157ddfe42ee23ad4d1cdb"
+            },
+            "rule_text": "rule Lazarus_msi_str\n{\n\tmeta:\n\t\tdescription = \"msi file using Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"f0b6d6981e06c7be2e45650e5f6d39570c1ee640ccb157ddfe42ee23ad4d1cdb\"\n\n\tstrings:\n\t\t$magic = /^\\xD0\\xCF\\x11\\xE0\\xA1\\xB1\\x1A\\xE1\\x00\\x00\\x00/\n\t\t$s1 = \"New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Days 300)\" ascii wide\n\t\t$s2 = \"New-ScheduledTaskAction -Execute \\\"c:\\\\windows\\\\system32\\\\pcalua.exe\" ascii wide\n\t\t$s3 = \"function sendbi(pd)\" ascii wide\n\t\t$s4 = \"\\\\n\\\\n\\\"+g_mac()+\\\"\\\\n\\\\n\\\"+g_proc()\" ascii wide\n\n\tcondition:\n\t\t$magic at 0 and 2 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_downloader_code",
+                "tags": [],
+                "description": "Lazarus downloader",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "faba4114ada285987d4f7c771f096e0a2bc4899c9244d182db032acd256c67aa"
+            },
+            "rule_text": "rule Lazarus_downloader_code\n{\n\tmeta:\n\t\tdescription = \"Lazarus downloader\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"faba4114ada285987d4f7c771f096e0a2bc4899c9244d182db032acd256c67aa\"\n\n\tstrings:\n\t\t$jmp = { 53 31 c0 50 50 50 50 50 C7 ?? ?? 00 00 00 00 EB 00 }\n\t\t$count = { 00 00 EB 00 B8 FF 59 62 02 3B 05 ?? ?? ?? 00 }\n\t\t$api = \"InitOnceExecuteOnce\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and filesize < 200KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_magicpoint_code",
+                "tags": [],
+                "description": "magicpoint bot using Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "6f11c52f01e5696b1ac0faf6c19b0b439ba6f48f1f9851e34f0fa582b09dfa48"
+            },
+            "rule_text": "rule Lazarus_magicpoint_code\n{\n\tmeta:\n\t\tdescription = \"magicpoint bot using Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"6f11c52f01e5696b1ac0faf6c19b0b439ba6f48f1f9851e34f0fa582b09dfa48\"\n\n\tstrings:\n\t\t$strPost1 = \"mpVI=%s\" ascii\n\t\t$strPost2 = \"mpCMD=%s&mpVID=%s\" ascii\n\t\t$strPost3 = \"mpVCR=%s&mpID=%s\" ascii\n\t\t$strMsg1 = \"Error creating pipe\" ascii\n\t\t$strMsg2 = \"Error creating process\" ascii\n\t\t$strFormat = \"%c%c%c%s%c%s\" ascii\n\t\t$strUA = \"Mozilla/88.0\" ascii\n\t\t$strMutex = \"LGMUQTW\" ascii\n\t\t$strData = \"xz36\" ascii\n\t\t$strcmd = \"cmd.exe /c %s\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 4 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "lazarus_dbgsymbols_str",
+                "tags": [],
+                "description": "Exploit tools in Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "50869d2a713acf406e160d6cde3b442fafe7cfe1221f936f3f28c4b9650a66e9"
+            },
+            "rule_text": "rule lazarus_dbgsymbols_str\n{\n\tmeta:\n\t\tdescription = \"Exploit tools in Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"50869d2a713acf406e160d6cde3b442fafe7cfe1221f936f3f28c4b9650a66e9\"\n\n\tstrings:\n\t\t$str1 = \"getsymbol\" nocase\n\t\t$str2 = \"dbgsymbol.com\" wide\n\t\t$str3 = \"c:\\\\symbols\" wide\n\t\t$str4 = \"symchk.exe /r /if %s /s SRV*%s*%s\" wide\n\t\t$str5 = \"Symbol Download Finished!\" wide\n\t\t$filename = \"symbolcheck.dll\" wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and 3 of ( $str* ) and all of ( $filename )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_npmLoader_dll",
+                "tags": [],
+                "description": "npmLoaderDll using Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "aec915753612bb003330ce7ffc67cfa9d7e3c12310f0ecfd0b7e50abf427989a"
+            },
+            "rule_text": "rule Lazarus_npmLoader_dll\n{\n\tmeta:\n\t\tdescription = \"npmLoaderDll using Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"b4c8c149005a43ae043038d4d62631dc1a0f57514c7cbf4f7726add7ec67981a\"\n\t\thash = \"eb8756ace46662a031c1d2422a91f0725ea7c4de74bfff4fce2693e7967be16e\"\n\t\thash = \"aec915753612bb003330ce7ffc67cfa9d7e3c12310f0ecfd0b7e50abf427989a\"\n\n\tstrings:\n\t\t$jnkcode = { 66 66 66 66 ?? ?? ?? ?? 00 00 00 00 00 }\n\t\t$enccode1 = { 81 E2 FF 03 00 00 41 81 E1 FF 03 00 00 81 E7 FF 03 00 00 81 E1 FF 03 00 00 }\n\t\t$enccode2 = { 48 33 D1 8B C1 41 C1 CA 0A C1 C0 09 81 E2 FF 03 00 00 44 33 D0 }\n\t\t$pdb1 = \"F:\\\\workspace\\\\CBG\\\\Loader\\\\npmLoaderDll\\\\x64\\\\Release\\\\npmLoaderDll.pdb\" ascii wide\n\t\t$pdb2 = \"F:\\\\workspace\\\\CBG\\\\npmLoaderDll\\\\x64\\\\Release\\\\npmLoaderDll.pdb\" ascii wide\n\t\t$pdb3 = \"D:\\\\workspace\\\\CBG\\\\Windows\\\\Loader\\\\npmLoaderDll\\\\x64\\\\Release\\\\npmLoaderDll.pdb\" ascii wide\n\t\t$pdb4 = \"npmLoaderDll\\\\x64\\\\Release\\\\npmLoaderDll.pdb\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and ( ( 1 of ( $pdb* ) ) or ( $jnkcode and all of ( $enccode* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_defaultdownpy_python",
+                "tags": [],
+                "description": "Python downloader for Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "1c0f6ffc30b702c7b6aeee2b38ef749b8329554603082d3e179b37ff86371858"
+            },
+            "rule_text": "rule Lazarus_defaultdownpy_python\n{\n\tmeta:\n\t\tdescription = \"Python downloader for Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"3b6a8d4c15f645d3c1a9f58fc8f4fd691cea26a54e5a251f445d4013e9057dd0\"\n\t\thash = \"70db987e2545cbc3e22bac0503f89f46a441cc9f206d0aa41d66b54f511638d6\"\n\t\thash = \"e93f2f24718711ddd7751b40cdfcd92814388a65015d1a1e8bc1b1885ada5fca\"\n\t\thash = \"6a2893c44d9a7f3bcad492ea7dbcea90eb0107fd0c191913cd097b663f806a67\"\n\t\thash = \"0046ad625564f42b9dd69f3479732b3e1aaf5ef3e365f4752006e703963dd3de\"\n\t\thash = \"1c0f6ffc30b702c7b6aeee2b38ef749b8329554603082d3e179b37ff86371858\"\n\n\tstrings:\n\t\t$enc1 = \"d=base64.b64decode(t[8:])\" ascii\n\t\t$enc2 = \"k=i&7;c=chr(d[i]^ord(sk[k]))\" ascii\n\t\t$enc3 = \"exec(res)\" ascii\n\t\t$enc4 = \"data=base64.b64decode(temp[8:]);\" ascii\n\t\t$enc5 = \"k=i&7;c=chr(data[i]^ord(sk[k]))\" ascii\n\t\t$dec1 = \"base64.b64decode(host[10:] + host[:10]).decode()\" ascii\n\t\t$dec2 = \"subprocess.Popen([sys.executable, ap], creationflags=subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP)\" ascii\n\t\t$dec3 = \"subprocess.Popen(cmd,shell=_T,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()\" ascii\n\t\t$dec4 = \"if ot==\\\"Darwin\\\":\" ascii\n\t\t$dec5 = \"subprocess.check_call([sys.executable, '-m', 'pip', 'install', \" ascii\n\t\t$dec6 = \"subprocess.check_call([sys.executable,'-m','pip','install',\" ascii\n\t\t$dec7 = \"subprocess.check_call([sys.executable,_M,_P,_L,\" ascii\n\t\t$dec8 = \"subprocess.check_call([sys.executable,_m,_pp,_inl,\" ascii\n\t\t$dec9 = \"ot = platform.system()\" ascii\n\t\t$dec10 = \"download_payload():\" ascii\n\t\t$dec11 = \"download_browse()\" ascii\n\t\t$dec12 = \"get_anydesk_path():\" ascii\n\t\t$dec13 = \"retrieve_web(self):\" ascii\n\t\t$dec14 = \"ssh_cmd(A,args):\" ascii\n\t\t$dec15 = \"ssh_upload(A,args)\" ascii\n\t\t$dec16 = \"win32process.GetWindowThreadProcessId(win32gui.GetForegroundWindow());return (pid[-1], psutil.Process(pid[-1]).name())\" ascii\n\t\t$dec17 = \"is_down(pyHook.GetKeyState(0x11)) or is_down(pyHook.GetKeyState(0xA2)) or is_down(pyHook.GetKeyState(0xA3))\" ascii\n\t\t$dec18 = \"sha256((str(getnode())+getuser()).encode()).digest().hex()\" ascii\n\t\t$dec19 = \"return{'uuid':A.uuid,'system':A.system,'release':A.release,'version':A.version,'hostname':A.hostname,'username':A.username}\" ascii\n\t\t$dec20 = \"{'ts':str(B),'type':sType,'hid':hn,'ss':'sys_info','cc':str(A.sys_info)}\" ascii\n\n\tcondition:\n\t\t3 of ( $enc* ) or 3 of ( $dec* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_jamistealer_str",
+                "tags": [],
+                "description": "Stealer targeted macOS and Windows for Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "9e3a9dbf10793a27361b3cef4d2c87dbd3662646f4470e5242074df4cb96c6b4"
+            },
+            "rule_text": "rule Lazarus_jamistealer_str\n{\n\tmeta:\n\t\tdescription = \"Stealer targeted macOS and Windows for Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"9abf6b93eafb797a3556bea1fe8a3b7311d2864d5a9a3687fce84bc1ec4a428c\"\n\t\thash = \"9e3a9dbf10793a27361b3cef4d2c87dbd3662646f4470e5242074df4cb96c6b4\"\n\n\tstrings:\n\t\t$str1 = \"Download Python Success!\" ascii\n\t\t$str2 = \"Download Client Success!\" ascii\n\t\t$str3 = \"form-data; name=\\\"multi_file\\\"; filename=\\\"%1\\\"\" ascii\n\t\t$str4 = \"boundary=---------------------------99614912995\" ascii\n\t\t$str5 = \"/.pyp/python.exe\" ascii\n\t\t$str6 = \"/AppData/Local/BraveSoftware/Brave-Browser/User Data\" ascii\n\t\t$str7 = \"/Library/Application Support/BraveSoftware/Brave-Browser\" ascii\n\t\t$str8 = \"/Library/Application Support/com.operasoftware.opera\" ascii\n\t\t$str9 = \"Upload LDB Finshed!!!\" ascii\n\t\t$str10 = \"%1_%2_%3_%4_%5\" ascii\n\n\tcondition:\n\t\t(( uint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 ) or ( uint32( 0 ) == 0xfeedface or uint32( 0 ) == 0xcefaedfe or uint32( 0 ) == 0xfeedfacf or uint32( 0 ) == 0xcffaedfe or uint32( 0 ) == 0xcafebabe or uint32( 0 ) == 0xbebafeca or uint32( 0 ) == 0xcafebabf or uint32( 0 ) == 0xbfbafeca ) ) and ( 5 of ( $str* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Lazarus_oprepjs_javascript",
+                "tags": [],
+                "description": "JS downloader for Lazarus",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "d69691996067c04fdb5595cf1512aca8928ee64511b4b3674197015414d014c8"
+            },
+            "rule_text": "rule Lazarus_oprepjs_javascript\n{\n\tmeta:\n\t\tdescription = \"JS downloader for Lazarus\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"d69691996067c04fdb5595cf1512aca8928ee64511b4b3674197015414d014c8\"\n\n\tstrings:\n\t\t$enc1 = \"writeFileSync\" ascii\n\t\t$enc2 = \"Login Data\" ascii\n\t\t$enc3 = \"copyFile\" ascii\n\t\t$enc4 = \".replace(\" ascii\n\t\t$enc5 = \"/client\" ascii\n\t\t$enc6 = \"t[e], a += t[10 + e], $ += t[20 + e], r += t[30 + e];\" ascii\n\t\t$enc7 = \"${c}${$}_${l}_${t}\" ascii\n\t\t$enc8 = \"/.npl\" ascii\n\t\t$enc9 = \"/Local Extension Settings/nkbihfbeogaeaoehlefnkodbefgpgknn/\" ascii\n\t\t$enc10 = \"/Library/Application Support/Google/Chrome/\" ascii\n\t\t$enc11 = \"includes(\\\".ldb\\\")\" ascii\n\t\t$key1 = \"30e5e005f625f45e9561c0c105466fd72be45e961fc88abc59012cb9b7fd091a\" ascii\n\t\t$key2 = \"eafb61b23c14874c10945b466cfef16b\" ascii\n\t\t$key3 = \"7a0508b2eb487b05be4aa5ea01c5e15d\" ascii\n\n\tcondition:\n\t\t6 of ( $enc* ) or all of ( $key* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

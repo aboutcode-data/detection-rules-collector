@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_ftp.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Victor Sergeev, oscd.community",
+                "date": "2020-10-09",
+                "title": "Renamed FTP.EXE Execution",
+                "id": "277a4393-446c-449a-b0ed-7fdc7795244c"
+            },
+            "rule_text": "title: Renamed FTP.EXE Execution\nid: 277a4393-446c-449a-b0ed-7fdc7795244c\nstatus: test\ndescription: Detects the execution of a renamed \"ftp.exe\" binary based on the PE metadata\n  fields\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Ftp/\nauthor: Victor Sergeev, oscd.community\ndate: 2020-10-09\nmodified: 2023-02-03\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059\n- attack.t1202\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_original:\n    OriginalFileName: ftp.exe\n  filter_img:\n    Image|endswith: \\ftp.exe\n  condition: selection_original and not filter_img\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_renamed_ftp/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_screensaver.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-08-19",
+                "title": "Suspicious ScreenSave Change by Reg.exe",
+                "id": "0fc35fc3-efe6-4898-8a37-0b233339524f"
+            },
+            "rule_text": "title: Suspicious ScreenSave Change by Reg.exe\nid: 0fc35fc3-efe6-4898-8a37-0b233339524f\nstatus: test\ndescription: 'Adversaries may establish persistence by executing malicious content\n  triggered by user inactivity.\n\n  Screensavers are programs that execute after a configurable time of user inactivity\n  and consist of Portable Executable (PE) files with a .scr file extension\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md\n- https://www.welivesecurity.com/wp-content/uploads/2017/08/eset-gazer.pdf\nauthor: frack113\ndate: 2021-08-19\nmodified: 2022-06-02\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1546.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_reg:\n    Image|endswith: \\reg.exe\n    CommandLine|contains:\n    - HKEY_CURRENT_USER\\Control Panel\\Desktop\n    - HKCU\\Control Panel\\Desktop\n  selection_option_1:\n    CommandLine|contains|all:\n    - /v ScreenSaveActive\n    - /t REG_SZ\n    - /d 1\n    - /f\n  selection_option_2:\n    CommandLine|contains|all:\n    - /v ScreenSaveTimeout\n    - /t REG_SZ\n    - '/d '\n    - /f\n  selection_option_3:\n    CommandLine|contains|all:\n    - /v ScreenSaverIsSecure\n    - /t REG_SZ\n    - /d 0\n    - /f\n  selection_option_4:\n    CommandLine|contains|all:\n    - /v SCRNSAVE.EXE\n    - /t REG_SZ\n    - '/d '\n    - .scr\n    - /f\n  condition: selection_reg and 1 of selection_option_*\nfalsepositives:\n- GPO\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

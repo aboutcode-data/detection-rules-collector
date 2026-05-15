@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_rundll32_inject_to_lsass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Rundll32 Injection into LSASS (RedCanary Threat Detection Report)",
+                "id": "7aa20f5c-6100-46c9-8885-427110e0c0e5"
+            },
+            "rule_text": "title: Rundll32 Injection into LSASS (RedCanary Threat Detection Report)\nid: 7aa20f5c-6100-46c9-8885-427110e0c0e5\nstatus: experimental\ndescription: Detects instances where Rundll32 opens a cross process handle into LSASS\n  to collect credentials. Part of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/rundll32/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.defense_evasion\n- attack.t1218.011\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    SourceImage|endswith: \\rundll32.exe\n    TargetImage|endswith: \\lsass.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

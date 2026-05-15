@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/SolarWinds-Supply-Chain/web_solarwinds_supernova_webshell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2020-12-17",
+                "title": "Solarwinds SUPERNOVA Webshell Access",
+                "id": "a2cee20b-eacc-459f-861d-c02e5d12f1db"
+            },
+            "rule_text": "title: Solarwinds SUPERNOVA Webshell Access\nid: a2cee20b-eacc-459f-861d-c02e5d12f1db\nstatus: test\ndescription: Detects access to SUPERNOVA webshell as described in Guidepoint report\nreferences:\n- https://www.guidepointsecurity.com/supernova-solarwinds-net-webshell-analysis/\n- https://www.anquanke.com/post/id/226029\nauthor: Florian Roth (Nextron Systems)\ndate: 2020-12-17\nmodified: 2023-01-02\ntags:\n- attack.persistence\n- attack.t1505.003\n- detection.emerging-threats\nlogsource:\n  category: webserver\ndetection:\n  selection1:\n    cs-uri-query|contains|all:\n    - logoimagehandler.ashx\n    - clazz\n  selection2:\n    cs-uri-query|contains: logoimagehandler.ashx\n    sc-status: 500\n  condition: selection1 or selection2\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": []
+        }
+    ]
+}

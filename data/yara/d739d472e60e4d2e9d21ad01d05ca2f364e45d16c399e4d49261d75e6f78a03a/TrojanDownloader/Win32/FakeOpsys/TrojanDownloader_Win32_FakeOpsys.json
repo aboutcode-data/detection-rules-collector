@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/FakeOpsys/TrojanDownloader_Win32_FakeOpsys.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_FakeOpsys",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/FakeOpsys,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_FakeOpsys\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/FakeOpsys,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {44 6f 77 6e 6c 6f 61 64 69 6e 67 2e 2e 2e }\n\t\t$a_03_1 = {2d 5e 01 00 00 90 09 07 00 6a 00 e8 }\n\t\t$a_03_2 = {2d 82 00 00 00 90 09 07 00 6a 01 e8 }\n\t\t$a_01_3 = {68 5e 01 00 00 68 82 00 00 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

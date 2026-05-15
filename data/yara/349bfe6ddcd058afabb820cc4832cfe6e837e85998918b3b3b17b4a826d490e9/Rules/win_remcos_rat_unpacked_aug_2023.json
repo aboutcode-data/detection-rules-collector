@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/embee-research/Yara-detection-rules/blob/master/Rules/win_remcos_rat_unpacked_aug_2023.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_remcos_rat_unpacked",
+                "tags": [],
+                "author": "Matthew @ Embee_Research",
+                "created": "2023/08/27",
+                "description": "Detects strings present in remcos rat Samples.",
+                "sha_256": "ec901217558e77f2f449031a6a1190b1e99b30fa1bb8d8dabc3a99bc69833784"
+            },
+            "rule_text": "rule win_remcos_rat_unpacked\n{\n\tmeta:\n\t\tauthor = \"Matthew @ Embee_Research\"\n\t\tcreated = \"2023/08/27\"\n\t\tdescription = \"Detects strings present in remcos rat Samples.\"\n\t\tsha_256 = \"ec901217558e77f2f449031a6a1190b1e99b30fa1bb8d8dabc3a99bc69833784\"\n\n\tstrings:\n\t\t$r0 = \" ______                              \" ascii\n\t\t$r1 = \"(_____ \\\\                             \" ascii\n\t\t$r2 = \" _____) )_____ ____   ____ ___   ___ \" ascii\n\t\t$r3 = \"|  __  /| ___ |    \\\\ / ___) _ \\\\ /___)\" ascii\n\t\t$r4 = \"| |  \\\\ \\\\| ____| | | ( (__| |_| |___ |\" ascii\n\t\t$r5 = \"|_|   |_|_____)_|_|_|\\\\____)___/(___/ \" ascii\n\t\t$s1 = \"Watchdog module activated\" ascii\n\t\t$s2 = \"Remcos restarted by watchdog!\" ascii\n\t\t$s3 = \" BreakingSecurity.net\" ascii\n\n\tcondition:\n\t\t(( all of ( $r* ) ) or ( all of ( $s* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

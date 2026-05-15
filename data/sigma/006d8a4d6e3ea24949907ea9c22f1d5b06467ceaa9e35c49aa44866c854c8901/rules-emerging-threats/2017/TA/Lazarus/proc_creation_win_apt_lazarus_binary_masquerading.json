@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2017/TA/Lazarus/proc_creation_win_apt_lazarus_binary_masquerading.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Trent Liffick (@tliffick), Bartlomiej Czyz (@bczyz1)",
+                "date": "2020-06-03",
+                "title": "Lazarus System Binary Masquerading",
+                "id": "3f7f5b0b-5b16-476c-a85f-ab477f6dd24b"
+            },
+            "rule_text": "title: Lazarus System Binary Masquerading\nid: 3f7f5b0b-5b16-476c-a85f-ab477f6dd24b\nstatus: test\ndescription: Detects binaries used by the Lazarus group which use system names but\n  are executed and launched from non-default location\nreferences:\n- https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2018/03/07180244/Lazarus_Under_The_Hood_PDF_final.pdf\nauthor: Trent Liffick (@tliffick), Bartlomiej Czyz (@bczyz1)\ndate: 2020-06-03\nmodified: 2023-03-10\ntags:\n- attack.stealth\n- attack.t1036.005\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\msdtc.exe\n    - \\gpsvc.exe\n  filter:\n    Image|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n  condition: selection and not filter\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wscript_cscript_susp_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Alejandro Houspanossian ('@lekz86')",
+                "date": "2023-05-15",
+                "title": "Cscript/Wscript Potentially Suspicious Child Process",
+                "id": "b6676963-0353-4f88-90f5-36c20d443c6a"
+            },
+            "rule_text": "title: Cscript/Wscript Potentially Suspicious Child Process\nid: b6676963-0353-4f88-90f5-36c20d443c6a\nstatus: test\ndescription: 'Detects potentially suspicious child processes of Wscript/Cscript. These\n  include processes such as rundll32 with uncommon exports or PowerShell spawning\n  rundll32 or regsvr32.\n\n  Malware such as Pikabot and Qakbot were seen using similar techniques as well as\n  many others.\n\n  '\nreferences:\n- Internal Research\n- https://github.com/pr0xylife/Pikabot/blob/fc58126127adf0f65e78f4eec59675523f48f086/Pikabot_30.10.2023.txt\n- https://github.com/pr0xylife/Pikabot/blob/fc58126127adf0f65e78f4eec59675523f48f086/Pikabot_22.12.2023.txt\nauthor: Nasreddine Bencherchali (Nextron Systems), Alejandro Houspanossian ('@lekz86')\ndate: 2023-05-15\nmodified: 2024-01-02\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\wscript.exe\n    - \\cscript.exe\n  selection_cli_script_main:\n    Image|endswith:\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  selection_cli_script_option_mshta:\n    CommandLine|contains|all:\n    - mshta\n    - http\n  selection_cli_script_option_other:\n    CommandLine|contains:\n    - rundll32\n    - regsvr32\n    - msiexec\n  selection_cli_standalone:\n    Image|endswith: \\rundll32.exe\n  filter_main_rundll32_known_exports:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains:\n    - UpdatePerUserSystemParameters\n    - PrintUIEntry\n    - ClearMyTracksByProcess\n  condition: selection_parent and ( selection_cli_standalone or (selection_cli_script_main\n    and 1 of selection_cli_script_option_*) ) and not 1 of filter_main_*\nfalsepositives:\n- Some false positives might occur with admin or third party software scripts. Investigate\n  and apply additional filters accordingly.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

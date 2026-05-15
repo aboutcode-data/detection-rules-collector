@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_ammyy_admin_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2024-08-05",
+                "title": "Remote Access Tool - Ammy Admin Agent Execution",
+                "id": "7da7809e-f3d5-47a3-9d5d-fc9d019caf14"
+            },
+            "rule_text": "title: Remote Access Tool - Ammy Admin Agent Execution\nid: 7da7809e-f3d5-47a3-9d5d-fc9d019caf14\nstatus: test\ndescription: Detects the execution of the Ammy Admin RMM agent for remote management.\nreferences:\n- https://www.ammyy.com/en/admin_features.html\nauthor: '@kostastsale'\ndate: 2024-08-05\ntags:\n- attack.execution\n- attack.persistence\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\rundll32.exe\n    CommandLine|contains: AMMYY\\aa_nts.dll\",run\n  condition: selection\nfalsepositives:\n- Legitimate use of Ammy Admin RMM agent for remote management by admins.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

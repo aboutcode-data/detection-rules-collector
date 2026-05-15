@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/evild3ad /contains_vba_macro_code.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Contains_VBA_macro_code",
+                "tags": [],
+                "author": "evild3ad",
+                "description": "Detect a MS Office document with embedded VBA macro code",
+                "date": "2016-01-09",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule Contains_VBA_macro_code\n{\n\tmeta:\n\t\tauthor = \"evild3ad\"\n\t\tdescription = \"Detect a MS Office document with embedded VBA macro code\"\n\t\tdate = \"2016-01-09\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$officemagic = { D0 CF 11 E0 A1 B1 1A E1 }\n\t\t$zipmagic = \"PK\"\n\t\t$97str1 = \"_VBA_PROJECT_CUR\" wide\n\t\t$97str2 = \"VBAProject\"\n\t\t$97str3 = { 41 74 74 72 69 62 75 74 00 65 20 56 42 5F }\n\t\t$xmlstr1 = \"vbaProject.bin\"\n\t\t$xmlstr2 = \"vbaData.xml\"\n\n\tcondition:\n\t\t($officemagic at 0 and any of ( $97str* ) ) or ( $zipmagic at 0 and any of ( $xmlstr* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_invoke_obfuscation_via_var_services_security.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Timur Zinniatullin, oscd.community",
+                "date": "2020-10-13",
+                "title": "Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION - Security",
+                "id": "4c54ba8f-73d2-4d40-8890-d9cf1dca3d30"
+            },
+            "rule_text": "title: Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION - Security\nid: 4c54ba8f-73d2-4d40-8890-d9cf1dca3d30\nrelated:\n- id: 14bcba49-a428-42d9-b943-e2ce0f0f7ae6\n  type: derived\nstatus: test\ndescription: Detects Obfuscated Powershell via VAR++ LAUNCHER\nreferences:\n- https://github.com/SigmaHQ/sigma/issues/1009\nauthor: Timur Zinniatullin, oscd.community\ndate: 2020-10-13\nmodified: 2022-11-29\ntags:\n- attack.stealth\n- attack.t1027\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceFileName|contains|all:\n    - '&&set'\n    - cmd\n    - /c\n    - -f\n    ServiceFileName|contains:\n    - '{0}'\n    - '{1}'\n    - '{2}'\n    - '{3}'\n    - '{4}'\n    - '{5}'\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

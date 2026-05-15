@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_dotnet_trace_lolbin_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jimmy Bayne (@bohops)",
+                "date": "2024-01-02",
+                "title": "Binary Proxy Execution Via Dotnet-Trace.EXE",
+                "id": "9257c05b-4a4a-48e5-a670-b7b073cf401b"
+            },
+            "rule_text": "title: Binary Proxy Execution Via Dotnet-Trace.EXE\nid: 9257c05b-4a4a-48e5-a670-b7b073cf401b\nstatus: test\ndescription: Detects commandline arguments for executing a child process via dotnet-trace.exe\nreferences:\n- https://twitter.com/bohops/status/1740022869198037480\nauthor: Jimmy Bayne (@bohops)\ndate: 2024-01-02\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\dotnet-trace.exe\n  - OriginalFileName: dotnet-trace.dll\n  selection_cli:\n    CommandLine|contains|all:\n    - '-- '\n    - collect\n  condition: all of selection_*\nfalsepositives:\n- Legitimate usage of the utility in order to debug and trace a program.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

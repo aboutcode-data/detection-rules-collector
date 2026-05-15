@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_bpfdoor_port_redirect.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Rafal Piasecki",
+                "date": "2022-08-10",
+                "title": "Bpfdoor TCP Ports Redirect",
+                "id": "70b4156e-50fc-4523-aa50-c9dddf1993fc"
+            },
+            "rule_text": "title: Bpfdoor TCP Ports Redirect\nid: 70b4156e-50fc-4523-aa50-c9dddf1993fc\nstatus: test\ndescription: 'All TCP traffic on particular port from attacker is routed to different\n  port. ex. ''/sbin/iptables -t nat -D PREROUTING -p tcp -s 192.168.1.1 --dport 22\n  -j REDIRECT --to-ports 42392''\n\n  The traffic looks like encrypted SSH communications going to TCP port 22, but in\n  reality is being directed to the shell port once it hits the iptables rule for the\n  attacker host only.\n\n  '\nreferences:\n- https://www.sandflysecurity.com/blog/bpfdoor-an-evasive-linux-backdoor-technical-analysis/\n- https://www.elastic.co/security-labs/a-peek-behind-the-bpfdoor\nauthor: Rafal Piasecki\ndate: 2022-08-10\ntags:\n- attack.defense-impairment\n- attack.t1686\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  cmd:\n    type: EXECVE\n    a0|endswith: iptables\n    a1: -t\n    a2: nat\n  keywords:\n  - --to-ports 42\n  - --to-ports 43\n  condition: cmd and keywords\nfalsepositives:\n- Legitimate ports redirect\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

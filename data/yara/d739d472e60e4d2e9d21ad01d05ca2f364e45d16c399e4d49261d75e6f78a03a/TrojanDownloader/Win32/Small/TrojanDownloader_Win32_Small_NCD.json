@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Small/TrojanDownloader_Win32_Small_NCD.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Small_NCD",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Small.NCD,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Small_NCD\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Small.NCD,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {40 00 6a 00 68 00 00 02 00 e8 ?? ?? 00 00 83 f8 00 0f ?? ?? ?? ?? ?? 68 ?? ?? 40 00 6a 00 68 ?? ?? 40 00 e8 }\n\t\t$a_00_1 = {2f 63 20 64 65 6c 20 25 73 2e 65 78 65 }\n\t\t$a_00_2 = {43 72 65 61 74 65 4d 75 74 65 78 }\n\t\t$a_00_3 = {57 69 6e 45 78 65 63 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

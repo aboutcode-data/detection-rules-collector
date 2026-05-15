@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Oficla/Trojan_Win32_Oficla_AG.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Oficla_AG",
+                "tags": [],
+                "description": "Trojan:Win32/Oficla.AG,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Oficla_AG\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Oficla.AG,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {b9 bf a2 1a 50 81 f1 ff a2 1a 50 51 b9 b3 a1 ca 3b 81 f1 b3 b1 ca 3b 51 b9 37 0f 00 00 51 }\n\t\t$a_01_1 = {64 a1 18 00 00 00 8b 40 34 83 f8 06 74 01 c3 }\n\t\t$a_00_2 = {66 75 63 6b 20 61 76 }\n\t\t$a_00_3 = {42 00 69 00 74 00 44 00 65 00 66 00 65 00 6e 00 64 00 65 00 72 00 20 00 31 00 30 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

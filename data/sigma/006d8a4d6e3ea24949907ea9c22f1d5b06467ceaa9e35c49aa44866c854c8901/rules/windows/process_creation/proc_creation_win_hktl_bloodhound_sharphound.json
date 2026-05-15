@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_bloodhound_sharphound.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2019-12-20",
+                "title": "HackTool - Bloodhound/Sharphound Execution",
+                "id": "f376c8a7-a2d0-4ddc-aa0c-16c17236d962"
+            },
+            "rule_text": "title: HackTool - Bloodhound/Sharphound Execution\nid: f376c8a7-a2d0-4ddc-aa0c-16c17236d962\nstatus: test\ndescription: Detects command line parameters used by Bloodhound and Sharphound hack\n  tools\nreferences:\n- https://github.com/BloodHoundAD/BloodHound\n- https://github.com/BloodHoundAD/SharpHound\nauthor: Florian Roth (Nextron Systems)\ndate: 2019-12-20\nmodified: 2023-02-04\ntags:\n- attack.discovery\n- attack.t1087.001\n- attack.t1087.002\n- attack.t1482\n- attack.t1069.001\n- attack.t1069.002\n- attack.execution\n- attack.t1059.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Product|contains: SharpHound\n  - Description|contains: SharpHound\n  - Company|contains:\n    - SpecterOps\n    - evil corp\n  - Image|contains:\n    - \\Bloodhound.exe\n    - \\SharpHound.exe\n  selection_cli_1:\n    CommandLine|contains:\n    - ' -CollectionMethod All '\n    - ' --CollectionMethods Session '\n    - ' --Loop --Loopduration '\n    - ' --PortScanTimeout '\n    - '.exe -c All -d '\n    - Invoke-Bloodhound\n    - Get-BloodHoundData\n  selection_cli_2:\n    CommandLine|contains|all:\n    - ' -JsonFolder '\n    - ' -ZipFileName '\n  selection_cli_3:\n    CommandLine|contains|all:\n    - ' DCOnly '\n    - ' --NoSaveCache '\n  condition: 1 of selection_*\nfalsepositives:\n- Other programs that use these command line option and accepts an 'All' parameter\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

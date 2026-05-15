@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_access/proc_access_win_hktl_handlekatz_lsass_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bhabesh Raj (rule), @thefLinkk",
+                "date": "2022-06-27",
+                "title": "HackTool - HandleKatz Duplicating LSASS Handle",
+                "id": "b1bd3a59-c1fd-4860-9f40-4dd161a7d1f5"
+            },
+            "rule_text": "title: HackTool - HandleKatz Duplicating LSASS Handle\nid: b1bd3a59-c1fd-4860-9f40-4dd161a7d1f5\nstatus: test\ndescription: Detects HandleKatz opening LSASS to duplicate its handle to later dump\n  the memory without opening any new handles\nreferences:\n- https://github.com/codewhitesec/HandleKatz\nauthor: Bhabesh Raj (rule), @thefLinkk\ndate: 2022-06-27\nmodified: 2023-11-28\ntags:\n- attack.execution\n- attack.t1106\n- attack.t1003.001\n- attack.credential-access\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    TargetImage|endswith: \\lsass.exe\n    GrantedAccess: '0x1440'\n    CallTrace|startswith: C:\\Windows\\System32\\ntdll.dll+\n    CallTrace|contains: '|UNKNOWN('\n    CallTrace|endswith: )\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

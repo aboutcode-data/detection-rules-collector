@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_wuauclt_network_connection.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)",
+                "date": "2020-10-12",
+                "title": "Potentially Suspicious Wuauclt Network Connection",
+                "id": "c649a6c7-cd8c-4a78-9c04-000fc76df954"
+            },
+            "rule_text": "title: Potentially Suspicious Wuauclt Network Connection\nid: c649a6c7-cd8c-4a78-9c04-000fc76df954\nstatus: test\ndescription: 'Detects the use of the Windows Update Client binary (wuauclt.exe) to\n  proxy execute code and making network connections.\n\n  One could easily make the DLL spawn a new process and inject to it to proxy the\n  network connection and bypass this rule.\n\n  '\nreferences:\n- https://dtm.uk/wuauclt/\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)\ndate: 2020-10-12\nmodified: 2024-03-12\ntags:\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: network_connection\n  product: windows\n  definition: 'Requirements: The CommandLine field enrichment is required in order\n    for this rule to be used.'\ndetection:\n  selection:\n    Image|contains: wuauclt\n    CommandLine|contains: ' /RunHandlerComServer'\n  filter_main_ip:\n    DestinationIp|cidr:\n    - 127.0.0.0/8\n    - 10.0.0.0/8\n    - 169.254.0.0/16\n    - 172.16.0.0/12\n    - 192.168.0.0/16\n    - ::1/128\n    - fe80::/10\n    - fc00::/7\n  filter_main_msrange:\n    DestinationIp|cidr:\n    - 20.184.0.0/13\n    - 20.192.0.0/10\n    - 23.79.0.0/16\n    - 51.10.0.0/15\n    - 51.103.0.0/16\n    - 51.104.0.0/15\n    - 52.224.0.0/11\n  filter_main_uus:\n    CommandLine|contains:\n    - :\\Windows\\UUS\\Packages\\Preview\\amd64\\updatedeploy.dll /ClassId\n    - :\\Windows\\UUS\\amd64\\UpdateDeploy.dll /ClassId\n  filter_main_winsxs:\n    CommandLine|contains|all:\n    - :\\Windows\\WinSxS\\\n    - '\\UpdateDeploy.dll /ClassId '\n  filter_main_cli_null:\n    CommandLine: null\n  filter_main_cli_empty:\n    CommandLine: ''\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

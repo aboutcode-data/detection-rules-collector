@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/windows/process_creation/donpapi.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Robin Hellsten",
+                "date": "2022-10-20",
+                "title": "DonPapi being executed",
+                "id": "25124754-2631-48b1-a2d7-26022e91e59c"
+            },
+            "rule_text": "title: DonPapi being executed\nid: 25124754-2631-48b1-a2d7-26022e91e59c\ndescription: DonPapi, tool for dumping DPAPI credentials observed\nstatus: stable\nauthor: NTT Security - Robin Hellsten\ndate: '2022-10-20'\nreferences:\n- https://unit42.paloaltonetworks.com/ransom-cartel-ransomware/\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  python:\n    CommandLine|contains: python\n  papi:\n    CommandLine|contains: donpapi\n  condition: python and papi\nfalsepositives:\n- No known false positives\nlevel: high\ntags:\n- attack.t1555\n- attack.credential_access\n- attack.lateral_movement\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Ransom/MSIL/Lazy/Ransom_MSIL_Lazy_SN_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransom_MSIL_Lazy_SN_MTB",
+                "tags": [],
+                "description": "Ransom:MSIL/Lazy.SN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 03 00 00 "
+            },
+            "rule_text": "rule Ransom_MSIL_Lazy_SN_MTB\n{\n\tmeta:\n\t\tdescription = \"Ransom:MSIL/Lazy.SN!MTB,SIGNATURE_TYPE_PEHSTR_EXT,07 00 07 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {45 02 00 00 00 2f 00 00 00 05 00 00 00 38 2a 00 00 00 1d 28 2a 00 00 0a 20 22 27 00 00 28 89 00 00 06 28 e0 00 00 06 20 00 00 00 00 28 8d 00 00 06 3a ca ff ff ff }\n\t\t$a_01_1 = {24 63 65 37 38 35 63 37 31 2d 37 39 61 63 2d 34 32 33 31 2d 39 31 37 63 2d 30 34 30 62 35 38 66 39 34 63 62 35 }\n\t\t$a_00_2 = {44 00 65 00 62 00 75 00 67 00 67 00 65 00 72 00 20 00 44 00 65 00 74 00 65 00 63 00 74 00 65 00 64 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 4 + ( #a_01_1 & 1 ) * 2 + ( #a_00_2 & 1 ) * 1 ) >= 7\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/BAT/Injector/VirTool_BAT_Injector_ED.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_BAT_Injector_ED",
+                "tags": [],
+                "description": "VirTool:BAT/Injector.ED,SIGNATURE_TYPE_PEHSTR_EXT,64 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_BAT_Injector_ED\n{\n\tmeta:\n\t\tdescription = \"VirTool:BAT/Injector.ED,SIGNATURE_TYPE_PEHSTR_EXT,64 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {02 1f 3c 28 }\n\t\t$a_03_1 = {20 00 30 00 00 1f 40 6f ?? 00 00 06 }\n\t\t$a_03_2 = {20 f8 00 00 00 d6 11 ?? 1f 28 d8 d6 11 ?? 16 1f 28 28 }\n\t\t$a_01_3 = {2d 4d 61 6c 77 61 72 65 62 79 74 65 73 20 53 63 61 6e 6e 65 72 2d }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * - 300 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

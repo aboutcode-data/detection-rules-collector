@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/proxy_generic/proxy_hello_world_user_agent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Joseph A. M.",
+                "date": "2025-08-02",
+                "title": "Potential Hello-World Scraper Botnet Activity",
+                "id": "1712bafe-be05-4a0e-89d4-17a3ed151bf5"
+            },
+            "rule_text": "title: Potential Hello-World Scraper Botnet Activity\nid: 1712bafe-be05-4a0e-89d4-17a3ed151bf5\nstatus: experimental\ndescription: 'Detects network traffic potentially associated with a scraper botnet\n  variant that uses the \"Hello-World/1.0\" user-agent string.\n\n  '\nreferences:\n- https://www.greynoise.io/blog/new-scraper-botnet-concentrated-in-taiwan\n- https://viz.greynoise.io/tags/hello-world-scraper-botnet?days=30\nauthor: Joseph A. M.\ndate: 2025-08-02\ntags:\n- attack.reconnaissance\n- attack.t1595\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-useragent: Hello-World/1.0\n    cs-method: GET\n  condition: selection\nfalsepositives:\n- Legitimate network monitoring or vulnerability scanning tools that may use this\n  generic user agent.\n- Internal development or testing scripts. Consider filtering by source IP if this\n  is expected from certain systems.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/web/proxy_generic/proxy_ua_bitsadmin_susp_tld.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Tim Shelton",
+                "date": "2019-03-07",
+                "title": "Bitsadmin to Uncommon TLD",
+                "id": "9eb68894-7476-4cd6-8752-23b51f5883a7"
+            },
+            "rule_text": "title: Bitsadmin to Uncommon TLD\nid: 9eb68894-7476-4cd6-8752-23b51f5883a7\nstatus: test\ndescription: Detects Bitsadmin connections to domains with uncommon TLDs\nreferences:\n- https://twitter.com/jhencinski/status/1102695118455349248\n- https://isc.sans.edu/forums/diary/Investigating+Microsoft+BITS+Activity/23281/\nauthor: Florian Roth (Nextron Systems), Tim Shelton\ndate: 2019-03-07\nmodified: 2023-05-17\ntags:\n- attack.command-and-control\n- attack.execution\n- attack.stealth\n- attack.t1071.001\n- attack.persistence\n- attack.t1197\n- attack.s0190\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-useragent|startswith: Microsoft BITS/\n  falsepositives:\n    cs-host|endswith:\n    - .com\n    - .net\n    - .org\n    - .scdn.co\n    - .sfx.ms\n  condition: selection and not falsepositives\nfalsepositives:\n- Rare programs that use Bitsadmin and update from regional TLDs e.g. .uk or .ca\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

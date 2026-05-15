@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Florian Roth/gen_regsrv32_issue.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SCT_Scriptlet_in_Temp_Inet_Files",
+                "tags": [],
+                "description": "Detects a scriptlet file in the temporary Internet files (see regsvr32 AppLocker bypass)",
+                "author": "Florian Roth",
+                "reference": "http://goo.gl/KAB8Jw",
+                "date": "2016-04-26"
+            },
+            "rule_text": "rule SCT_Scriptlet_in_Temp_Inet_Files\n{\n\tmeta:\n\t\tdescription = \"Detects a scriptlet file in the temporary Internet files (see regsvr32 AppLocker bypass)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"http://goo.gl/KAB8Jw\"\n\t\tdate = \"2016-04-26\"\n\n\tstrings:\n\t\t$s1 = \"<scriptlet>\" fullword ascii nocase\n\t\t$s2 = \"ActiveXObject(\\\"WScript.Shell\\\")\" ascii\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x4D583F3C or uint32( 0 ) == 0x6D78F3C ) and $s1 and $s2 and filepath contains \"Temporary Internet Files\"\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

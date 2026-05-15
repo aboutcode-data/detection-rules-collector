@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_zoho_rcef_logs.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "EXPL_Zoho_RCE_Fix_Lines_Dec21_1",
+                "tags": [],
+                "description": "Detects lines in log lines of Zoho products that indicate RCE fixes (silent removal of evidence)",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/cyb3rops/status/1467784104930385923",
+                "date": "2021-12-06",
+                "score": 65,
+                "id": "633287e3-a377-5b3c-8520-a7790168eff5"
+            },
+            "rule_text": "rule EXPL_Zoho_RCE_Fix_Lines_Dec21_1\n{\n\tmeta:\n\t\tdescription = \"Detects lines in log lines of Zoho products that indicate RCE fixes (silent removal of evidence)\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/cyb3rops/status/1467784104930385923\"\n\t\tdate = \"2021-12-06\"\n\t\tscore = 65\n\t\tid = \"633287e3-a377-5b3c-8520-a7790168eff5\"\n\n\tstrings:\n\t\t$s1 = \"RCEF=\"\n\t\t$sa1 = \"\\\"attackStatus\\\"\\\\:\\\"active\\\"\"\n\t\t$sa2 = \"\\\"attackStatus\\\":\\\"active\\\"\"\n\t\t$sd1 = \"deletedCount\"\n\t\t$sd_fp1 = \"\\\"deletedCount\\\"\\\\:0\"\n\t\t$sd_fp2 = \"\\\"deletedCount\\\":0\"\n\n\tcondition:\n\t\tfilesize < 6MB and $s1 and ( 1 of ( $sa* ) or ( $sd1 and not 1 of ( $sd_fp* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

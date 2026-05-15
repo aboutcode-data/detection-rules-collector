@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2022/TA/MERCURY/proc_creation_win_apt_mercury.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2022-08-26",
+                "title": "MERCURY APT Activity",
+                "id": "a62298a3-1fe0-422f-9a68-ffbcbc5a123d"
+            },
+            "rule_text": "title: MERCURY APT Activity\nid: a62298a3-1fe0-422f-9a68-ffbcbc5a123d\nstatus: test\ndescription: Detects suspicious command line patterns seen being used by MERCURY APT\nreferences:\n- https://www.microsoft.com/security/blog/2022/08/25/mercury-leveraging-log4j-2-vulnerabilities-in-unpatched-systems-to-target-israeli-organizations/\nauthor: Florian Roth (Nextron Systems)\ndate: 2022-08-26\nmodified: 2023-03-10\ntags:\n- attack.execution\n- attack.t1059.001\n- attack.g0069\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|all:\n    - -exec bypass -w 1 -enc\n    - UwB0AGEAcgB0AC0ASgBvAGIAIAAtAFMAYwByAGkAcAB0AEIAbABvAGMAawAgAHsAKABzAGEAcABzACAAKAAiAHAA\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

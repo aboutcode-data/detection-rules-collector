@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/IcedID/Trojan_Win64_IcedID_MSD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_IcedID_MSD_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/IcedID.MSD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_IcedID_MSD_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/IcedID.MSD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 04 01 8b 8c 24 ?? ?? ?? ?? eb 15 }\n\t\t$a_00_1 = {33 c8 8b c1 eb a6 }\n\t\t$a_03_2 = {48 63 0c 24 48 8b 94 24 ?? ?? ?? ?? e9 }\n\t\t$a_00_3 = {88 04 0a e9 }\n\t\t$a_00_4 = {55 6e 73 61 64 6a 6b 62 61 73 66 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

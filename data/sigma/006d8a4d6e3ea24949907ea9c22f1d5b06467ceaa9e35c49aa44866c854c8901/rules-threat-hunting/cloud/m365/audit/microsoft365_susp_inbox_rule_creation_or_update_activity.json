@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/cloud/m365/audit/microsoft365_susp_inbox_rule_creation_or_update_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Marco Pedrinazzi (@pedrinazziM) (InTheCyber)",
+                "date": "2026-01-09",
+                "title": "Inbox Rules Creation Or Update Activity in O365",
+                "id": "d3577be1-42c9-44a7-b56e-2e8de97349d3"
+            },
+            "rule_text": "title: Inbox Rules Creation Or Update Activity in O365\nid: d3577be1-42c9-44a7-b56e-2e8de97349d3\nstatus: experimental\ndescription: 'Detects inbox rule creation or update via O365 Audit logs, a technique\n  commonly observed in Business Email Compromise (BEC) attacks to hide emails.\n\n  The usage of inbox rules can be a sign of a compromised mailbox, where an attacker\n  is attempting to evade detections by suppressing or redirecting incoming emails.\n\n  Analysts should review these rules in context, validate whether they reflect normal\n  user behavior, and correlate with other indicators such as unusual login activity\n  or recent mailbox rule modifications.\n\n  '\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/email-hiding-rules/\n- https://learn.microsoft.com/it-it/powershell/module/exchangepowershell/set-inboxrule?view=exchange-ps\n- https://learn.microsoft.com/it-it/powershell/module/exchangepowershell/new-inboxrule?view=exchange-ps\nauthor: Marco Pedrinazzi (@pedrinazziM) (InTheCyber)\ndate: 2026-01-09\ntags:\n- attack.stealth\n- attack.t1564.008\n- attack.exfiltration\n- attack.collection\n- attack.t1114.003\n- detection.threat-hunting\nlogsource:\n  service: audit\n  product: m365\n  definition: 'Requirements: The ''Parameters'' field is a list of dict. A correct\n    mapping to the ''Value'' field inside is recommended to avoid greedy search'\ndetection:\n  selection:\n    Operation:\n    - New-InboxRule\n    - Set-InboxRule\n    Parameters|contains:\n    - DeleteMessage\n    - MarkAsRead\n    - MoveToFolder\n    - SubjectOrBodyContainsWords\n  condition: selection\nfalsepositives:\n- Legitimate inbox rules created by users or administrators to manage email flow such\n  as filtering, organizing, or automating email handling.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

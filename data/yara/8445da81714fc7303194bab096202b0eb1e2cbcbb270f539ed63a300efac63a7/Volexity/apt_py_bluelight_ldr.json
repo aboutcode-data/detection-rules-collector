@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Volexity/apt_py_bluelight_ldr.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "apt_py_bluelight_ldr",
+                "tags": [
+                    "InkySquid"
+                ],
+                "author": "threatintel@volexity.com",
+                "description": "Python Loader used to execute the BLUELIGHT malware family.",
+                "reference": "https://www.volexity.com/blog/2021/08/24/north-korean-bluelight-special-inkysquid-deploys-rokrat/",
+                "date": "2021-06-22",
+                "hash1": "80269413be6ad51b8b19631b2f5559c9572842e789bbce031babe6e879d2e120",
+                "license": "See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt"
+            },
+            "rule_text": "rule apt_py_bluelight_ldr : InkySquid\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdescription = \"Python Loader used to execute the BLUELIGHT malware family.\"\n\t\treference = \"https://www.volexity.com/blog/2021/08/24/north-korean-bluelight-special-inkysquid-deploys-rokrat/\"\n\t\tdate = \"2021-06-22\"\n\t\thash1 = \"80269413be6ad51b8b19631b2f5559c9572842e789bbce031babe6e879d2e120\"\n\t\tlicense = \"See license at https://github.com/volexity/threat-intel/blob/main/LICENSE.txt\"\n\n\tstrings:\n\t\t$s1 = \"\\\"\\\".join(chr(ord(\" ascii\n\t\t$s2 = \"import ctypes \" ascii\n\t\t$s3 = \"ctypes.CFUNCTYPE(ctypes.c_int)\" ascii\n\t\t$s4 = \"ctypes.memmove\" ascii\n\t\t$s5 = \"python ended\" ascii\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

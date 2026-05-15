@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_ieinstal.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-08-30",
+                "title": "UAC Bypass Using IEInstal - Process",
+                "id": "80fc36aa-945e-4181-89f2-2f907ab6775d"
+            },
+            "rule_text": "title: UAC Bypass Using IEInstal - Process\nid: 80fc36aa-945e-4181-89f2-2f907ab6775d\nstatus: test\ndescription: Detects the pattern of UAC Bypass using IEInstal.exe (UACMe 64)\nreferences:\n- https://github.com/hfiref0x/UACME\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-08-30\nmodified: 2024-12-01\ntags:\n- attack.privilege-escalation\n- attack.t1548.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    IntegrityLevel:\n    - High\n    - System\n    - S-1-16-16384\n    - S-1-16-12288\n    ParentImage|endswith: \\ieinstal.exe\n    Image|contains: \\AppData\\Local\\Temp\\\n    Image|endswith: consent.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

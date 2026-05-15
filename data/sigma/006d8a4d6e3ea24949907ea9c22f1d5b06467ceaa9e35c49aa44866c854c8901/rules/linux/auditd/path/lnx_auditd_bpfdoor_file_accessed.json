@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/path/lnx_auditd_bpfdoor_file_accessed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Rafal Piasecki",
+                "date": "2022-08-10",
+                "title": "BPFDoor Abnormal Process ID or Lock File Accessed",
+                "id": "808146b2-9332-4d78-9416-d7e47012d83d"
+            },
+            "rule_text": "title: BPFDoor Abnormal Process ID or Lock File Accessed\nid: 808146b2-9332-4d78-9416-d7e47012d83d\nstatus: test\ndescription: detects BPFDoor .lock and .pid files access in temporary file storage\n  facility\nreferences:\n- https://www.sandflysecurity.com/blog/bpfdoor-an-evasive-linux-backdoor-technical-analysis/\n- https://www.elastic.co/security-labs/a-peek-behind-the-bpfdoor\n- https://www.rapid7.com/blog/post/tr-bpfdoor-telecom-networks-sleeper-cells-threat-research-report/\n- https://github.com/rapid7/Rapid7-Labs/blob/741c7196ec12a0a56b63463d1fd726ff14d3a97a/BPFDoor/rapid7_detect_bpfdoor.sh\nauthor: Rafal Piasecki\ndate: 2022-08-10\nmodified: 2026-03-30\ntags:\n- attack.execution\n- attack.t1106\n- attack.t1059\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: PATH\n    name:\n    - /var/run/aepmonend.pid\n    - /var/run/auditd.lock\n    - /var/run/cma.lock\n    - /var/run/console-kit.pid\n    - /var/run/consolekit.pid\n    - /var/run/daemon.pid\n    - /var/run/hald-addon.pid\n    - /var/run/hald-smartd.pid\n    - /var/run/haldrund.pid\n    - /var/run/hp-health.pid\n    - /var/run/hpasmlit.lock\n    - /var/run/hpasmlited.pid\n    - /var/run/kdevrund.pid\n    - /var/run/lldpad.lock\n    - /var/run/mcelog.pid\n    - /var/run/system.pid\n    - /var/run/uvp-srv.pid\n    - /var/run/vmtoolagt.pid\n    - /var/run/xinetd.lock\n  condition: selection\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

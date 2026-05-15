@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Gozi/Trojan_Win32_Gozi_GO_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Gozi_GO_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Gozi.GO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Gozi_GO_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Gozi.GO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,0a 00 0a 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {0f b6 c9 6b c9 ?? 2a d9 8a ca f6 d8 c0 e1 ?? 02 ca 2a c1 02 d8 8b 44 24 ?? 05 ?? ?? ?? ?? a3 ?? ?? ?? ?? 89 84 3d ?? ?? ?? ?? 83 c7 ?? 8b 15 ?? ?? ?? ?? 0f b6 c3 66 83 e8 ?? 66 03 c2 0f b7 c8 89 4c 24 ?? 81 ff ?? ?? ?? ?? 73 ?? a1 ?? ?? ?? ?? e9 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 ) >= 10\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Gozi_GO_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Gozi.GO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Gozi_GO_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Gozi.GO!MTB,SIGNATURE_TYPE_PEHSTR_EXT,14 00 14 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8a 08 88 0a 8b 55 ?? 83 c2 01 89 55 ?? 8b 45 ?? 83 c0 01 89 45 ?? 8b 4d ?? 83 c1 ?? 8b 75 ?? 83 d6 00 33 d2 2b 4d ?? 1b f2 0f b7 45 ?? 99 2b c1 1b d6 66 89 45 ?? eb }\n\t\t$a_02_1 = {0f b6 45 ff 83 e8 ?? 2b 05 ?? ?? ?? ?? 66 89 45 ?? 8b 0d ?? ?? ?? ?? 81 c1 ?? ?? ?? ?? 89 0d ?? ?? ?? ?? 8b 15 ?? ?? ?? ?? 03 55 f4 a1 ?? ?? ?? ?? 89 82 ?? ?? ?? ?? 0f b7 4d ?? 8b 15 ?? ?? ?? ?? 8d 84 0a ?? ?? ?? ?? 66 89 45 ?? e9 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 ) >= 20\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_vscode_tunnel_remote_creation_artefacts.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-25",
+                "title": "Visual Studio Code Tunnel Remote File Creation",
+                "id": "56e05d41-ce99-4ecd-912d-93f019ee0b71"
+            },
+            "rule_text": "title: Visual Studio Code Tunnel Remote File Creation\nid: 56e05d41-ce99-4ecd-912d-93f019ee0b71\nstatus: test\ndescription: 'Detects the creation of file by the \"node.exe\" process in the \".vscode-server\"\n  directory. Could be a sign of remote file creation via VsCode tunnel feature\n\n  '\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-25\ntags:\n- attack.command-and-control\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    Image|contains: \\servers\\Stable-\n    Image|endswith: \\server\\node.exe\n    TargetFilename|contains: \\.vscode-server\\data\\User\\History\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/identity/okta/okta_policy_modified_or_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-09-12",
+                "title": "Okta Policy Modified or Deleted",
+                "id": "1667a172-ed4c-463c-9969-efd92195319a"
+            },
+            "rule_text": "title: Okta Policy Modified or Deleted\nid: 1667a172-ed4c-463c-9969-efd92195319a\nstatus: test\ndescription: Detects when an Okta policy is modified or deleted.\nreferences:\n- https://developer.okta.com/docs/reference/api/system-log/\n- https://developer.okta.com/docs/reference/api/event-types/\nauthor: Austin Songer @austinsonger\ndate: 2021-09-12\nmodified: 2026-04-27\ntags:\n- attack.impact\nlogsource:\n  product: okta\n  service: okta\ndetection:\n  selection:\n    eventType:\n    - policy.lifecycle.update\n    - policy.lifecycle.delete\n  condition: selection\nfalsepositives:\n- Okta Policies being modified or deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Okta Policies modified or deleted from unfamiliar users should be investigated.\n  If known behavior is causing false positives, it can be exempted from the rule.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

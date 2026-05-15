@@ -1,0 +1,30 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/US CERT/WannaCry.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Wanna_Cry_Ransomware_Generic",
+                "tags": [],
+                "description": "Detects WannaCry Ransomware on Disk and in Virtual Page",
+                "author": "US-CERT Code Analysis Team",
+                "reference": "not set",
+                "date": "2017/05/12",
+                "hash0": "4DA1F312A214C07143ABEEAFB695D904"
+            },
+            "rule_text": "rule Wanna_Cry_Ransomware_Generic\n{\n\tmeta:\n\t\tdescription = \"Detects WannaCry Ransomware on Disk and in Virtual Page\"\n\t\tauthor = \"US-CERT Code Analysis Team\"\n\t\treference = \"not set\"\n\t\tdate = \"2017/05/12\"\n\t\thash0 = \"4DA1F312A214C07143ABEEAFB695D904\"\n\n\tstrings:\n\t\t$s0 = {410044004D0049004E0024}\n\t\t$s1 = \"WannaDecryptor\"\n\t\t$s2 = \"WANNACRY\"\n\t\t$s3 = \"Microsoft Enhanced RSA and AES Cryptographic\"\n\t\t$s4 = \"PKS\"\n\t\t$s5 = \"StartTask\"\n\t\t$s6 = \"wcry@123\"\n\t\t$s7 = {2F6600002F72}\n\t\t$s8 = \"unzip 0.15 Copyrigh\"\n\t\t$s9 = \"Global\\\\WINDOWS_TASKOSHT_MUTEX\"\n\t\t$s10 = \"Global\\\\WINDOWS_TASKCST_MUTEX\"\n\t\t$s11 = {7461736B736368652E657865000000005461736B5374617274000000742E776E7279000069636163}\n\t\t$s12 = {6C73202E202F6772616E742045766572796F6E653A46202F54202F43202F5100617474726962202B68}\n\t\t$s13 = \"WNcry@2ol7\"\n\t\t$s14 = \"wcry@123\"\n\t\t$s15 = \"Global\\\\MsWinZonesCacheCounterMutexA\"\n\n\tcondition:\n\t\t$s0 and $s1 and $s2 and $s3 or $s4 and $s5 and $s6 and $s7 or $s8 and $s9 and $s10 or $s11 and $s12 or $s13 or $s14 or $s15\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MS17_010_WanaCry_worm",
+                "tags": [],
+                "description": "Worm exploiting MS17-010 and dropping WannaCry Ransomware",
+                "author": "Felipe Molina (@felmoltor)",
+                "reference": "https://www.exploit-db.com/exploits/41987/",
+                "date": "2017/05/12"
+            },
+            "rule_text": "rule MS17_010_WanaCry_worm\n{\n\tmeta:\n\t\tdescription = \"Worm exploiting MS17-010 and dropping WannaCry Ransomware\"\n\t\tauthor = \"Felipe Molina (@felmoltor)\"\n\t\treference = \"https://www.exploit-db.com/exploits/41987/\"\n\t\tdate = \"2017/05/12\"\n\n\tstrings:\n\t\t$ms17010_str1 = \"PC NETWORK PROGRAM 1.0\"\n\t\t$ms17010_str2 = \"LANMAN1.0\"\n\t\t$ms17010_str3 = \"Windows for Workgroups 3.1a\"\n\t\t$ms17010_str4 = \"__TREEID__PLACEHOLDER__\"\n\t\t$ms17010_str5 = \"__USERID__PLACEHOLDER__\"\n\t\t$wannacry_payload_substr1 = \"h6agLCqPqVyXi2VSQ8O6Yb9ijBX54j\"\n\t\t$wannacry_payload_substr2 = \"h54WfF9cGigWFEx92bzmOd0UOaZlM\"\n\t\t$wannacry_payload_substr3 = \"tpGFEoLOU6+5I78Toh/nHs/RAP\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

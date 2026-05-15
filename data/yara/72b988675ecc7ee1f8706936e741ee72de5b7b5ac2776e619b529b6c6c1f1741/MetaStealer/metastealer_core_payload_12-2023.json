@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/MetaStealer/metastealer_core_payload_12-2023.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MetaStealer_core_payload",
+                "tags": [],
+                "author": "RussianPanda",
+                "decription": "Detects MetaStealer Core Payload",
+                "date": "12/29/2023"
+            },
+            "rule_text": "import \"pe\"\n\nrule MetaStealer_core_payload\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdecription = \"Detects MetaStealer Core Payload\"\n\t\tdate = \"12/29/2023\"\n\n\tstrings:\n\t\t$s1 = \"FileScannerRule\"\n\t\t$s2 = \"TreeObject\"\n\t\t$s3 = \"Schema\"\n\t\t$s4 = \"StringDecrypt\"\n\t\t$s5 = \"AccountDetails\"\n\n\tcondition:\n\t\t4 of ( $s* ) and pe.imports ( \"mscoree.dll\" )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

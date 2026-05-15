@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Alureon/Trojan_Win32_Alureon_EO.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Alureon_EO",
+                "tags": [],
+                "description": "Trojan:Win32/Alureon.EO,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Alureon_EO\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Alureon.EO,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {04 37 13 c3 cd 8b ?? 03 ?? 85 90 09 05 00 89 ?? 08 c7 }\n\t\t$a_03_1 = {51 6a 05 6a 01 53 ff 15 ?? ?? ?? ?? 3b c7 74 }\n\t\t$a_01_2 = {6c 64 72 5f 64 6c 6c }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

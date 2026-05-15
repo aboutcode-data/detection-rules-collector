@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/PcClient/Backdoor_Win32_PcClient_gen_D.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_PcClient_gen_D",
+                "tags": [],
+                "description": "Backdoor:Win32/PcClient.gen!D,SIGNATURE_TYPE_PEHSTR_EXT,16 00 15 00 04 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_PcClient_gen_D\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/PcClient.gen!D,SIGNATURE_TYPE_PEHSTR_EXT,16 00 15 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {64 72 69 76 65 72 73 5c }\n\t\t$a_00_1 = {44 6f 53 65 72 76 69 63 65 }\n\t\t$a_03_2 = {33 c9 39 4c 24 08 76 10 8b 44 24 04 03 c1 80 30 ?? 41 3b 4c 24 08 72 f0 c3 }\n\t\t$a_03_3 = {83 c8 ff eb 1c 68 ?? ?? ?? ?? ?? ff 15 ?? ?? ?? ?? 85 c0 74 03 ?? ff d0 ?? ff 15 ?? ?? ?? ?? 33 c0 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_00_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 10 + ( #a_03_3 & 1 ) * 10 ) >= 21\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

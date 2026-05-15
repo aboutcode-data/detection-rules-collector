@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_stdin_redirect.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-07",
+                "title": "Read Contents From Stdin Via Cmd.EXE",
+                "id": "241e802a-b65e-484f-88cd-c2dc10f9206d"
+            },
+            "rule_text": "title: Read Contents From Stdin Via Cmd.EXE\nid: 241e802a-b65e-484f-88cd-c2dc10f9206d\nrelated:\n- id: 00a4bacd-6db4-46d5-9258-a7d5ebff4003\n  type: obsolete\nstatus: test\ndescription: Detect the use of \"<\" to read and potentially execute a file via cmd.exe\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1059.003/T1059.003.md\n- https://web.archive.org/web/20220306121156/https://www.x86matthew.com/view_post?id=ntdll_pipe\nauthor: frack113, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-07\ntags:\n- attack.execution\n- attack.t1059.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd:\n  - OriginalFileName: Cmd.Exe\n  - Image|endswith: \\cmd.exe\n  selection_cli:\n    CommandLine|contains: <\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

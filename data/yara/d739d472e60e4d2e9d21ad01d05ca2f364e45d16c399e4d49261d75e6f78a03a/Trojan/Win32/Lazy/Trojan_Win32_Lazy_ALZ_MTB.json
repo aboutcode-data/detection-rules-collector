@@ -1,0 +1,32 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Lazy/Trojan_Win32_Lazy_ALZ_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Lazy_ALZ_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Lazy.ALZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Lazy_ALZ_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Lazy.ALZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,01 00 01 00 01 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {8b 17 8a 5f 04 66 c1 e8 08 c1 c0 10 86 c4 29 fb 80 eb e8 01 f4 89 07 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 ) >= 1\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Lazy_ALZ_MTB_2",
+                "tags": [],
+                "description": "Trojan:Win32/Lazy.ALZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Lazy_ALZ_MTB_2\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Lazy.ALZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {53 68 00 02 00 00 8d 85 e4 fd ff ff 50 e8 ?? ?? ?? ?? 83 c4 28 8d 86 08 04 00 00 8d 4e 08 6a 00 50 68 ff 03 00 00 51 6a fd 8d 85 e4 fd ff ff 50 6a 00 ff 37 e8 }\n\t\t$a_01_1 = {6a 00 8d 86 08 04 00 00 50 68 ff 03 00 00 8d 46 08 50 6a fd 8d 85 e4 fd ff ff 50 6a 00 ff 37 e8 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Lazy_ALZ_MTB_3",
+                "tags": [],
+                "description": "Trojan:Win32/Lazy.ALZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Lazy_ALZ_MTB_3\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Lazy.ALZ!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {50 68 58 1d 62 67 6a 00 ff 15 ?? ?? ?? ?? 68 98 1d 62 67 89 85 74 17 ff ff ff 15 ?? ?? ?? ?? 68 a4 1d 62 67 50 ff 15 }\n\t\t$a_03_1 = {50 6a 00 8d 85 44 19 ff ff 50 ff 15 ?? ?? ?? ?? 8b b5 74 17 ff ff 8d 85 c0 2d ff ff 50 56 ff 15 ?? ?? ?? ?? 8b 3d fc c1 61 67 8d 85 c0 2d ff ff 50 56 ff d7 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

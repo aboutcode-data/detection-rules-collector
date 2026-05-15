@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_classic/posh_pc_renamed_powershell.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Harish Segar, frack113",
+                "date": "2020-06-29",
+                "title": "Renamed Powershell Under Powershell Channel",
+                "id": "30a8cb77-8eb3-4cfb-8e79-ad457c5a4592"
+            },
+            "rule_text": "title: Renamed Powershell Under Powershell Channel\nid: 30a8cb77-8eb3-4cfb-8e79-ad457c5a4592\nstatus: test\ndescription: 'Detects a renamed Powershell execution, which is a common technique\n  used to circumvent security controls and bypass detection logic that''s dependent\n  on process names and process paths.\n\n  '\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse\nauthor: Harish Segar, frack113\ndate: 2020-06-29\nmodified: 2025-01-20\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.001\n- attack.t1036.003\nlogsource:\n  product: windows\n  category: ps_classic_start\ndetection:\n  selection:\n    Data|contains: HostName=ConsoleHost\n  filter_main_ps:\n    Data|contains:\n    - HostApplication=powershell\n    - HostApplication=C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell\n    - HostApplication=C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell\n    - HostApplication=C:/Windows/System32/WindowsPowerShell/v1.0/powershell\n    - HostApplication=C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell\n    - HostApplication=C:\\\\\\\\WINDOWS\\\\\\\\system32\\\\\\\\WindowsPowerShell\\\\\\\\v1.0\\\\\\\\powershell.exe\n    - HostApplication=C:\\\\\\\\WINDOWS\\\\\\\\SysWOW64\\\\\\\\WindowsPowerShell\\\\\\\\v1.0\\\\\\\\powershell.exe\n  filter_main_host_application_null:\n    Data|re: HostId=[a-zA-Z0-9-]{36}\\s+EngineVersion=\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

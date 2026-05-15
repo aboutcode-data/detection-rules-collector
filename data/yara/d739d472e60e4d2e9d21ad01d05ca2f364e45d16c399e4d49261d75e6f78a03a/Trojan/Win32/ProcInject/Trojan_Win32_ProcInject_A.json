@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/ProcInject/Trojan_Win32_ProcInject_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_ProcInject_A",
+                "tags": [],
+                "description": "Trojan:Win32/ProcInject.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_ProcInject_A\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/ProcInject.A,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {89 c1 8b 75 08 89 f7 ac 34 ?? aa e2 fa }\n\t\t$a_01_1 = {43 72 65 61 74 65 54 68 72 65 61 64 00 52 65 61 64 50 72 6f 63 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_shell32_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Christian Burkard (Nextron Systems)",
+                "date": "2021-11-24",
+                "title": "Shell32 DLL Execution in Suspicious Directory",
+                "id": "32b96012-7892-429e-b26c-ac2bf46066ff"
+            },
+            "rule_text": "title: Shell32 DLL Execution in Suspicious Directory\nid: 32b96012-7892-429e-b26c-ac2bf46066ff\nstatus: test\ndescription: Detects shell32.dll executing a DLL in a suspicious directory\nreferences:\n- https://www.group-ib.com/resources/threat-research/red-curl-2.html\nauthor: Christian Burkard (Nextron Systems)\ndate: 2021-11-24\nmodified: 2023-02-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218.011\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains|all:\n    - shell32.dll\n    - Control_RunDLL\n    CommandLine|contains:\n    - '%AppData%'\n    - '%LocalAppData%'\n    - '%Temp%'\n    - '%tmp%'\n    - \\AppData\\\n    - \\Temp\\\n    - \\Users\\Public\\\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

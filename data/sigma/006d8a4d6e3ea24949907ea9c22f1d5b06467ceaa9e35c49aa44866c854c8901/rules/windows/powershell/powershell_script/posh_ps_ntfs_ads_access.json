@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_ntfs_ads_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sami Ruohonen",
+                "date": "2018-07-24",
+                "title": "NTFS Alternate Data Stream",
+                "id": "8c521530-5169-495d-a199-0a3a881ad24e"
+            },
+            "rule_text": "title: NTFS Alternate Data Stream\nid: 8c521530-5169-495d-a199-0a3a881ad24e\nstatus: test\ndescription: Detects writing data into NTFS alternate data streams from powershell.\n  Needs Script Block Logging.\nreferences:\n- https://web.archive.org/web/20220614030603/http://www.powertheshell.com/ntfsstreams/\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.004/T1564.004.md\nauthor: Sami Ruohonen\ndate: 2018-07-24\nmodified: 2022-12-25\ntags:\n- attack.stealth\n- attack.t1564.004\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_content:\n    ScriptBlockText|contains:\n    - set-content\n    - add-content\n  selection_stream:\n    ScriptBlockText|contains: -stream\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

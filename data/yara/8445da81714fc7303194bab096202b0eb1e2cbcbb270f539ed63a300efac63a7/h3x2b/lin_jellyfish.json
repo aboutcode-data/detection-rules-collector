@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/h3x2b/lin_jellyfish.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "jellyfish_gpu_rootkit_server",
+                "tags": [
+                    "malware",
+                    "linux",
+                    "rootkit"
+                ],
+                "author": "@h3x2b <tracker@h3x.eu>",
+                "description": "Detects Jellyfish samples - 201505"
+            },
+            "rule_text": "rule jellyfish_gpu_rootkit_server : malware linux rootkit\n{\n\tmeta:\n\t\tauthor = \"@h3x2b <tracker@h3x.eu>\"\n\t\tdescription = \"Detects Jellyfish samples - 201505\"\n\n\tstrings:\n\t\t$m_01 = \"gpu.txt\"\n\t\t$o_01 = \"socket failed!\"\n\t\t$o_02 = \"couldn't bind socket!\"\n\t\t$o_03 = \"couldn't setup listener socket!\"\n\t\t$o_04 = \"accept() socket failed!\"\n\t\t$o_05 = \"recv() failed! trying again...\\n\"\n\t\t$o_06 = \"%s  |  Logged to gpu.txt\\n\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464c457f and all of ( $m_* ) and 4 of ( $o_* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

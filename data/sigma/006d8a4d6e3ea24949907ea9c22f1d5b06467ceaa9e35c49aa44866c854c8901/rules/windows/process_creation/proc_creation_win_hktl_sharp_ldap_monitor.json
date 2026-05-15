@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_sharp_ldap_monitor.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-30",
+                "title": "HackTool - SharpLDAPmonitor Execution",
+                "id": "9f8fc146-1d1a-4dbf-b8fd-dfae15e08541"
+            },
+            "rule_text": "title: HackTool - SharpLDAPmonitor Execution\nid: 9f8fc146-1d1a-4dbf-b8fd-dfae15e08541\nstatus: test\ndescription: Detects execution of the SharpLDAPmonitor. Which can monitor the creation,\n  deletion and changes to LDAP objects.\nreferences:\n- https://github.com/p0dalirius/LDAPmonitor\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-30\nmodified: 2023-02-14\ntags:\n- attack.discovery\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\SharpLDAPmonitor.exe\n  - OriginalFileName: SharpLDAPmonitor.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - '/user:'\n    - '/pass:'\n    - '/dcip:'\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_persistence_amsi_providers.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Potential Persistence Via New AMSI Providers - Registry",
+                "id": "33efc23c-6ea2-4503-8cfe-bdf82ce8f705"
+            },
+            "rule_text": "title: Potential Persistence Via New AMSI Providers - Registry\nid: 33efc23c-6ea2-4503-8cfe-bdf82ce8f705\nstatus: test\ndescription: 'Detects when an attacker adds a new AMSI provider via the Windows Registry\n  to bypass AMSI (Antimalware Scan Interface) protections.\n\n  Attackers may add custom AMSI providers to persist on the system and evade detection\n  by security software that relies on AMSI for scanning scripts and other content.\n\n  This technique is often used in conjunction with fileless malware and script-based\n  attacks to maintain persistence while avoiding detection.\n\n  '\nreferences:\n- https://persistence-info.github.io/Data/amsi.html\n- https://github.com/gtworek/PSBits/blob/8d767892f3b17eefa4d0668f5d2df78e844f01d8/FakeAMSI/FakeAMSI.c\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2025-10-26\ntags:\n- attack.persistence\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\SOFTWARE\\Microsoft\\AMSI\\Providers\\\n    - \\SOFTWARE\\WOW6432Node\\Microsoft\\AMSI\\Providers\\\n  filter_optional_avast:\n    Image:\n    - C:\\Program Files\\Avast Software\\Avast\\RegSvr.exe\n    - C:\\Program Files\\Avast Software\\Avast\\x86\\RegSvr.exe\n    TargetObject|contains: \\{FB904E4E-D2C7-4C8D-8492-B620BB9896B1}\n  filter_optional_avg:\n    Image:\n    - C:\\Program Files\\AVG\\Antivirus\\RegSvr.exe\n    - C:\\Program Files\\AVG\\Antivirus\\x86\\RegSvr.exe\n    TargetObject|contains: \\{FB904E4E-D2C7-4C8D-8492-B620BB9896B1}\n  filter_optional_avira:\n    Image: C:\\Program Files\\Avira\\Endpoint Protection SDK\\endpointprotection.exe\n    TargetObject|contains: \\{00000001-3DCC-4B48-A82E-E2071FE58E05}\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate security products adding their own AMSI providers. Filter these according\n  to your environment.\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_persistence_amsi_providers/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

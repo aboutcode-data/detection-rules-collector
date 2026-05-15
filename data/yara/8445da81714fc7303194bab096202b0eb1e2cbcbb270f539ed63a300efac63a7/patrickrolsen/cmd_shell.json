@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/patrickrolsen/cmd_shell.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "cmd_shell",
+                "tags": [],
+                "author": "@patrickrolsen",
+                "reference": "Windows CMD Shell",
+                "filetype": "EXE",
+                "version": "0.1",
+                "date": "1/30/2014"
+            },
+            "rule_text": "rule cmd_shell\n{\n\tmeta:\n\t\tauthor = \"@patrickrolsen\"\n\t\treference = \"Windows CMD Shell\"\n\t\tfiletype = \"EXE\"\n\t\tversion = \"0.1\"\n\t\tdate = \"1/30/2014\"\n\n\tstrings:\n\t\t$s1 = \"cmd.pdb\"\n\t\t$s2 = \"CMD Internal Error %s\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and ( all of ( $s* ) ) and filesize <= 380KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

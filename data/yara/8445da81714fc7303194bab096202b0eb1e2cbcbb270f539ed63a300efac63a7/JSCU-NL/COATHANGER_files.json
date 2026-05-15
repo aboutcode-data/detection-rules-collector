@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/JSCU-NL/COATHANGER_files.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "COATHANGER_files",
+                "tags": [],
+                "description": "Detects COATHANGER files by used filenames",
+                "malware": "COATHANGER",
+                "author": "NLD MIVD - JSCU",
+                "date": "20240206"
+            },
+            "rule_text": "rule COATHANGER_files\n{\n\tmeta:\n\t\tdescription = \"Detects COATHANGER files by used filenames\"\n\t\tmalware = \"COATHANGER\"\n\t\tauthor = \"NLD MIVD - JSCU\"\n\t\tdate = \"20240206\"\n\n\tstrings:\n\t\t$1 = \"/data2/\"\n\t\t$2 = \"/httpsd\"\n\t\t$3 = \"/preload.so\"\n\t\t$4 = \"/authd\"\n\t\t$5 = \"/tmp/packfile\"\n\t\t$6 = \"/smartctl\"\n\t\t$7 = \"/etc/ld.so.preload\"\n\t\t$8 = \"/newcli\"\n\t\t$9 = \"/bin/busybox\"\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x464c457f or uint32( 4 ) == 0x464c457f ) and filesize < 5MB and 4 of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

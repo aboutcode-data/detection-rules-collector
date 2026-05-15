@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_ViceSociety_Ransomware/win_susp_reg_defender_tampering_vsociety.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/26",
+                "title": "Tampering of Windows Defender with Reg",
+                "id": "ca11521c-5d9c-484f-b83a-14aa12df1201"
+            },
+            "rule_text": "title: Tampering of Windows Defender with Reg\nid: ca11521c-5d9c-484f-b83a-14aa12df1201\nstatus: experimental\ndescription: Detects use of the reg utility to tamper with MS Defender protections.\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2022/10/25/dev-0832-vice-society-opportunistic-ransomware-campaigns-impacting-us-education-sector/\n- https://www.elevenforum.com/t/enable-or-disable-automatic-sample-submission-for-microsoft-defender-antivirus-in-windows-11.4010/\nauthor: Micah Babinski\ndate: 2022/11/26\ntags:\n- attack.defense_evasion\n- attack.t1562\n- attack.t1562.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_base:\n    Image|endswith: \\reg.exe\n  selection_disable_defender:\n    CommandLine|contains|all:\n    - delete\n    - \\Software\\Policies\\Microsoft\\Windows Defender\n  selection_disable_defender_services:\n    CommandLine|contains|all|windash:\n    - add\n    - /d\n    - '1'\n    CommandLine|contains:\n    - DisableAntiSpyware\n    - DisableAntiSpywareRealtimeProtection\n    - DisableAntiVirus\n    - DisableBehaviorMonitoring\n    - DisableIOAVProtection\n    - DisableOnAccessProtection\n    - DisableRealtimeMonitoring\n    - DisableRoutinelyTakingAction\n    - DisableScanOnRealtimeEnable\n    - DisableEnhancedNotifications\n    - DisableBlockAtFirstSeen\n    - DisableConfig\n    - DisablePrivacyMode\n    - DisableScriptScanning\n    - DisableIntrusionPreventionSystem\n  selection_disable_pus:\n    CommandLine|contains|all|windash:\n    - add\n    - /d\n    - '0'\n    CommandLine|contains:\n    - MpEnablePus\n    - SpynetReporting\n  selection_disable_sample_submission:\n    CommandLine|contains|all|windash:\n    - add\n    - /d\n    - '2'\n    - SubmitSamplesConsent\n  condition: selection_base and 1 of selection_disable*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

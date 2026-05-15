@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/VirTool/Win32/CeeInject/VirTool_Win32_CeeInject_AAT_bit.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "VirTool_Win32_CeeInject_AAT_bit",
+                "tags": [],
+                "description": "VirTool:Win32/CeeInject.AAT!bit,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule VirTool_Win32_CeeInject_AAT_bit\n{\n\tmeta:\n\t\tdescription = \"VirTool:Win32/CeeInject.AAT!bit,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {bb 00 00 00 83 6d ?? 7b 68 90 09 03 00 c7 45 }\n\t\t$a_03_1 = {ba 65 00 00 00 ?? 72 00 00 00 ?? 6e 00 00 00 }\n\t\t$a_03_2 = {8b d7 c1 ea 05 03 55 ?? 8b c7 c1 e0 04 03 45 }\n\t\t$a_01_3 = {8d 0c 33 33 d0 33 d1 2b fa }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

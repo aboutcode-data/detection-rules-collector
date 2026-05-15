@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_new_dll_added_to_appcertdlls_registry_key.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ilyas Ochkov, oscd.community",
+                "date": "2019-10-25",
+                "title": "New DLL Added to AppCertDlls Registry Key",
+                "id": "6aa1d992-5925-4e9f-a49b-845e51d1de01"
+            },
+            "rule_text": "title: New DLL Added to AppCertDlls Registry Key\nid: 6aa1d992-5925-4e9f-a49b-845e51d1de01\nstatus: test\ndescription: 'Dynamic-link libraries (DLLs) that are specified in the AppCertDLLs\n  value in the Registry key can be abused to obtain persistence and privilege escalation\n\n  by causing a malicious DLL to be loaded and run in the context of separate processes\n  on the computer.\n\n  '\nreferences:\n- http://www.hexacorn.com/blog/2013/01/19/beyond-good-ol-run-key-part-3/\n- https://eqllib.readthedocs.io/en/latest/analytics/14f90406-10a0-4d36-a672-31cabe149f2f.html\nauthor: Ilyas Ochkov, oscd.community\ndate: 2019-10-25\nmodified: 2021-11-27\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1546.009\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection:\n  - TargetObject: HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\AppCertDlls\n  - NewName: HKLM\\SYSTEM\\CurentControlSet\\Control\\Session Manager\\AppCertDlls\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

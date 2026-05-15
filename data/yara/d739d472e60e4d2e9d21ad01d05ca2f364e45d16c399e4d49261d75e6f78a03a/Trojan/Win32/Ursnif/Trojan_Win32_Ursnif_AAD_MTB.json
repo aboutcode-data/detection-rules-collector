@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Ursnif/Trojan_Win32_Ursnif_AAD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Ursnif_AAD_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Ursnif.AAD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Ursnif_AAD_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Ursnif.AAD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_02_0 = {8b 7c 24 18 8b 54 24 14 81 c2 b8 ec 5a 01 89 54 24 14 89 17 0f b7 f9 89 15 ?? ?? ?? ?? 8d 57 0d 89 54 24 2c 66 39 5c 24 0e 72 }\n\t\t$a_02_1 = {0f b6 44 24 0d 83 44 24 18 ?? 2b f8 83 c7 2f 03 fa ff 4c 24 24 74 ?? 8b 1d ?? ?? ?? ?? 8b 54 24 28 e9 }\n\n\tcondition:\n\t\t(( #a_02_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

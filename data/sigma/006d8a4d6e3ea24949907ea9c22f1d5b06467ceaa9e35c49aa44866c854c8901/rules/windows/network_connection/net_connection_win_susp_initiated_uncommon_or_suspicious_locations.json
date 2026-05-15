@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_susp_initiated_uncommon_or_suspicious_locations.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2017-03-19",
+                "title": "Network Connection Initiated From Process Located In Potentially Suspicious Or Uncommon Location",
+                "id": "7b434893-c57d-4f41-908d-6a17bf1ae98f"
+            },
+            "rule_text": "title: Network Connection Initiated From Process Located In Potentially Suspicious\n  Or Uncommon Location\nid: 7b434893-c57d-4f41-908d-6a17bf1ae98f\nstatus: test\ndescription: 'Detects a network connection initiated by programs or processes running\n  from suspicious or uncommon files system locations.\n\n  '\nreferences:\n- https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2017-03-19\nmodified: 2025-12-10\ntags:\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|contains:\n    - :\\$Recycle.bin\n    - :\\Perflogs\\\n    - :\\Temp\\\n    - :\\Users\\Default\\\n    - :\\Users\\Public\\\n    - :\\Windows\\Fonts\\\n    - :\\Windows\\IME\\\n    - :\\Windows\\System32\\Tasks\\\n    - :\\Windows\\Tasks\\\n    - \\config\\systemprofile\\\n    - \\Contacts\\\n    - \\Favorites\\\n    - \\Favourites\\\n    - \\Music\\\n    - \\Pictures\\\n    - \\Videos\\\n    - \\Windows\\addins\\\n  filter_main_domains:\n    DestinationHostname|endswith:\n    - .githubusercontent.com\n    - anonfiles.com\n    - cdn.discordapp.com\n    - ddns.net\n    - dl.dropboxusercontent.com\n    - ghostbin.co\n    - github.com\n    - glitch.me\n    - gofile.io\n    - hastebin.com\n    - mediafire.com\n    - mega.co.nz\n    - mega.nz\n    - onrender.com\n    - pages.dev\n    - paste.ee\n    - pastebin.com\n    - pastebin.pl\n    - pastetext.net\n    - portmap.io\n    - privatlab.com\n    - privatlab.net\n    - send.exploit.in\n    - sendspace.com\n    - storage.googleapis.com\n    - storjshare.io\n    - supabase.co\n    - temp.sh\n    - transfer.sh\n    - trycloudflare.com\n    - ufile.io\n    - w3spaces.com\n    - workers.dev\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_vscode_tunnel_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), citron_ninja",
+                "date": "2023-10-25",
+                "title": "Visual Studio Code Tunnel Execution",
+                "id": "90d6bd71-dffb-4989-8d86-a827fedd6624"
+            },
+            "rule_text": "title: Visual Studio Code Tunnel Execution\nid: 90d6bd71-dffb-4989-8d86-a827fedd6624\nstatus: test\ndescription: Detects Visual Studio Code tunnel execution. Attackers can abuse this\n  functionality to establish a C2 channel\nreferences:\n- https://ipfyx.fr/post/visual-studio-code-tunnel/\n- https://badoption.eu/blog/2023/01/31/code_c2.html\n- https://code.visualstudio.com/docs/remote/tunnels\nauthor: Nasreddine Bencherchali (Nextron Systems), citron_ninja\ndate: 2023-10-25\nmodified: 2025-10-29\ntags:\n- attack.command-and-control\n- attack.t1071.001\n- attack.t1219\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_only_tunnel:\n    OriginalFileName: null\n    CommandLine|endswith: .exe tunnel\n  selection_tunnel_args:\n    CommandLine|contains|all:\n    - .exe tunnel\n    - --accept-server-license-terms\n  selection_parent_tunnel:\n    ParentCommandLine|endswith: ' tunnel'\n    Image|endswith: \\cmd.exe\n    CommandLine|contains|all:\n    - '/d /c '\n    - \\servers\\Stable-\n    - code-server.cmd\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate use of Visual Studio Code tunnel\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

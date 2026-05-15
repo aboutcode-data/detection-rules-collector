@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/wp_susp_post.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "NTT Security - Axel Olsson",
+                "date": "2023-06-09",
+                "title": "Suspicious POST Request Towards Wordpress Site",
+                "id": "22e38465-8ef1-4058-964c-11f921653674"
+            },
+            "rule_text": "title: Suspicious POST Request Towards Wordpress Site\nid: 22e38465-8ef1-4058-964c-11f921653674\ndescription: Detects abnormal POST requests towards Wordpress websites without cs-referer\n  set, common characteristics for malware using compromised Wordpress sites for hosting\n  C2.\nstatus: stable\nauthor: NTT Security - Axel Olsson\ndate: '2023-06-09'\nreferences:\n- https://securelist.com/goldenjackal-apt-group/109677/\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    c-uri|startswith: /wp-\n    c-uri|endswith: .php\n    cs-method: POST\n    cs-referer: ''\n  filter:\n  - c-uri|startswith: /wp-admin\n  - c-uri:\n    - /wp-content/plugins/matomo/app/matomo.php\n  condition: selection and not filter\nfalsepositives:\n- Legitimate scripts running on Wordpress sites.\nlevel: medium\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/alienvault/PRISM.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PRISM",
+                "tags": [],
+                "author": "AlienLabs",
+                "description": "PRISM backdoor",
+                "reference": "https://github.com/andreafabrizi/prism/blob/master/prism.c",
+                "reference2": "https://cybersecurity.att.com/blogs/labs-research/prism-attacks-fly-under-the-radar"
+            },
+            "rule_text": "rule PRISM\n{\n\tmeta:\n\t\tauthor = \"AlienLabs\"\n\t\tdescription = \"PRISM backdoor\"\n\t\treference = \"https://github.com/andreafabrizi/prism/blob/master/prism.c\"\n\t\treference2 = \"https://cybersecurity.att.com/blogs/labs-research/prism-attacks-fly-under-the-radar\"\n\n\tstrings:\n\t\t$s1 = \"I'm not root :(\"\n\t\t$s2 = \"Flush Iptables:\\t\"\n\t\t$s3 = \" Version:\\t\\t%s\\n\"\n\t\t$s4 = \" Shell:\\t\\t\\t%s\\n\"\n\t\t$s5 = \" Process name:\\t\\t%s\\n\"\n\t\t$s6 = \"iptables -F 2> /dev/null\"\n\t\t$s7 = \"iptables -P INPUT ACCEPT 2> /dev/null\"\n\t\t$s8 = \" started\\n\\n# \"\n\t\t$c1 = {\n\n            E8 [4] 8B 45 ?? BE 00 00 00 00 89 C7 E8 [4] 8B 45 ?? BE 01 00 00 00\n\n            89 C7 E8 [4] 8B 45 ?? BE 02 00 00 00 89 C7 E8 [4] BA 00 00 00 00\n\n            BE [4] BF [4] B8 00 00 00 00 E8\n\n        }\n\t\t$c2 = {\n\n            BA 00 00 00 00\n\n            BE 01 00 00 00\n\n            BF 02 00 00 00\n\n            E8 [4]\n\n            89 45 [1]\n\n            83 ?? ?? 00\n\n        }\n\n\tcondition:\n\t\tuint32( 0 ) == 0x464C457F and filesize < 30KB and ( 4 of ( $s* ) or all of ( $c* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

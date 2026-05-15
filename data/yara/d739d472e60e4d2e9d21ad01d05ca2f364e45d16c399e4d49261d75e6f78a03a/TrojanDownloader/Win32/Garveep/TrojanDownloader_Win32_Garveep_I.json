@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Garveep/TrojanDownloader_Win32_Garveep_I.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Garveep_I",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Garveep.I,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Garveep_I\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Garveep.I,SIGNATURE_TYPE_PEHSTR_EXT,0c 00 0c 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {53 32 db b8 80 00 00 00 83 f8 10 7f 6a }\n\t\t$a_01_1 = {99 2b c2 d1 f8 85 c0 0f 8f 45 ff ff ff 88 1c 31 41 3b cf 0f 8c 32 ff ff ff }\n\t\t$a_00_2 = {72 72 65 63 65 6e 74 2e 70 68 70 }\n\t\t$a_00_3 = {25 73 5c 73 79 73 5c 2e 2e 5c 25 73 }\n\t\t$a_00_4 = {70 72 74 73 68 67 72 64 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 5 + ( #a_01_1 & 1 ) * 5 + ( #a_00_2 & 1 ) * 2 + ( #a_00_3 & 1 ) * 2 + ( #a_00_4 & 1 ) * 2 ) >= 12\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_browsercore.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Max Altgelt (Nextron Systems)",
+                "date": "2022-06-02",
+                "title": "Renamed BrowserCore.EXE Execution",
+                "id": "8a4519e8-e64a-40b6-ae85-ba8ad2177559"
+            },
+            "rule_text": "title: Renamed BrowserCore.EXE Execution\nid: 8a4519e8-e64a-40b6-ae85-ba8ad2177559\nstatus: test\ndescription: Detects process creation with a renamed BrowserCore.exe (used to extract\n  Azure tokens)\nreferences:\n- https://twitter.com/mariuszbit/status/1531631015139102720\nauthor: Max Altgelt (Nextron Systems)\ndate: 2022-06-02\nmodified: 2023-02-03\ntags:\n- attack.credential-access\n- attack.stealth\n- attack.t1528\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    OriginalFileName: BrowserCore.exe\n  filter_realbrowsercore:\n    Image|endswith: \\BrowserCore.exe\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

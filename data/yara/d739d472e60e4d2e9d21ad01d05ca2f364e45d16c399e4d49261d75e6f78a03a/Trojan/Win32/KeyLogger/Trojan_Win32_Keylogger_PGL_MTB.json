@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/KeyLogger/Trojan_Win32_Keylogger_PGL_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Keylogger_PGL_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Keylogger.PGL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Keylogger_PGL_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Keylogger.PGL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,05 00 05 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {5c 00 73 00 79 00 73 00 70 00 72 00 6f 00 63 00 2e 00 65 00 78 00 65 00 }\n\t\t$a_80_1 = {38 30 38 38 35 39 35 32 30 31 3a 41 41 47 71 6e 37 58 7a 42 73 59 30 74 39 76 42 44 65 39 68 4b 75 53 64 63 76 32 44 56 46 6f 74 69 43 67 }\n\t\t$a_80_2 = {2f 73 65 6e 64 4d 65 73 73 61 67 65 3f 63 68 61 74 5f 69 64 3d }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_80_1 & 1 ) * 2 + ( #a_80_2 & 1 ) * 2 ) >= 5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/CISA/HAFIUM_webshell_CVE_2021_27065.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CISA_10328929_01",
+                "tags": [
+                    "trojan",
+                    "webshell",
+                    "exploit",
+                    "CVE_2021_27065"
+                ],
+                "Author": "CISA Code & Media Analysis",
+                "Incident": "10328929",
+                "Date": "2021-03-17",
+                "Last_Modified": "20210317_2200",
+                "Actor": "n/a",
+                "Category": "Trojan WebShell Exploit CVE-2021-27065",
+                "Family": "HAFNIUM",
+                "Description": "Detects CVE-2021-27065 Webshellz",
+                "Reference": "https://www.cisa.gov/uscert/ncas/analysis-reports/ar21-084b",
+                "MD5_1": "ab3963337cf24dc2ade6406f11901e1f",
+                "SHA256_1": "c8a7b5ffcf23c7a334bb093dda19635ec06ca81f6196325bb2d811716c90f3c5"
+            },
+            "rule_text": "rule CISA_10328929_01 : trojan webshell exploit CVE_2021_27065\n{\n\tmeta:\n\t\tAuthor = \"CISA Code & Media Analysis\"\n\t\tIncident = \"10328929\"\n\t\tDate = \"2021-03-17\"\n\t\tLast_Modified = \"20210317_2200\"\n\t\tActor = \"n/a\"\n\t\tCategory = \"Trojan WebShell Exploit CVE-2021-27065\"\n\t\tFamily = \"HAFNIUM\"\n\t\tDescription = \"Detects CVE-2021-27065 Webshellz\"\n\t\tReference = \"https://www.cisa.gov/uscert/ncas/analysis-reports/ar21-084b\"\n\t\tMD5_1 = \"ab3963337cf24dc2ade6406f11901e1f\"\n\t\tSHA256_1 = \"c8a7b5ffcf23c7a334bb093dda19635ec06ca81f6196325bb2d811716c90f3c5\"\n\n\tstrings:\n\t\t$s0 = { 65 76 61 6C 28 52 65 71 75 65 73 74 5B 22 [1-32] 5D 2C 22 75 6E 73 61 66 65 22 29 }\n\t\t$s1 = { 65 76 61 6C 28 }\n\t\t$s2 = { 28 52 65 71 75 65 73 74 2E 49 74 65 6D 5B [1-36] 5D 29 29 2C 22 75 6E 73 61 66 65 22 29 }\n\t\t$s3 = { 49 4F 2E 53 74 72 65 61 6D 57 72 69 74 65 72 28 52 65 71 75 65 73 74 2E 46 6F 72 6D 5B [1-24] 5D }\n\t\t$s4 = { 57 72 69 74 65 28 52 65 71 75 65 73 74 2E 46 6F 72 6D 5B [1-24] 5D }\n\n\tcondition:\n\t\t$s0 or ( $s1 and $s2 ) or ( $s3 and $s4 )\n}\n",
+            "vulnerabilities": [
+                "CVE-2021-27065"
+            ]
+        }
+    ]
+}

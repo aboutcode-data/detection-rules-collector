@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_tmutil_disable_backup.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Pratinav Chandra",
+                "date": "2024-05-29",
+                "title": "Time Machine Backup Disabled Via Tmutil - MacOS",
+                "id": "2c95fa8a-8b8d-4787-afce-7117ceb8e3da"
+            },
+            "rule_text": "title: Time Machine Backup Disabled Via Tmutil - MacOS\nid: 2c95fa8a-8b8d-4787-afce-7117ceb8e3da\nstatus: test\ndescription: 'Detects disabling of Time Machine (Apple''s automated backup utility\n  software) via the native macOS backup utility \"tmutil\".\n\n  An attacker can use this to prevent backups from occurring.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md#atomic-test-12---disable-time-machine\n- https://www.loobins.io/binaries/tmutil/\nauthor: Pratinav Chandra\ndate: 2024-05-29\ntags:\n- attack.impact\n- attack.t1490\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection_img:\n  - Image|endswith: /tmutil\n  - CommandLine|contains: tmutil\n  selection_cmd:\n    CommandLine|contains: disable\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrator activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

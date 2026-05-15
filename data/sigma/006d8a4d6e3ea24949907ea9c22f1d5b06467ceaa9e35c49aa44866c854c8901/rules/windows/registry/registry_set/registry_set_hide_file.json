@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_hide_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-04-02",
+                "title": "Displaying Hidden Files Feature Disabled",
+                "id": "5a5152f1-463f-436b-b2f5-8eceb3964b42"
+            },
+            "rule_text": "title: Displaying Hidden Files Feature Disabled\nid: 5a5152f1-463f-436b-b2f5-8eceb3964b42\nstatus: test\ndescription: 'Detects modifications to the \"Hidden\" and \"ShowSuperHidden\" explorer\n  registry values in order to disable showing of hidden files and system files.\n\n  This technique is abused by several malware families to hide their files from normal\n  users.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.001/T1564.001.md#atomic-test-8---hide-files-through-registry\nauthor: frack113\ndate: 2022-04-02\nmodified: 2024-03-26\ntags:\n- attack.stealth\n- attack.t1564.001\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith:\n    - \\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\ShowSuperHidden\n    - \\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\Hidden\n    Details: DWORD (0x00000000)\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/threat_raspberry_robin_cmdline_netconn_no_params.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Network Connections from the Command Line with no Parameters",
+                "id": "1b49c5af-3774-4364-9c49-827fd59417cb"
+            },
+            "rule_text": "title: Network Connections from the Command Line with no Parameters\nid: 1b49c5af-3774-4364-9c49-827fd59417cb\nstatus: experimental\ndescription: \"It is unusual for these processes to attempt network connections with\\\n  \\ an empty command line, \\nwhich can indicate malicious command and control (C2)\\\n  \\ activity. Part of the RedCanary 2024 \\nThreat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/threats/raspberry-robin/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.command_and_control\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\regsvr32.exe\n    - \\rundll32.exe\n    - \\dllhost.exe\n    CommandLine: null\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

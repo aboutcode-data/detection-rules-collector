@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Stealer/Trojan_Win64_Stealer_NK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Stealer_NK_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Stealer.NK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Stealer_NK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Stealer.NK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,06 00 06 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {48 8b 44 24 ?? 48 89 84 24 ?? 00 00 00 48 8b 8c 24 ?? 00 00 00 e8 ?? ?? 00 00 48 89 84 24 ?? 00 00 00 48 8b 8c 24 ?? 00 00 00 e8 }\n\t\t$a_03_1 = {48 8d 8c 24 ?? 00 00 00 e8 ?? ?? 00 00 48 8d 8c 24 ?? 00 00 00 e8 ?? ?? 00 00 48 8d 8c 24 ?? 00 00 00 e8 ?? ?? 00 00 e9 e3 01 00 00 }\n\t\t$a_01_2 = {54 65 6c 65 67 72 61 6d 20 44 65 73 6b 74 6f 70 }\n\t\t$a_01_3 = {52 6f 61 6d 69 6e 67 }\n\t\t$a_01_4 = {55 53 45 52 50 52 4f 46 49 4c 45 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 + ( #a_01_4 & 1 ) * 1 ) >= 6\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

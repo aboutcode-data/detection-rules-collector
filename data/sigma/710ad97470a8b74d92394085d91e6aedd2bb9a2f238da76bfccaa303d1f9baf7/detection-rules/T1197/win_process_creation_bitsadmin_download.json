@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1197/win_process_creation_bitsadmin_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Michael Haag",
+                "date": null,
+                "title": "Bitsadmin Download",
+                "id": null
+            },
+            "rule_text": "title: Bitsadmin Download\nstatus: experimental\ndescription: Detects usage of bitsadmin downloading a file\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\ntags:\n- attack.defense_evasion\n- attack.persistence\n- attack.t1197\n- attack.s0190\nauthor: Michael Haag\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image: '*\\bitsadmin.exe'\n    CommandLine: '*/transfer*'\n  condition: selection\nfields:\n- CommandLine\n- ParentCommandLine\nfalsepositives:\n- Some legitimate apps use this, but limited.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

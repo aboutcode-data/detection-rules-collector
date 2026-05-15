@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_bitsadmin_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Michael Haag, FPT.EagleEye",
+                "date": "2017-03-09",
+                "title": "File Download Via Bitsadmin",
+                "id": "d059842b-6b9d-4ed1-b5c3-5b89143c6ede"
+            },
+            "rule_text": "title: File Download Via Bitsadmin\nid: d059842b-6b9d-4ed1-b5c3-5b89143c6ede\nstatus: test\ndescription: Detects usage of bitsadmin downloading a file\nreferences:\n- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin\n- https://isc.sans.edu/diary/22264\n- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/\nauthor: Michael Haag, FPT.EagleEye\ndate: 2017-03-09\nmodified: 2023-02-15\ntags:\n- attack.persistence\n- attack.execution\n- attack.stealth\n- attack.t1197\n- attack.s0190\n- attack.t1036.003\n- attack.command-and-control\n- attack.t1105\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\bitsadmin.exe\n  - OriginalFileName: bitsadmin.exe\n  selection_cmd:\n    CommandLine|contains: ' /transfer '\n  selection_cli_1:\n    CommandLine|contains:\n    - ' /create '\n    - ' /addfile '\n  selection_cli_2:\n    CommandLine|contains: http\n  condition: selection_img and (selection_cmd or all of selection_cli_*)\nfalsepositives:\n- Some legitimate apps use this, but limited.\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download/info.yml\nsimulation:\n- type: atomic-red-team\n  name: Windows - BITSAdmin BITS Download\n  technique: T1105\n  atomic_guid: a1921cd3-9a2d-47d5-a891-f1d0f2a7a31b\n",
+            "vulnerabilities": []
+        }
+    ]
+}

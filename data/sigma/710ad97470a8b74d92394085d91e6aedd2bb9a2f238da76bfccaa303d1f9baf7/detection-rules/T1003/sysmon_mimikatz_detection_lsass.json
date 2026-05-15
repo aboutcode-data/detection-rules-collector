@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/P4T12ICK/Sigma-Rule-Repository/blob/master/detection-rules/T1003/sysmon_mimikatz_detection_lsass.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": null,
+                "date": null,
+                "title": "Mimikatz Detection LSASS Access",
+                "id": null
+            },
+            "rule_text": "title: Mimikatz Detection LSASS Access\nstatus: experimental\ndescription: Detects process access to LSASS which is typical for Mimikatz (0x1000\n  PROCESS_QUERY_ LIMITED_INFORMATION, 0x0400 PROCESS_QUERY_ INFORMATION, 0x0010 PROCESS_VM_READ)\nreferences:\n- https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow\ntags:\n- attack.t1003\n- attack.s0002\n- attack.credential_access\nlogsource:\n  product: windows\n  service: sysmon\ndetection:\n  selection:\n    EventID: 10\n    TargetImage: C:\\windows\\system32\\lsass.exe\n    GrantedAccess:\n    - '0x1410'\n    - '0x1010'\n  condition: selection\nfalsepositives:\n- unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

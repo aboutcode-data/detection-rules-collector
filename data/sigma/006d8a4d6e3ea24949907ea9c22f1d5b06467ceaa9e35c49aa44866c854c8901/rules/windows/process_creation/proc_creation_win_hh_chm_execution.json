@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hh_chm_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "E.M. Anhaus (originally from Atomic Blue Detections, Dan Beavin), oscd.community",
+                "date": "2019-10-24",
+                "title": "HH.EXE Execution",
+                "id": "68c8acb4-1b60-4890-8e82-3ddf7a6dba84"
+            },
+            "rule_text": "title: HH.EXE Execution\nid: 68c8acb4-1b60-4890-8e82-3ddf7a6dba84\nstatus: test\ndescription: Detects the execution of \"hh.exe\" to open \".chm\" files.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.001/T1218.001.md\n- https://eqllib.readthedocs.io/en/latest/analytics/b25aa548-7937-11e9-8f5c-d46d6d62a49e.html\n- https://www.zscaler.com/blogs/security-research/unintentional-leak-glimpse-attack-vectors-apt37\nauthor: E.M. Anhaus (originally from Atomic Blue Detections, Dan Beavin), oscd.community\ndate: 2019-10-24\nmodified: 2023-12-11\ntags:\n- attack.stealth\n- attack.t1218.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName: HH.exe\n  - Image|endswith: \\hh.exe\n  selection_cli:\n    CommandLine|contains: .chm\n  condition: all of selection_*\nfalsepositives:\n- False positives are expected with legitimate \".CHM\"\nlevel: low\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_hh_chm_execution/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

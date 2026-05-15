@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2020/TA/SolarWinds-Supply-Chain/proc_creation_win_apt_unc2452_cmds.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-01-22",
+                "title": "UNC2452 Process Creation Patterns",
+                "id": "9be34ad0-b6a7-4fbd-91cf-fc7ec1047f5f"
+            },
+            "rule_text": "title: UNC2452 Process Creation Patterns\nid: 9be34ad0-b6a7-4fbd-91cf-fc7ec1047f5f\nstatus: test\ndescription: Detects a specific process creation patterns as seen used by UNC2452\n  and provided by Microsoft as Microsoft Defender ATP queries\nreferences:\n- https://www.microsoft.com/security/blog/2021/01/20/deep-dive-into-the-solorigate-second-stage-activation-from-sunburst-to-teardrop-and-raindrop/\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-01-22\nmodified: 2024-09-12\ntags:\n- attack.execution\n- attack.t1059.001\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_generic_1:\n    CommandLine|contains:\n    - 7z.exe a -v500m -mx9 -r0 -p\n    - 7z.exe a -mx9 -r0 -p\n    CommandLine|contains|all:\n    - .zip\n    - .txt\n  selection_generic_2:\n    CommandLine|contains:\n    - 7z.exe a -v500m -mx9 -r0 -p\n    - 7z.exe a -mx9 -r0 -p\n    CommandLine|contains|all:\n    - .zip\n    - .log\n  selection_generic_3:\n    ParentCommandLine|contains|all:\n    - wscript.exe\n    - .vbs\n    CommandLine|contains|all:\n    - rundll32.exe\n    - C:\\Windows\n    - .dll,Tk_\n  selection_generic_4:\n    ParentImage|endswith: \\rundll32.exe\n    ParentCommandLine|contains|all:\n    - C:\\Windows\n    - .dll\n    CommandLine|contains: 'cmd.exe /C '\n  selection_generic_5:\n    ParentImage|endswith: \\rundll32.exe\n    Image|endswith: \\dllhost.exe\n    CommandLine: ''\n  condition: 1 of selection_generic_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

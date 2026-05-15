@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/MonitoringTool/Win32/WinMonitor/MonitoringTool_Win32_WinMonitor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MonitoringTool_Win32_WinMonitor",
+                "tags": [],
+                "description": "MonitoringTool:Win32/WinMonitor,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 "
+            },
+            "rule_text": "rule MonitoringTool_Win32_WinMonitor\n{\n\tmeta:\n\t\tdescription = \"MonitoringTool:Win32/WinMonitor,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {41 6e 74 53 70 79 }\n\t\t$a_01_1 = {66 52 45 43 57 43 61 6d }\n\t\t$a_00_2 = {54 00 53 00 20 00 53 00 65 00 63 00 75 00 72 00 69 00 74 00 79 00 5c 00 }\n\t\t$a_00_3 = {64 00 5f 00 48 00 69 00 64 00 65 00 53 00 79 00 73 00 74 00 65 00 6d 00 46 00 69 00 6c 00 65 00 73 00 }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

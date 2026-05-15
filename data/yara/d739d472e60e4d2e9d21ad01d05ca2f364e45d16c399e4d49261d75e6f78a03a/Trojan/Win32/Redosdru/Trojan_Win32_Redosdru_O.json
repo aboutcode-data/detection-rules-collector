@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Redosdru/Trojan_Win32_Redosdru_O.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Redosdru_O",
+                "tags": [],
+                "description": "Trojan:Win32/Redosdru.O,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Redosdru_O\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Redosdru.O,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {47 c6 44 24 ?? 68 c6 44 24 ?? 30 c6 44 24 ?? 73 8b 54 24 ?? 8d 8e ?? ?? 00 00 89 86 ?? ?? 00 00 b0 74 }\n\t\t$a_01_1 = {43 00 56 00 69 00 64 00 65 00 6f 00 43 00 61 00 70 00 }\n\t\t$a_01_2 = {47 00 6c 00 6f 00 62 00 61 00 6c 00 5c 00 6d 00 6f 00 75 00 73 00 65 00 20 00 25 00 64 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

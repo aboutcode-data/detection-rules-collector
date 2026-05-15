@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_remote_access_tools_anydesk_revoked_cert.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Sai Prashanth Pulisetti, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2024-02-08",
+                "title": "Remote Access Tool - AnyDesk Execution With Known Revoked Signing Certificate",
+                "id": "41f407b5-3096-44ea-a74f-96d04fbc41be"
+            },
+            "rule_text": "title: Remote Access Tool - AnyDesk Execution With Known Revoked Signing Certificate\nid: 41f407b5-3096-44ea-a74f-96d04fbc41be\nstatus: test\ndescription: 'Detects the execution of an AnyDesk binary with a version prior to 8.0.8.\n\n  Prior to version 8.0.8, the Anydesk application used a signing certificate that\n  got compromised by threat actors.\n\n  Use this rule to detect instances of older versions of Anydesk using the compromised\n  certificate\n\n  This is recommended in order to avoid attackers leveraging the certificate and signing\n  their binaries to bypass detections.\n\n  '\nreferences:\n- https://www.bleepingcomputer.com/news/security/anydesk-says-hackers-breached-its-production-servers-reset-passwords/\n- https://anydesk.com/en/changelog/windows\nauthor: Sai Prashanth Pulisetti, Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-02-08\ntags:\n- attack.execution\n- attack.initial-access\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\AnyDesk.exe\n  - Description: AnyDesk\n  - Product: AnyDesk\n  - Company: AnyDesk Software GmbH\n  selection_version:\n    FileVersion|startswith:\n    - 7.0.\n    - 7.1.\n    - 8.0.1\n    - 8.0.2\n    - 8.0.3\n    - 8.0.4\n    - 8.0.5\n    - 8.0.6\n    - 8.0.7\n  filter_main_uninstall:\n    CommandLine|contains:\n    - ' --remove'\n    - ' --uninstall'\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

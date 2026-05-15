@@ -1,0 +1,1244 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_gcti_cobaltstrike.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact32_and_Resources_Dropper_v1_49_to_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact32{.exe,.dll,big.exe,big.dll} and resources/dropper.exe signature for versions 1.49 to 3.14",
+                "hash": "40fc605a8b95bbd79a3bd7d9af73fbeebe3fada577c99e7a111f6168f6a0d37a",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "243e3761-cbea-561c-97da-f6ba12ebc7ee"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact32_and_Resources_Dropper_v1_49_to_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact32{.exe,.dll,big.exe,big.dll} and resources/dropper.exe signature for versions 1.49 to 3.14\"\n\t\thash = \"40fc605a8b95bbd79a3bd7d9af73fbeebe3fada577c99e7a111f6168f6a0d37a\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"243e3761-cbea-561c-97da-f6ba12ebc7ee\"\n\n\tstrings:\n\t\t$payloadDecoder = { 8B [2] 89 ?? 03 [2] 8B [2] 03 [2] 0F B6 18 8B [2] 89 ?? C1 ?? 1F C1 ?? 1E 01 ?? 83 ?? 03 29 ?? 03 [2] 0F B6 00 31 ?? 88 ?? 8B [2] 89 ?? 03 [2] 8B [2] 03 [2] 0F B6 12 }\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact32_v3_1_and_v3_2",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact32{.dll,.exe,svc.exe,big.exe,big.dll,bigsvc.exe} and resources/artifact32uac(alt).dll signature for versions 3.1 and 3.2",
+                "hash": "4f14bcd7803a8e22e81e74d6061d0df9e8bac7f96f1213d062a29a8523ae4624",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "4fff7f42-9f50-5945-8ec0-2438ac5c7000"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact32_v3_1_and_v3_2\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact32{.dll,.exe,svc.exe,big.exe,big.dll,bigsvc.exe} and resources/artifact32uac(alt).dll signature for versions 3.1 and 3.2\"\n\t\thash = \"4f14bcd7803a8e22e81e74d6061d0df9e8bac7f96f1213d062a29a8523ae4624\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"4fff7f42-9f50-5945-8ec0-2438ac5c7000\"\n\n\tstrings:\n\t\t$decoderFunc = { 89 ?? B? 04 00 00 00 99 F7 FF 8B [2] 8A [2] 30 ?? 8A ?? 4? 88 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact32_v3_14_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact32{.dll,.exe,big.exe,big.dll,bigsvc.exe} signature for versions 3.14 to 4.x and resources/artifact32svc.exe for 3.14 to 4.x and resources/artifact32uac.dll for v3.14 and v4.0",
+                "hash": "888bae8d89c03c1d529b04f9e4a051140ce3d7b39bc9ea021ad9fc7c9f467719",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "8a010305-dce5-55f4-b2dd-a736721efe22"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact32_v3_14_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact32{.dll,.exe,big.exe,big.dll,bigsvc.exe} signature for versions 3.14 to 4.x and resources/artifact32svc.exe for 3.14 to 4.x and resources/artifact32uac.dll for v3.14 and v4.0\"\n\t\thash = \"888bae8d89c03c1d529b04f9e4a051140ce3d7b39bc9ea021ad9fc7c9f467719\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"8a010305-dce5-55f4-b2dd-a736721efe22\"\n\n\tstrings:\n\t\t$pushFmtStr = {\tC7 [3] 5C 00 00 00 C7 [3] 65 00 00 00 C7 [3] 70 00 00 00 C7 [3] 69 00 00 00 C7 [3] 70 00 00 00 F7 F1 C7 [3] 5C 00 00 00  C7 [3] 2E 00 00 00 C7 [3] 5C 00 00 00 }\n\t\t$fmtStr = \"%c%c%c%c%c%c%c%c%cMSSE-%d-server\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact32svc_Exe_v3_1_v3_2_v3_14_and_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact32svc(big).exe signature for versions 3.1 and 3.2 (with overlap with v3.14 through v4.x)",
+                "hash": "871390255156ce35221478c7837c52d926dfd581173818620b738b4b029e6fd9",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "732169be-e334-5774-b0ac-54b217a8b681"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact32svc_Exe_v3_1_v3_2_v3_14_and_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact32svc(big).exe signature for versions 3.1 and 3.2 (with overlap with v3.14 through v4.x)\"\n\t\thash = \"871390255156ce35221478c7837c52d926dfd581173818620b738b4b029e6fd9\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"732169be-e334-5774-b0ac-54b217a8b681\"\n\n\tstrings:\n\t\t$decoderFunc = { 89 ?? B? 04 00 00 00 99 F7 FF 8B [2] 8A [2] 30 }\n\n\tcondition:\n\t\t$decoderFunc\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact64_v1_49_v2_x_v3_0_v3_3_thru_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact64{.dll,.exe,big.exe,big.dll,bigsvc.exe,big.x64.dll} and resources/rtifactuac(alt)64.dll signature for versions v1.49, v2.x, v3.0, and v3.3 through v3.14",
+                "hash": "9ec57d306764517b5956b49d34a3a87d4a6b26a2bb3d0fdb993d055e0cc9920d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "67902782-500e-5a89-8b2a-59ee21bcba3e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact64_v1_49_v2_x_v3_0_v3_3_thru_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact64{.dll,.exe,big.exe,big.dll,bigsvc.exe,big.x64.dll} and resources/rtifactuac(alt)64.dll signature for versions v1.49, v2.x, v3.0, and v3.3 through v3.14\"\n\t\thash = \"9ec57d306764517b5956b49d34a3a87d4a6b26a2bb3d0fdb993d055e0cc9920d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"67902782-500e-5a89-8b2a-59ee21bcba3e\"\n\n\tstrings:\n\t\t$a = { 8B [2] 48 98 48 [2] 48 [3] 8B [2] 48 98 48 [3] 44 [3] 8B [2] 89 ?? C1 ?? 1F C1 ?? 1E 01 ?? 83 ?? 03 29 ?? 48 98 48 [3] 0F B6 00 44 [2] 88 }\n\n\tcondition:\n\t\t$a\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact64_v3_1_v3_2_v3_14_and_v4_0",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact64{svcbig.exe,.dll,big.dll,svc.exe} and resources/artifactuac(big)64.dll signature for versions 3.14 to 4.x and resources/artifact32svc.exe for 3.14 to 4.x",
+                "hash": "2e7a39bd6ac270f8f548855b97c4cef2c2ce7f54c54dd4d1aa0efabeecf3ba90",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "c9e9b8e0-16fe-5abc-b1fe-0e3e586f6db6"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact64_v3_1_v3_2_v3_14_and_v4_0\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact64{svcbig.exe,.dll,big.dll,svc.exe} and resources/artifactuac(big)64.dll signature for versions 3.14 to 4.x and resources/artifact32svc.exe for 3.14 to 4.x\"\n\t\thash = \"2e7a39bd6ac270f8f548855b97c4cef2c2ce7f54c54dd4d1aa0efabeecf3ba90\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"c9e9b8e0-16fe-5abc-b1fe-0e3e586f6db6\"\n\n\tstrings:\n\t\t$decoderFunction = { 31 ?? EB 0F 41 [2] 03 47 [3] 44 [3] 48 [2] 39 ?? 41 [2] 7C EA 4C [6] E9 }\n\n\tcondition:\n\t\t$decoderFunction\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Artifact64_v3_14_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/artifact64{.exe,.dll,svc.exe,svcbig.exe,big.exe,big.dll,.x64.dll,big.x64.dll} and resource/artifactuac(alt)64.exe signature for versions v3.14 through v4.x",
+                "hash": "decfcca0018f2cec4a200ea057c804bb357300a67c6393b097d52881527b1c44",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "1c7731d3-429b-57aa-9c17-8de7d0841b1e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Artifact64_v3_14_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/artifact64{.exe,.dll,svc.exe,svcbig.exe,big.exe,big.dll,.x64.dll,big.x64.dll} and resource/artifactuac(alt)64.exe signature for versions v3.14 through v4.x\"\n\t\thash = \"decfcca0018f2cec4a200ea057c804bb357300a67c6393b097d52881527b1c44\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"1c7731d3-429b-57aa-9c17-8de7d0841b1e\"\n\n\tstrings:\n\t\t$fmtBuilder = {\n\t\t\t41 ?? 5C 00 00 00\n\t\t\tC7 [3] 5C 00 00 00\n\t\t\tC7 [3] 65 00 00 00\n\t\t\tC7 [3] 70 00 00 00\n\t\t\tC7 [3] 69 00 00 00\n\t\t\tC7 [3] 70 00 00 00\n\t\t\tC7 [3] 5C 00 00 00\n\t\t\tC7 [3] 2E 00 00 00\n\t\t\t89 [3]\n\t\t\t48 [6]\n\t\t\tE8\n\t\t}\n\t\t$fmtString = \"%c%c%c%c%c%c%c%c%cMSSE-%d-server\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v1_44",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 1.44",
+                "hash": "75102e8041c58768477f5f982500da7e03498643b6ece86194f4b3396215f9c2",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "935ee27f-ce1b-5491-b4a3-cb78f199ab1b"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v1_44\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 1.44\"\n\t\thash = \"75102e8041c58768477f5f982500da7e03498643b6ece86194f4b3396215f9c2\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"935ee27f-ce1b-5491-b4a3-cb78f199ab1b\"\n\n\tstrings:\n\t\t$version_sig = { 0F B7 D2 4A 53 8B D9 83 FA 04 77 36 FF 24 }\n\t\t$decode = { B1 ?? 30 88 [4] 40 3D 28 01 00 00 7C F2 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v1_45",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 1.45",
+                "hash": "1a92b2024320f581232f2ba1e9a11bef082d5e9723429b3e4febb149458d1bb1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "04d4d0ee-f1ee-5888-8108-ca55243c770a"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v1_45\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 1.45\"\n\t\thash = \"1a92b2024320f581232f2ba1e9a11bef082d5e9723429b3e4febb149458d1bb1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"04d4d0ee-f1ee-5888-8108-ca55243c770a\"\n\n\tstrings:\n\t\t$version_sig = { 51 0F B7 D2 4A 53 56 83 FA 08 77 6B FF 24 }\n\t\t$decode = { B1 ?? 30 88 [4] 40 3D 28 01 00 00 7C F2 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v1_46",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 1.46",
+                "hash": "44e34f4024878024d4804246f57a2b819020c88ba7de160415be38cd6b5e2f76",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "79715042-1963-5e48-8b64-7d915da58d84"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v1_46\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 1.46\"\n\t\thash = \"44e34f4024878024d4804246f57a2b819020c88ba7de160415be38cd6b5e2f76\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"79715042-1963-5e48-8b64-7d915da58d84\"\n\n\tstrings:\n\t\t$version_sig = { 8B F2 83 F9 0C 0F 87 8E 00 00 00 FF 24 }\n\t\t$decode = { B1 ?? 30 88 [4] 40 3D A8 01 00 00 7C F2 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v1_47",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 1.47",
+                "hash": "8ff6dc80581804391183303bb39fca2a5aba5fe13d81886ab21dbd183d536c8d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "ac2249a9-210c-581f-8dd1-7619356dca7d"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v1_47\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 1.47\"\n\t\thash = \"8ff6dc80581804391183303bb39fca2a5aba5fe13d81886ab21dbd183d536c8d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"ac2249a9-210c-581f-8dd1-7619356dca7d\"\n\n\tstrings:\n\t\t$version_sig = { 83 F8 12 77 10 FF 24 }\n\t\t$decode = { B1 ?? 30 88 [4] 40 3D A8 01 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v1_48",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 1.48",
+                "hash": "dd4e445572cd5e32d7e9cc121e8de337e6f19ff07547e3f2c6b7fce7eafd15e4",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "dd15099f-ad19-58df-9ed4-ce66d7ee8540"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v1_48\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 1.48\"\n\t\thash = \"dd4e445572cd5e32d7e9cc121e8de337e6f19ff07547e3f2c6b7fce7eafd15e4\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"dd15099f-ad19-58df-9ed4-ce66d7ee8540\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F1 8B DA 83 F8 17 77 12 FF 24 }\n\t\t$decode = { B1 ?? 30 88 [4] 40 3D A8 01 00 00 7C F2 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v1_49",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 1.49",
+                "hash": "52b4bd87e21ee0cbaaa0fc007fd3f894c5fc2c4bae5cbc2a37188de3c2c465fe",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "871e28c9-b580-5a32-8529-2290ded1a1b6"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v1_49\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 1.49\"\n\t\thash = \"52b4bd87e21ee0cbaaa0fc007fd3f894c5fc2c4bae5cbc2a37188de3c2c465fe\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"871e28c9-b580-5a32-8529-2290ded1a1b6\"\n\n\tstrings:\n\t\t$version_sig = { 48 56 83 F8 1E 0F 87 23 01 00 00 FF 24 }\n\t\t$decoder = { B1 ?? 90 30 88 [4] 40 3D A8 01 00 00 7C F2 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v2_0_49",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Version 2.0.49",
+                "hash": "ed08c1a21906e313f619adaa0a6e5eb8120cddd17d0084a30ada306f2aca3a4e",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "087c584a-5ceb-536a-8842-53fbd668df54"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v2_0_49\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Version 2.0.49\"\n\t\thash = \"ed08c1a21906e313f619adaa0a6e5eb8120cddd17d0084a30ada306f2aca3a4e\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"087c584a-5ceb-536a-8842-53fbd668df54\"\n\n\tstrings:\n\t\t$version_sig = { 83 F8 22 0F 87 96 01 00 00 FF 24 }\n\t\t$decoder = { B1 ?? EB 03 8D 49 00 30 88 [4] 40 3D 30 05 00 00 72 F2  }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v2_1_and_v2_2",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 2.1 and 2.2",
+                "hash": "ae7a1d12e98b8c9090abe19bcaddbde8db7b119c73f7b40e76cdebb2610afdc2",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "384fb247-aae7-52e1-a45d-6bda0f80a04e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v2_1_and_v2_2\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 2.1 and 2.2\"\n\t\thash = \"ae7a1d12e98b8c9090abe19bcaddbde8db7b119c73f7b40e76cdebb2610afdc2\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"384fb247-aae7-52e1-a45d-6bda0f80a04e\"\n\n\tstrings:\n\t\t$version_sig = { 49 56 57 83 F9 24 0F 87 8A 01 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v2_3",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 2.3",
+                "hash": "00dd982cb9b37f6effb1a5a057b6571e533aac5e9e9ee39a399bb3637775ff83",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "aed092f1-fbb1-5efe-be8d-fb7c5aba1cde"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v2_3\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 2.3\"\n\t\thash = \"00dd982cb9b37f6effb1a5a057b6571e533aac5e9e9ee39a399bb3637775ff83\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"aed092f1-fbb1-5efe-be8d-fb7c5aba1cde\"\n\n\tstrings:\n\t\t$version_sig = { 49 56 57 83 F9 26 0F 87 A9 01 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v2_4",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 2.4",
+                "hash": "78c6f3f2b80e6140c4038e9c2bcd523a1b205d27187e37dc039ede4cf560beed",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "347a6b06-84a8-53ff-80a1-05fa1a48a412"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v2_4\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 2.4\"\n\t\thash = \"78c6f3f2b80e6140c4038e9c2bcd523a1b205d27187e37dc039ede4cf560beed\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"347a6b06-84a8-53ff-80a1-05fa1a48a412\"\n\n\tstrings:\n\t\t$version_sig = { 4A 56 57 83 FA 2F 0F 87 F9 01 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v2_5",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 2.5",
+                "hash": "d99693e3e521f42d19824955bef0cefb79b3a9dbf30f0d832180577674ee2b58",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "a89f9239-099c-5b97-b1df-e8ce2b95ea52"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v2_5\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 2.5\"\n\t\thash = \"d99693e3e521f42d19824955bef0cefb79b3a9dbf30f0d832180577674ee2b58\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"a89f9239-099c-5b97-b1df-e8ce2b95ea52\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F2 83 F8 3A 0F 87 6E 02 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_0",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.0",
+                "hash": "30251f22df7f1be8bc75390a2f208b7514647835f07593f25e470342fd2e3f52",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "132a1be8-f529-5141-ba03-fdf6df3d55d4"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_0\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.0\"\n\t\thash = \"30251f22df7f1be8bc75390a2f208b7514647835f07593f25e470342fd2e3f52\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"132a1be8-f529-5141-ba03-fdf6df3d55d4\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F2 83 F8 3C 0F 87 89 02 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_1",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.1",
+                "hash": "4de723e784ef4e1633bbbd65e7665adcfb03dd75505b2f17d358d5a40b7f35cf",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "aa511dee-69ea-53bd-be90-d2d03d08c550"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_1\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.1\"\n\t\thash = \"4de723e784ef4e1633bbbd65e7665adcfb03dd75505b2f17d358d5a40b7f35cf\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"aa511dee-69ea-53bd-be90-d2d03d08c550\"\n\n\tstrings:\n\t\t$version_sig = { 55 8B EC 83 EC 58 A1 [4] 33 C5 89 45 FC E8 DF F5 FF FF 6A 50 8D 45 A8 50 FF 15 [4] 8D 45 ?? 50 FF 15 [4] 85 C0 74 14 8B 40 0C 83 38 00 74 0C 8B 00 FF 30 FF 15 [4] EB 05 B8 [4] 8B 4D FC 33 CD E8 82 B7 00 00 C9 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_2",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.2",
+                "hash": "b490eeb95d150530b8e155da5d7ef778543836a03cb5c27767f1ae4265449a8d",
+                "rs2": "a93647c373f16d61c38ba6382901f468247f12ba8cbe56663abb2a11ff2a5144",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "3ccbc0f2-241c-5c10-8930-4a3d264d3b57"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_2\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.2\"\n\t\thash = \"b490eeb95d150530b8e155da5d7ef778543836a03cb5c27767f1ae4265449a8d\"\n\t\trs2 = \"a93647c373f16d61c38ba6382901f468247f12ba8cbe56663abb2a11ff2a5144\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"3ccbc0f2-241c-5c10-8930-4a3d264d3b57\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F2 83 F8 3D 0F 87 83 02 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\t\t$version3_1_sig = { 55 8B EC 83 EC 58 A1 [4] 33 C5 89 45 FC E8 DF F5 FF FF 6A 50 8D 45 A8 50 FF 15 [4] 8D 45 ?? 50 FF 15 [4] 85 C0 74 14 8B 40 0C 83 38 00 74 0C 8B 00 FF 30 FF 15 [4] EB 05 B8 [4] 8B 4D FC 33 CD E8 82 B7 00 00 C9 }\n\n\tcondition:\n\t\t$version_sig and $decoder and not $version3_1_sig\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_3",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.3",
+                "hash": "158dba14099f847816e2fc22f254c60e09ac999b6c6e2ba6f90c6dd6d937bc42",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "7cce26c9-1403-535f-bd9d-19667c7e313c"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_3\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.3\"\n\t\thash = \"158dba14099f847816e2fc22f254c60e09ac999b6c6e2ba6f90c6dd6d937bc42\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"7cce26c9-1403-535f-bd9d-19667c7e313c\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F1 83 F8 41 0F 87 F0 02 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 10 06 00 00 72 F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_4",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.4",
+                "hash": "5c40bfa04a957d68a095dd33431df883e3a075f5b7dea3e0be9834ce6d92daa3",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "58a34ab6-c061-59a2-b929-8519d3d844e7"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_4\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.4\"\n\t\thash = \"5c40bfa04a957d68a095dd33431df883e3a075f5b7dea3e0be9834ce6d92daa3\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"58a34ab6-c061-59a2-b929-8519d3d844e7\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F1 83 F8 42 0F 87 F0 02 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_5_hf1_and_3_5_1",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.5-hf1 and 3.5.1 (3.5.x)",
+                "hash": "c78e70cd74f4acda7d1d0bd85854ccacec79983565425e98c16a9871f1950525",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "1532596e-be0e-58c2-8d3b-5120c793d677"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_5_hf1_and_3_5_1\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.5-hf1 and 3.5.1 (3.5.x)\"\n\t\thash = \"c78e70cd74f4acda7d1d0bd85854ccacec79983565425e98c16a9871f1950525\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"1532596e-be0e-58c2-8d3b-5120c793d677\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F1 83 F8 43 0F 87 07 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_6",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.6",
+                "hash": "495a744d0a0b5f08479c53739d08bfbd1f3b9818d8a9cbc75e71fcda6c30207d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "7e7b5c22-82b3-5298-b794-b06d94a668d5"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.6\"\n\t\thash = \"495a744d0a0b5f08479c53739d08bfbd1f3b9818d8a9cbc75e71fcda6c30207d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"7e7b5c22-82b3-5298-b794-b06d94a668d5\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F9 83 F8 47 0F 87 2F 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_7",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.7",
+                "hash": "f18029e6b12158fb3993f4951dab2dc6e645bb805ae515d205a53a1ef41ca9b2",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "6352a31c-34b8-5886-8e34-ef9221c22e6e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_7\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.7\"\n\t\thash = \"f18029e6b12158fb3993f4951dab2dc6e645bb805ae515d205a53a1ef41ca9b2\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"6352a31c-34b8-5886-8e34-ef9221c22e6e\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F9 83 F8 49 0F 87 47 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_8",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.8",
+                "hash": "67b6557f614af118a4c409c992c0d9a0cc800025f77861ecf1f3bbc7c293d603",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "6c65cbf8-2c60-5315-b3b2-48dfcee75733"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_8\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.8\"\n\t\thash = \"67b6557f614af118a4c409c992c0d9a0cc800025f77861ecf1f3bbc7c293d603\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"6c65cbf8-2c60-5315-b3b2-48dfcee75733\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F9 83 F8 4B 0F 87 5D 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\t\t$xmrig_srcpath = \"C:/Users/SKOL-NOTE/Desktop/Loader/script.go\"\n\t\t$c2_1 = \"ns7.softline.top\" xor\n\t\t$c2_2 = \"ns8.softline.top\" xor\n\t\t$c2_3 = \"ns9.softline.top\" xor\n\n\tcondition:\n\t\t$version_sig and $decoder and ( 2 of ( $c2_* ) or $xmrig_srcpath )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_11",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.11",
+                "hash": "2428b93464585229fd234677627431cae09cfaeb1362fe4f648b8bee59d68f29",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "00e42396-db81-5d43-90ee-5a97b379019e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_11\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.11\"\n\t\thash = \"2428b93464585229fd234677627431cae09cfaeb1362fe4f648b8bee59d68f29\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"00e42396-db81-5d43-90ee-5a97b379019e\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B FA 83 F8 50 0F 87 11 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_11_bugfix_and_v3_12",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.11-bugfix and 3.12",
+                "hash": "5912c96fffeabb2c5c5cdd4387cfbfafad5f2e995f310ace76ca3643b866e3aa",
+                "rs2": "4476a93abe48b7481c7b13dc912090b9476a2cdf46a1c4287b253098e3523192",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "08ff2a2f-97bd-5839-b414-d67fbf2cdb0f"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_11_bugfix_and_v3_12\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.11-bugfix and 3.12\"\n\t\thash = \"5912c96fffeabb2c5c5cdd4387cfbfafad5f2e995f310ace76ca3643b866e3aa\"\n\t\trs2 = \"4476a93abe48b7481c7b13dc912090b9476a2cdf46a1c4287b253098e3523192\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"08ff2a2f-97bd-5839-b414-d67fbf2cdb0f\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B FA 83 F8 50 0F 87 0D 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_13",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.13",
+                "hash": "362119e3bce42e91cba662ea80f1a7957a5c2b1e92075a28352542f31ac46a0c",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "98dd32e6-9bb5-57b2-a5e5-1c74a0d1e6d3"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_13\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.13\"\n\t\thash = \"362119e3bce42e91cba662ea80f1a7957a5c2b1e92075a28352542f31ac46a0c\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"98dd32e6-9bb5-57b2-a5e5-1c74a0d1e6d3\"\n\n\tstrings:\n\t\t$version_sig = { 4A 56 57 83 FA 5A 0F 87 2D 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_Dll_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's resources/beacon.dll Versions 3.14",
+                "hash": "254c68a92a7108e8c411c7b5b87a2f14654cd9f1324b344f036f6d3b6c7accda",
+                "rs2": "87b3eb55a346b52fb42b140c03ac93fc82f5a7f80697801d3f05aea1ad236730",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "00edfc72-c7b8-5100-8275-ae3548b96e49"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_Dll_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/beacon.dll Versions 3.14\"\n\t\thash = \"254c68a92a7108e8c411c7b5b87a2f14654cd9f1324b344f036f6d3b6c7accda\"\n\t\trs2 = \"87b3eb55a346b52fb42b140c03ac93fc82f5a7f80697801d3f05aea1ad236730\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"00edfc72-c7b8-5100-8275-ae3548b96e49\"\n\n\tstrings:\n\t\t$version_sig = { 83 FA 5B 77 15 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_Dll_v4_0_suspected",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.dll Versions 4.0 (suspected, not confirmed)",
+                "hash": "e2b2b72454776531bbc6a4a5dd579404250901557f887a6bccaee287ac71b248",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "50ff6e44-ebc0-5000-a816-b385a6675768"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_Dll_v4_0_suspected\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.dll Versions 4.0 (suspected, not confirmed)\"\n\t\thash = \"e2b2b72454776531bbc6a4a5dd579404250901557f887a6bccaee287ac71b248\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"50ff6e44-ebc0-5000-a816-b385a6675768\"\n\n\tstrings:\n\t\t$version_sig = { 51 4A 56 57 83 FA 62 0F 87 8F 03 00 00 FF 24 95 56 7B 00 10 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_Dll_v4_1_and_v4_2",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.dll Versions 4.1 and 4.2",
+                "hash": "daa42f4380cccf8729129768f3588bb98e4833b0c40ad0620bb575b5674d5fc3",
+                "rs2": "9de55f27224a4ddb6b2643224a5da9478999c7b2dea3a3d6b3e1808148012bcf",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "793df916-bdf7-5743-b008-0113caf38bae"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_Dll_v4_1_and_v4_2\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.dll Versions 4.1 and 4.2\"\n\t\thash = \"daa42f4380cccf8729129768f3588bb98e4833b0c40ad0620bb575b5674d5fc3\"\n\t\trs2 = \"9de55f27224a4ddb6b2643224a5da9478999c7b2dea3a3d6b3e1808148012bcf\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"793df916-bdf7-5743-b008-0113caf38bae\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F2 83 F8 63 0F 87 3C 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_Dll_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.dll Versions 4.3 and 4.4",
+                "hash": "51490c01c72c821f476727c26fbbc85bdbc41464f95b28cdc577e5701790845f",
+                "rs2": "78a6fbefa677eeee29d1af4a294ee57319221b329a2fe254442f5708858b37dc",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "976e087c-f371-5fc6-85f8-9c803a91f549"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_Dll_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.dll Versions 4.3 and 4.4\"\n\t\thash = \"51490c01c72c821f476727c26fbbc85bdbc41464f95b28cdc577e5701790845f\"\n\t\trs2 = \"78a6fbefa677eeee29d1af4a294ee57319221b329a2fe254442f5708858b37dc\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"976e087c-f371-5fc6-85f8-9c803a91f549\"\n\n\tstrings:\n\t\t$version_sig = { 48 57 8B F2 83 F8 65 0F 87 47 03 00 00 FF 24 }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_Dll_v4_7_suspected",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.dll Versions 4.7 (suspected, not confirmed)",
+                "hash": "da9e91b3d8df3d53425dd298778782be3bdcda40037bd5c92928395153160549",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "4b6f90dd-69f3-5555-9195-6a0aed0fff58"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_Dll_v4_7_suspected\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.dll Versions 4.7 (suspected, not confirmed)\"\n\t\thash = \"da9e91b3d8df3d53425dd298778782be3bdcda40037bd5c92928395153160549\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"4b6f90dd-69f3-5555-9195-6a0aed0fff58\"\n\n\tstrings:\n\t\t$version_sig = { 53 56 48 57 8B F2 83 F8 67 0F 87 5E 03 00 00  }\n\t\t$decoder = { 80 B0 [4] ?? 40 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_2",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.2",
+                "hash": "5993a027f301f37f3236551e6ded520e96872723a91042bfc54775dcb34c94a1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "61188243-0b90-5bff-bcc8-50f10ed941f6"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_2\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.2\"\n\t\thash = \"5993a027f301f37f3236551e6ded520e96872723a91042bfc54775dcb34c94a1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"61188243-0b90-5bff-bcc8-50f10ed941f6\"\n\n\tstrings:\n\t\t$version_sig = { 4C 8D 05 9F F8 FF FF 8B D3 48 8B CF E8 05 1A 00 00\n                     EB 0A 8B D3 48 8B CF E8 41 21 00 00 48 8B 5C 24 30\n                     48 83 C4 20 }\n\t\t$decoder = { 80 31 ?? FF C2 48 FF C1 48 63 C2 48 3D 10 06 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_3",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.3",
+                "hash": "7b00721efeff6ed94ab108477d57b03022692e288cc5814feb5e9d83e3788580",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "fb96ecff-809e-5704-974e-a2d8ef022daa"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_3\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.3\"\n\t\thash = \"7b00721efeff6ed94ab108477d57b03022692e288cc5814feb5e9d83e3788580\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"fb96ecff-809e-5704-974e-a2d8ef022daa\"\n\n\tstrings:\n\t\t$version_sig = { 8B D3 48 8B CF E8 89 66 00 00 E9 23 FB FF FF \n                     41 B8 01 00 00 00 E9 F3 FD FF FF 48 8D 0D 2A F8 FF FF\n                     E8 8D 2B 00 00 48 8B 5C 24 30 48 83 C4 20 }\n\t\t$decoder = { 80 31 ?? FF C2 48 FF C1 48 63 C2 48 3D 10 06 00 00 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_4",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.4",
+                "hash": "5a4d48c2eda8cda79dc130f8306699c8203e026533ce5691bf90363473733bf0",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "97ef152c-86c7-513c-a881-e7d594d38dcf"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_4\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.4\"\n\t\thash = \"5a4d48c2eda8cda79dc130f8306699c8203e026533ce5691bf90363473733bf0\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"97ef152c-86c7-513c-a881-e7d594d38dcf\"\n\n\tstrings:\n\t\t$version_sig = { 8B D3 48 8B CF E8 56 6F 00 00 E9 17 FB FF FF\n                     41 B8 01 00 00 00 8B D3 48 8B CF E8 41 4D 00 00\n                     48 8B 5C 24 30 48 83 C4 20 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_5_hf1_and_v3_5_1",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.5-hf1 and 3.5.1",
+                "hash": "934134ab0ee65ec76ae98a9bb9ad0e9571d80f4bf1eb3491d58bacf06d42dc8d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "0c0e87d3-e0e2-5ddc-9d89-5e56443da4b8"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_5_hf1_and_v3_5_1\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.5-hf1 and 3.5.1\"\n\t\thash = \"934134ab0ee65ec76ae98a9bb9ad0e9571d80f4bf1eb3491d58bacf06d42dc8d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"0c0e87d3-e0e2-5ddc-9d89-5e56443da4b8\"\n\n\tstrings:\n\t\t$version_sig = { 8B D3 48 8B CF E8 38 70 00 00 E9 FD FA FF FF \n                     41 B8 01 00 00 00 8B D3 48 8B CF E8 3F 4D 00 00 \n                     48 8B 5C 24 30 48 83 C4 20 5F }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.6",
+                "hash": "92b0a4aec6a493bcb1b72ce04dd477fd1af5effa0b88a9d8283f26266bb019a1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "9651a1ca-d8ea-5b0b-bcba-a850c2e07791"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.6\"\n\t\thash = \"92b0a4aec6a493bcb1b72ce04dd477fd1af5effa0b88a9d8283f26266bb019a1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"9651a1ca-d8ea-5b0b-bcba-a850c2e07791\"\n\n\tstrings:\n\t\t$version_sig = { 48 89 5C 24 08 57 48 83 EC 20 41 8B D8 48 8B FA 83 F9 27\n                     0F 87 47 03 00 00 0F 84 30 03 00 00 83 F9 14\n                     0F 87 A4 01 00 00 0F 84 7A 01 00 00 83 F9 0C\n                     0F 87 C8 00 00 00 0F 84 B3 00 00 00 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_7",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.7",
+                "hash": "81296a65a24c0f6f22208b0d29e7bb803569746ce562e2fa0d623183a8bcca60",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "27fad98a-2882-5c52-af6e-c7dcf5559624"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_7\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.7\"\n\t\thash = \"81296a65a24c0f6f22208b0d29e7bb803569746ce562e2fa0d623183a8bcca60\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"27fad98a-2882-5c52-af6e-c7dcf5559624\"\n\n\tstrings:\n\t\t$version_sig = { 48 89 5C 24 08 57 48 83 EC 20 41 8B D8 48 8B FA 83 F9 28\n                     0F 87 7F 03 00 00 0F 84 67 03 00 00 83 F9 15\n                     0F 87 DB 01 00 00 0F 84 BF 01 00 00 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_8",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.8",
+                "hash": "547d44669dba97a32cb9e95cfb8d3cd278e00599e6a11080df1a9d09226f33ae",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "89809d81-9a8b-5cf3-a251-689bf52e98e0"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_8\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.8\"\n\t\thash = \"547d44669dba97a32cb9e95cfb8d3cd278e00599e6a11080df1a9d09226f33ae\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"89809d81-9a8b-5cf3-a251-689bf52e98e0\"\n\n\tstrings:\n\t\t$version_sig = { 8B D3 48 8B CF E8 7A 52 00 00 EB 0D 45 33 C0 8B D3 48 8B CF\n                     E8 8F 55 00 00 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_11",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.11 (two subversions)",
+                "hash": "64007e104dddb6b5d5153399d850f1e1f1720d222bed19a26d0b1c500a675b1a",
+                "rs2": "815f313e0835e7fdf4a6d93f2774cf642012fd21ce870c48ff489555012e0047",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "bf0c7661-2583-5fca-beb5-abb2b50c860d"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_11\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.11 (two subversions)\"\n\t\thash = \"64007e104dddb6b5d5153399d850f1e1f1720d222bed19a26d0b1c500a675b1a\"\n\t\trs2 = \"815f313e0835e7fdf4a6d93f2774cf642012fd21ce870c48ff489555012e0047\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"bf0c7661-2583-5fca-beb5-abb2b50c860d\"\n\n\tstrings:\n\t\t$version_sig = { 48 83 EC 20 41 8B D8 48 8B FA 83 F9 2D 0F 87 B2 03 00 00\n                     0F 84 90 03 00 00 83 F9 17 0F 87 F8 01 00 00\n                     0F 84 DC 01 00 00 83 F9 0E 0F 87 F9 00 00 00\n                     0F 84 DD 00 00 00 FF C9 0F 84 C0 00 00 00 83 E9 02\n                     0F 84 A6 00 00 00 FF C9 }\n\t\t$decoder = {\n      80 34 28 ?? \n      48 FF C0\n      48 3D 00 10 00 00\n      7C F1\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_12",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.12",
+                "hash": "8a28b7a7e32ace2c52c582d0076939d4f10f41f4e5fa82551e7cc8bdbcd77ebc",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "6eeae9f4-96e0-5a98-a8dc-779c916cd968"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_12\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.12\"\n\t\thash = \"8a28b7a7e32ace2c52c582d0076939d4f10f41f4e5fa82551e7cc8bdbcd77ebc\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"6eeae9f4-96e0-5a98-a8dc-779c916cd968\"\n\n\tstrings:\n\t\t$version_sig = { 8B D3 48 8B CF E8 F8 2E 00 00 EB 16 8B D3 48 8B CF\n                     E8 00 5C 00 00 EB 0A 8B D3 48 8B CF E8 64 4F 00 00 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_13",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.13",
+                "hash": "945e10dcd57ba23763481981c6035e0d0427f1d3ba71e75decd94b93f050538e",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "202eb8ea-7afb-515b-9306-67514abf5e55"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_13\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.13\"\n\t\thash = \"945e10dcd57ba23763481981c6035e0d0427f1d3ba71e75decd94b93f050538e\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"202eb8ea-7afb-515b-9306-67514abf5e55\"\n\n\tstrings:\n\t\t$version_sig = { 48 8D 0D 01 5B FF FF 48 83 C4 28 E9 A8 54 FF FF 8B D0\n                     49 8B CA E8 22 55 FF FF }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Beacon_x64_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 3.14",
+                "hash": "297a8658aaa4a76599a7b79cb0da5b8aa573dd26c9e2c8f071e591200cf30c93",
+                "rs2": "39b9040e3dcd1421a36e02df78fe031cbdd2fb1a9083260b8aedea7c2bc406bf",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "d69171e3-86f4-5187-8874-5eee2045f746"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Beacon_x64_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 3.14\"\n\t\thash = \"297a8658aaa4a76599a7b79cb0da5b8aa573dd26c9e2c8f071e591200cf30c93\"\n\t\trs2 = \"39b9040e3dcd1421a36e02df78fe031cbdd2fb1a9083260b8aedea7c2bc406bf\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"d69171e3-86f4-5187-8874-5eee2045f746\"\n\n\tstrings:\n\t\t$version_sig = { 8B D0 49 8B CA 48 83 C4 28 E9 B1 1F 00 00 8B D0 49 8B CA\n                     48 83 C4 28 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_Dll_x86_v4_0_suspected",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 4.0 (suspected, not confirmed)",
+                "hash": "55aa2b534fcedc92bb3da54827d0daaa23ece0f02a10eb08f5b5247caaa63a73",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "28a735c4-87d1-5e14-9379-46a6fd0cdd2a"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_Dll_x86_v4_0_suspected\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 4.0 (suspected, not confirmed)\"\n\t\thash = \"55aa2b534fcedc92bb3da54827d0daaa23ece0f02a10eb08f5b5247caaa63a73\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"28a735c4-87d1-5e14-9379-46a6fd0cdd2a\"\n\n\tstrings:\n\t\t$version_sig = { 41 B8 01 00 00 00 8B D0 49 8B CA 48 83 C4 28 E9 D1 B3 FF FF\n                     8B D0 49 8B CA 48 83 C4 28 E9 AF F5 FF FF 45 33 C0\n                     4C 8D 0D 8D 70 FF FF 8B D0 49 8B CA E8 9B B0 FF FF }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_x64_v4_1_and_v_4_2",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 4.1 and 4.2",
+                "hash": "29ec171300e8d2dad2e1ca2b77912caf0d5f9d1b633a81bb6534acb20a1574b2",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "dc320d17-98fc-5df3-ba05-4d134129317e"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_x64_v4_1_and_v_4_2\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 4.1 and 4.2\"\n\t\thash = \"29ec171300e8d2dad2e1ca2b77912caf0d5f9d1b633a81bb6534acb20a1574b2\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"dc320d17-98fc-5df3-ba05-4d134129317e\"\n\n\tstrings:\n\t\t$version_sig = { 83 F9 34 0F 87 8E 03 00 00 0F 84 7A 03 00 00 83 F9 1C 0F 87 E6 01 00 00\n                     0F 84 D7 01 00 00 83 F9 0E 0F 87 E9 00 00 00 0F 84 CE 00 00 00 FF C9\n                     0F 84 B8 00 00 00 83 E9 02 0F 84 9F 00 00 00 FF C9 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_x64_v4_3",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Version 4.3",
+                "hash": "3ac9c3525caa29981775bddec43d686c0e855271f23731c376ba48761c27fa3d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "572616c7-d1ec-5aa1-b142-4f2edf73737f"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_x64_v4_3\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Version 4.3\"\n\t\thash = \"3ac9c3525caa29981775bddec43d686c0e855271f23731c376ba48761c27fa3d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"572616c7-d1ec-5aa1-b142-4f2edf73737f\"\n\n\tstrings:\n\t\t$version_sig = { 8B D0 49 8B CA 48 83 C4 28 E9 D3 88 FF FF\n                     4C 8D 05 84 6E FF FF 8B D0 49 8B CA 48 83 C4 28 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_x64_v4_4_v_4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 4.4 through at least 4.6",
+                "hash": "3280fec57b7ca94fd2bdb5a4ea1c7e648f565ac077152c5a81469030ccf6ab44",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "79b6bfd4-1e45-5bd9-ac5c-19eb176ce698"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_x64_v4_4_v_4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 4.4 through at least 4.6\"\n\t\thash = \"3280fec57b7ca94fd2bdb5a4ea1c7e648f565ac077152c5a81469030ccf6ab44\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"79b6bfd4-1e45-5bd9-ac5c-19eb176ce698\"\n\n\tstrings:\n\t\t$version_sig = { 8B D0 49 8B CA 48 83 C4 28 E9 83 88 FF FF\n                     4C 8D 05 A4 6D FF FF 8B D0 49 8B CA 48 83 C4 28 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_Beacon_x64_v4_5_variant",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/beacon.x64.dll Versions 4.5 (variant)",
+                "hash": "8f0da7a45945b630cd0dfb5661036e365dcdccd085bc6cff2abeec6f4c9f1035",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "45715da9-8f16-5304-b216-1ca36c508c77"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_Beacon_x64_v4_5_variant\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/beacon.x64.dll Versions 4.5 (variant)\"\n\t\thash = \"8f0da7a45945b630cd0dfb5661036e365dcdccd085bc6cff2abeec6f4c9f1035\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"45715da9-8f16-5304-b216-1ca36c508c77\"\n\n\tstrings:\n\t\t$version_sig = { 41 B8 01 00 00 00 8B D0 49 8B CA 48 83 C4 28 E9 E8 AB FF FF\n                     8B D0 49 8B CA E8 1A EB FF FF 48 83 C4 28 }\n\t\t$decoder = { 80 34 28 ?? 48 FF C0 48 3D 00 10 00 00 7C F1 }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Bind64_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/bind64.bin signature for versions v2.5 to v4.x",
+                "hash": "5dd136f5674f66363ea6463fd315e06690d6cb10e3cc516f2d378df63382955d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "a01e7bc3-40e9-5f87-8fd6-926972be273b"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Bind64_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/bind64.bin signature for versions v2.5 to v4.x\"\n\t\thash = \"5dd136f5674f66363ea6463fd315e06690d6cb10e3cc516f2d378df63382955d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"a01e7bc3-40e9-5f87-8fd6-926972be273b\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t48 [2]\n\t\t\tAC\n\t\t\t41 [2] 0D\n\t\t\t41 [2]\n\t\t\t38 ??\n\t\t\t75 ??\n\t\t\t4C [4]\n\t\t\t45 [2]\n\t\t\t75 ??\n\t\t\t5?\n\t\t\t44 [2] 24\n\t\t\t49 [2]\n\t\t\t66 [4]\n\t\t\t44 [2] 1C\n\t\t\t49 [2]\n\t\t\t41 [3]\n\t\t\t48 \n\t\t}\n\t\t$calls = {\n\t\t\t41 BA C2 DB 37 67\n\t\t\tFF D5\n\t\t\t48 [2]\n\t\t\t48 [2]\n\t\t\t41 BA B7 E9 38 FF\n\t\t\tFF D5\n\t\t\t4D [2]\n\t\t\t48 [2]\n\t\t\t48 [2]\n\t\t\t41 BA 74 EC 3B E1\n\t\t\tFF D5\n\t\t\t48 [2]\n\t\t\t48 [2]\n\t\t\t41 BA 75 6E 4D 61\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $calls\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Bind_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/bind.bin signature for versions 2.5 to 4.x",
+                "hash": "3727542c0e3c2bf35cacc9e023d1b2d4a1e9e86ee5c62ee5b66184f46ca126d1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "32f129c1-9845-5843-9e16-7d9af217b8e2"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Bind_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/bind.bin signature for versions 2.5 to 4.x\"\n\t\thash = \"3727542c0e3c2bf35cacc9e023d1b2d4a1e9e86ee5c62ee5b66184f46ca126d1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"32f129c1-9845-5843-9e16-7d9af217b8e2\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t31 ?? \n\t\t\tAC\n\t\t\tC1 ?? 0D \n\t\t\t01 ?? \n\t\t\t38 ?? \n\t\t\t75 ?? \n\t\t\t03 [2]\n\t\t\t3B [2]\n\t\t\t75 ?? \n\t\t\t5? \n\t\t\t8B ?? 24 \n\t\t\t01 ?? \n\t\t\t66 8B [2]\n\t\t\t8B ?? 1C \n\t\t\t01 ?? \n\t\t\t8B ?? 8B \n\t\t\t01 ?? \n\t\t\t89 [3]\n\t\t\t5? \n\t\t\t5? \n\t\t}\n\t\t$ws2_32 = {\n\t\t\t5D\n\t\t\t68 33 32 00 00\n\t\t\t68 77 73 32 5F\n\t\t}\n\t\t$listenaccept = {\n\t\t\t5? \n\t\t\t5? \n\t\t\t68 B7 E9 38 FF\n\t\t\tFF ?? \n\t\t\t5? \n\t\t\t5? \n\t\t\t5? \n\t\t\t68 74 EC 3B E1\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $ws2_32 and $listenaccept\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike__Resources_Browserpivot_Bin_v1_48_to_v3_14_and_Sleeve_Browserpivot_Dll_v4_0_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/browserpivot.bin from v1.48 to v3.14 and sleeve/browserpivot.dll from v4.0 to at least v4.4",
+                "hash": "12af9f5a7e9bfc49c82a33d38437e2f3f601639afbcdc9be264d3a8d84fd5539",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "55086544-6684-526b-914f-505a562be458"
+            },
+            "rule_text": "rule CobaltStrike__Resources_Browserpivot_Bin_v1_48_to_v3_14_and_Sleeve_Browserpivot_Dll_v4_0_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/browserpivot.bin from v1.48 to v3.14 and sleeve/browserpivot.dll from v4.0 to at least v4.4\"\n\t\thash = \"12af9f5a7e9bfc49c82a33d38437e2f3f601639afbcdc9be264d3a8d84fd5539\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"55086544-6684-526b-914f-505a562be458\"\n\n\tstrings:\n\t\t$socket_recv = {\n\t\t\tFF [1-5]\n\t\t\t83 ?? FF \n\t\t\t74 ?? \n\t\t\t85 C0\n\t\t\t(74 | 76) ?? \n\t\t\t03 ?? \n\t\t\t83 ?? 02 \n\t\t\t72 ?? \n\t\t\t80 ?? 3E FF 0A \n\t\t\t75 ?? \n\t\t\t80 ?? 3E FE 0D \n\t\t}\n\t\t$fmt = \"%1024[^ ] %8[^:]://%1016[^/]%7168[^ ] %1024[^ ]\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Browserpivot_x64_Bin_v1_48_to_v3_14_and_Sleeve_Browserpivot_x64_Dll_v4_0_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/browserpivot.x64.bin from v1.48 to v3.14 and sleeve/browserpivot.x64.dll from v4.0 to at least v4.4",
+                "hash": "0ad32bc4fbf3189e897805cec0acd68326d9c6f714c543bafb9bc40f7ac63f55",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "a5dfae85-ff9c-5ca5-9ac0-041c6108a6ed"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Browserpivot_x64_Bin_v1_48_to_v3_14_and_Sleeve_Browserpivot_x64_Dll_v4_0_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/browserpivot.x64.bin from v1.48 to v3.14 and sleeve/browserpivot.x64.dll from v4.0 to at least v4.4\"\n\t\thash = \"0ad32bc4fbf3189e897805cec0acd68326d9c6f714c543bafb9bc40f7ac63f55\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"a5dfae85-ff9c-5ca5-9ac0-041c6108a6ed\"\n\n\tstrings:\n\t\t$socket_recv = {\n\t\t\tFF 15 [4]\n\t\t\t83 ?? FF\n\t\t\t74 ??\n\t\t\t85 ??\n\t\t\t74 ??\n\t\t\t03 ??\n\t\t\t83 ?? 02\n\t\t\t72 ??\n\t\t\t8D ?? FF\n\t\t\t80 [2] 0A\n\t\t\t75 ??\n\t\t\t8D ?? FE\n\t\t\t80 [2] 0D\n\t\t}\n\t\t$fmt = \"%1024[^ ] %8[^:]://%1016[^/]%7168[^ ] %1024[^ ]\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Bypassuac_Dll_v1_49_to_v3_14_and_Sleeve_Bypassuac_Dll_v4_0_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/bypassuac(-x86).dll from v1.49 to v3.14 (32-bit version) and sleeve/bypassuac.dll from v4.0 to at least v4.4",
+                "hash": "91d12e1d09a642feedee5da966e1c15a2c5aea90c79ac796e267053e466df365",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "614046b5-cf81-56a5-8824-b3a7e14a8ed5"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Bypassuac_Dll_v1_49_to_v3_14_and_Sleeve_Bypassuac_Dll_v4_0_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/bypassuac(-x86).dll from v1.49 to v3.14 (32-bit version) and sleeve/bypassuac.dll from v4.0 to at least v4.4\"\n\t\thash = \"91d12e1d09a642feedee5da966e1c15a2c5aea90c79ac796e267053e466df365\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"614046b5-cf81-56a5-8824-b3a7e14a8ed5\"\n\n\tstrings:\n\t\t$deleteFileCOM = {\n\t\t\tA1 [4]\n\t\t\t6A 00\n\t\t\t8B ?? \n\t\t\t5? \n\t\t\t5? \n\t\t\tFF ?? 48 \n\t\t\t85 ?? \n\t\t\t75 ?? \n\t\t\tA1 [4]\n\t\t\t5? \n\t\t\t8B ?? \n\t\t\tFF ?? 54 \n\t\t}\n\t\t$copyFileCOM = {\n\t\t\tA1 [4]\n\t\t\t6A 00\n\t\t\tFF [2]\n\t\t\t8B ?? \n\t\t\tFF [5]\n\t\t\tFF [5]\n\t\t\t5? \n\t\t\tFF ?? 40 \n\t\t\t85 ?? \n\t\t\t[2 - 6]\n\t\t\tA1 [4]\n\t\t\t5? \n\t\t\t8B ?? \n\t\t\tFF ?? 54 \n\t\t}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Bypassuac_x64_Dll_v3_3_to_v3_14_and_Sleeve_Bypassuac_x64_Dll_v4_0_and_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/bypassuac-x64.dll from v3.3 to v3.14 (64-bit version) and sleeve/bypassuac.x64.dll from v4.0 to at least v4.4",
+                "hash": "9ecf56e9099811c461d592c325c65c4f9f27d947cbdf3b8ef8a98a43e583aecb",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "eef83901-63d9-55a3-b115-03f420416177"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Bypassuac_x64_Dll_v3_3_to_v3_14_and_Sleeve_Bypassuac_x64_Dll_v4_0_and_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/bypassuac-x64.dll from v3.3 to v3.14 (64-bit version) and sleeve/bypassuac.x64.dll from v4.0 to at least v4.4\"\n\t\thash = \"9ecf56e9099811c461d592c325c65c4f9f27d947cbdf3b8ef8a98a43e583aecb\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"eef83901-63d9-55a3-b115-03f420416177\"\n\n\tstrings:\n\t\t$deleteFileCOM = {\n\t\t\t48 8B [5]\n\t\t\t45 33 ??\n\t\t\t48 8B ??\n\t\t\tFF 90 90 00 00 00\n\t\t\t85 C0\n\t\t\t75 ??\n\t\t\t48 8B [5]\n\t\t\t48 8B ??\n\t\t\tFF 92 A8 00 00 00\n\t\t\t85 C0\n\t\t}\n\t\t$copyFileCOM = {\n\t\t\t48 8B [5]\n\t\t\t4C 8B [5]\n\t\t\t48 8B [5]\n\t\t\t48 8B ??\n\t\t\t4C 8B ??\n\t\t\t48 89 [3]\n\t\t\tFF 90 80 00 00 00\n\t\t\t85 C0\n\t\t\t0F 85 [4]\n\t\t\t48 8B [5]\n\t\t\t48 8B 11\n\t\t\tFF 92 A8 00 00 00\n\t\t}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Bypassuactoken_Dll_v3_11_to_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's resources/bypassuactoken.dll from v3.11 to v3.14 (32-bit version)",
+                "hash": "df1c7256dfd78506e38c64c54c0645b6a56fc56b2ffad8c553b0f770c5683070",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "b9f25fa5-bd1d-5ba0-9b1d-bb97e1dbf76b"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Bypassuactoken_Dll_v3_11_to_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/bypassuactoken.dll from v3.11 to v3.14 (32-bit version)\"\n\t\thash = \"df1c7256dfd78506e38c64c54c0645b6a56fc56b2ffad8c553b0f770c5683070\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"b9f25fa5-bd1d-5ba0-9b1d-bb97e1dbf76b\"\n\n\tstrings:\n\t\t$isHighIntegrityProcess = {\n\t\t\t5? \n\t\t\t5? \n\t\t\t5? \n\t\t\t8B ?? \n\t\t\t6A 19\n\t\t\t5? \n\t\t\tFF 15 [4]\n\t\t\t85 C0\n\t\t\t75 ?? \n\t\t\tFF 15 [4]\n\t\t\t83 ?? 7A \n\t\t\t75 ?? \n\t\t\tFF [2]\n\t\t\t5? \n\t\t\tFF 15 [4]\n\t\t\t8B ?? \n\t\t\t8D [2]\n\t\t\t5? \n\t\t\tFF [2]\n\t\t\t5? \n\t\t\t6A 19\n\t\t\t5? \n\t\t\tFF 15 [4]\n\t\t\t85 C0\n\t\t\t74 ?? \n\t\t\tFF ?? \n\t\t\tFF 15 [4]\n\t\t\t8A ?? \n\t\t\tFE C8\n\t\t\t0F B6 C0\n\t\t\t5? \n\t\t\tFF ?? \n\t\t\tFF 15 [4]\n\t\t\tB? 01 00 00 00 \n\t\t\t5? \n\t\t\t81 ?? 00 30 00 00 \n\t\t}\n\t\t$executeTaskmgr = {\n\t\t\t6A 3C\n\t\t\t8D ?? C4 \n\t\t\t8B ?? \n\t\t\t6A 00\n\t\t\t5? \n\t\t\t8B ?? \n\t\t\tE8 [4]\n\t\t\t83 C4 0C\n\t\t\tC7 [2] 3C 00 00 00 \n\t\t\t8D [2]\n\t\t\tC7 [2] 40 00 00 00 \n\t\t\tC7 [6]\n\t\t\tC7 [2] 00 00 00 00 \n\t\t\t5? \n\t\t\tC7 [2] 00 00 00 00 \n\t\t\tC7 [6]\n\t\t\tC7 [2] 00 00 00 00 \n\t\t\tFF 15 [4]\n\t\t\tFF 75 FC\n\t\t}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Bypassuactoken_x64_Dll_v3_11_to_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's resources/bypassuactoken.x64.dll from v3.11 to v3.14 (64-bit version)",
+                "hash": "853068822bbc6b1305b2a9780cf1034f5d9d7127001351a6917f9dbb42f30d67",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "c89befcd-a622-5947-9ce3-a6031901a45a"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Bypassuactoken_x64_Dll_v3_11_to_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/bypassuactoken.x64.dll from v3.11 to v3.14 (64-bit version)\"\n\t\thash = \"853068822bbc6b1305b2a9780cf1034f5d9d7127001351a6917f9dbb42f30d67\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"c89befcd-a622-5947-9ce3-a6031901a45a\"\n\n\tstrings:\n\t\t$isHighIntegrityProcess = {\n\t\t\t83 ?? 7A\n\t\t\t75 ??\n\t\t\t8B [3]\n\t\t\t33 ??\n\t\t\tFF 15 [4]\n\t\t\t44 [4]\n\t\t\t8D [2]\n\t\t\t48 8B ??\n\t\t\t48 8D [3]\n\t\t\t48 8B ??\n\t\t\t4C 8B ??\n\t\t\t48 89 [3]\n\t\t\tFF 15 [4]\n\t\t\t85 C0\n\t\t\t74 ??\n\t\t\t48 8B ??\n\t\t\tFF 15 [4]\n\t\t\t8D [2]\n\t\t\t8A ??\n\t\t\t40 [2]\n\t\t\t0F B6 D1\n\t\t\t48 8B 0F\n\t\t\tFF 15 [4]\n\t\t\t81 ?? 00 30 00 00\n\t\t}\n\t\t$executeTaskmgr = {\n\t\t\t44 8D ?? 70\n\t\t\t48 8D [3]\n\t\t\tE8 [4]\n\t\t\t83 [3] 00\n\t\t\t48 8D [5]\n\t\t\t0F 57 ??\n\t\t\t66 0F 7F [3]\n\t\t\t48 89 [3]\n\t\t\t48 8D [5]\n\t\t\t48 8D [3]\n\t\t\tC7 [3] 70 00 00 00\n\t\t\tC7 [3] 40 00 00 00\n\t\t\t48 89 [3]\n\t\t\tFF 15 \n\t\t}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Command_Ps1_v2_5_to_v3_7_and_Resources_Compress_Ps1_v3_8_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/command.ps1 for versions 2.5 to v3.7 and resources/compress.ps1 from v3.8 to v4.x",
+                "hash": "932dec24b3863584b43caf9bb5d0cfbd7ed1969767d3061a7abdc05d3239ed62",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "c0b81deb-ed20-5f7e-8e15-e6a9e9362594"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Command_Ps1_v2_5_to_v3_7_and_Resources_Compress_Ps1_v3_8_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/command.ps1 for versions 2.5 to v3.7 and resources/compress.ps1 from v3.8 to v4.x\"\n\t\thash = \"932dec24b3863584b43caf9bb5d0cfbd7ed1969767d3061a7abdc05d3239ed62\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"c0b81deb-ed20-5f7e-8e15-e6a9e9362594\"\n\n\tstrings:\n\t\t$ps1 = \"$s=New-Object \\x49O.MemoryStream(,[Convert]::\\x46romBase64String(\" nocase\n\t\t$ps2 = \"));IEX (New-Object IO.StreamReader(New-Object IO.Compression.GzipStream($s,[IO.Compression.CompressionMode]::Decompress))).ReadToEnd();\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Covertvpn_Dll_v2_1_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/covertvpn.dll signature for version v2.2 to v4.4",
+                "hash": "0a452a94d53e54b1df6ba02bc2f02e06d57153aad111171a94ec65c910d22dcf",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "a65b855c-5703-5b9f-bb57-da8ebf898f9b"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Covertvpn_Dll_v2_1_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/covertvpn.dll signature for version v2.2 to v4.4\"\n\t\thash = \"0a452a94d53e54b1df6ba02bc2f02e06d57153aad111171a94ec65c910d22dcf\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"a65b855c-5703-5b9f-bb57-da8ebf898f9b\"\n\n\tstrings:\n\t\t$dropComponentsAndActivateDriver_prologue = {\n\t\t\t5? \n\t\t\t68 [4]\n\t\t\t68 [4]\n\t\t\tC7 [3-5] 00 00 00 00 \n\t\t\tFF 15 [4]\n\t\t\t50\n\t\t\tFF 15 [4]\n\t\t\t8B ?? \n\t\t\t85 ?? \n\t\t\t74 ??\n\t\t\t8D [3-5]\n\t\t\t5? \n\t\t\tFF 15 [4]\n\t\t\t50\n\t\t}\n\t\t$dropFile = {\n\t\t\t6A 00\n\t\t\t5? \n\t\t\tE8 [4]\n\t\t\t83 C4 08\n\t\t\t83 F8 FF\n\t\t\t74 ?? \n\t\t\t5? \n\t\t\t[0-5]\n\t\t\tE8 [4]\n\t\t\t83 C4 ??\n\t\t\t[0-2]\n\t\t\t6A 00\n\t\t\t68 80 01 00 00\n\t\t\t6A 02\n\t\t\t6A 00\n\t\t\t6A 05\n\t\t\t68 00 00 00 40\n\t\t\t5? \n\t\t\tFF 15 [4]\n\t\t\t8B ?? \n\t\t\t83 ?? FF \n\t\t\t75 ?? \n\t\t\tFF 15 [4]\n\t\t\t5? \n\t\t}\n\t\t$nfp = \"npf.sys\" nocase\n\t\t$wpcap = \"wpcap.dll\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Covertvpn_injector_Exe_v1_44_to_v2_0_49",
+                "tags": [],
+                "description": "Cobalt Strike's resources/covertvpn-injector.exe signature for version v1.44 to v2.0.49",
+                "hash": "d741751520f46602f5a57d1ed49feaa5789115aeeba7fa4fc7cbb534ee335462",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "48485ae2-1d99-5fa8-b8e8-0047e92ef447"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Covertvpn_injector_Exe_v1_44_to_v2_0_49\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/covertvpn-injector.exe signature for version v1.44 to v2.0.49\"\n\t\thash = \"d741751520f46602f5a57d1ed49feaa5789115aeeba7fa4fc7cbb534ee335462\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"48485ae2-1d99-5fa8-b8e8-0047e92ef447\"\n\n\tstrings:\n\t\t$dropComponentsAndActivateDriver_prologue = {\n\t\t\tC7 04 24 [4]\n\t\t\tE8 [4]\n\t\t\t83 EC 04\n\t\t\tC7 44 24 04 [4]\n\t\t\t89 04 24\n\t\t\tE8 59 14 00 00\n\t\t\t83 EC 08\n\t\t\t89 45 ?? \n\t\t\t83 7D ?? 00 \n\t\t\t74 ?? \n\t\t\tE8 [4]\n\t\t\t8D [2]\n\t\t\t89 [3]\n\t\t\t89 04 24\n\t\t}\n\t\t$dropFile = {\n\t\t\tC7 44 24 04 00 00 00 00\n\t\t\t8B [2]\n\t\t\t89 ?? 24 \n\t\t\tE8 [4]\n\t\t\t83 F8 FF\n\t\t\t74 ?? \n\t\t\t8B [2]\n\t\t\t89 ?? 24 04 \n\t\t\tC7 04 24 [4]\n\t\t\tE8 [4]\n\t\t\tE9 [4]\n\t\t\tC7 44 24 18 00 00 00 00\n\t\t\tC7 44 24 14 80 01 00 00\n\t\t\tC7 44 24 10 02 00 00 00\n\t\t\tC7 44 24 0C 00 00 00 00\n\t\t\tC7 44 24 08 05 00 00 00\n\t\t\tC7 44 24 04 00 00 00 40\n\t\t\t8B [2]\n\t\t\t89 04 24\n\t\t\tE8 [4]\n\t\t\t83 EC 1C\n\t\t\t89 45 ?? \n\t\t}\n\t\t$nfp = \"npf.sys\" nocase\n\t\t$wpcap = \"wpcap.dll\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Dnsstager_Bin_v1_47_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/dnsstager.bin signature for versions 1.47 to 4.x",
+                "hash": "10f946b88486b690305b87c14c244d7bc741015c3fef1c4625fa7f64917897f1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "e1b0e368-9bcf-5d9b-b2b3-8414742f213e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Dnsstager_Bin_v1_47_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/dnsstager.bin signature for versions 1.47 to 4.x\"\n\t\thash = \"10f946b88486b690305b87c14c244d7bc741015c3fef1c4625fa7f64917897f1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"e1b0e368-9bcf-5d9b-b2b3-8414742f213e\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t31 ?? \n\t\t\tAC\n\t\t\tC1 ?? 0D \n\t\t\t01 ?? \n\t\t\t38 ?? \n\t\t\t75 ?? \n\t\t\t03 [2]\n\t\t\t3B [2]\n\t\t\t75 ?? \n\t\t\t5? \n\t\t\t8B ?? 24 \n\t\t\t01 ?? \n\t\t\t66 8B [2]\n\t\t\t8B ?? 1C \n\t\t\t01 ?? \n\t\t\t8B ?? 8B \n\t\t\t01 ?? \n\t\t\t89 [3]\n\t\t\t5? \n\t\t\t5? \n\t\t}\n\t\t$dnsapi = { 68 64 6E 73 61 }\n\n\tcondition:\n\t\t$apiLocator and $dnsapi\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Elevate_Dll_v3_0_to_v3_14_and_Sleeve_Elevate_Dll_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/elevate.dll signature for v3.0 to v3.14 and sleeve/elevate.dll for v4.x",
+                "hash": "6deeb2cafe9eeefe5fc5077e63cc08310f895e9d5d492c88c4e567323077aa2f",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "170f62a2-ba4f-5be8-9ec5-402eb7bbde4e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Elevate_Dll_v3_0_to_v3_14_and_Sleeve_Elevate_Dll_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/elevate.dll signature for v3.0 to v3.14 and sleeve/elevate.dll for v4.x\"\n\t\thash = \"6deeb2cafe9eeefe5fc5077e63cc08310f895e9d5d492c88c4e567323077aa2f\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"170f62a2-ba4f-5be8-9ec5-402eb7bbde4e\"\n\n\tstrings:\n\t\t$wnd_proc = {\n\t\t\t6A 00\n\t\t\t6A 28\n\t\t\t68 00 01 00 00\n\t\t\t5? \n\t\t\tC7 [5] 01 00 00 00 \n\t\t\tFF ?? \n\t\t\t6A 00\n\t\t\t6A 27\n\t\t\t68 00 01 00 00\n\t\t\t5? \n\t\t\tFF ?? \n\t\t\t6A 00\n\t\t\t6A 00\n\t\t\t68 01 02 00 00\n\t\t\t5? \n\t\t\tFF ?? \n\t\t}\n\n\tcondition:\n\t\t$wnd_proc\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Elevate_X64_Dll_v3_0_to_v3_14_and_Sleeve_Elevate_X64_Dll_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/elevate.x64.dll signature for v3.0 to v3.14 and sleeve/elevate.x64.dll for v4.x",
+                "hash": "c3ee8a9181fed39cec3bd645b32b611ce98d2e84c5a9eff31a8acfd9c26410ec",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "91d5c343-1084-5cfc-9dfa-46f530eb9625"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Elevate_X64_Dll_v3_0_to_v3_14_and_Sleeve_Elevate_X64_Dll_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/elevate.x64.dll signature for v3.0 to v3.14 and sleeve/elevate.x64.dll for v4.x\"\n\t\thash = \"c3ee8a9181fed39cec3bd645b32b611ce98d2e84c5a9eff31a8acfd9c26410ec\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"91d5c343-1084-5cfc-9dfa-46f530eb9625\"\n\n\tstrings:\n\t\t$wnd_proc = {\n\t\t\t81 ?? 21 01 00 00\n\t\t\t75 ??\n\t\t\t83 [5] 00\n\t\t\t75 ??\n\t\t\t45 33 ??\n\t\t\t8D [2]\n\t\t\tC7 [5] 01 00 00 00\n\t\t\t45 [2] 28\n\t\t\tFF 15 [4]\n\t\t\t45 33 ??\n\t\t\t8D [2]\n\t\t\t45 [2] 27\n\t\t\t48 [2]\n\t\t\tFF 15 [4]\n\t\t\t45 33 ??\n\t\t\t45 33 ??\n\t\t\tBA 01 02 00 00\n\t\t\t48 \n\t\t}\n\n\tcondition:\n\t\t$wnd_proc\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Httpsstager64_Bin_v3_2_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/httpsstager64.bin signature for versions v3.2 to v4.x",
+                "hash": "109b8c55816ddc0defff360c93e8a07019ac812dd1a42209ea7e95ba79b5a573",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "c16e73fc-484a-5f7e-8127-d85a0254d842"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Httpsstager64_Bin_v3_2_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/httpsstager64.bin signature for versions v3.2 to v4.x\"\n\t\thash = \"109b8c55816ddc0defff360c93e8a07019ac812dd1a42209ea7e95ba79b5a573\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"c16e73fc-484a-5f7e-8127-d85a0254d842\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t48 [2]\n\t\t\tAC\n\t\t\t41 [2] 0D\n\t\t\t41 [2]\n\t\t\t38 ??\n\t\t\t75 ??\n\t\t\t4C [4]\n\t\t\t45 [2]\n\t\t\t75 ??\n\t\t\t5?\n\t\t\t44 [2] 24\n\t\t\t49 [2]\n\t\t\t66 [4]\n\t\t\t44 [2] 1C\n\t\t\t49 [2]\n\t\t\t41 [3]\n\t\t\t48 \n\t\t}\n\t\t$InternetSetOptionA = {\n\t\t\tBA 1F 00 00 00\n\t\t\t6A 00\n\t\t\t68 80 33 00 00\n\t\t\t49 [2]\n\t\t\t41 ?? 04 00 00 00\n\t\t\t41 ?? 75 46 9E 86\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $InternetSetOptionA\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Httpsstager_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/httpsstager.bin signature for versions 2.5 to 4.x",
+                "hash": "5ebe813a4c899b037ac0ee0962a439833964a7459b7a70f275ac73ea475705b3",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "f45aa40a-3936-50f9-a60e-de7181862d19"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Httpsstager_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/httpsstager.bin signature for versions 2.5 to 4.x\"\n\t\thash = \"5ebe813a4c899b037ac0ee0962a439833964a7459b7a70f275ac73ea475705b3\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"f45aa40a-3936-50f9-a60e-de7181862d19\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t31 ?? \n\t\t\tAC\n\t\t\tC1 ?? 0D \n\t\t\t01 ?? \n\t\t\t38 ?? \n\t\t\t75 ?? \n\t\t\t03 [2]\n\t\t\t3B [2]\n\t\t\t75 ?? \n\t\t\t5? \n\t\t\t8B ?? 24 \n\t\t\t01 ?? \n\t\t\t66 8B [2]\n\t\t\t8B ?? 1C \n\t\t\t01 ?? \n\t\t\t8B ?? 8B \n\t\t\t01 ?? \n\t\t\t89 [3]\n\t\t\t5? \n\t\t\t5? \n\t\t}\n\t\t$InternetSetOptionA = {\n\t\t\t6A 04\n\t\t\t5? \n\t\t\t6A 1F\n\t\t\t5? \n\t\t\t68 75 46 9E 86\n\t\t\tFF  \n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $InternetSetOptionA\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Httpstager64_Bin_v3_2_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/httpstager64.bin signature for versions v3.2 to v4.x",
+                "hash": "ad93d1ee561bc25be4a96652942f698eac9b133d8b35ab7e7d3489a25f1d1e76",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "5530dce8-e5a1-5133-9b05-464e3397084a"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Httpstager64_Bin_v3_2_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/httpstager64.bin signature for versions v3.2 to v4.x\"\n\t\thash = \"ad93d1ee561bc25be4a96652942f698eac9b133d8b35ab7e7d3489a25f1d1e76\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"5530dce8-e5a1-5133-9b05-464e3397084a\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t48 [2]\n\t\t\tAC\n\t\t\t41 [2] 0D\n\t\t\t41 [2]\n\t\t\t38 ??\n\t\t\t75 ??\n\t\t\t4C [4]\n\t\t\t45 [2]\n\t\t\t75 ??\n\t\t\t5?\n\t\t\t44 [2] 24\n\t\t\t49 [2]\n\t\t\t66 [4]\n\t\t\t44 [2] 1C\n\t\t\t49 [2]\n\t\t\t41 [3]\n\t\t\t48 \n\t\t}\n\t\t$postInternetOpenJmp = {\n\t\t\t41 ?? 3A 56 79 A7\n\t\t\tFF ??\n\t\t\tEB \n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $postInternetOpenJmp\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Httpstager_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/httpstager.bin signature for versions 2.5 to 4.x",
+                "hash": "a47569af239af092880751d5e7b68d0d8636d9f678f749056e702c9b063df256",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "86109485-c26c-5c51-8d04-dd1add9a8c57"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Httpstager_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/httpstager.bin signature for versions 2.5 to 4.x\"\n\t\thash = \"a47569af239af092880751d5e7b68d0d8636d9f678f749056e702c9b063df256\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"86109485-c26c-5c51-8d04-dd1add9a8c57\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t31 ?? \n\t\t\tAC\n\t\t\tC1 ?? 0D \n\t\t\t01 ?? \n\t\t\t38 ?? \n\t\t\t75 ?? \n\t\t\t03 [2]\n\t\t\t3B [2]\n\t\t\t75 ?? \n\t\t\t5? \n\t\t\t8B ?? 24 \n\t\t\t01 ?? \n\t\t\t66 8B [2]\n\t\t\t8B ?? 1C \n\t\t\t01 ?? \n\t\t\t8B ?? 8B \n\t\t\t01 ?? \n\t\t\t89 [3]\n\t\t\t5? \n\t\t\t5? \n\t\t}\n\t\t$downloaderLoop = {\n\t\t\tB? 00 2F 00 00 \n\t\t\t39 ?? \n\t\t\t74 ?? \n\t\t\t31 ?? \n\t\t\t( E9 | EB )\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $downloaderLoop\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Reverse64_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/reverse64.bin signature for versions v2.5 to v4.x",
+                "hash": "d2958138c1b7ef681a63865ec4a57b0c75cc76896bf87b21c415b7ec860397e8",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "966e6e4c-85e2-5c94-8245-25367802b7d2"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Reverse64_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/reverse64.bin signature for versions v2.5 to v4.x\"\n\t\thash = \"d2958138c1b7ef681a63865ec4a57b0c75cc76896bf87b21c415b7ec860397e8\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"966e6e4c-85e2-5c94-8245-25367802b7d2\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t48 [2]\n\t\t\tAC\n\t\t\t41 [2] 0D\n\t\t\t41 [2]\n\t\t\t38 ??\n\t\t\t75 ??\n\t\t\t4C [4]\n\t\t\t45 [2]\n\t\t\t75 ??\n\t\t\t5?\n\t\t\t44 [2] 24\n\t\t\t49 [2]\n\t\t\t66 [4]\n\t\t\t44 [2] 1C\n\t\t\t49 [2]\n\t\t\t41 [3]\n\t\t\t48 \n\t\t}\n\t\t$calls = {\n\t\t\t48 89 C1\n\t\t\t41 BA EA 0F DF E0\n\t\t\tFF D5\n\t\t\t48 [2]\n\t\t\t6A ??\n\t\t\t41 ??\n\t\t\t4C [2]\n\t\t\t48 [2]\n\t\t\t41 BA 99 A5 74 61\n\t\t\tFF D5\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $calls\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Reverse_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/reverse.bin signature for versions 2.5 to 4.x",
+                "hash": "887f666d6473058e1641c3ce1dd96e47189a59c3b0b85c8b8fccdd41b84000c7",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "182dbcd0-1180-5516-abe3-cf2eebbd0e39"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Reverse_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/reverse.bin signature for versions 2.5 to 4.x\"\n\t\thash = \"887f666d6473058e1641c3ce1dd96e47189a59c3b0b85c8b8fccdd41b84000c7\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"182dbcd0-1180-5516-abe3-cf2eebbd0e39\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t31 ?? \n\t\t\tAC\n\t\t\tC1 ?? 0D \n\t\t\t01 ?? \n\t\t\t38 ?? \n\t\t\t75 ?? \n\t\t\t03 [2]\n\t\t\t3B [2]\n\t\t\t75 ?? \n\t\t\t5? \n\t\t\t8B ?? 24 \n\t\t\t01 ?? \n\t\t\t66 8B [2]\n\t\t\t8B ?? 1C \n\t\t\t01 ?? \n\t\t\t8B ?? 8B \n\t\t\t01 ?? \n\t\t\t89 [3]\n\t\t\t5? \n\t\t\t5? \n\t\t}\n\t\t$ws2_32 = {\n\t\t\t5D\n\t\t\t68 33 32 00 00\n\t\t\t68 77 73 32 5F\n\t\t}\n\t\t$connect = {\n\t\t\t6A 10\n\t\t\t5? \n\t\t\t5? \n\t\t\t68 99 A5 74 61\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $ws2_32 and $connect\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Smbstager_Bin_v2_5_through_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/smbstager.bin signature for versions 2.5 to 4.x",
+                "hash": "946af5a23e5403ea1caccb2e0988ec1526b375a3e919189f16491eeabc3e7d8c",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "074b7d83-e3d8-541c-804b-2417c21f54d5"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Smbstager_Bin_v2_5_through_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/smbstager.bin signature for versions 2.5 to 4.x\"\n\t\thash = \"946af5a23e5403ea1caccb2e0988ec1526b375a3e919189f16491eeabc3e7d8c\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"074b7d83-e3d8-541c-804b-2417c21f54d5\"\n\n\tstrings:\n\t\t$apiLocator = {\n\t\t\t31 ?? \n\t\t\tAC\n\t\t\tC1 ?? 0D \n\t\t\t01 ?? \n\t\t\t38 ?? \n\t\t\t75 ?? \n\t\t\t03 [2]\n\t\t\t3B [2]\n\t\t\t75 ?? \n\t\t\t5? \n\t\t\t8B ?? 24 \n\t\t\t01 ?? \n\t\t\t66 8B [2]\n\t\t\t8B ?? 1C \n\t\t\t01 ?? \n\t\t\t8B ?? 8B \n\t\t\t01 ?? \n\t\t\t89 [3]\n\t\t\t5? \n\t\t\t5? \n\t\t}\n\t\t$smb = { 68 C6 96 87 52 }\n\t\t$smbstart = {\n\t\t\t6A 40\n\t\t\t68 00 10 00 00\n\t\t\t68 FF FF 07 00\n\t\t\t6A 00\n\t\t\t68 58 A4 53 E5\n\t\t}\n\n\tcondition:\n\t\t$apiLocator and $smb and $smbstart\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Template_Py_v3_3_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/template.py signature for versions v3.3 to v4.x",
+                "hash": "d5cb406bee013f51d876da44378c0a89b7b3b800d018527334ea0c5793ea4006",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "16aef9a9-b217-5462-93dc-f6273c99ddd0"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Template_Py_v3_3_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/template.py signature for versions v3.3 to v4.x\"\n\t\thash = \"d5cb406bee013f51d876da44378c0a89b7b3b800d018527334ea0c5793ea4006\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"16aef9a9-b217-5462-93dc-f6273c99ddd0\"\n\n\tstrings:\n\t\t$arch = \"platform.architecture()\"\n\t\t$nope = \"WindowsPE\"\n\t\t$alloc = \"ctypes.windll.kernel32.VirtualAlloc\"\n\t\t$movemem = \"ctypes.windll.kernel32.RtlMoveMemory\"\n\t\t$thread = \"ctypes.windll.kernel32.CreateThread\"\n\t\t$wait = \"ctypes.windll.kernel32.WaitForSingleObject\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Template_Sct_v3_3_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/template.sct signature for versions v3.3 to v4.x",
+                "hash": "fc66cb120e7bc9209882620f5df7fdf45394c44ca71701a8662210cf3a40e142",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "9d2b1dfa-5f76-503f-9198-6ed0d039e0cb"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Template_Sct_v3_3_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/template.sct signature for versions v3.3 to v4.x\"\n\t\thash = \"fc66cb120e7bc9209882620f5df7fdf45394c44ca71701a8662210cf3a40e142\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"9d2b1dfa-5f76-503f-9198-6ed0d039e0cb\"\n\n\tstrings:\n\t\t$scriptletstart = \"<scriptlet>\" nocase\n\t\t$registration = \"<registration progid=\" nocase\n\t\t$classid = \"classid=\" nocase\n\t\t$scriptlang = \"<script language=\\\"vbscript\\\">\" nocase\n\t\t$cdata = \"<![CDATA[\"\n\t\t$scriptend = \"</script>\" nocase\n\t\t$antiregistration = \"</registration>\" nocase\n\t\t$scriptletend = \"</scriptlet>\"\n\n\tcondition:\n\t\tall of them and @scriptletstart [ 1 ] < @registration [ 1 ] and @registration [ 1 ] < @classid [ 1 ] and @classid [ 1 ] < @scriptlang [ 1 ] and @scriptlang [ 1 ] < @cdata [ 1 ]\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources__Template_Vbs_v3_3_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/btemplate.vbs signature for versions v3.3 to v4.x",
+                "hash": "e0683f953062e63b2aabad7bc6d76a78748504b114329ef8e2ece808b3294135",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "62f35d02-1e4e-5651-b575-888ce06b8bdd"
+            },
+            "rule_text": "rule CobaltStrike_Resources__Template_Vbs_v3_3_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/btemplate.vbs signature for versions v3.3 to v4.x\"\n\t\thash = \"e0683f953062e63b2aabad7bc6d76a78748504b114329ef8e2ece808b3294135\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"62f35d02-1e4e-5651-b575-888ce06b8bdd\"\n\n\tstrings:\n\t\t$ea = \"Excel.Application\" nocase\n\t\t$vis = \"Visible = False\" nocase\n\t\t$wsc = \"Wscript.Shell\" nocase\n\t\t$regkey1 = \"HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Office\\\\\" nocase\n\t\t$regkey2 = \"\\\\Excel\\\\Security\\\\AccessVBOM\" nocase\n\t\t$regwrite = \".RegWrite\" nocase\n\t\t$dw = \"REG_DWORD\"\n\t\t$code = \".CodeModule.AddFromString\"\n\t\t$ao = { 41 75 74 6f 5f 4f 70 65 6e }\n\t\t$da = \".DisplayAlerts\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Template__x32_x64_Ps1_v1_45_to_v2_5_and_v3_11_to_v3_14",
+                "tags": [],
+                "description": "Cobalt Strike's resources/template.x64.ps1, resources/template.x32 from v3.11 to v3.14 and resources/template.ps1 from v1.45 to v2.5 ",
+                "hash": "ff743027a6bcc0fee02107236c1f5c96362eeb91f3a5a2e520a85294741ded87",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "c9fa6a39-0098-5dde-9762-94bc6b2df299"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Template__x32_x64_Ps1_v1_45_to_v2_5_and_v3_11_to_v3_14\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/template.x64.ps1, resources/template.x32 from v3.11 to v3.14 and resources/template.ps1 from v1.45 to v2.5 \"\n\t\thash = \"ff743027a6bcc0fee02107236c1f5c96362eeb91f3a5a2e520a85294741ded87\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"c9fa6a39-0098-5dde-9762-94bc6b2df299\"\n\n\tstrings:\n\t\t$importVA = \"[DllImport(\\\"kernel32.dll\\\")] public static extern IntPtr VirtualAlloc\" nocase\n\t\t$importCT = \"[DllImport(\\\"kernel32.dll\\\")] public static extern IntPtr CreateThread\" nocase\n\t\t$importWFSO = \"[DllImport(\\\"kernel32.dll\\\")] public static extern int WaitForSingleObject\" nocase\n\t\t$compiler = \"New-Object Microsoft.CSharp.CSharpCodeProvider\" nocase\n\t\t$params = \"New-Object System.CodeDom.Compiler.CompilerParameters\" nocase\n\t\t$paramsSys32 = \".ReferencedAssemblies.AddRange(@(\\\"System.dll\\\", [PsObject].Assembly.Location))\" nocase\n\t\t$paramsGIM = \".GenerateInMemory = $True\" nocase\n\t\t$result = \"$compiler.CompileAssemblyFromSource($params, $assembly)\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Template_x64_Ps1_v3_0_to_v4_x_excluding_3_12_3_13",
+                "tags": [],
+                "description": "Cobalt Strike's resources/template.x64.ps1, resources/template.hint.x64.ps1 and resources/template.hint.x32.ps1 from v3.0 to v4.x except 3.12 and 3.13",
+                "hash": "ff743027a6bcc0fee02107236c1f5c96362eeb91f3a5a2e520a85294741ded87",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "5a808113-aacb-56ca-b3ec-166c73c54b85"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Template_x64_Ps1_v3_0_to_v4_x_excluding_3_12_3_13\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/template.x64.ps1, resources/template.hint.x64.ps1 and resources/template.hint.x32.ps1 from v3.0 to v4.x except 3.12 and 3.13\"\n\t\thash = \"ff743027a6bcc0fee02107236c1f5c96362eeb91f3a5a2e520a85294741ded87\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"5a808113-aacb-56ca-b3ec-166c73c54b85\"\n\n\tstrings:\n\t\t$dda = \"[AppDomain]::CurrentDomain.DefineDynamicAssembly\" nocase\n\t\t$imm = \"InMemoryModule\" nocase\n\t\t$mdt = \"MyDelegateType\" nocase\n\t\t$rd = \"New-Object System.Reflection.AssemblyName('ReflectedDelegate')\" nocase\n\t\t$data = \"[Byte[]]$var_code = [System.Convert]::FromBase64String(\" nocase\n\t\t$64bitSpecific = \"[IntPtr]::size -eq 8\"\n\t\t$mandatory = \"Mandatory = $True\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Template_x86_Vba_v3_8_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resources/template.x86.vba signature for versions v3.8 to v4.x",
+                "hash": "fc66cb120e7bc9209882620f5df7fdf45394c44ca71701a8662210cf3a40e142",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "11c7758e-93b2-5fe3-873d-b98de579d2b4"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Template_x86_Vba_v3_8_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resources/template.x86.vba signature for versions v3.8 to v4.x\"\n\t\thash = \"fc66cb120e7bc9209882620f5df7fdf45394c44ca71701a8662210cf3a40e142\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"11c7758e-93b2-5fe3-873d-b98de579d2b4\"\n\n\tstrings:\n\t\t$createstuff = \"Function CreateStuff Lib \\\"kernel32\\\" Alias \\\"CreateRemoteThread\\\"\" nocase\n\t\t$allocstuff = \"Function AllocStuff Lib \\\"kernel32\\\" Alias \\\"VirtualAllocEx\\\"\" nocase\n\t\t$writestuff = \"Function WriteStuff Lib \\\"kernel32\\\" Alias \\\"WriteProcessMemory\\\"\" nocase\n\t\t$runstuff = \"Function RunStuff Lib \\\"kernel32\\\" Alias \\\"CreateProcessA\\\"\" nocase\n\t\t$vars = \"Dim rwxpage As Long\" nocase\n\t\t$res = \"RunStuff(sNull, sProc, ByVal 0&, ByVal 0&, ByVal 1&, ByVal 4&, ByVal 0&, sNull, sInfo, pInfo)\"\n\t\t$rwxpage = \"AllocStuff(pInfo.hProcess, 0, UBound(myArray), &H1000, &H40)\"\n\n\tcondition:\n\t\tall of them and @vars [ 1 ] < @res [ 1 ] and @allocstuff [ 1 ] < @rwxpage [ 1 ]\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Xor_Bin_v2_x_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resource/xor.bin signature for version 2.x through 4.x",
+                "hash": "211ccc5d28b480760ec997ed88ab2fbc5c19420a3d34c1df7991e65642638a6f",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "1754746c-3a42-5f7d-808a-ba2e1c0a270e"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Xor_Bin_v2_x_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resource/xor.bin signature for version 2.x through 4.x\"\n\t\thash = \"211ccc5d28b480760ec997ed88ab2fbc5c19420a3d34c1df7991e65642638a6f\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"1754746c-3a42-5f7d-808a-ba2e1c0a270e\"\n\n\tstrings:\n\t\t$stub52 = {fc e8 ?? ?? ?? ?? [1-32] eb 27 5? 8b ??    83 c? ?4 8b ??    31 ?? 83 c? ?4 5? 8b ??    31 ?? 89 ??    31 ?? 83 c? ?4 83 e? ?4 31 ?? 39 ?? 74 ?2 eb ea 5? ff e? e8 d4 ff ff ff}\n\t\t$stub56 = {fc e8 ?? ?? ?? ?? [1-32] eb 2b 5d 8b ?? ?? 83 c5 ?4 8b ?? ?? 31 ?? 83 c5 ?4 55 8b ?? ?? 31 ?? 89 ?? ?? 31 ?? 83 c5 ?4 83 e? ?4 31 ?? 39 ?? 74 ?2 eb e8 5? ff e? e8 d? ff ff ff}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Resources_Xor_Bin__64bit_v3_12_to_v4_x",
+                "tags": [],
+                "description": "Cobalt Strike's resource/xor64.bin signature for version 3.12 through 4.x",
+                "hash": "01dba8783768093b9a34a1ea2a20f72f29fd9f43183f3719873df5827a04b744",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "5bb465ee-3bbd-5bfe-8b63-1f243de217bc"
+            },
+            "rule_text": "rule CobaltStrike_Resources_Xor_Bin__64bit_v3_12_to_v4_x\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's resource/xor64.bin signature for version 3.12 through 4.x\"\n\t\thash = \"01dba8783768093b9a34a1ea2a20f72f29fd9f43183f3719873df5827a04b744\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"5bb465ee-3bbd-5bfe-8b63-1f243de217bc\"\n\n\tstrings:\n\t\t$stub58 = {fc e8 ?? ?? ?? ?? [1-32] eb 33 5? 8b ?? 00 4? 83 ?? ?4 8b ?? 00 31 ?? 4? 83 ?? ?4 5? 8b ?? 00 31 ?? 89 ?? 00 31 ?? 4? 83 ?? ?4 83 ?? ?4 31 ?? 39 ?? 74 ?2 eb e7 5? fc 4? 83 ?? f0 ff}\n\t\t$stub59 = {fc e8 ?? ?? ?? ?? [1-32] eb 2e 5? 8b ??    48 83 c? ?4 8b ??    31 ?? 48 83 c? ?4 5? 8b ??    31 ?? 89 ??    31 ?? 48 83 c? ?4 83 e? ?4 31 ?? 39 ?? 74 ?2 eb e9 5?    48 83 ec ?8 ff e? e8 cd ff ff ff}\n\t\t$stub63 = {fc e8 ?? ?? ?? ?? [1-32] eb 32 5d 8b ?? ?? 48 83 c5 ?4 8b ?? ?? 31 ?? 48 83 c5 ?4 55 8b ?? ?? 31 ?? 89 ?? ?? 31 ?? 48 83 c5 ?4 83 e? ?4 31 ?? 39 ?? 74 ?2 eb e7 5?    48 83 ec ?8 ff e? e8 c9 ff ff ff}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_HA_x86_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.HA.x86.o (HeapAlloc) Versions 4.3 through at least 4.6",
+                "hash": "8e4a1862aa3693f0e9011ade23ad3ba036c76ae8ccfb6585dc19ceb101507dcd",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "0ee3fa6f-367c-596f-a3bc-3bcfa61b97aa"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_HA_x86_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.HA.x86.o (HeapAlloc) Versions 4.3 through at least 4.6\"\n\t\thash = \"8e4a1862aa3693f0e9011ade23ad3ba036c76ae8ccfb6585dc19ceb101507dcd\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"0ee3fa6f-367c-596f-a3bc-3bcfa61b97aa\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 45 F0 48\n      C6 45 F1 65\n      C6 45 F2 61\n      C6 45 F3 70\n      C6 45 F4 41\n      C6 45 F5 6C\n      C6 45 F6 6C\n      C6 45 F7 6F\n      C6 45 F8 63\n      C6 45 F9 00\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_MVF_x86_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.MVF.x86.o (MapViewOfFile) Versions 4.3 through at least 4.6",
+                "hash": "cded3791caffbb921e2afa2de4c04546067c3148c187780066e8757e67841b44",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "3f7c0553-989e-53e7-87a9-3fa1c47f4b62"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_MVF_x86_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.MVF.x86.o (MapViewOfFile) Versions 4.3 through at least 4.6\"\n\t\thash = \"cded3791caffbb921e2afa2de4c04546067c3148c187780066e8757e67841b44\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"3f7c0553-989e-53e7-87a9-3fa1c47f4b62\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 45 EC 4D\n      C6 45 ED 61\n      C6 45 EE 70\n      C6 45 EF 56\n      C6 45 F0 69\n      C6 45 F1 65\n      C6 45 F2 77\n      C6 45 F3 4F\n      C6 45 F4 66\n      C6 45 F5 46\n      C6 45 F6 69\n      C6 45 F7 6C\n      C6 45 F8 65\n      C6 45 F9 00\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_VA_x86_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.VA.x86.o (VirtualAlloc) Versions 4.3 through at least 4.6",
+                "hash": "94d1b993a9d5786e0a9b44ea1c0dc27e225c9eb7960154881715c47f9af78cc1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "5f89c4be-f4c5-54d3-b923-d125de53902f"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_VA_x86_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.VA.x86.o (VirtualAlloc) Versions 4.3 through at least 4.6\"\n\t\thash = \"94d1b993a9d5786e0a9b44ea1c0dc27e225c9eb7960154881715c47f9af78cc1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"5f89c4be-f4c5-54d3-b923-d125de53902f\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 45 B0 56\n      C6 45 B1 69\n      C6 45 B2 72\n      C6 45 B3 74\n      C6 45 B4 75\n      C6 45 B5 61\n      C6 45 B6 6C\n      C6 45 B7 41\n      C6 45 B8 6C\n      C6 45 B9 6C\n      C6 45 BA 6F\n      C6 45 BB 63\n      C6 45 BC 00\n    }\n\t\t$deobfuscator = {\n      8B 4D FC\n      83 C1 01\n      89 4D FC\n      8B 55 FC\n      3B 55 0C\n      73 19\n      0F B6 45 10\n      8B 4D 08\n      03 4D FC\n      0F BE 11\n      33 D0\n      8B 45 08\n      03 45 FC\n      88 10\n      EB D6\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_x86_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.x86.o Versions 4.3 through at least 4.6",
+                "hash": "94d1b993a9d5786e0a9b44ea1c0dc27e225c9eb7960154881715c47f9af78cc1",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "32a47966-f3bb-52c3-a977-82a1b09ddf2c"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_x86_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.x86.o Versions 4.3 through at least 4.6\"\n\t\thash = \"94d1b993a9d5786e0a9b44ea1c0dc27e225c9eb7960154881715c47f9af78cc1\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"32a47966-f3bb-52c3-a977-82a1b09ddf2c\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 45 B0 56\n      C6 45 B1 69\n      C6 45 B2 72\n      C6 45 B3 74\n      C6 45 B4 75\n      C6 45 B5 61\n      C6 45 B6 6C\n      C6 45 B7 41\n      C6 45 B8 6C\n      C6 45 B9 6C\n      C6 45 BA 6F\n      C6 45 BB 63\n      C6 45 BC 00\n    }\n\t\t$deobfuscator = {\n      8B 4D FC\n      83 C1 01\n      89 4D FC\n      8B 55 FC\n      3B 55 0C\n      73 19\n      0F B6 45 10\n      8B 4D 08\n      03 4D FC\n      0F BE 11\n      33 D0\n      8B 45 08\n      03 45 FC\n      88 10\n      EB D6\n    }\n\n\tcondition:\n\t\t$core_sig and not $deobfuscator\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_HA_x64_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.HA.x64.o (HeapAlloc) Versions 4.3 through at least 4.6",
+                "hash": "d64f10d5a486f0f2215774e8ab56087f32bef19ac666e96c5627c70d345a354d",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "9b16ff13-2d8e-51dc-9f99-6c45eff76feb"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_HA_x64_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.HA.x64.o (HeapAlloc) Versions 4.3 through at least 4.6\"\n\t\thash = \"d64f10d5a486f0f2215774e8ab56087f32bef19ac666e96c5627c70d345a354d\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"9b16ff13-2d8e-51dc-9f99-6c45eff76feb\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 44 24 38 48\n      C6 44 24 39 65\n      C6 44 24 3A 61\n      C6 44 24 3B 70\n      C6 44 24 3C 41\n      C6 44 24 3D 6C\n      C6 44 24 3E 6C\n      C6 44 24 3F 6F\n      C6 44 24 40 63\n      C6 44 24 41 00\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_MVF_x64_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.MVF.x64.o (MapViewOfFile) Versions 4.3 through at least 4.6",
+                "hash": "9d5b6ccd0d468da389657309b2dc325851720390f9a5f3d3187aff7d2cd36594",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "38e063db-3d76-5a94-812a-945fcf46a232"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_MVF_x64_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.MVF.x64.o (MapViewOfFile) Versions 4.3 through at least 4.6\"\n\t\thash = \"9d5b6ccd0d468da389657309b2dc325851720390f9a5f3d3187aff7d2cd36594\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"38e063db-3d76-5a94-812a-945fcf46a232\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 44 24 58 4D\n      C6 44 24 59 61\n      C6 44 24 5A 70\n      C6 44 24 5B 56\n      C6 44 24 5C 69\n      C6 44 24 5D 65\n      C6 44 24 5E 77\n      C6 44 24 5F 4F\n      C6 44 24 60 66\n      C6 44 24 61 46\n      C6 44 24 62 69\n      C6 44 24 63 6C\n      C6 44 24 64 65\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_VA_x64_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.VA.x64.o (VirtualAlloc) Versions 4.3 through at least 4.6",
+                "hash": "ac090a0707aa5ccd2c645b523bd23a25999990cf6895fce3bfa3b025e3e8a1c9",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "8ca04f82-a8a8-5162-8b0c-8a7bce678a85"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_VA_x64_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.VA.x64.o (VirtualAlloc) Versions 4.3 through at least 4.6\"\n\t\thash = \"ac090a0707aa5ccd2c645b523bd23a25999990cf6895fce3bfa3b025e3e8a1c9\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"8ca04f82-a8a8-5162-8b0c-8a7bce678a85\"\n\n\tstrings:\n\t\t$core_sig = {\n      C6 44 24 48 56\n      C6 44 24 49 69\n      C6 44 24 4A 72\n      C6 44 24 4B 74\n      C6 44 24 4C 75\n      C6 44 24 4D 61\n      C6 44 24 4E 6C\n      C6 44 24 4F 41\n      C6 44 24 50 6C\n      C6 44 24 51 6C\n      C6 44 24 52 6F\n      C6 44 24 53 63\n      C6 44 24 54 00\n    }\n\t\t$deobfuscator = {\n      8B 04 24\n      FF C0\n      89 04 24\n      8B 44 24 28\n      39 04 24\n      73 20\n      8B 04 24\n      0F B6 4C 24 30\n      48 8B 54 24 20\n      0F BE 04 02\n      33 C1\n      8B 0C 24\n      48 8B 54 24 20\n      88 04 0A\n    }\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Sleeve_BeaconLoader_x64_o_v4_3_v4_4_v4_5_and_v4_6",
+                "tags": [],
+                "description": "Cobalt Strike's sleeve/BeaconLoader.x64.o (Base) Versions 4.3 through at least 4.6",
+                "hash": "ac090a0707aa5ccd2c645b523bd23a25999990cf6895fce3bfa3b025e3e8a1c9",
+                "author": "gssincla@google.com",
+                "reference": "https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse",
+                "date": "2022-11-18",
+                "id": "07f751e4-f001-5b95-b229-31fbaa867cea"
+            },
+            "rule_text": "rule CobaltStrike_Sleeve_BeaconLoader_x64_o_v4_3_v4_4_v4_5_and_v4_6\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike's sleeve/BeaconLoader.x64.o (Base) Versions 4.3 through at least 4.6\"\n\t\thash = \"ac090a0707aa5ccd2c645b523bd23a25999990cf6895fce3bfa3b025e3e8a1c9\"\n\t\tauthor = \"gssincla@google.com\"\n\t\treference = \"https://cloud.google.com/blog/products/identity-security/making-cobalt-strike-harder-for-threat-actors-to-abuse\"\n\t\tdate = \"2022-11-18\"\n\t\tid = \"07f751e4-f001-5b95-b229-31fbaa867cea\"\n\n\tstrings:\n\t\t$core_sig = {\n      33 C0\n      83 F8 01\n      74 63\n      48 8B 44 24 20\n      0F B7 00\n      3D 4D 5A 00 00\n      75 45\n      48 8B 44 24 20\n      48 63 40 3C\n      48 89 44 24 28\n      48 83 7C 24 28 40\n      72 2F\n      48 81 7C 24 28 00 04 00 00\n      73 24\n      48 8B 44 24 20\n      48 8B 4C 24 28\n      48 03 C8\n      48 8B C1\n      48 89 44 24 28\n      48 8B 44 24 28\n      81 38 50 45 00 00\n      75 02\n    }\n\t\t$deobfuscator = {\n      8B 04 24\n      FF C0\n      89 04 24\n      8B 44 24 28\n      39 04 24\n      73 20\n      8B 04 24\n      0F B6 4C 24 30\n      48 8B 54 24 20\n      0F BE 04 02\n      33 C1\n      8B 0C 24\n      48 8B 54 24 20\n      88 04 0A\n    }\n\n\tcondition:\n\t\t$core_sig and not $deobfuscator\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

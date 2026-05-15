@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_presentationhost_uncommon_location_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-01",
+                "title": "XBAP Execution From Uncommon Locations Via PresentationHost.EXE",
+                "id": "d22e2925-cfd8-463f-96f6-89cec9d9bc5f"
+            },
+            "rule_text": "title: XBAP Execution From Uncommon Locations Via PresentationHost.EXE\nid: d22e2925-cfd8-463f-96f6-89cec9d9bc5f\nstatus: test\ndescription: 'Detects the execution of \".xbap\" (Browser Applications) files via PresentationHost.EXE\n  from an uncommon location. These files can be abused to run malicious \".xbap\" files\n  any bypass AWL\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Presentationhost/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-01\nmodified: 2023-11-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\presentationhost.exe\n  - OriginalFileName: PresentationHost.exe\n  selection_cli:\n    CommandLine|contains: .xbap\n  filter_main_generic:\n    CommandLine|contains:\n    - ' C:\\Windows\\'\n    - ' C:\\Program Files'\n  condition: all of selection* and not 1 of filter_main_*\nfalsepositives:\n- Legitimate \".xbap\" being executed via \"PresentationHost\"\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

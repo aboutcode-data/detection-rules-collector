@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Hacktool_SharpSCCM.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Hacktool_SharpSCCM_9bef8dab",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "9bef8dab-af2e-46be-811a-0ac78d74a4ef",
+                "fingerprint": "dfbb7f142628eb7dc6c96dd271562d88a0970534af85464c10232ec01f58e35b",
+                "creation_date": "2024-03-25",
+                "last_modified": "2024-05-08",
+                "threat_name": "Windows.Hacktool.SharpSCCM",
+                "reference_sample": "2e169c4fd16627029445bb0365a2f9ee61ab6b3757b8ad02fd210ce85dc9c97f",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Hacktool_SharpSCCM_9bef8dab\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"9bef8dab-af2e-46be-811a-0ac78d74a4ef\"\n\t\tfingerprint = \"dfbb7f142628eb7dc6c96dd271562d88a0970534af85464c10232ec01f58e35b\"\n\t\tcreation_date = \"2024-03-25\"\n\t\tlast_modified = \"2024-05-08\"\n\t\tthreat_name = \"Windows.Hacktool.SharpSCCM\"\n\t\treference_sample = \"2e169c4fd16627029445bb0365a2f9ee61ab6b3757b8ad02fd210ce85dc9c97f\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$name = \"SharpSCCM\" wide fullword\n\t\t$s1 = \"--relay-server\" wide fullword\n\t\t$s2 = \"--username\" wide fullword\n\t\t$s3 = \"--domain\" wide fullword\n\t\t$s4 = \"--sms-provider\" wide fullword\n\t\t$s5 = \"--wmi-namespace\" wide fullword\n\t\t$s6 = \"--management-point\" wide fullword\n\t\t$s7 = \"--get-system\" wide fullword\n\t\t$s8 = \"--run-as-user\" wide fullword\n\t\t$s9 = \"--register-client\" wide fullword\n\t\t$s10 = \"MS_Collection\" wide fullword\n\t\t$s11 = \"SOFTWARE\\\\Microsoft\\\\CCM\" wide fullword\n\t\t$s12 = \"CCM_POST\" wide fullword\n\n\tcondition:\n\t\t($name and 2 of ( $s* ) ) or 7 of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

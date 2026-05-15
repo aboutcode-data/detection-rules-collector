@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/elceef/yara-rulz/blob/master/rules/ZIP_High_Ratio_Single_Doc.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ZIP_High_Ratio_Single_Doc",
+                "tags": [],
+                "description": "Detects ZIP archives containing single MS Word document with unusually high compression ratio",
+                "author": "marcin@ulikowski.pl",
+                "date": "2023-03-08",
+                "hash1": "4d9a6dfca804989d40eeca9bb2d90ef33f3980eb07ca89bbba06d0ef4b37634b",
+                "hash2": "4bc2d14585c197ad3aa5836b3f7d9d784d7afe79856e0ddf850fc3c676b6ecb1"
+            },
+            "rule_text": "rule ZIP_High_Ratio_Single_Doc\n{\n\tmeta:\n\t\tdescription = \"Detects ZIP archives containing single MS Word document with unusually high compression ratio\"\n\t\tauthor = \"marcin@ulikowski.pl\"\n\t\tdate = \"2023-03-08\"\n\t\thash1 = \"4d9a6dfca804989d40eeca9bb2d90ef33f3980eb07ca89bbba06d0ef4b37634b\"\n\t\thash2 = \"4bc2d14585c197ad3aa5836b3f7d9d784d7afe79856e0ddf850fc3c676b6ecb1\"\n\n\tstrings:\n\t\t$magic = { 50 4b 03 04 }\n\t\t$ext = \".doc\"\n\n\tcondition:\n\t\tfilesize < 1MB and $magic at 0 and #magic == 1 and uint32( 22 ) > 1024 * 1024 * 100 and $ext at ( uint16( 26 ) + 26 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

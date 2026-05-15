@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_win32_nteventlogfile_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-07-13",
+                "title": "Potentially Suspicious Call To Win32_NTEventlogFile Class - PSScript",
+                "id": "e2812b49-bae0-4b21-b366-7c142eafcde2"
+            },
+            "rule_text": "title: Potentially Suspicious Call To Win32_NTEventlogFile Class - PSScript\nid: e2812b49-bae0-4b21-b366-7c142eafcde2\nstatus: test\ndescription: Detects usage of the WMI class \"Win32_NTEventlogFile\" in a potentially\n  suspicious way (delete, backup, change permissions, etc.) from a PowerShell script\nreferences:\n- https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa394225(v=vs.85)\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-07-13\ntags:\n- attack.defense-impairment\nlogsource:\n  category: ps_script\n  product: windows\n  definition: bade5735-5ab0-4aa7-a642-a11be0e40872\ndetection:\n  selection_class:\n    ScriptBlockText|contains: Win32_NTEventlogFile\n  selection_function:\n    ScriptBlockText|contains:\n    - .BackupEventlog(\n    - .ChangeSecurityPermissions(\n    - .ChangeSecurityPermissionsEx(\n    - .ClearEventLog(\n    - .Delete(\n    - .DeleteEx(\n    - .Rename(\n    - .TakeOwnerShip(\n    - .TakeOwnerShipEx(\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration and backup scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

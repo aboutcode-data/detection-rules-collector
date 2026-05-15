@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_registry_install_reg_debugger_backdoor.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), oscd.community, Jonhnathan Ribeiro",
+                "date": "2019-09-06",
+                "title": "Suspicious Debugger Registration Cmdline",
+                "id": "ae215552-081e-44c7-805f-be16f975c8a2"
+            },
+            "rule_text": "title: Suspicious Debugger Registration Cmdline\nid: ae215552-081e-44c7-805f-be16f975c8a2\nstatus: test\ndescription: Detects the registration of a debugger for a program that is available\n  in the logon screen (sticky key backdoor).\nreferences:\n- https://blogs.technet.microsoft.com/jonathantrull/2016/10/03/detecting-sticky-key-backdoors/\n- https://bazaar.abuse.ch/sample/6f3aa9362d72e806490a8abce245331030d1ab5ac77e400dd475748236a6cc81/\nauthor: Florian Roth (Nextron Systems), oscd.community, Jonhnathan Ribeiro\ndate: 2019-09-06\nmodified: 2022-08-06\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1546.008\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection1:\n    CommandLine|contains: \\CurrentVersion\\Image File Execution Options\\\n  selection2:\n    CommandLine|contains:\n    - sethc.exe\n    - utilman.exe\n    - osk.exe\n    - magnify.exe\n    - narrator.exe\n    - displayswitch.exe\n    - atbroker.exe\n    - HelpPane.exe\n  condition: all of selection*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

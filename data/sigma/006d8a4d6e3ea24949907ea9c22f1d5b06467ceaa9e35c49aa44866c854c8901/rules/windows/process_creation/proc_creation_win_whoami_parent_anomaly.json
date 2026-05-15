@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_whoami_parent_anomaly.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-08-12",
+                "title": "Whoami.EXE Execution Anomaly",
+                "id": "8de1cbe8-d6f5-496d-8237-5f44a721c7a0"
+            },
+            "rule_text": "title: Whoami.EXE Execution Anomaly\nid: 8de1cbe8-d6f5-496d-8237-5f44a721c7a0\nstatus: test\ndescription: Detects the execution of whoami.exe with suspicious parent processes.\nreferences:\n- https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/\n- https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/\n- https://www.youtube.com/watch?v=DsJ9ByX84o4&t=6s\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-08-12\nmodified: 2025-03-06\ntags:\n- attack.discovery\n- attack.t1033\n- car.2016-03-001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Image|endswith: \\whoami.exe\n  - OriginalFileName: whoami.exe\n  filter_main_known_parents:\n    ParentImage|endswith:\n    - \\cmd.exe\n    - \\powershell_ise.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  filter_optional_ms_monitoring_agent:\n    ParentImage|endswith: :\\Program Files\\Microsoft Monitoring Agent\\Agent\\MonitoringHost.exe\n  filter_main_parent_null:\n    ParentImage: null\n  filter_main_parent_empty:\n    ParentImage:\n    - ''\n    - '-'\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Admin activity\n- Scripts and administrative tools used in the monitored environment\n- Monitoring activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

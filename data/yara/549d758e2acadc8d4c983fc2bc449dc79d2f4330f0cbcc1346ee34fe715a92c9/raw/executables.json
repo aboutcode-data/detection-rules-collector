@@ -1,0 +1,27 @@
+{
+    "source_url": "https://github.com/Xumeiquer/yara-forensics/blob/master/raw/executables.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "exe",
+                "tags": [
+                    "EXE"
+                ],
+                "author": "Joan Bono"
+            },
+            "rule_text": "rule exe : EXE\n{\n\tmeta:\n\t\tauthor = \"Joan Bono\"\n\n\tstrings:\n\t\t$a = { 4D 5A }\n\t\t$b = \"!This program cannot be run in DOS mode.\"\n\n\tcondition:\n\t\t$a and for all of ( $b ) : ( @ > @a )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "elf64",
+                "tags": [
+                    "ELF64"
+                ],
+                "author": "Joan Bono"
+            },
+            "rule_text": "rule elf64 : ELF64\n{\n\tmeta:\n\t\tauthor = \"Joan Bono\"\n\n\tstrings:\n\t\t$a = { 7F 45 4C 46 }\n\t\t$b = \"linux_amd64\"\n\t\t$c = \"linux-x86-64\"\n\n\tcondition:\n\t\t$a and ( $b or $c )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

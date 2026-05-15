@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_mode_codepage_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), Joseliyo Sanchez, @Joseliyo_Jstnk",
+                "date": "2024-01-19",
+                "title": "CodePage Modification Via MODE.COM",
+                "id": "d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e"
+            },
+            "rule_text": "title: CodePage Modification Via MODE.COM\nid: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e\nrelated:\n- id: 12fbff88-16b5-4b42-9754-cd001a789fb3\n  type: derived\nstatus: test\ndescription: 'Detects a CodePage modification using the \"mode.com\" utility.\n\n  This behavior has been used by threat actors behind Dharma ransomware.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers\n- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/mode\n- https://strontic.github.io/xcyclopedia/library/mode.com-59D1ED51ACB8C3D50F1306FD75F20E99.html\n- https://www.virustotal.com/gui/file/5e75ef02517afd6e8ba6462b19217dc4a5a574abb33d10eb0f2bab49d8d48c22/behavior\nauthor: Nasreddine Bencherchali (Nextron Systems), Joseliyo Sanchez, @Joseliyo_Jstnk\ndate: 2024-01-19\ntags:\n- attack.stealth\n- attack.t1036\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\mode.com\n  - OriginalFileName: MODE.COM\n  selection_cli:\n    CommandLine|contains|all:\n    - ' con '\n    - ' cp '\n    - ' select='\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

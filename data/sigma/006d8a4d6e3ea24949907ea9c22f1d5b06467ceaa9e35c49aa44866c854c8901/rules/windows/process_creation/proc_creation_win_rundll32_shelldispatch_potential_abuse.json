@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_shelldispatch_potential_abuse.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "X__Junior (Nextron Systems)",
+                "date": "2023-06-20",
+                "title": "Potential ShellDispatch.DLL Functionality Abuse",
+                "id": "82343930-652f-43f5-ab70-2ee9fdd6d5e9"
+            },
+            "rule_text": "title: Potential ShellDispatch.DLL Functionality Abuse\nid: 82343930-652f-43f5-ab70-2ee9fdd6d5e9\nstatus: test\ndescription: Detects potential \"ShellDispatch.dll\" functionality abuse to execute\n  arbitrary binaries via \"ShellExecute\"\nreferences:\n- https://www.hexacorn.com/blog/2023/06/07/this-lolbin-doesnt-exist/\nauthor: X__Junior (Nextron Systems)\ndate: 2023-06-20\ntags:\n- attack.execution\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\rundll32.exe\n  - OriginalFileName: RUNDLL32.EXE\n  selection_cli:\n    CommandLine|contains: RunDll_ShellExecuteW\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

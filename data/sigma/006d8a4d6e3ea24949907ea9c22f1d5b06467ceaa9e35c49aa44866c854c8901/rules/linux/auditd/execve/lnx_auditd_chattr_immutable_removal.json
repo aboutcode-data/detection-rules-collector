@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_chattr_immutable_removal.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jakob Weinzettl, oscd.community",
+                "date": "2019-09-23",
+                "title": "Remove Immutable File Attribute - Auditd",
+                "id": "a5b977d6-8a81-4475-91b9-49dbfcd941f7"
+            },
+            "rule_text": "title: Remove Immutable File Attribute - Auditd\nid: a5b977d6-8a81-4475-91b9-49dbfcd941f7\nstatus: test\ndescription: Detects removing immutable file attribute.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.002/T1222.002.md\nauthor: Jakob Weinzettl, oscd.community\ndate: 2019-09-23\nmodified: 2022-11-26\ntags:\n- attack.defense-impairment\n- attack.t1222.002\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  selection:\n    type: EXECVE\n    a0|contains: chattr\n    a1|contains: -i\n  condition: selection\nfalsepositives:\n- Administrator interacting with immutable files (e.g. for instance backups).\nlevel: medium\nsimulation:\n- type: atomic-red-team\n  name: Remove immutable file attribute\n  technique: T1222.002\n  atomic_guid: e7469fe2-ad41-4382-8965-99b94dd3c13f\n",
+            "vulnerabilities": []
+        }
+    ]
+}

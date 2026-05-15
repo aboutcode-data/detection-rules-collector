@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_app_privileged_permissions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'",
+                "date": "2022-07-28",
+                "title": "App Granted Privileged Delegated Or App Permissions",
+                "id": "5aecf3d5-f8a0-48e7-99be-3a759df7358f"
+            },
+            "rule_text": "title: App Granted Privileged Delegated Or App Permissions\nid: 5aecf3d5-f8a0-48e7-99be-3a759df7358f\nrelated:\n- id: ba2a7c80-027b-460f-92e2-57d113897dbc\n  type: obsolete\nstatus: test\ndescription: Detects when administrator grants either application permissions (app\n  roles) or highly privileged delegated permissions\nreferences:\n- https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications#application-granted-highly-privileged-permissions\nauthor: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'\ndate: 2022-07-28\nmodified: 2023-03-29\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1098.003\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    properties.message: Add app role assignment to service principal\n  condition: selection\nfalsepositives:\n- When the permission is legitimately needed for the app\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

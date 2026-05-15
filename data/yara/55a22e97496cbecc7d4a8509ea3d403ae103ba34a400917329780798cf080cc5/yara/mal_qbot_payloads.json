@@ -1,0 +1,24 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_qbot_payloads.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_QBot_HTML_Smuggling_Indicators_Oct22_1",
+                "tags": [],
+                "description": "Detects double encoded PKZIP headers as seen in HTML files used by QBot",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://twitter.com/ankit_anubhav/status/1578257383133876225?s=20&t=Bu3CCJCzImpTGOQX_KGsdA",
+                "date": "2022-10-07",
+                "score": 75,
+                "hash1": "4f384bcba31fda53e504d0a6c85cee0ce3ea9586226633d063f34c53ddeaca3f",
+                "hash2": "8e61c2b751682becb4c0337f5a79b2da0f5f19c128b162ec8058104b894cae9b",
+                "hash3": "c5d23d991ce3fbcf73b177bc6136d26a501ded318ccf409ca16f7c664727755a",
+                "hash4": "5072d91ee0d162c28452123a4d9986f3df6b3244e48bf87444ce88add29dd8ed",
+                "hash5": "ff4e21f788c36aabe6ba870cf3b10e258c2ba6f28a2d359a25d5a684c92a0cad",
+                "id": "8034d6af-4dae-5ff6-b635-efb5175fe4d1"
+            },
+            "rule_text": "rule MAL_QBot_HTML_Smuggling_Indicators_Oct22_1\n{\n\tmeta:\n\t\tdescription = \"Detects double encoded PKZIP headers as seen in HTML files used by QBot\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://twitter.com/ankit_anubhav/status/1578257383133876225?s=20&t=Bu3CCJCzImpTGOQX_KGsdA\"\n\t\tdate = \"2022-10-07\"\n\t\tscore = 75\n\t\thash1 = \"4f384bcba31fda53e504d0a6c85cee0ce3ea9586226633d063f34c53ddeaca3f\"\n\t\thash2 = \"8e61c2b751682becb4c0337f5a79b2da0f5f19c128b162ec8058104b894cae9b\"\n\t\thash3 = \"c5d23d991ce3fbcf73b177bc6136d26a501ded318ccf409ca16f7c664727755a\"\n\t\thash4 = \"5072d91ee0d162c28452123a4d9986f3df6b3244e48bf87444ce88add29dd8ed\"\n\t\thash5 = \"ff4e21f788c36aabe6ba870cf3b10e258c2ba6f28a2d359a25d5a684c92a0cad\"\n\t\tid = \"8034d6af-4dae-5ff6-b635-efb5175fe4d1\"\n\n\tstrings:\n\t\t$sd1 = \"VUVzREJCUUFBUUFJQ\"\n\t\t$sd2 = \"VFc0RCQlFBQVFBSU\"\n\t\t$sd3 = \"VRXNEQkJRQUFRQUlB\"\n\t\t$sdr1 = \"QJFUUBFUUCJERzVUV\"\n\t\t$sdr2 = \"USBFVQBFlQCR0cFV\"\n\t\t$sdr3 = \"BlUQRFUQRJkQENXRV\"\n\t\t$st1 = \"VlVWelJFSkNVVUZCVVVGSl\"\n\t\t$st2 = \"ZVVnpSRUpDVVVGQlVVRkpR\"\n\t\t$st3 = \"WVVZ6UkVKQ1VVRkJVVUZKU\"\n\t\t$st4 = \"VkZjMFJDUWxGQlFWRkJTV\"\n\t\t$st5 = \"ZGYzBSQ1FsRkJRVkZCU1\"\n\t\t$st6 = \"WRmMwUkNRbEZCUVZGQlNV\"\n\t\t$st7 = \"VlJYTkVRa0pSUVVGUlFVbE\"\n\t\t$st8 = \"ZSWE5FUWtKUlFVRlJRVWxC\"\n\t\t$st9 = \"WUlhORVFrSlJRVUZSUVVsQ\"\n\t\t$str1 = \"UUpGVVVCRlVVQ0pFUnpWVV\"\n\t\t$str2 = \"FKRlVVQkZVVUNKRVJ6VlVW\"\n\t\t$str3 = \"RSkZVVUJGVVVDSkVSelZVV\"\n\t\t$str4 = \"VVNCRlZRQkZsUUNSMGNGV\"\n\t\t$str5 = \"VTQkZWUUJGbFFDUjBjRl\"\n\t\t$str6 = \"VU0JGVlFCRmxRQ1IwY0ZW\"\n\t\t$str7 = \"QmxVUVJGVVFSSmtRRU5YUl\"\n\t\t$str8 = \"JsVVFSRlVRUkprUUVOWFJW\"\n\t\t$str9 = \"CbFVRUkZVUVJKa1FFTlhSV\"\n\t\t$htm = \"<html\" ascii\n\t\t$eml = \"Content-Transfer-Encoding:\" ascii\n\n\tcondition:\n\t\tfilesize < 10MB and ( ( 1 of ( $sd* ) and $htm and not $eml ) or ( 1 of ( $st* ) and $eml ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

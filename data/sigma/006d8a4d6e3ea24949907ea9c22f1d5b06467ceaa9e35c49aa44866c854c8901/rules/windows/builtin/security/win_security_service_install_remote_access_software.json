@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_service_install_remote_access_software.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Connor Martin, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-23",
+                "title": "Remote Access Tool Services Have Been Installed - Security",
+                "id": "c8b00925-926c-47e3-beea-298fd563728e"
+            },
+            "rule_text": "title: Remote Access Tool Services Have Been Installed - Security\nid: c8b00925-926c-47e3-beea-298fd563728e\nrelated:\n- id: 1a31b18a-f00c-4061-9900-f735b96c99fc\n  type: similar\nstatus: test\ndescription: Detects service installation of different remote access tools software.\n  These software are often abused by threat actors to perform\nreferences:\n- https://redcanary.com/blog/misbehaving-rats/\nauthor: Connor Martin, Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-23\nmodified: 2024-12-07\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.execution\n- attack.t1543.003\n- attack.t1569.002\nlogsource:\n  product: windows\n  service: security\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    EventID: 4697\n    ServiceName|contains:\n    - AmmyyAdmin\n    - AnyDesk\n    - Atera\n    - BASupportExpressSrvcUpdater\n    - BASupportExpressStandaloneService\n    - chromoting\n    - GoToAssist\n    - GoToMyPC\n    - jumpcloud\n    - LMIGuardianSvc\n    - LogMeIn\n    - monblanking\n    - Parsec\n    - RManService\n    - RPCPerformanceService\n    - RPCService\n    - SplashtopRemoteService\n    - SSUService\n    - TeamViewer\n    - TightVNC\n    - vncserver\n    - Zoho\n  condition: selection\nfalsepositives:\n- The rule doesn't look for anything suspicious so false positives are expected. If\n  you use one of the tools mentioned, comment it out\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

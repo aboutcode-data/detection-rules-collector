@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/gen_powershell_invocation.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PowerShell_Susp_Parameter_Combo",
+                "tags": [
+                    "HIGHVOL",
+                    "FILE"
+                ],
+                "description": "Detects PowerShell invocation with suspicious parameters",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "https://goo.gl/uAic1X",
+                "date": "2017-03-12",
+                "modified": "2025-12-16",
+                "score": 60,
+                "id": "17c707f3-7f51-5772-9874-a96c220960a7"
+            },
+            "rule_text": "rule PowerShell_Susp_Parameter_Combo : HIGHVOL FILE\n{\n\tmeta:\n\t\tdescription = \"Detects PowerShell invocation with suspicious parameters\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"https://goo.gl/uAic1X\"\n\t\tdate = \"2017-03-12\"\n\t\tmodified = \"2025-12-16\"\n\t\tscore = 60\n\t\tid = \"17c707f3-7f51-5772-9874-a96c220960a7\"\n\n\tstrings:\n\t\t$sa1 = \" -enc \" ascii wide nocase\n\t\t$sa2 = \" -EncodedCommand \" ascii wide nocase\n\t\t$sa3 = \" /enc \" ascii wide nocase\n\t\t$sa4 = \" /EncodedCommand \" ascii wide nocase\n\t\t$sb1 = \" -w hidden \" ascii wide nocase\n\t\t$sb2 = \" -window hidden \" ascii wide nocase\n\t\t$sb3 = \" -windowstyle hidden \" ascii wide nocase\n\t\t$sb4 = \" /w hidden \" ascii wide nocase\n\t\t$sb5 = \" /window hidden \" ascii wide nocase\n\t\t$sb6 = \" /windowstyle hidden \" ascii wide nocase\n\t\t$sc1 = \" -nop \" ascii wide nocase\n\t\t$sc2 = \" -noprofile \" ascii wide nocase\n\t\t$sc3 = \" /nop \" ascii wide nocase\n\t\t$sc4 = \" /noprofile \" ascii wide nocase\n\t\t$sd1 = \" -noni \" ascii wide nocase\n\t\t$sd2 = \" -noninteractive \" ascii wide nocase\n\t\t$sd3 = \" /noni \" ascii wide nocase\n\t\t$sd4 = \" /noninteractive \" ascii wide nocase\n\t\t$se1 = \" -ep bypass \" ascii wide nocase\n\t\t$se2 = \" -exec bypass \" ascii wide nocase\n\t\t$se3 = \" -executionpolicy bypass \" ascii wide nocase\n\t\t$se4 = \" -exec bypass \" ascii wide nocase\n\t\t$se5 = \" /ep bypass \" ascii wide nocase\n\t\t$se6 = \" /exec bypass \" ascii wide nocase\n\t\t$se7 = \" /executionpolicy bypass \" ascii wide nocase\n\t\t$se8 = \" /exec bypass \" ascii wide nocase\n\t\t$sf1 = \" -sta \" ascii wide\n\t\t$sf2 = \" /sta \" ascii wide\n\t\t$fp1 = \"Chocolatey Software\" ascii wide\n\t\t$fp2 = \"VBOX_MSI_INSTALL_PATH\" ascii wide\n\t\t$fp3 = \"\\\\Local\\\\Temp\\\\en-US.ps1\" ascii wide\n\t\t$fp4 = \"Lenovo Vantage - Battery Gauge Helper\" wide fullword\n\t\t$fp5 = \"\\\\LastPass\\\\lpwinmetro\\\\AppxUpgradeUwp.ps1\" ascii\n\t\t$fp6 = \"# use the encoded form to mitigate quoting complications that full scriptblock transfer exposes\" ascii\n\t\t$fp7 = \"Write-AnsibleLog \\\"INFO - s\" ascii\n\t\t$fp8 = \"\\\\Packages\\\\Matrix42\\\\\" ascii\n\t\t$fp9 = \"echo \" ascii\n\t\t$fp10 = \"install\" ascii fullword\n\t\t$fp11 = \"REM \" ascii\n\t\t$fp12 = \"set /p \" ascii\n\t\t$fp13 = \"rxScan Application\" wide\n\t\t$fp14 = \"psutil.tests\"\n\t\t$fpa1 = \"All Rights\"\n\t\t$fpa2 = \"<html\"\n\t\t$fpa2b = \"<HTML\"\n\t\t$fpa3 = \"Copyright\"\n\t\t$fpa4 = \"License\"\n\t\t$fpa5 = \"<?xml\"\n\t\t$fpa6 = \"Help\" fullword\n\t\t$fpa7 = \"COPYRIGHT\"\n\n\tcondition:\n\t\tfilesize < 3000KB and 4 of ( $s* ) and not 1 of ( $fp* ) and uint32be( 0 ) != 0x456C6646\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

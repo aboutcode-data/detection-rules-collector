@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_RedCanary_ThreatDetectionReport/technique_email_forwarding_rule_suspicious_names.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2024/03/21",
+                "title": "Email Forwarding Rule - Suspicious Rule Names",
+                "id": "47ea2a13-f863-4403-a672-00b3d940ac92"
+            },
+            "rule_text": "title: Email Forwarding Rule - Suspicious Rule Names\nid: 47ea2a13-f863-4403-a672-00b3d940ac92\nstatus: experimental\ndescription: \"Detects the creation of email forwarding rules with suspicious names.\\\n  \\ Part of the \\nRedCanary 2024 Threat Detection Report.\\n\"\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/email-forwarding-rule/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2024/03/21\ntags:\n- attack.collection\n- attack.t1114\n- attack.t1114.003\nlogsource:\n  service: exchange\n  product: m365\ndetection:\n  selection_rule:\n    Workload: Exchange\n    Operation:\n    - New-InboxRule\n    - Set-InboxRule\n  selection_onechar:\n    RuleName|re: ^\\w{1}$\n  selection_susp_vals:\n    RuleName:\n    - .\n    - ..\n    - aaaaa\n    - \"\\u2026\\u2026\"\n    - ;\n  condition: selection_rule and (selection_onechar or selection_susp_vals)\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

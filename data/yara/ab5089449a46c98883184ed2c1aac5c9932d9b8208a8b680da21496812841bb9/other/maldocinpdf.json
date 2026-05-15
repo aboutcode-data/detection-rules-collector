@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/maldocinpdf.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_MalDocinPDF",
+                "tags": [],
+                "description": "Hunt Maldoc in PDF",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "ef59d7038cfd565fd65bae12588810d5361df938244ebad33b71882dcf683058",
+                "hash2": "098796e1b82c199ad226bff056b6310262b132f6d06930d3c254c57bdf548187",
+                "hash3": "5b677d297fb862c2d223973697479ee53a91d03073b14556f421b3d74f136b9d"
+            },
+            "rule_text": "rule malware_MalDocinPDF\n{\n\tmeta:\n\t\tdescription = \"Hunt Maldoc in PDF\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"ef59d7038cfd565fd65bae12588810d5361df938244ebad33b71882dcf683058\"\n\t\thash2 = \"098796e1b82c199ad226bff056b6310262b132f6d06930d3c254c57bdf548187\"\n\t\thash3 = \"5b677d297fb862c2d223973697479ee53a91d03073b14556f421b3d74f136b9d\"\n\n\tstrings:\n\t\t$docfile2 = \"<w:WordDocument>\" ascii nocase\n\t\t$xlsfile2 = \"<x:ExcelWorkbook>\" ascii nocase\n\t\t$mhtfile0 = \"mime\" ascii nocase\n\t\t$mhtfile1 = \"content-location:\" ascii nocase\n\t\t$mhtfile2 = \"content-type:\" ascii nocase\n\n\tcondition:\n\t\t( uint32( 0 ) == 0x46445025 ) and ( 1 of ( $mhtfile* ) ) and ( ( 1 of ( $docfile* ) ) or ( 1 of ( $xlsfile* ) ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

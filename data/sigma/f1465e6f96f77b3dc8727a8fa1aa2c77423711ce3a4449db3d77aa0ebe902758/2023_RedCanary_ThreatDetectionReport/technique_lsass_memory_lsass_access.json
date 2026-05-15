@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2023_RedCanary_ThreatDetectionReport/technique_lsass_memory_lsass_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "RedCanary, Sigma formatting by Micah Babinski",
+                "date": "2023/05/10",
+                "title": "Abnormal LSASS Process Access and Injection (RedCanary Threat Detection Report)",
+                "id": "c62c85ad-bbe7-4937-b77a-2cc984a1449d"
+            },
+            "rule_text": "title: Abnormal LSASS Process Access and Injection (RedCanary Threat Detection Report)\nid: c62c85ad-bbe7-4937-b77a-2cc984a1449d\nstatus: experimental\ndescription: Detects suspicious cross-process events where LSASS is accessed. Part\n  of the RedCanary 2023 Threat Detection Report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/lsass-memory/\nauthor: RedCanary, Sigma formatting by Micah Babinski\ndate: 2023/05/10\ntags:\n- attack.credential_access\n- attack.t1003.001\nlogsource:\n  category: process_access\n  product: windows\ndetection:\n  selection:\n    SourceImage|endswith:\n    - \\powershell.exe\n    - \\taskmgr.exe\n    - \\rundll32.exe\n    - \\procdump.exe\n    - \\procexp.exe\n    TargetImage|endswith: \\lsass.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

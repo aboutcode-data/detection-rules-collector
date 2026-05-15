@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_susp_atbroker_change.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mateusz Wydra, oscd.community",
+                "date": "2020-10-13",
+                "title": "Atbroker Registry Change",
+                "id": "9577edbb-851f-4243-8c91-1d5b50c1a39b"
+            },
+            "rule_text": "title: Atbroker Registry Change\nid: 9577edbb-851f-4243-8c91-1d5b50c1a39b\nstatus: test\ndescription: Detects creation/modification of Assistive Technology applications and\n  persistence with usage of 'at'\nreferences:\n- http://www.hexacorn.com/blog/2016/07/22/beyond-good-ol-run-key-part-42/\n- https://lolbas-project.github.io/lolbas/Binaries/Atbroker/\nauthor: Mateusz Wydra, oscd.community\ndate: 2020-10-13\nmodified: 2023-01-19\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1218\n- attack.persistence\n- attack.t1547\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains:\n    - Software\\Microsoft\\Windows NT\\CurrentVersion\\Accessibility\\ATs\n    - Software\\Microsoft\\Windows NT\\CurrentVersion\\Accessibility\\Configuration\n  filter_atbroker:\n    Image: C:\\Windows\\system32\\atbroker.exe\n    TargetObject|contains: \\Microsoft\\Windows NT\\CurrentVersion\\Accessibility\\Configuration\n    Details: (Empty)\n  filter_uninstallers:\n    Image|startswith: C:\\Windows\\Installer\\MSI\n    TargetObject|contains: Software\\Microsoft\\Windows NT\\CurrentVersion\\Accessibility\\ATs\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Creation of non-default, legitimate at usage\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/eset/Animal_Farm.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ramFS",
+                "tags": [],
+                "Author": "Joan Calvet",
+                "Date": "2015/07/14",
+                "Description": "RamFS -- custom file system used by Animal Farm malware",
+                "Reference": "http://www.welivesecurity.com/2015/06/30/dino-spying-malware-analyzed/",
+                "Source": "https://github.com/eset/malware-ioc/",
+                "Contact": "github@eset.com",
+                "License": "BSD 2-Clause"
+            },
+            "rule_text": "rule ramFS\n{\n\tmeta:\n\t\tAuthor = \"Joan Calvet\"\n\t\tDate = \"2015/07/14\"\n\t\tDescription = \"RamFS -- custom file system used by Animal Farm malware\"\n\t\tReference = \"http://www.welivesecurity.com/2015/06/30/dino-spying-malware-analyzed/\"\n\t\tSource = \"https://github.com/eset/malware-ioc/\"\n\t\tContact = \"github@eset.com\"\n\t\tLicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$mz = { 4d 5a }\n\t\t$s01 = \"Check: Error in File_List\"\n\t\t$s02 = \"Check: Error in FreeFileHeader_List\"\n\t\t$s03 = \"CD-->[%s]\"\n\t\t$s04 = \"!!!EXTRACT ERROR!!!File Does Not Exists-->[%s]\"\n\t\t$s05 = \"tr4qa589\" fullword\n\t\t$s06 = \"xT0rvwz\" fullword\n\t\t$c01 = \"INSTALL\" fullword\n\t\t$c02 = \"EXTRACT\" fullword\n\t\t$c03 = \"DELETE\" fullword\n\t\t$c04 = \"EXEC\" fullword\n\t\t$c05 = \"INJECT\" fullword\n\t\t$c06 = \"SLEEP\" fullword\n\t\t$c07 = \"KILL\" fullword\n\t\t$c08 = \"AUTODEL\" fullword\n\t\t$c09 = \"CD\" fullword\n\t\t$c10 = \"MD\" fullword\n\n\tcondition:\n\t\t($mz at 0 ) and ( ( 1 of ( $s* ) ) or ( all of ( $c* ) ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "dino",
+                "tags": [],
+                "Author": "Joan Calvet",
+                "Date": "2015/07/14",
+                "Description": "Dino backdoor",
+                "Reference": "http://www.welivesecurity.com/2015/06/30/dino-spying-malware-analyzed/",
+                "Source": "https://github.com/eset/malware-ioc/",
+                "Contact": "github@eset.com",
+                "License": "BSD 2-Clause"
+            },
+            "rule_text": "rule dino\n{\n\tmeta:\n\t\tAuthor = \"Joan Calvet\"\n\t\tDate = \"2015/07/14\"\n\t\tDescription = \"Dino backdoor\"\n\t\tReference = \"http://www.welivesecurity.com/2015/06/30/dino-spying-malware-analyzed/\"\n\t\tSource = \"https://github.com/eset/malware-ioc/\"\n\t\tContact = \"github@eset.com\"\n\t\tLicense = \"BSD 2-Clause\"\n\n\tstrings:\n\t\t$ = \"PsmIsANiceM0du1eWith0SugarInsideA\"\n\t\t$ = \"destroyPSM\"\n\t\t$ = \"FM_PENDING_DOWN_%X\"\n\t\t$ = \"%s was canceled after %d try (reached MaxTry parameter)\"\n\t\t$ = \"you forgot value name\"\n\t\t$ = \"wakeup successfully scheduled in %d minutes\"\n\t\t$ = \"BD started at %s\"\n\t\t$ = \"decyphering failed on bd\"\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

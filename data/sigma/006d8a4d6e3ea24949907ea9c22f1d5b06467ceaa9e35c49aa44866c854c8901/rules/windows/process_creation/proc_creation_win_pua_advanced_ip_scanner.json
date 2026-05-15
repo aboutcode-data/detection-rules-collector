@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_pua_advanced_ip_scanner.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems), @ROxPinTeddy",
+                "date": "2020-05-12",
+                "title": "PUA - Advanced IP Scanner Execution",
+                "id": "bef37fa2-f205-4a7b-b484-0759bfd5f86f"
+            },
+            "rule_text": "title: PUA - Advanced IP Scanner Execution\nid: bef37fa2-f205-4a7b-b484-0759bfd5f86f\nstatus: test\ndescription: Detects the use of Advanced IP Scanner. Seems to be a popular tool for\n  ransomware groups.\nreferences:\n- https://news.sophos.com/en-us/2019/12/09/snatch-ransomware-reboots-pcs-into-safe-mode-to-bypass-protection/\n- https://www.fireeye.com/blog/threat-research/2020/05/tactics-techniques-procedures-associated-with-maze-ransomware-incidents.html\n- https://labs.f-secure.com/blog/prelude-to-ransomware-systembc\n- https://assets.documentcloud.org/documents/20444693/fbi-pin-egregor-ransomware-bc-01062021.pdf\n- https://thedfirreport.com/2021/01/18/all-that-for-a-coinminer\n- https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Other/Advanced%20IP%20Scanner\nauthor: Nasreddine Bencherchali (Nextron Systems), @ROxPinTeddy\ndate: 2020-05-12\nmodified: 2023-02-07\ntags:\n- attack.discovery\n- attack.t1046\n- attack.t1135\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|contains: \\advanced_ip_scanner\n  - OriginalFileName|contains: advanced_ip_scanner\n  - Description|contains: Advanced IP Scanner\n  selection_cli:\n    CommandLine|contains|all:\n    - /portable\n    - /lng\n  condition: 1 of selection_*\nfalsepositives:\n- Legitimate administrative use\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_pua_advanced_ip_scanner/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_dfsvc_child_processes.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-06-12",
+                "title": "ClickOnce Deployment Execution - Dfsvc.EXE Child Process",
+                "id": "241d52b5-eee0-49d0-ac8a-8b9c15c7221c"
+            },
+            "rule_text": "title: ClickOnce Deployment Execution - Dfsvc.EXE Child Process\nid: 241d52b5-eee0-49d0-ac8a-8b9c15c7221c\nstatus: test\ndescription: Detects child processes of \"dfsvc\" which indicates a ClickOnce deployment\n  execution.\nreferences:\n- https://posts.specterops.io/less-smartscreen-more-caffeine-ab-using-clickonce-for-trusted-code-execution-1446ea8051c5\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-06-12\ntags:\n- attack.execution\n- detection.threat-hunting\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\dfsvc.exe\n    Image|endswith: \\AppData\\Local\\Apps\\2.0\\\n  condition: selection\nfalsepositives:\n- False positives are expected in environement leveraging ClickOnce deployments. An\n  initial baselining is required before using this rule in production.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

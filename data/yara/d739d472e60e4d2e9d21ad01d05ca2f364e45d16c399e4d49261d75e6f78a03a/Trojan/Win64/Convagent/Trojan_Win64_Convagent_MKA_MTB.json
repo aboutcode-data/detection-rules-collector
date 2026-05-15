@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Convagent/Trojan_Win64_Convagent_MKA_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Convagent_MKA_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Convagent.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Convagent_MKA_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Convagent.MKA!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {41 bc 01 00 00 00 4c 89 e1 48 8b 95 98 05 00 00 48 8b 9d b8 05 00 00 49 89 d8 e8 ?? ?? ?? ?? 48 89 9d 00 05 00 00 4c 89 a5 80 05 00 00 4c 89 a5 08 05 00 00 48 89 9d 10 05 00 00 48 89 f1 48 8b 95 68 05 }\n\t\t$a_01_1 = {4c 01 fb 48 89 9d e0 04 00 00 0f 10 85 00 05 00 00 0f 29 85 d0 04 00 00 48 8b 95 d0 03 00 00 48 8d 04 55 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 15 + ( #a_01_1 & 1 ) * 10 ) >= 25\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

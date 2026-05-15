@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/CryptInject/Trojan_Win32_CryptInject_DL_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_CryptInject_DL_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/CryptInject.DL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_CryptInject_DL_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/CryptInject.DL!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_01_0 = {3d 8d cc 05 00 75 06 81 c1 fa 23 0a 00 40 3d 0f 7e 49 00 7c eb }\n\t\t$a_03_1 = {3d 50 4f 02 00 75 06 89 0d [0-04] 40 3d 6c 17 30 32 7c eb }\n\n\tcondition:\n\t\t(( #a_01_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 2 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

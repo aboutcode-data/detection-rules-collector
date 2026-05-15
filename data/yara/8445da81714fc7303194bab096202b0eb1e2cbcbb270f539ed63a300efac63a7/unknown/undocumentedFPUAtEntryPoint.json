@@ -1,0 +1,13 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/unknown/undocumentedFPUAtEntryPoint.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "undocumentedFPUAtEntryPoint",
+                "tags": []
+            },
+            "rule_text": "rule undocumentedFPUAtEntryPoint\n{\n\tstrings:\n\t\t$fpu1 = {D9 D8}\n\t\t$fpu2 = {DF DF}\n\t\t$fpu3 = {DF D8}\n\t\t$fpu4 = {DC D9}\n\t\t$fpu5 = {DF DA}\n\t\t$fpu6 = {DF CB}\n\n\tcondition:\n\t\t( for any of ( $fpu* ) : ( $ at entrypoint ) ) or $fpu2 in ( entrypoint..entrypoint + 10 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

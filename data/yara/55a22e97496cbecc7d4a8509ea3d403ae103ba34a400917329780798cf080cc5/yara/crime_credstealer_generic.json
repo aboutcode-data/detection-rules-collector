@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/crime_credstealer_generic.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CredentialStealer_Generic_Backdoor",
+                "tags": [],
+                "description": "Detects credential stealer byed on many strings that indicate password store access",
+                "license": "Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE",
+                "author": "Florian Roth (Nextron Systems)",
+                "reference": "Internal Research",
+                "date": "2017-06-07",
+                "hash1": "edb2d039a57181acf95bd91b2a20bd9f1d66f3ece18506d4ad870ab65e568f2c",
+                "id": "b3124f6c-4e18-562c-84d9-d51e086da446"
+            },
+            "rule_text": "rule CredentialStealer_Generic_Backdoor\n{\n\tmeta:\n\t\tdescription = \"Detects credential stealer byed on many strings that indicate password store access\"\n\t\tlicense = \"Detection Rule License 1.1 https://github.com/Neo23x0/signature-base/blob/master/LICENSE\"\n\t\tauthor = \"Florian Roth (Nextron Systems)\"\n\t\treference = \"Internal Research\"\n\t\tdate = \"2017-06-07\"\n\t\thash1 = \"edb2d039a57181acf95bd91b2a20bd9f1d66f3ece18506d4ad870ab65e568f2c\"\n\t\tid = \"b3124f6c-4e18-562c-84d9-d51e086da446\"\n\n\tstrings:\n\t\t$s1 = \"GetOperaLoginData\" fullword ascii\n\t\t$s2 = \"GetInternetExplorerCredentialsPasswords\" fullword ascii\n\t\t$s3 = \"%s\\\\Opera Software\\\\Opera Stable\\\\Login Data\" fullword ascii\n\t\t$s4 = \"select *  from moz_logins\" fullword ascii\n\t\t$s5 = \"%s\\\\Google\\\\Chrome\\\\User Data\\\\Default\\\\Login Data\" fullword ascii\n\t\t$s6 = \"Host.dll.Windows\" fullword ascii\n\t\t$s7 = \"GetInternetExplorerVaultPasswords\" fullword ascii\n\t\t$s8 = \"GetWindowsLiveMessengerPasswords\" fullword ascii\n\t\t$s9 = \"%s\\\\Chromium\\\\User Data\\\\Default\\\\Login Data\" fullword ascii\n\t\t$s10 = \"%s\\\\Opera\\\\Opera\\\\profile\\\\wand.dat\" fullword ascii\n\n\tcondition:\n\t\t( uint16( 0 ) == 0x5a4d and 4 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

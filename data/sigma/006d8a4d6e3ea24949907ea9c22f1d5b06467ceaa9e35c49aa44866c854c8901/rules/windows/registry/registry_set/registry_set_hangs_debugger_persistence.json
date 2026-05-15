@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_hangs_debugger_persistence.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-07-21",
+                "title": "Add Debugger Entry To Hangs Key For Persistence",
+                "id": "833ef470-fa01-4631-a79b-6f291c9ac498"
+            },
+            "rule_text": "title: Add Debugger Entry To Hangs Key For Persistence\nid: 833ef470-fa01-4631-a79b-6f291c9ac498\nstatus: test\ndescription: Detects when an attacker adds a new \"Debugger\" value to the \"Hangs\" key\n  in order to achieve persistence which will get invoked when an application crashes\nreferences:\n- https://persistence-info.github.io/Data/wer_debugger.html\n- https://www.hexacorn.com/blog/2019/09/20/beyond-good-ol-run-key-part-116/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-07-21\nmodified: 2023-08-17\ntags:\n- attack.persistence\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting\\Hangs\\Debugger\n  condition: selection\nfalsepositives:\n- This value is not set by default but could be rarly used by administrators\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

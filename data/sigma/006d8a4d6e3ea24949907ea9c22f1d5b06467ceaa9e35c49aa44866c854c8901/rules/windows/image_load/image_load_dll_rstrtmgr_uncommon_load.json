@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_dll_rstrtmgr_uncommon_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Luc Génaux",
+                "date": "2023-11-28",
+                "title": "Load Of RstrtMgr.DLL By An Uncommon Process",
+                "id": "3669afd2-9891-4534-a626-e5cf03810a61"
+            },
+            "rule_text": "title: Load Of RstrtMgr.DLL By An Uncommon Process\nid: 3669afd2-9891-4534-a626-e5cf03810a61\nrelated:\n- id: b48492dc-c5ef-4572-8dff-32bc241c15c8\n  type: derived\nstatus: test\ndescription: 'Detects the load of RstrtMgr DLL (Restart Manager) by an uncommon process.\n\n  This library has been used during ransomware campaigns to kill processes that would\n  prevent file encryption by locking them (e.g. Conti ransomware, Cactus ransomware).\n  It has also recently been seen used by the BiBi wiper for Windows.\n\n  It could also be used for anti-analysis purposes by shut downing specific processes.\n\n  '\nreferences:\n- https://www.crowdstrike.com/blog/windows-restart-manager-part-1/\n- https://www.crowdstrike.com/blog/windows-restart-manager-part-2/\n- https://web.archive.org/web/20231221193106/https://www.swascan.com/cactus-ransomware-malware-analysis/\n- https://taiwan.postsen.com/business/88601/Hamas-hackers-use-data-destruction-software-BiBi-which-consumes-a-lot-of-processor-resources-to-wipe-Windows-computer-data--iThome.html\nauthor: \"Luc G\\xE9naux\"\ndate: 2023-11-28\nmodified: 2025-12-08\ntags:\n- attack.impact\n- attack.defense-impairment\n- attack.t1486\n- attack.t1685\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n  - ImageLoaded|endswith: \\RstrtMgr.dll\n  - OriginalFileName: RstrtMgr.dll\n  filter_main_generic:\n    Image|startswith:\n    - C:\\$WINDOWS.~BT\\'\n    - C:\\$WinREAgent\\'\n    - C:\\Program Files (x86)\\'\n    - C:\\Program Files\\'\n    - C:\\ProgramData\\'\n    - C:\\Windows\\explorer.exe'\n    - C:\\Windows\\SoftwareDistribution\\'\n    - C:\\Windows\\SysNative\\'\n    - C:\\Windows\\System32\\'\n    - C:\\Windows\\SysWOW64\\'\n    - C:\\Windows\\WinSxS\\'\n    - C:\\WUDownloadCache\\'\n  filter_main_user_software_installations:\n    Image|startswith: C:\\Users\\'\n    Image|contains|all:\n    - \\AppData\\Local\\Temp\\is-\n    - .tmp\\\n    Image|endswith: .tmp\n  filter_main_admin_software_installations:\n    Image|startswith: C:\\Windows\\Temp\\'\n  filter_optional_onedrive:\n    Image|startswith: C:\\Users\\\n    Image|endswith: \\AppData\\Local\\Microsoft\\OneDrive\\OneDriveStandaloneUpdater.exe\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Other legitimate Windows processes not currently listed\n- Processes related to software installation\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

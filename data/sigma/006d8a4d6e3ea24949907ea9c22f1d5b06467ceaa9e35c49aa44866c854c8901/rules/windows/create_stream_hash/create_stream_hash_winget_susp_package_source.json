@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/create_stream_hash/create_stream_hash_winget_susp_package_source.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-18",
+                "title": "Potential Suspicious Winget Package Installation",
+                "id": "a3f5c081-e75b-43a0-9f5b-51f26fe5dba2"
+            },
+            "rule_text": "title: Potential Suspicious Winget Package Installation\nid: a3f5c081-e75b-43a0-9f5b-51f26fe5dba2\nstatus: test\ndescription: Detects potential suspicious winget package installation from a suspicious\n  source.\nreferences:\n- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-18\ntags:\n- attack.persistence\n- attack.stealth\nlogsource:\n  product: windows\n  category: create_stream_hash\ndetection:\n  selection:\n    Contents|startswith: '[ZoneTransfer]  ZoneId=3'\n    Contents|contains:\n    - ://1\n    - ://2\n    - ://3\n    - ://4\n    - ://5\n    - ://6\n    - ://7\n    - ://8\n    - ://9\n    TargetFilename|endswith: :Zone.Identifier\n    TargetFilename|contains: \\AppData\\Local\\Temp\\WinGet\\\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

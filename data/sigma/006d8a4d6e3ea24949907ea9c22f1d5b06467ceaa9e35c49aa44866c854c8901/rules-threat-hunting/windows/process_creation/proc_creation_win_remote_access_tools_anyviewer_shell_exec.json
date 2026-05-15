@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_anyviewer_shell_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@kostastsale",
+                "date": "2024-08-03",
+                "title": "Remote Access Tool - Cmd.EXE Execution via AnyViewer",
+                "id": "bc533330-fc29-44c0-b245-7dc6e5939c87"
+            },
+            "rule_text": "title: Remote Access Tool - Cmd.EXE Execution via AnyViewer\nid: bc533330-fc29-44c0-b245-7dc6e5939c87\nstatus: test\ndescription: 'Detects execution of \"cmd.exe\" via the AnyViewer RMM agent on a remote\n  management sessions.\n\n  '\nreferences:\n- https://www.anyviewer.com/help/remote-technical-support.html\nauthor: '@kostastsale'\ndate: 2024-08-03\ntags:\n- attack.execution\n- attack.persistence\n- detection.threat-hunting\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\AVCore.exe\n    ParentCommandLine|contains: AVCore.exe\" -d\n    Image|endswith: \\cmd.exe\n  condition: selection\nfalsepositives:\n- Legitimate use for admin activity.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

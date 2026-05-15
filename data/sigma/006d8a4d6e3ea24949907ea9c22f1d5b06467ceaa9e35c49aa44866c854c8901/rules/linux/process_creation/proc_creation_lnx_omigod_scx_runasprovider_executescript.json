@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_omigod_scx_runasprovider_executescript.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC",
+                "date": "2021-10-15",
+                "title": "OMIGOD SCX RunAsProvider ExecuteScript",
+                "id": "6eea1bf6-f8d2-488a-a742-e6ef6c1b67db"
+            },
+            "rule_text": "title: OMIGOD SCX RunAsProvider ExecuteScript\nid: 6eea1bf6-f8d2-488a-a742-e6ef6c1b67db\nstatus: test\ndescription: 'Rule to detect the use of the SCX RunAsProvider ExecuteScript to execute\n  any UNIX/Linux script using the /bin/sh shell.\n\n  Script being executed gets created as a temp file in /tmp folder with a scx* prefix.\n\n  Then it is invoked from the following directory /etc/opt/microsoft/scx/conf/tmpdir/.\n\n  The file in that directory has the same prefix scx*. SCXcore, started as the Microsoft\n  Operations Manager UNIX/Linux Agent, is now used in a host of products including\n\n  Microsoft Operations Manager, Microsoft Azure, and Microsoft Operations Management\n  Suite.\n\n  '\nreferences:\n- https://www.wiz.io/blog/omigod-critical-vulnerabilities-in-omi-azure\n- https://github.com/Azure/Azure-Sentinel/pull/3059\nauthor: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC\ndate: 2021-10-15\nmodified: 2022-10-05\ntags:\n- attack.privilege-escalation\n- attack.initial-access\n- attack.execution\n- attack.t1068\n- attack.t1190\n- attack.t1203\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    User: root\n    LogonId: 0\n    CurrentDirectory: /var/opt/microsoft/scx/tmp\n    CommandLine|contains: /etc/opt/microsoft/scx/conf/tmpdir/scx\n  condition: selection\nfalsepositives:\n- Legitimate use of SCX RunAsProvider ExecuteScript.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

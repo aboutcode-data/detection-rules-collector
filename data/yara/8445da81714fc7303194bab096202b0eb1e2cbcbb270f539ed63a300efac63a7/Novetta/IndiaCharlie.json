@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/IndiaCharlie.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "IndiaCharlie_One",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "rule IndiaCharlie_One\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$ = \"WMPNetworkSvcUpdate\"\n\t\t$ = \"backSched.dll\"\n\t\t$ = \"\\\\mspaint.exe\"\n\t\t$aesKey = \"X,LLIe{))%%l2i<[AM|aq!Ql/lPlw]d7@C-#j.<c|#*}Kx4_H(q^F-F^p/[t#%HT\"\n\n\tcondition:\n\t\t2 of them or $aesKey\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "IndiaCharlie_Two",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com"
+            },
+            "rule_text": "rule IndiaCharlie_Two\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\n\tstrings:\n\t\t$s1 = \"%s is an essential element in Windows System configuration and management. %s\"\n\t\t$s2 = \"%SYSTEMROOT%\\\\system32\\\\svchost.exe -k \"\n\t\t$s3 = \"%s\\\\system32\\\\%s\"\n\t\t$s4 = \"\\\\mspaint.exe\"\n\t\t$s5 = \":R\\nIF NOT EXIST %s GOTO E\\ndel /a %s\\nGOTO R\\n:E\\ndel /a d.bat\"\n\t\t$aesKey = \"}[eLkQAeEae0t@h18g!)3x-RvE%+^`n.6^()?+00ME6a&F7vcV}`@.dj]&u$o*vX\"\n\n\tcondition:\n\t\t3 of ( $s* ) or $aesKey\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

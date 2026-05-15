@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_exec_data_file.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-12-25",
+                "title": "Powershell Inline Execution From A File",
+                "id": "ee218c12-627a-4d27-9e30-d6fb2fe22ed2"
+            },
+            "rule_text": "title: Powershell Inline Execution From A File\nid: ee218c12-627a-4d27-9e30-d6fb2fe22ed2\nstatus: test\ndescription: Detects inline execution of PowerShell code from a file\nreferences:\n- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=50\nauthor: frack113\ndate: 2022-12-25\ntags:\n- attack.execution\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_exec:\n    CommandLine|contains:\n    - 'iex '\n    - 'Invoke-Expression '\n    - 'Invoke-Command '\n    - 'icm '\n  selection_read:\n    CommandLine|contains:\n    - 'cat '\n    - 'get-content '\n    - 'type '\n  selection_raw:\n    CommandLine|contains: ' -raw'\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

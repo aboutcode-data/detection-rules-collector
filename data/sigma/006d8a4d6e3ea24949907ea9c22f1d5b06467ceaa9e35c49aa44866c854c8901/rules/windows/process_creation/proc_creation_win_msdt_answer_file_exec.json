@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msdt_answer_file_exec.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-13",
+                "title": "MSDT Execution Via Answer File",
+                "id": "9c8c7000-3065-44a8-a555-79bcba5d9955"
+            },
+            "rule_text": "title: MSDT Execution Via Answer File\nid: 9c8c7000-3065-44a8-a555-79bcba5d9955\nstatus: test\ndescription: 'Detects execution of \"msdt.exe\" using an answer file which is simulating\n  the legitimate way of calling msdt via \"pcwrun.exe\" (For example from the compatibility\n  tab).\n\n  '\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Msdt/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-13\nmodified: 2025-10-29\ntags:\n- attack.stealth\n- attack.t1218\n- attack.execution\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\msdt.exe\n    CommandLine|contains: \\WINDOWS\\diagnostics\\index\\PCWDiagnostic.xml\n    CommandLine|contains|windash: ' -af '\n  filter_main_pcwrun:\n    ParentImage|endswith: \\pcwrun.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Possible undocumented parents of \"msdt\" other than \"pcwrun\".\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

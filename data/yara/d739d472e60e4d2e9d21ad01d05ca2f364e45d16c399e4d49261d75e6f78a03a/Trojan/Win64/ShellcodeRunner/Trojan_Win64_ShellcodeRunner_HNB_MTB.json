@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/ShellcodeRunner/Trojan_Win64_ShellcodeRunner_HNB_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_ShellcodeRunner_HNB_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/ShellcodeRunner.HNB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_ShellcodeRunner_HNB_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/ShellcodeRunner.HNB!MTB,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {46 61 69 6c 65 64 20 69 6e 20 63 68 61 6e 67 69 6e 67 20 70 72 6f 74 65 63 74 69 6f 6e 20 28 25 75 29 [0-10] 46 61 69 6c 65 64 20 69 6e 20 63 68 61 6e 67 69 6e 67 20 70 72 6f 74 65 63 74 69 6f 6e 20 62 61 63 6b 20 28 25 75 29 }\n\t\t$a_01_1 = {46 43 2d 34 38 2d 38 33 2d 45 34 2d 46 30 2d 45 38 }\n\t\t$a_01_2 = {43 30 2d 30 30 2d 30 30 2d 30 30 2d 34 31 2d 35 31 }\n\t\t$a_01_3 = {4e 74 43 72 65 61 74 65 54 68 72 65 61 64 45 78 20 48 6f 6f 6b 65 64 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 + ( #a_01_3 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

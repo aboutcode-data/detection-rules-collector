@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regedit_export_critical_keys.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Oddvar Moe, Sander Wiebing, oscd.community",
+                "date": "2020-10-12",
+                "title": "Exports Critical Registry Keys To a File",
+                "id": "82880171-b475-4201-b811-e9c826cd5eaa"
+            },
+            "rule_text": "title: Exports Critical Registry Keys To a File\nid: 82880171-b475-4201-b811-e9c826cd5eaa\nrelated:\n- id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a\n  type: similar\nstatus: test\ndescription: Detects the export of a crital Registry key to a file.\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/Regedit/\n- https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f\nauthor: Oddvar Moe, Sander Wiebing, oscd.community\ndate: 2020-10-12\nmodified: 2024-03-13\ntags:\n- attack.exfiltration\n- attack.discovery\n- attack.t1012\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\regedit.exe\n  - OriginalFileName: REGEDIT.EXE\n  selection_cli_1:\n    CommandLine|contains|windash: ' -E '\n  selection_cli_2:\n    CommandLine|contains:\n    - hklm\n    - hkey_local_machine\n  selection_cli_3:\n    CommandLine|endswith:\n    - \\system\n    - \\sam\n    - \\security\n  condition: all of selection_*\nfalsepositives:\n- Dumping hives for legitimate purpouse i.e. backup or forensic investigation\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

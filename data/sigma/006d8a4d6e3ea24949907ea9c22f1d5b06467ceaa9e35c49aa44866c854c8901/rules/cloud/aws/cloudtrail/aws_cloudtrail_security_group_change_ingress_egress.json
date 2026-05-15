@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_security_group_change_ingress_egress.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "jamesc-grafana",
+                "date": "2024-07-11",
+                "title": "Ingress/Egress Security Group Modification",
+                "id": "6fb77778-040f-4015-9440-572aa9b6b580"
+            },
+            "rule_text": "title: Ingress/Egress Security Group Modification\nid: 6fb77778-040f-4015-9440-572aa9b6b580\nstatus: test\ndescription: 'Detects when an account makes changes to the ingress or egress rules\n  of a security group.\n\n  This can indicate that an attacker is attempting to open up new attack vectors in\n  the account, that they are trying to exfiltrate data over the network, or that they\n  are trying to allow machines in that VPC/Subnet to contact a C&C server.\n\n  '\nreferences:\n- https://www.gorillastack.com/blog/real-time-events/important-aws-cloudtrail-security-events-tracking/\nauthor: jamesc-grafana\ndate: 2024-07-11\ntags:\n- attack.initial-access\n- attack.t1190\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection:\n    eventSource: ec2.amazonaws.com\n    eventName:\n    - AuthorizeSecurityGroupEgress\n    - AuthorizeSecurityGroupIngress\n    - RevokeSecurityGroupEgress\n    - RevokeSecurityGroupIngress\n  condition: selection\nfalsepositives:\n- New VPCs and Subnets being setup requiring a different security profile to those\n  already defined\n- A single port being opened for a new service that is known to be deploying\n- Administrators closing unused ports to reduce the attack surface\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

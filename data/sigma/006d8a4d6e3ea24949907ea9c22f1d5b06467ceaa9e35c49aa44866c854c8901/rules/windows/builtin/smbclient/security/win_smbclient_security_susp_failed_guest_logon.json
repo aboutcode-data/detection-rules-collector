@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/smbclient/security/win_smbclient_security_susp_failed_guest_logon.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), KevTheHermit, fuzzyf10w",
+                "date": "2021-06-30",
+                "title": "Suspicious Rejected SMB Guest Logon From IP",
+                "id": "71886b70-d7b4-4dbf-acce-87d2ca135262"
+            },
+            "rule_text": "title: Suspicious Rejected SMB Guest Logon From IP\nid: 71886b70-d7b4-4dbf-acce-87d2ca135262\nstatus: test\ndescription: Detect Attempt PrintNightmare (CVE-2021-1675) Remote code execution in\n  Windows Spooler Service\nreferences:\n- https://twitter.com/KevTheHermit/status/1410203844064301056\n- https://web.archive.org/web/20210629055600/https://github.com/hhlxf/PrintNightmare/\n- https://web.archive.org/web/20210701042336/https://github.com/afwu/PrintNightmare\nauthor: Florian Roth (Nextron Systems), KevTheHermit, fuzzyf10w\ndate: 2021-06-30\nmodified: 2023-01-02\ntags:\n- attack.credential-access\n- attack.t1110.001\nlogsource:\n  product: windows\n  service: smbclient-security\ndetection:\n  selection:\n    EventID: 31017\n    UserName: ''\n    ServerName|startswith: \\1\n  condition: selection\nfalsepositives:\n- Account fallback reasons (after failed login with specific account)\nlevel: medium\n",
+            "vulnerabilities": [
+                "CVE-2021-1675"
+            ]
+        }
+    ]
+}

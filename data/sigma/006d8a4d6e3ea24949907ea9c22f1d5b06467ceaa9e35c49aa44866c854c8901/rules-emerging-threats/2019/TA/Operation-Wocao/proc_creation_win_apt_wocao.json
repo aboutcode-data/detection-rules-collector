@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2019/TA/Operation-Wocao/proc_creation_win_apt_wocao.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), frack113",
+                "date": "2019-12-20",
+                "title": "Operation Wocao Activity",
+                "id": "1cfac73c-be78-4f9a-9b08-5bde0c3953ab"
+            },
+            "rule_text": "title: Operation Wocao Activity\nid: 1cfac73c-be78-4f9a-9b08-5bde0c3953ab\nrelated:\n- id: 74ad4314-482e-4c3e-b237-3f7ed3b9ca8d\n  type: derived\nstatus: test\ndescription: Detects activity mentioned in Operation Wocao report\nreferences:\n- https://www.fox-it.com/en/news/whitepapers/operation-wocao-shining-a-light-on-one-of-chinas-hidden-hacking-groups/\n- https://twitter.com/SBousseaden/status/1207671369963646976\nauthor: Florian Roth (Nextron Systems), frack113\ndate: 2019-12-20\nmodified: 2022-10-09\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.discovery\n- attack.stealth\n- attack.t1012\n- attack.t1036.004\n- attack.t1027\n- attack.execution\n- attack.t1053.005\n- attack.t1059.001\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\n  definition: The 'System Security Extension' audit subcategory need to be enabled\n    to log the EID 4697\ndetection:\n  selection:\n    CommandLine|contains:\n    - checkadmin.exe 127.0.0.1 -all\n    - netsh advfirewall firewall add rule name=powershell dir=in\n    - cmd /c powershell.exe -ep bypass -file c:\\s.ps1\n    - /tn win32times /f\n    - create win32times binPath=\n    - \\c$\\windows\\system32\\devmgr.dll\n    - ' -exec bypass -enc JgAg'\n    - type *keepass\\KeePass.config.xml\n    - iie.exe iie.txt\n    - reg query HKEY_CURRENT_USER\\Software\\\\*\\PuTTY\\Sessions\\\n  condition: selection\nfalsepositives:\n- Administrators that use checkadmin.exe tool to enumerate local administrators\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

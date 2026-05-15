@@ -1,0 +1,20 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/checkpoint/lyceum_dotnet_dns_backdoor.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "lyceum_dotnet_dns_backdoor",
+                "tags": [],
+                "author": "CPR",
+                "reference": "https://research.checkpoint.com/2022/state-sponsored-attack-groups-capitalise-on-russia-ukraine-war-for-cyber-espionage/",
+                "hash1": "8199f14502e80581000bd5b3bda250ee",
+                "hash2": "d79687676d2d152aec4143c852bdbc4a",
+                "hash3": "bcb465cc2257e5777bab431690ca5039",
+                "hash4": "2bc2abefc1a721908bc805894b62227d",
+                "hash5": "37a1514a7a5f9b2c6786096129a30721"
+            },
+            "rule_text": "rule lyceum_dotnet_dns_backdoor\n{\n\tmeta:\n\t\tauthor = \"CPR\"\n\t\treference = \"https://research.checkpoint.com/2022/state-sponsored-attack-groups-capitalise-on-russia-ukraine-war-for-cyber-espionage/\"\n\t\thash1 = \"8199f14502e80581000bd5b3bda250ee\"\n\t\thash2 = \"d79687676d2d152aec4143c852bdbc4a\"\n\t\thash3 = \"bcb465cc2257e5777bab431690ca5039\"\n\t\thash4 = \"2bc2abefc1a721908bc805894b62227d\"\n\t\thash5 = \"37a1514a7a5f9b2c6786096129a30721\"\n\n\tstrings:\n\t\t$log1 = \"MSG SIZE rcvd\" wide\n\t\t$log2 = \"Empty output\" wide\n\t\t$log3 = \"Big Output. lines: \" wide\n\t\t$com1 = \"Enddd\" wide\n\t\t$com2 = \"uploaddd\" wide\n\t\t$com3 = \"downloaddd\" wide\n\t\t$dga = \"trailers.apple.com\" wide\n\t\t$replace1 = \"BackSlashh\" wide\n\t\t$replace2 = \"QuotationMarkk\" wide\n\t\t$re_pattern = \"60\\\\s+IN\\\\s+TXT\" wide\n\t\t$func1 = \"comRun\"\n\t\t$func2 = \"PlaceDot\"\n\t\t$func3 = \"sendAns\"\n\t\t$heijden1 = \"Heijden.DNS\"\n\t\t$heijden2 = \"DnsHeijden\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and ( all of ( $log* ) or all of ( $com* ) or all of ( $replace* ) or all of ( $func* ) or ( any of ( $heijden* ) and $re_pattern and $dga ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

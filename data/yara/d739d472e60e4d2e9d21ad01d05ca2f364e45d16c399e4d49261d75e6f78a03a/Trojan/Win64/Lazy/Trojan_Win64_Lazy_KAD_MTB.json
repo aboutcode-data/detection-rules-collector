@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win64/Lazy/Trojan_Win64_Lazy_KAD_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win64_Lazy_KAD_MTB",
+                "tags": [],
+                "description": "Trojan:Win64/Lazy.KAD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 04 00 00 "
+            },
+            "rule_text": "rule Trojan_Win64_Lazy_KAD_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win64/Lazy.KAD!MTB,SIGNATURE_TYPE_PEHSTR_EXT,1e 00 1e 00 04 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {c7 45 fc 00 00 00 00 8b 45 f8 48 98 48 8d 15 ?? ?? 00 00 0f b6 14 10 8b 45 f8 48 98 0f b6 44 05 d0 38 c2 74 }\n\t\t$a_03_1 = {8b 45 2c 48 8d 15 ?? ?? 00 00 44 0f b6 04 10 0f b6 0d ?? ?? 00 00 8b 55 2c 48 8b 45 20 48 01 d0 44 89 c2 31 ca 88 10 83 45 2c 01 eb }\n\t\t$a_81_2 = {56 69 72 74 75 61 6c 41 6c 6c 6f 63 20 66 61 69 6c 65 64 20 66 6f 72 20 73 68 65 6c 6c 63 6f 64 65 }\n\t\t$a_81_3 = {53 68 65 6c 6c 63 6f 64 65 20 65 78 65 63 75 74 65 64 20 73 75 63 63 65 73 73 66 75 6c 6c 79 2e }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_03_1 & 1 ) * 8 + ( #a_81_2 & 1 ) * 7 + ( #a_81_3 & 1 ) * 5 ) >= 30\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

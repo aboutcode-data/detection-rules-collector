@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_renamed_sysinternals_eula_accepted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-08-24",
+                "title": "Usage of Renamed Sysinternals Tools - RegistrySet",
+                "id": "8023f872-3f1d-4301-a384-801889917ab4"
+            },
+            "rule_text": "title: Usage of Renamed Sysinternals Tools - RegistrySet\nid: 8023f872-3f1d-4301-a384-801889917ab4\nrelated:\n- id: 25ffa65d-76d8-4da5-a832-3f2b0136e133\n  type: derived\n- id: f50f3c09-557d-492d-81db-9064a8d4e211\n  type: similar\nstatus: test\ndescription: Detects non-sysinternals tools setting the \"accepteula\" key which normally\n  is set on sysinternals tool execution\nreferences:\n- Internal Research\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-08-24\nmodified: 2023-08-17\ntags:\n- attack.resource-development\n- attack.t1588.002\nlogsource:\n  product: windows\n  category: registry_set\ndetection:\n  selection:\n    TargetObject|contains:\n    - \\PsExec\n    - \\ProcDump\n    - \\Handle\n    - \\LiveKd\n    - \\Process Explorer\n    - \\PsLoglist\n    - \\PsPasswd\n    - \\Active Directory Explorer\n    TargetObject|endswith: \\EulaAccepted\n  filter_main_image_names:\n    Image|endswith:\n    - \\PsExec.exe\n    - \\PsExec64.exe\n    - \\procdump.exe\n    - \\procdump64.exe\n    - \\handle.exe\n    - \\handle64.exe\n    - \\livekd.exe\n    - \\livekd64.exe\n    - \\procexp.exe\n    - \\procexp64.exe\n    - \\psloglist.exe\n    - \\psloglist64.exe\n    - \\pspasswd.exe\n    - \\pspasswd64.exe\n    - \\ADExplorer.exe\n    - \\ADExplorer64.exe\n  filter_optional_null:\n    Image: null\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

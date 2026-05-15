@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/auditd/execve/lnx_auditd_system_shutdown_reboot.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Igor Fits, oscd.community",
+                "date": "2020-10-15",
+                "title": "System Shutdown/Reboot - Linux",
+                "id": "4cb57c2f-1f29-41f8-893d-8bed8e1c1d2f"
+            },
+            "rule_text": "title: System Shutdown/Reboot - Linux\nid: 4cb57c2f-1f29-41f8-893d-8bed8e1c1d2f\nstatus: test\ndescription: Adversaries may shutdown/reboot systems to interrupt access to, or aid\n  in the destruction of, those systems.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1529/T1529.md\nauthor: Igor Fits, oscd.community\ndate: 2020-10-15\nmodified: 2022-11-26\ntags:\n- attack.impact\n- attack.t1529\nlogsource:\n  product: linux\n  service: auditd\ndetection:\n  execve:\n    type: EXECVE\n  shutdowncmd:\n  - shutdown\n  - reboot\n  - halt\n  - poweroff\n  init:\n  - init\n  - telinit\n  initselection:\n  - 0\n  - 6\n  condition: execve and (shutdowncmd or (init and initselection))\nfalsepositives:\n- Legitimate administrative activity\nlevel: informational\n",
+            "vulnerabilities": []
+        }
+    ]
+}

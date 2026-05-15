@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/network_connection/net_connection_win_regsvr32_network_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Dmitriy Lifanov, oscd.community",
+                "date": "2019-10-25",
+                "title": "Network Connection Initiated By Regsvr32.EXE",
+                "id": "c7e91a02-d771-4a6d-a700-42587e0b1095"
+            },
+            "rule_text": "title: Network Connection Initiated By Regsvr32.EXE\nid: c7e91a02-d771-4a6d-a700-42587e0b1095\nstatus: test\ndescription: Detects a network connection initiated by \"Regsvr32.exe\"\nreferences:\n- https://pentestlab.blog/2017/05/11/applocker-bypass-regsvr32/\n- https://oddvar.moe/2017/12/13/applocker-case-study-how-insecure-is-it-really-part-1/\nauthor: Dmitriy Lifanov, oscd.community\ndate: 2019-10-25\nmodified: 2023-09-18\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1559.001\n- attack.t1218.010\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Initiated: 'true'\n    Image|endswith: \\regsvr32.exe\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

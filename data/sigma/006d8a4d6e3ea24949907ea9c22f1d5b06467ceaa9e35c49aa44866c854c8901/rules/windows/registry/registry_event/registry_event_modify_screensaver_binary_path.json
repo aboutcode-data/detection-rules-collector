@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_event/registry_event_modify_screensaver_binary_path.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Bartlomiej Czyz @bczyz1, oscd.community",
+                "date": "2020-10-11",
+                "title": "Path To Screensaver Binary Modified",
+                "id": "67a6c006-3fbe-46a7-9074-2ba3b82c3000"
+            },
+            "rule_text": "title: Path To Screensaver Binary Modified\nid: 67a6c006-3fbe-46a7-9074-2ba3b82c3000\nstatus: test\ndescription: Detects value modification of registry key containing path to binary\n  used as screensaver.\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md\n- https://www.welivesecurity.com/wp-content/uploads/2017/08/eset-gazer.pdf\nauthor: Bartlomiej Czyz @bczyz1, oscd.community\ndate: 2020-10-11\nmodified: 2021-11-27\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1546.002\nlogsource:\n  category: registry_event\n  product: windows\ndetection:\n  selection:\n    TargetObject|endswith: \\Control Panel\\Desktop\\SCRNSAVE.EXE\n  filter:\n    Image|endswith:\n    - \\rundll32.exe\n    - \\explorer.exe\n  condition: selection and not filter\nfalsepositives:\n- Legitimate modification of screensaver\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

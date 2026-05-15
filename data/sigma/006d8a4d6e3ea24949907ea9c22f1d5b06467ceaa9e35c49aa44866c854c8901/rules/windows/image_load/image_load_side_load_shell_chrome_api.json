@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_side_load_shell_chrome_api.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-12-01",
+                "title": "DLL Sideloading Of ShellChromeAPI.DLL",
+                "id": "ee4c5d06-3abc-48cc-8885-77f1c20f4451"
+            },
+            "rule_text": "title: DLL Sideloading Of ShellChromeAPI.DLL\nid: ee4c5d06-3abc-48cc-8885-77f1c20f4451\nrelated:\n- id: e173ad47-4388-4012-ae62-bd13f71c18a8\n  type: similar\nstatus: test\ndescription: 'Detects processes loading the non-existent DLL \"ShellChromeAPI\". One\n  known example is the \"DeviceEnroller\" binary in combination with the \"PhoneDeepLink\"\n  flag tries to load this DLL.\n\n  Adversaries can drop their own renamed DLL and execute it via DeviceEnroller.exe\n  using this parameter\n\n  '\nreferences:\n- https://mobile.twitter.com/0gtweet/status/1564131230941122561\n- https://strontic.github.io/xcyclopedia/library/DeviceEnroller.exe-24BEF0D6B0ECED36BB41831759FDE18D.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-12-01\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.execution\n- attack.stealth\n- attack.t1574.001\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\ShellChromeAPI.dll\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

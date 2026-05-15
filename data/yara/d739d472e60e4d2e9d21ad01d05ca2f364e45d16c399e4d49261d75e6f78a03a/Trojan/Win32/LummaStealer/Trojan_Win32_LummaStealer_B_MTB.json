@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/LummaStealer/Trojan_Win32_LummaStealer_B_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_LummaStealer_B_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/LummaStealer.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_LummaStealer_B_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/LummaStealer.B!MTB,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {0f b6 c0 8b 04 85 ?? ?? ?? ?? b9 ?? ?? ?? ?? 33 0d ?? ?? ?? ?? 01 c8 40 }\n\t\t$a_01_1 = {57 69 6e 64 6f 77 73 20 31 30 }\n\t\t$a_01_2 = {57 69 6e 64 6f 77 73 20 31 31 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_01_1 & 1 ) * 1 + ( #a_01_2 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

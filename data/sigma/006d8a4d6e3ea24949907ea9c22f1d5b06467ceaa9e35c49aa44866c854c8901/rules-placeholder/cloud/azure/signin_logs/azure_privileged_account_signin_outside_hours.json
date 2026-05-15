@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/cloud/azure/signin_logs/azure_privileged_account_signin_outside_hours.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'",
+                "date": "2022-08-11",
+                "title": "Privilege Role Sign-In Outside Of Normal Hours",
+                "id": "e927a2f5-e7af-424f-ace7-70ebb49e8976"
+            },
+            "rule_text": "title: Privilege Role Sign-In Outside Of Normal Hours\nid: e927a2f5-e7af-424f-ace7-70ebb49e8976\nstatus: test\ndescription: Detects account sign ins outside of normal hours or uncommon locations.\n  Administrator accounts should be investigated\nreferences:\n- https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor\nauthor: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'\ndate: 2022-08-11\nmodified: 2023-12-15\ntags:\n- attack.persistence\n- attack.initial-access\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1078\nlogsource:\n  product: azure\n  service: signinlogs\ndetection:\n  selection:\n    Status: Sucess\n    Location|expand: '%LegitCountries%'\n    Date|expand: '%ClosingTime%'\n    Initiatied.By|expand: '%ApprovedUserUpn%'\n  condition: selection\nfalsepositives:\n- An admin doing actual work outside of normal business hours\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

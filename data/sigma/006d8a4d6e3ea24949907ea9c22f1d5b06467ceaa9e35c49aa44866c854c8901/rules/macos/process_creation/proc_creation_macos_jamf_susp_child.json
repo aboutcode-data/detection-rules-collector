@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_jamf_susp_child.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-08-22",
+                "title": "JAMF MDM Potential Suspicious Child Process",
+                "id": "2316929c-01aa-438c-970f-099145ab1ee6"
+            },
+            "rule_text": "title: JAMF MDM Potential Suspicious Child Process\nid: 2316929c-01aa-438c-970f-099145ab1ee6\nstatus: test\ndescription: Detects potential suspicious child processes of \"jamf\". Could be a sign\n  of potential abuse of Jamf as a C2 server as seen by Typhon MythicAgent.\nreferences:\n- https://github.com/MythicAgents/typhon/\n- https://www.zoocoup.org/casper/jamf_cheatsheet.pdf\n- https://docs.jamf.com/10.30.0/jamf-pro/administrator-guide/Components_Installed_on_Managed_Computers.html\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-08-22\ntags:\n- attack.execution\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  selection:\n    ParentImage|endswith: /jamf\n    Image|endswith:\n    - /bash\n    - /sh\n  condition: selection\nfalsepositives:\n- Legitimate execution of custom scripts or commands by Jamf administrators. Apply\n  additional filters accordingly\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

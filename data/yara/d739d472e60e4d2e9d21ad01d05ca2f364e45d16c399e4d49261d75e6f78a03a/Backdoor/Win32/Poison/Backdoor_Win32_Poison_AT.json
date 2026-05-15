@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Poison/Backdoor_Win32_Poison_AT.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Poison_AT",
+                "tags": [],
+                "description": "Backdoor:Win32/Poison.AT,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 05 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Poison_AT\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Poison.AT,SIGNATURE_TYPE_PEHSTR_EXT,04 00 04 00 05 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {99 b9 1a 00 00 00 f7 f9 83 c2 61 }\n\t\t$a_02_1 = {66 c7 44 24 ?? 40 00 c6 44 24 ?? 80 c6 44 24 ?? 06 c6 44 24 ?? 50 }\n\t\t$a_00_2 = {99 b9 fa 00 00 00 f7 f9 42 }\n\t\t$a_00_3 = {4d 44 20 53 65 72 76 69 63 65 73 42 }\n\t\t$a_00_4 = {53 76 63 25 63 25 63 25 63 25 63 2e 65 78 65 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 1 + ( #a_00_2 & 1 ) * 1 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 ) >= 4\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

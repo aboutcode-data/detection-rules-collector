@@ -1,0 +1,29 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/nimfilecoder.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "malware_NimFilecoder",
+                "tags": [],
+                "description": "NimCopycatLoader malware in human-operated ransomware attack",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash1": "9a10ead4b8971b830daf1d0b7151462fb6cc379087b65b3013c756db3ce87118"
+            },
+            "rule_text": "rule malware_NimFilecoder\n{\n\tmeta:\n\t\tdescription = \"NimCopycatLoader malware in human-operated ransomware attack\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash1 = \"9a10ead4b8971b830daf1d0b7151462fb6cc379087b65b3013c756db3ce87118\"\n\n\tstrings:\n\t\t$str1 = \":wtfbbq\" ascii wide\n\t\t$lib = \"clr.nim\" ascii wide\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "malware_NimFilecoder02",
+                "tags": [],
+                "description": "detect NimFilecoder",
+                "author": "JPCERT/CC Incident Response Group",
+                "rule_usage": "scan, hunt",
+                "hash1": "9a10ead4b8971b830daf1d0b7151462fb6cc379087b65b3013c756db3ce87118",
+                "hash2": "b6dc9052b9b1c23f90eb214336815e0df1bed8456f8aa5781dd0ec46bff42610"
+            },
+            "rule_text": "rule malware_NimFilecoder02\n{\n\tmeta:\n\t\tdescription = \"detect NimFilecoder\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\trule_usage = \"scan, hunt\"\n\t\thash1 = \"9a10ead4b8971b830daf1d0b7151462fb6cc379087b65b3013c756db3ce87118\"\n\t\thash2 = \"b6dc9052b9b1c23f90eb214336815e0df1bed8456f8aa5781dd0ec46bff42610\"\n\n\tstrings:\n\t\t$Func1 = { 81 E? 55 55 55 55 }\n\t\t$Func2 = { 81 E? CC CC CC CC }\n\t\t$Func3 = { 81 E? 33 33 33 33 }\n\t\t$Func4 = { 81 E? 0F 0F 0F 0F }\n\t\t$Func5 = { 81 E? F0 F0 F0 F0 }\n\t\t$s0 = \"io.nim\" fullword ascii\n\t\t$s1 = \"os.nim\" fullword ascii\n\t\t$s2 = \"fatal.nim\" fullword ascii\n\t\t$s3 = \"GetCommandLineW\" fullword ascii\n\t\t$s4 = \"PathFileExistsW\" fullword ascii\n\t\t$s5 = \"libgcc_s_dw2-1.dll\" fullword ascii\n\t\t$s6 = \"GetModuleFileNameW\" fullword ascii\n\t\t$s7 = \"IsEqualGUID\" fullword ascii\n\t\t$s8 = \"[GC] cannot register thread local variable\" fullword ascii\n\t\t$s9 = \"streams.nim\" fullword ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and uint32( uint32( 0x3c ) ) == 0x00004550 and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

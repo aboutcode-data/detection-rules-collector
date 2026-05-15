@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/activity_logs/azure_suppression_rule_created.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer",
+                "date": "2021-08-16",
+                "title": "Azure Suppression Rule Created",
+                "id": "92cc3e5d-eb57-419d-8c16-5c63f325a401"
+            },
+            "rule_text": "title: Azure Suppression Rule Created\nid: 92cc3e5d-eb57-419d-8c16-5c63f325a401\nstatus: test\ndescription: Identifies when a suppression rule is created in Azure. Adversary's could\n  attempt this to evade detection.\nreferences:\n- https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations\nauthor: Austin Songer\ndate: 2021-08-16\nmodified: 2022-08-23\ntags:\n- attack.impact\nlogsource:\n  product: azure\n  service: activitylogs\ndetection:\n  selection:\n    operationName: MICROSOFT.SECURITY/ALERTSSUPPRESSIONRULES/WRITE\n  condition: selection\nfalsepositives:\n- Suppression Rule being created may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Suppression Rule created from unfamiliar users should be investigated. If known\n  behavior is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

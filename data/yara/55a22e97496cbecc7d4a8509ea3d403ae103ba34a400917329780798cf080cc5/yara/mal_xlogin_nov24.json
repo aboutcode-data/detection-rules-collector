@@ -1,0 +1,22 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_xlogin_nov24.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_ELF_Xlogin_Nov24_1",
+                "tags": [],
+                "description": "Detects xlogin backdoor samples",
+                "author": "Florian Roth",
+                "reference": "https://blog.sekoia.io/solving-the-7777-botnet-enigma-a-cybersecurity-quest/",
+                "date": "2024-11-11",
+                "score": 80,
+                "hash1": "2b09a6811a9d0447f8c6480430eb0f7e3ff64fa933d0b2e8cd6117f38382cc6a",
+                "hash2": "d1cbf80786b1ca1ba2e5c31ec09159be276ad3d10fc0a8a0dbff229d8263ca0a",
+                "hash3": "ff17e9bcc1ed16985713405b95745e47674ec98e3c6c889df797600718a35b2c",
+                "id": "e8940660-ecf8-5616-9cb1-fc0a02d35689"
+            },
+            "rule_text": "rule MAL_ELF_Xlogin_Nov24_1\n{\n\tmeta:\n\t\tdescription = \"Detects xlogin backdoor samples\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://blog.sekoia.io/solving-the-7777-botnet-enigma-a-cybersecurity-quest/\"\n\t\tdate = \"2024-11-11\"\n\t\tscore = 80\n\t\thash1 = \"2b09a6811a9d0447f8c6480430eb0f7e3ff64fa933d0b2e8cd6117f38382cc6a\"\n\t\thash2 = \"d1cbf80786b1ca1ba2e5c31ec09159be276ad3d10fc0a8a0dbff229d8263ca0a\"\n\t\thash3 = \"ff17e9bcc1ed16985713405b95745e47674ec98e3c6c889df797600718a35b2c\"\n\t\tid = \"e8940660-ecf8-5616-9cb1-fc0a02d35689\"\n\n\tstrings:\n\t\t$xc1 = { 6C 6F 67 69 6E 3A 00 25 73 00 00 2F 62 69 6E 2F 73 68 00 2F 74 6D 70 2F 6C 6F 67 69 6E }\n\t\t$s1 = \"/tmp/login\" ascii fullword\n\t\t$s2 = \"npxXoudifFeEgGaACSnmcs[\" ascii fullword\n\t\t$sc1 = { 28 6E 69 6C 29 00 00 00 28 6E 75 6C 6C 29 }\n\n\tcondition:\n\t\tuint16( 0 ) == 0x457f and filesize < 500KB and ( 1 of ( $x* ) or 2 of them )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

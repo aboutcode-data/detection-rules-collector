@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2024_Cicada3301_Ransomware/proc_creation_win_hyperv_stopvm.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)",
+                "date": "2024-09-07",
+                "title": "Hyper-V Virtual Machine Discovery Shutdown via Powershell Cmdlets",
+                "id": "d42df972-2f45-44b0-8566-3de71b9ed3e9"
+            },
+            "rule_text": "title: Hyper-V Virtual Machine Discovery Shutdown via Powershell Cmdlets\nid: d42df972-2f45-44b0-8566-3de71b9ed3e9\nstatus: experimental\ndescription: Detects powershell process used to find and shut down local Hyper-V VMs\n  using the Stop-VM cmdlet, as documented in the 2024 Morphisec report on Cicada3301\n  ransomware.\nreferences:\n- https://blog.morphisec.com/cicada3301-ransomware-threat-analysis\nrelated:\n- id: 42d36aa1-3240-4db0-8257-e0118dcdd9cd\n  type: derived\nauthor: Micah Babinski, Based on Morphisec report by Michael Gorelik (@smgoreli)\ndate: 2024-09-07\ntags:\n- attack.defense-evasion\n- attack.impact\n- attack.t1578\n- attack.t1578.003\n- attack.t1529\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\powershell.exe\n  - OriginalFileName: powershell.exe\n  selection_cmd:\n    CommandLine|contains|all:\n    - Get-VM\n    - Stop-VM\n    - -Force\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

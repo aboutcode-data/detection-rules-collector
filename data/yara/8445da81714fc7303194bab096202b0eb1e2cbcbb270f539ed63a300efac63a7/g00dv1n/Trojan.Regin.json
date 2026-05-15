@@ -1,0 +1,45 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/g00dv1n/Trojan.Regin.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Regin_APT_KernelDriver_Generic_A",
+                "tags": [],
+                "Description": "Trojan.Regin.A.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule Regin_APT_KernelDriver_Generic_A\n{\n\tmeta:\n\t\tDescription = \"Trojan.Regin.A.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$m1 = { 0e 1f ba 0e 00 b4 09 cd 21 b8 01 4c cd 21 54 68 69 73 20 70 72 6f 67 72 61 6d 20 63 61 6e 6e 6f 74 20 62 65 20 72 75 6e 20 69 6e 20 44 4f 53 20 6d 6f 64 65 2e }\n\t\t$s0 = \"atapi.sys\" fullword wide\n\t\t$s1 = \"disk.sys\" fullword wide\n\t\t$s3 = \"h.data\" fullword ascii\n\t\t$s4 = \"\\\\system32\" fullword ascii\n\t\t$s5 = \"\\\\SystemRoot\" fullword ascii\n\t\t$s6 = \"system\" fullword ascii\n\t\t$s7 = \"temp\" fullword ascii\n\t\t$s8 = \"windows\" fullword ascii\n\t\t$x1 = \"LRich6\" fullword ascii\n\t\t$x2 = \"KeServiceDescriptorTable\" fullword ascii\n\n\tcondition:\n\t\t$m1 and all of ( $s* ) and 1 of ( $x* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Regin_APT_KernelDriver_Generic_B",
+                "tags": [],
+                "Description": "Trojan.Regin.B.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule Regin_APT_KernelDriver_Generic_B\n{\n\tmeta:\n\t\tDescription = \"Trojan.Regin.B.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$s1 = { 0e 1f ba 0e 00 b4 09 cd 21 b8 01 4c cd 21 54 68 69 73 20 70 72 6f 67 72 61 6d 20 63 61 6e 6e 6f 74 20 62 65 20 72 75 6e 20 69 6e 20 44 4f 53 20 6d 6f 64 65 2e }\n\t\t$s2 = \"H.data\" fullword ascii nocase\n\t\t$s3 = \"INIT\" fullword ascii\n\t\t$s4 = \"ntoskrnl.exe\" fullword ascii\n\t\t$v1 = \"\\\\system32\" fullword ascii\n\t\t$v2 = \"\\\\SystemRoot\" fullword ascii\n\t\t$v3 = \"KeServiceDescriptorTable\" fullword ascii\n\t\t$w1 = \"\\\\system32\" fullword ascii\n\t\t$w2 = \"\\\\SystemRoot\" fullword ascii\n\t\t$w3 = \"LRich6\" fullword ascii\n\t\t$x1 = \"_snprintf\" fullword ascii\n\t\t$x2 = \"_except_handler3\" fullword ascii\n\t\t$y1 = \"mbstowcs\" fullword ascii\n\t\t$y2 = \"wcstombs\" fullword ascii\n\t\t$y3 = \"KeGetCurrentIrql\" fullword ascii\n\t\t$z1 = \"wcscpy\" fullword ascii\n\t\t$z2 = \"ZwCreateFile\" fullword ascii\n\t\t$z3 = \"ZwQueryInformationFile\" fullword ascii\n\t\t$z4 = \"wcslen\" fullword ascii\n\t\t$z5 = \"atoi\" fullword ascii\n\n\tcondition:\n\t\tall of ( $s* ) and ( all of ( $v* ) or all of ( $w* ) or all of ( $x* ) or all of ( $y* ) or all of ( $z* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Regin_APT_KernelDriver_Generic_C",
+                "tags": [],
+                "Description": "Trojan.Regin.C.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule Regin_APT_KernelDriver_Generic_C\n{\n\tmeta:\n\t\tDescription = \"Trojan.Regin.C.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$s0 = \"KeGetCurrentIrql\" fullword ascii\n\t\t$s1 = \"5.2.3790.0 (srv03_rtm.030324-2048)\" fullword wide\n\t\t$s2 = \"usbclass\" fullword wide\n\t\t$x1 = \"PADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDING\" ascii\n\t\t$x2 = \"Universal Serial Bus Class Driver\" fullword wide\n\t\t$x3 = \"5.2.3790.0\" fullword wide\n\t\t$y1 = \"LSA Shell\" fullword wide\n\t\t$y2 = \"0Richw\" fullword ascii\n\n\tcondition:\n\t\tall of ( $s* ) and ( all of ( $x* ) or all of ( $y* ) )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Regin_sig_svcsstat",
+                "tags": [],
+                "Description": "Trojan.Regin.sm",
+                "ThreatLevel": "5"
+            },
+            "rule_text": "rule Regin_sig_svcsstat\n{\n\tmeta:\n\t\tDescription = \"Trojan.Regin.sm\"\n\t\tThreatLevel = \"5\"\n\n\tstrings:\n\t\t$s0 = \"Service Control Manager\" fullword ascii\n\t\t$s1 = \"_vsnwprintf\" fullword ascii\n\t\t$s2 = \"Root Agency\" fullword ascii\n\t\t$s3 = \"Root Agency0\" fullword ascii\n\t\t$s4 = \"StartServiceCtrlDispatcherA\" fullword ascii\n\t\t$s5 = \"\\\\\\\\?\\\\UNC\" fullword ascii\n\t\t$s6 = \"%ls%ls\" fullword wide\n\n\tcondition:\n\t\tall of them and filesize < 15KB and filesize > 10KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Novetta/UniformAlfa.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "UniformAlfa",
+                "tags": [],
+                "copyright": "2015 Novetta Solutions",
+                "author": "Novetta Threat Research & Interdiction Group - trig@novetta.com",
+                "Source": "a24377681cf56c712e544af01ac8a5dbaa81d16851a17a147bbf5132890d7437"
+            },
+            "rule_text": "import \"pe\"\n\nrule UniformAlfa\n{\n\tmeta:\n\t\tcopyright = \"2015 Novetta Solutions\"\n\t\tauthor = \"Novetta Threat Research & Interdiction Group - trig@novetta.com\"\n\t\tSource = \"a24377681cf56c712e544af01ac8a5dbaa81d16851a17a147bbf5132890d7437\"\n\n\tstrings:\n\t\t$stopDeleteService = {\n\t\t\t8D [3] \n\t\t\t5? \n\t\t\t6A 01 \n\t\t\t5? \n\t\t\tFF D? \n\t\t\t83 [3] 01 \n\t\t\t75 ?? \n\t\t\t5? \n\t\t\tFF 15  \n\t\t}\n\n\tcondition:\n\t\t$stopDeleteService in ( ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset ) .. ( pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_offset + pe.sections [ pe.section_index ( \".text\" ) ] . raw_data_size ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2019/TA/MustangPanda/proc_creation_win_apt_mustangpanda.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), oscd.community",
+                "date": "2019-10-30",
+                "title": "Mustang Panda Dropper",
+                "id": "2d87d610-d760-45ee-a7e6-7a6f2a65de00"
+            },
+            "rule_text": "title: Mustang Panda Dropper\nid: 2d87d610-d760-45ee-a7e6-7a6f2a65de00\nstatus: test\ndescription: Detects specific process parameters as used by Mustang Panda droppers\nreferences:\n- https://app.any.run/tasks/7ca5661d-a67b-43ec-98c1-dd7a8103c256/\n- https://app.any.run/tasks/b12cccf3-1c22-4e28-9d3e-c7a6062f3914/\n- https://www.anomali.com/blog/china-based-apt-mustang-panda-targets-minority-groups-public-and-private-sector-organizations\nauthor: Florian Roth (Nextron Systems), oscd.community\ndate: 2019-10-30\nmodified: 2021-11-27\ntags:\n- attack.t1587.001\n- attack.resource-development\n- detection.emerging-threats\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cli:\n  - CommandLine|contains:\n    - Temp\\wtask.exe /create\n    - '%windir:~-3,1%%PUBLIC:~-9,1%'\n    - '/tn \"Security Script '\n    - '%windir:~-1,1%'\n  - CommandLine|contains|all:\n    - /E:vbscript\n    - C:\\Users\\\n    - .txt\n    - /F\n  selection_img:\n    Image|endswith: Temp\\winwsh.exe\n  condition: 1 of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

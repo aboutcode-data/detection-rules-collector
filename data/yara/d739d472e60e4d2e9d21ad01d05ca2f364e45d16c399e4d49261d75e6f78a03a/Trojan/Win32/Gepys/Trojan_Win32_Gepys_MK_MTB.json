@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Gepys/Trojan_Win32_Gepys_MK_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Gepys_MK_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Gepys.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 02 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Gepys_MK_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Gepys.MK!MTB,SIGNATURE_TYPE_PEHSTR_EXT,19 00 19 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 4d 08 8b 51 04 83 ea ?? d1 ea 89 55 f4 8b 45 08 83 c0 ?? 89 45 f0 8b 4d 08 51 8b 55 10 }\n\t\t$a_01_1 = {89 10 8b 4d 18 8b 11 8b 45 10 8b 0c 10 03 4d 14 8b 55 18 8b 02 8b 55 10 89 0c 02 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 15 + ( #a_01_1 & 1 ) * 10 ) >= 25\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

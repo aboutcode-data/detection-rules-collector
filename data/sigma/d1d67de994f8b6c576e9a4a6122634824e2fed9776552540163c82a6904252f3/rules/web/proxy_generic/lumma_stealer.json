@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/lumma_stealer.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "NTT Security - Amata Anantaprayoon",
+                "date": "2023-06-20",
+                "title": "Lumma Stealer C2 Traffic",
+                "id": "fc9583b5-06c0-411f-aca7-982917801a7b"
+            },
+            "rule_text": "title: Lumma Stealer C2 Traffic\nid: fc9583b5-06c0-411f-aca7-982917801a7b\ndescription: Detects Lumma stealer exfiltration traffic\nstatus: experimental\nauthor: NTT Security - Amata Anantaprayoon\ndate: '2023-06-20'\nmodified: '2023-08-15'\nreferences:\n- https://malpedia.caad.fkie.fraunhofer.de/details/win.lumma\n- https://app.any.run/tasks/c1c2695d-b0b0-464f-a4e3-71b017d9ff9b/\nlogsource:\n  category: proxy\ndetection:\n  selection:\n    cs-method: POST\n    c-uri:\n    - /c2sock\n    - /c2conf\n    cs-referer: ''\n  condition: selection\nfalsepositives:\n- Legit urls matching the same pattern\ntruepositives:\n- Multiple HTTP 'POST /c2sock' after 'POST /c2conf'\nlevel: high\ntags:\n- attack.command_and_control\n",
+            "vulnerabilities": []
+        }
+    ]
+}

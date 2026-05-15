@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_java_susp_child_process_2.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades), Nasreddine Bencherchali",
+                "date": "2021-12-17",
+                "title": "Shell Process Spawned by Java.EXE",
+                "id": "dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0"
+            },
+            "rule_text": "title: Shell Process Spawned by Java.EXE\nid: dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0\nrelated:\n- id: 0d34ed8b-1c12-4ff2-828c-16fc860b766d\n  type: similar\nstatus: test\ndescription: Detects shell spawned from Java host process, which could be a sign of\n  exploitation (e.g. log4j exploitation)\nreferences:\n- https://web.archive.org/web/20231230220738/https://www.lunasec.io/docs/blog/log4j-zero-day/\nauthor: Andreas Hunkeler (@Karneades), Nasreddine Bencherchali\ndate: 2021-12-17\nmodified: 2024-01-18\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\java.exe\n    Image|endswith:\n    - \\bash.exe\n    - \\cmd.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n  filter_main_build:\n    ParentImage|contains: build\n    CommandLine|contains: build\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Legitimate calls to system binaries\n- Company specific internal usage\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/maldocs/Maldoc_Word_2007_XML_Flat_OPC.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Word_2007_XML_Flat_OPC",
+                "tags": [
+                    "maldoc"
+                ],
+                "author": "Martin Willing (https://evild3ad.com)",
+                "description": "Detect Word 2007 XML Document in the Flat OPC format w/ embedded Microsoft Office 2007+ document",
+                "date": "2018-04-29",
+                "reference": "https://blogs.msdn.microsoft.com/ericwhite/2008/09/29/the-flat-opc-format/",
+                "hash1": "060c036ce059b465a05c42420efa07bf",
+                "hash2": "2af21d35bb909a0ac081c2399d0939b1",
+                "hash3": "72ffa688c228b0b833e69547885650fe",
+                "filetype": "Office documents"
+            },
+            "rule_text": "rule Word_2007_XML_Flat_OPC : maldoc\n{\n\tmeta:\n\t\tauthor = \"Martin Willing (https://evild3ad.com)\"\n\t\tdescription = \"Detect Word 2007 XML Document in the Flat OPC format w/ embedded Microsoft Office 2007+ document\"\n\t\tdate = \"2018-04-29\"\n\t\treference = \"https://blogs.msdn.microsoft.com/ericwhite/2008/09/29/the-flat-opc-format/\"\n\t\thash1 = \"060c036ce059b465a05c42420efa07bf\"\n\t\thash2 = \"2af21d35bb909a0ac081c2399d0939b1\"\n\t\thash3 = \"72ffa688c228b0b833e69547885650fe\"\n\t\tfiletype = \"Office documents\"\n\n\tstrings:\n\t\t$xml = \"<?xml\"\n\t\t$WordML = \"<?mso-application progid=\\\"Word.Document\\\"?>\"\n\t\t$OPC = \"<pkg:package\"\n\t\t$xmlns = \"http://schemas.microsoft.com/office/2006/xmlPackage\"\n\t\t$binaryData = \"<pkg:binaryData>0M8R4KGxGuE\"\n\t\t$docm = \"pkg:name=\\\"/word/vbaProject.bin\\\"\"\n\n\tcondition:\n\t\t$xml at 0 and $WordML and $OPC and $xmlns and $binaryData and $docm\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

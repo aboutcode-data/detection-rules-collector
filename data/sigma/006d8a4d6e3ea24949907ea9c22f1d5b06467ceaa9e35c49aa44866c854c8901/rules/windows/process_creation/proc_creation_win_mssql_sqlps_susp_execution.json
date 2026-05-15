@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mssql_sqlps_susp_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Agro (@agro_sev) oscd.community",
+                "date": "2020-10-10",
+                "title": "Detection of PowerShell Execution via Sqlps.exe",
+                "id": "0152550d-3a26-4efd-9f0e-54a0b28ae2f3"
+            },
+            "rule_text": "title: Detection of PowerShell Execution via Sqlps.exe\nid: 0152550d-3a26-4efd-9f0e-54a0b28ae2f3\nstatus: test\ndescription: 'This rule detects execution of a PowerShell code through the sqlps.exe\n  utility, which is included in the standard set of utilities supplied with the MSSQL\n  Server.\n\n  Script blocks are not logged in this case, so this utility helps to bypass protection\n  mechanisms based on the analysis of these logs.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/sql/tools/sqlps-utility?view=sql-server-ver15\n- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Sqlps/\n- https://twitter.com/bryon_/status/975835709587075072\nauthor: Agro (@agro_sev) oscd.community\ndate: 2020-10-10\nmodified: 2022-12-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1059.001\n- attack.t1127\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith: \\sqlps.exe\n  selection_image:\n  - Image|endswith: \\sqlps.exe\n  - OriginalFileName: sqlps.exe\n  filter_image:\n    ParentImage|endswith: \\sqlagent.exe\n  condition: selection_parent or (selection_image and not filter_image)\nfalsepositives:\n- Direct PS command execution through SQLPS.exe is uncommon, childprocess sqlps.exe\n  spawned by sqlagent.exe is a legitimate action.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_cmd_dir_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2021-12-13",
+                "title": "File And SubFolder Enumeration Via Dir Command",
+                "id": "7c9340a9-e2ee-4e43-94c5-c54ebbea1006"
+            },
+            "rule_text": "title: File And SubFolder Enumeration Via Dir Command\nid: 7c9340a9-e2ee-4e43-94c5-c54ebbea1006\nstatus: test\ndescription: 'Detects usage of the \"dir\" command part of Windows CMD with the \"/S\"\n  command line flag in order to enumerate files in a specified directory and all subdirectories.\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1217/T1217.md\nauthor: frack113\ndate: 2021-12-13\nmodified: 2024-04-14\ntags:\n- attack.discovery\n- attack.t1217\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_cmd:\n  - Image|endswith: \\cmd.exe\n  - OriginalFileName: Cmd.Exe\n  selection_cli:\n    CommandLine|contains|windash: dir*-s\n  condition: all of selection_*\nfalsepositives:\n- Likely\nlevel: low\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_cmd_dir_execution/info.yml\nsimulation:\n- type: atomic-red-team\n  name: List Internet Explorer Bookmarks using the command prompt\n  technique: T1217\n  atomic_guid: 727dbcdb-e495-4ab1-a6c4-80c7f77aef85\n",
+            "vulnerabilities": []
+        }
+    ]
+}

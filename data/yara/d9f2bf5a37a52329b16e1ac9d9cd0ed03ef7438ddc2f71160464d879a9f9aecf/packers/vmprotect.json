@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/godaddy/yara-rules/blob/master/packers/vmprotect.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "vmprotect",
+                "tags": [],
+                "description": "VMProtect packed file",
+                "block": false,
+                "quarantine": false
+            },
+            "rule_text": "rule vmprotect\n{\n\tmeta:\n\t\tdescription = \"VMProtect packed file\"\n\t\tblock = false\n\t\tquarantine = false\n\n\tstrings:\n\t\t$mz = \"MZ\"\n\t\t$vmp0 = {2E766D7030000000}\n\t\t$vmp1 = {2E766D7031000000}\n\n\tcondition:\n\t\t$mz at 0 and $vmp0 in ( 0x100 .. 0x300 ) and $vmp1 in ( 0x100 .. 0x300 )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

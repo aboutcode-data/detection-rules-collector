@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_proc_wrong_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "vburov",
+                "date": "2019-02-23",
+                "title": "Windows Processes Suspicious Parent Directory",
+                "id": "96036718-71cc-4027-a538-d1587e0006a7"
+            },
+            "rule_text": "title: Windows Processes Suspicious Parent Directory\nid: 96036718-71cc-4027-a538-d1587e0006a7\nstatus: test\ndescription: Detect suspicious parent processes of well-known Windows processes\nreferences:\n- https://web.archive.org/web/20180718061628/https://securitybytes.io/blue-team-fundamentals-part-two-windows-processes-759fe15965e2\n- https://www.carbonblack.com/2014/06/10/screenshot-demo-hunt-evil-faster-than-ever-with-carbon-black/\n- https://www.13cubed.com/downloads/windows_process_genealogy_v2.pdf\nauthor: vburov\ndate: 2019-02-23\nmodified: 2025-03-06\ntags:\n- attack.stealth\n- attack.t1036.003\n- attack.t1036.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\svchost.exe\n    - \\taskhost.exe\n    - \\lsm.exe\n    - \\lsass.exe\n    - \\services.exe\n    - \\lsaiso.exe\n    - \\csrss.exe\n    - \\wininit.exe\n    - \\winlogon.exe\n  filter_sys:\n  - ParentImage|endswith:\n    - \\SavService.exe\n    - \\ngen.exe\n  - ParentImage|contains:\n    - \\System32\\\n    - \\SysWOW64\\\n  filter_msmpeng:\n    ParentImage|contains:\n    - \\Windows Defender\\\n    - \\Microsoft Security Client\\\n    ParentImage|endswith: \\MsMpEng.exe\n  filter_null:\n  - ParentImage: null\n  - ParentImage:\n    - ''\n    - '-'\n  condition: selection and not 1 of filter_*\nfalsepositives:\n- Some security products seem to spawn these\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

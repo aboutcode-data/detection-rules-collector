@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/linux/process_creation/proc_creation_lnx_susp_running_process_discovery.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Ömer Günal, oscd.community, CheraaghiMilad",
+                "date": "2020-10-06",
+                "title": "Process Discovery",
+                "id": "4e2f5868-08d4-413d-899f-dc2f1508627b"
+            },
+            "rule_text": "title: Process Discovery\nid: 4e2f5868-08d4-413d-899f-dc2f1508627b\nstatus: stable\ndescription: 'Detects process discovery commands. Adversaries may attempt to get information\n  about running processes on a system.\n\n  Information obtained could be used to gain an understanding of common software/applications\n  running on systems within the network\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1057/T1057.md\n- https://www.cyberciti.biz/faq/show-all-running-processes-in-linux/\nauthor: \"\\xD6mer G\\xFCnal, oscd.community, CheraaghiMilad\"\ndate: 2020-10-06\nmodified: 2022-07-07\ntags:\n- attack.discovery\n- attack.t1057\n- detection.threat-hunting\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection:\n    Image|endswith:\n    - /atop\n    - /htop\n    - /pgrep\n    - /ps\n    - /pstree\n    - /top\n  condition: selection\nfalsepositives:\n- Legitimate administration activities\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

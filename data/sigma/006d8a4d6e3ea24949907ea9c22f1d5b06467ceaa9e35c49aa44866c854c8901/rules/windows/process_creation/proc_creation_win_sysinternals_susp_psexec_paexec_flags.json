@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sysinternals_susp_psexec_paexec_flags.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2021-05-22",
+                "title": "Potential Privilege Escalation To LOCAL SYSTEM",
+                "id": "207b0396-3689-42d9-8399-4222658efc99"
+            },
+            "rule_text": "title: Potential Privilege Escalation To LOCAL SYSTEM\nid: 207b0396-3689-42d9-8399-4222658efc99\nrelated:\n- id: 8834e2f7-6b4b-4f09-8906-d2276470ee23\n  type: similar\nstatus: test\ndescription: Detects unknown program using commandline flags usually used by tools\n  such as PsExec and PAExec to start programs with SYSTEM Privileges\nreferences:\n- https://learn.microsoft.com/en-us/sysinternals/downloads/psexec\n- https://www.poweradmin.com/paexec/\n- https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)\ndate: 2021-05-22\nmodified: 2024-03-05\ntags:\n- attack.resource-development\n- attack.t1587.001\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    CommandLine|contains|windash:\n    - ' -s cmd'\n    - ' -s -i cmd'\n    - ' -i -s cmd'\n    - ' -s pwsh'\n    - ' -s -i pwsh'\n    - ' -i -s pwsh'\n    - ' -s powershell'\n    - ' -s -i powershell'\n    - ' -i -s powershell'\n  filter_main_exclude_coverage:\n    CommandLine|contains:\n    - paexec\n    - PsExec\n    - accepteula\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Weird admins that rename their tools\n- Software companies that bundle PsExec/PAExec with their software and rename it,\n  so that it is less embarrassing\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

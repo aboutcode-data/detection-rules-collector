@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_disable_security_tools.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Daniil Yugoslavskiy, oscd.community",
+                "date": "2020-10-19",
+                "title": "Disable Security Tools",
+                "id": "ff39f1a6-84ac-476f-a1af-37fcdf53d7c0"
+            },
+            "rule_text": "title: Disable Security Tools\nid: ff39f1a6-84ac-476f-a1af-37fcdf53d7c0\nstatus: test\ndescription: Detects disabling security tools\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md\nauthor: Daniil Yugoslavskiy, oscd.community\ndate: 2020-10-19\nmodified: 2021-11-27\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: process_creation\n  product: macos\ndetection:\n  launchctl_unload:\n    Image: /bin/launchctl\n    CommandLine|contains: unload\n  security_plists:\n    CommandLine|contains:\n    - com.objective-see.lulu.plist\n    - com.objective-see.blockblock.plist\n    - com.google.santad.plist\n    - com.carbonblack.defense.daemon.plist\n    - com.carbonblack.daemon.plist\n    - at.obdev.littlesnitchd.plist\n    - com.tenablesecurity.nessusagent.plist\n    - com.opendns.osx.RoamingClientConfigUpdater.plist\n    - com.crowdstrike.falcond.plist\n    - com.crowdstrike.userdaemon.plist\n    - osquery\n    - filebeat\n    - auditbeat\n    - packetbeat\n    - td-agent\n  disable_gatekeeper:\n    Image: /usr/sbin/spctl\n    CommandLine|contains: disable\n  condition: (launchctl_unload and security_plists) or disable_gatekeeper\nfalsepositives:\n- Legitimate activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

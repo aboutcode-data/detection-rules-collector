@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_msedge_proxy_download.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel",
+                "date": "2023-11-09",
+                "title": "Arbitrary File Download Via MSEDGE_PROXY.EXE",
+                "id": "e84d89c4-f544-41ca-a6af-4b92fd38b023"
+            },
+            "rule_text": "title: Arbitrary File Download Via MSEDGE_PROXY.EXE\nid: e84d89c4-f544-41ca-a6af-4b92fd38b023\nstatus: test\ndescription: Detects usage of \"msedge_proxy.exe\" to download arbitrary files\nreferences:\n- https://lolbas-project.github.io/lolbas/Binaries/msedge_proxy/\nauthor: Swachchhanda Shrawan Poudel\ndate: 2023-11-09\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\msedge_proxy.exe\n  - OriginalFileName: msedge_proxy.exe\n  selection_cli:\n    CommandLine|contains:\n    - http://\n    - https://\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

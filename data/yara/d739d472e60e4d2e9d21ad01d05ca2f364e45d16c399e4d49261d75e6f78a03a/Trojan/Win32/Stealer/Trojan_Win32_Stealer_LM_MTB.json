@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Trojan/Win32/Stealer/Trojan_Win32_Stealer_LM_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Trojan_Win32_Stealer_LM_MTB",
+                "tags": [],
+                "description": "Trojan:Win32/Stealer.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 "
+            },
+            "rule_text": "rule Trojan_Win32_Stealer_LM_MTB\n{\n\tmeta:\n\t\tdescription = \"Trojan:Win32/Stealer.LM!MTB,SIGNATURE_TYPE_PEHSTR_EXT,23 00 23 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {40 00 00 c0 20 20 20 20 20 20 20 20 00 ?? ?? 00 00 f0 05 00 00 02 00 00 00 d4 05 00 }\n\t\t$a_01_1 = {40 00 00 e0 2e 72 73 72 63 00 00 00 c0 02 00 00 00 d0 05 00 00 02 00 00 00 d0 05 00 }\n\t\t$a_01_2 = {40 00 00 c0 2e 69 64 61 74 61 20 20 00 10 00 00 00 e0 05 00 00 02 00 00 00 d2 05 00 00 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_01_1 & 1 ) * 20 + ( #a_01_2 & 1 ) * 5 ) >= 35\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

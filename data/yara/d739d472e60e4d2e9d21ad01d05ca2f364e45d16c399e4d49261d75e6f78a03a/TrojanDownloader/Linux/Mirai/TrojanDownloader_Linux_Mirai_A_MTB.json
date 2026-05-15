@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Linux/Mirai/TrojanDownloader_Linux_Mirai_A_MTB.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Linux_Mirai_A_MTB",
+                "tags": [],
+                "description": "TrojanDownloader:Linux/Mirai.A!MTB,SIGNATURE_TYPE_ELFHSTR_EXT,03 00 03 00 02 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Linux_Mirai_A_MTB\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Linux/Mirai.A!MTB,SIGNATURE_TYPE_ELFHSTR_EXT,03 00 03 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_00_0 = {4d 49 52 41 49 0a 00 00 }\n\t\t$a_02_1 = {4e 49 46 0a 00 00 00 00 47 45 54 20 2f 62 69 6e 73 2f 6d 69 72 61 69 2e [0-05] 20 48 54 54 50 2f 31 2e 30 0d 0a 0d 0a 00 00 00 00 46 49 4e 0a 00 }\n\n\tcondition:\n\t\t(( #a_00_0 & 1 ) * 1 + ( #a_02_1 & 1 ) * 2 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

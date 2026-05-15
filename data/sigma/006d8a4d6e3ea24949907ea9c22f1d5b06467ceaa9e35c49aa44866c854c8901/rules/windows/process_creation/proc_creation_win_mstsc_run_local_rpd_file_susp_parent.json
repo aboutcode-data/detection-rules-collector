@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_mstsc_run_local_rpd_file_susp_parent.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-04-18",
+                "title": "Mstsc.EXE Execution From Uncommon Parent",
+                "id": "ff3b6b39-e765-42f9-bb2c-ea6761e0e0f6"
+            },
+            "rule_text": "title: Mstsc.EXE Execution From Uncommon Parent\nid: ff3b6b39-e765-42f9-bb2c-ea6761e0e0f6\nstatus: test\ndescription: Detects potential RDP connection via Mstsc using a local \".rdp\" file\n  located in suspicious locations.\nreferences:\n- https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/\n- https://web.archive.org/web/20230726144748/https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-04-18\ntags:\n- attack.lateral-movement\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_parent:\n    ParentImage|endswith:\n    - \\brave.exe\n    - \\CCleanerBrowser.exe\n    - \\chrome.exe\n    - \\chromium.exe\n    - \\firefox.exe\n    - \\iexplore.exe\n    - \\microsoftedge.exe\n    - \\msedge.exe\n    - \\opera.exe\n    - \\vivaldi.exe\n    - \\whale.exe\n    - \\outlook.exe\n  selection_img:\n  - Image|endswith: \\mstsc.exe\n  - OriginalFileName: mstsc.exe\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

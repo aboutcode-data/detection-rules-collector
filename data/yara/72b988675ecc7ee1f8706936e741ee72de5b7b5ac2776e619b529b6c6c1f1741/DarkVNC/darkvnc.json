@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/DarkVNC/darkvnc.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "DarkVNC",
+                "tags": [],
+                "author": "RussianPanda",
+                "description": "Detects DarkVNC",
+                "date": "1/15/2024",
+                "hash": "3c74dccd06605bcf527ffc27b3122959"
+            },
+            "rule_text": "rule DarkVNC\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdescription = \"Detects DarkVNC\"\n\t\tdate = \"1/15/2024\"\n\t\thash = \"3c74dccd06605bcf527ffc27b3122959\"\n\n\tstrings:\n\t\t$s1 = {66 89 84 24 ?? 00 00 00 B8 ?? 00 00 00}\n\t\t$s2 = {66 31 14 41 48}\n\t\t$s3 = \"VncStopServer\"\n\t\t$s4 = \"VncStartServer\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and 3 of them and filesize < 700KB\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

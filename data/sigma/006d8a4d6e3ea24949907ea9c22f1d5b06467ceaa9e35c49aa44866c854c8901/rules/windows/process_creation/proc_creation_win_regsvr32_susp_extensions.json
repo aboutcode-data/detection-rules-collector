@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_regsvr32_susp_extensions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems), frack113",
+                "date": "2021-11-29",
+                "title": "Regsvr32 DLL Execution With Suspicious File Extension",
+                "id": "089fc3d2-71e8-4763-a8a5-c97fbb0a403e"
+            },
+            "rule_text": "title: Regsvr32 DLL Execution With Suspicious File Extension\nid: 089fc3d2-71e8-4763-a8a5-c97fbb0a403e\nrelated:\n- id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d\n  type: obsolete\nstatus: test\ndescription: Detects the execution of REGSVR32.exe with DLL files masquerading as\n  other files\nreferences:\n- https://thedfirreport.com/2021/11/29/continuing-the-bazar-ransomware-story/\n- https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html\n- https://guides.lib.umich.edu/c.php?g=282942&p=1885348\n- https://harfanglab.io/insidethelab/uac-0057-pressure-ukraine-poland/\nauthor: Florian Roth (Nextron Systems), frack113\ndate: 2021-11-29\nmodified: 2025-08-27\ntags:\n- attack.stealth\n- attack.t1218.010\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\regsvr32.exe\n  - OriginalFileName: REGSVR32.EXE\n  selection_cli:\n    CommandLine|endswith:\n    - .bin\n    - .bmp\n    - .cr2\n    - .dat\n    - .eps\n    - .gif\n    - .ico\n    - .jpeg\n    - .jpg\n    - .log\n    - .nef\n    - .orf\n    - .png\n    - .raw\n    - .rtf\n    - .sr2\n    - .temp\n    - .tif\n    - .tiff\n    - .tmp\n    - .txt\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

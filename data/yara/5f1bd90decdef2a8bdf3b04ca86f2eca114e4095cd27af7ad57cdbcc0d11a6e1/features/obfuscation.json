@@ -1,0 +1,19 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/obfuscation.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "obfuscation_singlebyte_mov",
+                "tags": [
+                    "feature",
+                    "obfuscation"
+                ],
+                "author": "Andreas Schuster",
+                "description": "Detects strings obfuscated by single-byte mov ex: mov [ebp+String+1], A",
+                "link": "https://insights.sei.cmu.edu/sei_blog/2012/11/writing-effective-yara-signatures-to-identify-malware.html"
+            },
+            "rule_text": "rule obfuscation_singlebyte_mov : feature obfuscation\n{\n\tmeta:\n\t\tauthor = \"Andreas Schuster\"\n\t\tdescription = \"Detects strings obfuscated by single-byte mov ex: mov [ebp+String+1], A\"\n\t\tlink = \"https://insights.sei.cmu.edu/sei_blog/2012/11/writing-effective-yara-signatures-to-identify-malware.html\"\n\n\tstrings:\n\t\t$singleb_mov = { c6 45 [2] c6 45 [2] c6 45 [2] c6 45}\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

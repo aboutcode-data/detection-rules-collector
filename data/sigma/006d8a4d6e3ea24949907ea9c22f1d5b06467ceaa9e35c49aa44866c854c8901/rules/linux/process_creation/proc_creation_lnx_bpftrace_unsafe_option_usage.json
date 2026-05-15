@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_bpftrace_unsafe_option_usage.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Andreas Hunkeler (@Karneades)",
+                "date": "2022-02-11",
+                "title": "BPFtrace Unsafe Option Usage",
+                "id": "f8341cb2-ee25-43fa-a975-d8a5a9714b39"
+            },
+            "rule_text": "title: BPFtrace Unsafe Option Usage\nid: f8341cb2-ee25-43fa-a975-d8a5a9714b39\nstatus: test\ndescription: Detects the usage of the unsafe bpftrace option\nreferences:\n- https://embracethered.com/blog/posts/2021/offensive-bpf-bpftrace/\n- https://bpftrace.org/\nauthor: Andreas Hunkeler (@Karneades)\ndate: 2022-02-11\ntags:\n- attack.execution\n- attack.t1059.004\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|endswith: bpftrace\n    CommandLine|contains: --unsafe\n  condition: selection\nfalsepositives:\n- Legitimate usage of the unsafe option\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

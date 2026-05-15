@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_impacket_lateral_movement.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "stable",
+                "author": "Ecco, oscd.community, Jonhnathan Ribeiro, Tim Rauch",
+                "date": "2019-09-03",
+                "title": "HackTool - Potential Impacket Lateral Movement Activity",
+                "id": "10c14723-61c7-4c75-92ca-9af245723ad2"
+            },
+            "rule_text": "title: HackTool - Potential Impacket Lateral Movement Activity\nid: 10c14723-61c7-4c75-92ca-9af245723ad2\nrelated:\n- id: e31f89f7-36fb-4697-8ab6-48823708353b\n  type: obsolete\nstatus: stable\ndescription: Detects wmiexec/dcomexec/atexec/smbexec from Impacket framework\nreferences:\n- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/wmiexec.py\n- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/atexec.py\n- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/smbexec.py\n- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/dcomexec.py\n- https://www.elastic.co/guide/en/security/current/suspicious-cmd-execution-via-wmi.html\nauthor: Ecco, oscd.community, Jonhnathan Ribeiro, Tim Rauch\ndate: 2019-09-03\nmodified: 2023-02-21\ntags:\n- attack.execution\n- attack.t1047\n- attack.lateral-movement\n- attack.t1021.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_other:\n    ParentImage|endswith:\n    - \\wmiprvse.exe\n    - \\mmc.exe\n    - \\explorer.exe\n    - \\services.exe\n    CommandLine|contains|all:\n    - cmd.exe\n    - /Q\n    - /c\n    - \\\\\\\\127.0.0.1\\\\\n    - '&1'\n  selection_atexec:\n    ParentCommandLine|contains:\n    - svchost.exe -k netsvcs\n    - taskeng.exe\n    CommandLine|contains|all:\n    - cmd.exe\n    - /C\n    - Windows\\Temp\\\n    - '&1'\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/US CERT/APT10 Redleaves loader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "REDLEAVES_DroppedFile_ImplantLoader_Starburn",
+                "tags": [],
+                "description": "Detect the DLL responsible for loading and deobfuscating the DAT file containing shellcode and core REDLEAVES RAT",
+                "author": "USG",
+                "true_positive": "7f8a867a8302fe58039a6db254d335ae",
+                "reference": "https://www.us-cert.gov/ncas/alerts/TA17-117A"
+            },
+            "rule_text": "rule REDLEAVES_DroppedFile_ImplantLoader_Starburn\n{\n\tmeta:\n\t\tdescription = \"Detect the DLL responsible for loading and deobfuscating the DAT file containing shellcode and core REDLEAVES RAT\"\n\t\tauthor = \"USG\"\n\t\ttrue_positive = \"7f8a867a8302fe58039a6db254d335ae\"\n\t\treference = \"https://www.us-cert.gov/ncas/alerts/TA17-117A\"\n\n\tstrings:\n\t\t$XOR_Loop = {32 0c 3a 83 c2 02 88 0e 83 fa 08 [4-14] 32 0c 3a 83 c2 02 88 0e 83 fa 10}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

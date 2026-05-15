@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_RedCanary_ThreatDetectionReport/schtasks_network_connections.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/04",
+                "title": "Windows Scheduled Task Making Suspicious Network Connection",
+                "id": "4a224230-746d-436b-b569-59f2d6809d6b"
+            },
+            "rule_text": "title: Windows Scheduled Task Making Suspicious Network Connection\nid: 4a224230-746d-436b-b569-59f2d6809d6b\nstatus: experimental\ndescription: Detects scheduled tasks created to reach out to external domains and\n  download arbitrary binaries on a set or recurring schedule. Inspired by the 2022\n  Red Canary Threat Detection report.\nreferences:\n- https://redcanary.com/threat-detection-report/techniques/scheduled-task/\nauthor: Micah Babinski\ndate: 2022/11/04\ntags:\n- attack.persistence\n- attack.execution\n- attack.t1053\n- attack.t1053.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|windash: /create\n    CommandLine|contains:\n    - https://\n    - http://\n    - ftp://\n  condition: selection\nfalsepositives:\n- Creation of legitimate scheduled tasks which need to access external sites.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

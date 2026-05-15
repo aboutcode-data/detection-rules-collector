@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/builtin/lnx_buffer_overflows.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-01",
+                "title": "Buffer Overflow Attempts",
+                "id": "18b042f0-2ecd-4b6e-9f8d-aa7a7e7de781"
+            },
+            "rule_text": "title: Buffer Overflow Attempts\nid: 18b042f0-2ecd-4b6e-9f8d-aa7a7e7de781\nstatus: test\ndescription: Detects buffer overflow attempts in Unix system log files\nreferences:\n- https://github.com/ossec/ossec-hids/blob/1ecffb1b884607cb12e619f9ab3c04f530801083/etc/rules/attack_rules.xml\n- https://docs.oracle.com/cd/E19683-01/816-4883/6mb2joatd/index.html\n- https://www.giac.org/paper/gcih/266/review-ftp-protocol-cyber-defense-initiative/102802\n- https://blu.org/mhonarc/discuss/2001/04/msg00285.php\n- https://rapid7.com/blog/post/2019/02/19/stack-based-buffer-overflow-attacks-what-you-need-to-know/\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-01\nmodified: 2025-03-17\ntags:\n- attack.t1068\n- attack.privilege-escalation\nlogsource:\n  product: linux\ndetection:\n  keywords:\n  - attempt to execute code on stack by\n  - 0bin0sh1\n  - AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n  - stack smashing detected\n  condition: keywords\nfalsepositives:\n- Base64 encoded data in log entries\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

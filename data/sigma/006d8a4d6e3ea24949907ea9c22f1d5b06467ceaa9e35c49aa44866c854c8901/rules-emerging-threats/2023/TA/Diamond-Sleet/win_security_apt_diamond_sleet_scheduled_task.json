@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2023/TA/Diamond-Sleet/win_security_apt_diamond_sleet_scheduled_task.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-10-24",
+                "title": "Diamond Sleet APT Scheduled Task Creation",
+                "id": "3b8e5084-4de9-449a-a40d-0e11014f2e2d"
+            },
+            "rule_text": "title: Diamond Sleet APT Scheduled Task Creation\nid: 3b8e5084-4de9-449a-a40d-0e11014f2e2d\nstatus: test\ndescription: 'Detects registry event related to the creation of a scheduled task used\n  by Diamond Sleet APT during exploitation of Team City CVE-2023-42793 vulnerability\n\n  '\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2023/10/18/multiple-north-korean-threat-actors-exploiting-the-teamcity-cve-2023-42793-vulnerability/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-10-24\ntags:\n- attack.execution\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1053.005\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: security\n  definition: The Advanced Audit Policy setting Object Access > Audit Other Object\n    Access Events has to be configured to allow this detection. We also recommend\n    extracting the Command field from the embedded XML in the event data.\ndetection:\n  selection:\n    EventID: 4698\n    TaskName: \\Windows TeamCity Settings User Interface\n    TaskContent|contains: uTYNkfKxHiZrx3KJ\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: critical\n",
+            "vulnerabilities": [
+                "CVE-2023-42793"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_possible_dc_shadow.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Ilyas Ochkov, oscd.community, Chakib Gzenayi (@Chak092), Hosni Mribah",
+                "date": "2019-10-25",
+                "title": "Possible DC Shadow Attack",
+                "id": "32e19d25-4aed-4860-a55a-be99cb0bf7ed"
+            },
+            "rule_text": "title: Possible DC Shadow Attack\nid: 32e19d25-4aed-4860-a55a-be99cb0bf7ed\nrelated:\n- id: 611eab06-a145-4dfa-a295-3ccc5c20f59a\n  type: derived\nstatus: test\ndescription: Detects DCShadow via create new SPN\nreferences:\n- https://twitter.com/gentilkiwi/status/1003236624925413376\n- https://gist.github.com/gentilkiwi/dcc132457408cf11ad2061340dcb53c2\n- https://web.archive.org/web/20180203014709/https://blog.alsid.eu/dcshadow-explained-4510f52fc19d?gi=c426ac876c48\nauthor: Ilyas Ochkov, oscd.community, Chakib Gzenayi (@Chak092), Hosni Mribah\ndate: 2019-10-25\nmodified: 2022-10-17\ntags:\n- attack.credential-access\n- attack.defense-impairment\n- attack.t1207\nlogsource:\n  product: windows\n  service: security\n  definition: The \"Audit Directory Service Changes\" logging policy must be configured\n    in order to receive events. Audit events are generated only for objects with configured\n    system access control lists (SACLs). Audit events are generated only for objects\n    with configured system access control lists (SACLs) and only when accessed in\n    a manner that matches their SACL settings. This policy covers the following events\n    ids - 5136, 5137, 5138, 5139, 5141. Note that the default policy does not cover\n    User objects. For that a custom AuditRule need to be setup (See https://github.com/OTRF/Set-AuditRule)\ndetection:\n  selection1:\n    EventID: 4742\n    ServicePrincipalNames|contains: GC/\n  selection2:\n    EventID: 5136\n    AttributeLDAPDisplayName: servicePrincipalName\n    AttributeValue|startswith: GC/\n  condition: 1 of selection*\nfalsepositives:\n- Valid on domain controllers; exclude known DCs\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

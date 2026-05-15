@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_net_stop_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-05",
+                "title": "Stop Windows Service Via Net.EXE",
+                "id": "88872991-7445-4a22-90b2-a3adadb0e827"
+            },
+            "rule_text": "title: Stop Windows Service Via Net.EXE\nid: 88872991-7445-4a22-90b2-a3adadb0e827\nrelated:\n- id: eb87818d-db5d-49cc-a987-d5da331fbd90\n  type: obsolete\nstatus: test\ndescription: Detects the stopping of a Windows service via the \"net\" utility.\nreferences:\n- https://ss64.com/nt/net-service.html\nauthor: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-05\ntags:\n- attack.impact\n- attack.t1489\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - OriginalFileName:\n    - net.exe\n    - net1.exe\n  - Image|endswith:\n    - \\net.exe\n    - \\net1.exe\n  selection_cli:\n    CommandLine|contains: ' stop '\n  condition: all of selection_*\nfalsepositives:\n- There are many legitimate reasons to stop a service. This rule isn't looking for\n  any suspicious behaviour in particular. Filter legitimate activity accordingly\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

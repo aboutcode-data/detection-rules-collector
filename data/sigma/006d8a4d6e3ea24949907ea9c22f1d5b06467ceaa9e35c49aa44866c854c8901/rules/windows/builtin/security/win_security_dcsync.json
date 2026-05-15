@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_dcsync.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Benjamin Delpy, Florian Roth (Nextron Systems), Scott Dermott, Sorina Ionescu",
+                "date": "2018-06-03",
+                "title": "Mimikatz DC Sync",
+                "id": "611eab06-a145-4dfa-a295-3ccc5c20f59a"
+            },
+            "rule_text": "title: Mimikatz DC Sync\nid: 611eab06-a145-4dfa-a295-3ccc5c20f59a\nstatus: test\ndescription: Detects Mimikatz DC sync security events\nreferences:\n- https://twitter.com/gentilkiwi/status/1003236624925413376\n- https://gist.github.com/gentilkiwi/dcc132457408cf11ad2061340dcb53c2\n- https://blog.blacklanternsecurity.com/p/detecting-dcsync?s=r\n- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4662\nauthor: Benjamin Delpy, Florian Roth (Nextron Systems), Scott Dermott, Sorina Ionescu\ndate: 2018-06-03\nmodified: 2022-04-26\ntags:\n- attack.credential-access\n- attack.s0002\n- attack.t1003.006\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4662\n    Properties|contains:\n    - Replicating Directory Changes All\n    - 1131f6ad-9c07-11d1-f79f-00c04fc2dcd2\n    - 1131f6aa-9c07-11d1-f79f-00c04fc2dcd2\n    - 9923a32a-3607-11d2-b9be-0000f87a36b2\n    - 89e95b76-444d-4c62-991a-0facbeda640c\n    AccessMask: '0x100'\n  filter1:\n    SubjectDomainName: Window Manager\n  filter2:\n    SubjectUserName|startswith:\n    - NT AUT\n    - MSOL_\n  filter3:\n    SubjectUserName|endswith: $\n  condition: selection and not 1 of filter*\nfalsepositives:\n- Valid DC Sync that is not covered by the filters; please report\n- Local Domain Admin account used for Azure AD Connect\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

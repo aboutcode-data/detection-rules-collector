@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Hacktool_COFFLoader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Hacktool_COFFLoader_81ba13b8",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "81ba13b8-8994-4fe9-98e5-44514c554e8b",
+                "fingerprint": "ef9f11d9cd6c3b46f7d13ea039dcad6fa24515495466b1102ec8c1c8bed8853e",
+                "creation_date": "2024-04-22",
+                "last_modified": "2024-05-08",
+                "threat_name": "Windows.Hacktool.COFFLoader",
+                "reference_sample": "c2e03659eb1594dc958e01344cfa9ba126d66736b089db5e3dd1b1c3e3e7d2f7",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Hacktool_COFFLoader_81ba13b8\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"81ba13b8-8994-4fe9-98e5-44514c554e8b\"\n\t\tfingerprint = \"ef9f11d9cd6c3b46f7d13ea039dcad6fa24515495466b1102ec8c1c8bed8853e\"\n\t\tcreation_date = \"2024-04-22\"\n\t\tlast_modified = \"2024-05-08\"\n\t\tthreat_name = \"Windows.Hacktool.COFFLoader\"\n\t\treference_sample = \"c2e03659eb1594dc958e01344cfa9ba126d66736b089db5e3dd1b1c3e3e7d2f7\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$a1 = \"BeaconDataParse\" ascii fullword\n\t\t$a2 = \"BeaconDataInt\" ascii fullword\n\t\t$a3 = \"BeaconDataShort\" ascii fullword\n\t\t$a4 = \"BeaconDataLength\" ascii fullword\n\t\t$a5 = \"BeaconDataExtract\" ascii fullword\n\t\t$a6 = \"BeaconFormatAlloc\" ascii fullword\n\t\t$a7 = \"BeaconFormatReset\" ascii fullword\n\t\t$a8 = \"BeaconFormatFree\" ascii fullword\n\t\t$a9 = \"BeaconFormatAppend\" ascii fullword\n\t\t$a10 = \"BeaconFormatPrintf\" ascii fullword\n\t\t$a11 = \"BeaconFormatToString\" ascii fullword\n\t\t$a12 = \"BeaconFormatInt\" ascii fullword\n\t\t$a13 = \"BeaconPrintf\" ascii fullword\n\t\t$a14 = \"BeaconOutput\" ascii fullword\n\t\t$a15 = \"BeaconUseToken\" ascii fullword\n\t\t$a16 = \"BeaconRevertToken\" ascii fullword\n\t\t$a17 = \"BeaconDataParse\" ascii fullword\n\t\t$a18 = \"BeaconIsAdmin\" ascii fullword\n\t\t$a19 = \"BeaconGetSpawnTo\" ascii fullword\n\t\t$a20 = \"BeaconSpawnTemporaryProcess\" ascii fullword\n\t\t$a21 = \"BeaconInjectProcess\" ascii fullword\n\t\t$a22 = \"BeaconInjectTemporaryProcess\" ascii fullword\n\t\t$a23 = \"BeaconCleanupProcess\" ascii fullword\n\t\t$b1 = \"COFFLoader.x64.dll\"\n\t\t$b2 = \"COFFLoader.x86.dll\"\n\n\tcondition:\n\t\t5 of ( $a* ) or 1 of ( $b* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

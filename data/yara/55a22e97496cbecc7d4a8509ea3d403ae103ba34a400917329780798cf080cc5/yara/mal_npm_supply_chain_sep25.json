@@ -1,0 +1,34 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/mal_npm_supply_chain_sep25.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_JS_NPM_SupplyChain_Attack_Sep25",
+                "tags": [],
+                "description": "Detects obfuscated JavaScript in NPM packages used in supply chain crypto stealer attacks in September 2025",
+                "author": "Florian Roth",
+                "reference": "https://www.linkedin.com/feed/update/urn:li:activity:7370889385992437760/",
+                "date": "2025-09-09",
+                "modified": "2025-11-29",
+                "score": 85,
+                "hash1": "16f6c756bc8ce5ef5d9aa1ded0f811ec0c9cee3d8f85cc151b8ca1df7b8a4337"
+            },
+            "rule_text": "rule MAL_JS_NPM_SupplyChain_Attack_Sep25\n{\n\tmeta:\n\t\tdescription = \"Detects obfuscated JavaScript in NPM packages used in supply chain crypto stealer attacks in September 2025\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://www.linkedin.com/feed/update/urn:li:activity:7370889385992437760/\"\n\t\tdate = \"2025-09-09\"\n\t\tmodified = \"2025-11-29\"\n\t\tscore = 85\n\t\thash1 = \"16f6c756bc8ce5ef5d9aa1ded0f811ec0c9cee3d8f85cc151b8ca1df7b8a4337\"\n\n\tstrings:\n\t\t$x1 = \"const _0x112fa8=_0x180f;(function(_0x13c8b9\" ascii\n\t\t$fp1 = \"<html\"\n\t\t$fp2 = \"<xml \"\n\t\t$fp3 = \"<?xml\"\n\n\tcondition:\n\t\tfilesize < 200KB and 1 of ( $x* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "MAL_JS_NPM_SupplyChain_Compromise_Sep25",
+                "tags": [],
+                "description": "Detects a supply chain compromise in NPM packages (TinyColor, CrowdStrike etc.)",
+                "author": "Florian Roth",
+                "reference": "https://socket.dev/blog/tinycolor-supply-chain-attack-affects-40-packages",
+                "date": "2025-09-16",
+                "modified": "2025-09-17",
+                "score": 80
+            },
+            "rule_text": "rule MAL_JS_NPM_SupplyChain_Compromise_Sep25\n{\n\tmeta:\n\t\tdescription = \"Detects a supply chain compromise in NPM packages (TinyColor, CrowdStrike etc.)\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://socket.dev/blog/tinycolor-supply-chain-attack-affects-40-packages\"\n\t\tdate = \"2025-09-16\"\n\t\tmodified = \"2025-09-17\"\n\t\tscore = 80\n\n\tstrings:\n\t\t$x1 = \"if (plat === \\\"linux\\\") return \\\"https://github.com/trufflesecurity/trufflehog/releases\"\n\t\t$sa1 = \"curl -d \\\"$CONTENTS\\\" https://webhook.site/\" ascii\n\t\t$sa2 = \"curl -s -X POST -d \\\"$CONTENTS\\\" \\\"https://webhook.site/\"\n\t\t$sb1 = \" | base64 -w 0 | \" ascii\n\t\t$sb2 = \" | base64 -w0)\"\n\n\tcondition:\n\t\tfilesize < 20MB and ( 1 of ( $x* ) or ( 1 of ( $sa* ) and 1 of ( $sb* ) ) ) and not uint8( 0 ) == 0x7b\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

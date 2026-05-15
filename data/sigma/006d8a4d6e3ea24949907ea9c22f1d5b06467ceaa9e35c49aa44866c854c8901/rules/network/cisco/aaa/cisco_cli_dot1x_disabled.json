@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/cisco/aaa/cisco_cli_dot1x_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Luc Génaux",
+                "date": "2026-04-28",
+                "title": "Cisco Dot1x Disabled",
+                "id": "ef0ff092-a24a-4fbc-beea-06c08d53e085"
+            },
+            "rule_text": "title: Cisco Dot1x Disabled\nid: ef0ff092-a24a-4fbc-beea-06c08d53e085\nstatus: experimental\ndescription: 'Detects the manual disablement of IEEE 802.1X (dot1x) on a Cisco network\n  device interface.\n\n  Disabling dot1x bypasses Network Access Control (NAC) mechanisms, potentially allowing\n  unauthorized devices to gain access to the internal network.\n\n  This activity is a common technique used by attackers or malicious insiders to establish\n  persistence or perform lateral movement via rogue devices.\n\n  '\nreferences:\n- https://www.cisco.com/en/US/docs/ios-xml/ios/san/command/san-xe-3se-3850-cr-book_chapter_00.html#wp3394428680\n- https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/security/a1/sec-a1-xe-3se-3850-cr-book/sec-a1-xe-3se-3850-cr-book_chapter_010.html#wp3502072400\n- https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst2960/software/release/12-2_53_se/command/reference/2960ComRef/cli1.html#47220\nauthor: \"Luc G\\xE9naux\"\ndate: 2026-04-28\ntags:\n- attack.persistence\n- attack.credential-access\n- attack.defense-impairment\n- attack.t1685\n- attack.t1556.004\nlogsource:\n  product: cisco\n  service: aaa\ndetection:\n  keywords:\n  - access-session port-control force-authorized\n  - authentication port-control force-authorized\n  - dot1x port-control force-authorized\n  - no access-session port-control\n  - no authentication port-control\n  - no dot1x port-control\n  - no dot1x system-auth-control\n  condition: keywords\nfalsepositives:\n- Administrator troubleshooting connectivity issues\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

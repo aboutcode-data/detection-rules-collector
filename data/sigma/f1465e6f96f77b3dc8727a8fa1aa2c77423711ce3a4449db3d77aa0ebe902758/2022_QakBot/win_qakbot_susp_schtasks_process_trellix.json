@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_QakBot/win_qakbot_susp_schtasks_process_trellix.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/19",
+                "title": "Suspicious Schtasks Child Process",
+                "id": "6470cbb3-a339-40dd-8d0e-250013b86828"
+            },
+            "rule_text": "title: Suspicious Schtasks Child Process\nid: 6470cbb3-a339-40dd-8d0e-250013b86828\nstatus: experimental\ndescription: Detects schtasks being run as a child process of explorer.exe to create\n  a schedule task.\nreferences:\n- https://www.trellix.com/en-us/about/newsroom/stories/research/demystifying-qbot-malware.html\nauthor: Micah Babinski\ndate: 2022/11/19\ntags:\n- attack.persistence\n- attack.t1053\n- attack.t1053.005\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage|endswith: \\explorer.exe\n    Image|endswith: \\schtasks.exe\n    CommandLine|contains|windash:\n    - /create\n    - /ru\n    - /sc once\n    - powershell\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

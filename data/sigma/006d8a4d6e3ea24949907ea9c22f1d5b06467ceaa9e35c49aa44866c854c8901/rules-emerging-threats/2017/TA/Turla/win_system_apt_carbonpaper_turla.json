@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-emerging-threats/2017/TA/Turla/win_system_apt_carbonpaper_turla.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2017-03-31",
+                "title": "Turla Service Install",
+                "id": "1df8b3da-b0ac-4d8a-b7c7-6cb7c24160e4"
+            },
+            "rule_text": "title: Turla Service Install\nid: 1df8b3da-b0ac-4d8a-b7c7-6cb7c24160e4\nstatus: test\ndescription: This method detects a service install of malicious services mentioned\n  in Carbon Paper - Turla report by ESET\nreferences:\n- https://www.welivesecurity.com/2017/03/30/carbon-paper-peering-turlas-second-stage-backdoor/\nauthor: Florian Roth (Nextron Systems)\ndate: 2017-03-31\nmodified: 2021-11-30\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.g0010\n- attack.t1543.003\n- detection.emerging-threats\nlogsource:\n  product: windows\n  service: system\ndetection:\n  selection:\n    Provider_Name: Service Control Manager\n    EventID: 7045\n    ServiceName:\n    - srservice\n    - ipvpn\n    - hkmsvc\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

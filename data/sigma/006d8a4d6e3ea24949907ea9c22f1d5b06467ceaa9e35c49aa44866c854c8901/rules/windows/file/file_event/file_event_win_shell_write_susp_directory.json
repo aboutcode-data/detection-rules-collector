@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_shell_write_susp_directory.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Florian Roth (Nextron Systems)",
+                "date": "2021-11-20",
+                "title": "Windows Shell/Scripting Application File Write to Suspicious Folder",
+                "id": "1277f594-a7d1-4f28-a2d3-73af5cbeab43"
+            },
+            "rule_text": "title: Windows Shell/Scripting Application File Write to Suspicious Folder\nid: 1277f594-a7d1-4f28-a2d3-73af5cbeab43\nstatus: test\ndescription: Detects Windows shells and scripting applications that write files to\n  suspicious folders\nreferences:\n- Internal Research\nauthor: Florian Roth (Nextron Systems)\ndate: 2021-11-20\nmodified: 2023-03-29\ntags:\n- attack.execution\n- attack.t1059\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_1:\n    Image|endswith:\n    - \\bash.exe\n    - \\cmd.exe\n    - \\cscript.exe\n    - \\msbuild.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\sh.exe\n    - \\wscript.exe\n    TargetFilename|startswith:\n    - C:\\PerfLogs\\\n    - C:\\Users\\Public\\\n  selection_2:\n    Image|endswith:\n    - \\certutil.exe\n    - \\forfiles.exe\n    - \\mshta.exe\n    - \\schtasks.exe\n    - \\scriptrunner.exe\n    - \\wmic.exe\n    TargetFilename|contains:\n    - C:\\PerfLogs\\\n    - C:\\Users\\Public\\\n    - C:\\Windows\\Temp\\\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

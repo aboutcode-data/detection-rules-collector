@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Renos/TrojanDownloader_Win32_Renos_FW.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Renos_FW",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Renos.FW,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Renos_FW\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Renos.FW,SIGNATURE_TYPE_PEHSTR_EXT,03 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6a 02 56 6a fc 0f 95 c1 57 88 0d ?? ?? ?? ?? ff 15 }\n\t\t$a_01_1 = {35 23 01 ef cd 50 ff 15 }\n\t\t$a_03_2 = {85 c0 74 19 8b 45 fc c7 05 ?? ?? ?? ?? 00 00 0e d7 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

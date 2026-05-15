@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/JPCERTCC/jpcert-yara/blob/master/other/adminer.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "webshell_adminer_4_7",
+                "tags": [],
+                "description": "Webshell Adminer4.7",
+                "author": "JPCERT/CC Incident Response Group",
+                "hash": "7897ac51d8e50c550acae4204d0139cb2a5d0b6c11ca506978b237f8fe540fd1"
+            },
+            "rule_text": "rule webshell_adminer_4_7\n{\n\tmeta:\n\t\tdescription = \"Webshell Adminer4.7\"\n\t\tauthor = \"JPCERT/CC Incident Response Group\"\n\t\thash = \"7897ac51d8e50c550acae4204d0139cb2a5d0b6c11ca506978b237f8fe540fd1\"\n\n\tstrings:\n\t\t$str1 = \"bruteForceKey()\"\n\t\t$str2 = \"https://www.adminer.org/\"\n\t\t$str3 = \"$_COOKIE[\\\"adminer_permanent\\\"]\"\n\t\t$str4 = \"process_list()\"\n\t\t$str5 = \"routine_languages()\"\n\t\t$str6 = \"$_COOKIE[\\\"adminer_key\\\"]\"\n\t\t$str7 = \"lzw_decompress($\"\n\t\t$str8 = \"preg_match('~^(database|table|columns|sql|indexes|\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x68703F3C and 5 of ( $str* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

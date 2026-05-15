@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_remove_package.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Tuan Le (NCSGroup), Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2023-03-09",
+                "title": "Linux Package Uninstall",
+                "id": "95d61234-7f56-465c-6f2d-b562c6fedbc4"
+            },
+            "rule_text": "title: Linux Package Uninstall\nid: 95d61234-7f56-465c-6f2d-b562c6fedbc4\nstatus: test\ndescription: Detects linux package removal using builtin tools such as \"yum\", \"apt\",\n  \"apt-get\" or \"dpkg\".\nreferences:\n- https://sysdig.com/blog/mitre-defense-evasion-falco\n- https://www.tutorialspoint.com/how-to-install-a-software-on-linux-using-yum-command\n- https://linuxhint.com/uninstall_yum_package/\n- https://linuxhint.com/uninstall-debian-packages/\nauthor: Tuan Le (NCSGroup), Nasreddine Bencherchali (Nextron Systems)\ndate: 2023-03-09\ntags:\n- attack.stealth\n- attack.t1070\nlogsource:\n  product: linux\n  category: process_creation\ndetection:\n  selection_yum:\n    Image|endswith: /yum\n    CommandLine|contains:\n    - erase\n    - remove\n  selection_apt:\n    Image|endswith:\n    - /apt\n    - /apt-get\n    CommandLine|contains:\n    - remove\n    - purge\n  selection_dpkg:\n    Image|endswith: /dpkg\n    CommandLine|contains:\n    - '--remove '\n    - ' -r '\n  selection_rpm:\n    Image|endswith: /rpm\n    CommandLine|contains: ' -e '\n  condition: 1 of selection_*\nfalsepositives:\n- Administrator or administrator scripts might delete packages for several reasons\n  (debugging, troubleshooting).\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}

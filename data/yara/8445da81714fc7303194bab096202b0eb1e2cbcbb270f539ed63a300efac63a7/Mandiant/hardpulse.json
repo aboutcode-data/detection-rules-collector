@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Mandiant/hardpulse.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "FE_APT_Webshell_PL_HARDPULSE",
+                "tags": [],
+                "author": "Mandiant",
+                "date_created": "2021-04-16",
+                "md5": "980cba9e82faf194edb6f3cc20dc73ff",
+                "reference_url": "https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html"
+            },
+            "rule_text": "rule FE_APT_Webshell_PL_HARDPULSE\n{\n\tmeta:\n\t\tauthor = \"Mandiant\"\n\t\tdate_created = \"2021-04-16\"\n\t\tmd5 = \"980cba9e82faf194edb6f3cc20dc73ff\"\n\t\treference_url = \"https://www.fireeye.com/blog/threat-research/2021/04/suspected-apt-actors-leverage-bypass-techniques-pulse-secure-zero-day.html\"\n\n\tstrings:\n\t\t$r1 = /if[\\x09\\x20]{0,32}\\(\\$\\w{1,64}[\\x09\\x20]{1,32}eq[\\x09\\x20]{1,32}[\\x22\\x27]\\w{1,64}[\\x22\\x27]\\)\\s{0,128}\\{\\s{1,128}my[\\x09\\x20]{1,32}\\$\\w{1,64}[\\x09\\x20]{0,32}\\x3b\\s{1,128}unless[\\x09\\x20]{0,32}\\(open\\(\\$\\w{1,64},[\\x09\\x20]{0,32}\\$\\w{1,64}\\)\\)\\s{0,128}\\{\\s{1,128}goto[\\x09\\x20]{1,32}\\w{1,64}[\\x09\\x20]{0,32}\\x3b\\s{1,128}return[\\x09\\x20]{1,32}0[\\x09\\x20]{0,32}\\x3b\\s{0,128}\\}/\n\t\t$r2 = /open[\\x09\\x20]{0,32}\\(\\*\\w{1,64}[\\x09\\x20]{0,32},[\\x09\\x20]{0,32}[\\x22\\x27]>/\n\t\t$r3 = /if[\\x09\\x20]{0,32}\\(\\$\\w{1,64}[\\x09\\x20]{1,32}eq[\\x09\\x20]{1,32}[\\x22\\x27]\\w{1,64}[\\x22\\x27]\\)\\s{0,128}\\{\\s{1,128}print[\\x09\\x20]{0,32}[\\x22\\x27]Content-type/\n\t\t$s1 = \"CGI::request_method()\"\n\t\t$s2 = \"CGI::param(\"\n\t\t$s3 = \"syswrite(\"\n\t\t$s4 = \"print $_\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

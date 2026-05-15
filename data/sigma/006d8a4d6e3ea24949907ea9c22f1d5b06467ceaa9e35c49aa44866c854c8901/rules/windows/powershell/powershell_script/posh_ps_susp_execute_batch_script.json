@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_susp_execute_batch_script.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "frack113",
+                "date": "2022-01-02",
+                "title": "Powershell Execute Batch Script",
+                "id": "b5522a23-82da-44e5-9c8b-e10ed8955f88"
+            },
+            "rule_text": "title: Powershell Execute Batch Script\nid: b5522a23-82da-44e5-9c8b-e10ed8955f88\nstatus: test\ndescription: 'Adversaries may abuse the Windows command shell for execution.\n\n  The Windows command shell ([cmd](https://attack.mitre.org/software/S0106)) is the\n  primary command prompt on Windows systems.\n\n  The Windows command prompt can be used to control almost any aspect of a system,\n  with various permission levels required for different subsets of commands.\n\n  Batch files (ex: .bat or .cmd) also provide the shell with a list of sequential\n  commands to run, as well as normal scripting operations such as conditionals and\n  loops.\n\n  Common uses of batch files include long or repetitive tasks, or the need to run\n  the same set of commands on multiple system\n\n  '\nreferences:\n- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.003/T1059.003.md#atomic-test-1---create-and-execute-batch-script\nauthor: frack113\ndate: 2022-01-02\ntags:\n- attack.execution\n- attack.t1059.003\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_start:\n    ScriptBlockText|contains: Start-Process\n  selection_batch:\n    ScriptBlockText|contains:\n    - .cmd\n    - .bat\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administration script\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_netsupport_rat.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-09-19",
+                "title": "Renamed NetSupport RAT Execution",
+                "id": "0afbd410-de03-4078-8491-f132303cb67d"
+            },
+            "rule_text": "title: Renamed NetSupport RAT Execution\nid: 0afbd410-de03-4078-8491-f132303cb67d\nstatus: test\ndescription: Detects the execution of a renamed \"client32.exe\" (NetSupport RAT) via\n  Imphash, Product and OriginalFileName strings\nreferences:\n- https://redcanary.com/blog/misbehaving-rats/\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-09-19\nmodified: 2024-11-23\ntags:\n- attack.stealth\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n  - Product|contains: NetSupport Remote Control\n  - OriginalFileName|contains: client32.exe\n  - Hashes|contains: IMPHASH=A9D50692E95B79723F3E76FCF70D023E\n  filter:\n    Image|endswith: \\client32.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

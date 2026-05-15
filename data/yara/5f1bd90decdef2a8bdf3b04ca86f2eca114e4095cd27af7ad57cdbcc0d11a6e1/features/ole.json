@@ -1,0 +1,52 @@
+{
+    "source_url": "https://github.com/h3x2b/yara-rules/blob/master/features/ole.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "ole_object",
+                "tags": [
+                    "info",
+                    "ole",
+                    "windows"
+                ],
+                "description": "Detect OLE (Object Linking and Embedding)"
+            },
+            "rule_text": "rule ole_object : info ole windows\n{\n\tmeta:\n\t\tdescription = \"Detect OLE (Object Linking and Embedding)\"\n\n\tcondition:\n\t\tuint32be( 0 ) == 0xd0cf11e0 and uint32be( 4 ) == 0xa1b11ae1\n}\n",
+            "vulnerabilities": [
+                "CVE-2017-11882"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "embedded_ole_object",
+                "tags": [
+                    "info",
+                    "embedded",
+                    "ole",
+                    "windows"
+                ],
+                "description": "Detect embedded OLE (Object Linking and Embedding)"
+            },
+            "rule_text": "rule embedded_ole_object : info embedded ole windows\n{\n\tmeta:\n\t\tdescription = \"Detect embedded OLE (Object Linking and Embedding)\"\n\n\tstrings:\n\t\t$msdocfile_hexstring = { D0 CF 11 E0 A1 B1 1A E1 }\n\n\tcondition:\n\t\t$msdocfile_hexstring\n}\n",
+            "vulnerabilities": [
+                "CVE-2017-11882"
+            ]
+        },
+        {
+            "rule_metadata": {
+                "name": "ole_equation_editor",
+                "tags": [
+                    "info",
+                    "ole",
+                    "equation_editor",
+                    "windows"
+                ],
+                "description": "Detect embedded CLSID OLE of Equation Editor used in CVE-2017-11882"
+            },
+            "rule_text": "rule ole_equation_editor : info ole equation_editor windows\n{\n\tmeta:\n\t\tdescription = \"Detect embedded CLSID OLE of Equation Editor used in CVE-2017-11882\"\n\n\tstrings:\n\t\t$clsid_equation_editor = { 02 CE 02 00 00 00 00 00 C0 00 00 00 00 00 00 46 }\n\n\tcondition:\n\t\t$clsid_equation_editor\n}\n",
+            "vulnerabilities": [
+                "CVE-2017-11882"
+            ]
+        }
+    ]
+}

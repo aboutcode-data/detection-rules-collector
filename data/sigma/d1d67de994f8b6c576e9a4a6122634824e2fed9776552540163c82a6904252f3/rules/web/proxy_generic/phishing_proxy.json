@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SamuraiMDR/sigma-rules/blob/master/rules/web/proxy_generic/phishing_proxy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "NTT Security - Axel Olsson, Amata Anantaprayoon, Patrik Olson",
+                "date": "2023-12-09",
+                "title": "Phishing Proxy",
+                "id": "b03d7953-62ab-48f6-b457-1a626850f17e"
+            },
+            "rule_text": "title: Phishing Proxy\nid: b03d7953-62ab-48f6-b457-1a626850f17e\ndescription: A phishing proxy typically relays the same requests/responses as the\n  legitimate site, while also intercepting credentials and/or session cookies. This\n  rule detects HTTP requests that are part of login flows on sites that are common\n  in a corporate environment. It can also detect a subdomain pattern commonly used\n  by EvilProxy.\nstatus: test\nauthor: NTT Security - Axel Olsson, Amata Anantaprayoon, Patrik Olson\ndate: '2023-12-09'\nmodified: '2024-08-16'\nlogsource:\n  category: proxy\nreferences:\n- https://www.microsoft.com/en-us/security/blog/2023/12/07/star-blizzard-increases-sophistication-and-evasion-in-ongoing-attacks/\n- https://github.com/kgretzky/evilginx2\n- https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-341a\n- https://www.proofpoint.com/us/blog/email-and-cloud-threats/cloud-account-takeover-campaign-leveraging-evilproxy-targets-top-level\n- https://www.virustotal.com/gui/ip-address/154.29.75.192/relations\ndetection:\n  selection_evilproxy_subdomain:\n    cs-host|re: ^[a-f0-9]{8}-[a-f0-9]{8}\\.\n  selection_google:\n    cs-method|cased: POST\n    c-uri:\n    - /signin/v2/identifier\n    - /v3/signin/_/AccountsSignInUi/data/batchexecute\n  selection_linkedin:\n    cs-method|cased: POST\n    c-uri|cased:\n    - /uas/login-submit\n    - /checkpooint/lg/login-submit\n  selection_microsoft_live:\n    cs-method|cased: POST\n    c-uri:\n    - /GetCredentialType.srf\n    - /ppsecure/post.srf\n    - /oauth20_authorize.srf\n  selection_microsoft_online:\n    cs-method|cased: POST\n    c-uri:\n    - /common/GetCredentialType\n  selection_microsoft_adfs:\n    cs-method|cased: POST\n    c-uri|cased:\n    - /adfs/ls\n    c-uri-query|contains|cased:\n    - email=\n  filter:\n  - cs-host|cased:\n    - accounts.google.com\n    - login.live.com\n    - login.microsoftonline.com\n    - login.microsoftonline.us\n  - cs-host|endswith|cased:\n    - .linkedin.com\n    - .linkedin.cn\n    - .mcas.ms\n  condition: 1 of selection_* and not filter\nfalsepositives:\n- Old domains are likely FP, check whois or similar data\n- The user may not have entered any credentials. Look for suspicious logins or activity\n  logs around this time\nlevel: high\ntags:\n- attack.initial-access\n",
+            "vulnerabilities": []
+        }
+    ]
+}

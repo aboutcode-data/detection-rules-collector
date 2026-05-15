@@ -1,0 +1,38 @@
+{
+    "source_url": "https://github.com/Yara-Rules/rules/blob/master/utils/yara-forensics/file/png.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "png",
+                "tags": [
+                    "PNG"
+                ],
+                "author": "Joan Bono"
+            },
+            "rule_text": "rule png : PNG\n{\n\tmeta:\n\t\tauthor = \"Joan Bono\"\n\n\tstrings:\n\t\t$a = { 89 50 4E 47 0D 0A 1A 0A }\n\t\t$b = { 49 48 44 52 }\n\t\t$c = { 49 44 41 54 }\n\t\t$d = { 49 45 4E 44 }\n\n\tcondition:\n\t\t$a at 0 and for any of ( $b , $c ) : ( @ > @a ) and $d\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "mng",
+                "tags": [
+                    "PNG"
+                ],
+                "author": "Joan Bono"
+            },
+            "rule_text": "rule mng : PNG\n{\n\tmeta:\n\t\tauthor = \"Joan Bono\"\n\n\tstrings:\n\t\t$a = { 8A 4D 4E 47 0D 0A 1A 0A }\n\t\t$b = { 49 45 4E 44 }\n\n\tcondition:\n\t\t$a at 0 and $b\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "jng",
+                "tags": [
+                    "PNG"
+                ],
+                "author": "Joan Bono"
+            },
+            "rule_text": "rule jng : PNG\n{\n\tmeta:\n\t\tauthor = \"Joan Bono\"\n\n\tstrings:\n\t\t$a = { 8B 4A 4E 47 0D 0A 1A 0A }\n\t\t$b = { 49 45 4E 44 }\n\n\tcondition:\n\t\t$a at 0 and $b\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

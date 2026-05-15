@@ -1,0 +1,23 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/Backdoor/Win32/Caphaw/Backdoor_Win32_Caphaw_X.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Caphaw_X",
+                "tags": [],
+                "description": "Backdoor:Win32/Caphaw.X,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Caphaw_X\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Caphaw.X,SIGNATURE_TYPE_PEHSTR_EXT,02 00 02 00 02 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {6a 04 8d 45 e0 50 68 ?? ?? ?? ?? 6a 00 6a 00 ff 15 ?? ?? ?? 00 8b f8 85 ff 74 ?? 68 e8 03 00 00 57 ff 15 ?? ?? ?? 00 3d 02 01 00 00 74 ?? 68 e8 03 00 00 ff 15 ?? ?? ?? 00 }\n\t\t$a_01_1 = {53 55 8b 6c 24 18 56 8b 74 24 10 57 8b 7c 24 1c 8d 64 24 00 8b ca 83 e1 1f bb 01 00 00 00 d3 e3 85 dd 74 09 8a 0e }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 1 + ( #a_01_1 & 1 ) * 1 ) >= 2\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Backdoor_Win32_Caphaw_X_2",
+                "tags": [],
+                "description": "Backdoor:Win32/Caphaw.X,SIGNATURE_TYPE_PEHSTR_EXT,04 00 03 00 03 00 00 "
+            },
+            "rule_text": "rule Backdoor_Win32_Caphaw_X_2\n{\n\tmeta:\n\t\tdescription = \"Backdoor:Win32/Caphaw.X,SIGNATURE_TYPE_PEHSTR_EXT,04 00 03 00 03 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {8b 4c 24 04 85 c9 89 44 24 08 db 44 24 08 d9 fa db 44 24 04 7d 06 dc 05 ?? ?? ?? ?? de c1 e8 ?? ?? 00 00 89 44 24 04 8b 14 24 42 89 14 24 81 3c 24 00 00 ?? 01 72 c4 }\n\t\t$a_03_1 = {85 c0 75 13 8b 45 ?? 8b 48 3c 03 c8 51 50 53 e8 ?? ?? ff ff 83 c4 0c 90 09 1c 00 8b 46 3c 8b 4c ?? 54 8b d1 c1 e9 02 8b fb f3 a5 8b ca 83 e1 03 f3 a4 e8 ?? ?? ff ff }\n\t\t$a_03_2 = {8b 53 3c 8b ?? ?? 28 03 ?? 83 c4 04 89 ?? ?? ff }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 2 + ( #a_03_1 & 1 ) * 1 + ( #a_03_2 & 1 ) * 1 ) >= 3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

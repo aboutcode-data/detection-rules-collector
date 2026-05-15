@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mthcht/ThreatHunting-Keywords-yara-rules/blob/master/yara_rules/offensive_tool_keyword/I-K/Invoke-SMBRemoting.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Invoke_SMBRemoting",
+                "tags": [],
+                "description": "Detection patterns for the tool 'Invoke-SMBRemoting' taken from the ThreatHunting-Keywords github project",
+                "author": "@mthcht",
+                "reference": "https://github.com/mthcht/ThreatHunting-Keywords",
+                "tool": "Invoke-SMBRemoting",
+                "rule_category": "offensive_tool_keyword"
+            },
+            "rule_text": "rule Invoke_SMBRemoting\n{\n\tmeta:\n\t\tdescription = \"Detection patterns for the tool 'Invoke-SMBRemoting' taken from the ThreatHunting-Keywords github project\"\n\t\tauthor = \"@mthcht\"\n\t\treference = \"https://github.com/mthcht/ThreatHunting-Keywords\"\n\t\ttool = \"Invoke-SMBRemoting\"\n\t\trule_category = \"offensive_tool_keyword\"\n\n\tstrings:\n\t\t$string1 = /\\s\\-PipeName\\s.{0,1000}\\s\\-ServiceName\\s.{0,1000}\\s\\-Command\\swhoami/ nocase ascii wide\n\t\t$string2 = /\\/Invoke\\-SMBRemoting\\.git/ nocase ascii wide\n\t\t$string3 = \"Enter-SMBSession -ComputerName \" nocase ascii wide\n\t\t$string4 = /Enter\\-SMBSession.{0,1000}\\s\\-PipeName\\s.{0,1000}\\s\\-ServiceName\\s/ nocase ascii wide\n\t\t$string5 = /Invoke\\-SMBRemoting\\.ps1/ nocase ascii wide\n\t\t$string6 = \"Invoke-SMBRemoting-main\" nocase ascii wide\n\t\t$string7 = \"Leo4j/Invoke-SMBRemoting\" nocase ascii wide\n\n\tcondition:\n\t\tany of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

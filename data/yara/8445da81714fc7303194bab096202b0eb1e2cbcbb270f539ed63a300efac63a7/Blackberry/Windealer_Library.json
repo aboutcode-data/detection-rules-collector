@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/mikesxrs/Open-Source-YARA-rules/blob/master/Blackberry/Windealer_Library.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windealer_Library",
+                "tags": [],
+                "description": "Detects WinDealer Loaded DLL",
+                "reference": "https://blogs.blackberry.com/en/2022/06/threat-thursday-china-based-apt-plays-auto-updater-card-to-deliver-windealer-malwareZ",
+                "author": "BlackBerry Threat Research Team",
+                "date": "2022-06-14",
+                "license": "This Yara rule is provided under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0) and open to any user or organization, as long as you use it under this license and ensure originator credit in any derivative to The BlackBerry Research & Intelligence Team"
+            },
+            "rule_text": "rule Windealer_Library\n{\n\tmeta:\n\t\tdescription = \"Detects WinDealer Loaded DLL\"\n\t\treference = \"https://blogs.blackberry.com/en/2022/06/threat-thursday-china-based-apt-plays-auto-updater-card-to-deliver-windealer-malwareZ\"\n\t\tauthor = \"BlackBerry Threat Research Team\"\n\t\tdate = \"2022-06-14\"\n\t\tlicense = \"This Yara rule is provided under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0) and open to any user or organization, as long as you use it under this license and ensure originator credit in any derivative to The BlackBerry Research & Intelligence Team\"\n\n\tstrings:\n\t\t$s1 = \"C:\\\\Users\\\\Public\\\\Documents\\\\Tencent\\\\QQ\\\\UserDataInfo.ini\"\n\t\t$s2 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders\"\n\t\t$s3 = \"SOFTWARE\\\\SogouInput\\\\red\"\n\t\t$s4 = \"SOFTWARE\\\\SogouDesktopBar\"\n\t\t$s5 = \"MozillaDll.dll\"\n\t\t$s6 = \"Tencent Files\"\n\t\t$s7 = \"wangwang\"\n\t\t$s8 = \"WeChat Files\"\n\t\t$s9 = \"MyDocument\"\n\t\t$s10 = \"Skype\"\n\t\t$e1 = \"AutoGetSystemInfo\"\n\t\t$e2 = \"GetConfigInfo\"\n\t\t$e3 = \"partInitOpt\"\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5a4d and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

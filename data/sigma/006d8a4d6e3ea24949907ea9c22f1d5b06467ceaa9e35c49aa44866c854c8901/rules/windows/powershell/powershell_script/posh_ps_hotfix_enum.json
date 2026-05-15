@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_hotfix_enum.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Nasreddine Bencherchali (Nextron Systems)",
+                "date": "2022-06-21",
+                "title": "PowerShell Hotfix Enumeration",
+                "id": "f5d1def8-1de0-4a0e-9794-1f6f27dd605c"
+            },
+            "rule_text": "title: PowerShell Hotfix Enumeration\nid: f5d1def8-1de0-4a0e-9794-1f6f27dd605c\nstatus: test\ndescription: Detects call to \"Win32_QuickFixEngineering\" in order to enumerate installed\n  hotfixes often used in \"enum\" scripts by attackers\nreferences:\n- https://github.com/411Hall/JAWS/blob/233f142fcb1488172aa74228a666f6b3c5c48f1d/jaws-enum.ps1\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2022-06-21\ntags:\n- attack.discovery\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection:\n    ScriptBlockText|contains|all:\n    - Win32_QuickFixEngineering\n    - HotFixID\n  condition: selection\nfalsepositives:\n- Legitimate administration scripts\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

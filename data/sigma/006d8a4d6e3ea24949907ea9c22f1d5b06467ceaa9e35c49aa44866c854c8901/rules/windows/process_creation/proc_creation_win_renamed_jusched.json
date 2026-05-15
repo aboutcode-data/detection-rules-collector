@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_renamed_jusched.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Markus Neis, Swisscom",
+                "date": "2019-06-04",
+                "title": "Renamed Jusched.EXE Execution",
+                "id": "edd8a48c-1b9f-4ba1-83aa-490338cd1ccb"
+            },
+            "rule_text": "title: Renamed Jusched.EXE Execution\nid: edd8a48c-1b9f-4ba1-83aa-490338cd1ccb\nstatus: test\ndescription: Detects the execution of a renamed \"jusched.exe\" as seen used by the\n  cobalt group\nreferences:\n- https://www.bitdefender.com/files/News/CaseStudies/study/262/Bitdefender-WhitePaper-An-APT-Blueprint-Gaining-New-Visibility-into-Financial-Threats-interactive.pdf\nauthor: Markus Neis, Swisscom\ndate: 2019-06-04\nmodified: 2023-02-03\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1036.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Description:\n    - Java Update Scheduler\n    - Java(TM) Update Scheduler\n  filter:\n    Image|endswith: \\jusched.exe\n  condition: selection and not filter\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

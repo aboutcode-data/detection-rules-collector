@@ -1,0 +1,14 @@
+{
+    "source_url": "https://github.com/roadwy/DefenderYara/blob/master/TrojanDownloader/Win32/Cophlap/TrojanDownloader_Win32_Cophlap_A.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "TrojanDownloader_Win32_Cophlap_A",
+                "tags": [],
+                "description": "TrojanDownloader:Win32/Cophlap.A,SIGNATURE_TYPE_PEHSTR_EXT,22 00 22 00 07 00 00 "
+            },
+            "rule_text": "rule TrojanDownloader_Win32_Cophlap_A\n{\n\tmeta:\n\t\tdescription = \"TrojanDownloader:Win32/Cophlap.A,SIGNATURE_TYPE_PEHSTR_EXT,22 00 22 00 07 00 00 \"\n\n\tstrings:\n\t\t$a_03_0 = {68 04 01 00 00 8b ?? 50 ff 15 ?? ?? 40 00 8d 8c 24 ?? ?? 00 00 68 00 01 00 00 51 68 ?? ?? 40 00 ff 15 ?? ?? 40 00 8d 4c 24 }\n\t\t$a_02_1 = {25 50 72 6f 67 72 61 6d 46 69 6c 65 73 25 90 05 10 01 00 10 59 2f b6 28 65 d1 11 96 11 00 00 f8 1e 0d 0d }\n\t\t$a_03_2 = {40 00 8d 4c 24 ?? e8 ?? ?? 00 00 68 ?? ?? 40 00 8d 4c 24 ?? e8 ?? ?? 00 00 68 ?? ?? 40 00 8d 4c 24 ?? e8 ?? ?? 00 00 68 ?? ?? 40 00 8d 4c 24 ?? e8 ?? ?? 00 00 68 ?? ?? 40 00 8d 4c 24 ?? e8 ?? ?? 00 00 }\n\t\t$a_00_3 = {44 65 6c 65 74 65 55 72 6c 43 61 63 68 65 45 6e 74 72 79 }\n\t\t$a_00_4 = {55 52 4c 44 6f 77 6e 6c 6f 61 64 54 6f 46 69 6c 65 41 }\n\t\t$a_00_5 = {53 68 65 6c 6c 45 78 65 63 75 74 65 41 }\n\t\t$a_00_6 = {4c 6f 63 6b 69 74 }\n\n\tcondition:\n\t\t(( #a_03_0 & 1 ) * 10 + ( #a_02_1 & 1 ) * 10 + ( #a_03_2 & 1 ) * 10 + ( #a_00_3 & 1 ) * 1 + ( #a_00_4 & 1 ) * 1 + ( #a_00_5 & 1 ) * 1 + ( #a_00_6 & 1 ) * 1 ) >= 34\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

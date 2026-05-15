@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/mbabinski/Sigma-Rules/blob/master/2022_Hive_Ransomware/win_bcd_registry_modification_hive.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Micah Babinski",
+                "date": "2022/11/22",
+                "title": "Boot Configuration Database (BCD) Manipulation - Registry Modification",
+                "id": "99a9fbb6-62bf-4cb7-8406-a363bc14cbf3"
+            },
+            "rule_text": "title: Boot Configuration Database (BCD) Manipulation - Registry Modification\nid: 99a9fbb6-62bf-4cb7-8406-a363bc14cbf3\nstatus: experimental\ndescription: Detects registry modifications occuring in tandem with disruption of\n  boot processes with bcdedit (or as a method to evade detection)\nreferences:\n- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a\n- https://blog.nviso.eu/2022/05/30/detecting-bcd-changes-to-inhibit-system-recovery/\nauthor: Micah Babinski\ndate: 2022/11/22\ntags:\n- attack.impact\n- attack.t1490\n- attack.g0092\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection_1:\n    EventType: SetValue\n    TargetObject|contains: elements\n  selection_2:\n    TargetObject|contains:\n    - '16000009'\n    - 250000e0\n  condition: selection_1 and selection_2\nfalsepositives:\n- WMI initiating BCD changes\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}
