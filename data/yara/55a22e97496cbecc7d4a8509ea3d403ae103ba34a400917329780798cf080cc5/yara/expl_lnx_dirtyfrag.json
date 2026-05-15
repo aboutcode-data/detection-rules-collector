@@ -10,9 +10,10 @@
                 "date": "2026-05-07",
                 "score": 80,
                 "hash": "c35594d42f7a5d5d2895164147ee1bc62bb8e294c8468093b7d6fcaab0b174c8",
-                "reference": "https://github.com/V4bel/dirtyfrag/tree/master"
+                "reference": "https://github.com/V4bel/dirtyfrag/tree/master",
+                "id": "7548b4c6-6b0f-5c05-acab-26dceac109ac"
             },
-            "rule_text": "rule EXPL_HKTL_LNX_DirtyFragLPE_May26\n{\n\tmeta:\n\t\tdescription = \"Detects dirtyfrag, a local privilege escalation exploit for Linux.\"\n\t\tauthor = \"Pezier Pierre-Henri (Nextron Systems)\"\n\t\tdate = \"2026-05-07\"\n\t\tscore = 80\n\t\thash = \"c35594d42f7a5d5d2895164147ee1bc62bb8e294c8468093b7d6fcaab0b174c8\"\n\t\treference = \"https://github.com/V4bel/dirtyfrag/tree/master\"\n\n\tstrings:\n\t\t$x1 = \"gained CAP_NET_RAW within netn\" ascii\n\t\t$x2 = \"DIRTYFRAG_VERBOSE\" ascii\n\t\t$s1 = { 15 7C 4A 7F B9 79 37 9E }\n\t\t$s2 = \"/proc/self/setgroups\" ascii fullword\n\t\t$s3 = \"pcbc(fcrypt)\" ascii fullword\n\t\t$s4 = { 17 bb c7 f3 3f 36 ba 71 8e 97 65 60 69 b6 f6 e6 }\n\n\tcondition:\n\t\tfilesize < 100KB and uint32be( 0 ) == 0x7f454c46 and ( 1 of ( $x* ) or 3 of ( $s* ) )\n}\n",
+            "rule_text": "rule EXPL_HKTL_LNX_DirtyFragLPE_May26\n{\n\tmeta:\n\t\tdescription = \"Detects dirtyfrag, a local privilege escalation exploit for Linux.\"\n\t\tauthor = \"Pezier Pierre-Henri (Nextron Systems)\"\n\t\tdate = \"2026-05-07\"\n\t\tscore = 80\n\t\thash = \"c35594d42f7a5d5d2895164147ee1bc62bb8e294c8468093b7d6fcaab0b174c8\"\n\t\treference = \"https://github.com/V4bel/dirtyfrag/tree/master\"\n\t\tid = \"7548b4c6-6b0f-5c05-acab-26dceac109ac\"\n\n\tstrings:\n\t\t$x1 = \"gained CAP_NET_RAW within netn\" ascii\n\t\t$x2 = \"DIRTYFRAG_VERBOSE\" ascii\n\t\t$s1 = { 15 7C 4A 7F B9 79 37 9E }\n\t\t$s2 = \"/proc/self/setgroups\" ascii fullword\n\t\t$s3 = \"pcbc(fcrypt)\" ascii fullword\n\t\t$s4 = { 17 bb c7 f3 3f 36 ba 71 8e 97 65 60 69 b6 f6 e6 }\n\n\tcondition:\n\t\tfilesize < 100KB and uint32be( 0 ) == 0x7f454c46 and ( 1 of ( $x* ) or 3 of ( $s* ) )\n}\n",
             "vulnerabilities": []
         },
         {
@@ -24,9 +25,10 @@
                 "author": "Pezier Pierre-Henri (Nextron Systems)",
                 "date": "2026-05-07",
                 "score": 80,
-                "hash": "a02ea2ba8108a9b7a997faa8808cfc55bb69af54e69178fa5aa1785681cf0ced"
+                "hash": "a02ea2ba8108a9b7a997faa8808cfc55bb69af54e69178fa5aa1785681cf0ced",
+                "id": "c156da87-c029-5084-9cd3-a233fefdaf25"
             },
-            "rule_text": "rule EXPL_HKTL_LNX_DirtyFragShellcode_May26\n{\n\tmeta:\n\t\tdescription = \"Detects a shellcode observed in dirtyfrag, a local privilege escalation exploit for Linux.\"\n\t\treference = \"https://github.com/V4bel/dirtyfrag/tree/master\"\n\t\tauthor = \"Pezier Pierre-Henri (Nextron Systems)\"\n\t\tdate = \"2026-05-07\"\n\t\tscore = 80\n\t\thash = \"a02ea2ba8108a9b7a997faa8808cfc55bb69af54e69178fa5aa1785681cf0ced\"\n\n\tstrings:\n\t\t$op1 = {\n         31 ff     // xor     edi, edi\n         31 f6     // xor     esi, esi\n         31 c0     // xor     eax, eax\n         b0 6a     // mov     al, 6Ah ; 'j'\n         0f 05     // syscall; LINUX - sys_setgid\n         b0 69     // mov     al, 69h ; 'i'\n         0f 05     // syscall; LINUX - sys_setuid\n         b0 74     // mov     al, 74h ; 't'\n         0f 05     // syscall; LINUX - sys_setgroups\n         6a 00     // push    0\n         48 [6]    // lea     rax, aTermXterm; \"TERM=xterm\"\n         50        // push    rax\n         48 89 e2  // mov     rdx, rsp\n         48 [6]    // lea     rdi, aBinSh; \"/bin/sh\"\n         31 f6     // xor     esi, esi\n         6a 3b     // push    3Bh ; ';'\n         58        // pop     rax\n         0f 05     // syscall; LINUX - sys_execve\n      }\n\n\tcondition:\n\t\t$op1\n}\n",
+            "rule_text": "rule EXPL_HKTL_LNX_DirtyFragShellcode_May26\n{\n\tmeta:\n\t\tdescription = \"Detects a shellcode observed in dirtyfrag, a local privilege escalation exploit for Linux.\"\n\t\treference = \"https://github.com/V4bel/dirtyfrag/tree/master\"\n\t\tauthor = \"Pezier Pierre-Henri (Nextron Systems)\"\n\t\tdate = \"2026-05-07\"\n\t\tscore = 80\n\t\thash = \"a02ea2ba8108a9b7a997faa8808cfc55bb69af54e69178fa5aa1785681cf0ced\"\n\t\tid = \"c156da87-c029-5084-9cd3-a233fefdaf25\"\n\n\tstrings:\n\t\t$op1 = {\n         31 ff     // xor     edi, edi\n         31 f6     // xor     esi, esi\n         31 c0     // xor     eax, eax\n         b0 6a     // mov     al, 6Ah ; 'j'\n         0f 05     // syscall; LINUX - sys_setgid\n         b0 69     // mov     al, 69h ; 'i'\n         0f 05     // syscall; LINUX - sys_setuid\n         b0 74     // mov     al, 74h ; 't'\n         0f 05     // syscall; LINUX - sys_setgroups\n         6a 00     // push    0\n         48 [6]    // lea     rax, aTermXterm; \"TERM=xterm\"\n         50        // push    rax\n         48 89 e2  // mov     rdx, rsp\n         48 [6]    // lea     rdi, aBinSh; \"/bin/sh\"\n         31 f6     // xor     esi, esi\n         6a 3b     // push    3Bh ; ';'\n         58        // pop     rax\n         0f 05     // syscall; LINUX - sys_execve\n      }\n\n\tcondition:\n\t\t$op1\n}\n",
             "vulnerabilities": []
         },
         {
@@ -37,9 +39,10 @@
                 "author": "Florian Roth",
                 "reference": "https://github.com/V4bel/dirtyfrag/tree/master",
                 "date": "2026-05-08",
-                "score": 75
+                "score": 75,
+                "id": "bda5e087-8eb7-55bd-a5ff-0eef91d63bcf"
             },
-            "rule_text": "rule EXPL_LNX_DirtyFrag_ForensicArtefacts_May26\n{\n\tmeta:\n\t\tdescription = \"Detects DirtyFrag exploit code POC usage in Linux environments\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://github.com/V4bel/dirtyfrag/tree/master\"\n\t\tdate = \"2026-05-08\"\n\t\tscore = 75\n\n\tstrings:\n\t\t$xa1 = \"/V4bel/dirtyfrag.git\" ascii\n\t\t$xa2 = \"static const uint8_t shell_elf[PAYLOAD_LEN] = {\" ascii\n\t\t$xa3 = \"/usr/bin/su page-cache patched (entry 0x%x = shellcode)\" ascii\n\n\tcondition:\n\t\tfilesize < 800KB and 1 of ( $xa* )\n}\n",
+            "rule_text": "rule EXPL_LNX_DirtyFrag_ForensicArtefacts_May26\n{\n\tmeta:\n\t\tdescription = \"Detects DirtyFrag exploit code POC usage in Linux environments\"\n\t\tauthor = \"Florian Roth\"\n\t\treference = \"https://github.com/V4bel/dirtyfrag/tree/master\"\n\t\tdate = \"2026-05-08\"\n\t\tscore = 75\n\t\tid = \"bda5e087-8eb7-55bd-a5ff-0eef91d63bcf\"\n\n\tstrings:\n\t\t$xa1 = \"/V4bel/dirtyfrag.git\" ascii\n\t\t$xa2 = \"static const uint8_t shell_elf[PAYLOAD_LEN] = {\" ascii\n\t\t$xa3 = \"/usr/bin/su page-cache patched (entry 0x%x = shellcode)\" ascii\n\n\tcondition:\n\t\tfilesize < 800KB and 1 of ( $xa* )\n}\n",
             "vulnerabilities": []
         }
     ]
