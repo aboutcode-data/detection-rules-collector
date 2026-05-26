@@ -35,12 +35,13 @@
                 "description": "Identifies XOR'd strings used in Cobalt Strike Beacon DLL",
                 "reference": "https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures",
                 "date": "2021-03-16",
+                "modified": "2026-05-26",
                 "xor_s1": "%02d/%02d/%02d %02d:%02d:%02d",
                 "xor_s2": "Started service %s on %s",
                 "xor_s3": "%s as %s\\\\%s: %d",
                 "id": "359160a8-cf1c-58a8-bf7f-c09a8d661308"
             },
-            "rule_text": "rule HKTL_CobaltStrike_Beacon_XOR_Strings\n{\n\tmeta:\n\t\tauthor = \"Elastic\"\n\t\tdescription = \"Identifies XOR'd strings used in Cobalt Strike Beacon DLL\"\n\t\treference = \"https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures\"\n\t\tdate = \"2021-03-16\"\n\t\txor_s1 = \"%02d/%02d/%02d %02d:%02d:%02d\"\n\t\txor_s2 = \"Started service %s on %s\"\n\t\txor_s3 = \"%s as %s\\\\%s: %d\"\n\t\tid = \"359160a8-cf1c-58a8-bf7f-c09a8d661308\"\n\n\tstrings:\n\t\t$s1 = \"%02d/%02d/%02d %02d:%02d:%02d\" xor(0x01-0xff)\n\t\t$s2 = \"Started service %s on %s\" xor(0x01-0xff)\n\t\t$s3 = \"%s as %s\\\\%s: %d\" xor(0x01-0xff)\n\t\t$fp1 = \"MalwareRemovalTool\"\n\n\tcondition:\n\t\t2 of ( $s* ) and not 1 of ( $fp* )\n}\n",
+            "rule_text": "rule HKTL_CobaltStrike_Beacon_XOR_Strings\n{\n\tmeta:\n\t\tauthor = \"Elastic\"\n\t\tdescription = \"Identifies XOR'd strings used in Cobalt Strike Beacon DLL\"\n\t\treference = \"https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures\"\n\t\tdate = \"2021-03-16\"\n\t\tmodified = \"2026-05-26\"\n\t\txor_s1 = \"%02d/%02d/%02d %02d:%02d:%02d\"\n\t\txor_s2 = \"Started service %s on %s\"\n\t\txor_s3 = \"%s as %s\\\\%s: %d\"\n\t\tid = \"359160a8-cf1c-58a8-bf7f-c09a8d661308\"\n\n\tstrings:\n\t\t$s1 = \"%02d/%02d/%02d %02d:%02d:%02d\" xor(0x01-0xff)\n\t\t$s2 = \"Started service %s on %s\" xor(0x01-0xff)\n\t\t$s3 = \"%s as %s\\\\%s: %d\" xor(0x01-0xff)\n\t\t$fp1 = \"MalwareRemovalTool\" ascii wide\n\t\t$fp2 = \"advanced malware removal tool\" ascii wide\n\n\tcondition:\n\t\t2 of ( $s* ) and not 1 of ( $fp* )\n}\n",
             "vulnerabilities": []
         },
         {
@@ -53,7 +54,7 @@
                 "date": "2021-03-16",
                 "id": "63b71eef-0af5-5765-b957-ccdc9dde053b"
             },
-            "rule_text": "rule HKTL_CobaltStrike_Beacon_4_2_Decrypt\n{\n\tmeta:\n\t\tauthor = \"Elastic\"\n\t\tdescription = \"Identifies deobfuscation routine used in Cobalt Strike Beacon DLL version 4.2\"\n\t\treference = \"https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures\"\n\t\tdate = \"2021-03-16\"\n\t\tid = \"63b71eef-0af5-5765-b957-ccdc9dde053b\"\n\n\tstrings:\n\t\t$a_x64 = {4C 8B 53 08 45 8B 0A 45 8B 5A 04 4D 8D 52 08 45 85 C9 75 05 45 85 DB 74 33 45 3B CB 73 E6 49 8B F9 4C 8B 03}\n\t\t$a_x86 = {8B 46 04 8B 08 8B 50 04 83 C0 08 89 55 08 89 45 0C 85 C9 75 04 85 D2 74 23 3B CA 73 E6 8B 06 8D 3C 08 33 D2}\n\n\tcondition:\n\t\tany of them\n}\n",
+            "rule_text": "rule HKTL_CobaltStrike_Beacon_4_2_Decrypt\n{\n\tmeta:\n\t\tauthor = \"Elastic\"\n\t\tdescription = \"Identifies deobfuscation routine used in Cobalt Strike Beacon DLL version 4.2\"\n\t\treference = \"https://www.elastic.co/blog/detecting-cobalt-strike-with-memory-signatures\"\n\t\tdate = \"2021-03-16\"\n\t\tid = \"63b71eef-0af5-5765-b957-ccdc9dde053b\"\n\n\tstrings:\n\t\t$a_x64 = { 4C 8B 53 08 45 8B 0A 45 8B 5A 04 4D 8D 52 08 45 85 C9 75 05 45 85 DB 74 33 45 3B CB 73 E6 49 8B F9 4C 8B 03 }\n\t\t$a_x86 = { 8B 46 04 8B 08 8B 50 04 83 C0 08 89 55 08 89 45 0C 85 C9 75 04 85 D2 74 23 3B CA 73 E6 8B 06 8D 3C 08 33 D2 }\n\n\tcondition:\n\t\tany of them\n}\n",
             "vulnerabilities": []
         },
         {
@@ -69,7 +70,7 @@
                 "reference": "https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/",
                 "id": "113ba304-261f-5c59-bc56-57515c239b6d"
             },
-            "rule_text": "rule HKTL_Win_CobaltStrike : Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-05-25\"\n\t\tdescription = \"The CobaltStrike malware family.\"\n\t\thash = \"b041efb8ba2a88a3d172f480efa098d72eef13e42af6aa5fb838e6ccab500a7c\"\n\t\treference = \"https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/\"\n\t\tid = \"113ba304-261f-5c59-bc56-57515c239b6d\"\n\n\tstrings:\n\t\t$s1 = \"%s (admin)\" fullword\n\t\t$s2 = {48 54 54 50 2F 31 2E 31 20 32 30 30 20 4F 4B 0D 0A 43 6F 6E 74 65 6E 74 2D 54 79 70 65 3A 20 61 70 70 6C 69 63 61 74 69 6F 6E 2F 6F 63 74 65 74 2D 73 74 72 65 61 6D 0D 0A 43 6F 6E 74 65 6E 74 2D 4C 65 6E 67 74 68 3A 20 25 64 0D 0A 0D 0A 00}\n\t\t$s3 = \"%02d/%02d/%02d %02d:%02d:%02d\" fullword\n\t\t$s4 = \"%s as %s\\\\%s: %d\" fullword\n\t\t$s5 = \"%s&%s=%s\" fullword\n\t\t$s6 = \"rijndael\" fullword\n\t\t$s7 = \"(null)\"\n\n\tcondition:\n\t\tall of them\n}\n",
+            "rule_text": "rule HKTL_Win_CobaltStrike : Commodity\n{\n\tmeta:\n\t\tauthor = \"threatintel@volexity.com\"\n\t\tdate = \"2021-05-25\"\n\t\tdescription = \"The CobaltStrike malware family.\"\n\t\thash = \"b041efb8ba2a88a3d172f480efa098d72eef13e42af6aa5fb838e6ccab500a7c\"\n\t\treference = \"https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/\"\n\t\tid = \"113ba304-261f-5c59-bc56-57515c239b6d\"\n\n\tstrings:\n\t\t$s1 = \"%s (admin)\" fullword\n\t\t$s2 = { 48 54 54 50 2F 31 2E 31 20 32 30 30 20 4F 4B 0D 0A 43 6F 6E 74 65 6E 74 2D 54 79 70 65 3A 20 61 70 70 6C 69 63 61 74 69 6F 6E 2F 6F 63 74 65 74 2D 73 74 72 65 61 6D 0D 0A 43 6F 6E 74 65 6E 74 2D 4C 65 6E 67 74 68 3A 20 25 64 0D 0A 0D 0A 00 }\n\t\t$s3 = \"%02d/%02d/%02d %02d:%02d:%02d\" fullword\n\t\t$s4 = \"%s as %s\\\\%s: %d\" fullword\n\t\t$s5 = \"%s&%s=%s\" fullword\n\t\t$s6 = \"rijndael\" fullword\n\t\t$s7 = \"(null)\"\n\n\tcondition:\n\t\tall of them\n}\n",
             "vulnerabilities": []
         }
     ]
