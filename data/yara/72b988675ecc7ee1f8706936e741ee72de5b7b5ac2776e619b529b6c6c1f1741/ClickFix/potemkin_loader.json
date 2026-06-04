@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/ClickFix/potemkin_loader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "PotemkinLoader",
+                "tags": [],
+                "author": "RussianPanda",
+                "description": "Detects Potemkin Loader",
+                "date": "6/4/2026",
+                "hash": "2abe5dd3a057fdef935722e50e9251c272d29fd26113187b853a1f9a9cb89d9b"
+            },
+            "rule_text": "rule PotemkinLoader\n{\n\tmeta:\n\t\tauthor = \"RussianPanda\"\n\t\tdescription = \"Detects Potemkin Loader\"\n\t\tdate = \"6/4/2026\"\n\t\thash = \"2abe5dd3a057fdef935722e50e9251c272d29fd26113187b853a1f9a9cb89d9b\"\n\n\tstrings:\n\t\t$s1 = \"[Agent] DLL returned (updatedll), reloading...\" ascii\n\t\t$s2 = \"dll_debug.log\" ascii\n\t\t$s3 = \"[Agent] LoadAndRunDLL=\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and all of ( $s* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
