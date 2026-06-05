@@ -1,0 +1,25 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Linux_Rootkit_VoidLink.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Linux_Rootkit_VoidLink_243306b5",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "243306b5-4c63-4bba-adfb-8b054f2b712b",
+                "fingerprint": "a159e2089fa61f45af10a1ebca4e9d02dd287e9dfa04f518d630083b9da22e21",
+                "creation_date": "2026-03-13",
+                "last_modified": "2026-05-22",
+                "threat_name": "Linux.Rootkit.VoidLink",
+                "reference_sample": "8bce8daacaaa546a8fc77f484d776560a28dfb024e3b7aa7c6b322c7c5716ac5",
+                "severity": 100,
+                "arch_context": "x86, arm64",
+                "scan_context": "file, memory",
+                "license": "Elastic License v2",
+                "os": "linux"
+            },
+            "rule_text": "rule Linux_Rootkit_VoidLink_243306b5\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"243306b5-4c63-4bba-adfb-8b054f2b712b\"\n\t\tfingerprint = \"a159e2089fa61f45af10a1ebca4e9d02dd287e9dfa04f518d630083b9da22e21\"\n\t\tcreation_date = \"2026-03-13\"\n\t\tlast_modified = \"2026-05-22\"\n\t\tthreat_name = \"Linux.Rootkit.VoidLink\"\n\t\treference_sample = \"8bce8daacaaa546a8fc77f484d776560a28dfb024e3b7aa7c6b322c7c5716ac5\"\n\t\tseverity = 100\n\t\tarch_context = \"x86, arm64\"\n\t\tscan_context = \"file, memory\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"linux\"\n\n\tstrings:\n\t\t$mod1 = \"AMD Memory Encryption Support\"\n\t\t$mod2 = \"AMD Memory Encryption Driver\"\n\t\t$mod3 = \"Advanced Micro Devices, Inc.\"\n\t\t$func1 = \"vl_stealth\"\n\t\t$func2 = \"g_data\"\n\t\t$func3 = \"icmp_cmd\"\n\t\t$func4 = \"chk_pid\"\n\t\t$func5 = \"chk_port\"\n\t\t$func6 = \"mod_hide\"\n\t\t$func7 = \"amd_mem_encrypt\"\n\t\t$ebpf1 = \"hidden_ports\"\n\t\t$ebpf2 = \"recvmsg_ctx\"\n\t\t$ebpf3 = \"SOCK_DIAG_BY_FAMILY\"\n\n\tcondition:\n\t\t(2 of ( $mod* ) and 3 of ( $func* ) ) or ( 1 of ( $mod* ) and 2 of ( $ebpf* ) ) or ( 4 of ( $func* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
