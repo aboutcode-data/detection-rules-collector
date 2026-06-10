@@ -11,8 +11,8 @@
             },
             "rule_text": "title: User Added To Highly Privileged Group\nid: 10fb649c-3600-4d37-b1e6-56ea90bb7e09\nrelated:\n- id: ffa28e60-bdb1-46e0-9f82-05f7a61cc06e\n  type: similar\n- id: ad720b90-25ad-43ff-9b5e-5c841facc8e5\n  type: similar\nstatus: test\ndescription: Detects addition of users to highly privileged groups via \"Net\" or \"Add-LocalGroupMember\".\nreferences:\n- https://www.huntress.com/blog/slashandgrab-screen-connect-post-exploitation-in-the-wild-cve-2024-1709-cve-2024-1708\nauthor: Nasreddine Bencherchali (Nextron Systems)\ndate: 2024-02-23\ntags:\n- attack.privilege-escalation\n- attack.persistence\n- attack.t1098\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_main:\n  - CommandLine|contains|all:\n    - 'localgroup '\n    - ' /add'\n  - CommandLine|contains|all:\n    - 'Add-LocalGroupMember '\n    - ' -Group '\n  selection_group:\n    CommandLine|contains:\n    - Group Policy Creator Owners\n    - Schema Admins\n  condition: all of selection_*\nfalsepositives:\n- Administrative activity that must be investigated\nlevel: high\n",
             "vulnerabilities": [
-                "CVE-2024-1708",
-                "CVE-2024-1709"
+                "CVE-2024-1709",
+                "CVE-2024-1708"
             ]
         }
     ]
