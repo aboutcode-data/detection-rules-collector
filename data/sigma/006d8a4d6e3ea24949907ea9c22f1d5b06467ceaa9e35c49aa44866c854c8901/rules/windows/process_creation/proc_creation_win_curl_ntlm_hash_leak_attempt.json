@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_curl_ntlm_hash_leak_attempt.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-06-04",
+                "title": "NTLM Hash Leak Via Curl NTLM Authentication",
+                "id": "916eb839-895e-47f8-99ee-3008bf377a3e"
+            },
+            "rule_text": "title: NTLM Hash Leak Via Curl NTLM Authentication\nid: 916eb839-895e-47f8-99ee-3008bf377a3e\nstatus: test\ndescription: \"Detects the use of curl with NTLM authentication and empty credentials\\\n  \\ (-u :), which can be abused to leak the currently logged-in user's NTLMv2 challenge-response\\\n  \\ to an\\nattacker-controlled server, enabling offline cracking or relay attacks.\\n\\\n  When no credentials are provided, the Microsoft-shipped curl passes a NULL identity\\\n  \\ to Windows SSPI, which automatically falls back to the current user's logon session\\\n  \\ credentials\\nstored in LSASS \\u2014 without requiring a plaintext password.\\n\\\n  This behavior is exclusive to the curl binary shipped by Microsoft (available since\\\n  \\ Windows 10 / Windows Server 2019), which is built with SSPI support.\\n\"\nreferences:\n- https://github.com/curl/curl/blob/master/lib/vauth/ntlm_sspi.c#L128-L140\n- https://learn.microsoft.com/en-us/windows/win32/secauthn/acquirecredentialshandle--ntlm\n- https://curl.se/docs/manpage.html#--ntlm\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-06-04\ntags:\n- attack.credential-access\n- attack.t1187\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\curl.exe\n  - OriginalFileName: curl.exe\n  selection_ntlm_flag:\n    CommandLine|contains: --ntlm\n  selection_empty_creds:\n    CommandLine|re: '(?i)\\s(-u|--user)\\s*:'\n  condition: all of selection_*\nfalsepositives:\n- Should be very rare as it's not widely known or used, but could occur in legitimate\n  use cases where curl is used with NTLM authentication and empty credentials, such\n  as in certain scripts or automation tasks.\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_ntlm_hash_leak_attempt/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
