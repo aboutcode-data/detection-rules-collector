@@ -1,0 +1,63 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/susp_aur_packages.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNX_ARCH_PKGBUILD_NPM_Dependency_Jun26",
+                "tags": [],
+                "description": "Detects suspicious PKGBUILD with NPM dependency and install script",
+                "author": "Marius Benthin",
+                "date": "2026-06-15",
+                "reference": "https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8",
+                "reference2": "https://aur.archlinux.org/cgit/aur.git/commit/?h=python-django-js-asset&id=af09b1cf1b59",
+                "hash": "3e1f297ab4d261fcad14a865a54d049d75d897d549d03371a5c4bbbc6e10e5cd",
+                "score": 60
+            },
+            "rule_text": "rule SUSP_LNX_ARCH_PKGBUILD_NPM_Dependency_Jun26\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious PKGBUILD with NPM dependency and install script\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-06-15\"\n\t\treference = \"https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8\"\n\t\treference2 = \"https://aur.archlinux.org/cgit/aur.git/commit/?h=python-django-js-asset&id=af09b1cf1b59\"\n\t\thash = \"56bed7736d44219215fd912b229c7f765b737db4f6cde256ce264e795310c648\"\n\t\thash = \"1359814fda7f5ef63f04348439bfb011d7abc0381be6fbb404b04b359d63b61b\"\n\t\thash = \"3e1f297ab4d261fcad14a865a54d049d75d897d549d03371a5c4bbbc6e10e5cd\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$sa1 = { (0A | 20) 64 65 70 65 6E 64 73 3D 28 [0-15] (6E 70 6D | 62 75 6E) }\n\t\t$sb1 = { 69 6E 73 74 61 6C 6C 20 2D 44 6D 36 34 34 20 (22 | 27) [0-100] 2E 68 6F 6F 6B (22 | 27) 0A }\n\t\t$sb2 = { 69 6E 73 74 61 6C 6C 3D [1-50] 2E 69 6E 73 74 61 6C 6C }\n\n\tcondition:\n\t\tfilesize < 100KB and $sa1 and 1 of ( $sb* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNX_ARCH_SRCINFO_NPM_Dependency_Jun26",
+                "tags": [],
+                "description": "Detects suspicious .SRCINFO with NPM dependency and install script",
+                "author": "Marius Benthin",
+                "date": "2026-06-15",
+                "reference": "https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8",
+                "hash": "2ee28d5866fdb46e439678ad92729b1cd71d2d871135d8d56a27cf6a6b49e649",
+                "score": 60
+            },
+            "rule_text": "rule SUSP_LNX_ARCH_SRCINFO_NPM_Dependency_Jun26\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious .SRCINFO with NPM dependency and install script\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-06-15\"\n\t\treference = \"https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8\"\n\t\thash = \"2ee28d5866fdb46e439678ad92729b1cd71d2d871135d8d56a27cf6a6b49e649\"\n\t\tscore = 60\n\n\tstrings:\n\t\t$s1 = \"depends = npm\\n\"\n\t\t$s2 = { 69 6E 73 74 61 6C 6C 20 3D 20 [1-50] 2E 69 6E 73 74 61 6C 6C }\n\n\tcondition:\n\t\tfilesize < 5KB and all of them\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNX_ARCH_Install_Hook_Jun26",
+                "tags": [],
+                "description": "Detects suspicious pre and post hooks in Arch install files",
+                "author": "Marius Benthin",
+                "date": "2026-06-15",
+                "reference": "https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8",
+                "reference2": "https://aur.archlinux.org/cgit/aur.git/commit/?h=python-django-js-asset&id=af09b1cf1b59",
+                "hash": "ef735bca8cb2acafe70831e33ed468a3046a61147af694000761970415c7eef1",
+                "score": 70
+            },
+            "rule_text": "rule SUSP_LNX_ARCH_Install_Hook_Jun26\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious pre and post hooks in Arch install files\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-06-15\"\n\t\treference = \"https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8\"\n\t\treference2 = \"https://aur.archlinux.org/cgit/aur.git/commit/?h=python-django-js-asset&id=af09b1cf1b59\"\n\t\thash = \"47c076099e6715ffb0bd357b6832175741e77b88972033cd1f9b55b6ff7e5519\"\n\t\thash = \"ef735bca8cb2acafe70831e33ed468a3046a61147af694000761970415c7eef1\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$sa1 = \"pre_install() {\"\n\t\t$sa2 = \"post_install() {\"\n\t\t$sa3 = \"pre_upgrade() {\"\n\t\t$sa4 = \"post_upgrade() {\"\n\t\t$sa5 = \"pre_remove() {\"\n\t\t$sa6 = \"post_remove() {\"\n\t\t$sb1 = \"npm install \"\n\t\t$sb2 = \"&& 'b''u''n'\"\n\t\t$fp1 = \"#!/bin/sh\"\n\n\tcondition:\n\t\tfilesize < 5KB and 1 of ( $sa* ) and 1 of ( $sb* ) and not 1 of ( $fp* )\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "SUSP_LNX_ARCH_ALPM_Hook_Jun26",
+                "tags": [],
+                "description": "Detects suspicious execution commands in Arch ALPM hooks",
+                "author": "Marius Benthin",
+                "date": "2026-06-15",
+                "reference": "https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8",
+                "hash": "ba332432f87e68d7fa8c784c60c39ba0d3e2ac06fd8855e82ea49329e2684529",
+                "score": 70
+            },
+            "rule_text": "rule SUSP_LNX_ARCH_ALPM_Hook_Jun26\n{\n\tmeta:\n\t\tdescription = \"Detects suspicious execution commands in Arch ALPM hooks\"\n\t\tauthor = \"Marius Benthin\"\n\t\tdate = \"2026-06-15\"\n\t\treference = \"https://aur.archlinux.org/cgit/aur.git/commit/?h=hearthstone-linux-gui-bin&id=ecf810ac853e7149abd4e0c793b2517e9737edb8\"\n\t\thash = \"ba332432f87e68d7fa8c784c60c39ba0d3e2ac06fd8855e82ea49329e2684529\"\n\t\tscore = 70\n\n\tstrings:\n\t\t$s1 = \"[Action]\"\n\t\t$s2 = \"Exec = \"\n\t\t$s3 = \"npm install \"\n\t\t$s4 = \"2>/dev/null\"\n\n\tcondition:\n\t\tfilesize < 5KB and all of them\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
