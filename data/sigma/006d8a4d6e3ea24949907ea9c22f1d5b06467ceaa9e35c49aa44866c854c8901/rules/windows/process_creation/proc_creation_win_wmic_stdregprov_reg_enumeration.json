@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wmic_stdregprov_reg_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2025-07-30",
+                "title": "Registry Enumeration via WMI Stdregprov",
+                "id": "a0e417e2-2fa1-40da-b6d2-e094cd5e1191"
+            },
+            "rule_text": "title: Registry Enumeration via WMI Stdregprov\nid: a0e417e2-2fa1-40da-b6d2-e094cd5e1191\nrelated:\n- id: c453ab7a-1f5c-4716-a3b4-dea8135fb43a\n  type: similar\nstatus: experimental\ndescription: 'Detects the usage of wmic.exe to enumerate or read Windows registry\n  via the WMI StdRegProv class read methods (EnumKey, EnumValues, GetStringValue,\n  etc.).\n\n  While registry reads are common, attackers may use this technique to perform reconnaissance\n  and discover sensitive configuration values, credentials, or installed software.\n\n  The use of WMI as an alternative to standard tools like reg.exe can indicate an\n  attempt to evade detection focused on traditional registry query commands.\n\n  '\nreferences:\n- https://trustedsec.com/blog/command-line-underdog-wmic-in-action\n- https://trustedsec.com/blog/wmi-for-script-kiddies\n- https://learn.microsoft.com/en-us/previous-versions/windows/desktop/regprov/stdregprov\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2025-07-30\nmodified: 2026-06-19\ntags:\n- attack.execution\n- attack.t1047\n- attack.discovery\n- attack.t1012\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith: \\wmic.exe\n  - OriginalFileName: wmic.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - stdregprov\n    - call\n    CommandLine|contains:\n    - CheckAccess\n    - EnumKey\n    - EnumValues\n    - GetBinaryValue\n    - GetDWORDValue\n    - GetExpandedStringValue\n    - GetMultiStringValue\n    - GetQWORDValue\n    - GetSecurityDescriptor\n    - GetStringValue\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative activity\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}
