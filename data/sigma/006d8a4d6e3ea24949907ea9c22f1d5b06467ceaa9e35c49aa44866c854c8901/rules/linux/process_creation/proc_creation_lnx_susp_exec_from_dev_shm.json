@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_susp_exec_from_dev_shm.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Stan Beukers",
+                "date": "2026-06-20",
+                "title": "Process Execution From Shared Memory Directory",
+                "id": "5cd16c8f-44a6-4654-81e7-a84d6db507d4"
+            },
+            "rule_text": "title: Process Execution From Shared Memory Directory\nid: 5cd16c8f-44a6-4654-81e7-a84d6db507d4\nstatus: experimental\ndescription: 'Detects the execution of a binary from the Linux shared memory directory\n  /dev/shm.\n\n  This directory is a tmpfs mount backed entirely by RAM and is abused by attackers\n  for fileless malware staging because files written there never touch physical disk\n  and may evade disk-based detection.\n\n  '\nreferences:\n- https://www.sysdig.com/blog/containers-read-only-fileless-malware\n- https://unfinished.bike/fun-with-the-new-bpfdoor-2023\n- https://asiapacificdefencereporter.com/wp-content/uploads/2023/08/Final-CRWD-2023-Threat-Hunting-Report.pdf\n- https://www.crowdstrike.com/en-us/blog/how-to-hunt-for-decisivearchitect-and-justforfun-implant/\n- https://www.linkedin.com/posts/avradeep_malware-apt-infostealer-activity-7373203959697719296-JR-7\n- https://www.stormshield.com/news/orbit-analysis-of-a-linux-dedicated-malware/\nauthor: Stan Beukers\ndate: 2026-06-20\ntags:\n- attack.stealth\n- attack.execution\n- attack.t1027.011\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection:\n    Image|startswith: /dev/shm/\n  condition: selection\nfalsepositives:\n- Unlikely in production environments; some container runtimes or IPC frameworks may\n  use /dev/shm for inter-process communication but should not spawn executables.\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}
