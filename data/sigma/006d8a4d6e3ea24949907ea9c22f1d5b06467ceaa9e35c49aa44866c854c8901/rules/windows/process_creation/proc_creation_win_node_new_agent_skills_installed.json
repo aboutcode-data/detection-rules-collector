@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_node_new_agent_skills_installed.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Marco Pedrinazzi (@pedrinazziM) (InTheCyber)",
+                "date": "2026-02-03",
+                "title": "New Agent Skills Installation Attempt Via Node.EXE",
+                "id": "afa71271-6a97-4e47-810f-83120fb1a4ce"
+            },
+            "rule_text": "title: New Agent Skills Installation Attempt Via Node.EXE\nid: afa71271-6a97-4e47-810f-83120fb1a4ce\nstatus: experimental\ndescription: 'Detects the attempt to install new skills for AI agents using the \"npx\n  skills\" command.\n\n  Agent skills enhance AI agents with new capabilities, but attackers may abuse this\n  mechanism to inject malicious commands executed by the agent on behalf of the user.\n\n  The \"npx skills\" command can install skills for various agents (e.g., Claude Code,\n  Cursor, and others).\n\n  Analysts should review any installed skills to verify their legitimacy.\n\n  Note: Tune this rule based on whether AI agent tooling is allowed in your environment.\n\n  In environments where such tooling is authorized, this detection may reflect normal\n  activity and the alert level should be adjusted accordingly.\n\n  In environments where AI agent tooling is not permitted, this activity is likely\n  suspicious and may require immediate investigation.\n\n  '\nreferences:\n- https://blog.lukaszolejnik.com/supply-chain-risk-of-agentic-ai-infecting-infrastructures-via-skill-worms/\n- https://github.com/vercel-labs/skills/blob/1f7fbc8d0e49c4e0601d364696bd1bdd15e80967/README.md\n- https://opensourcemalware.com/blog/clawdbot-skills-ganked-your-crypto\n- https://promptintel.novahunting.ai/molt\nauthor: Marco Pedrinazzi (@pedrinazziM) (InTheCyber)\ndate: 2026-02-03\ntags:\n- attack.execution\n- attack.t1059.007\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith: \\node.exe\n  - OriginalFileName: node.exe\n  selection_cli:\n    CommandLine|contains|all:\n    - npx-cli.js\n    - 'skills '\n    - ' add '\n  condition: all of selection_*\nfalsepositives:\n- This rule will be triggered when a new agent skill is installed regardless if it\n  is benign or malicious.\n- High false positive rate expected in environments where AI agent tooling is authorized\n  and commonly used.\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_node_new_agent_skills_installed/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

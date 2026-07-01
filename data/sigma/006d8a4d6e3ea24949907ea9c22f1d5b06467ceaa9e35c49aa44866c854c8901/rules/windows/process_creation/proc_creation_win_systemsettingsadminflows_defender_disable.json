@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_systemsettingsadminflows_defender_disable.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Chirag Damani (KPMG India), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-01",
+                "title": "Windows Defender Disabled Via SystemSettingsAdminFlows.EXE",
+                "id": "da92713f-ca2d-4fab-8320-098013d3f43a"
+            },
+            "rule_text": "title: Windows Defender Disabled Via SystemSettingsAdminFlows.EXE\nid: da92713f-ca2d-4fab-8320-098013d3f43a\nstatus: experimental\ndescription: 'Detects the usage of SystemSettingsAdminFlows.exe to disable Windows\n  Defender.\n\n  SystemSettingsAdminFlows.exe is a legitimate Windows component used for administrative\n  configuration tasks.\n\n  However, attackers may abuse it to disable Windows Defender as part of their attack\n  chain, especially in the context of ransomware or other malware campaigns.\n\n  '\nreferences:\n- https://thedfirreport.com/2026/02/23/apache-activemq-exploit-leads-to-lockbit-ransomware/\n- https://www.huntress.com/blog/lolbin-to-inc-ransomware\ntags:\n- attack.defense-impairment\n- attack.t1685\nauthor: Chirag Damani (KPMG India), Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-01\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_ssaf_img:\n  - Image|endswith: \\SystemSettingsAdminFlows.exe\n  - OriginalFileName: SystemSettingsAdminFlows.EXE\n  selection_ssaf_cli:\n    CommandLine|contains: defender\n  selection_cli_enable_opt:\n    CommandLine|contains:\n    - 'RTP '\n    - 'RealTimeProtection '\n    - 'DisableEnhancedNotifications '\n  selection_cli_enable_value:\n    CommandLine|contains: '1'\n  selection_cli_disable_opt:\n    CommandLine|contains:\n    - 'SubmitSamplesConsent '\n    - 'SpyNetReporting '\n    - 'DisableCDPUserAuthPolicy '\n  selection_cli_disable_value:\n    CommandLine|contains: '0'\n  condition: all of selection_ssaf_* and (all of selection_cli_enable_* or all of\n    selection_cli_disable_*)\nfalsepositives:\n- Legitimate turn off of Windows Defender by the technical users or administrators\n  for troubleshooting or other purposes.\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_lolbin_systemsettingsadminflows_defender_disable/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
