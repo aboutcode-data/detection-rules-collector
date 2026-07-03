@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_ad_user_added_to_admin_role.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Raphaël CALVET, @MetallicHack",
+                "date": "2021-10-04",
+                "title": "User Added to an Administrator's Azure AD Role",
+                "id": "ebbeb024-5b1d-4e16-9c0c-917f86c708a7"
+            },
+            "rule_text": "title: User Added to an Administrator's Azure AD Role\nid: ebbeb024-5b1d-4e16-9c0c-917f86c708a7\nstatus: test\ndescription: User Added to an Administrator's Azure AD Role\nreferences:\n- https://web.archive.org/web/20250904191633/https://m365internals.com/2021/07/13/what-ive-learned-from-doing-a-year-of-cloud-forensics-in-azure-ad/\n- https://research.splunk.com/cloud/a28f0bc3-3400-4a6e-a2da-89b9e95f0d2a/\n- https://analyticsrules.exchange/analyticrules/2a09f8cb-deb7-4c40-b08b-9137667f1c0b/\n- https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities#core-directory\nauthor: \"Rapha\\xEBl CALVET, @MetallicHack\"\ndate: 2021-10-04\nmodified: 2026-04-30\ntags:\n- attack.initial-access\n- attack.persistence\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1098.003\n- attack.t1078\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    operationName: Add member to role\n    properties.targetResources|contains:\n    - Admins\n    - Administrator\n  condition: selection\nfalsepositives:\n- PIM (Privileged Identity Management) generates this event each time 'eligible role'\n  is enabled.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

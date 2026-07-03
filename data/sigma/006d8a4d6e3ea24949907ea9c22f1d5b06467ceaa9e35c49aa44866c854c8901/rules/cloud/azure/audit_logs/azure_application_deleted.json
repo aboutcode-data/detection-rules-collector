@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_application_deleted.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Austin Songer @austinsonger",
+                "date": "2021-09-03",
+                "title": "Azure Application Deleted",
+                "id": "410d2a41-1e6d-452f-85e5-abdd8257a823"
+            },
+            "rule_text": "title: Azure Application Deleted\nid: 410d2a41-1e6d-452f-85e5-abdd8257a823\nstatus: test\ndescription: Identifies when a application is deleted in Azure.\nreferences:\n- https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities#application-proxy\n- https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities#core-directory\n- https://techcommunity.microsoft.com/blog/microsoft-entra-blog/keeping-track-of-object-deletions-in-microsoft-entra-id/4053415\nauthor: Austin Songer @austinsonger\ndate: 2021-09-03\nmodified: 2026-04-30\ntags:\n- attack.impact\n- attack.t1489\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    operationName:\n    - Delete application\n    - Hard Delete application\n    - Delete administrative unit\n  condition: selection\nfalsepositives:\n- Application being deleted may be performed by a system administrator.\n- Verify whether the user identity, user agent, and/or hostname should be making changes\n  in your environment.\n- Application deleted from unfamiliar users should be investigated. If known behavior\n  is causing false positives, it can be exempted from the rule.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

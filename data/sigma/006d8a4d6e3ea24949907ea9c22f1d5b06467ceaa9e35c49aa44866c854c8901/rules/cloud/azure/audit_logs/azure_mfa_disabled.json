@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/azure/audit_logs/azure_mfa_disabled.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "@ionsor",
+                "date": "2022-02-08",
+                "title": "Disabled MFA to Bypass Authentication Mechanisms",
+                "id": "7ea78478-a4f9-42a6-9dcd-f861816122bf"
+            },
+            "rule_text": "title: Disabled MFA to Bypass Authentication Mechanisms\nid: 7ea78478-a4f9-42a6-9dcd-f861816122bf\nstatus: test\ndescription: Detection for when multi factor authentication has been disabled, which\n  might indicate a malicious activity to bypass authentication mechanisms.\nreferences:\n- https://learn.microsoft.com/en-us/azure/active-directory/authentication/howto-mfa-userstates\n- https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities#core-directory\n- https://research.splunk.com/cloud/482dd42a-acfa-486b-a0bb-d6fcda27318e/\n- https://analyticsrules.exchange/analyticrules/65c78944-930b-4cae-bd79-c3664ae30ba7/\n- https://www.elastic.co/docs/reference/security/prebuilt-rules/rules/integrations/azure/persistence_entra_id_mfa_disabled_for_user\nauthor: '@ionsor'\ndate: 2022-02-08\nmodified: 2026-04-30\ntags:\n- attack.credential-access\n- attack.persistence\n- attack.defense-impairment\n- attack.t1556\nlogsource:\n  product: azure\n  service: auditlogs\ndetection:\n  selection:\n    operationName: Disable Strong Authentication\n    properties.result: success\n  condition: selection\nfalsepositives:\n- Authorized modification by administrators\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}
