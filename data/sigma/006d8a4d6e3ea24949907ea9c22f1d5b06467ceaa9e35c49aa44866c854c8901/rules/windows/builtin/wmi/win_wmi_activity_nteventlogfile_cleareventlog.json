@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "test",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-01",
+                "title": "Failed Event Log Clear Via WMI NTEventLogFile ClearEventLog",
+                "id": "d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b"
+            },
+            "rule_text": "title: Failed Event Log Clear Via WMI NTEventLogFile ClearEventLog\nid: d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b\nstatus: test\ndescription: 'Detects failed attempts to clear Windows event logs via the WMI NTEventLogFile\n  ClearEventLog method.\n\n  Event 5858 in the WMI-Activity operational log is an error event, meaning it is\n  only generated\n\n  when the WMI operation encounters an error (e.g. access denied, provider failure).\n\n  It could be an indication of an attacker attempting to clear event logs via WMI,\n  but failing due to insufficient privileges or other issues.\n\n  Successful clearing operations will NOT produce this event; for those, correlate\n  with\n\n  Security event 1102 or System event 104.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/cleareventlog-method-in-class-win32-nteventlogfile\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-01\ntags:\n- attack.defense-impairment\n- attack.t1685.005\nlogsource:\n  product: windows\n  service: wmi\ndetection:\n  selection:\n    EventID: 5858\n    Operation|contains|all:\n    - Win32_NTEventlogFile\n    - cleareventlog\n  condition: selection\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
