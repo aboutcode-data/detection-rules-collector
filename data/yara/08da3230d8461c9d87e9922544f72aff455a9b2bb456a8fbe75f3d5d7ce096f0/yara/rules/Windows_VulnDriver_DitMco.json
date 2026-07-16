@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_DitMco.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_DitMco_31fabc5e",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "31fabc5e-4fd9-45a1-bae6-a92906f5ac1f",
+                "fingerprint": "83ce10baf340a7ba7c1f403757a3fec40f30228fdbb933a435d3ae4b8a1fd4ef",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-13",
+                "description": "Subject: DIT-MCO International Corporation",
+                "threat_name": "Windows.VulnDriver.DitMco",
+                "reference_sample": "33f9f2aa566d0873777e841c8cd970298a93206d3be4dfd30fee726eb0d47585",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_DitMco_31fabc5e\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"31fabc5e-4fd9-45a1-bae6-a92906f5ac1f\"\n\t\tfingerprint = \"83ce10baf340a7ba7c1f403757a3fec40f30228fdbb933a435d3ae4b8a1fd4ef\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-13\"\n\t\tdescription = \"Subject: DIT-MCO International Corporation\"\n\t\tthreat_name = \"Windows.VulnDriver.DitMco\"\n\t\treference_sample = \"33f9f2aa566d0873777e841c8cd970298a93206d3be4dfd30fee726eb0d47585\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 44 49 54 2D 4D 43 4F 20 49 6E 74 65 72 6E 61 74 69 6F 6E 61 6C 20 43 6F 72 70 6F 72 61 74 69 6F 6E }\n\t\t$str1 = \"DITPIO.pdb\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
