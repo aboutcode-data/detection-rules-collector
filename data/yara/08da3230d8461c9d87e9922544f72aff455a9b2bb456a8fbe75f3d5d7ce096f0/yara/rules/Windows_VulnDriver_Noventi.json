@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_Noventi.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_Noventi_1d9804d7",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "1d9804d7-bf6e-4fb5-82e1-f9ebfbbb6039",
+                "fingerprint": "45c509c4e10a4018f33cc00ba0f661e9f387fb4fbc0dcd9b4cbcb1571a4be16e",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-20",
+                "description": "Subject: NOVENTI Health SE",
+                "threat_name": "Windows.VulnDriver.Noventi",
+                "reference_sample": "5e238d351e16d4909ca394f1db0326a60d33c9ac7b4d78aefcf17a6d9cc72be9",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_Noventi_1d9804d7\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"1d9804d7-bf6e-4fb5-82e1-f9ebfbbb6039\"\n\t\tfingerprint = \"45c509c4e10a4018f33cc00ba0f661e9f387fb4fbc0dcd9b4cbcb1571a4be16e\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-20\"\n\t\tdescription = \"Subject: NOVENTI Health SE\"\n\t\tthreat_name = \"Windows.VulnDriver.Noventi\"\n\t\treference_sample = \"5e238d351e16d4909ca394f1db0326a60d33c9ac7b4d78aefcf17a6d9cc72be9\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 4E 4F 56 45 4E 54 49 20 48 65 61 6C 74 68 20 53 45 }\n\t\t$str1 = \"amifldrv64.pdb\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

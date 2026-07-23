@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_MatroxGraphics.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_MatroxGraphics_f069d0ed",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "f069d0ed-5f98-486d-bdd5-0bed9e53d42b",
+                "fingerprint": "453707599c0deb47f3d56c7497d723669d9b1a3547850ba88443005eb2837e4e",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-20",
+                "description": "Subject: Matrox Graphics Inc.",
+                "threat_name": "Windows.VulnDriver.MatroxGraphics",
+                "reference_sample": "0414c0d5bb6ddbcc84b3d59ce411acf1ed8b17d17054c6192e0a7594b5146d60",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_MatroxGraphics_f069d0ed\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"f069d0ed-5f98-486d-bdd5-0bed9e53d42b\"\n\t\tfingerprint = \"453707599c0deb47f3d56c7497d723669d9b1a3547850ba88443005eb2837e4e\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-20\"\n\t\tdescription = \"Subject: Matrox Graphics Inc.\"\n\t\tthreat_name = \"Windows.VulnDriver.MatroxGraphics\"\n\t\treference_sample = \"0414c0d5bb6ddbcc84b3d59ce411acf1ed8b17d17054c6192e0a7594b5146d60\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 4D 61 74 72 6F 78 20 47 72 61 70 68 69 63 73 20 49 6E 63 2E }\n\t\t$str1 = \"MtxVxd.pdb\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

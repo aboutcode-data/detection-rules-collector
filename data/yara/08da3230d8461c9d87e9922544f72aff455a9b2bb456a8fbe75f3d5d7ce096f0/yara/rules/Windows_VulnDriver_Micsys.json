@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_Micsys.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_Micsys_b1db31b5",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "b1db31b5-f79e-4453-bc5b-04e5746adfce",
+                "fingerprint": "98cfb23e27884f1428ff85b13a283dd9e4294512a0cc3fdbd77a71d6e93c8e1a",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-20",
+                "description": "Subject: MICSYS Technology Co., Ltd.",
+                "threat_name": "Windows.VulnDriver.Micsys",
+                "reference_sample": "525d9b51a80ca0cd4c5889a96f857e73f3a80da1ffbae59851e0f51bdfb0b6cd",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_Micsys_b1db31b5\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"b1db31b5-f79e-4453-bc5b-04e5746adfce\"\n\t\tfingerprint = \"98cfb23e27884f1428ff85b13a283dd9e4294512a0cc3fdbd77a71d6e93c8e1a\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-20\"\n\t\tdescription = \"Subject: MICSYS Technology Co., Ltd.\"\n\t\tthreat_name = \"Windows.VulnDriver.Micsys\"\n\t\treference_sample = \"525d9b51a80ca0cd4c5889a96f857e73f3a80da1ffbae59851e0f51bdfb0b6cd\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 4D 49 43 53 59 53 20 54 65 63 68 6E 6F 6C 6F 67 79 20 43 6F 2E 2C 20 4C 74 64 2E }\n\t\t$str1 = \"MsIo64.pdb\"\n\t\t$str2 = \"IOCTL_MSIO_UNMAPPHYSADDR\"\n\t\t$str3 = \"IOCTL_MSIO_MAPPHYSTOLIN\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1 and $str2 and $str3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
