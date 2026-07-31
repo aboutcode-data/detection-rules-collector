@@ -1,0 +1,47 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_ShiruiElectronics.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_ShiruiElectronics_ccf646ac",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "ccf646ac-ac08-4189-9bda-4c33b4a4f2ab",
+                "fingerprint": "daa1cfc11315b992957eeacd22d72d9afb29071ab4d87802899ba1cb6fa7b5ea",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-29",
+                "description": "Subject: Guangzhou Shirui Electronics Co., Ltd",
+                "threat_name": "Windows.VulnDriver.ShiruiElectronics",
+                "reference_sample": "42322b59f75f3ee3f66d080433c01fe024ca9ce5cbd3acac8a98394ac2a0d659",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_ShiruiElectronics_ccf646ac\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"ccf646ac-ac08-4189-9bda-4c33b4a4f2ab\"\n\t\tfingerprint = \"daa1cfc11315b992957eeacd22d72d9afb29071ab4d87802899ba1cb6fa7b5ea\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-29\"\n\t\tdescription = \"Subject: Guangzhou Shirui Electronics Co., Ltd\"\n\t\tthreat_name = \"Windows.VulnDriver.ShiruiElectronics\"\n\t\treference_sample = \"42322b59f75f3ee3f66d080433c01fe024ca9ce5cbd3acac8a98394ac2a0d659\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 47 75 61 6E 67 7A 68 6F 75 20 53 68 69 72 75 69 20 45 6C 65 63 74 72 6F 6E 69 63 73 20 43 6F 2E 2C 20 4C 74 64 }\n\t\t$str1 = \"WinIo.pdb\"\n\t\t$str2 = \"IOCTL_WINIO_UNMAPPHYSADDR\"\n\t\t$str3 = \"IOCTL_WINIO_MAPPHYSTOLIN\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1 and $str2 and $str3\n}\n",
+            "vulnerabilities": []
+        },
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_ShiruiElectronics_9da0976f",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "9da0976f-fcbd-400f-97ce-4940e30ecc6b",
+                "fingerprint": "48cda3a3a6964e0d4aba1417610211fd4ff5c0daa9bed6e6e42f50edb98c3aca",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-29",
+                "description": "Subject: Guangzhou Shirui Electronics Co., Ltd., Version: <= 0.0.1.6",
+                "threat_name": "Windows.VulnDriver.ShiruiElectronics",
+                "reference_sample": "4cea52c32579869d0209f18ced0b9cc9ad8f86cac29e0fb63b3d60eb64801bda",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_ShiruiElectronics_9da0976f\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"9da0976f-fcbd-400f-97ce-4940e30ecc6b\"\n\t\tfingerprint = \"48cda3a3a6964e0d4aba1417610211fd4ff5c0daa9bed6e6e42f50edb98c3aca\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-29\"\n\t\tdescription = \"Subject: Guangzhou Shirui Electronics Co., Ltd., Version: <= 0.0.1.6\"\n\t\tthreat_name = \"Windows.VulnDriver.ShiruiElectronics\"\n\t\treference_sample = \"4cea52c32579869d0209f18ced0b9cc9ad8f86cac29e0fb63b3d60eb64801bda\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 47 75 61 6E 67 7A 68 6F 75 20 53 68 69 72 75 69 20 45 6C 65 63 74 72 6F 6E 69 63 73 20 43 6F 2E 2C 20 4C 74 64 2E }\n\t\t$version = /V\\x00S\\x00_\\x00V\\x00E\\x00R\\x00S\\x00I\\x00O\\x00N\\x00_\\x00I\\x00N\\x00F\\x00O\\x00\\x00\\x00{0,4}\\xbd\\x04\\xef\\xfe[\\x00-\\xff]{4}([\\x00-\\x00][\\x00-\\x00][\\x00-\\x00][\\x00-\\x00][\\x00-\\xff][\\x00-\\xff][\\x00-\\x00][\\x00-\\x00]|[\\x00-\\x00][\\x00-\\x00][\\x00-\\x00][\\x00-\\x00][\\x00-\\x05][\\x00-\\x00][\\x01-\\x01][\\x00-\\x00]|[\\x00-\\x00][\\x00-\\x00][\\x00-\\x00][\\x00-\\x00][\\x06-\\x06][\\x00-\\x00][\\x01-\\x01][\\x00-\\x00])/\n\t\t$str1 = \"WinCPUoC64.pdb\"\n\t\t$str2 = \"Windows CPU Temperature Component\" wide\n\t\t$str3 = \"seewo - Windows CPU Temperature Component\" wide\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $version and $str1 and $str2 and $str3\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

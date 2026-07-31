@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_YiZeng.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_YiZeng_a14e301e",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "a14e301e-0c7f-4d31-a912-e5398ae9a3cd",
+                "fingerprint": "6a2b5565d02706df8c74ece43b4a3fcb9454e4ffb34dbb4b6cf75a5e5c4645c2",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-07-29",
+                "description": "Subject: YI ZENG",
+                "threat_name": "Windows.VulnDriver.YiZeng",
+                "reference_sample": "56066ed07bad3b5c1474e8fae5ee2543d17d7977369b34450bd0775517e3b25c",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_YiZeng_a14e301e\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"a14e301e-0c7f-4d31-a912-e5398ae9a3cd\"\n\t\tfingerprint = \"6a2b5565d02706df8c74ece43b4a3fcb9454e4ffb34dbb4b6cf75a5e5c4645c2\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-07-29\"\n\t\tdescription = \"Subject: YI ZENG\"\n\t\tthreat_name = \"Windows.VulnDriver.YiZeng\"\n\t\treference_sample = \"56066ed07bad3b5c1474e8fae5ee2543d17d7977369b34450bd0775517e3b25c\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 59 49 20 5A 45 4E 47 }\n\t\t$str1 = \"nullout.pdb\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
