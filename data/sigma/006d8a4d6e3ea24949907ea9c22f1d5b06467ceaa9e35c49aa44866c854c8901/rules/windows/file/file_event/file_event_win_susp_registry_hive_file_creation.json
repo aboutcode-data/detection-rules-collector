@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_susp_registry_hive_file_creation.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-23",
+                "title": "Registry Hive File Staged Outside Standard User Profile Path",
+                "id": "a7f3c891-2e4d-4b6a-9f8c-d5e2a1b04c73"
+            },
+            "rule_text": "title: Registry Hive File Staged Outside Standard User Profile Path\nid: a7f3c891-2e4d-4b6a-9f8c-d5e2a1b04c73\nstatus: experimental\ndescription: 'Detects the creation of a registry hive file (UsrClass.dat or NTUSER.DAT)\n  outside of the standard user profile path.\n\n  These files generally contain various user-specific registry settings and are typically\n  located in the user''s profile directory.\n\n  Staging these files outside of the standard path can be indicative of an attacker\n  attempting to manipulate user registry settings\n\n  for persistence, privilege escalation, or dump user registry hives for credential\n  harvesting.\n\n  '\nreferences:\n- https://github.com/MSNightmare/LegacyHive\n- https://git.projectnightcrawler.dev/NightmareEclipse/LegacyHive\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-23\ntags:\n- attack.privilege-escalation\n- attack.t1548\n- attack.credential-access\n- attack.t1003\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection:\n    TargetFilename|endswith:\n    - \\UsrClass.dat\n    - \\NTUSER.DAT\n  filter_main_usrclass:\n    TargetFilename|endswith: \\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat\n  filter_main_ntuser:\n    TargetFilename|re|i: ^C:\\\\Users\\\\[^\\\\]+\\\\NTUSER\\.DAT$\n  filter_main_system:\n    TargetFilename|startswith:\n    - C:\\Windows\\System32\\config\\\n    - C:\\Windows\\SYSVOL\\\n    - C:\\Windows\\ServiceProfiles\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Backup or profile migration software\n- Forensic acquisition tools\nlevel: high\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_susp_registry_hive_file_creation/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

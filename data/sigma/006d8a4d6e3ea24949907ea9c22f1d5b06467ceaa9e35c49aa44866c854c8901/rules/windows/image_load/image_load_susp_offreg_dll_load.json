@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_susp_offreg_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-23",
+                "title": "Potentially Suspicious Image Load of Offreg.dll",
+                "id": "c9e5f013-4a6f-4d8c-9b0e-f7a4c3d26e95"
+            },
+            "rule_text": "title: Potentially Suspicious Image Load of Offreg.dll\nid: c9e5f013-4a6f-4d8c-9b0e-f7a4c3d26e95\nstatus: experimental\ndescription: 'Detects potentially suspicious loading of the Offline Registry Library\n  (offreg.dll).\n\n  Offreg.dll enables direct read/write access to offline registry hives without invoking\n  the Windows Registry API,\n\n  bypassing its associated audit logging and telemetry. Attackers may abuse this to\n  stealthily modify registry hives\n\n  while evading detection mechanisms that rely on standard registry event logs.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/devnotes/about-the-offline-registry-library\n- https://github.com/MSNightmare/LegacyHive\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-23\ntags:\n- attack.defense-impairment\n- attack.persistence\n- attack.t1112\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection:\n    ImageLoaded|endswith: \\offreg.dll\n  filter_main_system32:\n    Image|startswith:\n    - C:\\Windows\\System32\\\n    - C:\\Windows\\SysWOW64\\\n    - C:\\Windows\\WinSxS\\\n  filter_main_program_files:\n    Image|startswith:\n    - C:\\Program Files\\\n    - C:\\Program Files (x86)\\\n  filter_main_appdata_local_programs:\n    Image|startswith: C:\\Users\\\n    Image|contains: \\AppData\\Local\\Programs\\\n  filter_main_defender:\n    Image|startswith: C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\\n    Image|endswith: \\MsMpEng.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Third-party backup or forensic software that performs offline registry parsing\n- Windows deployment tools (DISM, ADK) run from non-standard paths\nlevel: medium\nregression_tests_path: regression_data/rules/windows/image_load/image_load_susp_offreg_dll_load/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

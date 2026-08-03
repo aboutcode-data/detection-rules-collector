@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_susp_cross_user_process_spawn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-23",
+                "title": "Suspicious Cross-User Process Spawn",
+                "id": "d2b7a134-9c3e-4f8a-b56d-e0c1f8a29b47"
+            },
+            "rule_text": "title: Suspicious Cross-User Process Spawn\nid: d2b7a134-9c3e-4f8a-b56d-e0c1f8a29b47\nstatus: experimental\ndescription: 'Detects suspicious spawning of a process under a different user context\n  than the parent process.\n\n  Processes such as notepad.exe, calculator etc. are generally spawned under the same\n  user context and\n\n  also they are often targeted as sacrificial process or decoy process to check successful\n  privilege escalation.\n\n  '\nreferences:\n- https://github.com/MSNightmare/LegacyHive\n- https://git.projectnightcrawler.dev/NightmareEclipse/LegacyHive\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-23\ntags:\n- attack.privilege-escalation\n- attack.stealth\n- attack.t1055\n- attack.t1134\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith:\n    - \\notepad.exe\n    - \\calc.exe\n    - \\mspaint.exe\n    - \\wordpad.exe\n    - \\write.exe\n  filter_main_same_user:\n    User|fieldref: ParentUser\n  filter_optional_user_null:\n    User: null\n  filter_optional_parent_null:\n    ParentUser: null\n  filter_optional_empty_user:\n  - ParentUser:\n    - ''\n    - '-'\n  - User:\n    - ''\n    - '-'\n  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*\nfalsepositives:\n- RunAs usage spawning one of the listed binaries under a different account\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_susp_cross_user_process_spawn/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
