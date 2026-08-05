@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_dc_machine_accoutn_tgt_non_dc_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-29",
+                "title": "DC Machine Account TGT Request from Non-DC Source IP",
+                "id": "9c5d2b84-1f7e-4a3c-d6b8-e04f9a17c523"
+            },
+            "rule_text": "title: DC Machine Account TGT Request from Non-DC Source IP\nid: 9c5d2b84-1f7e-4a3c-d6b8-e04f9a17c523\nstatus: experimental\ndescription: \"Detects a Kerberos TGT request (Event 4768) for a known Domain Controller\\\n  \\ machine account\\noriginating from an IP address that is not a known Domain Controller.\\\n  \\ DC machine accounts\\nshould only request TGTs from their own IP. Any TGT request\\\n  \\ for a DC account from a\\nworkstation or non-DC host is anomalous and indicates\\\n  \\ one of the following:\\n\\n  - PKINIT abuse (CVE-2026-54121 / Certighost): attacker\\\n  \\ authenticating as a DC via a\\n    forged certificate from their workstation\\n\\\n  \\  - Overpass-the-Hash: attacker converting a stolen DC machine account NTLM hash\\\n  \\ into a\\n    Kerberos TGT\\n  - Pass-the-Hash (RC4): attacker using the DC machine\\\n  \\ account hash directly with Kerberos\\n\"\nreferences:\n- https://github.com/aniqfakhrul/CVE-2026-54121\n- https://gist.github.com/H0j3n/a5ef2609b5f2944ac2390a191a534c26\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-29\ntags:\n- attack.credential-access\n- attack.lateral-movement\n- attack.t1649\n- attack.t1550.003\n- attack.t1558.001\n- cve.2026-54121\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4768\n    Status: '0x0'\n    TargetUserName|endswith: $\n    TargetUserName|expand: '%dc_machine_accounts%'\n  filter_main_dc_source:\n    IpAddress|expand: '%dc_ip_addresses%'\n  filter_main_loopback:\n  - IpAddress:\n    - 127.0.0.1\n    - ::1\n    - ::ffff:127.0.0.1\n    - '-'\n  - IpAddress|startswith: 'fe80:'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely if %dc_machine_accounts% and %dc_ip_addresses% are correctly populated.\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2026-54121"
+            ]
+        }
+    ]
+}

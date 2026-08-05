@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_dc_machine_account_logon_non_dc_ip.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-29",
+                "title": "DC Machine Account Network Logon from Non-DC Source IP",
+                "id": "b2e4a719-3c8f-4d1b-a507-f83c2d56e901"
+            },
+            "rule_text": "title: DC Machine Account Network Logon from Non-DC Source IP\nid: b2e4a719-3c8f-4d1b-a507-f83c2d56e901\nstatus: experimental\ndescription: \"Detects a Domain Controller machine account authenticating from a source\\\n  \\ IP that is not\\na known Domain Controller. DC machine accounts should only authenticate\\\n  \\ locally or from other DCs during\\nreplication operations. Any logon event for\\\n  \\ a DC account from a workstation or non-DC host is anomalous and\\nindicates one\\\n  \\ of the following:\\n\\n  - Silver Ticket: attacker forged a Kerberos TGS for a DC\\\n  \\ machine account without\\n    requesting a TGT\\n  - Pass-the-Ticket: attacker is\\\n  \\ replaying a captured DC machine account TGS from\\n    a non-DC host\\n  - Overpass-the-Hash:\\\n  \\ attacker converted a stolen DC machine account hash into a\\n    Kerberos ticket\\\n  \\ and is authenticating from a non-DC host\\n  - Exploitation of certain vulnerabilities\\\n  \\ such as CVE-2026-54121 (Certighost):\\n    attacker obtained a DC certificate via\\\n  \\ ADCS CDC-chase\\n    abuse, authenticates via PKINIT as the DC from their own host,\\\n  \\ then performs DCSync\\n\"\nreferences:\n- https://github.com/aniqfakhrul/CVE-2026-54121\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-29\ntags:\n- attack.credential-access\n- attack.lateral-movement\n- attack.t1550.003\n- attack.t1558.002\n- attack.t1649\n- cve.2026-54121\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection:\n    EventID: 4624\n    TargetUserName|endswith: $\n    TargetUserName|expand: '%dc_machine_accounts%'\n  filter_main_dc_source:\n    IpAddress|expand: '%dc_ip_addresses%'\n  filter_main_loopback:\n  - IpAddress:\n    - 127.0.0.1\n    - ::1\n    - ::ffff:127.0.0.1\n    - '-'\n  - IpAddress|startswith: 'fe80:'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely if %dc_machine_accounts% and %dc_ip_addresses% are correctly populated.\nlevel: critical\n",
+            "vulnerabilities": [
+                "CVE-2026-54121"
+            ]
+        }
+    ]
+}

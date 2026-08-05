@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/network_connection/net_connection_win_certsvc_outbound_smb_ldap.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-07-29",
+                "title": "Certificate Services Outbound SMB or LDAP Connection",
+                "id": "2a9e4f17-6c3b-4d8a-e1f0-b57c2d94a631"
+            },
+            "rule_text": "title: Certificate Services Outbound SMB or LDAP Connection\nid: 2a9e4f17-6c3b-4d8a-e1f0-b57c2d94a631\nrelated:\n- id: c4a1f389-2e6b-4d9a-8f0c-b73e5a12d947\n  type: similar\nstatus: experimental\ndescription: \"Detects the Windows Certificate Services process (certsrv.exe) initiating\\\n  \\ an outbound\\nnetwork connection on port 445 (SMB) or 389 (LDAP) to a non-DC host.\\\n  \\ This behaviour is\\ninherently suspicious: under normal operation the CA resolves\\\n  \\ subject identities via local\\nRPC against the domain and never initiates outbound\\\n  \\ SMB or LDAP connections to arbitrary\\nhosts. Any such connection indicates the\\\n  \\ CA is being coerced into performing a remote\\nidentity lookup against an attacker-controlled\\\n  \\ host.\\n\\nThe most direct known trigger is the CA chase fallback (EDITF_ENABLECHASECLIENTDC)\\\n  \\ where\\na requester-supplied 'cdc' attribute causes the CA to open SMB and LDAP\\\n  \\ to a specified\\naddress. CVE-2026-54121 (Certighost) exploits this path to redirect\\\n  \\ the CA to rogue LSA\\nand LDAP services that return a DC's identity, resulting\\\n  \\ in a forged DC certificate.\\nThis rule is not limited to Certighost \\u2014 any\\\n  \\ future vulnerability or misconfiguration\\nthat causes certsrv.exe to make outbound\\\n  \\ SMB or LDAP connections is covered.\\n\"\nreferences:\n- https://github.com/aniqfakhrul/CVE-2026-54121\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-07-29\ntags:\n- attack.privilege-escalation\n- attack.credential-access\n- attack.t1649\nlogsource:\n  category: network_connection\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\certsrv.exe\n    Initiated: 'true'\n    DestinationPort:\n    - 389\n    - 445\n  filter_main_loopback:\n    DestinationIp:\n    - 127.0.0.1\n    - ::1\n    - 0:0:0:0:0:0:0:1\n  filter_main_known_legit_ips:\n    DestinationIp|expand: '%legit_ips%'\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\n",
+            "vulnerabilities": [
+                "CVE-2026-54121"
+            ]
+        }
+    ]
+}
