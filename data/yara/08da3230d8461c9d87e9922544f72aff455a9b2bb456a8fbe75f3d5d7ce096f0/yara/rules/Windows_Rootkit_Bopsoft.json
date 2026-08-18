@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_Rootkit_Bopsoft.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_Rootkit_Bopsoft_923591e2",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "923591e2-3c13-4d29-a78f-14d827300d65",
+                "fingerprint": "288663d012176cfd6d72a6b34ff2db690d44a113a54f6fc1aa0e7108c4b706ba",
+                "creation_date": "2026-05-22",
+                "last_modified": "2026-08-10",
+                "description": "Subject: Bopsoft",
+                "threat_name": "Windows.Rootkit.Bopsoft",
+                "reference_sample": "b6cb163089f665c05d607a465f1b6272cdd5c949772ab9ce7227120cf61f971a",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_Rootkit_Bopsoft_923591e2\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"923591e2-3c13-4d29-a78f-14d827300d65\"\n\t\tfingerprint = \"288663d012176cfd6d72a6b34ff2db690d44a113a54f6fc1aa0e7108c4b706ba\"\n\t\tcreation_date = \"2026-05-22\"\n\t\tlast_modified = \"2026-08-10\"\n\t\tdescription = \"Subject: Bopsoft\"\n\t\tthreat_name = \"Windows.Rootkit.Bopsoft\"\n\t\treference_sample = \"b6cb163089f665c05d607a465f1b6272cdd5c949772ab9ce7227120cf61f971a\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 42 6F 70 73 6F 66 74 }\n\t\t$str1 = \"MemoryTest.pdb\"\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $str1\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

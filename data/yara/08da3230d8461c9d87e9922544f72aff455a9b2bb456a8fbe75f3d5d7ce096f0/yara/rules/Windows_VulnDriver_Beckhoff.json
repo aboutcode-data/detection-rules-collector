@@ -1,0 +1,26 @@
+{
+    "source_url": "https://github.com/elastic/protections-artifacts/blob/master/yara/rules/Windows_VulnDriver_Beckhoff.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Windows_VulnDriver_Beckhoff_882be601",
+                "tags": [],
+                "author": "Elastic Security",
+                "id": "882be601-4112-41a8-ab1f-ea61e8683fa8",
+                "fingerprint": "3dfa8155ab04ba428a26dd46047668d4af50e698cd62dcbdb1f06166f6104563",
+                "creation_date": "2026-07-26",
+                "last_modified": "2026-08-11",
+                "description": "Subject: Microsoft Windows Hardware Compatibility Publisher, Version: <= 3.1.0.2355",
+                "threat_name": "Windows.VulnDriver.Beckhoff",
+                "reference_sample": "d89938a469e8e4b429507522b5a52cb6f87c50f559f22f3042921631b768e59a",
+                "severity": 50,
+                "arch_context": "x86",
+                "scan_context": "file",
+                "license": "Elastic License v2",
+                "os": "windows"
+            },
+            "rule_text": "rule Windows_VulnDriver_Beckhoff_882be601\n{\n\tmeta:\n\t\tauthor = \"Elastic Security\"\n\t\tid = \"882be601-4112-41a8-ab1f-ea61e8683fa8\"\n\t\tfingerprint = \"3dfa8155ab04ba428a26dd46047668d4af50e698cd62dcbdb1f06166f6104563\"\n\t\tcreation_date = \"2026-07-26\"\n\t\tlast_modified = \"2026-08-11\"\n\t\tdescription = \"Subject: Microsoft Windows Hardware Compatibility Publisher, Version: <= 3.1.0.2355\"\n\t\tthreat_name = \"Windows.VulnDriver.Beckhoff\"\n\t\treference_sample = \"d89938a469e8e4b429507522b5a52cb6f87c50f559f22f3042921631b768e59a\"\n\t\tseverity = 50\n\t\tarch_context = \"x86\"\n\t\tscan_context = \"file\"\n\t\tlicense = \"Elastic License v2\"\n\t\tos = \"windows\"\n\n\tstrings:\n\t\t$subject_name = { 06 03 55 04 03 [2] 4D 69 63 72 6F 73 6F 66 74 20 57 69 6E 64 6F 77 73 20 48 61 72 64 77 61 72 65 20 43 6F 6D 70 61 74 69 62 69 6C 69 74 79 20 50 75 62 6C 69 73 68 65 72 }\n\t\t$version = /V\\x00S\\x00_\\x00V\\x00E\\x00R\\x00S\\x00I\\x00O\\x00N\\x00_\\x00I\\x00N\\x00F\\x00O\\x00\\x00\\x00{0,4}\\xbd\\x04\\xef\\xfe[\\x00-\\xff]{4}([\\x00-\\xff][\\x00-\\xff][\\x00-\\x02][\\x00-\\x00][\\x00-\\xff][\\x00-\\xff][\\x00-\\xff][\\x00-\\xff]|[\\x00-\\x00][\\x00-\\x00][\\x03-\\x03][\\x00-\\x00][\\x00-\\xff][\\x00-\\xff][\\x00-\\xff][\\x00-\\xff]|[\\x01-\\x01][\\x00-\\x00][\\x03-\\x03][\\x00-\\x00]([\\x00-\\xff][\\x00-\\x00]|[\\x00-\\xff][\\x01-\\x08]|[\\x00-\\x32][\\x09-\\x09])[\\x00-\\x00][\\x00-\\x00]|[\\x01-\\x01][\\x00-\\x00][\\x03-\\x03][\\x00-\\x00][\\x33-\\x33][\\x09-\\x09][\\x00-\\x00][\\x00-\\x00])/\n\t\t$str1 = \"TcRouter.pdb\"\n\t\t$str2 = \"\\\\Device\\\\ROUTER_IO_COMPLETE\"\n\t\t$str3 = \"GetRouterFuncTable\"\n\t\t$str4 = \"Beckhoff TwinCAT\" wide\n\t\t$str5 = \"TwinCAT Router Server\" wide\n\n\tcondition:\n\t\tint16 ( uint32( 0x3C ) + 0x5c ) == 0x0001 and int16 ( uint32( 0x3C ) + 0x18 ) == 0x020b and $subject_name and $version and $str1 and $str2 and $str3 and $str4 and $str5\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
