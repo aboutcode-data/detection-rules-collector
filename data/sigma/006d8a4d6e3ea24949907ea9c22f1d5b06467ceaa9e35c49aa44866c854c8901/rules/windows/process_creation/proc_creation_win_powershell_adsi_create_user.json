@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_adsi_create_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "William Gokah (idea), Raylee Hawkins, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-08-13",
+                "title": "New User Account Creation Attempt Via ADSI in CommandLine",
+                "id": "7c9fed65-039a-4055-8c23-fa763d94aff6"
+            },
+            "rule_text": "title: New User Account Creation Attempt Via ADSI in CommandLine\nid: 7c9fed65-039a-4055-8c23-fa763d94aff6\nrelated:\n- id: e50d5d26-0cf6-4045-b82b-13c0a4e316be\n  type: similar\nstatus: experimental\ndescription: 'Detects PowerShell command line arguments containing ADSI (Active Directory\n  Service Interfaces) patterns\n\n  trying to create a new user account via the WinNT or LDAP provider. This is an uncommon\n  method to create\n\n  user accounts and may indicate an attempt to evade detection by avoiding more commonly\n  monitored commands\n\n  such as \"net user\", \"New-LocalUser\" or \"New-ADUser\".\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/adsi/user-creation-with-the-adsi-ldap-provider\n- https://learn.microsoft.com/en-us/windows/win32/adsi/adsi-winnt-provider\nauthor: William Gokah (idea), Raylee Hawkins, Swachchhanda Shrawan Poudel (Nextron\n  Systems)\ndate: 2026-08-13\ntags:\n- attack.persistence\n- attack.t1136.001\n- attack.t1136.002\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cli_adsi:\n    CommandLine|contains: '[ADSI]'\n  selection_cli_create_user:\n    CommandLine|contains:\n    - .Create(\"user\n    - .Create('user\n  selection_cli_adsi_provider:\n    CommandLine|contains:\n    - WinNT://\n    - LDAP://\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative scripts that use ADSI to provision user accounts but should\n  be rare in most environments\nlevel: medium\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_powershell_adsi_create_user/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

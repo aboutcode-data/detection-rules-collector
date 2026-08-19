@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_adsi_create_user.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "William Gokah (idea), Raylee Hawkins, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-08-13",
+                "title": "New User Account Creation Attempt Via ADSI",
+                "id": "e50d5d26-0cf6-4045-b82b-13c0a4e316be"
+            },
+            "rule_text": "title: New User Account Creation Attempt Via ADSI\nid: e50d5d26-0cf6-4045-b82b-13c0a4e316be\nrelated:\n- id: 7c9fed65-039a-4055-8c23-fa763d94aff6\n  type: similar\nstatus: experimental\ndescription: 'Detects an attempt to create a new user account via ADSI (Active Directory\n  Service Interfaces)\n\n  using either the WinNT or LDAP provider. This is an uncommon method to create user\n  accounts\n\n  and may indicate an attempt to evade detection by avoiding more commonly monitored\n  commands\n\n  such as \"net user\", \"New-LocalUser\" or \"New-ADUser\".\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/adsi/user-creation-with-the-adsi-ldap-provider\n- https://learn.microsoft.com/en-us/windows/win32/adsi/adsi-winnt-provider\nauthor: William Gokah (idea), Raylee Hawkins, Swachchhanda Shrawan Poudel (Nextron\n  Systems)\ndate: 2026-08-13\ntags:\n- attack.persistence\n- attack.t1136.001\n- attack.t1136.002\nlogsource:\n  product: windows\n  category: ps_script\n  definition: 'Requirements: Script Block Logging must be enabled'\ndetection:\n  selection_adsi:\n    ScriptBlockText|contains: '[ADSI]'\n  selection_create_user:\n    ScriptBlockText|contains:\n    - .create(\"user\n    - .create('user\n  selection_adsi_provider:\n    ScriptBlockText|contains:\n    - WinNT://\n    - LDAP://\n  condition: all of selection_*\nfalsepositives:\n- Legitimate administrative scripts that use ADSI to provision user accounts but should\n  be rare in most environments\nlevel: medium\nregression_tests_path: regression_data/rules/windows/powershell/powershell_script/posh_ps_adsi_create_user/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

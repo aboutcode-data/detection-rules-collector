@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_applocker_policy_discovery_via_get_applockerpolicy.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Tom3306",
+                "date": "2026-08-19",
+                "title": "PowerShell AppLocker Policy Discovery Via Get-AppLockerPolicy",
+                "id": "f14b1e99-5e53-4598-98dc-6f20ad7b35e0"
+            },
+            "rule_text": "title: PowerShell AppLocker Policy Discovery Via Get-AppLockerPolicy\nid: f14b1e99-5e53-4598-98dc-6f20ad7b35e0\nstatus: experimental\ndescription: 'Detects AppLocker policy enumeration attempts via PowerShell using the\n  Get-AppLockerPolicy cmdlet and an policy scope of either Effective, LDAP, or Local.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/powershell/module/applocker/get-applockerpolicy\nauthor: Tom3306\ndate: 2026-08-19\ntags:\n- attack.discovery\n- attack.t1518.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - PowerShell.EXE\n    - pwsh.dll\n  selection_cmdlet:\n    CommandLine|contains: Get-AppLockerPolicy\n  selection_flag:\n    CommandLine|contains|windash:\n    - ' -Effective'\n    - ' -Ldap '\n    - ' -Local'\n  condition: all of selection_*\nfalsepositives:\n- PowerShell-based AppLocker auditing and policy troubleshooting by administrators.\nlevel: low\n",
+            "vulnerabilities": []
+        }
+    ]
+}
