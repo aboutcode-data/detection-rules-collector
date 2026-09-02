@@ -19,13 +19,13 @@
             },
             "rule_text": "rule WatchDog_Botnet : botnet linuxmalware exploitation cve_2019_11581 cve_2019_10149\n{\n\tmeta:\n\t\tAuthor = \"Adam M. Swanda\"\n\t\tWebsite = \"https://www.deadbits.org\"\n\t\tRepo = \"https://github.com/deadbits/yara-rules\"\n\t\tDate = \"2019-07-22\"\n\t\tReference = \"https://twitter.com/polarply/status/1153232987762376704\"\n\n\tstrings:\n\t\t$py0 = \"libpython\" ascii\n\t\t$str0 = \"*/3 * * * * root wget -q -O- https://pastebin.com/raw/\" ascii\n\t\t$str1 = \"*/1 * * * * root curl -fsSL https://pastebin.com/raw/\" ascii\n\t\t$str6 = \"onion.to\"\n\t\t$str7 = /https?:\\/\\/pastebin.com\\/raw/ nocase\n\t\t$str8 = \"http://icanhazip.com/\"\n\t\t$str9 = \"http://ident.me/\"\n\t\t$scan0 = \"Scan_run\"\n\t\t$scan1 = \"scan_nexus\"\n\t\t$scan2 = \"scan_couchdb\"\n\t\t$scan3 = \"scan_jenkins\"\n\t\t$scan4 = \"scan_laravel\"\n\t\t$scan5 = \"scan_redis\"\n\t\t$exploit01 = \"CVE_2015_4335\"\n\t\t$exploit02 = \"CVE_2018_1000861\"\n\t\t$exploit03 = \"CVE_2018_8007\"\n\t\t$exploit04 = \"CVE_2019_1014\"\n\t\t$exploit05 = \"CVE_2019_11581\"\n\t\t$exploit06 = \"CVE_2019_7238\"\n\t\t$pwn0 = \"pwn_couchdb\"\n\t\t$pwn1 = \"pwn_jenkins\"\n\t\t$pwn2 = \"pwn_jira\"\n\t\t$pwn3 = \"pwn_nexus\"\n\t\t$pwn4 = \"pwn_redis\"\n\t\t$pwn5 = \"pwn_exim\"\n\t\t$payload = /payload(s)/ nocase\n\t\t$jira_token = \"atlassian.xsrf.token=%s\" ascii fullword\n\t\t$jira_cmd = \"set ($cmd=\\\"%s\\\")\" ascii fullword\n\t\t$jira_id = \"JSESSIONID=%s\" ascii fullword\n\n\tcondition:\n\t\tuint32be( 0x0 ) == 0x7f454c46 and $py0 and ( ( all of ( $pwn* ) and all of ( $scan* ) ) or ( $payload and all of ( $jira* ) and 5 of ( $str* ) ) or ( all of ( $str* ) and all of ( $exploit* ) ) )\n}\n",
             "vulnerabilities": [
+                "CVE-2018-8007",
+                "CVE-2019-7238",
+                "CVE-2018-1000861",
                 "CVE-2019-10149",
-                "CVE-2019-11581",
                 "CVE-2015-4335",
                 "CVE-2019-1014",
-                "CVE-2018-8007",
-                "CVE-2018-1000861",
-                "CVE-2019-7238"
+                "CVE-2019-11581"
             ]
         }
     ]
