@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wsl_binary_hijack_execution.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-05-05",
+                "title": "Suspicious WSL Binary Hijack via Proxy Execution",
+                "id": "88d306e9-8e2d-4025-9768-28757d2732db"
+            },
+            "rule_text": "title: Suspicious WSL Binary Hijack via Proxy Execution\nid: 88d306e9-8e2d-4025-9768-28757d2732db\nstatus: experimental\ndescription: 'Detects C:\\Windows\\System32\\wsl.exe spawning a child wsl.exe process\n  from outside the legitimate WSL install locations.\n\n  When WSL or bash is invoked, the System32 stub (wsl.exe) looks up the InstallLocation\n  registry key and executes the wsl.exe found there.\n\n  An attacker who modifies InstallLocation to a controlled path causes the stub to\n  transparently proxy execution to a malicious payload,\n\n  which then appears as a wsl.exe child of the legitimate System32 stub.\n\n  '\nreferences:\n- https://cardinalops.com/blog/bash-and-switch-hijacking-via-windows-subsystem-for-linux/\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/04/20/implications-of-windows-subsystem-for-linux-for-adversaries-defenders-part-2\n- https://www.bleepingcomputer.com/news/security/new-malware-uses-windows-subsystem-for-linux-for-stealthy-attacks/\n- https://thehackernews.com/2021/09/new-malware-targets-windows-subsystem.html\n- https://learn.microsoft.com/en-us/windows/wsl/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-05-05\ntags:\n- attack.stealth\n- attack.t1036.005\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    ParentImage: C:\\Windows\\System32\\wsl.exe\n    Image|endswith: \\wsl.exe\n  filter_main_legit_paths_1:\n    Image:\n    - C:\\Windows\\System32\\wsl.exe\n    - C:\\Program Files\\WSL\\wsl.exe\n  filter_main_legit_paths_2:\n    Image|startswith:\n    - C:\\Windows\\WinSxS\\amd64_microsoft-windows-lxss-wsl_\n    - C:\\Windows\\WinSxS\\arm64_microsoft-windows-lxss-wsl_\n    - C:\\Program Files\\WindowsApps\\MicrosoftCorporationII.WindowsSubsystemForLinux\n  filter_main_legit_paths_3:\n    Image|startswith: C:\\Users\\\n    Image|contains: \\AppData\\Local\\Microsoft\\WindowsApps\\\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_wsl_binary_hijack_execution/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

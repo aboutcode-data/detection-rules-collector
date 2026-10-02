@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wsl_masquerading.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-05-05",
+                "title": "Suspicious WSL Binary Masquerading",
+                "id": "530576ee-3b62-4bce-9a03-9aac6c61788a"
+            },
+            "rule_text": "title: Suspicious WSL Binary Masquerading\nid: 530576ee-3b62-4bce-9a03-9aac6c61788a\nstatus: experimental\ndescription: 'Detects execution of masqueraded wsl.exe binary.\n\n  Attackers can rename a malicious payload to wsl.exe to masquerade as the legitimate\n  Windows Subsystem for Linux binary,\n\n  bypassing detection based on image name alone and abusing user trust in the WSL\n  process name.\n\n  '\nreferences:\n- https://cardinalops.com/blog/bash-and-switch-hijacking-via-windows-subsystem-for-linux/\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/04/20/implications-of-windows-subsystem-for-linux-for-adversaries-defenders-part-2\n- https://www.bleepingcomputer.com/news/security/new-malware-uses-windows-subsystem-for-linux-for-stealthy-attacks/\n- https://thehackernews.com/2021/09/new-malware-targets-windows-subsystem.html\n- https://learn.microsoft.com/en-us/windows/wsl/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-05-05\ntags:\n- attack.stealth\n- attack.t1036.005\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection:\n    Image|endswith: \\wsl.exe\n  filter_main_legit_original:\n    OriginalFileName: wsl.exe\n  filter_main_null:\n    OriginalFileName: null\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_wsl_masquerading/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

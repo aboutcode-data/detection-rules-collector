@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_wsl_installlocation_registry_key_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Liran Ravich, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-05-05",
+                "title": "Potential WSL InstallLocation Registry Key Modification",
+                "id": "83475063-b1c8-4774-9568-69bbda71a539"
+            },
+            "rule_text": "title: Potential WSL InstallLocation Registry Key Modification\nid: 83475063-b1c8-4774-9568-69bbda71a539\nrelated:\n- id: f9f62824-de4e-40ca-afe7-8358f76a876d\n  type: similar\nstatus: experimental\ndescription: 'Detects modifications to the Windows Subsystem for Linux (WSL) InstallLocation\n  registry key.\n\n  Attackers can modify this registry key to redirect the execution flow of legitimate\n  WSL processes (wsl.exe or bash.exe) to a malicious payload, acting as a proxy execution\n  and defense evasion technique.\n\n  '\nreferences:\n- https://cardinalops.com/blog/bash-and-switch-hijacking-via-windows-subsystem-for-linux/\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/04/20/implications-of-windows-subsystem-for-linux-for-adversaries-defenders-part-2\n- https://www.bleepingcomputer.com/news/security/new-malware-uses-windows-subsystem-for-linux-for-stealthy-attacks/\n- https://thehackernews.com/2021/09/new-malware-targets-windows-subsystem.html\n- https://learn.microsoft.com/en-us/windows/wsl/\nauthor: Liran Ravich, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-05-05\ntags:\n- attack.stealth\n- attack.defense-impairment\n- attack.persistence\n- attack.t1112\n- attack.t1218\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Lxss\\MSI\\InstallLocation\n  filter_main_legitimate_binary:\n  - Details:\n    - C:\\Program Files\\WSL\n    - '%ProgramFiles%\\WSL'\n  - Details|contains:\n    - :\\Program Files\\WindowsApps\\MicrosoftCorporationII.WindowsSubsystemForLinux_\n    - \\AppData\\Local\\Microsoft\\WindowsApps\n    - '%ProgramFiles%\\WindowsApps\\MicrosoftCorporationII.WindowsSubsystemForLinux_'\n  filter_main_msiexec:\n    Image:\n    - C:\\Windows\\System32\\msiexec.exe\n    - C:\\Windows\\SysWOW64\\msiexec.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_wsl_installlocation_registry_key_modification/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

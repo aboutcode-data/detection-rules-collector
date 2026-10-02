@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/file/file_event/file_event_win_wsl_binary_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Liran Ravich, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-05-05",
+                "title": "Potential WSL Binary Modification from Installed Location",
+                "id": "2f400434-01e1-416b-b52c-bb5bfbb9eb78"
+            },
+            "rule_text": "title: Potential WSL Binary Modification from Installed Location\nid: 2f400434-01e1-416b-b52c-bb5bfbb9eb78\nstatus: experimental\ndescription: 'Detects the modification of the wsl.exe binary from its installed location.\n\n  Attackers can replace the legitimate wsl.exe binary with a malicious payload in\n  its place, which is then executed when the user runs WSL, acting as a proxy execution\n  and defense evasion technique.\n\n  '\nreferences:\n- https://cardinalops.com/blog/bash-and-switch-hijacking-via-windows-subsystem-for-linux/\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/04/20/implications-of-windows-subsystem-for-linux-for-adversaries-defenders-part-2\n- https://www.bleepingcomputer.com/news/security/new-malware-uses-windows-subsystem-for-linux-for-stealthy-attacks/\n- https://thehackernews.com/2021/09/new-malware-targets-windows-subsystem.html\n- https://learn.microsoft.com/en-us/windows/wsl/\nauthor: Liran Ravich, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-05-05\ntags:\n- attack.stealth\n- attack.t1036.005\n- attack.t1218\nlogsource:\n  category: file_event\n  product: windows\ndetection:\n  selection_wsl_exe:\n    TargetFilename|endswith: \\wsl.exe\n  selection_wsl_folder:\n  - TargetFilename|contains:\n    - :\\Program files\\wsl\\\n    - :\\Program files\\WindowsApps\\MicrosoftCorporationII.WindowsSubsystemForLinux_\n  - TargetFilename|contains|all:\n    - :\\Users\\\n    - \\AppData\\Local\\Microsoft\\WindowsApps\\\n  filter_main_msiexec:\n    Image:\n    - C:\\Windows\\System32\\msiexec.exe\n    - C:\\Windows\\SysWOW64\\msiexec.exe\n  filter_main_svchost:\n    Image: C:\\Windows\\System32\\svchost.exe\n    TargetFilename|contains: \\WindowsApps\\\n  condition: all of selection_* and not 1 of filter_main_*\nfalsepositives:\n- Unlikely\nlevel: medium\nregression_tests_path: regression_data/rules/windows/file/file_event/file_event_win_wsl_binary_modification/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}

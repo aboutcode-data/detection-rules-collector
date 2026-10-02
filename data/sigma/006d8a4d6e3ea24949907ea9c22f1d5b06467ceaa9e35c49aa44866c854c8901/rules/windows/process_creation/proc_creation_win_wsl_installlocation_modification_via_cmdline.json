@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_wsl_installlocation_modification_via_cmdline.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-05-05",
+                "title": "Suspicious WSL InstallLocation Registry Key Modification Via CommandLine",
+                "id": "f9f62824-de4e-40ca-afe7-8358f76a876d"
+            },
+            "rule_text": "title: Suspicious WSL InstallLocation Registry Key Modification Via CommandLine\nid: f9f62824-de4e-40ca-afe7-8358f76a876d\nrelated:\n- id: 83475063-b1c8-4774-9568-69bbda71a539\n  type: similar\nstatus: experimental\ndescription: 'Detects the use of reg.exe or PowerShell to modify the WSL InstallLocation\n  registry key via command-line arguments.\n\n  Legitimate modifications to this key are performed exclusively by the Windows Installer\n  (msiexec.exe) during WSL package installation or update.\n\n  Manual use of reg.exe or PowerShell to set this value strongly indicates an attempt\n  to redirect WSL execution to a malicious binary.\n\n  '\nreferences:\n- https://cardinalops.com/blog/bash-and-switch-hijacking-via-windows-subsystem-for-linux/\n- https://blog.qualys.com/vulnerabilities-threat-research/2022/04/20/implications-of-windows-subsystem-for-linux-for-adversaries-defenders-part-2\n- https://www.bleepingcomputer.com/news/security/new-malware-uses-windows-subsystem-for-linux-for-stealthy-attacks/\n- https://thehackernews.com/2021/09/new-malware-targets-windows-subsystem.html\n- https://learn.microsoft.com/en-us/windows/wsl/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-05-05\ntags:\n- attack.stealth\n- attack.defense-impairment\n- attack.persistence\n- attack.t1112\n- attack.t1218\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\reg.exe\n  - OriginalFileName:\n    - powershell.exe\n    - pwsh.dll\n    - reg.exe\n  selection_cli_action:\n    CommandLine|contains:\n    - ' add '\n    - New-ItemProperty\n    - Set-ItemProperty\n    - 'sp '\n  selection_cli_key:\n    CommandLine|contains:\n    - \\Lxss\\MSI\n    - /Lxss/MSI\n  selection_cli_value:\n    CommandLine|contains: InstallLocation\n  condition: all of selection_*\nfalsepositives:\n- Unlikely\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_wsl_installlocation_modification_via_cmdline/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
