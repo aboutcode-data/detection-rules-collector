@@ -11,8 +11,8 @@
             },
             "rule_text": "title: Remote Access Tool - ScreenConnect Potential Suspicious Remote Command Execution\nid: 7b582f1a-b318-4c6a-bf4e-66fe49bf55a5\nrelated:\n- id: d1a401ab-8c47-4e86-a7d8-2460b6a53e4a\n  type: derived\nstatus: test\ndescription: 'Detects potentially suspicious child processes launched via the ScreenConnect\n  client service.\n\n  '\nreferences:\n- https://www.mandiant.com/resources/telegram-malware-iranian-espionage\n- https://docs.connectwise.com/ConnectWise_Control_Documentation/Get_started/Host_client/View_menu/Backstage_mode\n- https://www.huntress.com/blog/slashandgrab-screen-connect-post-exploitation-in-the-wild-cve-2024-1709-cve-2024-1708\n- https://www.trendmicro.com/en_us/research/24/b/threat-actor-groups-including-black-basta-are-exploiting-recent-.html\nauthor: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems),\n  @Kostastsale\ndate: 2022-02-25\nmodified: 2024-02-28\ntags:\n- attack.command-and-control\n- attack.t1219.002\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection:\n    ParentCommandLine|contains|all:\n    - :\\Windows\\TEMP\\ScreenConnect\\\n    - run.cmd\n    Image|endswith:\n    - \\bitsadmin.exe\n    - \\cmd.exe\n    - \\curl.exe\n    - \\dllhost.exe\n    - \\net.exe\n    - \\nltest.exe\n    - \\powershell.exe\n    - \\pwsh.exe\n    - \\rundll32.exe\n    - \\wevtutil.exe\n  condition: selection\nfalsepositives:\n- If the script being executed make use of any of the utilities mentioned in the detection\n  then they should filtered out or allowed.\nlevel: medium\n",
             "vulnerabilities": [
-                "CVE-2024-1708",
-                "CVE-2024-1709"
+                "CVE-2024-1709",
+                "CVE-2024-1708"
             ]
         }
     ]
