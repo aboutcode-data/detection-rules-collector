@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_cmdlet_invocation_via_exported_commands_array_index.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Norbert Jaśniewicz (AlphaSOC), Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-06",
+                "title": "PowerShell Dynamic Module Invocation Via ExportedCommands Array Index",
+                "id": "0c3ebe9f-df09-4e00-be0f-73d4ca8d62f6"
+            },
+            "rule_text": "title: PowerShell Dynamic Module Invocation Via ExportedCommands Array Index\nid: 0c3ebe9f-df09-4e00-be0f-73d4ca8d62f6\nrelated:\n- id: 4ff4ad3e-9fb5-4a70-9962-d6ea58090318\n  type: similar\nstatus: experimental\ndescription: 'Detects PowerShell processes invoked with obfuscated command lines that\n  enumerate Microsoft.PowerShell.Utility\n\n  exported commands and invoke cmdlets indirectly by array index. This technique is\n  used to evade\n\n  detections that look for explicit strings such as Invoke-RestMethod or Invoke-Expression.\n\n  '\nreferences:\n- https://www.linkedin.com/posts/mark-o-halloran1_clickfix-defense-evasion-tactic-today-i-ugcPost-7453463467736408064-snrp/\nauthor: \"Norbert Ja\\u015Bniewicz (AlphaSOC), Swachchhanda Shrawan Poudel (Nextron\\\n  \\ Systems)\"\ndate: 2026-10-06\ntags:\n- attack.execution\n- attack.stealth\n- attack.t1027.010\n- attack.t1059.001\nlogsource:\n  product: windows\n  category: process_creation\ndetection:\n  selection_img:\n  - Image|endswith:\n    - \\powershell.exe\n    - \\pwsh.exe\n  - OriginalFileName:\n    - powershell.exe\n    - pwsh.dll\n  selection_module_export_enum:\n    CommandLine|contains:\n    - 'Get-Module '\n    - 'gmo '\n    CommandLine|contains|all:\n    - ListAvailable\n    - Microsoft.PowerShell.Utility\n    - ExportedCommands\n    - Values\n  selection_index_used:\n    CommandLine|contains: '[*]'\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of exported commands array indexing during PowerShell command execution\n  (should be rare)\nlevel: high\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_powershell_cmdlet_invocation_via_exported_commands_array_index/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
