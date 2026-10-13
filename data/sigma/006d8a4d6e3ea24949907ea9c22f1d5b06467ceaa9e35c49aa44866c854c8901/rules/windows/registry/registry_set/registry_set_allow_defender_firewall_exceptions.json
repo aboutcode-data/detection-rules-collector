@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_allow_defender_firewall_exceptions.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "frack113",
+                "date": "2026-10-13",
+                "title": "Allow Exceptions in Microsoft Defender Firewall via Registry",
+                "id": "c69fc6a2-607d-4530-b7d1-75823af1bde4"
+            },
+            "rule_text": "title: Allow Exceptions in Microsoft Defender Firewall via Registry\nid: c69fc6a2-607d-4530-b7d1-75823af1bde4\nstatus: experimental\ndescription: 'Detects the degradation of the system firewall security by the DoNotAllowExceptions\n  policy value being\n\n  set to 0 (DWORD 0x00000000), which re-enables application and port exceptions in\n  the Microsoft\n\n  Defender Firewall and can restore network paths that a hardened profile would block.\n\n  '\nreferences:\n- https://www.virustotal.com/gui/file/da209017000b9812e8bc5f4e8db6499430ee2aadc72ef896964cffdfd896f143/behavior\n- https://app.any.run/tasks/8d4113a8-5403-4367-a79f-4ce4978d9bdb\n- https://www.zscaler.com/fr/blogs/security-research/malvertising-targeting-european-transit-users\n- https://www.trendmicro.com/vinfo/us/threat-encyclopedia/malware/trojan.win32.zbot.e\nauthor: frack113\ndate: 2026-10-13\ntags:\n- attack.defense-impairment\n- attack.t1686.003\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Services\\SharedAccess\\Parameters\\FirewallPolicy\\\n    TargetObject|endswith: \\DoNotAllowExceptions\n    Details: DWORD (0x00000000)\n  filter_main_svchost:\n    Image:\n    - C:\\Windows\\System32\\svchost.exe\n    - C:\\Windows\\SysWOW64\\svchost.exe\n  condition: selection and not 1 of filter_main_*\nfalsepositives:\n- Unknown\nlevel: medium\nregression_tests_path: regression_data/rules/windows/registry/registry_set/registry_set_allow_defender_firewall_exceptions/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
