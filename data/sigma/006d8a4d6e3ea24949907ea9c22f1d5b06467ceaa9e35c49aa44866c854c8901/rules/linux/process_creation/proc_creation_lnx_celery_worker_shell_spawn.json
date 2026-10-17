@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/linux/process_creation/proc_creation_lnx_celery_worker_shell_spawn.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Jennifer Batina",
+                "date": "2026-10-17",
+                "title": "Shell Spawned by Celery Worker Process",
+                "id": "904f6442-3b57-4b3f-987c-1559f58ce8d8"
+            },
+            "rule_text": "title: Shell Spawned by Celery Worker Process\nid: 904f6442-3b57-4b3f-987c-1559f58ce8d8\nstatus: experimental\ndescription: 'Detects a system shell interpreter being spawned directly by a Celery\n  worker process.\n\n  This behavior indicates a Python background task execution framework is evaluating\n  raw string input through a shell execution context,\n\n  which is highly indicative of successful command or prompt injection exploitation\n  against an LLM agent task.\n\n  '\nreferences:\n- https://docs.celeryq.dev/en/stable/userguide/tasks.html\n- https://genai.owasp.org/llmrisk/llm01-prompt-injection/\n- https://labs.cloudsecurityalliance.org/research/csa-research-note-promptware-c2-agent-exploitation-20260406/\n- https://nvd.nist.gov/vuln/detail/CVE-2021-23727\n- https://owasp.org/www-project-top-10-for-large-language-model-applications/\n- https://security.snyk.io/vuln/SNYK-PYTHON-CELERY-2314953\n- https://snyk.io/blog/python-rce-vulnerability/\n- https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/\n- https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks\nauthor: Jennifer Batina\ndate: 2026-10-17\ntags:\n- attack.execution\n- attack.t1059.004\nlogsource:\n  category: process_creation\n  product: linux\ndetection:\n  selection_img:\n    Image|endswith:\n    - /ash\n    - /bash\n    - /busybox\n    - /csh\n    - /dash\n    - /fish\n    - /ksh\n    - /sh\n    - /tcsh\n    - /zsh\n    ParentCommandLine|contains: celery\n  selection_parent:\n  - ParentImage|endswith:\n    - /python\n    - /python3\n  - ParentImage|contains: /python3.\n  condition: all of selection_*\nfalsepositives:\n- Legacy or custom administrative tasks deliberately hardcoded with shell=True or\n  os.system execution inside Celery task functions.\n- Media processing, deployment, or reporting pipelines that intentionally shell out\n  to external tools (e.g. ffmpeg, git) from within a task.\nlevel: medium\n",
+            "vulnerabilities": [
+                "CVE-2021-23727"
+            ]
+        }
+    ]
+}
