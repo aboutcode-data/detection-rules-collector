@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_reg_internal_tools_setting_tampering.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-18",
+                "title": "Registry Tampering Of Internal Tools Settings",
+                "id": "ccc946a3-f65a-432a-bb6f-efc6acc1fd27"
+            },
+            "rule_text": "title: Registry Tampering Of Internal Tools Settings\nid: ccc946a3-f65a-432a-bb6f-efc6acc1fd27\nrelated:\n- id: e2482f8d-3443-4237-b906-cc145d87a076\n  type: similar\nstatus: experimental\ndescription: Detects registry modifications that tamper with internal Windows tools\n  settings, commonly used by malware to disable security features or system tools\nreferences:\n- https://bazaar.abuse.ch/sample/7bde840c7e8c36dce4c3bac937bcf39f36a6f118001b406bfbbc25451ce44fb4/\n- https://blogs.vmware.com/security/2022/11/batloader-the-evasive-downloader-malware.html\n- https://www.mandiant.com/resources/unc2165-shifts-to-evade-sanctions\n- https://www.sentinelone.com/blog/cybervolk-returns-flawed-volklocker-brings-new-features-with-growing-pains/\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-10-18\ntags:\n- attack.persistence\n- attack.defense-impairment\n- attack.t1112\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_reg_img:\n  - Image|endswith: \\reg.exe\n  - OriginalFileName: reg.exe\n  selection_reg_cli:\n    CommandLine|contains: ' add '\n  selection_currentversion_explorer_system_root:\n    CommandLine|contains:\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\n    - SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\n    - SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer\n    - SOFTWARE\\Policies\\Microsoft\\Windows\\System\n  selection_currentversion_explorer_system_key:\n    CommandLine|contains:\n    - ConsentPromptBehaviorAdmin\n    - DisableChangePassword\n    - DisableCMD\n    - DisableLockWorkstation\n    - DisableNotificationCenter\n    - DisableRegistryTools\n    - DisableTaskmgr\n    - HideSCAHealth\n    - HideSCANetwork\n    - HideSCAVolume\n    - InactivityTimeoutSecs\n    - NoClose\n    - NoControlPanel\n    - NoDesktop\n    - NoDispBackgroundPage\n    - NoDispCPL\n    - NoDrives\n    - NoFileMenu\n    - NoFind\n    - NoLogOff\n    - NoPropertiesMyDocuments\n    - NoRun\n    - NoSetTaskbar\n    - NoTrayContextMenu\n    - StartMenuLogOff\n    - shutdownwithoutlogon\n  condition: all of selection_*\nfalsepositives:\n- Legitimate use of reg.exe to change system settings\nlevel: medium\nsimulation:\n- type: atomic-red-team\n  name: Modify Registry of Current User Profile - cmd\n  technique: T1112\n  atomic_guid: 1324796b-d0f6-455a-b4ae-21ffee6aa6b9\nregression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_reg_internal_tools_setting_tampering/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
