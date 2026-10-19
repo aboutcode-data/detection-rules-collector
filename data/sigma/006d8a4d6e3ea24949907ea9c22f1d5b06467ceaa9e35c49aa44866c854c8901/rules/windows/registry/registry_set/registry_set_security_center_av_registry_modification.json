@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_security_center_av_registry_modification.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-18",
+                "title": "Potential HackTool - Defendnot Security Center AV Registry Modification",
+                "id": "9991c683-05aa-47b7-a865-df14dc4b9dc4"
+            },
+            "rule_text": "title: Potential HackTool - Defendnot Security Center AV Registry Modification\nid: 9991c683-05aa-47b7-a865-df14dc4b9dc4\nstatus: experimental\ndescription: 'Detects modification of the Microsoft Security Center AV registry keys,\n  particularly those related with DisplayName, ProductEXE, or ReportingExe.\n\n  These keys typically store information about antivirus products installed on the\n  system, which is Windows Defender or third-party antivirus software.\n\n  But, if these keys holds unexpected values or are modified in a suspicious manner,\n  it could indicate an attempt to tamper with the security settings of the system.\n\n  '\nreferences:\n- https://www.huntress.com/blog/defendnot-detecting-malicious-security-product-bypass-techniques\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-10-18\ntags:\n- attack.defense-impairment\n- attack.t1685\nlogsource:\n  category: registry_set\n  product: windows\ndetection:\n  selection:\n    TargetObject|contains: \\Software\\Microsoft\\Security Center\\Provider\\Av\\\n    TargetObject|endswith:\n    - \\ProductEXE\n    - \\DisplayName\n    - \\ReportingExe\n  filter_optional_antivirus:\n    Image: C:\\Windows\\System32\\svchost.exe\n    Details|contains:\n    - Avira\n    - Windows Defender\n    - Microsoft Defender\n    - Sophos\n    - Kaspersky\n    - ESET\n    - Bitdefender\n    - Trend Micro\n    - McAfee\n    - Symantec\n    - CrowdStrike\n    - SentinelOne\n    - Carbon Black\n    - Elastic\n    - Cortex\n    - AVG\n    - Avast\n    - Malwarebytes\n  condition: selection and not 1 of filter_optional_*\nfalsepositives:\n- Legitimate changes by antivirus software missing in the filter list\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

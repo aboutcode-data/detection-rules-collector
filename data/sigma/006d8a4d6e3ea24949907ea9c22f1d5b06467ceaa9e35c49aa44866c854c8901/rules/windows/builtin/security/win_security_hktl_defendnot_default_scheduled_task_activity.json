@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/security/win_security_hktl_defendnot_default_scheduled_task_activity.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-18",
+                "title": "HackTool - Defendnot Default Scheduled Task Activity",
+                "id": "015ff932-4156-41ae-9d4c-1443995611fd"
+            },
+            "rule_text": "title: HackTool - Defendnot Default Scheduled Task Activity\nid: 015ff932-4156-41ae-9d4c-1443995611fd\nstatus: experimental\ndescription: 'Detects the default scheduled task activity of the hacktool Defendnot,\n  which is used to disable Windows Defender Security.\n\n  It abuses Microsoft''s undocumented WSC API to register itself as a fake antivirus\n  product, allowing it to disable Windows Defender.\n\n  During installation, Defendnot creates a scheduled task named ''defendnot'' with\n  the argument ''--from-autorun'' for persistence.\n\n  '\nreferences:\n- https://github.com/es3n1n/defendnot/blob/525176a37721ead27d3f9f77f59b58abfc305988/README.md\n- https://www.huntress.com/blog/defendnot-detecting-malicious-security-product-bypass-techniques\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-10-18\ntags:\n- attack.execution\n- attack.persistence\n- attack.privilege-escalation\n- attack.defense-impairment\n- attack.t1053.005\n- attack.t1685\nlogsource:\n  product: windows\n  service: security\ndetection:\n  selection_eid:\n    EventID:\n    - 4698\n    - 4702\n  selection_task:\n  - TaskName: \\defendnot\n  - TaskContent|contains:\n    - defendnot\n    - <Arguments>--from-autorun</Arguments>\n  condition: all of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}
