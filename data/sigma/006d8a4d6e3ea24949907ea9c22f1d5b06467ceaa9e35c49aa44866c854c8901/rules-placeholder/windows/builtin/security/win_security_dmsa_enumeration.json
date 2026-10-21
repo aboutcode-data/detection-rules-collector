@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_dmsa_enumeration.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Panos Gkatziroulis, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-19",
+                "title": "Potential Delegated Managed Service Account (dMSA) Enumeration on Windows System",
+                "id": "54f3cf8f-f577-46d9-b609-2029554e975d"
+            },
+            "rule_text": "title: Potential Delegated Managed Service Account (dMSA) Enumeration on Windows System\nid: 54f3cf8f-f577-46d9-b609-2029554e975d\nstatus: experimental\ndescription: 'Detects read operations performed on an Active Directory object of type\n  msDS-DelegatedManagedServiceAccount (GUID 0feb936f-47b3-49f2-9386-1dedc2c23765),\n  which is used for delegated Managed Service Accounts.\n\n  Such access may indicate an attempt to gather information and leverage it for attacks\n  like GoldendMSA.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-adsc/2c3e6e0a-134d-47e3-9ed5-edb71145def3\n- https://ipurple.team/2025/09/02/golden-dmsa/\n- https://www.semperis.com/blog/golden-dmsa-what-is-dmsa-authentication-bypass/\n- https://hacktricks.wiki/en/windows-hardening/active-directory-methodology/golden-dmsa-gmsa.html\nauthor: Panos Gkatziroulis, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-10-19\ntags:\n- attack.credential-access\n- attack.t1003.006\n- attack.t1558.003\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Directory Service Access auditing should be enabled.\n\n    Auditing should be enabled for the organizational unit that contains the dMSAs\n    for Authenticated Users.\n\n    '\ndetection:\n  selection:\n    EventID: 4662\n    ObjectType|contains: 0feb936f-47b3-49f2-9386-1dedc2c23765\n    AccessMask:\n    - '0x100'\n    - '0x10'\n  filter:\n    SubjectUserName|expand: '%Domain_Controller%'\n  condition: selection and not filter\nfalsepositives:\n- Legitimate administrative activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

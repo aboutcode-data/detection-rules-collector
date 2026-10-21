@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_hktl_goldendmsa.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-19",
+                "title": "HackTool - GoldenDMSA Execution",
+                "id": "c41ec561-872d-469b-847c-1653ad19b45d"
+            },
+            "rule_text": "title: HackTool - GoldenDMSA Execution\nid: c41ec561-872d-469b-847c-1653ad19b45d\nstatus: experimental\ndescription: 'Detects execution of GoldenDMSA hacktool used for Directory Service\n  Account manipulation.\n\n  '\nreferences:\n- https://github.com/Semperis/GoldenDMSA\n- https://ipurple.team/2025/09/02/golden-dmsa/\n- https://www.semperis.com/blog/golden-dmsa-what-is-dmsa-authentication-bypass/\n- https://thehackernews.com/2025/07/critical-golden-dmsa-attack-in-windows.html\n- https://hacktricks.wiki/en/windows-hardening/active-directory-methodology/golden-dmsa-gmsa.html\nauthor: Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-10-19\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1098\n- attack.credential-access\n- attack.t1110.001\n- attack.t1558.003\nlogsource:\n  category: process_creation\n  product: windows\ndetection:\n  selection_img:\n    Image|endswith: \\GoldenDMSA.exe\n  selection_cli:\n    CommandLine|contains:\n    - wordlist\n    - bruteforce\n    CommandLine|contains|all:\n    - ' -s '\n    - S-1-5-21-\n    - ' -d '\n    - ' -k '\n  condition: 1 of selection_*\nfalsepositives:\n- Unknown\nlevel: high\n",
+            "vulnerabilities": []
+        }
+    ]
+}

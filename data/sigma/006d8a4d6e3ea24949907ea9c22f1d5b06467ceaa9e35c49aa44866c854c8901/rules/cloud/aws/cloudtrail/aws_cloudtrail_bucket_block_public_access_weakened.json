@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/cloud/aws/cloudtrail/aws_cloudtrail_bucket_block_public_access_weakened.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Shoban Chiddarth",
+                "date": "2026-10-21",
+                "title": "AWS Bucket Block Public Access Weakened",
+                "id": "ab18a523-e093-4ac6-8303-8c47431f4fca"
+            },
+            "rule_text": "title: AWS Bucket Block Public Access Weakened\nid: ab18a523-e093-4ac6-8303-8c47431f4fca\nstatus: experimental\ndescription: 'Detects the weakening of \"Block Public Access\" setting of S3 buckets\n  in CloudTrail logs.\n\n  Monitoring changes to Block Public Access settings is critical, as attackers may\n  disable these safeguards before exposing a bucket through a public ACL or bucket\n  policy.\n\n  '\nreferences:\n- https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html\n- https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html\nauthor: Shoban Chiddarth\ndate: 2026-10-21\ntags:\n- attack.defense-impairment\n- attack.t1686.001\nlogsource:\n  product: aws\n  service: cloudtrail\ndetection:\n  selection_event_name:\n    eventSource: s3.amazonaws.com\n    eventName: PutBucketPublicAccessBlock\n  selection_weaken_restrict_public_buckets:\n    requestParameters.PublicAccessBlockConfiguration.RestrictPublicBuckets: 'false'\n  selection_weaken_block_public_acls:\n    requestParameters.PublicAccessBlockConfiguration.BlockPublicAcls: 'false'\n  selection_weaken_block_public_policy:\n    requestParameters.PublicAccessBlockConfiguration.BlockPublicPolicy: 'false'\n  selection_weaken_ignore_public_acls:\n    requestParameters.PublicAccessBlockConfiguration.IgnorePublicAcls: 'false'\n  selection_status_success:\n    errorCode: Success\n  selection_status_null:\n    errorCode: null\n  condition: selection_event_name and 1 of selection_weaken_* and 1 of selection_status_*\nfalsepositives:\n- Administrators intentionally modifying Block Public Access settings to support a\n  legitimate application or public bucket configuration.\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}

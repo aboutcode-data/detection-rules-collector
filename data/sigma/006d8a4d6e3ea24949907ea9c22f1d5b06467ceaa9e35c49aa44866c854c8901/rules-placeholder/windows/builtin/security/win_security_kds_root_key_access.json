@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules-placeholder/windows/builtin/security/win_security_kds_root_key_access.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Panos Gkatziroulis, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-10-19",
+                "title": "Potential KDS Root Key Access on Windows System",
+                "id": "5f0d5e5a-61d1-44cd-900d-2df14ffe4f82"
+            },
+            "rule_text": "title: Potential KDS Root Key Access on Windows System\nid: 5f0d5e5a-61d1-44cd-900d-2df14ffe4f82\nstatus: experimental\ndescription: 'Detects potential retrieval of KDS Root Key information from Active\n  Directory for the purpose of conducting a Golden dMSA attack.\n\n  The Golden dMSA technique attempts to read the Master Root Keys by accessing the\n  object type msKds-ProvRootKey.\n\n  '\nreferences:\n- https://learn.microsoft.com/en-us/windows/win32/adschema/c-mskds-provrootkey\n- https://ipurple.team/2025/09/02/golden-dmsa/\n- https://www.semperis.com/blog/golden-dmsa-what-is-dmsa-authentication-bypass/\n- https://github.com/MicrosoftDocs/SupportArticles-docs/blob/ed7cab329190354c13deaa07ea15b6165bbd32fd/support/windows-server/windows-security/recover-from-golden-gmsa-attack.md\n- https://threatlabsnews.xcitium.com/blog/golden-dmsa-attack-one-flaw-in-windows-server-2025-threatens-entire-active-directory-forests\nauthor: Panos Gkatziroulis, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-10-19\ntags:\n- attack.credential-access\n- attack.t1003.006\n- attack.t1558.003\n- attack.t1558.004\nlogsource:\n  product: windows\n  service: security\n  definition: 'Requirements: Audit Directory Service Access auditing should be enabled.\n\n    Monitoring of KDS Root Keys requires creating a System Access Control List (SACL)\n    for the associated object.\n\n    Enable auditing for objects attempting to Read or Write properties for the principal\n    group \"Everyone\" on msKds-ProvRootKey object types.\n\n    '\ndetection:\n  selection:\n    EventID: 4662\n    ObjectType|contains: aa02fd41-17e0-4f18-8687-b2239649736b\n    AccessMask:\n    - '0x100'\n    - '0x10'\n  filter:\n    SubjectUserName|expand: '%Domain_Controller%'\n  condition: selection and not filter\nfalsepositives:\n- Legitimate administrative activities\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}
