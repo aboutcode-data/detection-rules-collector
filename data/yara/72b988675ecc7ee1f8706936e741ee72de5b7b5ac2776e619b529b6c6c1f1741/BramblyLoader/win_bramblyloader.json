@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/BramblyLoader/win_bramblyloader.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "win_brambly_loader",
+                "tags": [],
+                "author": "PandaRE",
+                "description": "Brambly loader",
+                "date": "2026-10-18",
+                "hash": "ca4717d84adc33c42fed4bd9f4656893a2f8892b943b250f5265cb6303b64371"
+            },
+            "rule_text": "rule win_brambly_loader\n{\n\tmeta:\n\t\tauthor = \"PandaRE\"\n\t\tdescription = \"Brambly loader\"\n\t\tdate = \"2026-10-18\"\n\t\thash = \"ca4717d84adc33c42fed4bd9f4656893a2f8892b943b250f5265cb6303b64371\"\n\n\tstrings:\n\t\t$a1 = {\n            BA 62 6A 6C 6C\n            [0-8]\n            0F B6 ??\n            6B D2 1F\n            4?\n            83 C? 20\n       }\n\t\t$b1 = {81 FA 6C 1A A7 91}\n\t\t$b2 = {81 FA 46 5C 31 E8}\n\t\t$b3 = {81 FA EF 2B DD 68}\n\t\t$b4 = {81 FA 55 5C 7B 1D}\n\t\t$b5 = {81 FA 4E D9 0C 35}\n\t\t$b6 = {81 FA 19 D2 D7 3D}\n\t\t$b7 = {81 FA AA E1 F0 13}\n\t\t$c1 = {\n            83 E? 7F\n            8A 4C ?? 08\n            30 [2]\n            4?\n       }\n\t\t$d1 = {83 ED 01 73 07 0F B6 ?? 4? 6A 07 5D}\n\t\t$e1 = {64 A1 18 00 00 00 [0-16] 8B 40 30}\n\t\t$e2 = {8B 4? 3C 8B 44 ?? 78}\n\t\t$e3 = {C7 40 04 6C 2E 64 6C C7 00 6E 74 64 6C}\n\t\t$e4 = {\n            66 C7 44 24 ?? 4C 64\n            C6 44 24 ?? 72\n            66 C7 44 24 ?? 70 48\n       }\n\t\t$e5 = {\n            8B ?? A4 00 00 00\n            C1 E? 08\n            [0-8]\n            66 81 FA 03 06\n       }\n\t\t$e6 = {6A 00 6A 01 FF 74 24 ?? FF D?}\n\t\t$e7 = {59 5A 51 52 55 53 57 56 81 EC}\n\n\tcondition:\n\t\t$a1 and 3 of ( $b* ) and $c1 and $d1 and 2 of ( $e* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
