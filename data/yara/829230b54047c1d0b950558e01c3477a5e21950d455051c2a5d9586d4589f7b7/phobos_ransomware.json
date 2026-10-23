@@ -1,0 +1,18 @@
+{
+    "source_url": "https://github.com/pmelson/yara_rules/blob/master/phobos_ransomware.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "Ransomware_Phobos_NetShare_WinHTTP_TokenDup",
+                "tags": [],
+                "description": "Phobos-style ransomware: enumerates/mounts network shares via WNet* APIs, duplicates process tokens, enumerates processes, and talks to a C2 over WinHTTP",
+                "author": "Paul Melson (@pmelson)",
+                "date": "2026-10-21",
+                "family": "Phobos",
+                "reference_hashes": "2dcaca208625860f4eb114af4c4158368284eb99c994793d5ac66d3af654bf5f, 5470c14af0710ffde36d775b089496825c38ae33d6ae6dd04140e1d78c4d46d6"
+            },
+            "rule_text": "rule Ransomware_Phobos_NetShare_WinHTTP_TokenDup\n{\n\tmeta:\n\t\tdescription = \"Phobos-style ransomware: enumerates/mounts network shares via WNet* APIs, duplicates process tokens, enumerates processes, and talks to a C2 over WinHTTP\"\n\t\tauthor = \"Paul Melson (@pmelson)\"\n\t\tdate = \"2026-10-21\"\n\t\tfamily = \"Phobos\"\n\t\treference_hashes = \"2dcaca208625860f4eb114af4c4158368284eb99c994793d5ac66d3af654bf5f, 5470c14af0710ffde36d775b089496825c38ae33d6ae6dd04140e1d78c4d46d6\"\n\n\tstrings:\n\t\t$wnet1 = \"WNetEnumResourceW\" ascii\n\t\t$wnet2 = \"WNetUseConnectionW\" ascii\n\t\t$wnet3 = \"WNetOpenEnumW\" ascii\n\t\t$ip = \"GetIpAddrTable\" ascii\n\t\t$tok = \"DuplicateTokenEx\" ascii\n\t\t$priv = \"LookupPrivilegeValueW\" ascii\n\t\t$proc = \"CreateToolhelp32Snapshot\" ascii\n\t\t$http = \"WinHttpOpen\" ascii\n\n\tcondition:\n\t\tuint16( 0 ) == 0x5A4D and filesize < 500KB and 6 of ( $wnet1 , $wnet2 , $wnet3 , $ip , $tok , $priv , $proc , $http )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}

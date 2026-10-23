@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/pmelson/yara_rules/blob/master/cobaltstrike.yara",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "CobaltStrike_Beacon_DLL",
+                "tags": [],
+                "description": "Cobalt Strike Beacon DLL (x86/x64) based on PE structure and import profile",
+                "author": "Paul Melson (pmelson)",
+                "date": "2026-10-21",
+                "reference_sample": "0193c6130fc55895ff42dd9d08aa785067ccd56e3aabf6c2e15e26922ba09a8b"
+            },
+            "rule_text": "import \"pe\"\n\nrule CobaltStrike_Beacon_DLL\n{\n\tmeta:\n\t\tdescription = \"Cobalt Strike Beacon DLL (x86/x64) based on PE structure and import profile\"\n\t\tauthor = \"Paul Melson (pmelson)\"\n\t\tdate = \"2026-10-21\"\n\t\treference_sample = \"0193c6130fc55895ff42dd9d08aa785067ccd56e3aabf6c2e15e26922ba09a8b\"\n\n\tcondition:\n\t\tpe.is_dll( ) and pe.imports ( \"kernel32.dll\" , \"ConnectNamedPipe\" ) and pe.imports ( \"kernel32.dll\" , \"SetThreadContext\" ) and pe.imports ( \"kernel32.dll\" , \"GetComputerNameA\" ) and pe.imports ( \"kernel32.dll\" , \"VirtualAllocEx\" ) and pe.imports ( \"kernel32.dll\" , \"WriteProcessMemory\" ) and pe.imports ( \"kernel32.dll\" , \"CreateRemoteThread\" ) and pe.imports ( \"ws2_32.dll\" , \"WSAStartup\" ) and pe.imports ( \"ws2_32.dll\" , \"connect\" ) and pe.imports ( \"ws2_32.dll\" , \"bind\" ) and pe.imports ( \"ws2_32.dll\" , \"listen\" ) and pe.number_of_resources == 0 and pe.characteristics & pe.BYTES_REVERSED_HI and pe.size_of_code * 2 > pe.size_of_image\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
