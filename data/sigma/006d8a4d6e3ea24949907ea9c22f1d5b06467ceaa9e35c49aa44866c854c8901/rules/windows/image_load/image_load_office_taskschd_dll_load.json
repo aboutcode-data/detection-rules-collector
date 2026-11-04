@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/image_load/image_load_office_taskschd_dll_load.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "Saksham Bhattarai, Swachchhanda Shrawan Poudel (Nextron Systems)",
+                "date": "2026-11-04",
+                "title": "Microsoft Office Application Loading Task Scheduler DLL",
+                "id": "8d1e674c-5c03-4be1-949c-4b85a472dc16"
+            },
+            "rule_text": "title: Microsoft Office Application Loading Task Scheduler DLL\nid: 8d1e674c-5c03-4be1-949c-4b85a472dc16\nstatus: experimental\ndescription: 'Detects a Microsoft Office application loading taskschd.dll, which exposes\n  COM interfaces for managing Windows Scheduled Tasks.\n\n  This load is an early precursor to scheduled task creation or modification and has\n  been frequently observed in macro-enabled\n\n  malicious documents attempting to establish persistence.\n\n  '\nreferences:\n- https://github.com/saksham-17/detection-lab/blob/cbc25dfe1e5eda0c4e5a7d66b6d3bbd27829e158/T1053.005-scheduled-task/tests/test5-task-scheduler-via-VBA/report.md\nauthor: Saksham Bhattarai, Swachchhanda Shrawan Poudel (Nextron Systems)\ndate: 2026-11-04\ntags:\n- attack.persistence\n- attack.privilege-escalation\n- attack.t1053.005\n- attack.execution\n- attack.t1204.002\nlogsource:\n  category: image_load\n  product: windows\ndetection:\n  selection_dll:\n  - ImageLoaded|endswith: \\taskschd.dll\n  - OriginalFileName: taskschd.dll\n  selection_exe:\n    Image|endswith:\n    - \\eqnedt32.exe\n    - \\excel.exe\n    - \\fltldr.exe\n    - \\graph.exe\n    - \\msaccess.exe\n    - \\mspub.exe\n    - \\onenote.exe\n    - \\onenoteim.exe\n    - \\onenotem.exe\n    - \\outlook.exe\n    - \\powerpnt.exe\n    - \\visio.exe\n    - \\winproj.exe\n    - \\winword.exe\n  condition: all of selection_*\nfalsepositives:\n- Legitimate add-ins or automation scripts that use Office applications to manage\n  scheduled tasks (rare in most environments)\nlevel: medium\nregression_tests_path: regression_data/rules/windows/image_load/image_load_office_taskschd_dll_load/info.yml\n",
+            "vulnerabilities": []
+        }
+    ]
+}
