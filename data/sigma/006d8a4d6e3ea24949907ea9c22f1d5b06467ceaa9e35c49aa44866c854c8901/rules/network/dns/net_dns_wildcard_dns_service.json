@@ -1,0 +1,16 @@
+{
+    "source_url": "https://github.com/SigmaHQ/sigma/blob/master/rules/network/dns/net_dns_wildcard_dns_service.yml",
+    "rules": [
+        {
+            "rule_metadata": {
+                "status": "experimental",
+                "author": "MahirAli Khan",
+                "date": "2026-11-05",
+                "title": "DNS Query to Wildcard DNS Services - Network",
+                "id": "139ddcb3-ba90-4407-b0b1-1838131ce8e7"
+            },
+            "rule_text": "title: DNS Query to Wildcard DNS Services - Network\nid: 139ddcb3-ba90-4407-b0b1-1838131ce8e7\nrelated:\n- id: 4f8a1c2e-7d3b-4e5f-9a6c-0b1d2e3f4a5b\n  type: similar\nstatus: experimental\ndescription: 'Detects DNS queries to public wildcard DNS services that dynamically\n  resolve subdomains to IP addresses embedded in the subdomain.\n\n  Adversaries abuse these services to establish C2 channels or stage phishing infrastructure\n  without registering a custom domain, potentially to evade detection and attribution.\n\n  '\nreferences:\n- https://nip.io/\n- https://sslip.io/\n- https://traefik.me/\n- https://github.polettix.it/ETOOBUSY/2022/10/09/nip-io-sslip-io/\nauthor: MahirAli Khan\ndate: 2026-11-05\ntags:\n- attack.command-and-control\n- attack.t1071.004\n- attack.t1568\nlogsource:\n  category: dns\ndetection:\n  selection:\n    query|endswith:\n    - .1u.ms\n    - .backname.io\n    - .nip.io\n    - .sslip.io\n    - .traefik.me\n    - .xip.io\n  condition: selection\nfalsepositives:\n- Developers using nip.io or sslip.io to test local HTTPS setups or Kubernetes ingress\n  rules without modifying /etc/hosts\n- CI/CD pipelines that provision ephemeral review environments with dynamically generated\n  hostnames (e.g. PR-based preview deployments)\nlevel: medium\n",
+            "vulnerabilities": []
+        }
+    ]
+}
