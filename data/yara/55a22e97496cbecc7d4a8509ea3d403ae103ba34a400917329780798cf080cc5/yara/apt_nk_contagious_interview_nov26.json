@@ -1,0 +1,21 @@
+{
+    "source_url": "https://github.com/Neo23x0/signature-base/blob/master/yara/apt_nk_contagious_interview_nov26.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "MAL_APT_NK_JS_ContagiousInterview_TCP_Backdoor_Nov26",
+                "tags": [],
+                "description": "Detects the Node.js backdoor of the Contagious Interview campaign (git hook lure) that talks to its C2 over plain TCP with newline-delimited JSON. Works on the javascript-obfuscator output as distributed: it relies on top-level names that the obfuscator keeps (renameGlobals is off by default) and on key strings, which end up either as literals or in the base64 encoded string array",
+                "author": "n4uu",
+                "reference": "https://n4uu.github.io/2026/raw-tcp-backdoor-cleverstack/",
+                "date": "2026-11-05",
+                "score": 80,
+                "hash1": "281d4d60fc99cf7f54819defb1c7c14b9202d46890936c4c6b9ebe3ddc75dd2f",
+                "hash2": "6db4c3d2ab56227d36eff59d1dc9e13eadf9959996fab1e0b04591cc5e637d04",
+                "id": "fdd732d7-e852-4f09-b57c-f1893cc1ec64"
+            },
+            "rule_text": "rule MAL_APT_NK_JS_ContagiousInterview_TCP_Backdoor_Nov26\n{\n\tmeta:\n\t\tdescription = \"Detects the Node.js backdoor of the Contagious Interview campaign (git hook lure) that talks to its C2 over plain TCP with newline-delimited JSON. Works on the javascript-obfuscator output as distributed: it relies on top-level names that the obfuscator keeps (renameGlobals is off by default) and on key strings, which end up either as literals or in the base64 encoded string array\"\n\t\tauthor = \"n4uu\"\n\t\treference = \"https://n4uu.github.io/2026/raw-tcp-backdoor-cleverstack/\"\n\t\tdate = \"2026-11-05\"\n\t\tscore = 80\n\t\thash1 = \"281d4d60fc99cf7f54819defb1c7c14b9202d46890936c4c6b9ebe3ddc75dd2f\"\n\t\thash2 = \"6db4c3d2ab56227d36eff59d1dc9e13eadf9959996fab1e0b04591cc5e637d04\"\n\t\tid = \"fdd732d7-e852-4f09-b57c-f1893cc1ec64\"\n\n\tstrings:\n\t\t$r1 = \"require(\" ascii\n\t\t$g1 = \"GIT_CHECKER_MARKER\" ascii fullword\n\t\t$g2 = \"LOCK_UPDATE_INTERVAL\" ascii fullword\n\t\t$g3 = \"getHandleParam\" ascii fullword\n\t\t$g4 = \"createSocketConnection\" ascii fullword\n\t\t$g5 = \"lockUpdateTimer\" ascii fullword\n\t\t$g6 = \"git_content\" ascii fullword\n\t\t$g7 = \"SERVER_API_URL\" ascii fullword\n\t\t$g8 = \"attemptReconnect\" ascii fullword\n\t\t$s1 = \"vscode-ext.lock\" ascii\n\t\t$s2 = \".git-checker\" ascii\n\t\t$s3 = \"start /b cmd /c \\\"cd /d \" ascii\n\t\t$s4 = \"ss_exec \" ascii\n\t\t$sb1 = \"vscode-ext.lock\" base64\n\t\t$sb2 = \".git-checker\" base64\n\t\t$sb3 = \"start /b cmd /c \\\"cd /d \" base64\n\t\t$sb4 = \"ss_exec \" base64\n\n\tcondition:\n\t\tfilesize < 1MB and $r1 and ( 6 of ( $g* ) or ( 3 of ( $g* ) and 2 of ( $s* ) ) or 3 of ( $s* ) )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
