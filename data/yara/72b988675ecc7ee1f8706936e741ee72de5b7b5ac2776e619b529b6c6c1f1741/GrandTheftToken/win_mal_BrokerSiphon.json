@@ -1,0 +1,17 @@
+{
+    "source_url": "https://github.com/RussianPanda95/Yara-Rules/blob/master/GrandTheftToken/win_mal_BrokerSiphon.yar",
+    "rules": [
+        {
+            "rule_metadata": {
+                "name": "BrokerSiphon",
+                "tags": [],
+                "description": "Detects BrokerSiphon",
+                "author": "PandaRE",
+                "date": "2026-11-25",
+                "reference": "https://tenex.ai/blog/grand-theft-token-brokersiphon"
+            },
+            "rule_text": "rule BrokerSiphon\n{\n\tmeta:\n\t\tdescription = \"Detects BrokerSiphon\"\n\t\tauthor = \"PandaRE\"\n\t\tdate = \"2026-11-25\"\n\t\treference = \"https://tenex.ai/blog/grand-theft-token-brokersiphon\"\n\n\tstrings:\n\t\t$s1 = \"com/hierynomus/smbj/\"\n\t\t$s2 = \"jcifs/smb/SmbFile.class\"\n\t\t$c1 = \"/SmbXferEngine.class\"\n\t\t$c2 = \"/JTokenFacade.class\"\n\t\t$c3 = \"/TknMetadataParser.class\"\n\t\t$c4 = \"/SpoProbeWriteRunner.class\"\n\t\t$c5 = \"/JcifsCloudBridge.class\"\n\t\t$c6 = \"/ClientLegitimacy.class\"\n\t\t$c7 = \"/V2_JavaSmbCrawler.class\"\n\t\t$c8 = \"/JcifsOneDriveUploader.class\"\n\t\t$c9 = \"/WriteTestModeHandler.class\"\n\t\t$c10 = \"/SmbjPocTest.class\"\n\t\t$c11 = \"/HugeFileMultipartUploader.class\"\n\n\tcondition:\n\t\tuint32( 0 ) == 0x04034B50 and filesize < 60MB and all of ( $s* ) and 3 of ( $c* )\n}\n",
+            "vulnerabilities": []
+        }
+    ]
+}
